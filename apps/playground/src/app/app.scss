@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #0f1115;
+  color: #dfe6f4;
+}
+
+.playground {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 24px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
