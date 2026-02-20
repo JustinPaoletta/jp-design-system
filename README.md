@@ -19,7 +19,6 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 - `DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
 - `JP_ROADMAP.md`: phased implementation plan
-- `QA_STORY_0_1_CHECKLIST.md`: QA pass criteria for Story 0.1
 
 ## Monorepo Architecture
 
