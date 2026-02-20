@@ -61,6 +61,20 @@
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",
       "linter": "eslint",
+      "standalone": true,
+      "strict": true,
+      "style": "scss",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "changeDetection": "OnPush",
+      "standalone": true,
+      "style": "scss"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "standalone": true,
+      "strict": true,
       "style": "scss",
       "unitTestRunner": "jest"
     }

@@ -1,101 +1,115 @@
-# JpDesignSystem
+# JP Design System
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Dark-first. Precision-engineered. Token-driven.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+The JP Design System is a structured Angular component library for professional dashboards and software products. It prioritizes clarity, accessibility, and long-term maintainability over visual trend cycles.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Core Philosophy
 
-## Run tasks
+- Precision over decoration
+- Signal, not noise
+- Consistency over customization
+- Accessibility by default
+- Controlled brand evolution
+- Engineering-grade discipline
 
-To run the dev server for your app, use:
+This system is opinionated by design. Customization that weakens consistency is intentionally restricted.
 
-```sh
+## Repository Docs
+
+- `DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
+- `JP_ROADMAP.md`: phased implementation plan
+- `QA_STORY_0_1_CHECKLIST.md`: QA pass criteria for Story 0.1
+
+## Monorepo Architecture
+
+Current workspace:
+
+```text
+/apps
+  /playground
+
+/libs
+  (planned: /tokens, /ui)
+```
+
+Planned additions:
+
+```text
+/apps
+  /storybook
+
+/libs
+  /tokens
+  /ui
+```
+
+## Token and UI Principles
+
+### Tokens (`libs/tokens`)
+
+- Primitive tokens (palette, type, spacing, radius, motion)
+- Semantic aliases
+- Accent families (`data-jp-accent`)
+- Density modes (`data-jp-density`)
+- Dark-first theme
+
+No component may use hardcoded visual values.
+
+### UI Library (`libs/ui`)
+
+Standalone Angular components with:
+
+- Strict typing
+- Token-based styling
+- WCAG AA minimum accessibility
+- Constrained API surface
+
+## Development Standards
+
+- Strict TypeScript
+- No `any`
+- No hardcoded colors in components
+- Token usage for spacing, color, radius, motion
+- CI-enforced lint + test + build
+
+## Quick Start
+
+Install dependencies:
+
+```bash
+npm ci
+```
+
+Run local app:
+
+```bash
 npx nx serve playground
 ```
 
-To create a production bundle:
+Run baseline quality checks:
 
-```sh
-npx nx build playground
+```bash
+npx nx run-many -t lint test build -p playground --parallel=3
 ```
 
-To see all available targets to run for a project, run:
+List projects:
 
-```sh
-npx nx show project playground
+```bash
+npx nx show projects
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+## Status
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Phase 0, Story 0.1 is complete:
 
-## Add new projects
+- Nx Angular monorepo initialized
+- Angular 21 configured
+- Strict TypeScript enabled
+- Standalone defaults configured
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+Next milestone: Phase 0, Story 0.2 (`libs/tokens`, `libs/ui`, Storybook app).
 
-Use the plugin's generator to create new projects.
+## License
 
-To generate a new application, use:
-
-```sh
-npx nx g @nx/angular:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/angular:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Private (for now).
