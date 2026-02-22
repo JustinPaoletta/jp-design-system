@@ -17,8 +17,9 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ## Repository Docs
 
-- `DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
-- `JP_ROADMAP.md`: phased implementation plan
+- `docs/DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
+- `docs/JP_ROADMAP.md`: phased implementation plan
+- `docs/CI_BRANCH_PROTECTION.md`: required GitHub settings for merge-blocking CI
 
 ## Monorepo Architecture
 
@@ -27,15 +28,6 @@ Current workspace:
 ```text
 /apps
   /playground
-
-/libs
-  (planned: /tokens, /ui)
-```
-
-Planned additions:
-
-```text
-/apps
   /storybook
 
 /libs
@@ -89,7 +81,10 @@ npx nx serve playground
 Run baseline quality checks:
 
 ```bash
-npx nx run-many -t lint test build -p playground --parallel=3
+npm run format:check
+npm run lint
+npm run test
+npm run build
 ```
 
 List projects:
@@ -100,14 +95,24 @@ npx nx show projects
 
 ## Status
 
-Phase 0, Story 0.1 is complete:
+Phase 0, Story 0.4 is complete:
 
 - Nx Angular monorepo initialized
 - Angular 21 configured
 - Strict TypeScript enabled
 - Standalone defaults configured
+- `libs/tokens` scaffolded
+- `libs/ui` scaffolded
+- Storybook app scaffolded (`apps/storybook`)
+- UI Storybook configured (`npx nx storybook ui`)
+- ESLint warns are treated as failures (`maxWarnings: 0`)
+- `@typescript-eslint/no-explicit-any` is enforced as `error`
+- Hardcoded colors are blocked by `npm run lint:colors`
+- Prettier formatting scripts are available (`format`, `format:check`)
+- CI workflow is configured in `.github/workflows/ci.yml` (`Lint`, `Test`, `Build` jobs)
+- Branch protection setup is documented in `docs/CI_BRANCH_PROTECTION.md`
 
-Next milestone: Phase 0, Story 0.2 (`libs/tokens`, `libs/ui`, Storybook app).
+Next milestone: Phase 1, Story 1.1 (Primitive Tokens).
 
 ## License
 

@@ -9,7 +9,7 @@ It is not a style experiment. It is an engineered system.
 This document defines the non-negotiable rules that guide every design
 and engineering decision.
 
-------------------------------------------------------------------------
+---
 
 # 1. Precision Over Decoration
 
@@ -21,7 +21,7 @@ that does not improve usability. We do not chase trends.
 If a visual element does not improve comprehension, hierarchy, or
 usability, it does not belong.
 
-------------------------------------------------------------------------
+---
 
 # 2. Signal, Not Noise
 
@@ -35,7 +35,7 @@ Decorative emphasis
 
 The interface must remain calm. The accent must remain intentional.
 
-------------------------------------------------------------------------
+---
 
 # 3. Consistency Over Customization
 
@@ -49,7 +49,7 @@ entropy.
 
 The system is opinionated by design.
 
-------------------------------------------------------------------------
+---
 
 # 4. Dark-First Clarity
 
@@ -60,7 +60,7 @@ through tone shifts and borders --- not heavy shadows.
 
 Dark UI must remain readable, not dramatic.
 
-------------------------------------------------------------------------
+---
 
 # 5. Accessibility Is Default
 
@@ -72,7 +72,7 @@ discomfort
 
 If accessibility conflicts with aesthetics, accessibility wins.
 
-------------------------------------------------------------------------
+---
 
 # 6. Motion Is Subtle and Purposeful
 
@@ -84,7 +84,7 @@ No bounce. No spring physics. No exaggerated transitions.
 
 Motion should never draw attention to itself.
 
-------------------------------------------------------------------------
+---
 
 # 7. Layout Discipline
 
@@ -96,7 +96,7 @@ Ad-hoc margin usage is discouraged. Token scales are mandatory.
 
 The system enforces structural clarity.
 
-------------------------------------------------------------------------
+---
 
 # 8. Semantic Meaning Is Stable
 
@@ -107,7 +107,7 @@ consistent, regardless of brand accent changes.
 
 Brand identity can shift. Semantic meaning must remain stable.
 
-------------------------------------------------------------------------
+---
 
 # 9. Approachability Without Softness
 
@@ -119,7 +119,7 @@ It is not: - Playful - Loud - Aggressive
 
 Professional does not mean cold. Approachable does not mean casual.
 
-------------------------------------------------------------------------
+---
 
 # 10. Engineering-Grade Standards
 
@@ -130,7 +130,7 @@ coverage - Visual regression safeguards
 
 A design system is infrastructure. Infrastructure must be reliable.
 
-------------------------------------------------------------------------
+---
 
 # 11. Evolution Without Chaos
 
@@ -141,7 +141,7 @@ layered.
 
 Evolution is intentional, not reactive.
 
-------------------------------------------------------------------------
+---
 
 # Final Standard
 

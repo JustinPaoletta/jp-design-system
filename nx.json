@@ -10,7 +10,10 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json"
     ],
     "sharedGlobals": []
   },
@@ -22,6 +25,9 @@
     },
     "@nx/eslint:lint": {
       "cache": true,
+      "options": {
+        "maxWarnings": 0
+      },
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json",
@@ -41,6 +47,20 @@
           "codeCoverage": true
         }
       }
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "build-storybook": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
+      ]
     }
   },
   "plugins": [
@@ -61,22 +81,22 @@
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",
       "linter": "eslint",
-      "standalone": true,
-      "strict": true,
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true,
+      "standalone": true
     },
     "@nx/angular:component": {
+      "style": "scss",
       "changeDetection": "OnPush",
-      "standalone": true,
-      "style": "scss"
+      "standalone": true
     },
     "@nx/angular:library": {
       "linter": "eslint",
-      "standalone": true,
+      "unitTestRunner": "jest",
       "strict": true,
-      "style": "scss",
-      "unitTestRunner": "jest"
+      "standalone": true,
+      "style": "scss"
     }
   }
 }
