@@ -59,6 +59,9 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Storybook interaction tests
+        run: npx nx run ui:test-storybook
+
   build:
     name: Build
     runs-on: ubuntu-latest

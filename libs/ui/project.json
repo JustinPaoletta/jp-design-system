@@ -49,7 +49,7 @@
     "test-storybook": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "test-storybook -c libs/ui/.storybook --url=http://localhost:4400"
+        "command": "node tools/run-ui-test-storybook.mjs"
       }
     },
     "static-storybook": {
