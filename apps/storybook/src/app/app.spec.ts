@@ -8,12 +8,12 @@ describe('App', () => {
     }).compileComponents();
   });
 
-  it('should render title', async () => {
+  it('should render host title', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'JP Design System',
+      'JP Storybook Host',
     );
   });
 });

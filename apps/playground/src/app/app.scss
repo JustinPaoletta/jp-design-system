@@ -1,8 +1,8 @@
 :host {
   display: block;
   min-height: 100vh;
-  background: #0f1115;
-  color: #dfe6f4;
+  background: var(--jp-color-surface-canvas);
+  color: var(--jp-color-text-primary);
 }
 
 .playground {
