@@ -21,5 +21,5 @@ After this is configured, any failed CI job will block merges into the protected
 ## Current Repo State
 
 - Default branch: `master`
-- Required checks configured: `CI / Lint`, `CI / Test`, `CI / Build`
+- Required checks configured: `Lint`, `Test`, `Build`
 - Strict status checks: enabled
