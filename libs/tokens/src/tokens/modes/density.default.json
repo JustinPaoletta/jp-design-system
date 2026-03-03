@@ -1,0 +1,21 @@
+{
+  "space": {
+    "2xs": { "value": "{primitive.space.2}" },
+    "xs": { "value": "{primitive.space.4}" },
+    "sm": { "value": "{primitive.space.6}" },
+    "md": { "value": "{primitive.space.8}" },
+    "lg": { "value": "{primitive.space.12}" },
+    "xl": { "value": "{primitive.space.16}" },
+    "2xl": { "value": "{primitive.space.24}" },
+    "3xl": { "value": "{primitive.space.32}" }
+  },
+  "size": {
+    "control": {
+      "xs": { "value": "{primitive.space.8}" },
+      "sm": { "value": "{primitive.space.10}" },
+      "md": { "value": "{primitive.space.12}" },
+      "lg": { "value": "{primitive.space.16}" },
+      "xl": { "value": "{primitive.space.20}" }
+    }
+  }
+}

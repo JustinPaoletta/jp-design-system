@@ -1,0 +1,48 @@
+{
+  "primitive": {
+    "color": {
+      "neutral": {
+        "0": { "value": "#ffffff" },
+        "50": { "value": "#f4f7ff" },
+        "100": { "value": "#dce3f3" },
+        "200": { "value": "#c2ccde" },
+        "300": { "value": "#a8b4c8" },
+        "400": { "value": "#8b98ae" },
+        "500": { "value": "#6d7a92" },
+        "600": { "value": "#53607a" },
+        "700": { "value": "#3f4b63" },
+        "800": { "value": "#2d374a" },
+        "900": { "value": "#1e2636" },
+        "950": { "value": "#141b2a" },
+        "1000": { "value": "#0c111c" },
+        "1100": { "value": "#070b13" }
+      },
+      "state": {
+        "success": {
+          "100": { "value": "#d8f8e6" },
+          "300": { "value": "#7bd3a0" },
+          "500": { "value": "#2f9c68" },
+          "700": { "value": "#1f6f4a" }
+        },
+        "warning": {
+          "100": { "value": "#fff1d9" },
+          "300": { "value": "#f7c980" },
+          "500": { "value": "#c98c31" },
+          "700": { "value": "#8f5f1f" }
+        },
+        "error": {
+          "100": { "value": "#ffe0e0" },
+          "300": { "value": "#f29b9b" },
+          "500": { "value": "#cf4d4d" },
+          "700": { "value": "#9b2f2f" }
+        },
+        "info": {
+          "100": { "value": "#dce8ff" },
+          "300": { "value": "#9cbaf7" },
+          "500": { "value": "#4b79d6" },
+          "700": { "value": "#2d4f96" }
+        }
+      }
+    }
+  }
+}

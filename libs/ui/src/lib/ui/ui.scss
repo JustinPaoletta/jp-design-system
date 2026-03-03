@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  font-family: var(--jp-font-family-base);
+  color: var(--jp-color-text-primary);
+}
+
+.jp-demo {
+  max-width: 32rem;
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-raised);
+  box-shadow: var(--jp-elevation-raised);
+  padding: var(--jp-space-lg);
+  display: grid;
+  gap: var(--jp-space-md);
+}
+
+.jp-demo__header {
+  display: grid;
+  gap: var(--jp-space-xs);
+}
+
+.jp-demo__title {
+  margin: 0;
+  font-size: var(--jp-font-size-title);
+  line-height: var(--jp-font-line-height-tight);
+}
+
+.jp-demo__subtitle {
+  margin: 0;
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-text-secondary);
+}
+
+.jp-demo__actions {
+  display: inline-flex;
+  gap: var(--jp-space-sm);
+  align-items: center;
+}
+
+.jp-demo__button {
+  border: 0;
+  border-radius: var(--jp-radius-md);
+  height: var(--jp-size-control-md);
+  padding: 0 var(--jp-space-md);
+  background: var(--jp-color-accent-solid);
+  color: var(--jp-color-accent-contrast);
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: 1;
+  transition: var(--jp-motion-transition-base);
+  cursor: pointer;
+}
+
+.jp-demo__button:hover {
+  background: var(--jp-color-accent-strong);
+}
+
+.jp-demo__button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.jp-demo__badge {
+  display: inline-flex;
+  align-items: center;
+  height: var(--jp-size-control-sm);
+  border-radius: var(--jp-radius-full);
+  padding: 0 var(--jp-space-sm);
+  background: var(--jp-color-state-success-soft);
+  color: var(--jp-color-state-success-strong);
+  border: 1px solid var(--jp-color-state-success-border);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+}

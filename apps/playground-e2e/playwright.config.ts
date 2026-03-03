@@ -24,9 +24,10 @@ export default defineConfig({
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx run playground:serve --port=4300',
+    command: 'npx nx run playground:serve-static --port=4300',
     url: baseURL,
-    reuseExistingServer: false,
+    reuseExistingServer: true,
+    timeout: 120000,
     cwd: workspaceRoot,
   },
   projects: [

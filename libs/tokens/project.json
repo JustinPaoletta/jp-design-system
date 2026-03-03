@@ -24,6 +24,19 @@
       "options": {
         "jestConfig": "libs/tokens/jest.config.cts"
       }
+    },
+    "build-tokens": {
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/src/generated"],
+      "options": {
+        "command": "node libs/tokens/scripts/build-tokens.mjs"
+      }
+    },
+    "check-tokens": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node libs/tokens/scripts/check-generated.mjs"
+      }
     }
   }
 }
