@@ -1,0 +1,153 @@
+{
+  "color": {
+    "surface": {
+      "canvas": { "value": "{primitive.color.neutral.1100}" },
+      "sunken": { "value": "{primitive.color.neutral.1000}" },
+      "subtle": { "value": "{primitive.color.neutral.950}" },
+      "raised": { "value": "{primitive.color.neutral.900}" },
+      "overlay": { "value": "{primitive.color.neutral.800}" }
+    },
+    "text": {
+      "primary": { "value": "{primitive.color.neutral.50}" },
+      "secondary": { "value": "{primitive.color.neutral.200}" },
+      "muted": { "value": "{primitive.color.neutral.400}" },
+      "disabled": { "value": "{primitive.color.neutral.500}" },
+      "inverse": { "value": "{primitive.color.neutral.1100}" }
+    },
+    "border": {
+      "subtle": { "value": "{primitive.color.neutral.900}" },
+      "default": { "value": "{primitive.color.neutral.800}" },
+      "strong": { "value": "{primitive.color.neutral.700}" },
+      "interactive": { "value": "{color.accent.solid}" }
+    },
+    "accent": {
+      "soft": { "value": "{primitive.color.accent.neon.200}" },
+      "muted": { "value": "{primitive.color.accent.neon.300}" },
+      "solid": { "value": "{primitive.color.accent.neon.500}" },
+      "strong": { "value": "{primitive.color.accent.neon.600}" },
+      "contrast": { "value": "{primitive.color.neutral.1100}" },
+      "focus": { "value": "{primitive.color.accent.neon.500}" }
+    },
+    "state": {
+      "success": {
+        "soft": { "value": "{primitive.color.state.success.100}" },
+        "border": { "value": "{primitive.color.state.success.300}" },
+        "text": { "value": "{primitive.color.state.success.500}" },
+        "strong": { "value": "{primitive.color.state.success.700}" }
+      },
+      "warning": {
+        "soft": { "value": "{primitive.color.state.warning.100}" },
+        "border": { "value": "{primitive.color.state.warning.300}" },
+        "text": { "value": "{primitive.color.state.warning.500}" },
+        "strong": { "value": "{primitive.color.state.warning.700}" }
+      },
+      "error": {
+        "soft": { "value": "{primitive.color.state.error.100}" },
+        "border": { "value": "{primitive.color.state.error.300}" },
+        "text": { "value": "{primitive.color.state.error.500}" },
+        "strong": { "value": "{primitive.color.state.error.700}" }
+      },
+      "info": {
+        "soft": { "value": "{primitive.color.state.info.100}" },
+        "border": { "value": "{primitive.color.state.info.300}" },
+        "text": { "value": "{primitive.color.state.info.500}" },
+        "strong": { "value": "{primitive.color.state.info.700}" }
+      }
+    },
+    "focus": {
+      "ring": { "value": "{color.accent.focus}" }
+    }
+  },
+  "space": {
+    "2xs": { "value": "{primitive.space.2}" },
+    "xs": { "value": "{primitive.space.4}" },
+    "sm": { "value": "{primitive.space.6}" },
+    "md": { "value": "{primitive.space.8}" },
+    "lg": { "value": "{primitive.space.12}" },
+    "xl": { "value": "{primitive.space.16}" },
+    "2xl": { "value": "{primitive.space.24}" },
+    "3xl": { "value": "{primitive.space.32}" }
+  },
+  "radius": {
+    "none": { "value": "{primitive.radius.none}" },
+    "sm": { "value": "{primitive.radius.sm}" },
+    "md": { "value": "{primitive.radius.md}" },
+    "lg": { "value": "{primitive.radius.lg}" },
+    "xl": { "value": "{primitive.radius.xl}" },
+    "full": { "value": "{primitive.radius.pill}" }
+  },
+  "size": {
+    "control": {
+      "xs": { "value": "{primitive.space.8}" },
+      "sm": { "value": "{primitive.space.10}" },
+      "md": { "value": "{primitive.space.12}" },
+      "lg": { "value": "{primitive.space.16}" },
+      "xl": { "value": "{primitive.space.20}" }
+    },
+    "icon": {
+      "sm": { "value": "{primitive.space.4}" },
+      "md": { "value": "{primitive.space.6}" },
+      "lg": { "value": "{primitive.space.8}" }
+    },
+    "container": {
+      "narrow": { "value": "42rem" },
+      "wide": { "value": "72rem" }
+    }
+  },
+  "font": {
+    "family": {
+      "base": { "value": "{primitive.typography.family.sans}" },
+      "mono": { "value": "{primitive.typography.family.mono}" }
+    },
+    "size": {
+      "caption": { "value": "{primitive.typography.size.200}" },
+      "body": { "value": "{primitive.typography.size.300}" },
+      "body-lg": { "value": "{primitive.typography.size.400}" },
+      "title": { "value": "{primitive.typography.size.500}" },
+      "display": { "value": "{primitive.typography.size.700}" }
+    },
+    "weight": {
+      "regular": { "value": "{primitive.typography.weight.regular}" },
+      "medium": { "value": "{primitive.typography.weight.medium}" },
+      "semibold": { "value": "{primitive.typography.weight.semibold}" },
+      "bold": { "value": "{primitive.typography.weight.bold}" }
+    },
+    "line-height": {
+      "tight": { "value": "{primitive.typography.lineHeight.100}" },
+      "normal": { "value": "{primitive.typography.lineHeight.300}" },
+      "relaxed": { "value": "{primitive.typography.lineHeight.400}" }
+    },
+    "letter-spacing": {
+      "tight": { "value": "{primitive.typography.letterSpacing.tight}" },
+      "normal": { "value": "{primitive.typography.letterSpacing.normal}" },
+      "wide": { "value": "{primitive.typography.letterSpacing.wide}" }
+    }
+  },
+  "motion": {
+    "duration": {
+      "fast": { "value": "{primitive.motion.duration.fast}" },
+      "normal": { "value": "{primitive.motion.duration.normal}" },
+      "slow": { "value": "{primitive.motion.duration.slow}" }
+    },
+    "easing": {
+      "standard": { "value": "{primitive.motion.easing.standard}" },
+      "emphasized": { "value": "{primitive.motion.easing.emphasized}" },
+      "linear": { "value": "{primitive.motion.easing.linear}" }
+    },
+    "transition": {
+      "base": {
+        "value": "all {motion.duration.normal} {motion.easing.standard}"
+      },
+      "emphasized": {
+        "value": "all {motion.duration.fast} {motion.easing.emphasized}"
+      }
+    }
+  },
+  "elevation": {
+    "none": { "value": "{primitive.elevation.0}" },
+    "raised": { "value": "{primitive.elevation.100}" },
+    "floating": { "value": "{primitive.elevation.200}" },
+    "overlay": { "value": "{primitive.elevation.300}" },
+    "focus-ring": { "value": "{primitive.elevation.focusRing}" }
+  }
+}

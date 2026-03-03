@@ -8,14 +8,20 @@ density.
 
 ---
 
-## Current Progress (as of February 20, 2026)
+## Current Progress (as of March 3, 2026)
 
-- Phase 0 is in progress.
+- Phase 0 is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
 - Story 0.2 (Create Libraries) is complete and validated.
 - Story 0.3 (Lint & Formatting) is complete and validated.
 - Story 0.4 (CI Pipeline) is complete and validated.
-- Next milestone: Story 1.1 (Primitive Tokens).
+- Phase 1, Epic 1 (Token System) is complete.
+- Story 1.1 (Primitive Tokens) is complete and validated.
+- Story 1.2 (Semantic Aliases) is complete and validated.
+- Story 1.3 (Density Modes) is complete and validated.
+- Story 1.4 (Accent Variants) is complete and validated.
+- Story 1.5 (CSS Output) is complete and validated.
+- Next milestone: Phase 2, Epic 2 (Layout Primitives).
 
 ---
 
@@ -60,37 +66,37 @@ Deliverable: Clean CI-ready repo.
 
 ### Story 1.1 --- Primitive Tokens
 
-- Neutrals
-- Accent ramp
-- Typography
-- Spacing
-- Radius
-- Elevation
-- Motion
+- [x] Neutrals
+- [x] Accent ramp
+- [x] Typography
+- [x] Spacing
+- [x] Radius
+- [x] Elevation
+- [x] Motion
 
 ### Story 1.2 --- Semantic Aliases
 
-- Map primitive → semantic
-- Prevent direct primitive usage in components
+- [x] Map primitive → semantic
+- [x] Prevent direct primitive usage in components
 
 ### Story 1.3 --- Density Modes
 
-- Default
-- Compact (token overrides only)
+- [x] Default
+- [x] Compact (token overrides only)
 
 ### Story 1.4 --- Accent Variants
 
-- data-jp-accent attribute
-- Implement neon
-- Validate swap readiness
+- [x] data-jp-accent attribute
+- [x] Implement neon
+- [x] Validate swap readiness
 
 ### Story 1.5 --- CSS Output
 
-- Style Dictionary setup
-- Generate tokens.css
-- Generate compact variant
+- [x] Style Dictionary setup
+- [x] Generate tokens.css
+- [x] Generate compact variant
 
-Deliverable: Working theme + density + accent switching.
+Deliverable: Working theme + density + accent switching. Completed.
 
 ---
 

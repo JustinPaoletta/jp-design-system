@@ -1,0 +1,26 @@
+{
+  "primitive": {
+    "color": {
+      "accent": {
+        "neon": {
+          "100": { "value": "#d9fff8" },
+          "200": { "value": "#adfff2" },
+          "300": { "value": "#7cffe9" },
+          "400": { "value": "#4be9db" },
+          "500": { "value": "#22c7bd" },
+          "600": { "value": "#149f98" },
+          "700": { "value": "#0d7c78" }
+        },
+        "cobalt": {
+          "100": { "value": "#dbe8ff" },
+          "200": { "value": "#b8d0ff" },
+          "300": { "value": "#8db2ff" },
+          "400": { "value": "#6292f0" },
+          "500": { "value": "#4674d0" },
+          "600": { "value": "#3158a8" },
+          "700": { "value": "#223f7c" }
+        }
+      }
+    }
+  }
+}

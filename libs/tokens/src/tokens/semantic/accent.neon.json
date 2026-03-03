@@ -1,0 +1,12 @@
+{
+  "color": {
+    "accent": {
+      "soft": { "value": "{primitive.color.accent.neon.200}" },
+      "muted": { "value": "{primitive.color.accent.neon.300}" },
+      "solid": { "value": "{primitive.color.accent.neon.500}" },
+      "strong": { "value": "{primitive.color.accent.neon.600}" },
+      "contrast": { "value": "{primitive.color.neutral.1100}" },
+      "focus": { "value": "{primitive.color.accent.neon.500}" }
+    }
+  }
+}
