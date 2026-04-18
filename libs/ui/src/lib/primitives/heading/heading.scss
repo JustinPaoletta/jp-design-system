@@ -1,0 +1,10 @@
+:host {
+  display: block;
+}
+
+.jp-heading__root {
+  font-family: var(--jp-font-family-base);
+  letter-spacing: var(--jp-font-letter-spacing-tight);
+  line-height: var(--jp-font-line-height-tight);
+  margin: 0;
+}

@@ -21,7 +21,13 @@ density.
 - Story 1.3 (Density Modes) is complete and validated.
 - Story 1.4 (Accent Variants) is complete and validated.
 - Story 1.5 (CSS Output) is complete and validated.
-- Next milestone: Phase 2, Epic 2 (Layout Primitives).
+- Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
+- Story 2.1 (Layout primitives in `libs/ui`) is complete and validated.
+- Story 2.2 (Playground `/phase-2-dashboard`) is complete and validated.
+- Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
+- Story 2.4 (Chromium e2e gate for Playground dashboard) is complete and validated.
+- Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
+- Next milestone: Phase 3, Epic 3 (App Shell).
 
 ---
 
@@ -104,15 +110,19 @@ Deliverable: Working theme + density + accent switching. Completed.
 
 ## EPIC 2 --- Layout Primitives
 
-- jp-box
-- jp-stack
-- jp-inline
-- jp-grid
-- jp-surface
-- jp-text
-- jp-heading
+- [x] jp-box
+- [x] jp-stack
+- [x] jp-inline
+- [x] jp-grid
+- [x] jp-surface
+- [x] jp-text
+- [x] jp-heading
+- [x] Storybook primitives + composition story coverage
+- [x] Playground `/phase-2-dashboard` route and page
+- [x] CI Playwright Chromium gate for dashboard validation
+- [x] `Ui`/`lib-ui` marked deprecated for transition window
 
-Deliverable: Layout-only dashboard using primitives.
+Deliverable: Layout-only dashboard using primitives. Completed.
 
 ---
 

@@ -65,6 +65,9 @@ jobs:
       - name: Storybook interaction tests
         run: npx nx run ui:test-storybook
 
+      - name: Playground dashboard e2e (Chromium)
+        run: npx nx run playground-e2e:e2e -- --project=chromium
+
   build:
     name: Build
     runs-on: ubuntu-latest

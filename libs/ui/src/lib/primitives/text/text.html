@@ -1,0 +1,84 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@switch (tag()) { @case ('span') {
+<span
+  class="jp-text__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</span>
+} @case ('label') {
+<label
+  class="jp-text__root"
+  [attr.for]="forId()"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</label>
+} @case ('small') {
+<small
+  class="jp-text__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</small>
+} @case ('strong') {
+<strong
+  class="jp-text__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</strong>
+} @case ('em') {
+<em
+  class="jp-text__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</em>
+} @default {
+<p
+  class="jp-text__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+  [style.fontFamily]="rootFontFamily()"
+  [style.whiteSpace]="rootWhiteSpace()"
+  [style.overflow]="rootOverflow()"
+  [style.textOverflow]="rootTextOverflow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</p>
+} }

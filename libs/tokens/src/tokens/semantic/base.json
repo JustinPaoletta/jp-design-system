@@ -92,6 +92,11 @@
     "container": {
       "narrow": { "value": "42rem" },
       "wide": { "value": "72rem" }
+    },
+    "column-min": {
+      "sm": { "value": "16rem" },
+      "md": { "value": "20rem" },
+      "lg": { "value": "24rem" }
     }
   },
   "font": {

@@ -1,0 +1,93 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@switch (tag()) { @case ('div') {
+<div
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</div>
+} @case ('article') {
+<article
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</article>
+} @case ('aside') {
+<aside
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</aside>
+} @case ('main') {
+<main
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</main>
+} @case ('header') {
+<header
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</header>
+} @case ('footer') {
+<footer
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</footer>
+} @case ('nav') {
+<nav
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</nav>
+} @default {
+<section
+  class="jp-surface__root"
+  [style.background]="rootBackground()"
+  [style.padding]="rootPadding()"
+  [style.borderRadius]="rootRadius()"
+  [style.border]="rootBorder()"
+  [style.boxShadow]="rootBoxShadow()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</section>
+} }
