@@ -40,7 +40,7 @@ A token-driven Angular design-system monorepo for internal dashboards and produc
 - `libs/tokens` design-token source and build pipeline
 - `libs/ui` reusable Angular components
 - `tools/` custom lint and token-check scripts
-- `docs/` design principles, roadmap, CI, and manual test guidance
+- `docs/` design principles, roadmap, CI, and release/process docs
 
 ## Prerequisites
 
@@ -85,7 +85,6 @@ A token-driven Angular design-system monorepo for internal dashboards and produc
 - [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
 - [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
-- [docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md](./docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md)
 
 ## License
 
