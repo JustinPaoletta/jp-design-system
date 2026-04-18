@@ -57,12 +57,12 @@ npm run build
 9. Open a pull request from `release/vX.Y.Z` into the protected default branch and merge it after review.
 10. Tag the merge commit and push the tag:
 
-   ```bash
-   git checkout master
-   git pull --ff-only
-   git tag -a vX.Y.Z -m "Release vX.Y.Z"
-   git push origin vX.Y.Z
-   ```
+```bash
+git checkout master
+git pull --ff-only
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
+```
 
 11. Publish the GitHub Release from the matching changelog section.
 12. Continue adding new work under `## [Unreleased]` for the next cycle.
