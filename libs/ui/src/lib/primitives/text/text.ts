@@ -31,9 +31,18 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-text',
+    '[style.display]': 'hostDisplay()',
   },
 })
 export class JpText {
+  private static readonly INLINE_TAGS = new Set<JpTextTag>([
+    'span',
+    'label',
+    'small',
+    'strong',
+    'em',
+  ]);
+
   readonly as = input<JpTextTag, unknown>('p', {
     transform: createStringUnionTransform(JP_TEXT_TAGS, 'p'),
   });
@@ -57,6 +66,10 @@ export class JpText {
   readonly forId = input<string | null>(null);
 
   readonly tag = computed(() => this.as());
+
+  readonly hostDisplay = computed(() =>
+    JpText.INLINE_TAGS.has(this.tag()) ? 'inline' : 'block',
+  );
 
   readonly rootFontSize = computed(() => textSizeToCssVar(this.size()));
 

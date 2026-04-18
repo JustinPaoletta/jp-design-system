@@ -14,6 +14,7 @@ import {
   JP_SPACE_TOKENS,
 } from '../shared/primitive-types';
 import {
+  createOptionalStringUnionTransform,
   createStringUnionTransform,
   maxWidthToCssVar,
   spaceTokenToCssVar,
@@ -38,12 +39,12 @@ export class JpBox {
     transform: createStringUnionTransform(JP_SPACE_TOKENS, 'none'),
   });
 
-  readonly paddingX = input<JpSpaceToken, unknown>('none', {
-    transform: createStringUnionTransform(JP_SPACE_TOKENS, 'none'),
+  readonly paddingX = input<JpSpaceToken | null, unknown>(null, {
+    transform: createOptionalStringUnionTransform(JP_SPACE_TOKENS),
   });
 
-  readonly paddingY = input<JpSpaceToken, unknown>('none', {
-    transform: createStringUnionTransform(JP_SPACE_TOKENS, 'none'),
+  readonly paddingY = input<JpSpaceToken | null, unknown>(null, {
+    transform: createOptionalStringUnionTransform(JP_SPACE_TOKENS),
   });
 
   readonly maxWidth = input<JpBoxMaxWidth, unknown>('none', {
@@ -54,14 +55,12 @@ export class JpBox {
 
   readonly rootPadding = computed(() => {
     const basePadding = spaceTokenToCssVar(this.padding());
+    const paddingY = this.paddingY();
+    const paddingX = this.paddingX();
     const verticalPadding =
-      this.paddingY() === 'none'
-        ? basePadding
-        : spaceTokenToCssVar(this.paddingY());
+      paddingY === null ? basePadding : spaceTokenToCssVar(paddingY);
     const horizontalPadding =
-      this.paddingX() === 'none'
-        ? basePadding
-        : spaceTokenToCssVar(this.paddingX());
+      paddingX === null ? basePadding : spaceTokenToCssVar(paddingX);
 
     return `${verticalPadding} ${horizontalPadding}`;
   });

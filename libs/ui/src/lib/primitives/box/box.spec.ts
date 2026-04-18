@@ -25,6 +25,31 @@ describe('JpBox', () => {
     expect(component.rootPadding()).toBe('0 0');
   });
 
+  it('inherits base padding when axis overrides are omitted', () => {
+    fixture.componentRef.setInput('padding', 'lg');
+    fixture.detectChanges();
+
+    expect(component.rootPadding()).toBe(
+      'var(--jp-space-lg) var(--jp-space-lg)',
+    );
+  });
+
+  it('allows paddingX to clear horizontal padding explicitly', () => {
+    fixture.componentRef.setInput('padding', 'lg');
+    fixture.componentRef.setInput('paddingX', 'none');
+    fixture.detectChanges();
+
+    expect(component.rootPadding()).toBe('var(--jp-space-lg) 0');
+  });
+
+  it('allows paddingY to clear vertical padding explicitly', () => {
+    fixture.componentRef.setInput('padding', 'lg');
+    fixture.componentRef.setInput('paddingY', 'none');
+    fixture.detectChanges();
+
+    expect(component.rootPadding()).toBe('0 var(--jp-space-lg)');
+  });
+
   it('renders requested semantic tag', () => {
     fixture.componentRef.setInput('as', 'section');
     fixture.detectChanges();

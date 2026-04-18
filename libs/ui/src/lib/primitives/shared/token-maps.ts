@@ -128,6 +128,28 @@ export function createStringUnionTransform<T extends string>(
   };
 }
 
+export function createOptionalStringUnionTransform<T extends string>(
+  allowed: readonly T[],
+) {
+  const allowedSet = new Set<string>(allowed);
+
+  return (value: unknown): T | null => {
+    if (
+      value === null ||
+      value === undefined ||
+      (typeof value === 'string' && value.trim() === '')
+    ) {
+      return null;
+    }
+
+    if (typeof value === 'string' && allowedSet.has(value)) {
+      return value as T;
+    }
+
+    return null;
+  };
+}
+
 export function createNumberUnionTransform<T extends number>(
   allowed: readonly T[],
   fallback: T,

@@ -16,8 +16,6 @@ const meta: Meta<JpBox> = {
   args: {
     as: 'div',
     padding: 'md',
-    paddingX: 'none',
-    paddingY: 'none',
     maxWidth: 'none',
   },
 };

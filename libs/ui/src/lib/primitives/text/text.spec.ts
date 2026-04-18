@@ -21,8 +21,19 @@ describe('JpText', () => {
 
   it('uses defaults', () => {
     expect(component.as()).toBe('p');
+    expect(component.hostDisplay()).toBe('block');
     expect(component.rootFontSize()).toBe('var(--jp-font-size-body)');
     expect(component.rootColor()).toBe('var(--jp-color-text-primary)');
+  });
+
+  it('keeps inline tags inline at the host level', () => {
+    fixture.componentRef.setInput('as', 'span');
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector('span.jp-text__root');
+    expect(root).toBeTruthy();
+    expect(component.hostDisplay()).toBe('inline');
+    expect(fixture.nativeElement.style.display).toBe('inline');
   });
 
   it('applies truncate mode styles', () => {
