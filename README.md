@@ -1,119 +1,92 @@
 # JP Design System
 
-Dark-first. Precision-engineered. Token-driven.
-
-The JP Design System is a structured Angular component library for professional dashboards and software products. It prioritizes clarity, accessibility, and long-term maintainability over visual trend cycles.
-
-## Core Philosophy
-
-- Precision over decoration
-- Signal, not noise
-- Consistency over customization
-- Accessibility by default
-- Controlled brand evolution
-- Engineering-grade discipline
-
-This system is opinionated by design. Customization that weakens consistency is intentionally restricted.
-
-## Repository Docs
-
-- `docs/DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
-- `docs/JP_ROADMAP.md`: phased implementation plan
-- `docs/CI_BRANCH_PROTECTION.md`: required GitHub settings for merge-blocking CI
-
-## Monorepo Architecture
-
-Current workspace:
-
-```text
-/apps
-  /playground
-  /storybook
-
-/libs
-  /tokens
-  /ui
-```
-
-## Token and UI Principles
-
-### Tokens (`libs/tokens`)
-
-- Primitive tokens (palette, type, spacing, radius, motion)
-- Semantic aliases
-- Accent families (`data-jp-accent`)
-- Density modes (`data-jp-density`)
-- Dark-first theme
-
-No component may use hardcoded visual values.
-
-### UI Library (`libs/ui`)
-
-Standalone Angular components with:
-
-- Strict typing
-- Token-based styling
-- WCAG AA minimum accessibility
-- Constrained API surface
-
-## Development Standards
-
-- Strict TypeScript
-- No `any`
-- No hardcoded colors in components
-- Token usage for spacing, color, radius, motion
-- CI-enforced lint + test + build
-
-## Quick Start
-
-Install dependencies:
-
-```bash
-npm ci
-```
-
-Run local app:
-
-```bash
-npx nx serve playground
-```
-
-Run baseline quality checks:
-
-```bash
-npm run format:check
-npm run lint
-npm run test
-npm run build
-```
-
-List projects:
-
-```bash
-npx nx show projects
-```
+A token-driven Angular design-system monorepo for internal dashboards and product UIs, focused on precision, accessibility, and long-term consistency.
 
 ## Status
 
-Phase 0, Story 0.4 is complete:
+- Type: private component-library monorepo
+- Current version: `0.0.0`
+- Maturity: pre-1.0 foundations with Phase 0 complete
+- Release model: manual changelog + release branch flow documented in [RELEASE.md](./RELEASE.md)
 
-- Nx Angular monorepo initialized
-- Angular 21 configured
-- Strict TypeScript enabled
-- Standalone defaults configured
-- `libs/tokens` scaffolded
-- `libs/ui` scaffolded
-- Storybook app scaffolded (`apps/storybook`)
-- UI Storybook configured (`npx nx storybook ui`)
-- ESLint warns are treated as failures (`maxWarnings: 0`)
-- `@typescript-eslint/no-explicit-any` is enforced as `error`
-- Hardcoded colors are blocked by `npm run lint:colors`
-- Prettier formatting scripts are available (`format`, `format:check`)
-- CI workflow is configured in `.github/workflows/ci.yml` (`Lint`, `Test`, `Build` jobs)
-- Branch protection setup is documented in `docs/CI_BRANCH_PROTECTION.md`
+## Quick Links
 
-Next milestone: Phase 1, Story 1.1 (Primitive Tokens).
+- Changelog: [CHANGELOG.md](./CHANGELOG.md)
+- Release process: [RELEASE.md](./RELEASE.md)
+- Roadmap: [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- Design principles: [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
+- CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
+
+## What The Project Does
+
+- Provides primitive and semantic design tokens through `libs/tokens`.
+- Provides standalone Angular UI components through `libs/ui`.
+- Uses opinionated rules to prevent hardcoded colors, primitive-token misuse, and inconsistent UI patterns.
+- Includes a playground app and Storybook surfaces for development and review.
+
+## Tech Stack
+
+- Angular 21
+- Nx 22
+- TypeScript
+- Storybook 10
+- Jest and Playwright
+- Style Dictionary
+
+## Repository Layout
+
+- `apps/playground` local consumer app for component development
+- `apps/storybook` Storybook host app
+- `libs/tokens` design-token source and build pipeline
+- `libs/ui` reusable Angular components
+- `tools/` custom lint and token-check scripts
+- `docs/` design principles, roadmap, CI, and manual test guidance
+
+## Prerequisites
+
+- Node.js 20 or newer
+- npm
+
+## Local Setup
+
+1. Install dependencies with `npm ci`.
+2. Inspect the workspace with `npx nx show projects`.
+3. Start the playground with `npx nx serve playground`.
+4. Start Storybook with `npx nx storybook ui`.
+
+## Common Commands
+
+- `npm run format:check` verifies Prettier formatting.
+- `npm run lint` runs Nx lint plus custom token and color guards.
+- `npm run test` runs the configured test targets.
+- `npm run build` builds the workspace targets.
+- `npm run tokens:build` regenerates token outputs.
+- `npm run tokens:check` validates the token pipeline.
+
+## Environment & Configuration
+
+- This repo does not currently depend on an application-style environment variable matrix.
+- The main configuration surface is the token system, Nx workspace config, and the custom lint rules under `tools/`.
+
+## Testing & Quality Gates
+
+- Local baseline: `npm run format:check`, `npm run lint`, `npm run test`, and `npm run build`.
+- Component or token releases should include manual Storybook and playground review for the affected surfaces.
+
+## Release Process
+
+- Keep `CHANGELOG.md` updated under `## [Unreleased]`.
+- Cut release branches as `release/vX.Y.Z` from the protected default branch.
+- Until package publishing is introduced, treat releases as repository-level releases rather than per-library npm releases.
+- Follow the full checklist in [RELEASE.md](./RELEASE.md).
+
+## Additional Docs
+
+- [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
+- [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
+- [docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md](./docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md)
 
 ## License
 
-Private (for now).
+MIT.
