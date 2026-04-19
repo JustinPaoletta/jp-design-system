@@ -4,25 +4,3 @@
   background: var(--jp-color-surface-canvas);
   color: var(--jp-color-text-primary);
 }
-
-.playground {
-  max-width: var(--jp-size-container-narrow);
-  margin: 0 auto;
-  padding: var(--jp-space-3xl) var(--jp-space-lg);
-  display: grid;
-  gap: var(--jp-space-md);
-}
-
-h1 {
-  margin: 0;
-  font-size: var(--jp-font-size-display);
-  line-height: var(--jp-font-line-height-tight);
-  letter-spacing: var(--jp-font-letter-spacing-tight);
-}
-
-p {
-  margin: 0;
-  font-size: var(--jp-font-size-body-lg);
-  line-height: var(--jp-font-line-height-normal);
-  color: var(--jp-color-text-secondary);
-}

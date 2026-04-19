@@ -164,6 +164,9 @@
   --jp-size-icon-lg: 1rem;
   --jp-size-container-narrow: 42rem;
   --jp-size-container-wide: 72rem;
+  --jp-size-column-min-sm: 16rem;
+  --jp-size-column-min-md: 20rem;
+  --jp-size-column-min-lg: 24rem;
   --jp-font-family-base: 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-font-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   --jp-font-size-caption: 0.8125rem;
