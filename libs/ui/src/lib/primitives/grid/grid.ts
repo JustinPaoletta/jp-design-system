@@ -64,6 +64,6 @@ export class JpGrid {
       return `repeat(${this.columns()}, minmax(0, 1fr))`;
     }
 
-    return `repeat(auto-fit, minmax(${gridMinColumnToCssVar(this.minColumn())}, 1fr))`;
+    return `repeat(auto-fit, minmax(min(${gridMinColumnToCssVar(this.minColumn())}, 100%), 1fr))`;
   });
 }

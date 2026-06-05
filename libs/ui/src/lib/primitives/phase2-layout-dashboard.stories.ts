@@ -10,7 +10,7 @@ import { JpSurface } from './surface/surface';
 import { JpText } from './text/text';
 
 const meta: Meta = {
-  title: 'Compositions/Phase 2/Layout Dashboard',
+  title: 'Compositions/Layout Dashboard',
   component: JpBox,
   decorators: [
     moduleMetadata({
@@ -19,22 +19,66 @@ const meta: Meta = {
   ],
   render: () => ({
     template: `
+      <style>
+        .jp-phase2-dashboard-story__header {
+          align-items: flex-start;
+        }
+
+        .jp-phase2-dashboard-story__accent-badge {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: calc(var(--jp-space-md) + var(--jp-space-sm));
+          padding: var(--jp-space-2xs) var(--jp-space-xs);
+          border-radius: var(--jp-radius-full);
+          background: var(--jp-color-accent-solid);
+          color: var(--jp-color-accent-contrast);
+          font: var(--jp-font-label-sm);
+          font-weight: var(--jp-font-weight-semibold);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+          text-transform: uppercase;
+        }
+
+        .jp-phase2-dashboard-story__accent-rule {
+          width: 100%;
+          height: var(--jp-primitive-space-2);
+          border-radius: var(--jp-radius-full);
+          background: linear-gradient(
+            90deg,
+            var(--jp-color-accent-strong) 0%,
+            var(--jp-color-accent-muted) 100%
+          );
+        }
+
+        .jp-phase2-dashboard-story__accent-value {
+          color: var(--jp-color-accent-muted);
+        }
+      </style>
+
       <jp-box padding="lg" maxWidth="wide">
         <jp-stack gap="lg">
-          <jp-stack gap="xs">
-            <jp-heading as="h1">Phase 2 Layout Dashboard</jp-heading>
+          <jp-stack gap="sm" class="jp-phase2-dashboard-story__header">
+            <jp-inline align="center" gap="sm">
+              <jp-heading as="h1">Layout Dashboard</jp-heading>
+              <span class="jp-phase2-dashboard-story__accent-badge">
+                {{ documentAccent }}
+              </span>
+            </jp-inline>
             <jp-text tone="secondary">Layout-only composition with primitives.</jp-text>
             <jp-inline gap="sm">
               <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
               <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
             </jp-inline>
+            <div class="jp-phase2-dashboard-story__accent-rule" aria-hidden="true"></div>
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Active sessions</jp-text>
-                <jp-heading as="h3" size="title">1,284</jp-heading>
+                <jp-heading as="h3" size="title">
+                  <span class="jp-phase2-dashboard-story__accent-value">1,284</span>
+                </jp-heading>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">

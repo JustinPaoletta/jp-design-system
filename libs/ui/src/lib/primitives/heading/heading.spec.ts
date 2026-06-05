@@ -21,6 +21,7 @@ describe('JpHeading', () => {
 
   it('maps auto size by heading level', () => {
     expect(component.rootFontSize()).toBe('var(--jp-font-size-display)');
+    expect(component.rootColor()).toBe('var(--jp-color-foreground-primary)');
 
     fixture.componentRef.setInput('as', 'h4');
     fixture.detectChanges();
@@ -38,8 +39,10 @@ describe('JpHeading', () => {
 
   it('falls back to default for invalid size', () => {
     fixture.componentRef.setInput('size', 'bad' as never);
+    fixture.componentRef.setInput('tone', 'bad' as never);
     fixture.detectChanges();
 
     expect(component.size()).toBe('auto');
+    expect(component.tone()).toBe('primary');
   });
 });

@@ -53,7 +53,7 @@ export const JP_JUSTIFY_CONTENT = [
 
 export type JpJustifyContent = (typeof JP_JUSTIFY_CONTENT)[number];
 
-export const JP_GRID_COLUMNS = [1, 2, 3, 4, 6, 12] as const;
+export const JP_GRID_COLUMNS = [1, 2, 3, 4, 6] as const;
 
 export type JpGridColumns = (typeof JP_GRID_COLUMNS)[number];
 
@@ -108,7 +108,6 @@ export const JP_TEXT_TONES = [
   'secondary',
   'muted',
   'disabled',
-  'inverse',
 ] as const;
 
 export type JpTextTone = (typeof JP_TEXT_TONES)[number];

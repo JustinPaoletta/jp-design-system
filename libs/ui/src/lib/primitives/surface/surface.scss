@@ -3,8 +3,13 @@
 }
 
 .jp-surface__root {
+  --jp-color-foreground-primary: var(--jp-color-text-primary);
+  --jp-color-foreground-secondary: var(--jp-color-text-secondary);
+  --jp-color-foreground-muted: var(--jp-color-text-muted);
+  --jp-color-foreground-disabled: var(--jp-color-text-disabled);
+
   box-sizing: border-box;
-  color: var(--jp-color-text-primary);
+  color: var(--jp-color-foreground-primary);
   display: block;
   width: 100%;
 }

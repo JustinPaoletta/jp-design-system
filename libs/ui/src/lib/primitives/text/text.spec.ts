@@ -23,7 +23,7 @@ describe('JpText', () => {
     expect(component.as()).toBe('p');
     expect(component.hostDisplay()).toBe('block');
     expect(component.rootFontSize()).toBe('var(--jp-font-size-body)');
-    expect(component.rootColor()).toBe('var(--jp-color-text-primary)');
+    expect(component.rootColor()).toBe('var(--jp-color-foreground-primary)');
   });
 
   it('keeps inline tags inline at the host level', () => {

@@ -112,7 +112,10 @@
   --jp-color-text-secondary: #c2ccde;
   --jp-color-text-muted: #8b98ae;
   --jp-color-text-disabled: #6d7a92;
-  --jp-color-text-inverse: #070b13;
+  --jp-color-foreground-primary: #f4f7ff;
+  --jp-color-foreground-secondary: #c2ccde;
+  --jp-color-foreground-muted: #8b98ae;
+  --jp-color-foreground-disabled: #6d7a92;
   --jp-color-border-subtle: #1e2636;
   --jp-color-border-default: #2d374a;
   --jp-color-border-strong: #3f4b63;
@@ -184,6 +187,7 @@
   --jp-font-letter-spacing-tight: -0.01em;
   --jp-font-letter-spacing-normal: 0;
   --jp-font-letter-spacing-wide: 0.01em;
+  --jp-font-label-sm: 500 0.8125rem/1.5 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-motion-duration-fast: 120ms;
   --jp-motion-duration-normal: 180ms;
   --jp-motion-duration-slow: 240ms;

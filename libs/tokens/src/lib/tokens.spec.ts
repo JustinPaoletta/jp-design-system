@@ -170,6 +170,8 @@ describe('generated artifacts', () => {
     expect(css).toContain('[data-jp-accent="cobalt"]');
     expect(css).toContain('--jp-color-surface-canvas');
     expect(css).toContain('--jp-color-text-primary');
+    expect(css).toContain('--jp-color-foreground-primary');
+    expect(css).toContain('--jp-font-label-sm');
   });
 
   it('tokens.compact.css contains compact density overrides', () => {

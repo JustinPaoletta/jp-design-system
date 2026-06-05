@@ -79,11 +79,10 @@ const ELEVATION_TO_CSS_VAR: Record<JpElevationToken, string> = {
 };
 
 const TEXT_TONE_TO_CSS_VAR: Record<JpTextTone, string> = {
-  primary: 'var(--jp-color-text-primary)',
-  secondary: 'var(--jp-color-text-secondary)',
-  muted: 'var(--jp-color-text-muted)',
-  disabled: 'var(--jp-color-text-disabled)',
-  inverse: 'var(--jp-color-text-inverse)',
+  primary: 'var(--jp-color-foreground-primary)',
+  secondary: 'var(--jp-color-foreground-secondary)',
+  muted: 'var(--jp-color-foreground-muted)',
+  disabled: 'var(--jp-color-foreground-disabled)',
 };
 
 const TEXT_SIZE_TO_CSS_VAR: Record<JpTextSize, string> = {

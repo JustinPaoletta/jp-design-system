@@ -11,8 +11,13 @@
       "primary": { "value": "{primitive.color.neutral.50}" },
       "secondary": { "value": "{primitive.color.neutral.200}" },
       "muted": { "value": "{primitive.color.neutral.400}" },
-      "disabled": { "value": "{primitive.color.neutral.500}" },
-      "inverse": { "value": "{primitive.color.neutral.1100}" }
+      "disabled": { "value": "{primitive.color.neutral.500}" }
+    },
+    "foreground": {
+      "primary": { "value": "{color.text.primary}" },
+      "secondary": { "value": "{color.text.secondary}" },
+      "muted": { "value": "{color.text.muted}" },
+      "disabled": { "value": "{color.text.disabled}" }
     },
     "border": {
       "subtle": { "value": "{primitive.color.neutral.900}" },
@@ -126,6 +131,11 @@
       "tight": { "value": "{primitive.typography.letterSpacing.tight}" },
       "normal": { "value": "{primitive.typography.letterSpacing.normal}" },
       "wide": { "value": "{primitive.typography.letterSpacing.wide}" }
+    },
+    "label": {
+      "sm": {
+        "value": "{font.weight.medium} {font.size.caption}/{font.line-height.normal} {font.family.base}"
+      }
     }
   },
   "motion": {
