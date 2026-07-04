@@ -41,7 +41,7 @@ const meta: Meta = {
 
         .jp-phase2-dashboard-story__accent-rule {
           width: 100%;
-          height: var(--jp-primitive-space-2);
+          height: var(--jp-space-2xs);
           border-radius: var(--jp-radius-full);
           background: linear-gradient(
             90deg,
