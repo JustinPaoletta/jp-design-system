@@ -110,7 +110,7 @@ const meta: Meta<JpSurface> = {
       <div class="jp-surface-story__shell">
         <div class="jp-surface-story__frame">
           <div class="jp-surface-story__hint">
-            Tone sets fill level. Elevation adds rim + shadow — compare the control panel to the none reference on the mid-tone mat.
+            Visual panel — tone, border, radius, and padding set the fill; elevation adds rim and shadow. Compare the control panel to the none reference on the mid-tone mat.
           </div>
           <div class="jp-surface-story__stage" [style.background]="stageBackground">
             <div class="jp-surface-story__mat" [style.background]="shadowMatBackground">
@@ -251,7 +251,7 @@ export const ElevationLadder: Story = {
       <div class="jp-surface-story__shell">
         <div class="jp-surface-story__frame">
           <div class="jp-surface-story__hint">
-            Fixed emphasis stage; identical raised panels at each elevation step.
+            All elevation steps on a fixed raised panel — none, raised, floating, and overlay.
           </div>
           <div class="jp-surface-story__stage">
             <div class="jp-surface-story__mat">

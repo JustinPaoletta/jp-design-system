@@ -73,7 +73,7 @@ const meta: Meta<JpInline> = {
       <div class="jp-inline-story__shell">
         <div class="jp-inline-story__frame">
           <div class="jp-inline-story__hint">
-            justify distributes along the main axis; align along the cross axis.
+            Horizontal flex layout. justify moves items left-to-right; align moves items top-to-bottom. Toggle wrap or see WrapStress and NoWrap stories.
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
@@ -123,5 +123,183 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.jp-inline__root');
     await expect(root).toBeTruthy();
+  },
+};
+
+/** Many items with wrap enabled — resize the viewport to confirm reflow. */
+export const WrapStress: Story = {
+  args: {
+    wrap: true,
+    gap: 'sm',
+    justify: 'start',
+  },
+  render: (args) => ({
+    props: { ...args, asTag: args.as },
+    template: `
+      <style>
+        .jp-inline-story__shell {
+          inline-size: 100%;
+          max-inline-size: 100%;
+          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__frame {
+          display: grid;
+          gap: var(--jp-space-xs);
+          inline-size: 100%;
+          padding: var(--jp-space-sm);
+          border: 1px dashed var(--jp-color-border-subtle);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
+        .jp-inline-story__viewport {
+          display: flex;
+          flex-direction: column;
+          inline-size: 100%;
+          max-inline-size: calc(var(--jp-space-3xl) * 8);
+          min-block-size: calc(var(--jp-space-2xl) * 4);
+          padding: var(--jp-space-md);
+          border: 1px solid var(--jp-color-border-default);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__viewport > jp-inline {
+          flex: 1;
+          min-height: 0;
+          min-width: 0;
+        }
+
+        .jp-inline-story__item {
+          display: inline-flex;
+          align-items: center;
+          padding: var(--jp-space-xs) var(--jp-space-sm);
+          border: 1px solid var(--jp-color-border-default);
+          background: var(--jp-color-surface-subtle);
+          color: var(--jp-color-foreground-primary);
+          white-space: nowrap;
+        }
+      </style>
+
+      <div class="jp-inline-story__shell">
+        <div class="jp-inline-story__frame">
+          <div class="jp-inline-story__hint">
+            Narrow viewport with wrap on — items reflow to new rows instead of overflowing.
+          </div>
+          <div class="jp-inline-story__viewport">
+            <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
+              <span class="jp-inline-story__item">Alpha</span>
+              <span class="jp-inline-story__item">Beta</span>
+              <span class="jp-inline-story__item">Gamma</span>
+              <span class="jp-inline-story__item">Delta</span>
+              <span class="jp-inline-story__item">Epsilon</span>
+              <span class="jp-inline-story__item">Zeta</span>
+              <span class="jp-inline-story__item">Eta</span>
+              <span class="jp-inline-story__item">Theta</span>
+            </jp-inline>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-inline__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).flexWrap).toBe('wrap');
+  },
+};
+
+export const NoWrap: Story = {
+  args: {
+    wrap: false,
+    gap: 'sm',
+  },
+  render: (args) => ({
+    props: { ...args, asTag: args.as },
+    template: `
+      <style>
+        .jp-inline-story__shell {
+          inline-size: 100%;
+          max-inline-size: 100%;
+          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__frame {
+          display: grid;
+          gap: var(--jp-space-xs);
+          inline-size: 100%;
+          padding: var(--jp-space-sm);
+          border: 1px dashed var(--jp-color-border-subtle);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
+        .jp-inline-story__viewport {
+          display: flex;
+          flex-direction: column;
+          inline-size: 100%;
+          max-inline-size: calc(var(--jp-space-3xl) * 6);
+          min-block-size: calc(var(--jp-space-2xl) * 2);
+          padding: var(--jp-space-md);
+          border: 1px solid var(--jp-color-border-default);
+          box-sizing: border-box;
+          overflow-x: auto;
+        }
+
+        .jp-inline-story__viewport > jp-inline {
+          flex: 1;
+          min-height: 0;
+          min-width: 0;
+        }
+
+        .jp-inline-story__item {
+          display: inline-flex;
+          align-items: center;
+          padding: var(--jp-space-xs) var(--jp-space-sm);
+          border: 1px solid var(--jp-color-border-default);
+          background: var(--jp-color-surface-subtle);
+          color: var(--jp-color-foreground-primary);
+          white-space: nowrap;
+        }
+      </style>
+
+      <div class="jp-inline-story__shell">
+        <div class="jp-inline-story__frame">
+          <div class="jp-inline-story__hint">
+            wrap off — items stay on one row; a narrow viewport scrolls horizontally.
+          </div>
+          <div class="jp-inline-story__viewport">
+            <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
+              <span class="jp-inline-story__item">Alpha Item</span>
+              <span class="jp-inline-story__item">Beta Item</span>
+              <span class="jp-inline-story__item">Gamma Item</span>
+              <span class="jp-inline-story__item">Delta Item</span>
+              <span class="jp-inline-story__item">Epsilon Item</span>
+            </jp-inline>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-inline__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).flexWrap).toBe('nowrap');
   },
 };

@@ -56,7 +56,7 @@ const meta: Meta<JpStack> = {
 
       <div class="jp-stack-story__frame">
         <div class="jp-stack-story__hint">
-          justify distributes along the main axis; align along the cross axis.
+          Vertical flex layout. justify moves items top-to-bottom; align moves items left-to-right. See SpaceBetween and Centered for common presets.
         </div>
         <div class="jp-stack-story__viewport">
           <jp-stack [as]="asTag" [gap]="gap" [align]="align" [justify]="justify">
@@ -101,5 +101,41 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.jp-stack__root');
     await expect(root).toBeTruthy();
+  },
+};
+
+export const SpaceBetween: Story = {
+  args: {
+    justify: 'between',
+    gap: 'sm',
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-stack__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).justifyContent).toBe(
+      'space-between',
+    );
+  },
+};
+
+export const Centered: Story = {
+  args: {
+    align: 'center',
+    justify: 'center',
+    gap: 'md',
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-stack__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).alignItems).toBe(
+      'center',
+    );
+    await expect(getComputedStyle(root as HTMLElement).justifyContent).toBe(
+      'center',
+    );
   },
 };

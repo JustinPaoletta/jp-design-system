@@ -31,6 +31,12 @@ const meta: Meta<JpText> = {
           background: var(--jp-color-surface-sunken);
         }
 
+        .jp-text-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
         .jp-text-story__sample {
           min-height: calc(var(--jp-space-3xl) + var(--jp-space-md) / 2);
           display: flex;
@@ -43,6 +49,9 @@ const meta: Meta<JpText> = {
       </style>
 
       <div class="jp-text-story__frame">
+        <div class="jp-text-story__hint">
+          Body copy typography. as sets the semantic tag — span, small, strong, em, and label stay inline within a line.
+        </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
             Text primitive sample with enough length to show truncation clearly.

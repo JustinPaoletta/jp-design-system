@@ -63,7 +63,7 @@ const meta: Meta<BoxStoryArgs> = {
 
       <div class="jp-box-story__frame">
         <div class="jp-box-story__hint">
-          Dashed outline shows Box bounds; inner block is slotted content.
+          Structural wrapper — padding and max-width only, no fill or border. Dashed outline marks jp-box bounds; solid inner block is slotted content.
         </div>
         <div class="jp-box-story__viewport">
           <jp-box [as]="asTag" [padding]="padding" [paddingX]="paddingXValue" [paddingY]="paddingYValue" [maxWidth]="maxWidth">
@@ -139,5 +139,58 @@ export const SemanticSection: Story = {
       `${resolveExpectedTag(args.as)}.jp-box__root`,
     );
     await expect(root).toBeTruthy();
+  },
+};
+
+/** Base padding lg with horizontal axis cleared — vertical padding should remain. */
+export const PaddingXOverride: Story = {
+  args: {
+    padding: 'lg',
+    paddingX: 'none',
+    paddingY: 'inherit',
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-box__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    const styles = getComputedStyle(root as HTMLElement);
+    await expect(styles.paddingTop).not.toBe('0px');
+    await expect(styles.paddingLeft).toBe('0px');
+  },
+};
+
+/** Base padding lg with vertical axis cleared — horizontal padding should remain. */
+export const PaddingYOverride: Story = {
+  args: {
+    padding: 'lg',
+    paddingX: 'inherit',
+    paddingY: 'none',
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-box__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    const styles = getComputedStyle(root as HTMLElement);
+    await expect(styles.paddingTop).toBe('0px');
+    await expect(styles.paddingLeft).not.toBe('0px');
+  },
+};
+
+/** Shows max-width token cap — compare with Default (none) via controls. */
+export const MaxWidthNarrow: Story = {
+  args: {
+    padding: 'md',
+    maxWidth: 'narrow',
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector(
+      '.jp-box__root',
+    ) as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).maxWidth).not.toBe(
+      'none',
+    );
   },
 };

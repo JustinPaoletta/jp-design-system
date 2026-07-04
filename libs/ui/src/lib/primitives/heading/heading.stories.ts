@@ -31,6 +31,12 @@ const meta: Meta<JpHeading> = {
           background: var(--jp-color-surface-sunken);
         }
 
+        .jp-heading-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
         .jp-heading-story__sample {
           min-height: calc(var(--jp-space-3xl) + var(--jp-space-lg));
           display: flex;
@@ -43,6 +49,9 @@ const meta: Meta<JpHeading> = {
       </style>
 
       <div class="jp-heading-story__frame">
+        <div class="jp-heading-story__hint">
+          Page and section titles. as sets h1–h6; size auto uses display scale for h1/h2 and title scale for h3–h6.
+        </div>
         <div class="jp-heading-story__sample">
           <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
             Heading Primitive
