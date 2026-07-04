@@ -19,14 +19,30 @@ const meta: Meta<JpStack> = {
     template: `
       <style>
         .jp-stack-story__frame {
+          display: grid;
+          gap: var(--jp-space-xs);
           padding: var(--jp-space-sm);
           border: 1px dashed var(--jp-color-border-subtle);
         }
 
-        .jp-stack-story__frame jp-stack .jp-stack__root {
+        .jp-stack-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
+        .jp-stack-story__viewport {
+          display: flex;
+          flex-direction: column;
           min-height: calc(var(--jp-space-2xl) * 6);
           padding: var(--jp-space-sm);
           border: 1px solid var(--jp-color-border-default);
+          box-sizing: border-box;
+        }
+
+        .jp-stack-story__viewport > jp-stack {
+          flex: 1;
+          min-height: 0;
         }
 
         .jp-stack-story__item {
@@ -39,11 +55,16 @@ const meta: Meta<JpStack> = {
       </style>
 
       <div class="jp-stack-story__frame">
-        <jp-stack [as]="asTag" [gap]="gap" [align]="align" [justify]="justify">
-          <div class="jp-stack-story__item">Item A</div>
-          <div class="jp-stack-story__item">Item B</div>
-          <div class="jp-stack-story__item">Item C</div>
-        </jp-stack>
+        <div class="jp-stack-story__hint">
+          justify distributes along the main axis; align along the cross axis.
+        </div>
+        <div class="jp-stack-story__viewport">
+          <jp-stack [as]="asTag" [gap]="gap" [align]="align" [justify]="justify">
+            <div class="jp-stack-story__item">Item A</div>
+            <div class="jp-stack-story__item">Item B</div>
+            <div class="jp-stack-story__item">Item C</div>
+          </jp-stack>
+        </div>
       </div>
     `,
   }),

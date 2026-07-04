@@ -14,19 +14,49 @@ const meta: Meta<JpInline> = {
   globals: {
     accent: 'neon',
   },
+  parameters: {
+    layout: 'padded',
+  },
   render: (args) => ({
     props: { ...args, asTag: args.as },
     template: `
       <style>
-        .jp-inline-story__frame {
-          max-width: calc(var(--jp-space-2xl) * 6);
-          padding: var(--jp-space-sm);
-          border: 1px dashed var(--jp-color-border-subtle);
+        .jp-inline-story__shell {
+          inline-size: 100%;
+          max-inline-size: 100%;
+          padding: var(--jp-space-lg);
+          box-sizing: border-box;
         }
 
-        .jp-inline-story__frame jp-inline .jp-inline__root {
+        .jp-inline-story__frame {
+          display: grid;
+          gap: var(--jp-space-xs);
+          inline-size: 100%;
           padding: var(--jp-space-sm);
+          border: 1px dashed var(--jp-color-border-subtle);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
+        .jp-inline-story__viewport {
+          display: flex;
+          flex-direction: column;
+          inline-size: 100%;
+          min-block-size: calc(var(--jp-space-2xl) * 3);
+          padding: var(--jp-space-md);
           border: 1px solid var(--jp-color-border-default);
+          box-sizing: border-box;
+        }
+
+        .jp-inline-story__viewport > jp-inline {
+          flex: 1;
+          min-height: 0;
+          min-width: 0;
         }
 
         .jp-inline-story__item {
@@ -40,12 +70,19 @@ const meta: Meta<JpInline> = {
         }
       </style>
 
-      <div class="jp-inline-story__frame">
-        <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-          <span class="jp-inline-story__item">Alpha Item</span>
-          <span class="jp-inline-story__item">Beta Item</span>
-          <span class="jp-inline-story__item">Gamma Item</span>
-        </jp-inline>
+      <div class="jp-inline-story__shell">
+        <div class="jp-inline-story__frame">
+          <div class="jp-inline-story__hint">
+            justify distributes along the main axis; align along the cross axis.
+          </div>
+          <div class="jp-inline-story__viewport">
+            <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
+              <span class="jp-inline-story__item">Alpha Item</span>
+              <span class="jp-inline-story__item">Beta Item</span>
+              <span class="jp-inline-story__item">Gamma Item</span>
+            </jp-inline>
+          </div>
+        </div>
       </div>
     `,
   }),

@@ -1,10 +1,17 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
 }
 
 .jp-inline__root {
   display: flex;
   flex-direction: row;
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-height: 0;
+  min-width: 0;
   width: 100%;
   box-sizing: border-box;
 }

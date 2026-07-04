@@ -5,7 +5,7 @@
       "sunken": { "value": "{primitive.color.neutral.1000}" },
       "subtle": { "value": "{primitive.color.neutral.950}" },
       "raised": { "value": "{primitive.color.neutral.900}" },
-      "overlay": { "value": "{primitive.color.neutral.800}" }
+      "emphasis": { "value": "{primitive.color.neutral.800}" }
     },
     "text": {
       "primary": { "value": "{primitive.color.neutral.50}" },

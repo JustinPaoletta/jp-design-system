@@ -61,7 +61,7 @@ const SURFACE_TONE_TO_CSS_VAR: Record<JpSurfaceTone, string> = {
   sunken: 'var(--jp-color-surface-sunken)',
   subtle: 'var(--jp-color-surface-subtle)',
   raised: 'var(--jp-color-surface-raised)',
-  overlay: 'var(--jp-color-surface-overlay)',
+  emphasis: 'var(--jp-color-surface-emphasis)',
 };
 
 const BORDER_TO_CSS_VALUE: Record<JpBorderTone, string> = {

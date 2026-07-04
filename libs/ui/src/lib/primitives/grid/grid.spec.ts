@@ -30,7 +30,7 @@ describe('JpGrid', () => {
     fixture.detectChanges();
 
     expect(component.rootTemplateColumns()).toBe(
-      'repeat(auto-fit, minmax(var(--jp-size-column-min-lg), 1fr))',
+      'repeat(auto-fit, minmax(min(var(--jp-size-column-min-lg), 100%), 1fr))',
     );
   });
 

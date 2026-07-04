@@ -49,9 +49,9 @@
   --jp-primitive-color-state-info-500: #4b79d6;
   --jp-primitive-color-state-info-700: #2d4f96;
   --jp-primitive-elevation-0: none;
-  --jp-primitive-elevation-100: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --jp-primitive-elevation-200: 0 4px 12px rgba(0, 0, 0, 0.28);
-  --jp-primitive-elevation-300: 0 12px 28px rgba(0, 0, 0, 0.34);
+  --jp-primitive-elevation-100: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.45);
+  --jp-primitive-elevation-200: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --jp-primitive-elevation-300: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 12px 32px rgba(0, 0, 0, 0.65);
   --jp-primitive-elevation-focus-ring: 0 0 0 2px rgba(34, 199, 189, 0.45);
   --jp-primitive-motion-duration-instant: 0ms;
   --jp-primitive-motion-duration-fast: 120ms;
@@ -107,7 +107,7 @@
   --jp-color-surface-sunken: #0c111c;
   --jp-color-surface-subtle: #141b2a;
   --jp-color-surface-raised: #1e2636;
-  --jp-color-surface-overlay: #2d374a;
+  --jp-color-surface-emphasis: #2d374a;
   --jp-color-text-primary: #f4f7ff;
   --jp-color-text-secondary: #c2ccde;
   --jp-color-text-muted: #8b98ae;
@@ -197,9 +197,9 @@
   --jp-motion-transition-base: all 180ms cubic-bezier(0.2, 0, 0, 1);
   --jp-motion-transition-emphasized: all 120ms cubic-bezier(0.2, 0, 0, 1.08);
   --jp-elevation-none: none;
-  --jp-elevation-raised: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --jp-elevation-floating: 0 4px 12px rgba(0, 0, 0, 0.28);
-  --jp-elevation-overlay: 0 12px 28px rgba(0, 0, 0, 0.34);
+  --jp-elevation-raised: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.45);
+  --jp-elevation-floating: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --jp-elevation-overlay: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 12px 32px rgba(0, 0, 0, 0.65);
   --jp-elevation-focus-ring: 0 0 0 2px rgba(34, 199, 189, 0.45);
 }
 

@@ -26,7 +26,10 @@ const config: StorybookConfig = {
 
     for (const plugin of plugins) {
       if (isDefinePlugin(plugin)) {
-        Object.assign(definitions, plugin.definitions as Record<string, unknown>);
+        Object.assign(
+          definitions,
+          plugin.definitions as Record<string, unknown>,
+        );
       }
     }
 

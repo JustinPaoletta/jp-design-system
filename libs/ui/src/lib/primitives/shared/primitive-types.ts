@@ -70,7 +70,7 @@ export const JP_SURFACE_TONES = [
   'sunken',
   'subtle',
   'raised',
-  'overlay',
+  'emphasis',
 ] as const;
 
 export type JpSurfaceTone = (typeof JP_SURFACE_TONES)[number];
