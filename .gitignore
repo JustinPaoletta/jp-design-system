@@ -45,3 +45,7 @@ Thumbs.db
 
 # Codex
 .codex/environments/environment.toml
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json

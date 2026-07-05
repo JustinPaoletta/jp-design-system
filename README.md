@@ -1,13 +1,16 @@
 # JP Design System
 
-A token-driven Angular design-system monorepo for internal dashboards and product UIs, focused on precision, accessibility, and long-term consistency.
+Dark-first. Precision-engineered. Token-driven.
+
+The JP Design System is a structured Angular component library for professional dashboards and software products. It prioritizes clarity, accessibility, and long-term maintainability over visual trend cycles.
 
 ## Status
 
 - Type: private component-library monorepo
 - Current version: `0.0.0`
-- Maturity: pre-1.0 foundations with Phase 0 complete
-- Release model: manual changelog + release branch flow documented in [RELEASE.md](./RELEASE.md)
+- **Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives, Storybook coverage, and Showcase `/phase-2-dashboard`
+- **Next:** Phase 3 App Shell — see [PHASE3_EPIC3_APP_SHELL_PLAN.md](./docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
+- Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
 
@@ -15,14 +18,35 @@ A token-driven Angular design-system monorepo for internal dashboards and produc
 - Release process: [RELEASE.md](./RELEASE.md)
 - Roadmap: [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Design principles: [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
+- Primitive API: [docs/PRIMITIVES.md](./docs/PRIMITIVES.md)
 - CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
 
-## What The Project Does
+## Core Philosophy
 
-- Provides primitive and semantic design tokens through `libs/tokens`.
-- Provides standalone Angular UI components through `libs/ui`.
-- Uses opinionated rules to prevent hardcoded colors, primitive-token misuse, and inconsistent UI patterns.
-- Includes a playground app and Storybook surfaces for development and review.
+- Precision over decoration
+- Signal, not noise
+- Consistency over customization
+- Accessibility by default
+- Controlled brand evolution
+- Engineering-grade discipline
+
+This system is opinionated by design. Customization that weakens consistency is intentionally restricted.
+
+## Monorepo Architecture
+
+```text
+/apps
+  /showcase            # read-only integration app (e.g. /phase-2-dashboard)
+  /showcase-e2e        # Playwright e2e for showcase
+  /storybook           # placeholder Angular shell (not the component Storybook)
+  /storybook-e2e       # Playwright scaffold for the storybook app
+
+/libs
+  /tokens              # design tokens (Style Dictionary)
+  /ui                  # Angular primitives + Storybook target (port 4400)
+```
+
+**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is a read-only Angular host app that proves compositions render correctly outside Storybook. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
 
 ## Tech Stack
 
@@ -33,58 +57,102 @@ A token-driven Angular design-system monorepo for internal dashboards and produc
 - Jest and Playwright
 - Style Dictionary
 
-## Repository Layout
+## Token and UI Principles
 
-- `apps/playground` local consumer app for component development
-- `apps/storybook` Storybook host app
-- `libs/tokens` design-token source and build pipeline
-- `libs/ui` reusable Angular components
-- `tools/` custom lint and token-check scripts
-- `docs/` design principles, roadmap, CI, and release/process docs
+### Tokens (`libs/tokens`)
 
-## Prerequisites
+- Primitive tokens (palette, type, spacing, radius, motion)
+- Semantic aliases
+- Accent families (`data-jp-accent`)
+- Density modes (`data-jp-density`)
+- Dark-first theme
 
-- Node.js 20 or newer
-- npm
+No component may use hardcoded visual values.
 
-## Local Setup
+### UI Library (`libs/ui`)
 
-1. Install dependencies with `npm ci`.
-2. Inspect the workspace with `npx nx show projects`.
-3. Start the playground with `npx nx serve playground`.
-4. Start Storybook with `npx nx storybook ui`.
+Standalone Angular components with:
+
+- Strict typing
+- Token-based styling
+- WCAG AA minimum accessibility
+- Constrained API surface
+
+## Development Standards
+
+- Strict TypeScript
+- No `any`
+- No hardcoded colors in components
+- Token usage for spacing, color, radius, motion
+- CI-enforced lint + test + build
+
+## Quick Start
+
+Install dependencies:
+
+```bash
+npm ci
+```
+
+Run Showcase (read-only composition host):
+
+```bash
+npx nx run showcase:serve
+```
+
+Run UI Storybook (component primitives):
+
+```bash
+npx nx run ui:storybook
+```
+
+Run baseline quality checks:
+
+```bash
+npm run format:check
+npm run lint
+npm run test
+npm run build
+```
+
+List projects:
+
+```bash
+npx nx show projects
+```
 
 ## Common Commands
 
-- `npm run format:check` verifies Prettier formatting.
-- `npm run lint` runs Nx lint plus custom token and color guards.
-- `npm run test` runs the configured test targets.
-- `npm run build` builds the workspace targets.
-- `npm run tokens:build` regenerates token outputs.
-- `npm run tokens:check` validates the token pipeline.
-
-## Environment & Configuration
-
-- This repo does not currently depend on an application-style environment variable matrix.
-- The main configuration surface is the token system, Nx workspace config, and the custom lint rules under `tools/`.
+- `npm run tokens:build` regenerates token outputs
+- `npm run tokens:check` validates the token pipeline
 
 ## Testing & Quality Gates
 
-- Local baseline: `npm run format:check`, `npm run lint`, `npm run test`, and `npm run build`.
-- Component or token releases should include manual Storybook and playground review for the affected surfaces.
+Local baseline: `npm run format:check`, `npm run lint`, `npm run test`, and `npm run build`.
+
+Quality gates:
+
+- ESLint warnings treated as failures (`maxWarnings: 0`)
+- `@typescript-eslint/no-explicit-any` enforced
+- Hardcoded colors blocked (`npm run lint:colors`)
+- Primitive token usage blocked in components (`npm run lint:primitives`)
+- Token artifact drift blocked (`npm run tokens:check`)
+- CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
+
+Component or token releases should include manual Storybook and Showcase review for affected surfaces.
 
 ## Release Process
 
-- Keep `CHANGELOG.md` updated under `## [Unreleased]`.
-- Cut release branches as `release/vX.Y.Z` from the protected default branch.
-- Until package publishing is introduced, treat releases as repository-level releases rather than per-library npm releases.
-- Follow the full checklist in [RELEASE.md](./RELEASE.md).
+- Keep `CHANGELOG.md` updated under `## [Unreleased]`
+- Cut release branches as `release/vX.Y.Z` from the protected default branch
+- Until package publishing is introduced, treat releases as repository-level releases rather than per-library npm releases
+- Follow the full checklist in [RELEASE.md](./RELEASE.md)
 
-## Additional Docs
+## Completed Milestones
 
-- [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
-- [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
-- [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
+- Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
+- Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
+- Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, layout dashboard composition, Playwright e2e gate
 
 ## License
 

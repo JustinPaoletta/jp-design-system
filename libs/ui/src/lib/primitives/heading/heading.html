@@ -1,0 +1,59 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@switch (tag()) { @case ('h1') {
+<h1
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h1>
+} @case ('h3') {
+<h3
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h3>
+} @case ('h4') {
+<h4
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h4>
+} @case ('h5') {
+<h5
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h5>
+} @case ('h6') {
+<h6
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h6>
+} @default {
+<h2
+  class="jp-heading__root"
+  [style.fontSize]="rootFontSize()"
+  [style.color]="rootColor()"
+  [style.fontWeight]="rootFontWeight()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</h2>
+} }

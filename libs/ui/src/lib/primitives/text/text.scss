@@ -1,0 +1,26 @@
+.jp-text__root {
+  box-sizing: border-box;
+  line-height: var(--jp-font-line-height-normal);
+  margin: 0;
+}
+
+:host(.jp-text--block) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+:host(.jp-text--truncate) {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+:host(.jp-text--truncate) .jp-text__root {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

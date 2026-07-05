@@ -7,10 +7,14 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-### Documentation
+### Added
 
-- Standardize the repository around a shared README structure, a manual changelog, and a root `RELEASE.md` guide.
+- Phase 2 layout and typography primitives (`jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`)
+- Showcase `/phase-2-dashboard` route and Playwright e2e gate
+- UI Storybook primitive and composition coverage
+- Manual changelog and root `RELEASE.md` release process documentation
 
 ### Changed
 
+- Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.

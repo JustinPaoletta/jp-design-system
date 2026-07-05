@@ -25,3 +25,7 @@ Release branches such as `release/v0.1.0` should still flow back through pull re
 - Default branch: `master` (manual release docs use the same workflow even if this later becomes `main`)
 - Required checks configured: `Lint`, `Test`, `Build`
 - Strict status checks: enabled
+
+The `Test` job runs `npm run test`, `npx nx run ui:test-storybook`, and
+`npx nx run showcase-e2e:e2e -- --project=chromium`. Those steps are part of
+the `Test` check name — no separate status checks are required for them.

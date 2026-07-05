@@ -5,14 +5,19 @@
       "sunken": { "value": "{primitive.color.neutral.1000}" },
       "subtle": { "value": "{primitive.color.neutral.950}" },
       "raised": { "value": "{primitive.color.neutral.900}" },
-      "overlay": { "value": "{primitive.color.neutral.800}" }
+      "emphasis": { "value": "{primitive.color.neutral.800}" }
     },
     "text": {
       "primary": { "value": "{primitive.color.neutral.50}" },
       "secondary": { "value": "{primitive.color.neutral.200}" },
       "muted": { "value": "{primitive.color.neutral.400}" },
-      "disabled": { "value": "{primitive.color.neutral.500}" },
-      "inverse": { "value": "{primitive.color.neutral.1100}" }
+      "disabled": { "value": "{primitive.color.neutral.500}" }
+    },
+    "foreground": {
+      "primary": { "value": "{color.text.primary}" },
+      "secondary": { "value": "{color.text.secondary}" },
+      "muted": { "value": "{color.text.muted}" },
+      "disabled": { "value": "{color.text.disabled}" }
     },
     "border": {
       "subtle": { "value": "{primitive.color.neutral.900}" },
@@ -92,6 +97,11 @@
     "container": {
       "narrow": { "value": "42rem" },
       "wide": { "value": "72rem" }
+    },
+    "column-min": {
+      "sm": { "value": "16rem" },
+      "md": { "value": "20rem" },
+      "lg": { "value": "24rem" }
     }
   },
   "font": {
@@ -104,7 +114,13 @@
       "body": { "value": "{primitive.typography.size.300}" },
       "body-lg": { "value": "{primitive.typography.size.400}" },
       "title": { "value": "{primitive.typography.size.500}" },
-      "display": { "value": "{primitive.typography.size.700}" }
+      "display": { "value": "{primitive.typography.size.700}" },
+      "heading-h1": { "value": "{primitive.typography.size.700}" },
+      "heading-h2": { "value": "{primitive.typography.size.600}" },
+      "heading-h3": { "value": "{primitive.typography.size.500}" },
+      "heading-h4": { "value": "{primitive.typography.size.400}" },
+      "heading-h5": { "value": "{primitive.typography.size.300}" },
+      "heading-h6": { "value": "{primitive.typography.size.200}" }
     },
     "weight": {
       "regular": { "value": "{primitive.typography.weight.regular}" },
@@ -121,6 +137,11 @@
       "tight": { "value": "{primitive.typography.letterSpacing.tight}" },
       "normal": { "value": "{primitive.typography.letterSpacing.normal}" },
       "wide": { "value": "{primitive.typography.letterSpacing.wide}" }
+    },
+    "label": {
+      "sm": {
+        "value": "{font.weight.medium} {font.size.caption}/{font.line-height.normal} {font.family.base}"
+      }
     }
   },
   "motion": {

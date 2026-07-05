@@ -49,9 +49,9 @@
   --jp-primitive-color-state-info-500: #4b79d6;
   --jp-primitive-color-state-info-700: #2d4f96;
   --jp-primitive-elevation-0: none;
-  --jp-primitive-elevation-100: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --jp-primitive-elevation-200: 0 4px 12px rgba(0, 0, 0, 0.28);
-  --jp-primitive-elevation-300: 0 12px 28px rgba(0, 0, 0, 0.34);
+  --jp-primitive-elevation-100: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.45);
+  --jp-primitive-elevation-200: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --jp-primitive-elevation-300: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 12px 32px rgba(0, 0, 0, 0.65);
   --jp-primitive-elevation-focus-ring: 0 0 0 2px rgba(34, 199, 189, 0.45);
   --jp-primitive-motion-duration-instant: 0ms;
   --jp-primitive-motion-duration-fast: 120ms;
@@ -107,12 +107,15 @@
   --jp-color-surface-sunken: #0c111c;
   --jp-color-surface-subtle: #141b2a;
   --jp-color-surface-raised: #1e2636;
-  --jp-color-surface-overlay: #2d374a;
+  --jp-color-surface-emphasis: #2d374a;
   --jp-color-text-primary: #f4f7ff;
   --jp-color-text-secondary: #c2ccde;
   --jp-color-text-muted: #8b98ae;
   --jp-color-text-disabled: #6d7a92;
-  --jp-color-text-inverse: #070b13;
+  --jp-color-foreground-primary: #f4f7ff;
+  --jp-color-foreground-secondary: #c2ccde;
+  --jp-color-foreground-muted: #8b98ae;
+  --jp-color-foreground-disabled: #6d7a92;
   --jp-color-border-subtle: #1e2636;
   --jp-color-border-default: #2d374a;
   --jp-color-border-strong: #3f4b63;
@@ -164,6 +167,9 @@
   --jp-size-icon-lg: 1rem;
   --jp-size-container-narrow: 42rem;
   --jp-size-container-wide: 72rem;
+  --jp-size-column-min-sm: 16rem;
+  --jp-size-column-min-md: 20rem;
+  --jp-size-column-min-lg: 24rem;
   --jp-font-family-base: 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-font-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   --jp-font-size-caption: 0.8125rem;
@@ -171,6 +177,12 @@
   --jp-font-size-body-lg: 1rem;
   --jp-font-size-title: 1.125rem;
   --jp-font-size-display: 1.5rem;
+  --jp-font-size-heading-h1: 1.5rem;
+  --jp-font-size-heading-h2: 1.25rem;
+  --jp-font-size-heading-h3: 1.125rem;
+  --jp-font-size-heading-h4: 1rem;
+  --jp-font-size-heading-h5: 0.875rem;
+  --jp-font-size-heading-h6: 0.8125rem;
   --jp-font-weight-regular: 400;
   --jp-font-weight-medium: 500;
   --jp-font-weight-semibold: 600;
@@ -181,6 +193,7 @@
   --jp-font-letter-spacing-tight: -0.01em;
   --jp-font-letter-spacing-normal: 0;
   --jp-font-letter-spacing-wide: 0.01em;
+  --jp-font-label-sm: 500 0.8125rem/1.5 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-motion-duration-fast: 120ms;
   --jp-motion-duration-normal: 180ms;
   --jp-motion-duration-slow: 240ms;
@@ -190,9 +203,9 @@
   --jp-motion-transition-base: all 180ms cubic-bezier(0.2, 0, 0, 1);
   --jp-motion-transition-emphasized: all 120ms cubic-bezier(0.2, 0, 0, 1.08);
   --jp-elevation-none: none;
-  --jp-elevation-raised: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --jp-elevation-floating: 0 4px 12px rgba(0, 0, 0, 0.28);
-  --jp-elevation-overlay: 0 12px 28px rgba(0, 0, 0, 0.34);
+  --jp-elevation-raised: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.45);
+  --jp-elevation-floating: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --jp-elevation-overlay: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 12px 32px rgba(0, 0, 0, 0.65);
   --jp-elevation-focus-ring: 0 0 0 2px rgba(34, 199, 189, 0.45);
 }
 
