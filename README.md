@@ -4,6 +4,23 @@ Dark-first. Precision-engineered. Token-driven.
 
 The JP Design System is a structured Angular component library for professional dashboards and software products. It prioritizes clarity, accessibility, and long-term maintainability over visual trend cycles.
 
+## Status
+
+- Type: private component-library monorepo
+- Current version: `0.0.0`
+- **Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives, Storybook coverage, and Showcase `/phase-2-dashboard`
+- **Next:** Phase 3 App Shell — see [PHASE3_EPIC3_APP_SHELL_PLAN.md](./docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
+- Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
+
+## Quick Links
+
+- Changelog: [CHANGELOG.md](./CHANGELOG.md)
+- Release process: [RELEASE.md](./RELEASE.md)
+- Roadmap: [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- Design principles: [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
+- Primitive API: [docs/PRIMITIVES.md](./docs/PRIMITIVES.md)
+- CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
+
 ## Core Philosophy
 
 - Precision over decoration
@@ -15,17 +32,7 @@ The JP Design System is a structured Angular component library for professional 
 
 This system is opinionated by design. Customization that weakens consistency is intentionally restricted.
 
-## Repository Docs
-
-- `docs/DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
-- `docs/PRIMITIVES.md`: Phase 2 primitive API and typography design decisions
-- `docs/JP_ROADMAP.md`: phased implementation plan
-- `docs/PHASE3_EPIC3_APP_SHELL_PLAN.md`: Phase 3 app shell implementation plan
-- `docs/CI_BRANCH_PROTECTION.md`: required GitHub settings for merge-blocking CI
-
 ## Monorepo Architecture
-
-Current workspace:
 
 ```text
 /apps
@@ -39,10 +46,16 @@ Current workspace:
   /ui                  # Angular primitives + Storybook target (port 4400)
 ```
 
-**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive
-explorer (controls, accent/density toolbar). Showcase is a read-only Angular host
-app that proves compositions render correctly outside Storybook. The `apps/storybook`
-project is a minimal Angular shell only — it does not host component stories.
+**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is a read-only Angular host app that proves compositions render correctly outside Storybook. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
+
+## Tech Stack
+
+- Angular 21
+- Nx 22
+- TypeScript
+- Storybook 10
+- Jest and Playwright
+- Style Dictionary
 
 ## Token and UI Principles
 
@@ -108,18 +121,14 @@ List projects:
 npx nx show projects
 ```
 
-## Status
+## Common Commands
 
-**Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives,
-Storybook coverage, and Showcase `/phase-2-dashboard`.
-**Next:** Phase 3 App Shell — see `docs/PHASE3_EPIC3_APP_SHELL_PLAN.md`.
+- `npm run tokens:build` regenerates token outputs
+- `npm run tokens:check` validates the token pipeline
 
-Completed to date:
+## Testing & Quality Gates
 
-- Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
-- Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
-- Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`,
-  `jp-heading`, layout dashboard composition, Playwright e2e gate
+Local baseline: `npm run format:check`, `npm run lint`, `npm run test`, and `npm run build`.
 
 Quality gates:
 
@@ -130,6 +139,21 @@ Quality gates:
 - Token artifact drift blocked (`npm run tokens:check`)
 - CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
 
+Component or token releases should include manual Storybook and Showcase review for affected surfaces.
+
+## Release Process
+
+- Keep `CHANGELOG.md` updated under `## [Unreleased]`
+- Cut release branches as `release/vX.Y.Z` from the protected default branch
+- Until package publishing is introduced, treat releases as repository-level releases rather than per-library npm releases
+- Follow the full checklist in [RELEASE.md](./RELEASE.md)
+
+## Completed Milestones
+
+- Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
+- Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
+- Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, layout dashboard composition, Playwright e2e gate
+
 ## License
 
-Private (for now).
+MIT.
