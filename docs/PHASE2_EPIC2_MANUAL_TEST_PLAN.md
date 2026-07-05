@@ -1,202 +1,162 @@
-# Phase 2 Epic 2 Test Checklist
+# Phase 2 Epic 2 — Manual QA Record
 
-Use this to verify the Phase 2 primitives, the dashboard composition, and the
-Playground route.
+Branch: `phase2Epic2` · PR: [#3](https://github.com/JustinPaoletta/jp-design-system/pull/3)
 
-## Setup
+**Last updated:** 2026-07-04
 
-Run:
+---
+
+## Summary
+
+Phase 2 Epic 2 manual QA is **complete**. All automated and manual checks passed on
+2026-07-04. The milestone is ready to merge via PR #3.
+
+| Area                              | Status      | Notes                                         |
+| --------------------------------- | ----------- | --------------------------------------------- |
+| Automated gate (full suite)       | ✅ **PASS** | All Step 1 commands green (2026-07-04)        |
+| Layout primitives (Storybook)     | ✅ **PASS** | Box, Stack, Inline, Grid, Surface             |
+| Typography primitives (Storybook) | ✅ **PASS** | Text, Heading                                 |
+| Dashboard composition (Storybook) | ✅ **PASS** | `Compositions/Layout Dashboard` → `Dashboard` |
+| Showcase route                    | ✅ **PASS** | `/phase-2-dashboard`                          |
+| Responsive (Showcase)             | ✅ **PASS** | 1440 / 1024 / 768 / 390 viewports             |
+| Regression grep                   | ✅ **PASS** | All 3 `rg` commands returned no matches       |
+
+---
+
+## Post-QA merge sequence
+
+1. Resolve any open review threads on PR #3.
+2. Merge PR #3 (`phase2Epic2` → `master`).
+3. Merge PR #4 (`standardizeApps` — release/docs standardization).
+4. Rename `master` → `main` as a separate repo operation (update branch protection,
+   local clones, and any doc references).
+5. Start **Phase 3 — App Shell** ([JP_ROADMAP.md](./JP_ROADMAP.md)).
+
+---
+
+## Step 1 — Automated gate
+
+Run from repo root to re-verify before merge:
 
 ```bash
 npm ci
 npm run tokens:build
-npm run tokens:check
-npx nx run ui:storybook
-npx nx run playground:serve
-```
-
-## Stop Here If These Fail
-
-Run:
-
-```bash
 npm run format:check
 npm run lint
 npm run test
-npx nx run ui:test-storybook
-npx nx run playground-e2e:e2e -- --project=chromium
 npm run build
+npx nx run ui:test-storybook
+npx nx run showcase-e2e:e2e -- --project=chromium
 ```
 
-Expected:
+All commands must pass.
 
-1. Every command passes.
-2. If any command fails, fix that first.
+---
 
-## Storybook: Primitive Stories
+## Step 2 — Dev servers
 
-Open these stories:
-
-1. `Primitives/Layout/Box`
-2. `Primitives/Layout/Stack`
-3. `Primitives/Layout/Inline`
-4. `Primitives/Layout/Grid`
-5. `Primitives/Layout/Surface`
-6. `Primitives/Typography/Text`
-7. `Primitives/Typography/Heading`
-
-For every story:
-
-1. It renders.
-2. The console stays clean.
-3. Control changes apply immediately.
-4. Token-based styles resolve correctly.
-
-Note:
-
-1. The `accent` toolbar is intentionally disabled on primitive-only stories.
-2. Test `accent` on the dashboard story and Playground route instead.
-
-### Box
-
-1. Change `as` to `section`, `article`, `main`, and `nav`.
-2. Expected: the root tag matches the selected value.
-3. Change `padding` to `none`, `md`, and `xl`.
-4. Expected: inner spacing changes.
-5. Set `padding="lg"` and `paddingX="none"`.
-6. Expected: only horizontal padding clears.
-7. Set `padding="lg"` and `paddingY="none"`.
-8. Expected: only vertical padding clears.
-9. Set `maxWidth="narrow"` and `maxWidth="wide"`.
-10. Expected: the width cap changes.
-
-### Stack
-
-1. Change `gap` to `sm`, `md`, and `xl`.
-2. Expected: space between items increases.
-3. Change `align` to `start`, `center`, `end`, and `stretch`.
-4. Expected: items shift or stretch correctly.
-5. Change `justify` to `start`, `center`, `end`, and `between`.
-6. Expected: items redistribute vertically.
-
-### Inline
-
-1. Toggle `wrap`.
-2. Expected: wrapping turns on and off.
-3. Set `justify="between"`.
-4. Expected: items spread across the row.
-5. Set `as="nav"`.
-6. Expected: the root tag becomes `<nav>`.
-
-### Grid
-
-1. In the default story, change `columns` to `1`, `2`, `3`, `4`, and `6`.
-2. Expected: the grid column count updates each time.
-3. Open the `AutoFit` story.
-4. Resize from desktop to mobile.
-5. Expected: cards reflow without horizontal overflow.
-6. Change `minColumn` to `sm`, `md`, and `lg`.
-7. Expected: the minimum card width changes.
-
-### Surface
-
-1. Confirm the default root tag is `section`.
-2. Change `tone`.
-3. Expected: the background changes.
-4. Change `border`.
-5. Expected: border visibility and strength change.
-6. Change `elevation`.
-7. Expected: shadow depth changes.
-8. Change `radius` and `padding`.
-9. Expected: corner radius and internal spacing change.
-
-### Text
-
-1. Change `size`, `tone`, `weight`, `truncate`, and `mono`.
-2. Expected: each visual change applies correctly.
-3. Change `as` to `span`, `small`, `strong`, `em`, and `label`.
-4. Expected: the rendered tag matches the selected value.
-5. Expected: inline tags stay inline.
-6. Expected: margin remains `0`.
-
-### Heading
-
-1. Change `as` from `h1` through `h6`.
-2. Expected: the rendered heading tag matches.
-3. Keep `size="auto"` and test `h1` and `h2`.
-4. Expected: auto size resolves to `display`.
-5. Keep `size="auto"` and test `h3` through `h6`.
-6. Expected: auto size resolves to `title`.
-7. Set `size="display"` while `as="h6"`.
-8. Expected: explicit size overrides auto sizing.
-9. Expected: margin remains `0`.
-
-## Storybook: Dashboard Composition
-
-Open `Compositions/Phase 2/Layout Dashboard`.
-
-1. Confirm the story loads cleanly.
-2. Confirm the header, KPI cards, Activity, Insights, and Recent Events render.
-3. Confirm the composition uses only the Phase 2 primitives.
-4. Toggle `accent` between `neon` and `cobalt`.
-5. Expected: accent-driven elements update.
-6. Toggle `density` between `default` and `compact`.
-7. Expected: spacing tightens in compact mode.
-
-## Playground Route
-
-Test `http://localhost:4200/phase-2-dashboard`.
-
-1. Open `/`.
-2. Expected: it redirects to `/phase-2-dashboard`.
-3. Open `/phase-2-dashboard` directly.
-4. Expected: the page loads with no console errors.
-5. Confirm the main heading and all dashboard sections render.
-6. Confirm the page uses the same Phase 2 primitives as Storybook.
-7. Confirm there is no legacy `lib-ui` usage on the page.
-
-## Responsive Check
-
-Test widths: `1440`, `1024`, `768`, `390`.
-
-At each width:
-
-1. Reload `/phase-2-dashboard`.
-2. Confirm there is no horizontal overflow.
-3. Confirm the KPI grid reflows cleanly.
-4. Confirm the two-column content area stays readable.
-5. Confirm typography stays legible.
-
-## Accent and Density Check
-
-In Storybook:
-
-1. Test `accent` and `density` on `Compositions/Phase 2/Layout Dashboard`.
-2. Expected: `accent` changes accent-only elements.
-3. Expected: `density` tightens spacing in compact mode.
-
-In Playground DevTools:
-
-```js
-document.documentElement.setAttribute('data-jp-accent', 'cobalt');
-document.documentElement.setAttribute('data-jp-density', 'compact');
+```bash
+npx nx run ui:storybook
 ```
 
-Expected:
-
-1. Accent-driven elements switch to cobalt.
-2. Spacing tightens.
-
-Reset:
-
-```js
-document.documentElement.removeAttribute('data-jp-accent');
-document.documentElement.removeAttribute('data-jp-density');
+```bash
+npx nx run showcase:serve
 ```
 
-## Regression Check
+Showcase URL: `http://localhost:4200/phase-2-dashboard`
 
-Run:
+---
+
+## Step 3 — Manual checks (reference)
+
+### Primitive stories
+
+| Story   | Path                            | Status  |
+| ------- | ------------------------------- | ------- |
+| Box     | `Primitives/Layout/Box`         | ✅ PASS |
+| Stack   | `Primitives/Layout/Stack`       | ✅ PASS |
+| Inline  | `Primitives/Layout/Inline`      | ✅ PASS |
+| Grid    | `Primitives/Layout/Grid`        | ✅ PASS |
+| Surface | `Primitives/Layout/Surface`     | ✅ PASS |
+| Text    | `Primitives/Typography/Text`    | ✅ PASS |
+| Heading | `Primitives/Typography/Heading` | ✅ PASS |
+
+The **accent toolbar is disabled** on primitive stories by design. Test accent and
+density on the dashboard composition story and Showcase route instead.
+
+### Box — ✅ PASS
+
+- [x] `padding="lg"` + `paddingX="none"` → horizontal padding clears, vertical stays
+- [x] `padding="lg"` + `paddingY="none"` → vertical padding clears, horizontal stays
+- [x] `maxWidth` changes (`narrow`, `wide`) update the width cap
+- [x] `as` changes the root tag (`section`, `article`, `main`, `nav`)
+
+**Helpful stories:** `PaddingXOverride`, `PaddingYOverride`, `MaxWidthNarrow`, `SemanticSection`
+
+`jp-box` is a structural wrapper (padding + max-width only). Visual panels use `jp-surface`.
+
+### Stack — ✅ PASS
+
+- [x] Default story renders; controls update gap, align, justify
+- [x] `SpaceBetween` and `Centered` stories show distribution presets
+
+### Inline — ✅ PASS
+
+- [x] Default story renders; controls update gap, align, justify, wrap
+- [x] `WrapStress` — items reflow when viewport is narrow (wrap=true)
+- [x] `NoWrap` — items stay on one row (wrap=false)
+
+### Grid — ✅ PASS
+
+- [x] Default story: changing `columns` updates column count
+- [x] AutoFit story: resize to mobile → cards reflow, no horizontal overflow
+
+### Surface — ✅ PASS
+
+- [x] Changing `tone`, `border`, `elevation`, `radius`, `padding` each produces a visible change
+- [x] `ElevationLadder` shows all elevation steps side-by-side
+
+### Heading — ✅ PASS
+
+Design: `jp-heading` has **no `size` prop**. The `as` level (`h1`–`h6`) sets both
+the HTML tag and font size via per-level tokens. See [PRIMITIVES.md](./PRIMITIVES.md).
+
+- [x] `as="h1"`–`h6` → rendered tag matches; each step down is visibly smaller
+- [x] Controls panel shows only `as`, `tone`, `weight` (no `size`)
+
+### Text — ✅ PASS
+
+Design: `jp-text` separates semantic tag (`as`) from visual size (`size`).
+Inline tags stay inline. See [PRIMITIVES.md](./PRIMITIVES.md).
+
+- [x] `as="span"`, `small`, `strong`, `em`, `label` → tag matches and **stays inline**
+- [x] `truncate: false` → text wraps when container is narrow
+- [x] `truncate: true` → single line with ellipsis when container is narrow
+
+### Dashboard composition — ✅ PASS
+
+Open `Compositions/Layout Dashboard` → `Dashboard`.
+
+- [x] Header, KPI cards, Activity, Insights, Recent Events all render
+- [x] Toggle **accent** (`neon` ↔ `cobalt`) → accent badge, rule, and KPI accent value change
+- [x] Toggle **density** (`default` ↔ `compact`) → spacing tightens
+
+### Showcase route — ✅ PASS
+
+- [x] `/` redirects to `/phase-2-dashboard`
+- [x] Page loads with no console errors
+- [x] Same dashboard sections as Storybook
+- [x] No legacy `lib-ui` on the page
+
+### Responsive — ✅ PASS
+
+At widths **1440**, **1024**, **768**, **390** on `/phase-2-dashboard`:
+
+- [x] No horizontal overflow
+- [x] KPI grid reflows cleanly (3 → 3 → 2 → 1 columns)
+- [x] Typography stays legible
+
+### Regression — ✅ PASS
 
 ```bash
 rg -n "selector:\\s*'lib-" libs/ui/src/lib/primitives
@@ -204,43 +164,64 @@ rg -n "input\\([^)]*(style|class)|@Input\\(\\)\\s*(style|class)" libs/ui/src/lib
 rg -n "display:\\s*contents" libs/ui/src
 ```
 
-Expected:
+All three commands returned **no matches** (exit code 1).
 
-1. No new primitive uses the `lib-*` namespace.
-2. No primitive exposes arbitrary `style` or `class` passthrough inputs.
-3. No primitive relies on `display: contents`.
+---
 
-## What To Record If Something Fails
+## Step 4 — Start Phase 3 (App Shell)
 
-1. Story or route URL.
-2. The control values you used.
-3. A screenshot.
-4. Console output.
-5. What happened vs what you expected.
+After PRs #3 and #4 are merged, begin **Phase 3, Epic 3** from [JP_ROADMAP.md](./JP_ROADMAP.md).
 
-## Sign-Off
+| Component / behavior | What it does                                   |
+| -------------------- | ---------------------------------------------- |
+| `jp-app-shell`       | Root layout wrapper for dashboard pages        |
+| Sidebar collapse     | Collapse/expand the nav sidebar                |
+| Nav item states      | Active, hover, and focus states for navigation |
+| Mobile drawer        | Sidebar becomes a drawer on small viewports    |
+
+**How to start:**
+
+1. Pull the latest default branch after merges.
+2. Create a feature branch (e.g. `phase3-app-shell`).
+3. Scaffold `jp-app-shell` in `libs/ui` following existing primitive patterns.
+4. Wire it into a new Showcase route and Storybook story.
+5. Keep using tokens and existing layout primitives inside the shell.
+
+---
+
+## If something fails (re-test)
+
+Record:
+
+1. Story or URL
+2. Control values used
+3. Screenshot
+4. Console output
+5. Expected vs actual
+
+---
+
+## Sign-off
 
 ```md
-## Phase 2 Epic 2 Manual QA Result
+## Phase 2 Epic 2 Manual QA
 
-- Date:
-- Tester:
-- Environment:
+- Date: 2026-07-04
+- Branch: phase2Epic2
 
-- Primitive stories: PASS/FAIL
-- Dashboard story: PASS/FAIL
-- Playground route: PASS/FAIL
-- Responsive behavior: PASS/FAIL
-- Accent and density: PASS/FAIL
-- Regression checks: PASS/FAIL
+- [x] Automated gate: PASS
+- [x] Layout primitive stories: PASS (Box, Stack, Inline, Grid, Surface)
+- [x] Typography primitive stories: PASS (Text, Heading)
+- [x] Dashboard story: PASS
+- [x] Showcase route: PASS
+- [x] Responsive: PASS
+- [x] Regression: PASS
 
-### Issues Found
+### Issues
 
-1.
-2.
-3.
+None.
 
-### Final Decision
+### Decision
 
-- READY / NOT READY
+READY TO MERGE PR #3
 ```

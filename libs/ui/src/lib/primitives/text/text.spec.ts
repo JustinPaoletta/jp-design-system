@@ -48,7 +48,9 @@ describe('JpText', () => {
 
   it('marks block tags for flex-safe sizing', () => {
     expect(component.isBlockTag()).toBe(true);
-    expect(fixture.nativeElement.classList.contains('jp-text--block')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('jp-text--block')).toBe(
+      true,
+    );
   });
 
   it('falls back to defaults for invalid values', () => {

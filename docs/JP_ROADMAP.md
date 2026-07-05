@@ -123,7 +123,7 @@ Typography:
 
 - [x] jp-text — body copy; `as` and `size` are independent
 - [x] jp-heading — titles; `as` (h1–h6) sets both semantics and size via
-  per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
+      per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
 
 Integration:
 
