@@ -34,7 +34,7 @@ npm run build
 4. Create the release branch:
 
    ```bash
-   git checkout master
+   git checkout main
    git pull --ff-only
    git checkout -b release/vX.Y.Z
    ```
@@ -58,7 +58,7 @@ npm run build
 10. Tag the merge commit and push the tag:
 
 ```bash
-git checkout master
+git checkout main
 git pull --ff-only
 git tag -a vX.Y.Z -m "Release vX.Y.Z"
 git push origin vX.Y.Z
@@ -69,5 +69,4 @@ git push origin vX.Y.Z
 
 ## Notes
 
-- Until the branch rename is completed, substitute the current default branch name where this document says `master`.
 - Until package publishing exists, releases are repository-level milestones rather than npm package publishes.
