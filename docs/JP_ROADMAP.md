@@ -142,10 +142,14 @@ Deliverable: Layout-only dashboard using primitives. Completed.
 
 ## EPIC 3 --- Layout System
 
-- jp-app-shell
-- Sidebar collapse
-- Nav item states
-- Mobile drawer behavior
+Implementation plan: [PHASE3_EPIC3_APP_SHELL_PLAN.md](./PHASE3_EPIC3_APP_SHELL_PLAN.md)
+
+- [ ] Story 3.0 — Shell layout tokens
+- [ ] Story 3.1 — `jp-app-shell` (sidebar + main, desktop collapse)
+- [ ] Story 3.2 — `jp-app-shell-nav-item` (active, hover, focus)
+- [ ] Story 3.3 — Mobile drawer + accessibility
+- [ ] Story 3.4 — Showcase route integration
+- [ ] Story 3.5 — Composition story + e2e gate
 
 Deliverable: Functional dashboard shell.
 

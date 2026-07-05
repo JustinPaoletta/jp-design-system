@@ -20,7 +20,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 - `docs/DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
 - `docs/PRIMITIVES.md`: Phase 2 primitive API and typography design decisions
 - `docs/JP_ROADMAP.md`: phased implementation plan
-- `docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md`: manual QA checklist for Epic 2
+- `docs/PHASE3_EPIC3_APP_SHELL_PLAN.md`: Phase 3 app shell implementation plan
 - `docs/CI_BRANCH_PROTECTION.md`: required GitHub settings for merge-blocking CI
 
 ## Monorepo Architecture
@@ -111,8 +111,8 @@ npx nx show projects
 ## Status
 
 **Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives,
-Storybook coverage, and Showcase `/phase-2-dashboard`. Manual QA complete.
-**Next:** Phase 3 App Shell (`jp-app-shell`, sidebar, mobile drawer).
+Storybook coverage, and Showcase `/phase-2-dashboard`.
+**Next:** Phase 3 App Shell — see `docs/PHASE3_EPIC3_APP_SHELL_PLAN.md`.
 
 Completed to date:
 
