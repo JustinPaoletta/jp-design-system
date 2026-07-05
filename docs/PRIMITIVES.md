@@ -29,9 +29,13 @@ Structural wrapper — padding and max-width only. No border or background. Use
 | ---------- | ----------------------------------------------------------------------- | ------- |
 | `as`       | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
 | `padding`  | space tokens                                                            | `none`  |
-| `paddingX` | space token or `null` (overrides horizontal)                            | `null`  |
-| `paddingY` | space token or `null` (overrides vertical)                              | `null`  |
+| `paddingX` | space token or `null` (overrides horizontal; use `none` to clear)       | `null`  |
+| `paddingY` | space token or `null` (overrides vertical; use `none` to clear)         | `null`  |
 | `maxWidth` | `none`, `narrow`, `wide`                                                | `none`  |
+
+`paddingX` / `paddingY` axis overrides: `null` inherits the base `padding` value on
+that axis; `'none'` explicitly clears padding on that axis (e.g.
+`padding="lg" paddingX="none"` keeps vertical `lg` and zeroes horizontal padding).
 
 ### `jp-stack`
 
