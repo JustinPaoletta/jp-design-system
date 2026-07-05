@@ -19,30 +19,28 @@ describe('JpHeading', () => {
     expect(component).toBeTruthy();
   });
 
-  it('maps auto size by heading level', () => {
-    expect(component.rootFontSize()).toBe('var(--jp-font-size-display)');
-    expect(component.rootColor()).toBe('var(--jp-color-foreground-primary)');
+  it('maps font size by heading level', () => {
+    fixture.componentRef.setInput('as', 'h1');
+    fixture.detectChanges();
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h1)');
+
+    fixture.componentRef.setInput('as', 'h2');
+    fixture.detectChanges();
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h2)');
 
     fixture.componentRef.setInput('as', 'h4');
     fixture.detectChanges();
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h4)');
 
-    expect(component.rootFontSize()).toBe('var(--jp-font-size-title)');
-  });
-
-  it('supports explicit size override', () => {
-    fixture.componentRef.setInput('size', 'title');
-    fixture.componentRef.setInput('as', 'h1');
+    fixture.componentRef.setInput('as', 'h6');
     fixture.detectChanges();
-
-    expect(component.rootFontSize()).toBe('var(--jp-font-size-title)');
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h6)');
   });
 
-  it('falls back to default for invalid size', () => {
-    fixture.componentRef.setInput('size', 'bad' as never);
+  it('falls back to default for invalid tone', () => {
     fixture.componentRef.setInput('tone', 'bad' as never);
     fixture.detectChanges();
 
-    expect(component.size()).toBe('auto');
     expect(component.tone()).toBe('primary');
   });
 });

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { expect } from 'storybook/test';
 import {
   JP_FONT_WEIGHTS,
-  JP_HEADING_SIZES,
   JP_HEADING_TAGS,
   JP_TEXT_TONES,
 } from '../shared/primitive-types';
@@ -50,10 +49,10 @@ const meta: Meta<JpHeading> = {
 
       <div class="jp-heading-story__frame">
         <div class="jp-heading-story__hint">
-          Page and section titles. as sets h1–h6; size auto uses display scale for h1/h2 and title scale for h3–h6.
+          Page and section titles. as sets h1–h6; each level maps to its own token scale (h1 largest → h6 smallest).
         </div>
         <div class="jp-heading-story__sample">
-          <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
+          <jp-heading [as]="asTag" [tone]="tone" [weight]="weight">
             Heading Primitive
           </jp-heading>
         </div>
@@ -64,10 +63,6 @@ const meta: Meta<JpHeading> = {
     as: {
       control: 'select',
       options: JP_HEADING_TAGS,
-    },
-    size: {
-      control: 'select',
-      options: JP_HEADING_SIZES,
     },
     tone: {
       control: 'select',
@@ -80,7 +75,6 @@ const meta: Meta<JpHeading> = {
   },
   args: {
     as: 'h2',
-    size: 'auto',
     tone: 'primary',
     weight: 'semibold',
   },

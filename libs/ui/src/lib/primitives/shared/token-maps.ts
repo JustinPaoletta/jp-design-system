@@ -5,7 +5,6 @@ import {
   type JpElevationToken,
   type JpFontWeight,
   type JpGridMinColumn,
-  type JpHeadingSize,
   type JpHeadingTag,
   type JpJustifyContent,
   type JpRadiusToken,
@@ -91,12 +90,13 @@ const TEXT_SIZE_TO_CSS_VAR: Record<JpTextSize, string> = {
   'body-lg': 'var(--jp-font-size-body-lg)',
 };
 
-const HEADING_SIZE_TO_CSS_VAR: Record<
-  Exclude<JpHeadingSize, 'auto'>,
-  string
-> = {
-  title: 'var(--jp-font-size-title)',
-  display: 'var(--jp-font-size-display)',
+const HEADING_LEVEL_TO_CSS_VAR: Record<JpHeadingTag, string> = {
+  h1: 'var(--jp-font-size-heading-h1)',
+  h2: 'var(--jp-font-size-heading-h2)',
+  h3: 'var(--jp-font-size-heading-h3)',
+  h4: 'var(--jp-font-size-heading-h4)',
+  h5: 'var(--jp-font-size-heading-h5)',
+  h6: 'var(--jp-font-size-heading-h6)',
 };
 
 const FONT_WEIGHT_TO_CSS_VAR: Record<JpFontWeight, string> = {
@@ -211,10 +211,8 @@ export function textSizeToCssVar(size: JpTextSize): string {
   return TEXT_SIZE_TO_CSS_VAR[size];
 }
 
-export function headingSizeToCssVar(
-  size: Exclude<JpHeadingSize, 'auto'>,
-): string {
-  return HEADING_SIZE_TO_CSS_VAR[size];
+export function headingLevelToCssVar(tag: JpHeadingTag): string {
+  return HEADING_LEVEL_TO_CSS_VAR[tag];
 }
 
 export function fontWeightToCssVar(weight: JpFontWeight): string {
@@ -223,15 +221,4 @@ export function fontWeightToCssVar(weight: JpFontWeight): string {
 
 export function gridMinColumnToCssVar(minColumn: JpGridMinColumn): string {
   return GRID_MIN_COLUMN_TO_CSS_VAR[minColumn];
-}
-
-export function resolveHeadingSize(
-  requestedSize: JpHeadingSize,
-  tag: JpHeadingTag,
-): Exclude<JpHeadingSize, 'auto'> {
-  if (requestedSize !== 'auto') {
-    return requestedSize;
-  }
-
-  return tag === 'h1' || tag === 'h2' ? 'display' : 'title';
 }

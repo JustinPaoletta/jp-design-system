@@ -177,6 +177,12 @@
   --jp-font-size-body-lg: 1rem;
   --jp-font-size-title: 1.125rem;
   --jp-font-size-display: 1.5rem;
+  --jp-font-size-heading-h1: 1.5rem;
+  --jp-font-size-heading-h2: 1.25rem;
+  --jp-font-size-heading-h3: 1.125rem;
+  --jp-font-size-heading-h4: 1rem;
+  --jp-font-size-heading-h5: 0.875rem;
+  --jp-font-size-heading-h6: 0.8125rem;
   --jp-font-weight-regular: 400;
   --jp-font-weight-medium: 500;
   --jp-font-weight-semibold: 600;

@@ -8,8 +8,6 @@ import {
 import {
   type JpFontWeight,
   JP_FONT_WEIGHTS,
-  type JpHeadingSize,
-  JP_HEADING_SIZES,
   type JpHeadingTag,
   JP_HEADING_TAGS,
   type JpTextTone,
@@ -18,8 +16,7 @@ import {
 import {
   createStringUnionTransform,
   fontWeightToCssVar,
-  headingSizeToCssVar,
-  resolveHeadingSize,
+  headingLevelToCssVar,
   textToneToCssVar,
 } from '../shared/token-maps';
 
@@ -38,10 +35,6 @@ export class JpHeading {
     transform: createStringUnionTransform(JP_HEADING_TAGS, 'h2'),
   });
 
-  readonly size = input<JpHeadingSize, unknown>('auto', {
-    transform: createStringUnionTransform(JP_HEADING_SIZES, 'auto'),
-  });
-
   readonly tone = input<JpTextTone, unknown>('primary', {
     transform: createStringUnionTransform(JP_TEXT_TONES, 'primary'),
   });
@@ -52,9 +45,7 @@ export class JpHeading {
 
   readonly tag = computed(() => this.as());
 
-  readonly rootFontSize = computed(() =>
-    headingSizeToCssVar(resolveHeadingSize(this.size(), this.as())),
-  );
+  readonly rootFontSize = computed(() => headingLevelToCssVar(this.as()));
 
   readonly rootColor = computed(() => textToneToCssVar(this.tone()));
 

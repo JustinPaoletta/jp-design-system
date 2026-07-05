@@ -24,7 +24,9 @@ const meta: Meta<JpText> = {
         .jp-text-story__frame {
           display: grid;
           gap: var(--jp-space-xs);
+          width: 100%;
           max-width: calc(var(--jp-space-3xl) * 5);
+          min-width: 0;
           padding: var(--jp-space-sm);
           border: 1px dashed var(--jp-color-border-default);
           border-radius: var(--jp-radius-md);
@@ -38,6 +40,8 @@ const meta: Meta<JpText> = {
         }
 
         .jp-text-story__sample {
+          min-width: 0;
+          width: 100%;
           min-height: calc(var(--jp-space-3xl) + var(--jp-space-md) / 2);
           display: flex;
           align-items: center;
@@ -46,11 +50,17 @@ const meta: Meta<JpText> = {
           border-radius: var(--jp-radius-md);
           background: var(--jp-color-surface-raised);
         }
+
+        .jp-text-story__sample > jp-text {
+          min-width: 0;
+          max-width: 100%;
+          flex: 1 1 auto;
+        }
       </style>
 
       <div class="jp-text-story__frame">
         <div class="jp-text-story__hint">
-          Body copy typography. as sets the semantic tag — span, small, strong, em, and label stay inline within a line.
+          Body copy typography. as sets the semantic tag — span, small, strong, em, and label stay inline within a line. truncate clips to one line with an ellipsis when the container is narrower than the text.
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">

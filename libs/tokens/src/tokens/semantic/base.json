@@ -114,7 +114,13 @@
       "body": { "value": "{primitive.typography.size.300}" },
       "body-lg": { "value": "{primitive.typography.size.400}" },
       "title": { "value": "{primitive.typography.size.500}" },
-      "display": { "value": "{primitive.typography.size.700}" }
+      "display": { "value": "{primitive.typography.size.700}" },
+      "heading-h1": { "value": "{primitive.typography.size.700}" },
+      "heading-h2": { "value": "{primitive.typography.size.600}" },
+      "heading-h3": { "value": "{primitive.typography.size.500}" },
+      "heading-h4": { "value": "{primitive.typography.size.400}" },
+      "heading-h5": { "value": "{primitive.typography.size.300}" },
+      "heading-h6": { "value": "{primitive.typography.size.200}" }
     },
     "weight": {
       "regular": { "value": "{primitive.typography.weight.regular}" },

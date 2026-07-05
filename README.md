@@ -18,7 +18,9 @@ This system is opinionated by design. Customization that weakens consistency is 
 ## Repository Docs
 
 - `docs/DESIGN_PRINCIPLES.md`: non-negotiable design and engineering rules
+- `docs/PRIMITIVES.md`: Phase 2 primitive API and typography design decisions
 - `docs/JP_ROADMAP.md`: phased implementation plan
+- `docs/PHASE2_EPIC2_MANUAL_TEST_PLAN.md`: manual QA checklist for Epic 2
 - `docs/CI_BRANCH_PROTECTION.md`: required GitHub settings for merge-blocking CI
 
 ## Monorepo Architecture
@@ -27,12 +29,12 @@ Current workspace:
 
 ```text
 /apps
-  /playground
-  /storybook
+  /playground          # demo app (e.g. /phase-2-dashboard)
+  /playground-e2e      # Playwright e2e for playground
 
 /libs
-  /tokens
-  /ui
+  /tokens              # design tokens (Style Dictionary)
+  /ui                  # Angular primitives + Storybook (port 4400)
 ```
 
 ## Token and UI Principles
@@ -72,10 +74,16 @@ Install dependencies:
 npm ci
 ```
 
-Run local app:
+Run Playground:
 
 ```bash
-npx nx serve playground
+npx nx run playground:serve
+```
+
+Run UI Storybook (component primitives):
+
+```bash
+npx nx run ui:storybook
 ```
 
 Run baseline quality checks:
@@ -95,24 +103,24 @@ npx nx show projects
 
 ## Status
 
-Phase 0, Story 0.4 is complete:
+**Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives,
+Storybook coverage, and Playground `/phase-2-dashboard`. Manual QA in progress.
+**Next:** Phase 3 App Shell (`jp-app-shell`, sidebar, mobile drawer).
 
-- Nx Angular monorepo initialized
-- Angular 21 configured
-- Strict TypeScript enabled
-- Standalone defaults configured
-- `libs/tokens` scaffolded
-- `libs/ui` scaffolded
-- Storybook app scaffolded (`apps/storybook`)
-- UI Storybook configured (`npx nx storybook ui`)
-- ESLint warns are treated as failures (`maxWarnings: 0`)
-- `@typescript-eslint/no-explicit-any` is enforced as `error`
-- Hardcoded colors are blocked by `npm run lint:colors`
-- Prettier formatting scripts are available (`format`, `format:check`)
-- CI workflow is configured in `.github/workflows/ci.yml` (`Lint`, `Test`, `Build` jobs)
-- Branch protection setup is documented in `docs/CI_BRANCH_PROTECTION.md`
+Completed to date:
 
-Next milestone: Phase 1, Story 1.1 (Primitive Tokens).
+- Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
+- Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
+- Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`,
+  `jp-heading`, layout dashboard composition, Playwright e2e gate
+
+Quality gates:
+
+- ESLint warnings treated as failures (`maxWarnings: 0`)
+- `@typescript-eslint/no-explicit-any` enforced
+- Hardcoded colors blocked (`npm run lint:colors`)
+- Primitive token usage blocked in components (`npm run lint:primitives`)
+- CI: lint, test, build (`.github/workflows/ci.yml`)
 
 ## License
 

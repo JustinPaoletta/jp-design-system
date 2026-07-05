@@ -36,12 +36,19 @@ describe('JpText', () => {
     expect(fixture.nativeElement.style.display).toBe('inline');
   });
 
-  it('applies truncate mode styles', () => {
+  it('applies truncate mode class', () => {
     fixture.componentRef.setInput('truncate', true);
     fixture.detectChanges();
 
-    expect(component.rootWhiteSpace()).toBe('nowrap');
-    expect(component.rootTextOverflow()).toBe('ellipsis');
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(host.classList.contains('jp-text--truncate')).toBe(true);
+    expect(component.hostDisplay()).toBe('block');
+  });
+
+  it('marks block tags for flex-safe sizing', () => {
+    expect(component.isBlockTag()).toBe(true);
+    expect(fixture.nativeElement.classList.contains('jp-text--block')).toBe(true);
   });
 
   it('falls back to defaults for invalid values', () => {

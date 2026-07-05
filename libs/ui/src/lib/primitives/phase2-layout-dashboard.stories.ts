@@ -76,7 +76,7 @@ const meta: Meta = {
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Active sessions</jp-text>
-                <jp-heading as="h3" size="title">
+                <jp-heading as="h3">
                   <span class="jp-phase2-dashboard-story__accent-value">1,284</span>
                 </jp-heading>
               </jp-stack>
@@ -84,13 +84,13 @@ const meta: Meta = {
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Error rate</jp-text>
-                <jp-heading as="h3" size="title">0.14%</jp-heading>
+                <jp-heading as="h3">0.14%</jp-heading>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Avg response</jp-text>
-                <jp-heading as="h3" size="title">182ms</jp-heading>
+                <jp-heading as="h3">182ms</jp-heading>
               </jp-stack>
             </jp-surface>
           </jp-grid>

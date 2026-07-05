@@ -8,7 +8,7 @@ density.
 
 ---
 
-## Current Progress (as of March 3, 2026)
+## Current Progress (as of July 4, 2026)
 
 - Phase 0 is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
@@ -108,19 +108,30 @@ Deliverable: Working theme + density + accent switching. Completed.
 
 # PHASE 2 --- Primitives
 
-## EPIC 2 --- Layout Primitives
+## EPIC 2 --- Layout + Typography Primitives
+
+Layout:
 
 - [x] jp-box
 - [x] jp-stack
 - [x] jp-inline
 - [x] jp-grid
 - [x] jp-surface
-- [x] jp-text
-- [x] jp-heading
+
+Typography:
+
+- [x] jp-text — body copy; `as` and `size` are independent
+- [x] jp-heading — titles; `as` (h1–h6) sets both semantics and size via
+  per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
+
+Integration:
+
 - [x] Storybook primitives + composition story coverage
 - [x] Playground `/phase-2-dashboard` route and page
 - [x] CI Playwright Chromium gate for dashboard validation
 - [x] `Ui`/`lib-ui` marked deprecated for transition window
+
+See [PRIMITIVES.md](./PRIMITIVES.md) for API reference and design rationale.
 
 Deliverable: Layout-only dashboard using primitives. Completed.
 

@@ -124,7 +124,3 @@ export type JpFontWeight = (typeof JP_FONT_WEIGHTS)[number];
 export const JP_HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 export type JpHeadingTag = (typeof JP_HEADING_TAGS)[number];
-
-export const JP_HEADING_SIZES = ['auto', 'title', 'display'] as const;
-
-export type JpHeadingSize = (typeof JP_HEADING_SIZES)[number];

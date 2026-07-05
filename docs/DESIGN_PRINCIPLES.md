@@ -98,7 +98,22 @@ The system enforces structural clarity.
 
 ---
 
-# 8. Semantic Meaning Is Stable
+# 8. Typography Hierarchy Is Level-Based
+
+Body copy and headings serve different roles and use different primitives.
+
+- **`jp-text`** — body copy, labels, inline emphasis. Semantic tag (`as`) and
+  visual size (`size`) are independent.
+- **`jp-heading`** — page and section titles only. The `h1`–`h6` level sets
+  both semantic meaning and visual scale. There is no separate `size` prop.
+
+Each heading level maps to a dedicated token (`--jp-font-size-heading-h1` through
+`h6`). Do not override heading size outside the level system — pick the correct
+level or use `jp-text` for non-heading copy.
+
+---
+
+# 9. Semantic Meaning Is Stable
 
 Accent color may evolve. Semantic meaning may not.
 
@@ -109,7 +124,7 @@ Brand identity can shift. Semantic meaning must remain stable.
 
 ---
 
-# 9. Approachability Without Softness
+# 10. Approachability Without Softness
 
 The system reflects high competence without intimidation.
 
@@ -121,7 +136,7 @@ Professional does not mean cold. Approachable does not mean casual.
 
 ---
 
-# 10. Engineering-Grade Standards
+# 11. Engineering-Grade Standards
 
 Code quality is part of design quality.
 
@@ -132,7 +147,7 @@ A design system is infrastructure. Infrastructure must be reliable.
 
 ---
 
-# 11. Evolution Without Chaos
+# 12. Evolution Without Chaos
 
 The system is built to support brand evolution.
 

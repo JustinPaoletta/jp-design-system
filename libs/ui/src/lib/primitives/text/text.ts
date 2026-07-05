@@ -31,6 +31,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-text',
+    '[class.jp-text--truncate]': 'truncate()',
+    '[class.jp-text--block]': 'isBlockTag()',
     '[style.display]': 'hostDisplay()',
   },
 })
@@ -67,9 +69,15 @@ export class JpText {
 
   readonly tag = computed(() => this.as());
 
-  readonly hostDisplay = computed(() =>
-    JpText.INLINE_TAGS.has(this.tag()) ? 'inline' : 'block',
-  );
+  readonly isBlockTag = computed(() => !JpText.INLINE_TAGS.has(this.tag()));
+
+  readonly hostDisplay = computed(() => {
+    if (this.truncate()) {
+      return 'block';
+    }
+
+    return JpText.INLINE_TAGS.has(this.tag()) ? 'inline' : 'block';
+  });
 
   readonly rootFontSize = computed(() => textSizeToCssVar(this.size()));
 
@@ -79,17 +87,5 @@ export class JpText {
 
   readonly rootFontFamily = computed(() =>
     this.mono() ? 'var(--jp-font-family-mono)' : 'var(--jp-font-family-base)',
-  );
-
-  readonly rootWhiteSpace = computed(() =>
-    this.truncate() ? 'nowrap' : 'normal',
-  );
-
-  readonly rootOverflow = computed(() =>
-    this.truncate() ? 'hidden' : 'visible',
-  );
-
-  readonly rootTextOverflow = computed(() =>
-    this.truncate() ? 'ellipsis' : 'clip',
   );
 }

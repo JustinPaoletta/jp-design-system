@@ -1,7 +1,27 @@
 # ui
 
-This library was generated with [Nx](https://nx.dev).
+Angular component library for the JP Design System.
 
-## Running unit tests
+## Primitives (Phase 2)
 
-Run `nx test ui` to execute the unit tests.
+Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`
+
+Typography: `jp-text`, `jp-heading`
+
+Full API, token mappings, and design rationale:
+[docs/PRIMITIVES.md](../../docs/PRIMITIVES.md)
+
+## Storybook
+
+```bash
+npx nx run ui:storybook
+```
+
+Runs at http://localhost:4400
+
+## Tests
+
+```bash
+npx nx run ui:test
+npx nx run ui:test-storybook
+```
