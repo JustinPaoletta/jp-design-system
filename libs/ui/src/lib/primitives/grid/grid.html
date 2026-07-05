@@ -1,0 +1,69 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@switch (tag()) { @case ('section') {
+<section
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</section>
+} @case ('article') {
+<article
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</article>
+} @case ('aside') {
+<aside
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</aside>
+} @case ('main') {
+<main
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</main>
+} @case ('header') {
+<header
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</header>
+} @case ('footer') {
+<footer
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</footer>
+} @case ('nav') {
+<nav
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</nav>
+} @default {
+<div
+  class="jp-grid__root"
+  [style.gap]="rootGap()"
+  [style.gridTemplateColumns]="rootTemplateColumns()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</div>
+} }

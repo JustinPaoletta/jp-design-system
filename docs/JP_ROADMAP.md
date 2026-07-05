@@ -8,7 +8,7 @@ density.
 
 ---
 
-## Current Progress (as of March 3, 2026)
+## Current Progress (as of July 4, 2026)
 
 - Phase 0 is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
@@ -21,7 +21,13 @@ density.
 - Story 1.3 (Density Modes) is complete and validated.
 - Story 1.4 (Accent Variants) is complete and validated.
 - Story 1.5 (CSS Output) is complete and validated.
-- Next milestone: Phase 2, Epic 2 (Layout Primitives).
+- Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
+- Story 2.1 (Layout primitives in `libs/ui`) is complete and validated.
+- Story 2.2 (Showcase `/phase-2-dashboard`) is complete and validated.
+- Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
+- Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
+- Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
+- Next milestone: Phase 3, Epic 3 (App Shell).
 
 ---
 
@@ -40,7 +46,8 @@ density.
 
 - [x] libs/tokens
 - [x] libs/ui
-- [x] Storybook app
+- [x] UI Storybook target (`ui:storybook` on port 4400)
+- [x] Showcase integration app (`showcase`)
 
 ### Story 0.3 --- Lint & Formatting
 
@@ -102,17 +109,32 @@ Deliverable: Working theme + density + accent switching. Completed.
 
 # PHASE 2 --- Primitives
 
-## EPIC 2 --- Layout Primitives
+## EPIC 2 --- Layout + Typography Primitives
 
-- jp-box
-- jp-stack
-- jp-inline
-- jp-grid
-- jp-surface
-- jp-text
-- jp-heading
+Layout:
 
-Deliverable: Layout-only dashboard using primitives.
+- [x] jp-box
+- [x] jp-stack
+- [x] jp-inline
+- [x] jp-grid
+- [x] jp-surface
+
+Typography:
+
+- [x] jp-text — body copy; `as` and `size` are independent
+- [x] jp-heading — titles; `as` (h1–h6) sets both semantics and size via
+      per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
+
+Integration:
+
+- [x] Storybook primitives + composition story coverage
+- [x] Showcase `/phase-2-dashboard` route and page
+- [x] CI Playwright Chromium gate for dashboard validation
+- [x] `Ui`/`lib-ui` marked deprecated for transition window
+
+See [PRIMITIVES.md](./PRIMITIVES.md) for API reference and design rationale.
+
+Deliverable: Layout-only dashboard using primitives. Completed.
 
 ---
 
@@ -120,10 +142,14 @@ Deliverable: Layout-only dashboard using primitives.
 
 ## EPIC 3 --- Layout System
 
-- jp-app-shell
-- Sidebar collapse
-- Nav item states
-- Mobile drawer behavior
+Implementation plan: [PHASE3_EPIC3_APP_SHELL_PLAN.md](./PHASE3_EPIC3_APP_SHELL_PLAN.md)
+
+- [ ] Story 3.0 — Shell layout tokens
+- [ ] Story 3.1 — `jp-app-shell` (sidebar + main, desktop collapse)
+- [ ] Story 3.2 — `jp-app-shell-nav-item` (active, hover, focus)
+- [ ] Story 3.3 — Mobile drawer + accessibility
+- [ ] Story 3.4 — Showcase route integration
+- [ ] Story 3.5 — Composition story + e2e gate
 
 Deliverable: Functional dashboard shell.
 

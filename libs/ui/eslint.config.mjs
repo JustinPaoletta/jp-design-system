@@ -12,10 +12,23 @@ export default [
         'error',
         {
           type: 'attribute',
-          prefix: 'lib',
+          prefix: 'jp',
           style: 'camelCase',
         },
       ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'jp',
+          style: 'kebab-case',
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/lib/ui/ui.ts', 'src/lib/ui/ui.ts', 'libs/ui/src/lib/ui/ui.ts'],
+    rules: {
       '@angular-eslint/component-selector': [
         'error',
         {

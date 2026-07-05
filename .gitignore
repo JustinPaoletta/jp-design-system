@@ -42,3 +42,7 @@ Thumbs.db
 .nx/workspace-data
 
 .angular
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
