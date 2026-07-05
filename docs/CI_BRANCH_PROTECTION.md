@@ -7,7 +7,7 @@ does not enforce that; the branch protection rule must require CI checks.
 
 1. Open repository Settings.
 2. Open Branches.
-3. Add or edit the protection rule for your protected default branch (`master` today; rename to `main` when you are ready to standardize branch names).
+3. Add or edit the protection rule for the protected default branch (`main`).
 4. Enable "Require status checks to pass before merging".
 5. Add these required checks from the `CI` workflow:
    - `Lint`
@@ -22,7 +22,7 @@ Release branches such as `release/v0.1.0` should still flow back through pull re
 
 ## Current Repo State
 
-- Default branch: `master` (manual release docs use the same workflow even if this later becomes `main`)
+- Default branch: `main`
 - Required checks configured: `Lint`, `Test`, `Build`
 - Strict status checks: enabled
 
