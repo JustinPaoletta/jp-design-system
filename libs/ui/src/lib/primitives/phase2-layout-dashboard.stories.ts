@@ -102,7 +102,7 @@ const meta: Meta = {
                 <jp-stack gap="xs">
                   <jp-text tone="secondary">Design token sync completed</jp-text>
                   <jp-text tone="secondary">Storybook interaction checks passing</jp-text>
-                  <jp-text tone="secondary">Playground route composed with primitives</jp-text>
+                  <jp-text tone="secondary">Showcase route composed with primitives</jp-text>
                 </jp-stack>
               </jp-stack>
             </jp-surface>

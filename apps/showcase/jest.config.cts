@@ -1,8 +1,8 @@
 module.exports = {
-  displayName: 'playground',
+  displayName: 'showcase',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/playground',
+  coverageDirectory: '../../coverage/apps/showcase',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

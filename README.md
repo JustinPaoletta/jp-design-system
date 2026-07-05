@@ -29,13 +29,20 @@ Current workspace:
 
 ```text
 /apps
-  /playground          # demo app (e.g. /phase-2-dashboard)
-  /playground-e2e      # Playwright e2e for playground
+  /showcase            # read-only integration app (e.g. /phase-2-dashboard)
+  /showcase-e2e        # Playwright e2e for showcase
+  /storybook           # placeholder Angular shell (not the component Storybook)
+  /storybook-e2e       # Playwright scaffold for the storybook app
 
 /libs
   /tokens              # design tokens (Style Dictionary)
-  /ui                  # Angular primitives + Storybook (port 4400)
+  /ui                  # Angular primitives + Storybook target (port 4400)
 ```
+
+**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive
+explorer (controls, accent/density toolbar). Showcase is a read-only Angular host
+app that proves compositions render correctly outside Storybook. The `apps/storybook`
+project is a minimal Angular shell only — it does not host component stories.
 
 ## Token and UI Principles
 
@@ -74,10 +81,10 @@ Install dependencies:
 npm ci
 ```
 
-Run Playground:
+Run Showcase (read-only composition host):
 
 ```bash
-npx nx run playground:serve
+npx nx run showcase:serve
 ```
 
 Run UI Storybook (component primitives):
@@ -104,7 +111,7 @@ npx nx show projects
 ## Status
 
 **Current milestone:** Phase 2 Epic 2 complete — layout + typography primitives,
-Storybook coverage, and Playground `/phase-2-dashboard`. Manual QA in progress.
+Storybook coverage, and Showcase `/phase-2-dashboard`. Manual QA complete.
 **Next:** Phase 3 App Shell (`jp-app-shell`, sidebar, mobile drawer).
 
 Completed to date:
@@ -120,7 +127,8 @@ Quality gates:
 - `@typescript-eslint/no-explicit-any` enforced
 - Hardcoded colors blocked (`npm run lint:colors`)
 - Primitive token usage blocked in components (`npm run lint:primitives`)
-- CI: lint, test, build (`.github/workflows/ci.yml`)
+- Token artifact drift blocked (`npm run tokens:check`)
+- CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
 
 ## License
 

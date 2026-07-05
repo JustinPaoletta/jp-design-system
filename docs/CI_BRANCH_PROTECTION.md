@@ -23,3 +23,7 @@ After this is configured, any failed CI job will block merges into the protected
 - Default branch: `master`
 - Required checks configured: `Lint`, `Test`, `Build`
 - Strict status checks: enabled
+
+The `Test` job runs `npm run test`, `npx nx run ui:test-storybook`, and
+`npx nx run showcase-e2e:e2e -- --project=chromium`. Those steps are part of
+the `Test` check name — no separate status checks are required for them.

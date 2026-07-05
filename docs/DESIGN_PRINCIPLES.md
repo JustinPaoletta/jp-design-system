@@ -90,7 +90,7 @@ Motion should never draw attention to itself.
 
 Spacing is controlled through primitives.
 
-All layout must use: - Stack - Inline - Grid - Surface
+All layout must use: - Box - Stack - Inline - Grid - Surface
 
 Ad-hoc margin usage is discouraged. Token scales are mandatory.
 

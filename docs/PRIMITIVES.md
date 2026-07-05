@@ -12,7 +12,7 @@ See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_R
 - **Selectors:** `jp-*` (e.g. `jp-box`, `jp-heading`). Legacy `lib-ui` is deprecated.
 - **No style/class inputs:** Visual values come from token-backed props only.
 - **Accent toolbar:** Disabled on layout and typography primitive stories. Accent
-  tokens apply on composition stories (e.g. Layout Dashboard) and Playground pages.
+  tokens apply on composition stories (e.g. Layout Dashboard) and Showcase pages.
 - **Semantic `as` props:** Set the rendered HTML tag for accessibility. Behavior
   differs by primitive — see typography section below.
 
@@ -25,9 +25,9 @@ See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_R
 Structural wrapper — padding and max-width only. No border or background. Use
 `jp-surface` for visual panels.
 
-| Input      | Values                                              | Default |
-| ---------- | --------------------------------------------------- | ------- |
-| `as`       | `div`, `section`, `article`, `aside`, `main`, …     | `div`   |
+| Input      | Values                                                                 | Default |
+| ---------- | ---------------------------------------------------------------------- | ------- |
+| `as`       | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
 | `padding`  | space tokens                                        | `none`  |
 | `paddingX` | space token or `null` (overrides horizontal)        | `null`  |
 | `paddingY` | space token or `null` (overrides vertical)          | `null`  |
@@ -37,9 +37,10 @@ Structural wrapper — padding and max-width only. No border or background. Use
 
 Vertical flex layout.
 
-| Input     | Values                          | Default |
-| --------- | ------------------------------- | ------- |
-| `gap`     | space tokens                    | `md`    |
+| Input     | Values                                                                 | Default |
+| --------- | ---------------------------------------------------------------------- | ------- |
+| `as`      | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
+| `gap`     | space tokens                                                           | `md`    |
 | `align`   | `start`, `center`, `end`, `stretch` | `stretch` |
 | `justify` | `start`, `center`, `end`, `between` | `start` |
 
@@ -47,20 +48,22 @@ Vertical flex layout.
 
 Horizontal flex layout.
 
-| Input     | Values                          | Default |
-| --------- | ------------------------------- | ------- |
-| `gap`     | space tokens                    | `md`    |
-| `align`   | `start`, `center`, `end`, `stretch` | `center` |
-| `justify` | `start`, `center`, `end`, `between` | `start` |
-| `wrap`    | boolean                         | `false` |
+| Input     | Values                                                                 | Default |
+| --------- | ---------------------------------------------------------------------- | ------- |
+| `as`      | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
+| `gap`     | space tokens                                                           | `sm`    |
+| `align`   | `start`, `center`, `end`, `stretch`                                    | `center` |
+| `justify` | `start`, `center`, `end`, `between`                                    | `start` |
+| `wrap`    | boolean                                                                | `true`  |
 
 ### `jp-grid`
 
 CSS grid layout.
 
-| Input       | Values                    | Default    |
-| ----------- | ------------------------- | ---------- |
-| `columns`   | `1`, `2`, `3`, `4`, `6`   | `3`        |
+| Input       | Values                                                                 | Default    |
+| ----------- | ---------------------------------------------------------------------- | ---------- |
+| `as`        | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`      |
+| `columns`   | `1`, `2`, `3`, `4`, `6`                                                | `3`        |
 | `gap`       | space tokens              | `md`       |
 | `mode`      | `fixed`, `auto-fit`       | `fixed`    |
 | `minColumn` | `sm`, `md`, `lg`          | `md`       |
@@ -69,14 +72,14 @@ CSS grid layout.
 
 Visual panel — background, border, elevation, radius, padding.
 
-| Input       | Values                                              | Default  |
-| ----------- | --------------------------------------------------- | -------- |
-| `as`        | layout tags                                         | `section`|
-| `tone`      | `canvas`, `sunken`, `subtle`, `raised`, `emphasis`  | `raised` |
-| `padding`   | space tokens                                        | `lg`     |
-| `border`    | `none`, `subtle`, `default`, `strong`               | `default`|
-| `elevation` | `none`, `raised`, `floating`, `overlay`             | `none`   |
-| `radius`    | radius tokens                                       | `md`     |
+| Input       | Values                                                                 | Default  |
+| ----------- | ---------------------------------------------------------------------- | -------- |
+| `as`        | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `section`|
+| `tone`      | `canvas`, `sunken`, `subtle`, `raised`, `emphasis`                     | `raised` |
+| `padding`   | space tokens                                                           | `lg`     |
+| `border`    | `none`, `subtle`, `default`, `strong`                                  | `default`|
+| `elevation` | `none`, `raised`, `floating`, `overlay`                                | `raised` |
+| `radius`    | radius tokens                                                          | `lg`     |
 
 ---
 
@@ -149,16 +152,17 @@ npx nx run ui:storybook
 ```
 
 Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-and `Compositions/Phase 2/Layout Dashboard`.
+and `Compositions/Layout Dashboard`.
 
 ---
 
-## Playground
+## Showcase
 
-Layout dashboard demo:
+Read-only Angular host app for viewing compositions in a real app context (not
+editable — use Storybook for controls and accent/density toggles):
 
 ```bash
-npx nx run playground:serve
+npx nx run showcase:serve
 ```
 
 Open http://localhost:4200/phase-2-dashboard

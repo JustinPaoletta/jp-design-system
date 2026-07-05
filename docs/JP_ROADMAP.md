@@ -23,9 +23,9 @@ density.
 - Story 1.5 (CSS Output) is complete and validated.
 - Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
 - Story 2.1 (Layout primitives in `libs/ui`) is complete and validated.
-- Story 2.2 (Playground `/phase-2-dashboard`) is complete and validated.
+- Story 2.2 (Showcase `/phase-2-dashboard`) is complete and validated.
 - Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
-- Story 2.4 (Chromium e2e gate for Playground dashboard) is complete and validated.
+- Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
 - Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
 - Next milestone: Phase 3, Epic 3 (App Shell).
 
@@ -46,7 +46,8 @@ density.
 
 - [x] libs/tokens
 - [x] libs/ui
-- [x] Storybook app
+- [x] UI Storybook target (`ui:storybook` on port 4400)
+- [x] Showcase integration app (`showcase`)
 
 ### Story 0.3 --- Lint & Formatting
 
@@ -127,7 +128,7 @@ Typography:
 Integration:
 
 - [x] Storybook primitives + composition story coverage
-- [x] Playground `/phase-2-dashboard` route and page
+- [x] Showcase `/phase-2-dashboard` route and page
 - [x] CI Playwright Chromium gate for dashboard validation
 - [x] `Ui`/`lib-ui` marked deprecated for transition window
 

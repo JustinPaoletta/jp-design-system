@@ -8,7 +8,7 @@ script = ""
 [[actions]]
 name = "Run"
 icon = "run"
-command = "npx nx serve playground"
+command = "npx nx serve showcase"
 
 [[actions]]
 name = "Test"

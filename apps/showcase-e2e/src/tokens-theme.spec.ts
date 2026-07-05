@@ -44,7 +44,7 @@ async function getCssVar(page: Page, variable: string) {
   }, variable);
 }
 
-test.describe('playground token theming', () => {
+test.describe('showcase token theming', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });

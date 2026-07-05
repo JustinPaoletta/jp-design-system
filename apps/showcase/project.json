@@ -1,26 +1,26 @@
 {
-  "name": "playground",
+  "name": "showcase",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/playground/src",
+  "sourceRoot": "apps/showcase/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/playground",
-        "browser": "apps/playground/src/main.ts",
-        "tsConfig": "apps/playground/tsconfig.app.json",
+        "outputPath": "dist/apps/showcase",
+        "browser": "apps/showcase/src/main.ts",
+        "tsConfig": "apps/showcase/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/playground/public"
+            "input": "apps/showcase/public"
           }
         ],
-        "styles": ["apps/playground/src/styles.scss"]
+        "styles": ["apps/showcase/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -51,10 +51,10 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "playground:build:production"
+          "buildTarget": "showcase:build:production"
         },
         "development": {
-          "buildTarget": "playground:build:development"
+          "buildTarget": "showcase:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -66,17 +66,17 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/playground/jest.config.cts",
-        "tsConfig": "apps/playground/tsconfig.spec.json"
+        "jestConfig": "apps/showcase/jest.config.cts",
+        "tsConfig": "apps/showcase/tsconfig.spec.json"
       }
     },
     "serve-static": {
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "playground:build",
+        "buildTarget": "showcase:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/playground/browser",
+        "staticFilePath": "dist/apps/showcase/browser",
         "spa": true
       }
     }
