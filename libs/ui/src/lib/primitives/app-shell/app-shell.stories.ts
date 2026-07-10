@@ -78,7 +78,9 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const sidebar = canvasElement.querySelector('.jp-app-shell__sidebar');
     const main = canvasElement.querySelector('.jp-app-shell__main');
-    const toggle = canvasElement.querySelector('.jp-app-shell__collapse-toggle');
+    const toggle = canvasElement.querySelector(
+      '.jp-app-shell__collapse-toggle',
+    );
 
     await expect(sidebar).toBeTruthy();
     await expect(main).toBeTruthy();
