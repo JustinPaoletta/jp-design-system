@@ -33,6 +33,18 @@
       "contrast": { "value": "{primitive.color.neutral.1100}" },
       "focus": { "value": "{primitive.color.accent.neon.500}" }
     },
+    "shell": {
+      "sidebar-bg": { "value": "{color.surface.sunken}" },
+      "border": { "value": "{color.border.default}" },
+      "scrim": { "value": "rgba(7, 11, 19, 0.72)" }
+    },
+    "nav-item": {
+      "text": { "value": "{color.text.secondary}" },
+      "text-active": { "value": "{color.text.primary}" },
+      "indicator": { "value": "{color.accent.muted}" },
+      "bg-hover": { "value": "{color.surface.subtle}" },
+      "bg-active": { "value": "{color.surface.raised}" }
+    },
     "state": {
       "success": {
         "soft": { "value": "{primitive.color.state.success.100}" },
@@ -102,6 +114,15 @@
       "sm": { "value": "16rem" },
       "md": { "value": "20rem" },
       "lg": { "value": "24rem" }
+    },
+    "sidebar": {
+      "expanded": { "value": "16rem" },
+      "collapsed": { "value": "{primitive.space.16}" }
+    }
+  },
+  "layout": {
+    "shell": {
+      "mobile-max": { "value": "48rem" }
     }
   },
   "font": {
@@ -148,12 +169,14 @@
     "duration": {
       "fast": { "value": "{primitive.motion.duration.fast}" },
       "normal": { "value": "{primitive.motion.duration.normal}" },
-      "slow": { "value": "{primitive.motion.duration.slow}" }
+      "slow": { "value": "{primitive.motion.duration.slow}" },
+      "shell": { "value": "{motion.duration.normal}" }
     },
     "easing": {
       "standard": { "value": "{primitive.motion.easing.standard}" },
       "emphasized": { "value": "{primitive.motion.easing.emphasized}" },
-      "linear": { "value": "{primitive.motion.easing.linear}" }
+      "linear": { "value": "{primitive.motion.easing.linear}" },
+      "shell": { "value": "{motion.easing.standard}" }
     },
     "transition": {
       "base": {
@@ -161,7 +184,16 @@
       },
       "emphasized": {
         "value": "all {motion.duration.fast} {motion.easing.emphasized}"
+      },
+      "shell": {
+        "value": "width {motion.duration.shell} {motion.easing.shell}, transform {motion.duration.shell} {motion.easing.shell}"
       }
+    }
+  },
+  "z": {
+    "shell": {
+      "scrim": { "value": "{primitive.z.40}" },
+      "drawer": { "value": "{primitive.z.50}" }
     }
   },
   "elevation": {

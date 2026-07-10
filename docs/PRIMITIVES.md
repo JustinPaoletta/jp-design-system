@@ -85,6 +85,23 @@ Visual panel — background, border, elevation, radius, padding.
 | `elevation` | `none`, `raised`, `floating`, `overlay`                                 | `raised`  |
 | `radius`    | radius tokens                                                           | `lg`      |
 
+### `jp-app-shell`
+
+Application chrome — sidebar + main content regions with desktop collapse.
+
+| Input / output           | Type      | Default | Notes                                    |
+| ------------------------ | --------- | ------- | ---------------------------------------- |
+| `sidebarCollapsed`       | `boolean` | `false` | Collapses sidebar to icon rail width     |
+| `sidebarCollapsedChange` | `output`  | —       | Emits when the toolbar toggle is clicked |
+
+**Content projection:**
+
+- `[jpAppShellSidebar]` — primary navigation slot (renders inside `<aside>`)
+- `[jpAppShellMain]` — page content slot
+
+Mobile drawer behavior (Story 3.3) is not implemented yet; below
+`--jp-layout-shell-mobile-max` the sidebar is hidden until drawer work lands.
+
 ---
 
 ## Typography primitives

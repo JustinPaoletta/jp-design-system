@@ -13,6 +13,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Showcase `/phase-2-dashboard` route and Playwright e2e gate
 - UI Storybook primitive and composition coverage
 - Manual changelog and root `RELEASE.md` release process documentation
+- Phase 3 app shell semantic tokens (sidebar widths, nav colors, shell motion, z-index)
+- `jp-app-shell` primitive with sidebar collapse and Storybook coverage (Stories 3.0–3.1)
 
 ### Changed
 

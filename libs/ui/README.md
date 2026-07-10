@@ -2,14 +2,17 @@
 
 Angular component library for the JP Design System.
 
-## Primitives (Phase 2)
+## Primitives
 
-Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`
+Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-app-shell`
 
 Typography: `jp-text`, `jp-heading`
 
 Full API, token mappings, and design rationale:
 [docs/PRIMITIVES.md](../../docs/PRIMITIVES.md)
+
+Phase 3 implementation plan:
+[docs/PHASE3_EPIC3_APP_SHELL_PLAN.md](../../docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
 
 ## Storybook
 
@@ -20,7 +23,7 @@ npx nx run ui:storybook
 ```
 
 Runs at http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-and `Compositions/Layout Dashboard`.
+`Compositions/Layout Dashboard`, and `Primitives/Layout/App Shell`.
 
 ## Showcase
 

@@ -41,6 +41,21 @@ Heading level scale (used by `jp-heading` — one token per `h1`–`h6` level):
 Heading levels map to primitive typography sizes 700 → 200. See
 [docs/PRIMITIVES.md](../../docs/PRIMITIVES.md) for how `jp-heading` uses these.
 
+## App shell tokens (Phase 3)
+
+| Semantic token                 | CSS variable                                | Purpose                        |
+| ------------------------------ | ------------------------------------------- | ------------------------------ |
+| `sidebar.expanded`             | `--jp-size-sidebar-expanded`                | Expanded sidebar width         |
+| `sidebar.collapsed`            | `--jp-size-sidebar-collapsed`               | Collapsed icon rail width      |
+| `shell.mobile-max`             | `--jp-layout-shell-mobile-max`              | Mobile layout breakpoint       |
+| `shell.sidebar-bg`             | `--jp-color-shell-sidebar-bg`               | Sidebar background             |
+| `shell.border`                 | `--jp-color-shell-border`                   | Shell chrome borders           |
+| `nav-item.text`                | `--jp-color-nav-item-text`                  | Default nav label              |
+| `nav-item.text-active`         | `--jp-color-nav-item-text-active`           | Active nav label               |
+| `nav-item.indicator`           | `--jp-color-nav-item-indicator`             | Active accent signal           |
+| `transition.shell`             | `--jp-motion-transition-shell`              | Sidebar width/transform motion |
+| `shell.scrim` / `shell.drawer` | `--jp-z-shell-scrim`, `--jp-z-shell-drawer` | Mobile drawer stacking         |
+
 ## Generated artifacts
 
 `npm run tokens:build` writes:

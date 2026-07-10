@@ -1,0 +1,31 @@
+<div class="jp-app-shell__layout">
+  <aside
+    class="jp-app-shell__sidebar"
+    [attr.aria-expanded]="!sidebarCollapsed()"
+  >
+    <div class="jp-app-shell__sidebar-toolbar">
+      <button
+        type="button"
+        class="jp-app-shell__collapse-toggle"
+        [attr.aria-label]="
+          sidebarCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'
+        "
+        [attr.aria-pressed]="sidebarCollapsed()"
+        (click)="toggleSidebar()"
+      >
+        <span
+          class="jp-app-shell__collapse-toggle-icon"
+          aria-hidden="true"
+        ></span>
+      </button>
+    </div>
+
+    <div class="jp-app-shell__sidebar-content">
+      <ng-content select="[jpAppShellSidebar]" />
+    </div>
+  </aside>
+
+  <div class="jp-app-shell__main">
+    <ng-content select="[jpAppShellMain]" />
+  </div>
+</div>

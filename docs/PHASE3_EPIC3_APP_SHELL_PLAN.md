@@ -1,7 +1,7 @@
 # Phase 3 Epic 3 — App Shell Implementation Plan
 
-**Status:** Ready to start after PR #3 and PR #4 merge  
-**Branch target:** `phase3-app-shell`  
+**Status:** In progress — Stories 3.0–3.1 complete (shell tokens + `jp-app-shell`)  
+**Branch:** `phase3-app-shell`  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)
 
 ---
@@ -22,12 +22,11 @@ rebuilding layout chrome.
 
 Complete before starting implementation:
 
-1. Merge PR #3 (`phase2Epic2` → default branch).
-2. Merge PR #4 (`standardizeApps` — Showcase rename and docs alignment).
-3. Pull latest default branch and branch from it (`phase3-app-shell`).
+1. ~~Merge PR #3 (`phase2Epic2` → default branch).~~ Done.
+2. ~~Merge PR #4 (`standardizeApps` — Showcase rename and docs alignment).~~ Done.
+3. ~~Pull latest default branch and branch from it (`phase3-app-shell`).~~ Done.
 
-Phase 2 manual QA is archived in git history; this document replaces the
-Epic 2 checklist as the active planning artifact.
+Phase 2 manual QA is archived in git history; this document is the active planning artifact.
 
 ---
 
@@ -152,9 +151,22 @@ Add shell-specific semantic tokens before component SCSS. Proposed groups:
 Run `npm run tokens:build` and `npm run tokens:check` in CI. No primitive token
 usage in components.
 
+**Status:** ✅ Complete (2026-07-10)
+
 ---
 
 ## Story breakdown
+
+### Story 3.0 — Shell layout tokens
+
+**Acceptance criteria:**
+
+- [x] Sidebar width tokens (`--jp-size-sidebar-expanded`, `--jp-size-sidebar-collapsed`)
+- [x] Layout breakpoint token (`--jp-layout-shell-mobile-max`)
+- [x] Shell chrome and nav-item color tokens
+- [x] Shell motion and z-index tokens
+- [x] Generated artifacts rebuilt; `tokens:check` passes
+- [x] Documented in `libs/tokens/README.md`
 
 ### Story 3.1 — Shell layout primitive
 
@@ -162,12 +174,12 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Component lives under `libs/ui/src/lib/primitives/app-shell/`
-- [ ] Exported from `libs/ui/src/index.ts`
-- [ ] Collapse toggles sidebar between expanded and collapsed widths via token
-- [ ] Main content reflows; no horizontal overflow at 1440 / 1024
-- [ ] Unit tests for collapse state and host classes
-- [ ] Storybook: `Primitives/Layout/App Shell` — `Default`, `Collapsed`
+- [x] Component lives under `libs/ui/src/lib/primitives/app-shell/`
+- [x] Exported from `libs/ui/src/index.ts`
+- [x] Collapse toggles sidebar between expanded and collapsed widths via token
+- [x] Main content reflows; no horizontal overflow at 1440 / 1024 (manual verify in Storybook)
+- [x] Unit tests for collapse state and host classes
+- [x] Storybook: `Primitives/Layout/App Shell` — `Default`, `Collapsed`
 
 ### Story 3.2 — Nav item primitive
 
