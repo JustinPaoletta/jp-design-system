@@ -1,0 +1,61 @@
+<div class="jp-table__frame">
+  <table class="jp-table__root">
+    @if (caption()) {
+    <caption class="jp-table__caption">
+      {{ caption() }}
+    </caption>
+    }
+    <thead class="jp-table__head">
+      <tr>
+        @for (column of columns(); track column.key) {
+        <th
+          class="jp-table__header"
+          scope="col"
+          [class.jp-table__header--start]="columnAlign(column) === 'start'"
+          [class.jp-table__header--center]="columnAlign(column) === 'center'"
+          [class.jp-table__header--end]="columnAlign(column) === 'end'"
+        >
+          {{ column.header }}
+        </th>
+        }
+      </tr>
+    </thead>
+    @if (hasRows()) {
+    <tbody class="jp-table__body">
+      @for (row of rows(); track $index) {
+      <tr class="jp-table__row">
+        @for (column of columns(); track column.key) {
+        <td
+          class="jp-table__cell"
+          [class.jp-table__cell--start]="columnAlign(column) === 'start'"
+          [class.jp-table__cell--center]="columnAlign(column) === 'center'"
+          [class.jp-table__cell--end]="columnAlign(column) === 'end'"
+        >
+          @if (cellTemplate(column.key); as template) {
+          <ng-container
+            [ngTemplateOutlet]="template"
+            [ngTemplateOutletContext]="{
+                      $implicit: cellValue(row, column.key),
+                      value: cellValue(row, column.key),
+                      row: row,
+                      column: column,
+                    }"
+          />
+          } @else { {{ displayValue(cellValue(row, column.key)) }} }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+    }
+  </table>
+
+  @if (!hasRows()) {
+  <div class="jp-table__empty">
+    <ng-content select="jp-empty-state" />
+    @if (!projectedEmpty()) {
+    <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
+    }
+  </div>
+  }
+</div>

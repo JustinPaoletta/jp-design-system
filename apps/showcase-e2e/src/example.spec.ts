@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test';
 test('has title', async ({ page }) => {
   await page.goto('/');
 
-  await expect(page).toHaveURL(/phase-4-controls/);
-  await expect(page.locator('h1')).toContainText('Phase 4 Controls');
+  await expect(page).toHaveURL(/phase-5-data/);
+  await expect(page.locator('h1')).toContainText('Phase 5 Data Display');
 });
 
 test('phase 2 dashboard remains available', async ({ page }) => {

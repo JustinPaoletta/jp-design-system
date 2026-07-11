@@ -15,6 +15,9 @@ export * from './lib/primitives/textarea/textarea';
 export * from './lib/primitives/select/select';
 export * from './lib/primitives/checkbox/checkbox';
 export * from './lib/primitives/switch/switch';
+export * from './lib/primitives/badge/badge';
+export * from './lib/primitives/empty-state/empty-state';
+export * from './lib/primitives/table/table';
 
 /** @deprecated Temporary compatibility export. */
 export * from './lib/ui/ui';

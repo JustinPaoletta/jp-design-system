@@ -153,3 +153,30 @@ export const JP_INPUT_TYPES = [
 ] as const;
 
 export type JpInputType = (typeof JP_INPUT_TYPES)[number];
+
+export const JP_BADGE_TONES = [
+  'neutral',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'info',
+] as const;
+
+export type JpBadgeTone = (typeof JP_BADGE_TONES)[number];
+
+export const JP_BADGE_SIZES = ['sm', 'md'] as const;
+
+export type JpBadgeSize = (typeof JP_BADGE_SIZES)[number];
+
+export const JP_TABLE_ALIGNS = ['start', 'center', 'end'] as const;
+
+export type JpTableAlign = (typeof JP_TABLE_ALIGNS)[number];
+
+export type JpTableCellValue = string | number | null | undefined;
+
+export interface JpTableColumn {
+  key: string;
+  header: string;
+  align?: JpTableAlign;
+}

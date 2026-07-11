@@ -1,0 +1,61 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+.jp-badge__root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-2xs);
+  max-width: 100%;
+  padding-block: var(--jp-space-2xs);
+  padding-inline: var(--jp-space-sm);
+  border-radius: var(--jp-radius-full);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
+  letter-spacing: var(--jp-font-letter-spacing-wide);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host(.jp-badge--sm) .jp-badge__root {
+  padding-block: 0;
+  padding-inline: var(--jp-space-xs);
+  font-size: var(--jp-font-size-caption);
+}
+
+:host(.jp-badge--neutral) .jp-badge__root {
+  background: var(--jp-color-badge-neutral-bg);
+  color: var(--jp-color-badge-neutral-fg);
+}
+
+:host(.jp-badge--accent) .jp-badge__root {
+  background: var(--jp-color-badge-accent-bg);
+  color: var(--jp-color-badge-accent-fg);
+}
+
+:host(.jp-badge--success) .jp-badge__root {
+  background: var(--jp-color-badge-success-bg);
+  color: var(--jp-color-badge-success-fg);
+}
+
+:host(.jp-badge--warning) .jp-badge__root {
+  background: var(--jp-color-badge-warning-bg);
+  color: var(--jp-color-badge-warning-fg);
+}
+
+:host(.jp-badge--error) .jp-badge__root {
+  background: var(--jp-color-badge-error-bg);
+  color: var(--jp-color-badge-error-fg);
+}
+
+:host(.jp-badge--info) .jp-badge__root {
+  background: var(--jp-color-badge-info-bg);
+  color: var(--jp-color-badge-info-fg);
+}

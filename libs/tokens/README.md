@@ -104,6 +104,41 @@ Selection (checkbox / switch):
 Control heights (`sm` / `md` / `lg`) map to `--jp-size-control-*` and tighten under
 `data-jp-density="compact"`.
 
+## Data display tokens (Phase 5)
+
+Badge:
+
+| Semantic token     | CSS variable                  |
+| ------------------ | ----------------------------- |
+| `badge.neutral-bg` | `--jp-color-badge-neutral-bg` |
+| `badge.neutral-fg` | `--jp-color-badge-neutral-fg` |
+| `badge.accent-bg`  | `--jp-color-badge-accent-bg`  |
+| `badge.accent-fg`  | `--jp-color-badge-accent-fg`  |
+| `badge.success-bg` | `--jp-color-badge-success-bg` |
+| `badge.success-fg` | `--jp-color-badge-success-fg` |
+| `badge.warning-bg` | `--jp-color-badge-warning-bg` |
+| `badge.warning-fg` | `--jp-color-badge-warning-fg` |
+| `badge.error-bg`   | `--jp-color-badge-error-bg`   |
+| `badge.error-fg`   | `--jp-color-badge-error-fg`   |
+| `badge.info-bg`    | `--jp-color-badge-info-bg`    |
+| `badge.info-fg`    | `--jp-color-badge-info-fg`    |
+
+Table:
+
+| Semantic token         | CSS variable                      |
+| ---------------------- | --------------------------------- |
+| `table.header-bg`      | `--jp-color-table-header-bg`      |
+| `table.header-fg`      | `--jp-color-table-header-fg`      |
+| `table.row-bg`         | `--jp-color-table-row-bg`         |
+| `table.row-bg-hover`   | `--jp-color-table-row-bg-hover`   |
+| `table.row-bg-striped` | `--jp-color-table-row-bg-striped` |
+| `table.row-border`     | `--jp-color-table-row-border`     |
+| `table.cell-fg`        | `--jp-color-table-cell-fg`        |
+| `table.caption-fg`     | `--jp-color-table-caption-fg`     |
+
+Empty state reuses surface/foreground tokens; no dedicated empty-state color
+tokens in v1.
+
 ## Generated artifacts
 
 `npm run tokens:build` writes:

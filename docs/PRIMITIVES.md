@@ -1,11 +1,11 @@
 # Primitives
 
-Reference for layout, typography, shell, and control primitives in `libs/ui`.
-All primitives use design tokens, strict typed inputs, and OnPush change
+Reference for layout, typography, shell, control, and data-display primitives in
+`libs/ui`. All primitives use design tokens, strict typed inputs, and OnPush change
 detection.
 
 See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md),
-[PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md).
+[PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md).
 
 ---
 
@@ -283,6 +283,52 @@ projected content. CVA value type: `boolean`.
 
 ---
 
+## Data display primitives
+
+Phase 5 data display. No `class` / `style` inputs. Table is presentational (no
+sort/filter/selection chrome).
+
+### `jp-badge`
+
+| Input  | Values                                                     | Default   |
+| ------ | ---------------------------------------------------------- | --------- |
+| `tone` | `neutral`, `accent`, `success`, `warning`, `error`, `info` | `neutral` |
+| `size` | `sm`, `md`                                                 | `md`      |
+
+Label content is projected. Presentational only (not a button). Accent tone uses
+soft accent fill as a signal chip — not a large accent wash.
+
+### `jp-empty-state`
+
+| Input         | Values | Default | Notes                    |
+| ------------- | ------ | ------- | ------------------------ |
+| `title`       | string | —       | Required                 |
+| `description` | string | `''`    | Optional supporting copy |
+
+Host has `role="status"`. Optional icon via `[jpEmptyStateIcon]`. Actions via
+default content projection (typically `jp-button`).
+
+### `jp-table`
+
+| Input              | Values                               | Default     | Notes                                    |
+| ------------------ | ------------------------------------ | ----------- | ---------------------------------------- |
+| `caption`          | string                               | `''`        | Renders `<caption>` when non-empty       |
+| `columns`          | `JpTableColumn[]`                    | `[]`        | `key`, `header`, optional `align`        |
+| `rows`             | `Record<string, JpTableCellValue>[]` | `[]`        | Cell values: string \| number \| nullish |
+| `striped`          | boolean                              | `false`     | Alternating row background               |
+| `emptyTitle`       | string                               | `'No data'` | Fallback when no projected empty state   |
+| `emptyDescription` | string                               | `''`        | Fallback description                     |
+
+`JpTableColumn.align`: `start` \| `center` \| `end` (default `start`).
+
+Rich cells: project `ng-template[jpTableCell]="columnKey"` with
+`let-value` (also `value`, `row`, `column` in context).
+
+Empty rows: project `jp-empty-state` into the table; otherwise the fallback
+title/description render.
+
+---
+
 ## Storybook
 
 Component stories live in `libs/ui`:
@@ -292,8 +338,9 @@ npx nx run ui:storybook
 ```
 
 Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Compositions/Layout Dashboard`,
-`Compositions/App Shell Dashboard`, and `Compositions/Controls Form`.
+`Primitives/Controls/*`, `Primitives/Data Display/*`, `Compositions/Layout Dashboard`,
+`Compositions/App Shell Dashboard`, `Compositions/Controls Form`, and
+`Compositions/Data Display`.
 
 ---
 
@@ -306,5 +353,5 @@ editable — use Storybook for controls and accent/density toggles):
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-4-controls (also `/phase-3-dashboard`,
-`/phase-2-dashboard`).
+Open http://localhost:4200/phase-5-data (also `/phase-4-controls`,
+`/phase-3-dashboard`, `/phase-2-dashboard`).

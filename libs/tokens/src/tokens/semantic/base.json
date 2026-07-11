@@ -107,6 +107,30 @@
       "checkbox-bg-checked": { "value": "{color.accent.solid}" },
       "checkbox-fg": { "value": "{color.accent.contrast}" },
       "checkbox-border": { "value": "{color.border.default}" }
+    },
+    "badge": {
+      "neutral-bg": { "value": "{color.surface.emphasis}" },
+      "neutral-fg": { "value": "{color.text.secondary}" },
+      "accent-bg": { "value": "{color.accent.soft}" },
+      "accent-fg": { "value": "{color.accent.strong}" },
+      "success-bg": { "value": "{color.state.success.soft}" },
+      "success-fg": { "value": "{color.state.success.text}" },
+      "warning-bg": { "value": "{color.state.warning.soft}" },
+      "warning-fg": { "value": "{color.state.warning.text}" },
+      "error-bg": { "value": "{color.state.error.soft}" },
+      "error-fg": { "value": "{color.state.error.text}" },
+      "info-bg": { "value": "{color.state.info.soft}" },
+      "info-fg": { "value": "{color.state.info.text}" }
+    },
+    "table": {
+      "header-bg": { "value": "{color.surface.subtle}" },
+      "header-fg": { "value": "{color.text.secondary}" },
+      "row-bg": { "value": "{color.surface.raised}" },
+      "row-bg-hover": { "value": "{color.surface.subtle}" },
+      "row-bg-striped": { "value": "{color.surface.sunken}" },
+      "row-border": { "value": "{color.border.subtle}" },
+      "cell-fg": { "value": "{color.text.primary}" },
+      "caption-fg": { "value": "{color.text.muted}" }
     }
   },
   "space": {

@@ -22,10 +22,14 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Control primitives: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`
 - Showcase `/phase-4-controls` form composition inside `jp-app-shell` + Playwright e2e
 - Storybook `Compositions/Controls Form` with accent/density toolbars
+- Phase 5 data-display tokens (badge tones, table surfaces)
+- Data-display primitives: `jp-badge`, `jp-empty-state`, `jp-table` (with optional `jpTableCell` templates)
+- Showcase `/phase-5-data` dashboard data page inside `jp-app-shell` + Playwright e2e
+- Storybook `Compositions/Data Display` with accent/density toolbars
 
 ### Changed
 
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
-- Showcase root redirect now points to `/phase-4-controls`
+- Showcase root redirect now points to `/phase-5-data`

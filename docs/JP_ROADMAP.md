@@ -28,9 +28,10 @@ density.
 - Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
 - Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
 - Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
-- Phase 4, Epic 4 (Core Inputs / Controls) is in progress on `phase4-controls`.
-- Implementation plan: [PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md).
-- Next milestone: complete Phase 4 merge (controls + Showcase `/phase-4-controls`).
+- Phase 4, Epic 4 (Core Inputs / Controls) is complete on `phase4-controls`.
+- Phase 5, Epic 5 (Data Display) is in progress on `phase5-data-display`.
+- Implementation plan: [PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md).
+- Next milestone: complete Phase 5 merge (badge + table + empty state + Showcase `/phase-5-data`).
 
 ---
 
@@ -172,7 +173,7 @@ Implementation plan: [PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLA
 - [x] Story 4.5 — `jp-checkbox` + `jp-switch`
 - [x] Story 4.6 — Showcase composition + e2e
 
-Deliverable: Complete form styling.
+Deliverable: Complete form styling. Completed.
 
 ---
 
@@ -180,9 +181,13 @@ Deliverable: Complete form styling.
 
 ## EPIC 5
 
-- jp-table
-- jp-badge
-- Empty state pattern
+Implementation plan: [PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md)
+
+- [x] Story 5.0 — Data display tokens + API spike (locked decisions)
+- [x] Story 5.1 — `jp-badge`
+- [x] Story 5.2 — `jp-empty-state`
+- [x] Story 5.3 — `jp-table`
+- [x] Story 5.4 — Showcase composition + e2e
 
 Deliverable: Dashboard data page.
 

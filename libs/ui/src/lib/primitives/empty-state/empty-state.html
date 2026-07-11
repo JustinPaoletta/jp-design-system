@@ -1,0 +1,14 @@
+<div class="jp-empty-state__root">
+  <div class="jp-empty-state__icon">
+    <ng-content select="[jpEmptyStateIcon]" />
+  </div>
+  <div class="jp-empty-state__copy">
+    <p class="jp-empty-state__title">{{ title() }}</p>
+    @if (description()) {
+    <p class="jp-empty-state__description">{{ description() }}</p>
+    }
+  </div>
+  <div class="jp-empty-state__actions">
+    <ng-content />
+  </div>
+</div>

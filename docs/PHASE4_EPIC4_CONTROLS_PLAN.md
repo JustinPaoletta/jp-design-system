@@ -1,7 +1,7 @@
 # Phase 4 Epic 4 — Core Controls Implementation Plan
 
-**Status:** In progress — implementation on `phase4-controls`  
-**Suggested branch:** `phase4-controls`  
+**Status:** Complete — Stories 4.0–4.6 delivered  
+**Branch:** `phase4-controls`  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
 **Depends on:** Phase 3 App Shell complete ([PHASE3_EPIC3_APP_SHELL_PLAN.md](./PHASE3_EPIC3_APP_SHELL_PLAN.md))
 
