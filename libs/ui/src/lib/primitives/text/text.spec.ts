@@ -61,4 +61,11 @@ describe('JpText', () => {
     expect(component.size()).toBe('body');
     expect(component.tone()).toBe('primary');
   });
+
+  it('applies mono font family when mono is true', () => {
+    fixture.componentRef.setInput('mono', true);
+    fixture.detectChanges();
+
+    expect(component.rootFontFamily()).toBe('var(--jp-font-family-mono)');
+  });
 });

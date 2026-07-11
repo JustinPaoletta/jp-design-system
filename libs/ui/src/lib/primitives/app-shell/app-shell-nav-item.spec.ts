@@ -58,6 +58,7 @@ describe('JpAppShellNavItem', () => {
     expect(root.tagName).toBe('BUTTON');
     expect(root.getAttribute('type')).toBe('button');
     expect(root.getAttribute('href')).toBeNull();
+    expect(component.resolvedHref()).toBeNull();
   });
 
   it('uses provided href on anchors', () => {

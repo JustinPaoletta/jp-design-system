@@ -23,3 +23,4 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
+- Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
