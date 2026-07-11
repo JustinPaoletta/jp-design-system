@@ -11,6 +11,7 @@
   [attr.aria-label]="title()"
   [attr.aria-hidden]="!isOpen()"
   [attr.inert]="isOpen() ? null : ''"
+  [jpFocusTrap]="trapFocus()"
   (keydown)="onSurfaceKeydown($event)"
 >
   <header class="jp-assistant-panel__header">

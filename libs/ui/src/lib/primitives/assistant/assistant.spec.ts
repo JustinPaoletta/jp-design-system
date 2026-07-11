@@ -156,8 +156,7 @@ describe('JpAssistantPanel + trigger', () => {
 
     expect(service.isOpen()).toBe(true);
     expect(service.messages()).toEqual([]);
-    // null context becomes undefined → open() does not overwrite prior context
-    expect(service.context()?.label).toBe('Prior');
+    expect(service.context()).toBeNull();
   });
 
   it('closes on Escape and via close button', () => {
@@ -209,6 +208,35 @@ describe('JpAssistantPanel + trigger', () => {
     fixture.detectChanges();
 
     expect(service.context()).toBeNull();
+  });
+
+  it('traps focus on mobile viewport when open', () => {
+    const matchMedia = jest.fn().mockImplementation((query: string) => ({
+      matches: query.includes('48rem'),
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      configurable: true,
+      value: matchMedia,
+    });
+
+    const mobileFixture = TestBed.createComponent(AssistantHost);
+    mobileFixture.detectChanges();
+
+    const panel = mobileFixture.debugElement.query(
+      By.directive(JpAssistantPanel),
+    ).componentInstance as JpAssistantPanel;
+    panel.ngOnInit();
+
+    expect(panel.isMobileViewport()).toBe(true);
+    expect(panel.trapFocus()).toBe(false);
+
+    service.open();
+    mobileFixture.detectChanges();
+    expect(panel.trapFocus()).toBe(true);
   });
 
   it('ignores empty submits and Escape when closed', () => {

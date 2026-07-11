@@ -25,9 +25,8 @@ export class JpAssistantTrigger {
 
   @HostListener('click')
   onClick(): void {
-    const context = this.jpAssistantContext();
     this.assistant.open({
-      context: context ?? undefined,
+      context: this.jpAssistantContext(),
       clearMessages: this.jpAssistantClearMessages(),
     });
   }

@@ -2,25 +2,30 @@ import {
   afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   ElementRef,
   inject,
   input,
   NgZone,
+  OnInit,
   output,
   signal,
   viewChild,
 } from '@angular/core';
 import { JpButton } from '../button/button';
 import { JpEmptyState } from '../empty-state/empty-state';
+import { JpFocusTrap } from '../shared/focus-trap';
 import { JpAssistantMessage } from './assistant-message';
 import { JpAssistantService } from './assistant.service';
+
+const ASSISTANT_MOBILE_MEDIA = '(max-width: 48rem)';
 
 let nextAssistantPanelId = 0;
 
 @Component({
   selector: 'jp-assistant-panel',
-  imports: [JpAssistantMessage, JpButton, JpEmptyState],
+  imports: [JpAssistantMessage, JpButton, JpEmptyState, JpFocusTrap],
   templateUrl: './assistant-panel.html',
   styleUrl: './assistant-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +34,7 @@ let nextAssistantPanelId = 0;
     '[class.jp-assistant-panel--open]': 'isOpen()',
   },
 })
-export class JpAssistantPanel {
+export class JpAssistantPanel implements OnInit {
   private readonly assistantService = inject(JpAssistantService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly zone = inject(NgZone);
@@ -38,7 +43,13 @@ export class JpAssistantPanel {
     viewChild<ElementRef<HTMLTextAreaElement>>('composer');
   private previousFocus: HTMLElement | null = null;
   private lastOpen = false;
+  private mobileMediaQuery: MediaQueryList | null = null;
   readonly composerId = `jp-assistant-composer-${++nextAssistantPanelId}`;
+
+  readonly isMobileViewport = signal(false);
+  readonly trapFocus = computed(
+    () => this.isOpen() && this.isMobileViewport(),
+  );
 
   readonly isOpen = this.assistantService.isOpen;
   readonly context = this.assistantService.context;
@@ -86,6 +97,27 @@ export class JpAssistantPanel {
         document.removeEventListener('keydown', onKeydown);
       });
     }
+  }
+
+  ngOnInit(): void {
+    if (
+      typeof window === 'undefined' ||
+      typeof window.matchMedia !== 'function'
+    ) {
+      return;
+    }
+
+    this.mobileMediaQuery = window.matchMedia(ASSISTANT_MOBILE_MEDIA);
+    this.isMobileViewport.set(this.mobileMediaQuery.matches);
+
+    const onChange = (event: MediaQueryListEvent) => {
+      this.isMobileViewport.set(event.matches);
+    };
+
+    this.mobileMediaQuery.addEventListener('change', onChange);
+    this.destroyRef.onDestroy(() => {
+      this.mobileMediaQuery?.removeEventListener('change', onChange);
+    });
   }
 
   close(): void {

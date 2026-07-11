@@ -67,7 +67,7 @@ export class Phase7AssistantPage {
   };
 
   seedToneDemo(): void {
-    this.assistant.open({ clearMessages: true });
+    this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
       content: 'Tone refinement demo — system meta stays muted.',
