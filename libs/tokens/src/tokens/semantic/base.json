@@ -152,6 +152,20 @@
       "warning-accent": { "value": "{color.state.warning.border}" },
       "error-accent": { "value": "{color.state.error.border}" },
       "info-accent": { "value": "{color.state.info.border}" }
+    },
+    "assistant": {
+      "panel-bg": { "value": "{color.surface.raised}" },
+      "panel-border": { "value": "{color.border.default}" },
+      "header-bg": { "value": "{color.surface.subtle}" },
+      "composer-bg": { "value": "{color.surface.sunken}" },
+      "user-bg": { "value": "{color.surface.subtle}" },
+      "user-fg": { "value": "{color.text.primary}" },
+      "assistant-bg": { "value": "{color.surface.sunken}" },
+      "assistant-fg": { "value": "{color.text.primary}" },
+      "system-fg": { "value": "{color.text.muted}" },
+      "context-bg": { "value": "{color.accent.soft}" },
+      "context-fg": { "value": "{color.accent.strong}" },
+      "context-border": { "value": "{color.accent.muted}" }
     }
   },
   "space": {
@@ -197,6 +211,9 @@
     "sidebar": {
       "expanded": { "value": "16rem" },
       "collapsed": { "value": "{primitive.space.32}" }
+    },
+    "assistant": {
+      "panel-width": { "value": "22rem" }
     }
   },
   "layout": {
@@ -281,6 +298,10 @@
       "dialog-scrim": { "value": "{primitive.z.90}" },
       "dialog": { "value": "{primitive.z.100}" },
       "toast": { "value": "{primitive.z.100}" }
+    },
+    "assistant": {
+      "scrim": { "value": "{primitive.z.55}" },
+      "panel": { "value": "{primitive.z.55}" }
     }
   },
   "elevation": {

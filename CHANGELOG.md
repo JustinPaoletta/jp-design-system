@@ -30,10 +30,14 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Feedback primitives: `jpFocusTrap`, `jp-tooltip`, `jp-toast` (+ service/outlet), `jp-dialog`, `jp-popover`, `jp-dropdown-menu`
 - Showcase `/phase-6-overlays` interaction page inside `jp-app-shell` + Playwright e2e
 - Storybook `Compositions/Feedback Overlays` with accent/density toolbars
+- Phase 7 assistant tokens (panel chrome, message role tones, context chip, z-index)
+- Assistant primitives: `JpAssistantService`, `jpAssistantTrigger`, `jp-assistant-message`, `jp-assistant-panel`
+- Showcase `/phase-7-assistant` assistant page inside `jp-app-shell` + Playwright e2e
+- Storybook `Compositions/Assistant System` with accent/density toolbars
 
 ### Changed
 
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
-- Showcase root redirect now points to `/phase-6-overlays`
+- Showcase root redirect now points to `/phase-7-assistant`

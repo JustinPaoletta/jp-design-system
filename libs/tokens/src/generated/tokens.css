@@ -105,6 +105,7 @@
   --jp-primitive-typography-letter-spacing-wide: 0.01em;
   --jp-primitive-z-40: 40;
   --jp-primitive-z-50: 50;
+  --jp-primitive-z-55: 55;
   --jp-primitive-z-60: 60;
   --jp-primitive-z-70: 70;
   --jp-primitive-z-80: 80;
@@ -221,6 +222,18 @@
   --jp-color-toast-warning-accent: #f7c980;
   --jp-color-toast-error-accent: #f29b9b;
   --jp-color-toast-info-accent: #9cbaf7;
+  --jp-color-assistant-panel-bg: #1e2636;
+  --jp-color-assistant-panel-border: #2d374a;
+  --jp-color-assistant-header-bg: #141b2a;
+  --jp-color-assistant-composer-bg: #0c111c;
+  --jp-color-assistant-user-bg: #141b2a;
+  --jp-color-assistant-user-fg: #f4f7ff;
+  --jp-color-assistant-assistant-bg: #0c111c;
+  --jp-color-assistant-assistant-fg: #f4f7ff;
+  --jp-color-assistant-system-fg: #8b98ae;
+  --jp-color-assistant-context-bg: #adfff2;
+  --jp-color-assistant-context-fg: #149f98;
+  --jp-color-assistant-context-border: #7cffe9;
   --jp-space-2xs: 0.25rem;
   --jp-space-xs: 0.5rem;
   --jp-space-sm: 0.75rem;
@@ -250,6 +263,7 @@
   --jp-size-column-min-lg: 24rem;
   --jp-size-sidebar-expanded: 16rem;
   --jp-size-sidebar-collapsed: 4rem;
+  --jp-size-assistant-panel-width: 22rem;
   --jp-layout-shell-mobile-max: 48rem;
   --jp-font-family-base: 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-font-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
@@ -294,6 +308,8 @@
   --jp-z-overlay-dialog-scrim: 90;
   --jp-z-overlay-dialog: 100;
   --jp-z-overlay-toast: 100;
+  --jp-z-assistant-scrim: 55;
+  --jp-z-assistant-panel: 55;
   --jp-elevation-none: none;
   --jp-elevation-raised: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.45);
   --jp-elevation-floating: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.55);

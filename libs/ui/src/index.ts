@@ -25,6 +25,10 @@ export * from './lib/primitives/toast/toast.service';
 export * from './lib/primitives/dialog/dialog';
 export * from './lib/primitives/popover/popover';
 export * from './lib/primitives/dropdown-menu/dropdown-menu';
+export * from './lib/primitives/assistant/assistant.service';
+export * from './lib/primitives/assistant/assistant-trigger';
+export * from './lib/primitives/assistant/assistant-message';
+export * from './lib/primitives/assistant/assistant-panel';
 
 /** @deprecated Temporary compatibility export. */
 export * from './lib/ui/ui';

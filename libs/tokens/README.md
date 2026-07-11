@@ -182,6 +182,31 @@ Overlay z-index stack:
 | `overlay.dialog`       | `--jp-z-overlay-dialog`       |
 | `overlay.toast`        | `--jp-z-overlay-toast`        |
 
+## Assistant tokens (Phase 7)
+
+Assistant panel chrome and message tones:
+
+| Semantic token             | CSS variable                          |
+| -------------------------- | ------------------------------------- |
+| `assistant.panel-bg`       | `--jp-color-assistant-panel-bg`       |
+| `assistant.panel-border`   | `--jp-color-assistant-panel-border`   |
+| `assistant.header-bg`      | `--jp-color-assistant-header-bg`      |
+| `assistant.composer-bg`    | `--jp-color-assistant-composer-bg`    |
+| `assistant.user-bg`        | `--jp-color-assistant-user-bg`        |
+| `assistant.user-fg`        | `--jp-color-assistant-user-fg`        |
+| `assistant.assistant-bg`   | `--jp-color-assistant-assistant-bg`   |
+| `assistant.assistant-fg`   | `--jp-color-assistant-assistant-fg`   |
+| `assistant.system-fg`      | `--jp-color-assistant-system-fg`      |
+| `assistant.context-bg`     | `--jp-color-assistant-context-bg`     |
+| `assistant.context-fg`     | `--jp-color-assistant-context-fg`     |
+| `assistant.context-border` | `--jp-color-assistant-context-border` |
+| `assistant.panel-width`    | `--jp-size-assistant-panel-width`     |
+| `assistant.scrim`          | `--jp-z-assistant-scrim`              |
+| `assistant.panel`          | `--jp-z-assistant-panel`              |
+
+Assistant z-index sits above the shell drawer and below dialogs/toasts so
+confirmations can still layer over the panel.
+
 ## Generated artifacts
 
 `npm run tokens:build` writes:

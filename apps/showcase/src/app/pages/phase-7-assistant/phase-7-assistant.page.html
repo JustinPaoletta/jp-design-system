@@ -1,0 +1,104 @@
+<jp-app-shell
+  [sidebarCollapsed]="sidebarCollapsed"
+  [mobileNavOpen]="mobileNavOpen"
+  (sidebarCollapsedChange)="sidebarCollapsed = $event"
+  (mobileNavOpenChange)="mobileNavOpen = $event"
+>
+  <nav jpAppShellSidebar>
+    <jp-stack gap="2xs">
+      <jp-app-shell-nav-item href="/phase-7-assistant" [active]="true">
+        Assistant
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-6-overlays">
+        Overlays
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-5-data"> Data </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-4-controls">
+        Controls
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-3-dashboard">
+        Phase 3
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-2-dashboard">
+        Phase 2
+      </jp-app-shell-nav-item>
+    </jp-stack>
+  </nav>
+
+  <main jpAppShellMain>
+    <jp-box padding="lg" maxWidth="wide">
+      <jp-stack gap="lg">
+        <jp-stack gap="xs">
+          <jp-heading as="h1">Phase 7 Assistant System</jp-heading>
+          <jp-text tone="secondary"
+            >Branded assistant panel, context triggers, and tone-refined message
+            roles inside the app shell.</jp-text
+          >
+          <jp-inline gap="sm">
+            <jp-text as="small" tone="muted">accent: {{ accent }}</jp-text>
+            <jp-text as="small" tone="muted">density: {{ density }}</jp-text>
+          </jp-inline>
+        </jp-stack>
+
+        <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+          <jp-stack gap="md">
+            <jp-heading as="h2">Context triggers</jp-heading>
+            <jp-text tone="secondary"
+              >Open the assistant with entity context from product
+              surfaces.</jp-text
+            >
+            <jp-inline gap="sm" wrap="true">
+              <jp-button
+                type="button"
+                variant="secondary"
+                jpAssistantTrigger
+                [jpAssistantContext]="deploymentContext"
+              >
+                Ask about deployment
+              </jp-button>
+              <jp-button
+                type="button"
+                variant="secondary"
+                jpAssistantTrigger
+                [jpAssistantContext]="tableRowContext"
+              >
+                Ask about row
+              </jp-button>
+              <jp-button
+                type="button"
+                variant="ghost"
+                jpAssistantTrigger
+                [jpAssistantContext]="filterContext"
+                [jpAssistantClearMessages]="true"
+              >
+                Ask about filters
+              </jp-button>
+            </jp-inline>
+          </jp-stack>
+        </jp-surface>
+
+        <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+          <jp-stack gap="md">
+            <jp-heading as="h2">Tone refinement</jp-heading>
+            <jp-text tone="secondary"
+              >Seed system, assistant, and user message roles to compare calm
+              surfaces.</jp-text
+            >
+            <jp-inline gap="sm" wrap="true" align="center">
+              <jp-button
+                type="button"
+                variant="primary"
+                (click)="seedToneDemo()"
+              >
+                Seed tone demo
+              </jp-button>
+              <jp-text tone="muted">Last question: {{ lastReply }}</jp-text>
+            </jp-inline>
+          </jp-stack>
+        </jp-surface>
+      </jp-stack>
+    </jp-box>
+  </main>
+</jp-app-shell>
+
+<jp-assistant-panel (messageSubmit)="onMessageSubmit($event)" />

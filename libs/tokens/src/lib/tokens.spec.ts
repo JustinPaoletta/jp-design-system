@@ -178,6 +178,9 @@ describe('generated artifacts', () => {
     expect(css).toContain('--jp-layout-shell-mobile-max');
     expect(css).toContain('--jp-color-shell-sidebar-bg');
     expect(css).toContain('--jp-z-shell-drawer');
+    expect(css).toContain('--jp-color-assistant-panel-bg');
+    expect(css).toContain('--jp-z-assistant-panel');
+    expect(css).toContain('--jp-size-assistant-panel-width');
   });
 
   it('tokens.compact.css contains compact density overrides', () => {
@@ -213,6 +216,10 @@ describe('generated artifacts', () => {
       getByPath(json, 'semantic.base.color.shell.sidebar-bg'),
     ).toBeTruthy();
     expect(getByPath(json, 'semantic.base.z.shell.drawer')).toBe('50');
+    expect(getByPath(json, 'semantic.base.z.assistant.panel')).toBe('55');
+    expect(getByPath(json, 'semantic.base.size.assistant.panel-width')).toBe(
+      '22rem',
+    );
   });
 });
 

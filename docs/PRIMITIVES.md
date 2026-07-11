@@ -1,11 +1,11 @@
 # Primitives
 
-Reference for layout, typography, shell, control, data-display, and feedback
-primitives in `libs/ui`. All primitives use design tokens, strict typed inputs,
-and OnPush change detection.
+Reference for layout, typography, shell, control, data-display, feedback, and
+assistant primitives in `libs/ui`. All primitives use design tokens, strict typed
+inputs, and OnPush change detection.
 
 See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md),
-[PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md).
+[PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md).
 
 ---
 
@@ -396,6 +396,70 @@ items; Enter/Space activate via native button behavior.
 
 ---
 
+## Assistant primitives
+
+Phase 7 branded assistant integration. No `class` / `style` inputs. Panel
+delivery follows the toast pattern: imperative service + panel host.
+
+### Tone refinement
+
+| Surface           | Rule                                                           |
+| ----------------- | -------------------------------------------------------------- |
+| Panel chrome      | Neutral raised/subtle surfaces — never accent wash backgrounds |
+| Context chip      | Compact accent signal (soft fill + strong text)                |
+| User message      | Subtle surface bubble; primary text                            |
+| Assistant message | Sunken/calm bubble; primary text; no brand-color fill          |
+| System message    | Muted caption text, no bubble                                  |
+| Send action       | Primary button (accent as action signal)                       |
+
+### `JpAssistantService`
+
+| Method / signal                | Role                                      |
+| ------------------------------ | ----------------------------------------- |
+| `isOpen`                       | Readonly open signal                      |
+| `context`                      | Readonly `JpAssistantContext \| null`     |
+| `messages`                     | Readonly `JpAssistantMessageItem[]`       |
+| `open(options?)`               | Open; optional `context`, `clearMessages` |
+| `close()`                      | Close panel                               |
+| `toggle()`                     | Toggle open state                         |
+| `setContext` / `clearContext`  | Manage entity context                     |
+| `addMessage` / `clearMessages` | Append or reset message list              |
+
+`JpAssistantContext`: `{ label, description?, entityType?, entityId? }`.
+
+Message roles: `user` \| `assistant` \| `system`.
+
+### `jpAssistantTrigger`
+
+Attribute directive. Click opens the panel via `JpAssistantService`.
+
+| Input                      | Type                         | Default | Notes         |
+| -------------------------- | ---------------------------- | ------- | ------------- |
+| `jpAssistantContext`       | `JpAssistantContext \| null` | `null`  | Set on open   |
+| `jpAssistantClearMessages` | boolean                      | `false` | Clear history |
+
+### `jp-assistant-message`
+
+| Input     | Values                        | Default     | Notes        |
+| --------- | ----------------------------- | ----------- | ------------ |
+| `role`    | `user`, `assistant`, `system` | `assistant` | Tone classes |
+| `content` | string                        | —           | Required     |
+
+### `jp-assistant-panel`
+
+| Input / output        | Type     | Default             | Notes                       |
+| --------------------- | -------- | ------------------- | --------------------------- |
+| `title`               | string   | `'JP Assistant'`    | Labels complementary region |
+| `closeLabel`          | string   | `'Close assistant'` | Close control name          |
+| `messageSubmit`       | `output` | —                   | Emits user message text     |
+| composer / empty copy | strings  | sensible defaults   | Overridable labels          |
+
+Reads open/context/messages from `JpAssistantService`. Escape closes. Focus moves
+to the composer on open. Desktop: fixed right dock. Mobile: scrim + overlay.
+Host apps respond to `messageSubmit` by calling `addMessage({ role: 'assistant', … })`.
+
+---
+
 ## Storybook
 
 Component stories live in `libs/ui`:
@@ -405,10 +469,10 @@ npx nx run ui:storybook
 ```
 
 Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`,
+`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`, `Primitives/Assistant/*`,
 `Compositions/Layout Dashboard`, `Compositions/App Shell Dashboard`,
-`Compositions/Controls Form`, `Compositions/Data Display`, and
-`Compositions/Feedback Overlays`.
+`Compositions/Controls Form`, `Compositions/Data Display`,
+`Compositions/Feedback Overlays`, and `Compositions/Assistant System`.
 
 ---
 
@@ -421,5 +485,5 @@ editable — use Storybook for controls and accent/density toggles):
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-6-overlays (also `/phase-5-data`,
-`/phase-4-controls`, `/phase-3-dashboard`, `/phase-2-dashboard`).
+Open http://localhost:4200/phase-7-assistant (also `/phase-6-overlays`,
+`/phase-5-data`, `/phase-4-controls`, `/phase-3-dashboard`, `/phase-2-dashboard`).

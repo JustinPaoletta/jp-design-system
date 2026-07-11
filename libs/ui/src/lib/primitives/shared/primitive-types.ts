@@ -212,3 +212,35 @@ export interface JpToastItem {
   tone: JpToastTone;
   durationMs: number;
 }
+
+export const JP_ASSISTANT_MESSAGE_ROLES = [
+  'user',
+  'assistant',
+  'system',
+] as const;
+
+export type JpAssistantMessageRole =
+  (typeof JP_ASSISTANT_MESSAGE_ROLES)[number];
+
+export interface JpAssistantContext {
+  label: string;
+  description?: string;
+  entityType?: string;
+  entityId?: string;
+}
+
+export interface JpAssistantMessageItem {
+  id: number;
+  role: JpAssistantMessageRole;
+  content: string;
+}
+
+export interface JpAssistantOpenOptions {
+  context?: JpAssistantContext | null;
+  clearMessages?: boolean;
+}
+
+export interface JpAssistantAddMessageOptions {
+  role: JpAssistantMessageRole;
+  content: string;
+}

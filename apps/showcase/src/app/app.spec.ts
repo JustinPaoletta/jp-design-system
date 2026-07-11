@@ -9,6 +9,7 @@ import { Phase3DashboardPage } from './pages/phase-3-dashboard/phase-3-dashboard
 import { Phase4ControlsPage } from './pages/phase-4-controls/phase-4-controls.page';
 import { Phase5DataPage } from './pages/phase-5-data/phase-5-data.page';
 import { Phase6OverlaysPage } from './pages/phase-6-overlays/phase-6-overlays.page';
+import { Phase7AssistantPage } from './pages/phase-7-assistant/phase-7-assistant.page';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -19,6 +20,20 @@ describe('App', () => {
       imports: [App],
       providers: [provideRouter(appRoutes)],
     }).compileComponents();
+  });
+
+  it('should render routed phase 7 assistant page', async () => {
+    const router = TestBed.inject(Router);
+    const fixture = TestBed.createComponent(App);
+    await router.navigateByUrl('/phase-7-assistant');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(router.url).toBe('/phase-7-assistant');
+    expect(compiled.querySelector('app-phase-7-assistant-page')).toBeTruthy();
+    expect(compiled.querySelector('jp-app-shell')).toBeTruthy();
+    expect(compiled.querySelector('jp-assistant-panel')).toBeTruthy();
   });
 
   it('should render routed phase 6 overlays page', async () => {
@@ -94,25 +109,25 @@ describe('App', () => {
     );
   });
 
-  it('should redirect root to phase 6 overlays', async () => {
+  it('should redirect root to phase 7 assistant', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
     await router.navigateByUrl('/');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(router.url).toBe('/phase-6-overlays');
+    expect(router.url).toBe('/phase-7-assistant');
   });
 
-  it('should toggle shell collapse state from the phase 6 page', async () => {
+  it('should toggle shell collapse state from the phase 7 page', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
-    await router.navigateByUrl('/phase-6-overlays');
+    await router.navigateByUrl('/phase-7-assistant');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const page = fixture.debugElement.query(By.directive(Phase6OverlaysPage))
-      .componentInstance as Phase6OverlaysPage;
+    const page = fixture.debugElement.query(By.directive(Phase7AssistantPage))
+      .componentInstance as Phase7AssistantPage;
     expect(page.sidebarCollapsed).toBe(false);
     expect(page.mobileNavOpen).toBe(false);
     expect(page.accent).toBe('neon');
@@ -221,6 +236,21 @@ describe('Showcase dashboard pages', () => {
     expect(fixture.componentInstance.density).toBe('compact');
   });
 
+  it('reads document accent and density attributes on phase 7', async () => {
+    document.documentElement.setAttribute('data-jp-accent', 'cobalt');
+    document.documentElement.setAttribute('data-jp-density', 'compact');
+
+    await TestBed.configureTestingModule({
+      imports: [Phase7AssistantPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Phase7AssistantPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.accent).toBe('cobalt');
+    expect(fixture.componentInstance.density).toBe('compact');
+  });
+
   it('toggles empty table rows on phase 5', async () => {
     await TestBed.configureTestingModule({
       imports: [Phase5DataPage],
@@ -259,5 +289,20 @@ describe('Showcase dashboard pages', () => {
     page.confirmDelete();
     expect(page.dialogOpen).toBe(false);
     expect(page.lastAction).toBe('Deleted deployment');
+  });
+
+  it('seeds tone demo and records assistant replies on phase 7', async () => {
+    await TestBed.configureTestingModule({
+      imports: [Phase7AssistantPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Phase7AssistantPage);
+    fixture.detectChanges();
+
+    const page = fixture.componentInstance;
+    page.seedToneDemo();
+    expect(page.lastReply).toBe('None yet');
+    page.onMessageSubmit('Summarize risks');
+    expect(page.lastReply).toBe('Summarize risks');
   });
 });

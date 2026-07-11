@@ -16,22 +16,14 @@ density.
 - Story 0.3 (Lint & Formatting) is complete and validated.
 - Story 0.4 (CI Pipeline) is complete and validated.
 - Phase 1, Epic 1 (Token System) is complete.
-- Story 1.1 (Primitive Tokens) is complete and validated.
-- Story 1.2 (Semantic Aliases) is complete and validated.
-- Story 1.3 (Density Modes) is complete and validated.
-- Story 1.4 (Accent Variants) is complete and validated.
-- Story 1.5 (CSS Output) is complete and validated.
 - Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
 - Phase 3, Epic 3 (App Shell) is complete.
-- Story 2.1 (Layout primitives in `libs/ui`) is complete and validated.
-- Story 2.2 (Showcase `/phase-2-dashboard`) is complete and validated.
-- Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
-- Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
-- Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
-- Phase 4, Epic 4 (Core Inputs / Controls) is complete on `phase4-controls`.
-- Phase 5, Epic 5 (Data Display) is in progress on `phase5-data-display`.
-- Implementation plan: [PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md).
-- Next milestone: complete Phase 5 merge (badge + table + empty state + Showcase `/phase-5-data`).
+- Phase 4, Epic 4 (Core Inputs / Controls) is complete.
+- Phase 5, Epic 5 (Data Display) is complete on `phase5-data-display`.
+- Phase 6, Epic 6 (Feedback & Overlays) is complete on `phase6-feedback-overlays`.
+- Phase 7, Epic 7 (Assistant System) is complete on `phase7-assistant-system`.
+- Implementation plan: [PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md).
+- Next milestone: Phase 8 quality hardening (tests, a11y audit, visual regression, bundle size).
 
 ---
 
@@ -216,9 +208,14 @@ Deliverable: Full interaction layer.
 
 ## EPIC 7
 
-- Assistant panel
-- Context trigger API
-- Tone refinement pass
+Implementation plan: [PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md)
+
+- [x] Story 7.0 — Assistant tokens + API spike (locked decisions)
+- [x] Story 7.1 — `JpAssistantService`
+- [x] Story 7.2 — `jpAssistantTrigger`
+- [x] Story 7.3 — `jp-assistant-message` (tone refinement)
+- [x] Story 7.4 — `jp-assistant-panel`
+- [x] Story 7.5 — Showcase composition + e2e
 
 Deliverable: Branded assistant integration.
 

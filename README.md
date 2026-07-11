@@ -8,8 +8,8 @@ The JP Design System is a structured Angular component library for professional 
 
 - Type: private component-library monorepo
 - Current version: `0.0.0`
-- **Current milestone:** Phase 6 Epic 6 in progress — feedback & overlays, Showcase `/phase-6-overlays`, composition + e2e
-- **Next:** Phase 7 assistant system — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- **Current milestone:** Phase 7 Epic 7 complete — assistant system, Showcase `/phase-7-assistant`, composition + e2e
+- **Next:** Phase 8 quality hardening — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
@@ -23,6 +23,7 @@ The JP Design System is a structured Angular component library for professional 
 - Phase 4 plan: [docs/PHASE4_EPIC4_CONTROLS_PLAN.md](./docs/PHASE4_EPIC4_CONTROLS_PLAN.md)
 - Phase 5 plan: [docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md)
 - Phase 6 plan: [docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md)
+- Phase 7 plan: [docs/PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./docs/PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md)
 - CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
 
 ## Core Philosophy
@@ -40,7 +41,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ```text
 /apps
-  /showcase            # read-only integration app (e.g. /phase-6-overlays)
+  /showcase            # read-only integration app (e.g. /phase-7-assistant)
   /showcase-e2e        # Playwright e2e for showcase
   /storybook           # placeholder Angular shell (not the component Storybook)
   /storybook-e2e       # Playwright scaffold for the storybook app

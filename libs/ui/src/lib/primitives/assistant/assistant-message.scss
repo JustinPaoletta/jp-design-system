@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-assistant-message__content {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+:host(.jp-assistant-message--user) {
+  align-self: flex-end;
+  max-width: 90%;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-assistant-user-bg);
+  color: var(--jp-color-assistant-user-fg);
+}
+
+:host(.jp-assistant-message--assistant) {
+  align-self: flex-start;
+  max-width: 90%;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-assistant-assistant-bg);
+  color: var(--jp-color-assistant-assistant-fg);
+}
+
+:host(.jp-assistant-message--system) {
+  align-self: stretch;
+  padding: 0;
+  color: var(--jp-color-assistant-system-fg);
+  font-size: var(--jp-font-size-caption);
+}
