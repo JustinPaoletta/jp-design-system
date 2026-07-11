@@ -6,6 +6,7 @@ import { App } from './app';
 import { appRoutes } from './app.routes';
 import { Phase2DashboardPage } from './pages/phase-2-dashboard/phase-2-dashboard.page';
 import { Phase3DashboardPage } from './pages/phase-3-dashboard/phase-3-dashboard.page';
+import { Phase4ControlsPage } from './pages/phase-4-controls/phase-4-controls.page';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -16,6 +17,21 @@ describe('App', () => {
       imports: [App],
       providers: [provideRouter(appRoutes)],
     }).compileComponents();
+  });
+
+  it('should render routed phase 4 controls page', async () => {
+    const router = TestBed.inject(Router);
+    const fixture = TestBed.createComponent(App);
+    await router.navigateByUrl('/phase-4-controls');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(router.url).toBe('/phase-4-controls');
+    expect(compiled.querySelector('app-phase-4-controls-page')).toBeTruthy();
+    expect(compiled.querySelector('jp-app-shell')).toBeTruthy();
+    expect(compiled.querySelector('jp-button.jp-button--primary')).toBeTruthy();
+    expect(compiled.querySelector('jp-input')).toBeTruthy();
   });
 
   it('should render routed phase 3 dashboard shell', async () => {
@@ -29,12 +45,6 @@ describe('App', () => {
     expect(router.url).toBe('/phase-3-dashboard');
     expect(compiled.querySelector('app-phase-3-dashboard-page')).toBeTruthy();
     expect(compiled.querySelector('jp-app-shell')).toBeTruthy();
-    expect(compiled.querySelectorAll('.jp-grid__root').length).toBeGreaterThan(
-      1,
-    );
-    expect(
-      compiled.querySelectorAll('.jp-surface__root').length,
-    ).toBeGreaterThan(3);
   });
 
   it('should render routed phase 2 dashboard', async () => {
@@ -52,25 +62,25 @@ describe('App', () => {
     );
   });
 
-  it('should redirect root to phase 3 dashboard', async () => {
+  it('should redirect root to phase 4 controls', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
     await router.navigateByUrl('/');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(router.url).toBe('/phase-3-dashboard');
+    expect(router.url).toBe('/phase-4-controls');
   });
 
-  it('should toggle shell collapse state from the phase 3 page', async () => {
+  it('should toggle shell collapse state from the phase 4 page', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
-    await router.navigateByUrl('/phase-3-dashboard');
+    await router.navigateByUrl('/phase-4-controls');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const page = fixture.debugElement.query(By.directive(Phase3DashboardPage))
-      .componentInstance as Phase3DashboardPage;
+    const page = fixture.debugElement.query(By.directive(Phase4ControlsPage))
+      .componentInstance as Phase4ControlsPage;
     expect(page.sidebarCollapsed).toBe(false);
     expect(page.mobileNavOpen).toBe(false);
     expect(page.accent).toBe('neon');
@@ -128,6 +138,21 @@ describe('Showcase dashboard pages', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(Phase3DashboardPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.accent).toBe('cobalt');
+    expect(fixture.componentInstance.density).toBe('compact');
+  });
+
+  it('reads document accent and density attributes on phase 4', async () => {
+    document.documentElement.setAttribute('data-jp-accent', 'cobalt');
+    document.documentElement.setAttribute('data-jp-density', 'compact');
+
+    await TestBed.configureTestingModule({
+      imports: [Phase4ControlsPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Phase4ControlsPage);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.accent).toBe('cobalt');

@@ -28,7 +28,9 @@ density.
 - Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
 - Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
 - Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
-- Next milestone: Phase 4, Epic 4 (Core Inputs / Controls).
+- Phase 4, Epic 4 (Core Inputs / Controls) is in progress on `phase4-controls`.
+- Implementation plan: [PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md).
+- Next milestone: complete Phase 4 merge (controls + Showcase `/phase-4-controls`).
 
 ---
 
@@ -160,13 +162,15 @@ Deliverable: Functional dashboard shell. Completed.
 
 ## EPIC 4 --- Core Inputs
 
-- jp-button (primary, secondary, ghost, destructive)
-- jp-icon-button
-- jp-input
-- jp-textarea
-- jp-select
-- jp-checkbox
-- jp-switch
+Implementation plan: [PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md)
+
+- [x] Story 4.0 — Control tokens + API spike (locked decisions)
+- [x] Story 4.1 — `jp-button`
+- [x] Story 4.2 — `jp-icon-button`
+- [x] Story 4.3 — `jp-input` + `jp-textarea`
+- [x] Story 4.4 — `jp-select`
+- [x] Story 4.5 — `jp-checkbox` + `jp-switch`
+- [x] Story 4.6 — Showcase composition + e2e
 
 Deliverable: Complete form styling.
 

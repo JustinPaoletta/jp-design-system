@@ -1,9 +1,11 @@
-# Phase 2 Primitives
+# Primitives
 
-Reference for layout and typography primitives in `libs/ui`. All primitives use
-design tokens, strict typed inputs, and OnPush change detection.
+Reference for layout, typography, shell, and control primitives in `libs/ui`.
+All primitives use design tokens, strict typed inputs, and OnPush change
+detection.
 
-See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md).
+See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md),
+[PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md).
 
 ---
 
@@ -186,6 +188,101 @@ both the HTML tag and font size.
 
 ---
 
+## Control primitives
+
+Phase 4 controls. No `class` / `style` inputs. Field controls implement
+`ControlValueAccessor`. Buttons do not.
+
+### `jp-button`
+
+| Input      | Values                                         | Default   |
+| ---------- | ---------------------------------------------- | --------- |
+| `variant`  | `primary`, `secondary`, `ghost`, `destructive` | `primary` |
+| `size`     | `sm`, `md`, `lg`                               | `md`      |
+| `type`     | `button`, `submit`, `reset`                    | `button`  |
+| `disabled` | boolean                                        | `false`   |
+
+Label content is projected. Primary uses accent tokens; destructive uses
+state-error tokens.
+
+### `jp-icon-button`
+
+| Input       | Values                      | Default  | Notes                          |
+| ----------- | --------------------------- | -------- | ------------------------------ |
+| `ariaLabel` | string (required)           | —        | Accessible name for the button |
+| `size`      | `sm`, `md`, `lg`            | `md`     | Square control size            |
+| `type`      | `button`, `submit`, `reset` | `button` | Native button type             |
+| `disabled`  | boolean                     | `false`  |                                |
+
+Icon glyph is projected content. Default styling is ghost-like.
+
+### `jp-input`
+
+| Input         | Values                                                        | Default   | Notes                                                      |
+| ------------- | ------------------------------------------------------------- | --------- | ---------------------------------------------------------- |
+| `label`       | string                                                        | `''`      | Associated via `for` / `id`                                |
+| `hint`        | string                                                        | `''`      | Linked with `aria-describedby` when no error               |
+| `error`       | string                                                        | `''`      | Linked with `aria-describedby`; takes precedence over hint |
+| `type`        | `text`, `email`, `password`, `search`, `tel`, `url`, `number` | `text`    |                                                            |
+| `size`        | `sm`, `md`, `lg`                                              | `md`      |                                                            |
+| `disabled`    | boolean                                                       | `false`   |                                                            |
+| `readonly`    | boolean                                                       | `false`   |                                                            |
+| `invalid`     | boolean                                                       | `false`   | Sets `aria-invalid` + invalid border                       |
+| `placeholder` | string                                                        | `''`      |                                                            |
+| `id`          | string or unset                                               | generated |                                                            |
+
+CVA value type: `string`.
+
+### `jp-textarea`
+
+Same field chrome as `jp-input`, plus:
+
+| Input  | Values | Default |
+| ------ | ------ | ------- |
+| `rows` | number | `4`     |
+
+CVA value type: `string`.
+
+### `jp-select`
+
+Native `<select>` styled with field tokens.
+
+| Input      | Values                               | Default   | Notes |
+| ---------- | ------------------------------------ | --------- | ----- |
+| `label`    | string                               | `''`      |       |
+| `hint`     | string                               | `''`      |       |
+| `error`    | string                               | `''`      |       |
+| `size`     | `sm`, `md`, `lg`                     | `md`      |       |
+| `disabled` | boolean                              | `false`   |       |
+| `invalid`  | boolean                              | `false`   |       |
+| `options`  | `{ value: string; label: string }[]` | `[]`      |       |
+| `id`       | string or unset                      | generated |       |
+
+CVA value type: `string`.
+
+### `jp-checkbox`
+
+| Input      | Values          | Default   | Notes |
+| ---------- | --------------- | --------- | ----- |
+| `disabled` | boolean         | `false`   |       |
+| `invalid`  | boolean         | `false`   |       |
+| `id`       | string or unset | generated |       |
+
+Label is projected content. CVA value type: `boolean`. No indeterminate state in v1.
+
+### `jp-switch`
+
+| Input      | Values          | Default   | Notes |
+| ---------- | --------------- | --------- | ----- |
+| `disabled` | boolean         | `false`   |       |
+| `invalid`  | boolean         | `false`   |       |
+| `id`       | string or unset | generated |       |
+
+Uses `role="switch"` and `aria-checked`. Track uses accent when on. Label is
+projected content. CVA value type: `boolean`.
+
+---
+
 ## Storybook
 
 Component stories live in `libs/ui`:
@@ -195,7 +292,8 @@ npx nx run ui:storybook
 ```
 
 Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-and `Compositions/Layout Dashboard`.
+`Primitives/Controls/*`, `Compositions/Layout Dashboard`,
+`Compositions/App Shell Dashboard`, and `Compositions/Controls Form`.
 
 ---
 
@@ -208,4 +306,5 @@ editable — use Storybook for controls and accent/density toggles):
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-2-dashboard
+Open http://localhost:4200/phase-4-controls (also `/phase-3-dashboard`,
+`/phase-2-dashboard`).

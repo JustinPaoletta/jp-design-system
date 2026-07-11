@@ -1,0 +1,28 @@
+<label class="jp-checkbox__root" [attr.for]="resolvedId()">
+  <input
+    class="jp-checkbox__input"
+    type="checkbox"
+    [attr.id]="resolvedId()"
+    [checked]="checked()"
+    [disabled]="isDisabled()"
+    [attr.aria-invalid]="invalid() ? true : null"
+    (change)="onInputChange($event)"
+    (blur)="onBlur()"
+  />
+  <span class="jp-checkbox__box" aria-hidden="true">
+    <svg
+      class="jp-checkbox__check"
+      viewBox="0 0 16 16"
+      width="100%"
+      height="100%"
+    >
+      <path
+        fill="currentColor"
+        d="M6.2 11.4 2.8 8l1.1-1.1 2.3 2.3 5-5L12.3 5.3z"
+      />
+    </svg>
+  </span>
+  <span class="jp-checkbox__label">
+    <ng-content />
+  </span>
+</label>

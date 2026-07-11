@@ -124,3 +124,32 @@ export type JpFontWeight = (typeof JP_FONT_WEIGHTS)[number];
 export const JP_HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 export type JpHeadingTag = (typeof JP_HEADING_TAGS)[number];
+
+export const JP_CONTROL_SIZES = ['sm', 'md', 'lg'] as const;
+
+export type JpControlSize = (typeof JP_CONTROL_SIZES)[number];
+
+export const JP_BUTTON_VARIANTS = [
+  'primary',
+  'secondary',
+  'ghost',
+  'destructive',
+] as const;
+
+export type JpButtonVariant = (typeof JP_BUTTON_VARIANTS)[number];
+
+export const JP_BUTTON_TYPES = ['button', 'submit', 'reset'] as const;
+
+export type JpButtonType = (typeof JP_BUTTON_TYPES)[number];
+
+export const JP_INPUT_TYPES = [
+  'text',
+  'email',
+  'password',
+  'search',
+  'tel',
+  'url',
+  'number',
+] as const;
+
+export type JpInputType = (typeof JP_INPUT_TYPES)[number];

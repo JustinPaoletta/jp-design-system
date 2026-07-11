@@ -1,0 +1,87 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.jp-button__root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-xs);
+  min-height: var(--jp-button-height, var(--jp-size-control-md));
+  padding-inline: var(--jp-space-md);
+  border: 1px solid transparent;
+  border-radius: var(--jp-radius-md);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
+  letter-spacing: var(--jp-font-letter-spacing-wide);
+  cursor: pointer;
+  transition: var(--jp-motion-transition-base);
+}
+
+:host(.jp-button--sm) .jp-button__root {
+  padding-inline: var(--jp-space-sm);
+  font-size: var(--jp-font-size-caption);
+}
+
+:host(.jp-button--lg) .jp-button__root {
+  padding-inline: var(--jp-space-lg);
+  font-size: var(--jp-font-size-body-lg);
+}
+
+:host(.jp-button--primary) .jp-button__root {
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+}
+
+:host(.jp-button--primary) .jp-button__root:hover:not(:disabled) {
+  background: var(--jp-color-button-primary-bg-hover);
+}
+
+:host(.jp-button--secondary) .jp-button__root {
+  background: var(--jp-color-button-secondary-bg);
+  border-color: var(--jp-color-button-secondary-border);
+  color: var(--jp-color-button-secondary-fg);
+}
+
+:host(.jp-button--secondary) .jp-button__root:hover:not(:disabled) {
+  background: var(--jp-color-button-secondary-bg-hover);
+}
+
+:host(.jp-button--ghost) .jp-button__root {
+  background: transparent;
+  color: var(--jp-color-button-ghost-fg);
+}
+
+:host(.jp-button--ghost) .jp-button__root:hover:not(:disabled) {
+  background: var(--jp-color-button-ghost-bg-hover);
+  color: var(--jp-color-button-ghost-fg-hover);
+}
+
+:host(.jp-button--destructive) .jp-button__root {
+  background: var(--jp-color-button-destructive-bg);
+  color: var(--jp-color-button-destructive-fg);
+}
+
+:host(.jp-button--destructive) .jp-button__root:hover:not(:disabled) {
+  background: var(--jp-color-button-destructive-bg-hover);
+}
+
+.jp-button__root:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.jp-button__root:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-button__root {
+    transition: none;
+  }
+}

@@ -1,0 +1,93 @@
+<jp-app-shell
+  [sidebarCollapsed]="sidebarCollapsed"
+  [mobileNavOpen]="mobileNavOpen"
+  (sidebarCollapsedChange)="sidebarCollapsed = $event"
+  (mobileNavOpenChange)="mobileNavOpen = $event"
+>
+  <nav jpAppShellSidebar>
+    <jp-stack gap="2xs">
+      <jp-app-shell-nav-item href="/phase-4-controls" [active]="true">
+        Controls
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-3-dashboard">
+        Phase 3
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/phase-2-dashboard">
+        Phase 2
+      </jp-app-shell-nav-item>
+    </jp-stack>
+  </nav>
+
+  <main jpAppShellMain>
+    <jp-box padding="lg" maxWidth="narrow">
+      <jp-stack gap="lg">
+        <jp-stack gap="xs">
+          <jp-inline align="center" gap="sm" justify="between">
+            <jp-heading as="h1">Phase 4 Controls</jp-heading>
+            <jp-icon-button ariaLabel="More actions">
+              <svg
+                viewBox="0 0 16 16"
+                width="100%"
+                height="100%"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="3" r="1.5" fill="currentColor" />
+                <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+                <circle cx="8" cy="13" r="1.5" fill="currentColor" />
+              </svg>
+            </jp-icon-button>
+          </jp-inline>
+          <jp-text tone="secondary"
+            >Token-driven buttons and form controls inside the app
+            shell.</jp-text
+          >
+          <jp-inline gap="sm">
+            <jp-text as="small" tone="muted">accent: {{ accent }}</jp-text>
+            <jp-text as="small" tone="muted">density: {{ density }}</jp-text>
+          </jp-inline>
+        </jp-stack>
+
+        <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+          <form>
+            <jp-stack gap="md">
+              <jp-input
+                label="Email"
+                type="email"
+                placeholder="you@example.com"
+                hint="Used for account notifications."
+                [(ngModel)]="email"
+                name="email"
+              />
+              <jp-textarea
+                label="Notes"
+                rows="3"
+                [(ngModel)]="notes"
+                name="notes"
+              />
+              <jp-select
+                label="Role"
+                [options]="roleOptions"
+                [(ngModel)]="role"
+                name="role"
+              />
+              <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
+                Subscribe to product updates
+              </jp-checkbox>
+              <jp-switch [(ngModel)]="compact" name="compact">
+                Compact density
+              </jp-switch>
+              <jp-inline gap="sm" wrap="true">
+                <jp-button variant="primary" type="submit">Save</jp-button>
+                <jp-button variant="secondary" type="button">Cancel</jp-button>
+                <jp-button variant="ghost" type="button">Reset</jp-button>
+                <jp-button variant="destructive" type="button"
+                  >Delete</jp-button
+                >
+              </jp-inline>
+            </jp-stack>
+          </form>
+        </jp-surface>
+      </jp-stack>
+    </jp-box>
+  </main>
+</jp-app-shell>

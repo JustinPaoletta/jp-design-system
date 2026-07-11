@@ -56,6 +56,54 @@ Heading levels map to primitive typography sizes 700 → 200. See
 | `transition.shell`             | `--jp-motion-transition-shell`              | Sidebar width/transform motion |
 | `shell.scrim` / `shell.drawer` | `--jp-z-shell-scrim`, `--jp-z-shell-drawer` | Mobile drawer stacking         |
 
+## Control tokens (Phase 4)
+
+Button:
+
+| Semantic token                | CSS variable                             |
+| ----------------------------- | ---------------------------------------- |
+| `button.primary-bg`           | `--jp-color-button-primary-bg`           |
+| `button.primary-bg-hover`     | `--jp-color-button-primary-bg-hover`     |
+| `button.primary-fg`           | `--jp-color-button-primary-fg`           |
+| `button.secondary-bg`         | `--jp-color-button-secondary-bg`         |
+| `button.secondary-bg-hover`   | `--jp-color-button-secondary-bg-hover`   |
+| `button.secondary-fg`         | `--jp-color-button-secondary-fg`         |
+| `button.secondary-border`     | `--jp-color-button-secondary-border`     |
+| `button.ghost-fg`             | `--jp-color-button-ghost-fg`             |
+| `button.ghost-fg-hover`       | `--jp-color-button-ghost-fg-hover`       |
+| `button.ghost-bg-hover`       | `--jp-color-button-ghost-bg-hover`       |
+| `button.destructive-bg`       | `--jp-color-button-destructive-bg`       |
+| `button.destructive-bg-hover` | `--jp-color-button-destructive-bg-hover` |
+| `button.destructive-fg`       | `--jp-color-button-destructive-fg`       |
+
+Field:
+
+| Semantic token         | CSS variable                      |
+| ---------------------- | --------------------------------- |
+| `field.bg`             | `--jp-color-field-bg`             |
+| `field.border`         | `--jp-color-field-border`         |
+| `field.border-hover`   | `--jp-color-field-border-hover`   |
+| `field.border-invalid` | `--jp-color-field-border-invalid` |
+| `field.fg`             | `--jp-color-field-fg`             |
+| `field.placeholder`    | `--jp-color-field-placeholder`    |
+| `field.label`          | `--jp-color-field-label`          |
+| `field.error`          | `--jp-color-field-error`          |
+
+Selection (checkbox / switch):
+
+| Semantic token                  | CSS variable                               |
+| ------------------------------- | ------------------------------------------ |
+| `selection.track`               | `--jp-color-selection-track`               |
+| `selection.track-checked`       | `--jp-color-selection-track-checked`       |
+| `selection.thumb`               | `--jp-color-selection-thumb`               |
+| `selection.checkbox-bg`         | `--jp-color-selection-checkbox-bg`         |
+| `selection.checkbox-bg-checked` | `--jp-color-selection-checkbox-bg-checked` |
+| `selection.checkbox-fg`         | `--jp-color-selection-checkbox-fg`         |
+| `selection.checkbox-border`     | `--jp-color-selection-checkbox-border`     |
+
+Control heights (`sm` / `md` / `lg`) map to `--jp-size-control-*` and tighten under
+`data-jp-density="compact"`.
+
 ## Generated artifacts
 
 `npm run tokens:build` writes:
