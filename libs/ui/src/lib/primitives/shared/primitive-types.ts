@@ -180,3 +180,35 @@ export interface JpTableColumn {
   header: string;
   align?: JpTableAlign;
 }
+
+export const JP_TOOLTIP_PLACEMENTS = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+] as const;
+
+export type JpTooltipPlacement = (typeof JP_TOOLTIP_PLACEMENTS)[number];
+
+export const JP_TOAST_TONES = [
+  'neutral',
+  'success',
+  'warning',
+  'error',
+  'info',
+] as const;
+
+export type JpToastTone = (typeof JP_TOAST_TONES)[number];
+
+export interface JpToastOptions {
+  message: string;
+  tone?: JpToastTone;
+  durationMs?: number;
+}
+
+export interface JpToastItem {
+  id: number;
+  message: string;
+  tone: JpToastTone;
+  durationMs: number;
+}

@@ -8,8 +8,8 @@ The JP Design System is a structured Angular component library for professional 
 
 - Type: private component-library monorepo
 - Current version: `0.0.0`
-- **Current milestone:** Phase 5 Epic 5 in progress — data display, Showcase `/phase-5-data`, composition + e2e
-- **Next:** Phase 6 feedback & overlays — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- **Current milestone:** Phase 6 Epic 6 in progress — feedback & overlays, Showcase `/phase-6-overlays`, composition + e2e
+- **Next:** Phase 7 assistant system — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
@@ -22,6 +22,7 @@ The JP Design System is a structured Angular component library for professional 
 - Phase 3 plan: [docs/PHASE3_EPIC3_APP_SHELL_PLAN.md](./docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
 - Phase 4 plan: [docs/PHASE4_EPIC4_CONTROLS_PLAN.md](./docs/PHASE4_EPIC4_CONTROLS_PLAN.md)
 - Phase 5 plan: [docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md)
+- Phase 6 plan: [docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md)
 - CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
 
 ## Core Philosophy
@@ -39,7 +40,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ```text
 /apps
-  /showcase            # read-only integration app (e.g. /phase-5-data)
+  /showcase            # read-only integration app (e.g. /phase-6-overlays)
   /showcase-e2e        # Playwright e2e for showcase
   /storybook           # placeholder Angular shell (not the component Storybook)
   /storybook-e2e       # Playwright scaffold for the storybook app
@@ -158,7 +159,8 @@ Component or token releases should include manual Storybook and Showcase review 
 - Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, layout dashboard composition, Playwright e2e gate
 - Phase 3: `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer, Showcase `/phase-3-dashboard`, composition + e2e
 - Phase 4: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, Showcase `/phase-4-controls`
-- Phase 5 (in progress): `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/phase-5-data`
+- Phase 5: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/phase-5-data`
+- Phase 6 (in progress): `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/phase-6-overlays`
 
 ## License
 

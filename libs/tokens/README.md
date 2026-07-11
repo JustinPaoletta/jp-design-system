@@ -139,6 +139,49 @@ Table:
 Empty state reuses surface/foreground tokens; no dedicated empty-state color
 tokens in v1.
 
+## Feedback & overlay tokens (Phase 6)
+
+Overlay panel / scrim:
+
+| Semantic token         | CSS variable                      |
+| ---------------------- | --------------------------------- |
+| `overlay.scrim`        | `--jp-color-overlay-scrim`        |
+| `overlay.panel-bg`     | `--jp-color-overlay-panel-bg`     |
+| `overlay.panel-border` | `--jp-color-overlay-panel-border` |
+| `overlay.panel-fg`     | `--jp-color-overlay-panel-fg`     |
+
+Tooltip:
+
+| Semantic token   | CSS variable                |
+| ---------------- | --------------------------- |
+| `tooltip.bg`     | `--jp-color-tooltip-bg`     |
+| `tooltip.fg`     | `--jp-color-tooltip-fg`     |
+| `tooltip.border` | `--jp-color-tooltip-border` |
+
+Toast:
+
+| Semantic token         | CSS variable                      |
+| ---------------------- | --------------------------------- |
+| `toast.bg`             | `--jp-color-toast-bg`             |
+| `toast.fg`             | `--jp-color-toast-fg`             |
+| `toast.border`         | `--jp-color-toast-border`         |
+| `toast.neutral-accent` | `--jp-color-toast-neutral-accent` |
+| `toast.success-accent` | `--jp-color-toast-success-accent` |
+| `toast.warning-accent` | `--jp-color-toast-warning-accent` |
+| `toast.error-accent`   | `--jp-color-toast-error-accent`   |
+| `toast.info-accent`    | `--jp-color-toast-info-accent`    |
+
+Overlay z-index stack:
+
+| Semantic token         | CSS variable                  |
+| ---------------------- | ----------------------------- |
+| `overlay.popover`      | `--jp-z-overlay-popover`      |
+| `overlay.dropdown`     | `--jp-z-overlay-dropdown`     |
+| `overlay.tooltip`      | `--jp-z-overlay-tooltip`      |
+| `overlay.dialog-scrim` | `--jp-z-overlay-dialog-scrim` |
+| `overlay.dialog`       | `--jp-z-overlay-dialog`       |
+| `overlay.toast`        | `--jp-z-overlay-toast`        |
+
 ## Generated artifacts
 
 `npm run tokens:build` writes:

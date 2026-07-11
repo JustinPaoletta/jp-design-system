@@ -26,10 +26,14 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Data-display primitives: `jp-badge`, `jp-empty-state`, `jp-table` (with optional `jpTableCell` templates)
 - Showcase `/phase-5-data` dashboard data page inside `jp-app-shell` + Playwright e2e
 - Storybook `Compositions/Data Display` with accent/density toolbars
+- Phase 6 overlay/feedback tokens (tooltip, toast, overlay panel, z-index stack)
+- Feedback primitives: `jpFocusTrap`, `jp-tooltip`, `jp-toast` (+ service/outlet), `jp-dialog`, `jp-popover`, `jp-dropdown-menu`
+- Showcase `/phase-6-overlays` interaction page inside `jp-app-shell` + Playwright e2e
+- Storybook `Compositions/Feedback Overlays` with accent/density toolbars
 
 ### Changed
 
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
-- Showcase root redirect now points to `/phase-5-data`
+- Showcase root redirect now points to `/phase-6-overlays`

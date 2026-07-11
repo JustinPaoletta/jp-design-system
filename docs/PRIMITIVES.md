@@ -1,11 +1,11 @@
 # Primitives
 
-Reference for layout, typography, shell, control, and data-display primitives in
-`libs/ui`. All primitives use design tokens, strict typed inputs, and OnPush change
-detection.
+Reference for layout, typography, shell, control, data-display, and feedback
+primitives in `libs/ui`. All primitives use design tokens, strict typed inputs,
+and OnPush change detection.
 
 See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md),
-[PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md).
+[PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md).
 
 ---
 
@@ -329,6 +329,73 @@ title/description render.
 
 ---
 
+## Feedback & overlay primitives
+
+Phase 6 feedback and overlays. No `class` / `style` inputs. Positioning is
+lightweight CSS (no CDK Overlay). Focus management uses `jpFocusTrap`.
+
+### `jpFocusTrap`
+
+Attribute directive that traps Tab within the host when active.
+
+| Input         | Values  | Default | Notes                 |
+| ------------- | ------- | ------- | --------------------- |
+| `jpFocusTrap` | boolean | `true`  | Disable to pause trap |
+
+### `jp-tooltip`
+
+| Input       | Values                           | Default | Notes                 |
+| ----------- | -------------------------------- | ------- | --------------------- |
+| `content`   | string                           | —       | Required tooltip text |
+| `placement` | `top`, `bottom`, `left`, `right` | `top`   |                       |
+
+Wraps a trigger. Shows on pointer enter / focus; hides on leave / blur / Escape.
+Sets `aria-describedby` on the trigger while open.
+
+### `jp-toast` / `JpToastService` / `jp-toast-outlet`
+
+| Piece             | Role                                               |
+| ----------------- | -------------------------------------------------- |
+| `JpToastService`  | `show({ message, tone?, durationMs? })`, `dismiss` |
+| `jp-toast-outlet` | Fixed stack host; place once near app root         |
+| `jp-toast`        | Presentational toast (`role="status"`)             |
+
+Toast tones: `neutral` \| `success` \| `warning` \| `error` \| `info`.
+
+### `jp-dialog`
+
+| Input / output | Type     | Default          | Notes                           |
+| -------------- | -------- | ---------------- | ------------------------------- |
+| `open`         | boolean  | `false`          | Controlled visibility           |
+| `openChange`   | `output` | —                | Emits on Escape / scrim / close |
+| `title`        | string   | —                | Required; labels the dialog     |
+| `closeLabel`   | string   | `'Close dialog'` | Close button accessible name    |
+
+Uses `role="dialog"` + `aria-modal="true"`, focus trap while open, and restores
+focus on close. Actions slot: `[jpDialogActions]`.
+
+### `jp-popover`
+
+| Input / output | Type     | Default | Notes                  |
+| -------------- | -------- | ------- | ---------------------- |
+| `open`         | boolean  | `false` | Controlled             |
+| `openChange`   | `output` | —       | Escape / outside click |
+
+Trigger: `[jpPopoverTrigger]`. Content: `[jpPopoverContent]` (`role="region"`).
+
+### `jp-dropdown-menu`
+
+| Input / output | Type     | Default | Notes                         |
+| -------------- | -------- | ------- | ----------------------------- |
+| `open`         | boolean  | `false` | Controlled                    |
+| `openChange`   | `output` | —       | Escape / outside click / item |
+
+Trigger: `[jpDropdownTrigger]` (`aria-haspopup="menu"`). Items:
+`button[jpDropdownMenuItem]` with `(itemSelect)` output. Arrow keys move between
+items; Enter/Space activate via native button behavior.
+
+---
+
 ## Storybook
 
 Component stories live in `libs/ui`:
@@ -338,9 +405,10 @@ npx nx run ui:storybook
 ```
 
 Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Primitives/Data Display/*`, `Compositions/Layout Dashboard`,
-`Compositions/App Shell Dashboard`, `Compositions/Controls Form`, and
-`Compositions/Data Display`.
+`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`,
+`Compositions/Layout Dashboard`, `Compositions/App Shell Dashboard`,
+`Compositions/Controls Form`, `Compositions/Data Display`, and
+`Compositions/Feedback Overlays`.
 
 ---
 
@@ -353,5 +421,5 @@ editable — use Storybook for controls and accent/density toggles):
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-5-data (also `/phase-4-controls`,
-`/phase-3-dashboard`, `/phase-2-dashboard`).
+Open http://localhost:4200/phase-6-overlays (also `/phase-5-data`,
+`/phase-4-controls`, `/phase-3-dashboard`, `/phase-2-dashboard`).

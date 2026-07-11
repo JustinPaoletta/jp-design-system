@@ -197,12 +197,16 @@ Deliverable: Dashboard data page.
 
 ## EPIC 6
 
-- Focus directive
-- jp-tooltip
-- jp-toast
-- jp-dialog
-- jp-popover
-- jp-dropdown-menu
+Implementation plan: [PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md)
+
+- [x] Story 6.0 — Overlay tokens + API spike (locked decisions)
+- [x] Story 6.1 — Focus directive (`jpFocusTrap`)
+- [x] Story 6.2 — `jp-tooltip`
+- [x] Story 6.3 — `jp-toast` (+ service / outlet)
+- [x] Story 6.4 — `jp-dialog`
+- [x] Story 6.5 — `jp-popover`
+- [x] Story 6.6 — `jp-dropdown-menu`
+- [x] Story 6.7 — Showcase composition + e2e
 
 Deliverable: Full interaction layer.
 

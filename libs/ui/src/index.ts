@@ -18,6 +18,13 @@ export * from './lib/primitives/switch/switch';
 export * from './lib/primitives/badge/badge';
 export * from './lib/primitives/empty-state/empty-state';
 export * from './lib/primitives/table/table';
+export * from './lib/primitives/tooltip/tooltip';
+export * from './lib/primitives/toast/toast';
+export * from './lib/primitives/toast/toast-outlet';
+export * from './lib/primitives/toast/toast.service';
+export * from './lib/primitives/dialog/dialog';
+export * from './lib/primitives/popover/popover';
+export * from './lib/primitives/dropdown-menu/dropdown-menu';
 
 /** @deprecated Temporary compatibility export. */
 export * from './lib/ui/ui';

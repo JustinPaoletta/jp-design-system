@@ -8,6 +8,7 @@ import { Phase2DashboardPage } from './pages/phase-2-dashboard/phase-2-dashboard
 import { Phase3DashboardPage } from './pages/phase-3-dashboard/phase-3-dashboard.page';
 import { Phase4ControlsPage } from './pages/phase-4-controls/phase-4-controls.page';
 import { Phase5DataPage } from './pages/phase-5-data/phase-5-data.page';
+import { Phase6OverlaysPage } from './pages/phase-6-overlays/phase-6-overlays.page';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -18,6 +19,21 @@ describe('App', () => {
       imports: [App],
       providers: [provideRouter(appRoutes)],
     }).compileComponents();
+  });
+
+  it('should render routed phase 6 overlays page', async () => {
+    const router = TestBed.inject(Router);
+    const fixture = TestBed.createComponent(App);
+    await router.navigateByUrl('/phase-6-overlays');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(router.url).toBe('/phase-6-overlays');
+    expect(compiled.querySelector('app-phase-6-overlays-page')).toBeTruthy();
+    expect(compiled.querySelector('jp-app-shell')).toBeTruthy();
+    expect(compiled.querySelector('jp-tooltip')).toBeTruthy();
+    expect(compiled.querySelector('jp-toast-outlet')).toBeTruthy();
   });
 
   it('should render routed phase 5 data page', async () => {
@@ -78,25 +94,25 @@ describe('App', () => {
     );
   });
 
-  it('should redirect root to phase 5 data', async () => {
+  it('should redirect root to phase 6 overlays', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
     await router.navigateByUrl('/');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(router.url).toBe('/phase-5-data');
+    expect(router.url).toBe('/phase-6-overlays');
   });
 
-  it('should toggle shell collapse state from the phase 5 page', async () => {
+  it('should toggle shell collapse state from the phase 6 page', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
-    await router.navigateByUrl('/phase-5-data');
+    await router.navigateByUrl('/phase-6-overlays');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const page = fixture.debugElement.query(By.directive(Phase5DataPage))
-      .componentInstance as Phase5DataPage;
+    const page = fixture.debugElement.query(By.directive(Phase6OverlaysPage))
+      .componentInstance as Phase6OverlaysPage;
     expect(page.sidebarCollapsed).toBe(false);
     expect(page.mobileNavOpen).toBe(false);
     expect(page.accent).toBe('neon');
@@ -190,6 +206,21 @@ describe('Showcase dashboard pages', () => {
     expect(fixture.componentInstance.density).toBe('compact');
   });
 
+  it('reads document accent and density attributes on phase 6', async () => {
+    document.documentElement.setAttribute('data-jp-accent', 'cobalt');
+    document.documentElement.setAttribute('data-jp-density', 'compact');
+
+    await TestBed.configureTestingModule({
+      imports: [Phase6OverlaysPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Phase6OverlaysPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.accent).toBe('cobalt');
+    expect(fixture.componentInstance.density).toBe('compact');
+  });
+
   it('toggles empty table rows on phase 5', async () => {
     await TestBed.configureTestingModule({
       imports: [Phase5DataPage],
@@ -208,5 +239,25 @@ describe('Showcase dashboard pages', () => {
     expect(page.statusTone('Degraded')).toBe('warning');
     expect(page.statusTone('Failed')).toBe('error');
     expect(page.statusTone('Unknown')).toBe('neutral');
+  });
+
+  it('opens dialog and records menu actions on phase 6', async () => {
+    await TestBed.configureTestingModule({
+      imports: [Phase6OverlaysPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(Phase6OverlaysPage);
+    fixture.detectChanges();
+
+    const page = fixture.componentInstance;
+    expect(page.dialogOpen).toBe(false);
+    page.onMenuEdit();
+    expect(page.lastAction).toBe('Edit selected');
+    page.onMenuDelete();
+    expect(page.dialogOpen).toBe(true);
+    expect(page.lastAction).toBe('Delete selected');
+    page.confirmDelete();
+    expect(page.dialogOpen).toBe(false);
+    expect(page.lastAction).toBe('Deleted deployment');
   });
 });

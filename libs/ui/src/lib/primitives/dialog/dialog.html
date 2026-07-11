@@ -1,0 +1,32 @@
+@if (open()) {
+<div
+  class="jp-dialog__scrim"
+  aria-hidden="true"
+  (pointerdown)="onScrimClick()"
+></div>
+<div
+  #panel
+  class="jp-dialog__panel"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="titleId"
+  [jpFocusTrap]="true"
+  (pointerdown)="$event.stopPropagation()"
+>
+  <div class="jp-dialog__header">
+    <h2 class="jp-dialog__title" [id]="titleId">{{ title() }}</h2>
+    <button
+      type="button"
+      class="jp-dialog__close"
+      [attr.aria-label]="closeLabel()"
+      (click)="close()"
+    >
+      ×
+    </button>
+  </div>
+  <div class="jp-dialog__body">
+    <ng-content />
+  </div>
+  <ng-content select="[jpDialogActions]" />
+</div>
+}

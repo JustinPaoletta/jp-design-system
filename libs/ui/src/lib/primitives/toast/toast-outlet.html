@@ -1,0 +1,9 @@
+<div class="jp-toast-outlet__stack">
+  @for (item of items(); track item.id) {
+  <jp-toast
+    [message]="item.message"
+    [tone]="item.tone"
+    (dismissed)="dismiss(item.id)"
+  />
+  }
+</div>

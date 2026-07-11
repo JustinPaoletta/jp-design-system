@@ -131,6 +131,27 @@
       "row-border": { "value": "{color.border.subtle}" },
       "cell-fg": { "value": "{color.text.primary}" },
       "caption-fg": { "value": "{color.text.muted}" }
+    },
+    "overlay": {
+      "scrim": { "value": "{color.shell.scrim}" },
+      "panel-bg": { "value": "{color.surface.raised}" },
+      "panel-border": { "value": "{color.border.default}" },
+      "panel-fg": { "value": "{color.text.primary}" }
+    },
+    "tooltip": {
+      "bg": { "value": "{color.surface.emphasis}" },
+      "fg": { "value": "{color.text.primary}" },
+      "border": { "value": "{color.border.strong}" }
+    },
+    "toast": {
+      "bg": { "value": "{color.surface.raised}" },
+      "fg": { "value": "{color.text.primary}" },
+      "border": { "value": "{color.border.default}" },
+      "neutral-accent": { "value": "{color.border.strong}" },
+      "success-accent": { "value": "{color.state.success.border}" },
+      "warning-accent": { "value": "{color.state.warning.border}" },
+      "error-accent": { "value": "{color.state.error.border}" },
+      "info-accent": { "value": "{color.state.info.border}" }
     }
   },
   "space": {
@@ -252,6 +273,14 @@
     "shell": {
       "scrim": { "value": "{primitive.z.40}" },
       "drawer": { "value": "{primitive.z.50}" }
+    },
+    "overlay": {
+      "popover": { "value": "{primitive.z.60}" },
+      "dropdown": { "value": "{primitive.z.70}" },
+      "tooltip": { "value": "{primitive.z.80}" },
+      "dialog-scrim": { "value": "{primitive.z.90}" },
+      "dialog": { "value": "{primitive.z.100}" },
+      "toast": { "value": "{primitive.z.100}" }
     }
   },
   "elevation": {
