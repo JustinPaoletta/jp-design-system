@@ -15,10 +15,12 @@ import {
   standalone: true,
   host: {
     '(click)': 'onClick($event)',
+    '[attr.aria-expanded]': 'popover.open()',
+    '[attr.aria-controls]': 'popover.contentId',
   },
 })
 export class JpPopoverTrigger {
-  private readonly popover = inject(JpPopover);
+  readonly popover = inject(JpPopover);
 
   onClick(event: Event): void {
     event.stopPropagation();

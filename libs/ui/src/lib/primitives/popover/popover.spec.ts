@@ -41,6 +41,11 @@ describe('JpPopover', () => {
     openPopover();
 
     expect(fixture.componentInstance.open).toBe(true);
+    const trigger = fixture.nativeElement.querySelector(
+      '[jppopovertrigger]',
+    ) as HTMLButtonElement;
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger.getAttribute('aria-controls')).toBeTruthy();
     const content = fixture.nativeElement.querySelector(
       '[jppopovercontent]',
     ) as HTMLElement;
