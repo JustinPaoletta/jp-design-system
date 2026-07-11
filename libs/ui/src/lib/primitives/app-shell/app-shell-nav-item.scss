@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+.jp-app-shell-nav-item__root {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  width: 100%;
+  min-height: var(--jp-size-control-md);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 0;
+  border-radius: var(--jp-radius-md);
+  background: transparent;
+  color: var(--jp-color-nav-item-text);
+  font: inherit;
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--jp-motion-transition-base);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.jp-app-shell-nav-item__root:hover {
+  background: var(--jp-color-nav-item-bg-hover);
+  color: var(--jp-color-nav-item-text-active);
+}
+
+.jp-app-shell-nav-item__root:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+:host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root {
+  background: var(--jp-color-nav-item-bg-active);
+  color: var(--jp-color-nav-item-text-active);
+}
+
+:host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--jp-space-2xs);
+  bottom: var(--jp-space-2xs);
+  width: var(--jp-space-2xs);
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-nav-item-indicator);
+}
+
+.jp-app-shell-nav-item__icon {
+  display: none;
+  flex-shrink: 0;
+  width: var(--jp-size-icon-md);
+  height: var(--jp-size-icon-md);
+  align-items: center;
+  justify-content: center;
+}
+
+.jp-app-shell-nav-item__icon:not(:empty) {
+  display: inline-flex;
+}
+
+.jp-app-shell-nav-item__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__root {
+  justify-content: center;
+  padding-inline: var(--jp-space-2xs);
+}
+
+:host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:host-context(.jp-app-shell--collapsed)
+  .jp-app-shell-nav-item__icon:not(:empty) {
+  display: inline-flex;
+}
+
+:host-context(.jp-app-shell--collapsed).jp-app-shell-nav-item--active
+  .jp-app-shell-nav-item__root::before {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-app-shell-nav-item__root {
+    transition: none;
+  }
+}

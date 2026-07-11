@@ -14,7 +14,10 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - UI Storybook primitive and composition coverage
 - Manual changelog and root `RELEASE.md` release process documentation
 - Phase 3 app shell semantic tokens (sidebar widths, nav colors, shell motion, z-index)
-- `jp-app-shell` primitive with sidebar collapse and Storybook coverage (Stories 3.0–3.1)
+- `jp-app-shell` primitive with sidebar collapse, mobile drawer, and Storybook coverage
+- `jp-app-shell-nav-item` with active/hover/focus states
+- Showcase `/phase-3-dashboard` route and Playwright shell e2e gate
+- Storybook `Compositions/App Shell Dashboard` composition
 
 ### Changed
 

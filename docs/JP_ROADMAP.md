@@ -22,13 +22,13 @@ density.
 - Story 1.4 (Accent Variants) is complete and validated.
 - Story 1.5 (CSS Output) is complete and validated.
 - Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
-- Phase 3, Epic 3 (App Shell) is in progress — Stories 3.0–3.1 complete.
+- Phase 3, Epic 3 (App Shell) is complete.
 - Story 2.1 (Layout primitives in `libs/ui`) is complete and validated.
 - Story 2.2 (Showcase `/phase-2-dashboard`) is complete and validated.
 - Story 2.3 (Storybook primitive + composition coverage) is complete and validated.
 - Story 2.4 (Chromium e2e gate for Showcase dashboard) is complete and validated.
 - Story 2.5 (`Ui`/`lib-ui` deprecation window) is complete and validated.
-- Next milestone: Phase 3, Epic 3 (App Shell) — nav item, mobile drawer, Showcase integration.
+- Next milestone: Phase 4, Epic 4 (Core Inputs / Controls).
 
 ---
 
@@ -147,12 +147,12 @@ Implementation plan: [PHASE3_EPIC3_APP_SHELL_PLAN.md](./PHASE3_EPIC3_APP_SHELL_P
 
 - [x] Story 3.0 — Shell layout tokens
 - [x] Story 3.1 — `jp-app-shell` (sidebar + main, desktop collapse)
-- [ ] Story 3.2 — `jp-app-shell-nav-item` (active, hover, focus)
-- [ ] Story 3.3 — Mobile drawer + accessibility
-- [ ] Story 3.4 — Showcase route integration
-- [ ] Story 3.5 — Composition story + e2e gate
+- [x] Story 3.2 — `jp-app-shell-nav-item` (active, hover, focus)
+- [x] Story 3.3 — Mobile drawer + accessibility
+- [x] Story 3.4 — Showcase route integration
+- [x] Story 3.5 — Composition story + e2e gate
 
-Deliverable: Functional dashboard shell.
+Deliverable: Functional dashboard shell. Completed.
 
 ---
 

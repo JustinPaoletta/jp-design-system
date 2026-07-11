@@ -87,20 +87,42 @@ Visual panel — background, border, elevation, radius, padding.
 
 ### `jp-app-shell`
 
-Application chrome — sidebar + main content regions with desktop collapse.
+Application chrome — sidebar + main content regions with desktop collapse and
+mobile drawer.
 
-| Input / output           | Type      | Default | Notes                                    |
-| ------------------------ | --------- | ------- | ---------------------------------------- |
-| `sidebarCollapsed`       | `boolean` | `false` | Collapses sidebar to icon rail width     |
-| `sidebarCollapsedChange` | `output`  | —       | Emits when the toolbar toggle is clicked |
+| Input / output           | Type      | Default     | Notes                                        |
+| ------------------------ | --------- | ----------- | -------------------------------------------- |
+| `sidebarCollapsed`       | `boolean` | `false`     | Collapses sidebar to icon rail width         |
+| `sidebarCollapsedChange` | `output`  | —           | Emits when the toolbar toggle is clicked     |
+| `mobileNavOpen`          | `boolean` | `false`     | Opens the off-canvas drawer below breakpoint |
+| `mobileNavOpenChange`    | `output`  | —           | Emits on menu toggle, scrim click, or Escape |
+| `sidebarLabel`           | `string`  | `'Primary'` | `aria-label` for the sidebar landmark        |
 
 **Content projection:**
 
 - `[jpAppShellSidebar]` — primary navigation slot (renders inside `<aside>`)
 - `[jpAppShellMain]` — page content slot
 
-Mobile drawer behavior (Story 3.3) is not implemented yet; below
-`--jp-layout-shell-mobile-max` the sidebar is hidden until drawer work lands.
+**Behavior:**
+
+- Desktop (≥ `--jp-layout-shell-mobile-max` / `48rem`): sidebar visible; collapse
+  toggles expanded vs icon-rail widths.
+- Mobile (`< 48rem`): sidebar hidden by default; menu button opens drawer +
+  scrim; Escape / scrim / close button dismiss; focus moves into the drawer and
+  returns to the menu trigger on close; main is `inert` while open.
+
+### `jp-app-shell-nav-item`
+
+Single navigation row for use inside the shell sidebar.
+
+| Input    | Values           | Default | Notes                                    |
+| -------- | ---------------- | ------- | ---------------------------------------- |
+| `as`     | `a`, `button`    | `a`     | Rendered interactive element             |
+| `href`   | string or `null` | `null`  | Used when `as="a"` (falls back to `#`)   |
+| `active` | boolean          | `false` | Accent indicator + `aria-current="page"` |
+
+Optional icon slot: project into `[jpAppShellNavIcon]`. Labels are visually
+hidden when the parent shell is collapsed.
 
 ---
 

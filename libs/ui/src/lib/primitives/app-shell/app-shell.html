@@ -1,6 +1,33 @@
 <div class="jp-app-shell__layout">
+  <header class="jp-app-shell__mobile-bar">
+    <button
+      #menuToggle
+      type="button"
+      class="jp-app-shell__menu-toggle"
+      [attr.aria-expanded]="mobileNavOpen()"
+      [attr.aria-controls]="sidebarId"
+      [attr.aria-label]="
+        mobileNavOpen() ? 'Close navigation' : 'Open navigation'
+      "
+      (click)="toggleMobileNav()"
+    >
+      <span class="jp-app-shell__menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  @if (mobileNavOpen()) {
+  <div
+    class="jp-app-shell__scrim"
+    aria-hidden="true"
+    (click)="closeMobileNav()"
+  ></div>
+  }
+
   <aside
+    #sidebarPanel
     class="jp-app-shell__sidebar"
+    [id]="sidebarId"
+    [attr.aria-label]="sidebarLabel()"
     [attr.aria-expanded]="!sidebarCollapsed()"
   >
     <div class="jp-app-shell__sidebar-toolbar">
@@ -18,6 +45,15 @@
           aria-hidden="true"
         ></span>
       </button>
+
+      <button
+        type="button"
+        class="jp-app-shell__drawer-close"
+        aria-label="Close navigation"
+        (click)="closeMobileNav()"
+      >
+        <span class="jp-app-shell__drawer-close-icon" aria-hidden="true"></span>
+      </button>
     </div>
 
     <div class="jp-app-shell__sidebar-content">
@@ -25,7 +61,11 @@
     </div>
   </aside>
 
-  <div class="jp-app-shell__main">
+  <div
+    class="jp-app-shell__main"
+    [attr.inert]="mainInert() ? '' : null"
+    [attr.aria-hidden]="mainInert() ? true : null"
+  >
     <ng-content select="[jpAppShellMain]" />
   </div>
 </div>

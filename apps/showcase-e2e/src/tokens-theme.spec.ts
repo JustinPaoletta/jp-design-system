@@ -52,7 +52,9 @@ test.describe('showcase token theming', () => {
   test('uses default neon accent and default density when no data attributes are present', async ({
     page,
   }) => {
-    await expect(page.locator('h1')).toContainText('Phase 2 Layout Dashboard');
+    await expect(page.locator('h1')).toContainText(
+      'Phase 3 App Shell Dashboard',
+    );
 
     await expect(page.locator('html')).not.toHaveAttribute(
       'data-jp-accent',

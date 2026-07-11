@@ -117,7 +117,7 @@
     },
     "sidebar": {
       "expanded": { "value": "16rem" },
-      "collapsed": { "value": "{primitive.space.16}" }
+      "collapsed": { "value": "{primitive.space.32}" }
     }
   },
   "layout": {

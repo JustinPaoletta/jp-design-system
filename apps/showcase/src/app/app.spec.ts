@@ -12,16 +12,17 @@ describe('App', () => {
     }).compileComponents();
   });
 
-  it('should render routed phase 2 dashboard', async () => {
+  it('should render routed phase 3 dashboard shell', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
-    await router.navigateByUrl('/phase-2-dashboard');
+    await router.navigateByUrl('/phase-3-dashboard');
     fixture.detectChanges();
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(router.url).toBe('/phase-2-dashboard');
-    expect(compiled.querySelector('app-phase-2-dashboard-page')).toBeTruthy();
+    expect(router.url).toBe('/phase-3-dashboard');
+    expect(compiled.querySelector('app-phase-3-dashboard-page')).toBeTruthy();
+    expect(compiled.querySelector('jp-app-shell')).toBeTruthy();
     expect(compiled.querySelectorAll('.jp-grid__root').length).toBeGreaterThan(
       1,
     );

@@ -4,7 +4,7 @@ Angular component library for the JP Design System.
 
 ## Primitives
 
-Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-app-shell`
+Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-app-shell`, `jp-app-shell-nav-item`
 
 Typography: `jp-text`, `jp-heading`
 
@@ -23,7 +23,8 @@ npx nx run ui:storybook
 ```
 
 Runs at http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Compositions/Layout Dashboard`, and `Primitives/Layout/App Shell`.
+`Compositions/Layout Dashboard`, `Compositions/App Shell Dashboard`, and
+`Primitives/Layout/App Shell`.
 
 ## Showcase
 

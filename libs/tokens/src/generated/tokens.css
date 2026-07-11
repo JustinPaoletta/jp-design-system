@@ -181,7 +181,7 @@
   --jp-size-column-min-md: 20rem;
   --jp-size-column-min-lg: 24rem;
   --jp-size-sidebar-expanded: 16rem;
-  --jp-size-sidebar-collapsed: 2rem;
+  --jp-size-sidebar-collapsed: 4rem;
   --jp-layout-shell-mobile-max: 48rem;
   --jp-font-family-base: 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --jp-font-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;

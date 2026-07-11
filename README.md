@@ -8,8 +8,8 @@ The JP Design System is a structured Angular component library for professional 
 
 - Type: private component-library monorepo
 - Current version: `0.0.0`
-- **Current milestone:** Phase 3 Epic 3 in progress — shell tokens and `jp-app-shell` (Stories 3.0–3.1)
-- **Next:** Story 3.2 nav item primitive — see [PHASE3_EPIC3_APP_SHELL_PLAN.md](./docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
+- **Current milestone:** Phase 3 Epic 3 complete — app shell, nav item, mobile drawer, Showcase + e2e
+- **Next:** Phase 4 controls (`jp-button`, inputs) — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
@@ -37,7 +37,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ```text
 /apps
-  /showcase            # read-only integration app (e.g. /phase-2-dashboard)
+  /showcase            # read-only integration app (e.g. /phase-3-dashboard)
   /showcase-e2e        # Playwright e2e for showcase
   /storybook           # placeholder Angular shell (not the component Storybook)
   /storybook-e2e       # Playwright scaffold for the storybook app
@@ -154,7 +154,7 @@ Component or token releases should include manual Storybook and Showcase review 
 - Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
 - Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
 - Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, layout dashboard composition, Playwright e2e gate
-- Phase 3 (in progress): App shell tokens, `jp-app-shell` with sidebar collapse (Stories 3.0–3.1)
+- Phase 3: `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer, Showcase `/phase-3-dashboard`, composition + e2e
 
 ## License
 

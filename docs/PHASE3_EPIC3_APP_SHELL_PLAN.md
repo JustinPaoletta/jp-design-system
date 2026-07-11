@@ -1,8 +1,21 @@
 # Phase 3 Epic 3 — App Shell Implementation Plan
 
-**Status:** In progress — Stories 3.0–3.1 complete (shell tokens + `jp-app-shell`)  
+**Status:** Complete — Stories 3.0–3.5 delivered  
 **Branch:** `phase3-app-shell`  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)
+
+---
+
+## Locked decisions (Stories 3.2–3.5)
+
+| Decision             | Choice                                                                |
+| -------------------- | --------------------------------------------------------------------- |
+| Route naming         | Add `/phase-3-dashboard`; keep `/phase-2-dashboard`; root → phase-3   |
+| Sub-components       | `jp-app-shell` + `jp-app-shell-nav-item` only (no sidebar/main split) |
+| Collapse persistence | Session-only (Showcase local state)                                   |
+| Icons in nav         | Optional `[jpAppShellNavIcon]` slot; text labels required             |
+| Breakpoint           | `48rem` (`--jp-layout-shell-mobile-max`)                              |
+| Collapsed width      | `4rem` (`--jp-size-sidebar-collapsed`) so the rail fits the toggle    |
 
 ---
 
@@ -187,11 +200,11 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Renders as `<a>` or `<button>` via `as` / `href` pattern (match existing primitive conventions)
-- [ ] `active` input applies accent signal (not large accent fill)
-- [ ] Focus ring uses semantic focus tokens
-- [ ] Storybook: `Active`, `Hover` (pseudo via forced states doc), `FocusVisible`
-- [ ] Unit tests for class/state mapping
+- [x] Renders as `<a>` or `<button>` via `as` / `href` pattern (match existing primitive conventions)
+- [x] `active` input applies accent signal (not large accent fill)
+- [x] Focus ring uses semantic focus tokens
+- [x] Storybook: `Active`, `Hover` (pseudo via forced states doc), `FocusVisible`
+- [x] Unit tests for class/state mapping
 
 ### Story 3.3 — Mobile drawer
 
@@ -199,12 +212,12 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Below layout breakpoint, sidebar hidden by default
-- [ ] `mobileNavOpen` input opens drawer over content with scrim
-- [ ] Escape key and scrim click set `mobileNavOpen` false
-- [ ] Focus moves into drawer on open; returns to trigger on close
-- [ ] `prefers-reduced-motion`: instant or minimal transition
-- [ ] Storybook story at mobile viewport; Playwright viewport test in e2e
+- [x] Below layout breakpoint, sidebar hidden by default
+- [x] `mobileNavOpen` input opens drawer over content with scrim
+- [x] Escape key and scrim click set `mobileNavOpen` false
+- [x] Focus moves into drawer on open; returns to trigger on close
+- [x] `prefers-reduced-motion`: instant or minimal transition
+- [x] Storybook story at mobile viewport; Playwright viewport test in e2e
 
 ### Story 3.4 — Showcase integration
 
@@ -212,11 +225,11 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Route `/phase-3-dashboard` (or migrate `/phase-2-dashboard` — **decide at PR open**)
-- [ ] Phase 2 dashboard content unchanged inside `<main>`
-- [ ] Sample nav items (static labels; one marked active)
-- [ ] Root redirect updated if route name changes
-- [ ] No `lib-ui` on page
+- [x] Route `/phase-3-dashboard` (or migrate `/phase-2-dashboard` — **decide at PR open**)
+- [x] Phase 2 dashboard content unchanged inside `<main>`
+- [x] Sample nav items (static labels; one marked active)
+- [x] Root redirect updated if route name changes
+- [x] No `lib-ui` on page
 
 ### Story 3.5 — Composition story + CI gate
 
@@ -224,10 +237,10 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] `Compositions/App Shell Dashboard` story with accent/density toolbar enabled
-- [ ] `npx nx run ui:test-storybook` covers shell smoke interaction
-- [ ] `showcase-e2e` asserts shell landmarks, collapse toggle, mobile drawer at 390px
-- [ ] Full Step 1 gate green (see below)
+- [x] `Compositions/App Shell Dashboard` story with accent/density toolbar enabled
+- [x] `npx nx run ui:test-storybook` covers shell smoke interaction
+- [x] `showcase-e2e` asserts shell landmarks, collapse toggle, mobile drawer at 390px
+- [x] Full Step 1 gate green (see below)
 
 ---
 
