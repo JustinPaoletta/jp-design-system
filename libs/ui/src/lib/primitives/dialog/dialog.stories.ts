@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect } from 'storybook/test';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { JpButton } from '../button/button';
 import { JpText } from '../text/text';
 import { JpDialog, JpDialogActions } from './dialog';
@@ -11,9 +11,11 @@ import { JpDialog, JpDialogActions } from './dialog';
   standalone: true,
   imports: [JpDialog, JpDialogActions, JpButton, JpText],
   template: `
-    <jp-button type="button" variant="secondary" (click)="open = true">
-      Open dialog
-    </jp-button>
+    @if (!open) {
+      <jp-button type="button" variant="secondary" (click)="open = true">
+        Open dialog
+      </jp-button>
+    }
     <jp-dialog [open]="open" [title]="title" (openChange)="open = $event">
       <jp-text>This action cannot be undone.</jp-text>
       <div jpDialogActions>
@@ -28,11 +30,11 @@ import { JpDialog, JpDialogActions } from './dialog';
   `,
 })
 class DialogStoryHost {
-  open = true;
-  title = 'Delete deployment?';
+  @Input() open = false;
+  @Input() title = 'Delete deployment?';
 }
 
-const meta: Meta = {
+const meta: Meta<DialogStoryHost> = {
   title: 'Primitives/Feedback/Dialog',
   component: JpDialog,
   globals: {
@@ -41,20 +43,38 @@ const meta: Meta = {
   parameters: {
     layout: 'padded',
   },
+  argTypes: {
+    open: {
+      control: 'boolean',
+    },
+    title: {
+      control: 'text',
+    },
+  },
+  args: {
+    open: false,
+    title: 'Delete deployment?',
+  },
   decorators: [
     moduleMetadata({
       imports: [JpDialog, JpDialogActions, JpButton, JpText, DialogStoryHost],
     }),
   ],
+  render: (args) => ({
+    props: args,
+    template: `<jp-dialog-story-host [open]="open" [title]="title" />`,
+  }),
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<DialogStoryHost>;
+
+export const Default: Story = {};
 
 export const Open: Story = {
-  render: () => ({
-    template: `<jp-dialog-story-host />`,
-  }),
+  args: {
+    open: true,
+  },
   play: async ({ canvasElement }) => {
     const dialog = canvasElement.querySelector(
       '[role="dialog"][aria-modal="true"]',

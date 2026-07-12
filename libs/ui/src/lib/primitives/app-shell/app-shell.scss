@@ -13,8 +13,10 @@
   transition: var(--jp-motion-transition-shell);
 }
 
-:host(.jp-app-shell--collapsed) .jp-app-shell__layout {
-  grid-template-columns: var(--jp-size-sidebar-collapsed) minmax(0, 1fr);
+@media (min-width: 48.0625rem) {
+  :host(.jp-app-shell--collapsed) .jp-app-shell__layout {
+    grid-template-columns: var(--jp-size-sidebar-collapsed) minmax(0, 1fr);
+  }
 }
 
 .jp-app-shell__mobile-bar {

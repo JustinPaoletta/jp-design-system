@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { JpButton } from '../button/button';
 import {
   JpDropdownMenu,
@@ -28,10 +28,10 @@ import {
   `,
 })
 class DropdownStoryHost {
-  open = false;
+  @Input() open = false;
 }
 
-const meta: Meta = {
+const meta: Meta<DropdownStoryHost> = {
   title: 'Primitives/Feedback/Dropdown Menu',
   component: JpDropdownMenu,
   globals: {
@@ -39,6 +39,14 @@ const meta: Meta = {
   },
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    open: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    open: false,
   },
   decorators: [
     moduleMetadata({
@@ -51,15 +59,18 @@ const meta: Meta = {
       ],
     }),
   ],
+  render: (args) => ({
+    props: args,
+    template: `<jp-dropdown-story-host [open]="open" />`,
+  }),
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<DropdownStoryHost>;
 
-export const Default: Story = {
-  render: () => ({
-    template: `<jp-dropdown-story-host />`,
-  }),
+export const Default: Story = {};
+
+export const MenuOpen: Story = {
   play: async ({ canvasElement }) => {
     const trigger = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(trigger);

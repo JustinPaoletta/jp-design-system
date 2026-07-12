@@ -1,9 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect } from 'storybook/test';
-import { JP_BADGE_SIZES, JP_BADGE_TONES } from '../shared/primitive-types';
+import {
+  JP_BADGE_SIZES,
+  JP_BADGE_TONES,
+  type JpBadgeSize,
+  type JpBadgeTone,
+} from '../shared/primitive-types';
 import { JpBadge } from './badge';
 
-const meta: Meta<JpBadge> = {
+type BadgeStoryArgs = {
+  tone: JpBadgeTone;
+  size: JpBadgeSize;
+  label: string;
+};
+
+const meta: Meta<BadgeStoryArgs> = {
   title: 'Primitives/Data Display/Badge',
   component: JpBadge,
   globals: {
@@ -21,24 +32,28 @@ const meta: Meta<JpBadge> = {
       control: 'select',
       options: JP_BADGE_SIZES,
     },
+    label: {
+      control: 'text',
+    },
   },
   args: {
     tone: 'neutral',
     size: 'md',
+    label: 'Badge',
   },
   render: (args) => ({
     props: args,
     template: `
-      <jp-badge [tone]="tone" [size]="size">Badge</jp-badge>
+      <jp-badge [tone]="tone" [size]="size">{{ label }}</jp-badge>
     `,
   }),
 };
 
 export default meta;
-type Story = StoryObj<JpBadge>;
+type Story = StoryObj<BadgeStoryArgs>;
 
 export const Neutral: Story = {
-  args: { tone: 'neutral' },
+  args: { tone: 'neutral', label: 'Neutral' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--neutral')).toBe(true);
@@ -46,7 +61,7 @@ export const Neutral: Story = {
 };
 
 export const Accent: Story = {
-  args: { tone: 'accent' },
+  args: { tone: 'accent', label: 'Accent' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--accent')).toBe(true);
@@ -54,23 +69,23 @@ export const Accent: Story = {
 };
 
 export const Success: Story = {
-  args: { tone: 'success' },
+  args: { tone: 'success', label: 'Success' },
 };
 
 export const Warning: Story = {
-  args: { tone: 'warning' },
+  args: { tone: 'warning', label: 'Warning' },
 };
 
 export const Error: Story = {
-  args: { tone: 'error' },
+  args: { tone: 'error', label: 'Error' },
 };
 
 export const Info: Story = {
-  args: { tone: 'info' },
+  args: { tone: 'info', label: 'Info' },
 };
 
 export const Small: Story = {
-  args: { tone: 'accent', size: 'sm' },
+  args: { tone: 'accent', size: 'sm', label: 'Small' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--sm')).toBe(true);

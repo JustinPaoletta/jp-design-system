@@ -10,7 +10,7 @@ const meta: Meta<JpIconButton> = {
     accent: 'neon',
   },
   parameters: {
-    layout: 'padded',
+    layout: 'centered',
   },
   argTypes: {
     size: {

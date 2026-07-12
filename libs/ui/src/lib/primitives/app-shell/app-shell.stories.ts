@@ -133,6 +133,7 @@ export const Collapsed: Story = {
 
 export const MobileDrawerOpen: Story = {
   args: {
+    sidebarCollapsed: false,
     mobileNavOpen: true,
   },
   play: async ({ canvasElement }) => {

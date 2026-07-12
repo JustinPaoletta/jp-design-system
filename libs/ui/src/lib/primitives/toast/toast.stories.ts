@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { JP_TOAST_TONES } from '../shared/primitive-types';
 import { JpButton } from '../button/button';
 import { JpToast } from './toast';
 import { JpToastOutlet } from './toast-outlet';
@@ -21,8 +22,11 @@ import { JpToastService } from './toast.service';
 class ToastStoryHost {
   private readonly toasts = inject(JpToastService);
 
+  @Input() message = 'Deployment saved';
+  @Input() tone: (typeof JP_TOAST_TONES)[number] = 'success';
+
   show(): void {
-    this.toasts.show({ message: 'Deployment saved', tone: 'success' });
+    this.toasts.show({ message: this.message, tone: this.tone });
   }
 }
 
@@ -70,8 +74,33 @@ export const Error: Story = {
 };
 
 export const ViaService: Story = {
-  render: () => ({
-    template: `<jp-toast-story-host />`,
+  argTypes: {
+    message: {
+      control: 'text',
+    },
+    tone: {
+      control: 'select',
+      options: JP_TOAST_TONES,
+    },
+  },
+  args: {
+    message: 'Deployment saved',
+    tone: 'success',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<jp-toast-story-host [message]="message" [tone]="tone" />`,
+  }),
+};
+
+export const ViaServiceInteractive: Story = {
+  args: {
+    message: 'Deployment saved',
+    tone: 'success',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<jp-toast-story-host [message]="message" [tone]="tone" />`,
   }),
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;

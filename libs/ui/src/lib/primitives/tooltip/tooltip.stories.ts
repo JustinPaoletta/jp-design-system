@@ -39,7 +39,9 @@ const meta: Meta<JpTooltip> = {
 export default meta;
 type Story = StoryObj<JpTooltip>;
 
-export const Top: Story = {
+export const Top: Story = {};
+
+export const TopInteractive: Story = {
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-tooltip') as HTMLElement;
     await userEvent.hover(host);
