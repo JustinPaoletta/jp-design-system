@@ -19,13 +19,13 @@ Phases 3–7 build on each other inside the `jp-app-shell`. Validate the **curre
 milestone route** first (Showcase `/` redirect), then exercise that phase's
 primitives, then spot-check earlier phase routes for regression.
 
-| Phase | Milestone route        | Key deliverables                                                                 |
-| ----- | ---------------------- | -------------------------------------------------------------------------------- |
-| 3     | `/phase-3-dashboard`   | `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer                           |
-| 4     | `/phase-4-controls`    | `jp-button`, `jp-icon-button`, input/textarea/select/checkbox/switch             |
-| 5     | `/phase-5-data`        | `jp-badge`, `jp-empty-state`, `jp-table`                                         |
-| 6     | `/phase-6-overlays`    | `jpFocusTrap`, tooltip, toast, dialog, popover, dropdown-menu                  |
-| 7     | `/phase-7-assistant`   | `JpAssistantService`, trigger, message, panel                                    |
+| Phase | Milestone route      | Key deliverables                                                     |
+| ----- | -------------------- | -------------------------------------------------------------------- |
+| 3     | `/phase-3-dashboard` | `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer               |
+| 4     | `/phase-4-controls`  | `jp-button`, `jp-icon-button`, input/textarea/select/checkbox/switch |
+| 5     | `/phase-5-data`      | `jp-badge`, `jp-empty-state`, `jp-table`                             |
+| 6     | `/phase-6-overlays`  | `jpFocusTrap`, tooltip, toast, dialog, popover, dropdown-menu        |
+| 7     | `/phase-7-assistant` | `JpAssistantService`, trigger, message, panel                        |
 
 **Out of scope for Phases 3–7 (do not file as bugs):** router-aware nav inside the
 shell primitive, user menu, breadcrumbs, custom listbox/combobox, date picker, file
@@ -67,7 +67,7 @@ Run these when validating any phase ≥ 3 to confirm the stack still works.
 | --- | -------------------------- | ------------------------------------------------------------ |
 | R.1 | Visit `/phase-2-dashboard` | Phase 2 layout-only page still works (no app shell)          |
 | R.2 | Visit `/phase-3-dashboard` | Shell + dashboard unchanged (see Phase 3 for full shell QA)  |
-| R.3 | Visit `/phase-4-controls`    | Controls form inside shell (when phase ≥ 4)                  |
+| R.3 | Visit `/phase-4-controls`  | Controls form inside shell (when phase ≥ 4)                  |
 | R.4 | Visit `/phase-5-data`      | Data display page (when phase ≥ 5)                           |
 | R.5 | Visit `/phase-6-overlays`  | Overlays page (when phase ≥ 6)                               |
 | R.6 | Accent / density meta      | Page shows `accent:` and `density:` from document attributes |
@@ -80,32 +80,32 @@ Run these when validating any phase ≥ 3 to confirm the stack still works.
 
 ### Showcase — routing and composition
 
-| #   | Action                     | Expect                                                                  |
-| --- | -------------------------- | ----------------------------------------------------------------------- |
-| 3.1 | Visit `/` (phase 3 milestone) | Redirects to `/phase-3-dashboard`                                    |
-| 3.2 | Read the page              | Heading **Phase 3 App Shell Dashboard**; metric cards + activity panels |
-| 3.3 | Inspect chrome             | Persistent left sidebar + main content; no `lib-ui` usage               |
-| 3.4 | Check nav                  | Overview / Phase 2 / Activity / Settings; **Overview** is active        |
+| #   | Action                        | Expect                                                                  |
+| --- | ----------------------------- | ----------------------------------------------------------------------- |
+| 3.1 | Visit `/` (phase 3 milestone) | Redirects to `/phase-3-dashboard`                                       |
+| 3.2 | Read the page                 | Heading **Phase 3 App Shell Dashboard**; metric cards + activity panels |
+| 3.3 | Inspect chrome                | Persistent left sidebar + main content; no `lib-ui` usage               |
+| 3.4 | Check nav                     | Overview / Phase 2 / Activity / Settings; **Overview** is active        |
 
 ### Desktop shell — collapse (1440px and 1024px)
 
 Do both widths. Sidebar should stay visible; no horizontal page scroll.
 
-| #   | Action                    | Expect                                                                |
-| --- | ------------------------- | --------------------------------------------------------------------- |
-| 3.5 | Load `/phase-3-dashboard` | Expanded sidebar ~`16rem` (256px); main fills remaining width         |
-| 3.6 | Note sidebar surface      | Sunken shell background; right border uses shell border token         |
-| 3.7 | Click collapse (chevron)  | Sidebar narrows to ~`4rem` icon rail; main expands; chevron rotates   |
-| 3.8 | Labels when collapsed     | Nav labels visually hidden (screen-reader text may remain)            |
-| 3.9 | Click collapse again      | Sidebar expands; labels return                                        |
-| 3.10 | Collapse toggle a11y     | `aria-label` flips Collapse/Expand; `aria-pressed` tracks state       |
-| 3.11 | Sidebar landmark         | `aside` has `aria-label` (default **Primary**); `aria-expanded` flips |
+| #    | Action                    | Expect                                                                |
+| ---- | ------------------------- | --------------------------------------------------------------------- |
+| 3.5  | Load `/phase-3-dashboard` | Expanded sidebar ~`16rem` (256px); main fills remaining width         |
+| 3.6  | Note sidebar surface      | Sunken shell background; right border uses shell border token         |
+| 3.7  | Click collapse (chevron)  | Sidebar narrows to ~`4rem` icon rail; main expands; chevron rotates   |
+| 3.8  | Labels when collapsed     | Nav labels visually hidden (screen-reader text may remain)            |
+| 3.9  | Click collapse again      | Sidebar expands; labels return                                        |
+| 3.10 | Collapse toggle a11y      | `aria-label` flips Collapse/Expand; `aria-pressed` tracks state       |
+| 3.11 | Sidebar landmark          | `aside` has `aria-label` (default **Primary**); `aria-expanded` flips |
 
 ### Nav items — states and accent
 
-| #   | Action                                      | Expect                                                             |
-| --- | ------------------------------------------- | ------------------------------------------------------------------ |
-| 3.12 | Inspect **Overview**                       | Active: stronger text, subtle bg, **left accent bar** (not a fill) |
+| #    | Action                                      | Expect                                                             |
+| ---- | ------------------------------------------- | ------------------------------------------------------------------ |
+| 3.12 | Inspect **Overview**                        | Active: stronger text, subtle bg, **left accent bar** (not a fill) |
 | 3.13 | Hover inactive items                        | Hover background; text brightens; cursor pointer                   |
 | 3.14 | Tab to a nav item                           | Visible focus ring (`--jp-color-focus-ring`)                       |
 | 3.15 | Active item semantics                       | `aria-current="page"` on the active control                        |
@@ -137,16 +137,16 @@ Do both widths. Sidebar should stay visible; no horizontal page scroll.
 | **Primitives / Layout / App Shell Nav Item** | Default, Active, FocusVisible, AsButton                      |
 | **Compositions / App Shell Dashboard**       | Full shell + dashboard; accent + density toolbars enabled    |
 
-| #   | Action                    | Expect                                             |
-| --- | ------------------------- | -------------------------------------------------- |
+| #    | Action                    | Expect                                             |
+| ---- | ------------------------- | -------------------------------------------------- |
 | 3.30 | Switch accent neon/cobalt | Active nav indicator and accents update            |
 | 3.31 | Switch density compact    | Shell/nav spacing tightens without breaking layout |
 | 3.32 | Collapse in composition   | Same rail behavior as Showcase                     |
 
 ### Keyboard and accessibility (Phase 3)
 
-| #   | Action                           | Expect                                                    |
-| --- | -------------------------------- | --------------------------------------------------------- |
+| #    | Action                           | Expect                                                    |
+| ---- | -------------------------------- | --------------------------------------------------------- |
 | 3.33 | Tab through shell chrome         | Collapse / menu / nav / close all focusable               |
 | 3.34 | Focus rings                      | Always visible on keyboard focus                          |
 | 3.35 | Contrast (neon + cobalt)         | Nav text and active states readable on shell bg (WCAG AA) |
@@ -166,25 +166,25 @@ Do both widths. Sidebar should stay visible; no horizontal page scroll.
 
 ### Showcase — routing and shell composition
 
-| #   | Action                     | Expect                                                       |
-| --- | -------------------------- | ------------------------------------------------------------ |
-| 4.1 | Visit `/` (phase 4 milestone) | Redirects to `/phase-4-controls`                          |
-| 4.2 | Read the page              | Heading **Phase 4 Controls**; form inside raised surface     |
-| 4.3 | Inspect chrome             | App shell sidebar + main; **Controls** nav item active       |
-| 4.4 | Nav links                  | Phase 3 / Phase 2 links present                              |
-| 4.5 | Icon button in header      | “More actions” icon button visible next to the heading       |
+| #   | Action                        | Expect                                                   |
+| --- | ----------------------------- | -------------------------------------------------------- |
+| 4.1 | Visit `/` (phase 4 milestone) | Redirects to `/phase-4-controls`                         |
+| 4.2 | Read the page                 | Heading **Phase 4 Controls**; form inside raised surface |
+| 4.3 | Inspect chrome                | App shell sidebar + main; **Controls** nav item active   |
+| 4.4 | Nav links                     | Phase 3 / Phase 2 links present                          |
+| 4.5 | Icon button in header         | “More actions” icon button visible next to the heading   |
 
 ### Buttons (`jp-button`)
 
 On `/phase-4-controls` and Storybook **Primitives → Controls → Button**.
 
-| #   | Action                           | Expect                                                             |
-| --- | -------------------------------- | ------------------------------------------------------------------ |
-| 4.6 | Inspect **Save** (primary)       | Accent solid fill; high-contrast label; not a large page wash      |
-| 4.7 | Inspect **Cancel** (secondary)   | Neutral surface + border; primary text                             |
-| 4.8 | Inspect **Reset** (ghost)        | No heavy fill; secondary text; hover softens background            |
-| 4.9 | Inspect **Delete** (destructive) | Error-strong background (not accent); readable label               |
-| 4.10 | Hover each variant              | Clear hover change; cursor pointer                                 |
+| #    | Action                           | Expect                                                             |
+| ---- | -------------------------------- | ------------------------------------------------------------------ |
+| 4.6  | Inspect **Save** (primary)       | Accent solid fill; high-contrast label; not a large page wash      |
+| 4.7  | Inspect **Cancel** (secondary)   | Neutral surface + border; primary text                             |
+| 4.8  | Inspect **Reset** (ghost)        | No heavy fill; secondary text; hover softens background            |
+| 4.9  | Inspect **Delete** (destructive) | Error-strong background (not accent); readable label               |
+| 4.10 | Hover each variant               | Clear hover change; cursor pointer                                 |
 | 4.11 | Storybook → **Disabled**         | Dimmed; not clickable; no strong hover                             |
 | 4.12 | Storybook sizes sm / md / lg     | Height tracks control size tokens; padding coherent                |
 | 4.13 | Accent neon → cobalt             | Primary fill follows accent family; destructive stays error tokens |
@@ -192,8 +192,8 @@ On `/phase-4-controls` and Storybook **Primitives → Controls → Button**.
 
 ### Icon button (`jp-icon-button`)
 
-| #   | Action                      | Expect                                                |
-| --- | --------------------------- | ----------------------------------------------------- |
+| #    | Action                      | Expect                                                |
+| ---- | --------------------------- | ----------------------------------------------------- |
 | 4.15 | Showcase header icon button | Square control; icon centered                         |
 | 4.16 | Hover / focus               | Visible hover + focus ring                            |
 | 4.17 | Inspect accessible name     | `aria-label="More actions"` (or Storybook equivalent) |
@@ -216,8 +216,8 @@ On `/phase-4-controls` and Storybook **Primitives → Controls → Button**.
 
 ### Selection controls (`jp-checkbox`, `jp-switch`)
 
-| #   | Action                            | Expect                                                        |
-| --- | --------------------------------- | ------------------------------------------------------------- |
+| #    | Action                            | Expect                                                        |
+| ---- | --------------------------------- | ------------------------------------------------------------- |
 | 4.29 | Click checkbox label              | Toggles checked; label text is the hit target                 |
 | 4.30 | Checked checkbox                  | Accent fill / check signal (not a huge accent block)          |
 | 4.31 | Click switch                      | Toggles on/off; thumb moves                                   |
@@ -228,8 +228,8 @@ On `/phase-4-controls` and Storybook **Primitives → Controls → Button**.
 
 ### Form interaction (Showcase)
 
-| #   | Action                     | Expect                                                            |
-| --- | -------------------------- | ----------------------------------------------------------------- |
+| #    | Action                     | Expect                                                            |
+| ---- | -------------------------- | ----------------------------------------------------------------- |
 | 4.36 | Fill Email + Notes         | Values persist while interacting with other controls              |
 | 4.37 | Change Role                | Selected option remains after blur                                |
 | 4.38 | Toggle Subscribe + Compact | Both stay in sync with UI state                                   |
@@ -239,13 +239,13 @@ On `/phase-4-controls` and Storybook **Primitives → Controls → Button**.
 
 Phase 4 sits inside the shell — spot-check chrome still works here (full shell QA in [Phase 3](#phase-3--app-shell)).
 
-| #   | Action (desktop ~1440) | Expect                                    |
-| --- | ---------------------- | ----------------------------------------- |
+| #    | Action (desktop ~1440) | Expect                                    |
+| ---- | ---------------------- | ----------------------------------------- |
 | 4.40 | Collapse sidebar       | Rail collapses; form reflows; no overflow |
 | 4.41 | Expand again           | Labels return                             |
 
-| #   | Action (mobile 390)     | Expect                               |
-| --- | ----------------------- | ------------------------------------ |
+| #    | Action (mobile 390)     | Expect                               |
+| ---- | ----------------------- | ------------------------------------ |
 | 4.42 | Open menu drawer        | Drawer + scrim; form behind scrim    |
 | 4.43 | Escape / scrim close    | Drawer closes; focus returns to menu |
 | 4.44 | Use a field after close | Form still interactive               |
@@ -263,16 +263,16 @@ Phase 4 sits inside the shell — spot-check chrome still works here (full shell
 | **Primitives / Controls / Switch**      | On / off / disabled                              |
 | **Compositions / Controls Form**        | Full form; accent + density toolbars enabled     |
 
-| #   | Action                   | Expect                                          |
-| --- | ------------------------ | ----------------------------------------------- |
+| #    | Action                   | Expect                                          |
+| ---- | ------------------------ | ----------------------------------------------- |
 | 4.45 | Accent neon → cobalt     | Primary button, focus, checked/on states update |
 | 4.46 | Density → compact        | Controls tighten; form layout stays coherent    |
 | 4.47 | Interact with all fields | Same behaviors as Showcase                      |
 
 ### Keyboard and accessibility (Phase 4)
 
-| #   | Action                           | Expect                                            |
-| --- | -------------------------------- | ------------------------------------------------- |
+| #    | Action                           | Expect                                            |
+| ---- | -------------------------------- | ------------------------------------------------- |
 | 4.48 | Tab through all controls         | Every interactive control is reachable            |
 | 4.49 | Focus rings                      | Visible on keyboard focus for buttons and fields  |
 | 4.50 | Icon button name                 | Announced / present via `aria-label`              |
@@ -296,30 +296,30 @@ Phase 4 sits inside the shell — spot-check chrome still works here (full shell
 
 ### Showcase — routing and shell composition
 
-| #   | Action                     | Expect                                                          |
-| --- | -------------------------- | --------------------------------------------------------------- |
-| 5.1 | Visit `/` (phase 5 milestone) | Redirects to `/phase-5-data`                                 |
-| 5.2 | Read the page              | Heading **Phase 5 Data Display**; badge row + deployments table |
-| 5.3 | Inspect chrome             | App shell sidebar + main; **Data** nav item active              |
-| 5.4 | Nav links                  | Controls / Phase 3 / Phase 2 links present                      |
+| #   | Action                        | Expect                                                          |
+| --- | ----------------------------- | --------------------------------------------------------------- |
+| 5.1 | Visit `/` (phase 5 milestone) | Redirects to `/phase-5-data`                                    |
+| 5.2 | Read the page                 | Heading **Phase 5 Data Display**; badge row + deployments table |
+| 5.3 | Inspect chrome                | App shell sidebar + main; **Data** nav item active              |
+| 5.4 | Nav links                     | Controls / Phase 3 / Phase 2 links present                      |
 
 ### Badges (`jp-badge`)
 
 On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
-| #   | Action                    | Expect                                                            |
-| --- | ------------------------- | ----------------------------------------------------------------- |
-| 5.5 | Inspect tone row          | Neutral / accent / success / warning / error / info chips visible |
-| 5.6 | Accent tone               | Soft accent fill + strong accent text (not a large accent wash)   |
-| 5.7 | Success / warning / error | Soft state fills with readable status text                        |
-| 5.8 | Storybook sizes sm / md   | Padding/type scale coherent; no clipping                          |
-| 5.9 | Accent neon → cobalt      | Accent badge follows accent family; state tones stay state tokens |
-| 5.10 | Density → compact        | Badge padding tightens via space tokens without clipping labels   |
+| #    | Action                    | Expect                                                            |
+| ---- | ------------------------- | ----------------------------------------------------------------- |
+| 5.5  | Inspect tone row          | Neutral / accent / success / warning / error / info chips visible |
+| 5.6  | Accent tone               | Soft accent fill + strong accent text (not a large accent wash)   |
+| 5.7  | Success / warning / error | Soft state fills with readable status text                        |
+| 5.8  | Storybook sizes sm / md   | Padding/type scale coherent; no clipping                          |
+| 5.9  | Accent neon → cobalt      | Accent badge follows accent family; state tones stay state tokens |
+| 5.10 | Density → compact         | Badge padding tightens via space tokens without clipping labels   |
 
 ### Table (`jp-table`)
 
-| #   | Action                | Expect                                            |
-| --- | --------------------- | ------------------------------------------------- |
+| #    | Action                | Expect                                            |
+| ---- | --------------------- | ------------------------------------------------- |
 | 5.11 | Inspect caption       | “Recent deployments” above headers                |
 | 5.12 | Inspect headers       | Service / Environment / Status / Region           |
 | 5.13 | Inspect status cells  | Badges inside status column                       |
@@ -331,8 +331,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Empty state (`jp-empty-state`)
 
-| #   | Action                      | Expect                                             |
-| --- | --------------------------- | -------------------------------------------------- |
+| #    | Action                      | Expect                                             |
+| ---- | --------------------------- | -------------------------------------------------- |
 | 5.19 | Toggle **Show empty state** | Table body replaced by empty state                 |
 | 5.20 | Read empty copy             | Title + description; `role="status"`               |
 | 5.21 | Click **Clear filters**     | Returns to populated table                         |
@@ -341,8 +341,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Keyboard / accessibility (Phase 5)
 
-| #   | Action                           | Expect                                          |
-| --- | -------------------------------- | ----------------------------------------------- |
+| #    | Action                           | Expect                                          |
+| ---- | -------------------------------- | ----------------------------------------------- |
 | 5.24 | Tab to empty-state action button | Visible focus ring                              |
 | 5.25 | Inspect table semantics          | Real `<table>`, `<th scope="col">`, `<caption>` |
 | 5.26 | Badge is not focusable           | Status text conveys meaning (not color alone)   |
@@ -350,8 +350,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Storybook composition
 
-| #   | Action                               | Expect                                 |
-| --- | ------------------------------------ | -------------------------------------- |
+| #    | Action                               | Expect                                 |
+| ---- | ------------------------------------ | -------------------------------------- |
 | 5.28 | Open **Compositions / Data Display** | Shell + badges + table                 |
 | 5.29 | Toggle accent / density toolbars     | Tokens update without layout collapse  |
 | 5.30 | Toggle show-empty switch             | Empty state appears inside table frame |
@@ -369,12 +369,12 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Showcase — routing and shell composition
 
-| #   | Action                     | Expect                                                           |
-| --- | -------------------------- | ---------------------------------------------------------------- |
-| 6.1 | Visit `/` (phase 6 milestone) | Redirects to `/phase-6-overlays`                              |
-| 6.2 | Read the page              | Heading **Phase 6 Feedback & Overlays**; tooltip/toast/dialog UI |
-| 6.3 | Inspect chrome             | App shell sidebar + main; **Overlays** nav item active           |
-| 6.4 | Nav links                  | Data / Controls / Phase 3 / Phase 2 links present                |
+| #   | Action                        | Expect                                                           |
+| --- | ----------------------------- | ---------------------------------------------------------------- |
+| 6.1 | Visit `/` (phase 6 milestone) | Redirects to `/phase-6-overlays`                                 |
+| 6.2 | Read the page                 | Heading **Phase 6 Feedback & Overlays**; tooltip/toast/dialog UI |
+| 6.3 | Inspect chrome                | App shell sidebar + main; **Overlays** nav item active           |
+| 6.4 | Nav links                     | Data / Controls / Phase 3 / Phase 2 links present                |
 
 ### Tooltip (`jp-tooltip`)
 
@@ -388,18 +388,18 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Toast (`jp-toast`)
 
-| #   | Action                   | Expect                                        |
-| --- | ------------------------ | --------------------------------------------- |
-| 6.10 | Click **Success**       | Toast “Deployment saved” appears bottom-right |
-| 6.11 | Click dismiss ×         | Toast removes                                 |
-| 6.12 | Click **Error**         | Error-accent left border; message readable    |
+| #    | Action                   | Expect                                        |
+| ---- | ------------------------ | --------------------------------------------- |
+| 6.10 | Click **Success**        | Toast “Deployment saved” appears bottom-right |
+| 6.11 | Click dismiss ×          | Toast removes                                 |
+| 6.12 | Click **Error**          | Error-accent left border; message readable    |
 | 6.13 | Wait ~4s without dismiss | Toast auto-dismisses                          |
-| 6.14 | Focus stays on trigger  | Toast does not steal keyboard focus           |
+| 6.14 | Focus stays on trigger   | Toast does not steal keyboard focus           |
 
 ### Dialog (`jp-dialog`)
 
-| #   | Action                      | Expect                                       |
-| --- | --------------------------- | -------------------------------------------- |
+| #    | Action                      | Expect                                       |
+| ---- | --------------------------- | -------------------------------------------- |
 | 6.15 | Click **Delete deployment** | Dialog opens with title + actions            |
 | 6.16 | Tab inside dialog           | Focus cycles within dialog (trap)            |
 | 6.17 | Press Escape                | Dialog closes; focus returns to trigger area |
@@ -409,16 +409,16 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Popover (`jp-popover`)
 
-| #   | Action                | Expect                            |
-| --- | --------------------- | --------------------------------- |
+| #    | Action                | Expect                            |
+| ---- | --------------------- | --------------------------------- |
 | 6.21 | Click **Filters**     | Popover panel opens below trigger |
 | 6.22 | Click outside         | Popover closes                    |
 | 6.23 | Re-open; press Escape | Popover closes                    |
 
 ### Dropdown menu (`jp-dropdown-menu`)
 
-| #   | Action                   | Expect                                   |
-| --- | ------------------------ | ---------------------------------------- |
+| #    | Action                   | Expect                                   |
+| ---- | ------------------------ | ---------------------------------------- |
 | 6.24 | Click **Actions**        | Menu opens with Edit / Delete…           |
 | 6.25 | ArrowDown / ArrowUp      | Focus moves between items                |
 | 6.26 | Activate **Edit**        | Menu closes; last action = Edit selected |
@@ -426,8 +426,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Keyboard / accessibility (Phase 6)
 
-| #   | Action                 | Expect                                 |
-| --- | ---------------------- | -------------------------------------- |
+| #    | Action                 | Expect                                 |
+| ---- | ---------------------- | -------------------------------------- |
 | 6.28 | Dialog focus rings     | Visible on close + action buttons      |
 | 6.29 | Menu `role="menu"`     | Items are `menuitem`                   |
 | 6.30 | Toast `role="status"`  | Announced politely (optional SR check) |
@@ -435,8 +435,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Storybook composition
 
-| #   | Action                                    | Expect                                |
-| --- | ----------------------------------------- | ------------------------------------- |
+| #    | Action                                    | Expect                                |
+| ---- | ----------------------------------------- | ------------------------------------- |
 | 6.32 | Open **Compositions / Feedback Overlays** | Shell + overlay controls              |
 | 6.33 | Toggle accent / density toolbars          | Tokens update without layout collapse |
 | 6.34 | Open dialog from composition              | Dialog appears over shell             |
@@ -454,12 +454,12 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Showcase — routing and shell composition
 
-| #   | Action                    | Expect                                                        |
-| --- | ------------------------- | ------------------------------------------------------------- |
-| 7.1 | Visit `/` (phase 7 milestone) | Redirects to `/phase-7-assistant`                         |
-| 7.2 | Read the page             | Heading **Phase 7 Assistant System**; context trigger buttons |
-| 7.3 | Inspect chrome            | App shell sidebar + main; **Assistant** nav item active       |
-| 7.4 | Nav links                 | Overlays / Data / Controls / Phase 3 / Phase 2 links present  |
+| #   | Action                        | Expect                                                        |
+| --- | ----------------------------- | ------------------------------------------------------------- |
+| 7.1 | Visit `/` (phase 7 milestone) | Redirects to `/phase-7-assistant`                             |
+| 7.2 | Read the page                 | Heading **Phase 7 Assistant System**; context trigger buttons |
+| 7.3 | Inspect chrome                | App shell sidebar + main; **Assistant** nav item active       |
+| 7.4 | Nav links                     | Overlays / Data / Controls / Phase 3 / Phase 2 links present  |
 
 ### Context trigger API
 
@@ -472,10 +472,10 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Assistant panel
 
-| #   | Action                      | Expect                                            |
-| --- | --------------------------- | ------------------------------------------------- |
-| 7.9 | With panel open, press Esc  | Panel closes                                      |
-| 7.10 | Re-open; click header ×    | Panel closes                                      |
+| #    | Action                      | Expect                                            |
+| ---- | --------------------------- | ------------------------------------------------- |
+| 7.9  | With panel open, press Esc  | Panel closes                                      |
+| 7.10 | Re-open; click header ×     | Panel closes                                      |
 | 7.11 | Open panel                  | Focus moves into composer textarea                |
 | 7.12 | Type a question; click Send | User bubble appears; host assistant reply appears |
 | 7.13 | Press Enter in composer     | Same as Send (Shift+Enter should not send)        |
@@ -483,8 +483,8 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Tone refinement
 
-| #   | Action                   | Expect                                                          |
-| --- | ------------------------ | --------------------------------------------------------------- |
+| #    | Action                   | Expect                                                          |
+| ---- | ------------------------ | --------------------------------------------------------------- |
 | 7.15 | Click **Seed tone demo** | System (muted), assistant (sunken), user (subtle) messages show |
 | 7.16 | Inspect panel chrome     | Neutral surfaces; no large accent wash                          |
 | 7.17 | Inspect context chip     | Soft accent fill + strong accent text (signal only)             |
@@ -493,16 +493,16 @@ On `/phase-5-data` and Storybook **Primitives → Data Display → Badge**.
 
 ### Mobile (390×844)
 
-| #   | Action               | Expect                                     |
-| --- | -------------------- | ------------------------------------------ |
+| #    | Action               | Expect                                     |
+| ---- | -------------------- | ------------------------------------------ |
 | 7.20 | Open assistant       | Full-height overlay + scrim behind panel   |
 | 7.21 | Tap scrim            | Panel closes                               |
 | 7.22 | Shell drawer + panel | Both usable independently; no layout crash |
 
 ### Storybook
 
-| #   | Action                                      | Expect                              |
-| --- | ------------------------------------------- | ----------------------------------- |
+| #    | Action                                      | Expect                              |
+| ---- | ------------------------------------------- | ----------------------------------- |
 | 7.23 | `Primitives/Assistant/Panel` → MessageRoles | Three role tones readable           |
 | 7.24 | ContextTrigger play function                | Opens panel with deployment context |
 | 7.25 | `Compositions/Assistant System`             | Shell + trigger interaction passes  |

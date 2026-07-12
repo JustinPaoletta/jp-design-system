@@ -47,9 +47,7 @@ export class JpAssistantPanel implements OnInit {
   readonly composerId = `jp-assistant-composer-${++nextAssistantPanelId}`;
 
   readonly isMobileViewport = signal(false);
-  readonly trapFocus = computed(
-    () => this.isOpen() && this.isMobileViewport(),
-  );
+  readonly trapFocus = computed(() => this.isOpen() && this.isMobileViewport());
 
   readonly isOpen = this.assistantService.isOpen;
   readonly context = this.assistantService.context;
