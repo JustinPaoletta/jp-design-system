@@ -145,6 +145,7 @@ Quality gates:
 - CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
 
 Component or token releases should include manual Storybook and Showcase review for affected surfaces.
+See [MANUAL_QA.md](./MANUAL_QA.md) for the Phases 3–7 checklist.
 
 ## Release Process
 
