@@ -8,8 +8,8 @@ The JP Design System is a structured Angular component library for professional 
 
 - Type: private component-library monorepo
 - Current version: `0.0.0`
-- **Current milestone:** Phase 7 Epic 7 complete — assistant system, Showcase `/phase-7-assistant`, composition + e2e
-- **Next:** Phase 8 quality hardening — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- **Current milestone:** Assistant system complete — Showcase `/assistant`, composition + e2e
+- **Next:** Quality hardening — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
@@ -19,11 +19,11 @@ The JP Design System is a structured Angular component library for professional 
 - Roadmap: [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Design principles: [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
 - Primitive API: [docs/PRIMITIVES.md](./docs/PRIMITIVES.md)
-- Phase 3 plan: [docs/PHASE3_EPIC3_APP_SHELL_PLAN.md](./docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
-- Phase 4 plan: [docs/PHASE4_EPIC4_CONTROLS_PLAN.md](./docs/PHASE4_EPIC4_CONTROLS_PLAN.md)
-- Phase 5 plan: [docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./docs/PHASE5_EPIC5_DATA_DISPLAY_PLAN.md)
-- Phase 6 plan: [docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./docs/PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md)
-- Phase 7 plan: [docs/PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./docs/PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md)
+- App Shell plan: [docs/APP_SHELL_PLAN.md](./docs/APP_SHELL_PLAN.md)
+- Controls plan: [docs/CONTROLS_PLAN.md](./docs/CONTROLS_PLAN.md)
+- Data Display plan: [docs/DATA_DISPLAY_PLAN.md](./docs/DATA_DISPLAY_PLAN.md)
+- Feedback & Overlays plan: [docs/FEEDBACK_OVERLAYS_PLAN.md](./docs/FEEDBACK_OVERLAYS_PLAN.md)
+- Assistant System plan: [docs/ASSISTANT_SYSTEM_PLAN.md](./docs/ASSISTANT_SYSTEM_PLAN.md)
 - CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
 
 ## Core Philosophy
@@ -41,14 +41,14 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ```text
 /apps
-  /showcase            # read-only integration app (e.g. /phase-7-assistant)
-  /showcase-e2e        # Playwright e2e for showcase
-  /storybook           # placeholder Angular shell (not the component Storybook)
-  /storybook-e2e       # Playwright scaffold for the storybook app
+ /showcase # read-only integration app (e.g. /assistant)
+ /showcase-e2e # Playwright e2e for showcase
+ /storybook # placeholder Angular shell (not the component Storybook)
+ /storybook-e2e # Playwright scaffold for the storybook app
 
 /libs
-  /tokens              # design tokens (Style Dictionary)
-  /ui                  # Angular primitives + Storybook target (port 4400)
+ /tokens # design tokens (Style Dictionary)
+ /ui # Angular primitives + Storybook target (port 4400)
 ```
 
 **Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is a read-only Angular host app that proves compositions render correctly outside Storybook. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
@@ -145,7 +145,7 @@ Quality gates:
 - CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
 
 Component or token releases should include manual Storybook and Showcase review for affected surfaces.
-See [MANUAL_QA.md](./MANUAL_QA.md) for the Phases 3–7 checklist.
+See [MANUAL_QA.md](./MANUAL_QA.md) for the App Shell through Assistant checklist.
 
 ## Release Process
 
@@ -156,13 +156,14 @@ See [MANUAL_QA.md](./MANUAL_QA.md) for the Phases 3–7 checklist.
 
 ## Completed Milestones
 
-- Phase 0: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
-- Phase 1: Token system (primitives, semantic aliases, density, accent, CSS output)
-- Phase 2: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, layout dashboard composition, Playwright e2e gate
-- Phase 3: `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer, Showcase `/phase-3-dashboard`, composition + e2e
-- Phase 4: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, Showcase `/phase-4-controls`
-- Phase 5: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/phase-5-data`
-- Phase 6 (in progress): `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/phase-6-overlays`
+- Foundation: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
+- Tokens: Token system (primitives, semantic aliases, density, accent, CSS output)
+- Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, Showcase `/layout-dashboard`, Playwright e2e gate
+- App Shell: `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer, Showcase `/app-shell`, composition + e2e
+- Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, Showcase `/controls`
+- Data Display: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/data`
+- Feedback & Overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/overlays`
+- Assistant: `JpAssistantService`, `jp-assistant-panel`, Showcase `/assistant`
 
 ## License
 

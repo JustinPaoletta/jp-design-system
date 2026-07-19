@@ -14,7 +14,9 @@ context.
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-2-dashboard (root `/` redirects here).
+Open http://localhost:4200 (root `/` redirects to `/assistant`).
+
+Other routes: `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`.
 
 ## E2E
 

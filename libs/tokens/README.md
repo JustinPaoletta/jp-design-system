@@ -1,6 +1,6 @@
 # tokens
 
-Token source and generated artifacts for Phase 1 Epic 1.
+Token source and generated artifacts for the design-token system.
 
 ## Source of truth
 
@@ -41,7 +41,7 @@ Heading level scale (used by `jp-heading` — one token per `h1`–`h6` level):
 Heading levels map to primitive typography sizes 700 → 200. See
 [docs/PRIMITIVES.md](../../docs/PRIMITIVES.md) for how `jp-heading` uses these.
 
-## App shell tokens (Phase 3)
+## App shell tokens
 
 | Semantic token                 | CSS variable                                | Purpose                        |
 | ------------------------------ | ------------------------------------------- | ------------------------------ |
@@ -56,7 +56,7 @@ Heading levels map to primitive typography sizes 700 → 200. See
 | `transition.shell`             | `--jp-motion-transition-shell`              | Sidebar width/transform motion |
 | `shell.scrim` / `shell.drawer` | `--jp-z-shell-scrim`, `--jp-z-shell-drawer` | Mobile drawer stacking         |
 
-## Control tokens (Phase 4)
+## Control tokens
 
 Button:
 
@@ -104,7 +104,7 @@ Selection (checkbox / switch):
 Control heights (`sm` / `md` / `lg`) map to `--jp-size-control-*` and tighten under
 `data-jp-density="compact"`.
 
-## Data display tokens (Phase 5)
+## Data display tokens
 
 Badge:
 
@@ -139,7 +139,7 @@ Table:
 Empty state reuses surface/foreground tokens; no dedicated empty-state color
 tokens in v1.
 
-## Feedback & overlay tokens (Phase 6)
+## Feedback & overlay tokens
 
 Overlay panel / scrim:
 
@@ -182,7 +182,7 @@ Overlay z-index stack:
 | `overlay.dialog`       | `--jp-z-overlay-dialog`       |
 | `overlay.toast`        | `--jp-z-overlay-toast`        |
 
-## Assistant tokens (Phase 7)
+## Assistant tokens
 
 Assistant panel chrome and message tones:
 

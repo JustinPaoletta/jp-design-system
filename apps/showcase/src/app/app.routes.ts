@@ -1,39 +1,39 @@
 import { Route } from '@angular/router';
-import { Phase2DashboardPage } from './pages/phase-2-dashboard/phase-2-dashboard.page';
-import { Phase3DashboardPage } from './pages/phase-3-dashboard/phase-3-dashboard.page';
-import { Phase4ControlsPage } from './pages/phase-4-controls/phase-4-controls.page';
-import { Phase5DataPage } from './pages/phase-5-data/phase-5-data.page';
-import { Phase6OverlaysPage } from './pages/phase-6-overlays/phase-6-overlays.page';
-import { Phase7AssistantPage } from './pages/phase-7-assistant/phase-7-assistant.page';
+import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
+import { AppShellPage } from './pages/app-shell/app-shell.page';
+import { ControlsPage } from './pages/controls/controls.page';
+import { DataPage } from './pages/data/data.page';
+import { OverlaysPage } from './pages/overlays/overlays.page';
+import { AssistantPage } from './pages/assistant/assistant.page';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'phase-7-assistant',
+    redirectTo: 'assistant',
   },
   {
-    path: 'phase-2-dashboard',
-    component: Phase2DashboardPage,
+    path: 'layout-dashboard',
+    component: LayoutDashboardPage,
   },
   {
-    path: 'phase-3-dashboard',
-    component: Phase3DashboardPage,
+    path: 'app-shell',
+    component: AppShellPage,
   },
   {
-    path: 'phase-4-controls',
-    component: Phase4ControlsPage,
+    path: 'controls',
+    component: ControlsPage,
   },
   {
-    path: 'phase-5-data',
-    component: Phase5DataPage,
+    path: 'data',
+    component: DataPage,
   },
   {
-    path: 'phase-6-overlays',
-    component: Phase6OverlaysPage,
+    path: 'overlays',
+    component: OverlaysPage,
   },
   {
-    path: 'phase-7-assistant',
-    component: Phase7AssistantPage,
+    path: 'assistant',
+    component: AssistantPage,
   },
 ];

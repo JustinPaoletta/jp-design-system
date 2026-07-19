@@ -13,11 +13,11 @@ Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`,
 Full API, token mappings, and design rationale:
 [docs/PRIMITIVES.md](../../docs/PRIMITIVES.md)
 
-Phase 3 implementation plan:
-[docs/PHASE3_EPIC3_APP_SHELL_PLAN.md](../../docs/PHASE3_EPIC3_APP_SHELL_PLAN.md)
+App shell implementation plan:
+[docs/APP_SHELL_PLAN.md](../../docs/APP_SHELL_PLAN.md)
 
-Phase 4 implementation plan:
-[docs/PHASE4_EPIC4_CONTROLS_PLAN.md](../../docs/PHASE4_EPIC4_CONTROLS_PLAN.md)
+Controls implementation plan:
+[docs/CONTROLS_PLAN.md](../../docs/CONTROLS_PLAN.md)
 
 ## Storybook
 
@@ -40,7 +40,7 @@ Read-only integration app for compositions:
 npx nx run showcase:serve
 ```
 
-Runs at http://localhost:4200 (`/phase-4-controls` by default)
+Runs at http://localhost:4200 (`/assistant` by default)
 
 ## Tests
 

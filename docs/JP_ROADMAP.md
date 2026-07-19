@@ -10,24 +10,24 @@ density.
 
 ## Current Progress (as of July 10, 2026)
 
-- Phase 0 is complete.
+- Foundation is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
 - Story 0.2 (Create Libraries) is complete and validated.
 - Story 0.3 (Lint & Formatting) is complete and validated.
 - Story 0.4 (CI Pipeline) is complete and validated.
-- Phase 1, Epic 1 (Token System) is complete.
-- Phase 2, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
-- Phase 3, Epic 3 (App Shell) is complete.
-- Phase 4, Epic 4 (Core Inputs / Controls) is complete.
-- Phase 5, Epic 5 (Data Display) is complete on `phase5-data-display`.
-- Phase 6, Epic 6 (Feedback & Overlays) is complete on `phase6-feedback-overlays`.
-- Phase 7, Epic 7 (Assistant System) is complete on `phase7-assistant-system`.
-- Implementation plan: [PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md).
-- Next milestone: Phase 8 quality hardening (tests, a11y audit, visual regression, bundle size).
+- Tokens, Epic 1 (Token System) is complete.
+- Layout, Epic 2 (Layout Primitives + Layout-Only Dashboard) is complete.
+- App Shell, Epic 3 (App Shell) is complete.
+- Controls, Epic 4 (Core Inputs / Controls) is complete.
+- Data Display, Epic 5 (Data Display) is complete.
+- Feedback & Overlays, Epic 6 (Feedback & Overlays) is complete.
+- Assistant, Epic 7 (Assistant System) is complete.
+- Implementation plan: [ASSISTANT_SYSTEM_PLAN.md](./ASSISTANT_SYSTEM_PLAN.md).
+- Next milestone: quality hardening (tests, a11y audit, visual regression, bundle size).
 
 ---
 
-# PHASE 0 --- Foundation & Tooling
+# Milestone 0 --- Foundation & Tooling
 
 ## EPIC 0 --- Monorepo Setup
 
@@ -63,7 +63,7 @@ Deliverable: Clean CI-ready repo.
 
 ---
 
-# PHASE 1 --- Token Architecture
+# Milestone 1 --- Token Architecture
 
 ## EPIC 1 --- Token System
 
@@ -103,7 +103,7 @@ Deliverable: Working theme + density + accent switching. Completed.
 
 ---
 
-# PHASE 2 --- Primitives
+# Milestone 2 --- Primitives
 
 ## EPIC 2 --- Layout + Typography Primitives
 
@@ -119,12 +119,12 @@ Typography:
 
 - [x] jp-text — body copy; `as` and `size` are independent
 - [x] jp-heading — titles; `as` (h1–h6) sets both semantics and size via
-      per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
+ per-level tokens (`--jp-font-size-heading-h1` … `h6`). No `size` prop.
 
 Integration:
 
 - [x] Storybook primitives + composition story coverage
-- [x] Showcase `/phase-2-dashboard` route and page
+- [x] Showcase `/layout-dashboard` route and page
 - [x] CI Playwright Chromium gate for dashboard validation
 - [x] `Ui`/`lib-ui` marked deprecated for transition window
 
@@ -134,11 +134,11 @@ Deliverable: Layout-only dashboard using primitives. Completed.
 
 ---
 
-# PHASE 3 --- App Shell
+# Milestone 3 --- App Shell
 
 ## EPIC 3 --- Layout System
 
-Implementation plan: [PHASE3_EPIC3_APP_SHELL_PLAN.md](./PHASE3_EPIC3_APP_SHELL_PLAN.md)
+Implementation plan: [APP_SHELL_PLAN.md](./APP_SHELL_PLAN.md)
 
 - [x] Story 3.0 — Shell layout tokens
 - [x] Story 3.1 — `jp-app-shell` (sidebar + main, desktop collapse)
@@ -151,11 +151,11 @@ Deliverable: Functional dashboard shell. Completed.
 
 ---
 
-# PHASE 4 --- Controls
+# Milestone 4 --- Controls
 
 ## EPIC 4 --- Core Inputs
 
-Implementation plan: [PHASE4_EPIC4_CONTROLS_PLAN.md](./PHASE4_EPIC4_CONTROLS_PLAN.md)
+Implementation plan: [CONTROLS_PLAN.md](./CONTROLS_PLAN.md)
 
 - [x] Story 4.0 — Control tokens + API spike (locked decisions)
 - [x] Story 4.1 — `jp-button`
@@ -169,11 +169,11 @@ Deliverable: Complete form styling. Completed.
 
 ---
 
-# PHASE 5 --- Data Display
+# Milestone 5 --- Data Display
 
 ## EPIC 5
 
-Implementation plan: [PHASE5_EPIC5_DATA_DISPLAY_PLAN.md](./PHASE5_EPIC5_DATA_DISPLAY_PLAN.md)
+Implementation plan: [DATA_DISPLAY_PLAN.md](./DATA_DISPLAY_PLAN.md)
 
 - [x] Story 5.0 — Data display tokens + API spike (locked decisions)
 - [x] Story 5.1 — `jp-badge`
@@ -185,11 +185,11 @@ Deliverable: Dashboard data page.
 
 ---
 
-# PHASE 6 --- Feedback & Overlays
+# Milestone 6 --- Feedback & Overlays
 
 ## EPIC 6
 
-Implementation plan: [PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md](./PHASE6_EPIC6_FEEDBACK_OVERLAYS_PLAN.md)
+Implementation plan: [FEEDBACK_OVERLAYS_PLAN.md](./FEEDBACK_OVERLAYS_PLAN.md)
 
 - [x] Story 6.0 — Overlay tokens + API spike (locked decisions)
 - [x] Story 6.1 — Focus directive (`jpFocusTrap`)
@@ -204,11 +204,11 @@ Deliverable: Full interaction layer.
 
 ---
 
-# PHASE 7 --- Assistant System
+# Milestone 7 --- Assistant System
 
 ## EPIC 7
 
-Implementation plan: [PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md](./PHASE7_EPIC7_ASSISTANT_SYSTEM_PLAN.md)
+Implementation plan: [ASSISTANT_SYSTEM_PLAN.md](./ASSISTANT_SYSTEM_PLAN.md)
 
 - [x] Story 7.0 — Assistant tokens + API spike (locked decisions)
 - [x] Story 7.1 — `JpAssistantService`
@@ -221,7 +221,7 @@ Deliverable: Branded assistant integration.
 
 ---
 
-# PHASE 8 --- Quality Hardening
+# Milestone 8 --- Quality Hardening
 
 ## EPIC 8
 
@@ -234,7 +234,7 @@ Deliverable: Production-grade stability.
 
 ---
 
-# PHASE 9 --- Distribution
+# Milestone 9 --- Distribution
 
 ## EPIC 9
 

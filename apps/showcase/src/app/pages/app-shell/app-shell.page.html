@@ -1,0 +1,118 @@
+<jp-app-shell
+  [sidebarCollapsed]="sidebarCollapsed"
+  [mobileNavOpen]="mobileNavOpen"
+  (sidebarCollapsedChange)="sidebarCollapsed = $event"
+  (mobileNavOpenChange)="mobileNavOpen = $event"
+>
+  <nav jpAppShellSidebar>
+    <jp-stack gap="2xs">
+      <jp-app-shell-nav-item href="/app-shell" [active]="true">
+        Overview
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/layout-dashboard">
+        Layout
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item as="button"> Activity </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item as="button"> Settings </jp-app-shell-nav-item>
+    </jp-stack>
+  </nav>
+
+  <main jpAppShellMain>
+    <jp-box padding="lg" maxWidth="wide">
+      <jp-stack gap="lg">
+        <jp-stack gap="xs">
+          <jp-heading as="h1">App Shell Dashboard</jp-heading>
+          <jp-text tone="secondary"
+            >Dashboard content inside the persistent app shell.</jp-text
+          >
+          <jp-inline gap="sm">
+            <jp-text as="small" tone="muted">accent: {{ accent }}</jp-text>
+            <jp-text as="small" tone="muted">density: {{ density }}</jp-text>
+          </jp-inline>
+        </jp-stack>
+
+        <jp-grid mode="auto-fit" minColumn="sm" gap="md">
+          <jp-surface
+            padding="md"
+            tone="subtle"
+            border="subtle"
+            elevation="none"
+          >
+            <jp-stack gap="xs">
+              <jp-text as="small" tone="muted">Active sessions</jp-text>
+              <jp-heading as="h3">1,284</jp-heading>
+            </jp-stack>
+          </jp-surface>
+          <jp-surface
+            padding="md"
+            tone="subtle"
+            border="subtle"
+            elevation="none"
+          >
+            <jp-stack gap="xs">
+              <jp-text as="small" tone="muted">Error rate</jp-text>
+              <jp-heading as="h3">0.14%</jp-heading>
+            </jp-stack>
+          </jp-surface>
+          <jp-surface
+            padding="md"
+            tone="subtle"
+            border="subtle"
+            elevation="none"
+          >
+            <jp-stack gap="xs">
+              <jp-text as="small" tone="muted">Avg response</jp-text>
+              <jp-heading as="h3">182ms</jp-heading>
+            </jp-stack>
+          </jp-surface>
+        </jp-grid>
+
+        <jp-grid [columns]="2" gap="md">
+          <jp-surface tone="raised" padding="md">
+            <jp-stack gap="sm">
+              <jp-heading as="h3">Activity</jp-heading>
+              <jp-stack gap="xs">
+                <jp-text tone="secondary">App shell tokens applied</jp-text>
+                <jp-text tone="secondary"
+                  >Sidebar collapse and mobile drawer ready</jp-text
+                >
+                <jp-text tone="secondary"
+                  >Nav item active state uses accent signal</jp-text
+                >
+              </jp-stack>
+            </jp-stack>
+          </jp-surface>
+          <jp-surface tone="raised" padding="md">
+            <jp-stack gap="sm">
+              <jp-heading as="h3">Insights</jp-heading>
+              <jp-text tone="secondary">
+                Shell chrome is token-driven and reusable across dashboard
+                pages.
+              </jp-text>
+            </jp-stack>
+          </jp-surface>
+        </jp-grid>
+
+        <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
+          <jp-stack gap="sm">
+            <jp-heading as="h3">Recent Events</jp-heading>
+            <jp-stack gap="xs">
+              <jp-inline justify="between">
+                <jp-text>jp-app-shell-nav-item added</jp-text>
+                <jp-text as="small" tone="muted">just now</jp-text>
+              </jp-inline>
+              <jp-inline justify="between">
+                <jp-text>Mobile drawer focus trap enabled</jp-text>
+                <jp-text as="small" tone="muted">just now</jp-text>
+              </jp-inline>
+              <jp-inline justify="between">
+                <jp-text>Layout composition preserved</jp-text>
+                <jp-text as="small" tone="muted">earlier</jp-text>
+              </jp-inline>
+            </jp-stack>
+          </jp-stack>
+        </jp-surface>
+      </jp-stack>
+    </jp-box>
+  </main>
+</jp-app-shell>
