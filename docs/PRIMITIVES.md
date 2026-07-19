@@ -118,10 +118,11 @@ mobile drawer.
 Single navigation row for use inside the shell sidebar.
 
 | Input | Values | Default | Notes |
-| -------- | ---------------- | ------- | ---------------------------------------- |
+| ---------- | ---------------- | ------- | --------------------------------------------------------- |
 | `as` | `a`, `button` | `a` | Rendered interactive element |
 | `href` | string or `null` | `null` | Used when `as="a"` (falls back to `#`) |
 | `active` | boolean | `false` | Accent indicator + `aria-current="page"` |
+| `disabled` | boolean | `false` | Non-interactive; muted chrome (demo stubs, unavailable) |
 
 Optional icon slot: project into `[jpAppShellNavIcon]`. Labels are visually
 hidden when the parent shell is collapsed.

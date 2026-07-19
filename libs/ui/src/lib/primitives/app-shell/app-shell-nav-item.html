@@ -11,6 +11,7 @@
 <button
   type="button"
   class="jp-app-shell-nav-item__root"
+  [disabled]="disabled()"
   [attr.aria-current]="ariaCurrent()"
 >
   <ng-container [ngTemplateOutlet]="content"></ng-container>
@@ -20,6 +21,8 @@
   class="jp-app-shell-nav-item__root"
   [attr.href]="resolvedHref()"
   [attr.aria-current]="ariaCurrent()"
+  [attr.aria-disabled]="disabled() ? true : null"
+  [attr.tabindex]="tabIndex()"
 >
   <ng-container [ngTemplateOutlet]="content"></ng-container>
 </a>

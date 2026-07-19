@@ -77,4 +77,35 @@ describe('JpAppShellNavItem', () => {
 
     expect(component.as()).toBe('a');
   });
+
+  it('disables button nav items', () => {
+    fixture.componentRef.setInput('as', 'button');
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement.classList.contains(
+        'jp-app-shell-nav-item--disabled',
+      ),
+    ).toBe(true);
+
+    const root = fixture.nativeElement.querySelector(
+      '.jp-app-shell-nav-item__root',
+    ) as HTMLButtonElement;
+    expect(root.disabled).toBe(true);
+  });
+
+  it('marks disabled anchors as non-navigable', () => {
+    fixture.componentRef.setInput('href', '/settings');
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.jp-app-shell-nav-item__root',
+    ) as HTMLAnchorElement;
+    expect(root.getAttribute('href')).toBeNull();
+    expect(root.getAttribute('aria-disabled')).toBe('true');
+    expect(root.getAttribute('tabindex')).toBe('-1');
+    expect(root.getAttribute('aria-current')).toBeNull();
+  });
 });

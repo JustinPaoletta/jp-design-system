@@ -85,7 +85,7 @@ Run these when validating any showcase area to confirm the stack still works.
 | SH.1 | Visit `/app-shell` | Loads app shell dashboard |
 | SH.2 | Read the page | Heading **App Shell Dashboard**; metric cards + activity panels |
 | SH.3 | Inspect chrome | Persistent left sidebar + main content; no `lib-ui` usage |
-| SH.4 | Check nav | Overview / Layout / Activity / Settings; **Overview** is active |
+| SH.4 | Check nav | Overview / Layout / Demo as button; **Overview** active; demo item disabled |
 
 ### Desktop shell — collapse (1440px and 1024px)
 

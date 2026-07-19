@@ -25,9 +25,17 @@
   position: relative;
 }
 
-.jp-app-shell-nav-item__root:hover {
+.jp-app-shell-nav-item__root:hover:not(:disabled) {
   background: var(--jp-color-nav-item-bg-hover);
   color: var(--jp-color-nav-item-text-active);
+}
+
+:host(.jp-app-shell-nav-item--disabled) .jp-app-shell-nav-item__root,
+.jp-app-shell-nav-item__root:disabled {
+  color: var(--jp-color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
 }
 
 .jp-app-shell-nav-item__root:focus-visible {

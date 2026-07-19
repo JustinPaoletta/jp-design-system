@@ -21,6 +21,7 @@ export type JpAppShellNavItemTag = (typeof JP_APP_SHELL_NAV_ITEM_TAGS)[number];
   host: {
     class: 'jp-app-shell-nav-item',
     '[class.jp-app-shell-nav-item--active]': 'active()',
+    '[class.jp-app-shell-nav-item--disabled]': 'disabled()',
   },
 })
 export class JpAppShellNavItem {
@@ -32,15 +33,21 @@ export class JpAppShellNavItem {
 
   readonly active = input(false, { transform: booleanAttribute });
 
+  readonly disabled = input(false, { transform: booleanAttribute });
+
   readonly tag = computed(() => this.as());
 
   readonly resolvedHref = computed(() => {
-    if (this.tag() !== 'a') {
+    if (this.tag() !== 'a' || this.disabled()) {
       return null;
     }
 
     return this.href() ?? '#';
   });
 
-  readonly ariaCurrent = computed(() => (this.active() ? 'page' : null));
+  readonly ariaCurrent = computed(() =>
+    this.active() && !this.disabled() ? 'page' : null,
+  );
+
+  readonly tabIndex = computed(() => (this.disabled() ? -1 : null));
 }

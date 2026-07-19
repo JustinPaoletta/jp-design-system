@@ -6,6 +6,7 @@ type NavItemStoryArgs = {
   as: 'a' | 'button';
   href: string;
   active: boolean;
+  disabled: boolean;
   label: string;
 };
 
@@ -31,7 +32,12 @@ const meta: Meta<NavItemStoryArgs> = {
         }
       </style>
       <div class="jp-app-shell-nav-item-story">
-        <jp-app-shell-nav-item [as]="asTag" [href]="href" [active]="active">
+        <jp-app-shell-nav-item
+          [as]="asTag"
+          [href]="href"
+          [active]="active"
+          [disabled]="disabled"
+        >
           {{ label }}
         </jp-app-shell-nav-item>
       </div>
@@ -41,6 +47,7 @@ const meta: Meta<NavItemStoryArgs> = {
     as: 'a',
     href: '/overview',
     active: false,
+    disabled: false,
     label: 'Overview',
   },
   argTypes: {
@@ -49,6 +56,7 @@ const meta: Meta<NavItemStoryArgs> = {
       options: ['a', 'button'],
     },
     active: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
 };
 
@@ -98,5 +106,23 @@ export const AsButton: Story = {
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.jp-app-shell-nav-item__root');
     await expect(root?.tagName).toBe('BUTTON');
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    as: 'button',
+    disabled: true,
+    label: 'Demo as button',
+  },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector(
+      '.jp-app-shell-nav-item--disabled',
+    );
+    const root = canvasElement.querySelector(
+      '.jp-app-shell-nav-item__root',
+    ) as HTMLButtonElement;
+    await expect(host).toBeTruthy();
+    await expect(root.disabled).toBe(true);
   },
 };
