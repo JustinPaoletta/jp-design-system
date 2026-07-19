@@ -1,0 +1,52 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.jp-tooltip__trigger {
+  display: inline-flex;
+}
+
+.jp-tooltip__content {
+  position: absolute;
+  z-index: var(--jp-z-overlay-tooltip);
+  box-sizing: border-box;
+  max-width: 16rem;
+  padding: var(--jp-space-2xs) var(--jp-space-xs);
+  border: 1px solid var(--jp-color-tooltip-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-tooltip-bg);
+  color: var(--jp-color-tooltip-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+  box-shadow: var(--jp-elevation-floating);
+  pointer-events: none;
+  white-space: normal;
+}
+
+:host(.jp-tooltip--top) .jp-tooltip__content {
+  bottom: calc(100% + var(--jp-space-2xs));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+:host(.jp-tooltip--bottom) .jp-tooltip__content {
+  top: calc(100% + var(--jp-space-2xs));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+:host(.jp-tooltip--left) .jp-tooltip__content {
+  right: calc(100% + var(--jp-space-2xs));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host(.jp-tooltip--right) .jp-tooltip__content {
+  left: calc(100% + var(--jp-space-2xs));
+  top: 50%;
+  transform: translateY(-50%);
+}

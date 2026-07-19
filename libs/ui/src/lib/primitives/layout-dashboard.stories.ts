@@ -20,11 +20,11 @@ const meta: Meta = {
   render: () => ({
     template: `
       <style>
-        .jp-phase2-dashboard-story__header {
+        .jp-layout-dashboard-story__header {
           align-items: flex-start;
         }
 
-        .jp-phase2-dashboard-story__accent-badge {
+        .jp-layout-dashboard-story__accent-badge {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -39,7 +39,7 @@ const meta: Meta = {
           text-transform: uppercase;
         }
 
-        .jp-phase2-dashboard-story__accent-rule {
+        .jp-layout-dashboard-story__accent-rule {
           width: 100%;
           height: var(--jp-space-2xs);
           border-radius: var(--jp-radius-full);
@@ -50,17 +50,17 @@ const meta: Meta = {
           );
         }
 
-        .jp-phase2-dashboard-story__accent-value {
+        .jp-layout-dashboard-story__accent-value {
           color: var(--jp-color-accent-muted);
         }
       </style>
 
       <jp-box padding="lg" maxWidth="wide">
         <jp-stack gap="lg">
-          <jp-stack gap="sm" class="jp-phase2-dashboard-story__header">
+          <jp-stack gap="sm" class="jp-layout-dashboard-story__header">
             <jp-inline align="center" gap="sm">
               <jp-heading as="h1">Layout Dashboard</jp-heading>
-              <span class="jp-phase2-dashboard-story__accent-badge">
+              <span class="jp-layout-dashboard-story__accent-badge">
                 {{ documentAccent }}
               </span>
             </jp-inline>
@@ -69,7 +69,7 @@ const meta: Meta = {
               <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
               <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
             </jp-inline>
-            <div class="jp-phase2-dashboard-story__accent-rule" aria-hidden="true"></div>
+            <div class="jp-layout-dashboard-story__accent-rule" aria-hidden="true"></div>
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
@@ -77,7 +77,7 @@ const meta: Meta = {
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Active sessions</jp-text>
                 <jp-heading as="h3">
-                  <span class="jp-phase2-dashboard-story__accent-value">1,284</span>
+                  <span class="jp-layout-dashboard-story__accent-value">1,284</span>
                 </jp-heading>
               </jp-stack>
             </jp-surface>

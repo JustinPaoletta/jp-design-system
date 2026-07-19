@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  min-width: 16rem;
+  max-width: 24rem;
+}
+
+.jp-toast__root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--jp-space-sm);
+  box-sizing: border-box;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  border: 1px solid var(--jp-color-toast-border);
+  border-left-width: 3px;
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-toast-bg);
+  color: var(--jp-color-toast-fg);
+  box-shadow: var(--jp-elevation-floating);
+  font-family: var(--jp-font-family-base);
+}
+
+:host(.jp-toast--neutral) .jp-toast__root {
+  border-left-color: var(--jp-color-toast-neutral-accent);
+}
+
+:host(.jp-toast--success) .jp-toast__root {
+  border-left-color: var(--jp-color-toast-success-accent);
+}
+
+:host(.jp-toast--warning) .jp-toast__root {
+  border-left-color: var(--jp-color-toast-warning-accent);
+}
+
+:host(.jp-toast--error) .jp-toast__root {
+  border-left-color: var(--jp-color-toast-error-accent);
+}
+
+:host(.jp-toast--info) .jp-toast__root {
+  border-left-color: var(--jp-color-toast-info-accent);
+}
+
+.jp-toast__message {
+  margin: 0;
+  flex: 1;
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-toast__dismiss {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-lg);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.jp-toast__dismiss:hover {
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+}
+
+.jp-toast__dismiss:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}

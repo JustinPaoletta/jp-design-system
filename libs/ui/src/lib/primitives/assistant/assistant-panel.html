@@ -1,0 +1,90 @@
+@if (isOpen()) {
+<div
+  class="jp-assistant-panel__scrim"
+  aria-hidden="true"
+  (pointerdown)="onScrimClick()"
+></div>
+}
+<aside
+  class="jp-assistant-panel__surface"
+  role="complementary"
+  [attr.aria-label]="title()"
+  [attr.aria-hidden]="!isOpen()"
+  [attr.inert]="isOpen() ? null : ''"
+  [jpFocusTrap]="trapFocus()"
+  (keydown)="onSurfaceKeydown($event)"
+>
+  <header class="jp-assistant-panel__header">
+    <h2 class="jp-assistant-panel__title">{{ title() }}</h2>
+    <button
+      type="button"
+      class="jp-assistant-panel__close"
+      [attr.aria-label]="closeLabel()"
+      (click)="close()"
+    >
+      ×
+    </button>
+  </header>
+
+  @if (context(); as ctx) {
+  <div class="jp-assistant-panel__context">
+    <div class="jp-assistant-panel__context-copy">
+      <span class="jp-assistant-panel__context-label">{{ ctx.label }}</span>
+      @if (ctx.description) {
+      <span class="jp-assistant-panel__context-description"
+        >{{ ctx.description }}</span
+      >
+      }
+    </div>
+    <button
+      type="button"
+      class="jp-assistant-panel__context-clear"
+      [attr.aria-label]="clearContextLabel()"
+      (click)="clearContext()"
+    >
+      ×
+    </button>
+  </div>
+  }
+
+  <div class="jp-assistant-panel__messages" aria-live="polite">
+    @if (messages().length === 0) {
+    <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
+    } @else {
+    <div class="jp-assistant-panel__message-list">
+      @for (message of messages(); track message.id) {
+      <jp-assistant-message [role]="message.role" [content]="message.content" />
+      }
+    </div>
+    }
+  </div>
+
+  <form
+    class="jp-assistant-panel__composer"
+    (submit)="$event.preventDefault(); submit()"
+  >
+    <label class="jp-assistant-panel__composer-label" [attr.for]="composerId">
+      {{ composerLabel() }}
+    </label>
+    <textarea
+      #composer
+      class="jp-assistant-panel__composer-input"
+      [id]="composerId"
+      rows="3"
+      [attr.placeholder]="placeholder()"
+      [value]="draft()"
+      (input)="onDraftInput($event)"
+      (keydown)="onComposerKeydown($event)"
+    ></textarea>
+    <div class="jp-assistant-panel__composer-actions">
+      <jp-button
+        type="submit"
+        variant="primary"
+        size="sm"
+        [disabled]="!draft().trim()"
+      >
+        {{ sendLabel() }}
+      </jp-button>
+    </div>
+  </form>
+</aside>

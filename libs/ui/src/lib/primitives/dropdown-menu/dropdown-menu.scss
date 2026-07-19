@@ -1,0 +1,65 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.jp-dropdown-menu__anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+.jp-dropdown-menu__panel {
+  position: absolute;
+  top: calc(100% + var(--jp-space-2xs));
+  left: 0;
+  z-index: var(--jp-z-overlay-dropdown);
+  box-sizing: border-box;
+  min-width: 10rem;
+  padding: var(--jp-space-2xs);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-floating);
+  font-family: var(--jp-font-family-base);
+}
+
+.jp-dropdown-menu__panel[hidden] {
+  display: none !important;
+}
+
+:host ::ng-deep .jp-dropdown-menu__item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+  text-align: left;
+  cursor: pointer;
+}
+
+:host ::ng-deep .jp-dropdown-menu__item:hover,
+:host ::ng-deep .jp-dropdown-menu__item:focus-visible {
+  background: var(--jp-color-surface-subtle);
+  outline: none;
+}
+
+:host ::ng-deep .jp-dropdown-menu__item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--jp-color-focus-ring);
+}
+
+:host ::ng-deep .jp-dropdown-menu__item:disabled,
+:host ::ng-deep .jp-dropdown-menu__item[aria-disabled='true'] {
+  color: var(--jp-color-text-disabled);
+  cursor: not-allowed;
+}

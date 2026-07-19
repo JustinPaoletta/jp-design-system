@@ -65,7 +65,14 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    a11y: {
+      test: 'todo',
+    },
+    docs: {
+      toc: true,
+    },
   },
+  tags: ['autodocs'],
 };
 
 export default preview;

@@ -1,0 +1,94 @@
+<jp-app-shell
+  [sidebarCollapsed]="sidebarCollapsed"
+  [mobileNavOpen]="mobileNavOpen"
+  (sidebarCollapsedChange)="sidebarCollapsed = $event"
+  (mobileNavOpenChange)="mobileNavOpen = $event"
+>
+  <nav jpAppShellSidebar>
+    <jp-stack gap="2xs">
+      <jp-app-shell-nav-item href="/data" [active]="true">
+        Data
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/controls">
+        Controls
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/app-shell">
+        App Shell
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item href="/layout-dashboard">
+        Layout
+      </jp-app-shell-nav-item>
+    </jp-stack>
+  </nav>
+
+  <main jpAppShellMain>
+    <jp-box padding="lg" maxWidth="wide">
+      <jp-stack gap="lg">
+        <jp-stack gap="xs">
+          <jp-heading as="h1">Data Display</jp-heading>
+          <jp-text tone="secondary"
+            >Token-driven table, badges, and empty state inside the app
+            shell.</jp-text
+          >
+          <jp-inline gap="sm">
+            <jp-text as="small" tone="muted">accent: {{ accent }}</jp-text>
+            <jp-text as="small" tone="muted">density: {{ density }}</jp-text>
+          </jp-inline>
+        </jp-stack>
+
+        <jp-inline gap="sm" wrap="true">
+          <jp-badge tone="neutral">Neutral</jp-badge>
+          <jp-badge tone="accent">Accent</jp-badge>
+          <jp-badge tone="success">Success</jp-badge>
+          <jp-badge tone="warning">Warning</jp-badge>
+          <jp-badge tone="error">Error</jp-badge>
+          <jp-badge tone="info">Info</jp-badge>
+        </jp-inline>
+
+        <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+          <jp-stack gap="md">
+            <jp-inline align="center" gap="sm" justify="between" wrap="true">
+              <jp-heading as="h2">Deployments</jp-heading>
+              <jp-switch [(ngModel)]="showEmpty" name="showEmpty">
+                Show empty state
+              </jp-switch>
+            </jp-inline>
+
+            <jp-table
+              caption="Recent deployments"
+              [columns]="columns"
+              [rows]="visibleRows"
+              [striped]="true"
+            >
+              <ng-template jpTableCell="status" let-value>
+                <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
+              </ng-template>
+              <jp-empty-state
+                title="No deployments"
+                description="Nothing matches the current filters."
+              >
+                <jp-button
+                  variant="secondary"
+                  type="button"
+                  (click)="showEmpty = false"
+                >
+                  Clear filters
+                </jp-button>
+              </jp-empty-state>
+            </jp-table>
+          </jp-stack>
+        </jp-surface>
+
+        <jp-surface tone="sunken" padding="md" border="subtle" elevation="none">
+          <jp-empty-state
+            title="Standalone empty state"
+            description="Use outside tables for filtered lists or first-run screens."
+          >
+            <span jpEmptyStateIcon aria-hidden="true">◇</span>
+            <jp-button variant="primary" type="button">New item</jp-button>
+          </jp-empty-state>
+        </jp-surface>
+      </jp-stack>
+    </jp-box>
+  </main>
+</jp-app-shell>

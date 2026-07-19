@@ -1,0 +1,21 @@
+<label class="jp-switch__root" [attr.for]="resolvedId()">
+  <button
+    class="jp-switch__control"
+    type="button"
+    role="switch"
+    [attr.id]="resolvedId()"
+    [attr.aria-checked]="checked()"
+    [attr.aria-invalid]="invalid() ? true : null"
+    [disabled]="isDisabled()"
+    (click)="toggle()"
+    (keydown)="onKeydown($event)"
+    (blur)="onBlur()"
+  >
+    <span class="jp-switch__track" aria-hidden="true">
+      <span class="jp-switch__thumb"></span>
+    </span>
+  </button>
+  <span class="jp-switch__label">
+    <ng-content />
+  </span>
+</label>

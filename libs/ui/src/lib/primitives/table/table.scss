@@ -1,0 +1,100 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.jp-table__frame {
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--jp-color-table-row-border);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-table-row-bg);
+}
+
+.jp-table__root {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.jp-table__caption {
+  caption-side: top;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  text-align: start;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-table-caption-fg);
+}
+
+.jp-table__header {
+  box-sizing: border-box;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  background: var(--jp-color-table-header-bg);
+  color: var(--jp-color-table-header-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
+  letter-spacing: var(--jp-font-letter-spacing-wide);
+  text-align: start;
+  border-bottom: 1px solid var(--jp-color-table-row-border);
+  white-space: nowrap;
+}
+
+.jp-table__header--center,
+.jp-table__cell--center {
+  text-align: center;
+}
+
+.jp-table__header--end,
+.jp-table__cell--end {
+  text-align: end;
+}
+
+.jp-table__cell {
+  box-sizing: border-box;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  color: var(--jp-color-table-cell-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-regular);
+  line-height: var(--jp-font-line-height-normal);
+  text-align: start;
+  border-bottom: 1px solid var(--jp-color-table-row-border);
+  vertical-align: middle;
+}
+
+.jp-table__row:last-child .jp-table__cell {
+  border-bottom: none;
+}
+
+.jp-table__row {
+  background: var(--jp-color-table-row-bg);
+  transition: background var(--jp-motion-duration-fast)
+    var(--jp-motion-easing-standard);
+}
+
+.jp-table__row:hover {
+  background: var(--jp-color-table-row-bg-hover);
+}
+
+:host(.jp-table--striped) .jp-table__row:nth-child(even) {
+  background: var(--jp-color-table-row-bg-striped);
+}
+
+:host(.jp-table--striped) .jp-table__row:nth-child(even):hover {
+  background: var(--jp-color-table-row-bg-hover);
+}
+
+.jp-table__empty {
+  border-top: 1px solid var(--jp-color-table-row-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-table__row {
+    transition: none;
+  }
+}

@@ -1,15 +1,28 @@
-# Phase 3 Epic 3 — App Shell Implementation Plan
+# Epic 3 — App Shell Implementation Plan
 
-**Status:** Ready to start after PR #3 and PR #4 merge  
-**Branch target:** `phase3-app-shell`  
+**Status:** Complete — Stories 3.0–3.5 delivered  
+**Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)
+
+---
+
+## Locked decisions (Stories 3.2–3.5)
+
+| Decision             | Choice                                                                |
+| -------------------- | --------------------------------------------------------------------- |
+| Route naming         | Add `/app-shell`; keep `/layout-dashboard`; root → `/app-shell`   |
+| Sub-components       | `jp-app-shell` + `jp-app-shell-nav-item` only (no sidebar/main split) |
+| Collapse persistence | Session-only (Showcase local state)                                   |
+| Icons in nav         | Optional `[jpAppShellNavIcon]` slot; text labels required             |
+| Breakpoint           | `48rem` (`--jp-layout-shell-mobile-max`)                              |
+| Collapsed width      | `4rem` (`--jp-size-sidebar-collapsed`) so the rail fits the toggle    |
 
 ---
 
 ## Executive summary
 
-Phase 2 proved that layout and typography primitives compose cleanly into a
-dashboard page. Phase 3 wraps that content in a **persistent application shell**:
+Layout proved that layout and typography primitives compose cleanly into a
+dashboard page. This epic wraps that content in a **persistent application shell**:
 sidebar navigation, collapsible rail, and mobile drawer behavior.
 
 The deliverable is not a pixel-perfect Stripe clone. It is a **token-driven,
@@ -22,18 +35,17 @@ rebuilding layout chrome.
 
 Complete before starting implementation:
 
-1. Merge PR #3 (`phase2Epic2` → default branch).
-2. Merge PR #4 (`standardizeApps` — Showcase rename and docs alignment).
-3. Pull latest default branch and branch from it (`phase3-app-shell`).
+1. ~~Merge PR #3 (→ default branch).~~ Done.
+2. ~~Merge PR #4 (`standardizeApps` — Showcase rename and docs alignment).~~ Done.
+3. ~~Pull latest default branch and branch from it.~~ Done.
 
-Phase 2 manual QA is archived in git history; this document replaces the
-Epic 2 checklist as the active planning artifact.
+Layout manual QA is archived in git history; this document is the active planning artifact.
 
 ---
 
 ## Problem statement
 
-Today, `/phase-2-dashboard` renders dashboard content directly inside a bare
+Today, `/layout-dashboard` renders dashboard content directly inside a bare
 `<jp-box>`. There is no shared chrome for:
 
 - Primary navigation and route context
@@ -41,7 +53,7 @@ Today, `/phase-2-dashboard` renders dashboard content directly inside a bare
 - Off-canvas navigation on mobile
 - Active / hover / focus nav affordances using accent tokens
 
-Without a shell, every future page (Phase 4 controls, Phase 5 data tables) would
+Without a shell, every future page (Controls, Data Display data tables) would
 duplicate layout logic and drift from design principles.
 
 ---
@@ -60,15 +72,15 @@ duplicate layout logic and drift from design principles.
 
 ---
 
-## Non-goals (defer to later phases)
+## Non-goals (defer to later milestones)
 
 - **`jp-button` / icon buttons** — collapse trigger and drawer close use minimal
-  native `<button>` styling with tokens until Phase 4 ships formal controls.
+  native `<button>` styling with tokens until Controls ships formal controls.
 - **Router-aware nav** — shell accepts nav items as inputs or projected content;
   Angular `RouterLink` wiring lives in Showcase, not inside the primitive.
 - **User menu, breadcrumbs, command palette** — out of scope.
-- **Assistant panel** — Phase 7.
-- **Visual regression baselines** — Phase 8.
+- **Assistant panel** — Assistant.
+- **Visual regression baselines** — Quality hardening.
 
 ---
 
@@ -99,14 +111,14 @@ becomes hard to test.
   </nav>
 
   <main jpAppShellMain>
-    <!-- existing phase-2 dashboard composition -->
+    <!-- existing layout dashboard composition -->
   </main>
 </jp-app-shell>
 ```
 
 Design constraints:
 
-- **No `style` / `class` inputs** — same rule as Phase 2 primitives.
+- **No `style` / `class` inputs** — same rule as Layout primitives.
 - **Semantic landmarks** — shell renders `<aside>` + `<main>` (or documents why not).
 - **State is controllable** — collapse and drawer open are inputs with change outputs
   so Showcase and Storybook can drive state without private APIs.
@@ -118,7 +130,7 @@ Design constraints:
 Desktop (≥ breakpoint)
 ┌──────────────┬─────────────────────────────┐
 │   Sidebar    │         Main content        │
-│  (expanded   │   (phase-2 dashboard, etc.)   │
+│  (expanded   │   (layout dashboard, etc.)   │
 │   or rail)   │                             │
 └──────────────┴─────────────────────────────┘
 
@@ -152,9 +164,22 @@ Add shell-specific semantic tokens before component SCSS. Proposed groups:
 Run `npm run tokens:build` and `npm run tokens:check` in CI. No primitive token
 usage in components.
 
+**Status:** ✅ Complete (2026-07-10)
+
 ---
 
 ## Story breakdown
+
+### Story 3.0 — Shell layout tokens
+
+**Acceptance criteria:**
+
+- [x] Sidebar width tokens (`--jp-size-sidebar-expanded`, `--jp-size-sidebar-collapsed`)
+- [x] Layout breakpoint token (`--jp-layout-shell-mobile-max`)
+- [x] Shell chrome and nav-item color tokens
+- [x] Shell motion and z-index tokens
+- [x] Generated artifacts rebuilt; `tokens:check` passes
+- [x] Documented in `libs/tokens/README.md`
 
 ### Story 3.1 — Shell layout primitive
 
@@ -162,12 +187,12 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Component lives under `libs/ui/src/lib/primitives/app-shell/`
-- [ ] Exported from `libs/ui/src/index.ts`
-- [ ] Collapse toggles sidebar between expanded and collapsed widths via token
-- [ ] Main content reflows; no horizontal overflow at 1440 / 1024
-- [ ] Unit tests for collapse state and host classes
-- [ ] Storybook: `Primitives/Layout/App Shell` — `Default`, `Collapsed`
+- [x] Component lives under `libs/ui/src/lib/primitives/app-shell/`
+- [x] Exported from `libs/ui/src/index.ts`
+- [x] Collapse toggles sidebar between expanded and collapsed widths via token
+- [x] Main content reflows; no horizontal overflow at 1440 / 1024 (manual verify in Storybook)
+- [x] Unit tests for collapse state and host classes
+- [x] Storybook: `Primitives/Layout/App Shell` — `Default`, `Collapsed`
 
 ### Story 3.2 — Nav item primitive
 
@@ -175,11 +200,11 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Renders as `<a>` or `<button>` via `as` / `href` pattern (match existing primitive conventions)
-- [ ] `active` input applies accent signal (not large accent fill)
-- [ ] Focus ring uses semantic focus tokens
-- [ ] Storybook: `Active`, `Hover` (pseudo via forced states doc), `FocusVisible`
-- [ ] Unit tests for class/state mapping
+- [x] Renders as `<a>` or `<button>` via `as` / `href` pattern (match existing primitive conventions)
+- [x] `active` input applies accent signal (not large accent fill)
+- [x] Focus ring uses semantic focus tokens
+- [x] Storybook: `Active`, `Hover` (pseudo via forced states doc), `FocusVisible`
+- [x] Unit tests for class/state mapping
 
 ### Story 3.3 — Mobile drawer
 
@@ -187,12 +212,12 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Below layout breakpoint, sidebar hidden by default
-- [ ] `mobileNavOpen` input opens drawer over content with scrim
-- [ ] Escape key and scrim click set `mobileNavOpen` false
-- [ ] Focus moves into drawer on open; returns to trigger on close
-- [ ] `prefers-reduced-motion`: instant or minimal transition
-- [ ] Storybook story at mobile viewport; Playwright viewport test in e2e
+- [x] Below layout breakpoint, sidebar hidden by default
+- [x] `mobileNavOpen` input opens drawer over content with scrim
+- [x] Escape key and scrim click set `mobileNavOpen` false
+- [x] Focus moves into drawer on open; returns to trigger on close
+- [x] `prefers-reduced-motion`: instant or minimal transition
+- [x] Storybook story at mobile viewport; Playwright viewport test in e2e
 
 ### Story 3.4 — Showcase integration
 
@@ -200,11 +225,11 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] Route `/phase-3-dashboard` (or migrate `/phase-2-dashboard` — **decide at PR open**)
-- [ ] Phase 2 dashboard content unchanged inside `<main>`
-- [ ] Sample nav items (static labels; one marked active)
-- [ ] Root redirect updated if route name changes
-- [ ] No `lib-ui` on page
+- [x] Route `/app-shell` (or migrate `/layout-dashboard` — **decide at PR open**)
+- [x] Layout dashboard content unchanged inside `<main>`
+- [x] Sample nav items (static labels; one marked active)
+- [x] Root redirect updated if route name changes
+- [x] No `lib-ui` on page
 
 ### Story 3.5 — Composition story + CI gate
 
@@ -212,10 +237,10 @@ usage in components.
 
 **Acceptance criteria:**
 
-- [ ] `Compositions/App Shell Dashboard` story with accent/density toolbar enabled
-- [ ] `npx nx run ui:test-storybook` covers shell smoke interaction
-- [ ] `showcase-e2e` asserts shell landmarks, collapse toggle, mobile drawer at 390px
-- [ ] Full Step 1 gate green (see below)
+- [x] `Compositions/App Shell Dashboard` story with accent/density toolbar enabled
+- [x] `npx nx run ui:test-storybook` covers shell smoke interaction
+- [x] `showcase-e2e` asserts shell landmarks, collapse toggle, mobile drawer at 390px
+- [x] Full Step 1 gate green (see below)
 
 ---
 
@@ -262,11 +287,11 @@ Record failures in the PR description, not a separate QA ledger.
 
 | Decision             | Options                                               | Recommendation                                                     |
 | -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------ |
-| Route naming         | Keep `/phase-2-dashboard` vs add `/phase-3-dashboard` | Add `/phase-3-dashboard`; keep phase-2 route until Phase 4 cleanup |
+| Route naming         | Keep `/layout-dashboard` vs add `/app-shell` | Add `/app-shell`; keep `/layout-dashboard` route until Controls cleanup |
 | Sub-components       | Monolith vs split                                     | Start monolith; split if complexity grows                          |
 | Collapse persistence | Session-only vs `localStorage`                        | Session-only for v1; persistence is a Showcase concern             |
 | Icons in nav         | Placeholder spans vs SVG                              | Text-only labels in v1; icon slot as ng-content                    |
-| Breakpoint value     | 768 vs 1024                                           | 768 to align with Phase 2 responsive testing                       |
+| Breakpoint value     | 768 vs 1024                                           | 768 to align with Layout responsive testing                       |
 
 ---
 
@@ -300,7 +325,7 @@ Single epic PR is acceptable if review size stays under ~800 lines; split if lar
 
 ## First implementation steps
 
-1. Create branch `phase3-app-shell` from merged default branch.
+1. Create create the feature branch from merged default branch.
 2. Add shell layout tokens (Story 3.0); run `tokens:build`.
 3. Scaffold `libs/ui/src/lib/primitives/app-shell/` following `jp-surface` patterns
    (typed inputs, OnPush, token maps, spec + stories).

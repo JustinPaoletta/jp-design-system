@@ -157,6 +157,7 @@ async function loadTokenSources() {
     'primitives/radius.json',
     'primitives/elevation.json',
     'primitives/motion.json',
+    'primitives/z-index.json',
   ];
 
   let primitives = {};

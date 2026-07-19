@@ -89,6 +89,7 @@ describe('token source contracts', () => {
       'primitives/radius.json',
       'primitives/elevation.json',
       'primitives/motion.json',
+      'primitives/z-index.json',
     ];
 
     for (const file of primitiveFiles) {
@@ -105,6 +106,7 @@ describe('token source contracts', () => {
       'primitives/radius.json',
       'primitives/elevation.json',
       'primitives/motion.json',
+      'primitives/z-index.json',
     ].reduce<Record<string, unknown>>((merged, file) => {
       const current = readJson(file) as Record<string, unknown>;
       return deepMerge(merged, current);
@@ -172,6 +174,13 @@ describe('generated artifacts', () => {
     expect(css).toContain('--jp-color-text-primary');
     expect(css).toContain('--jp-color-foreground-primary');
     expect(css).toContain('--jp-font-label-sm');
+    expect(css).toContain('--jp-size-sidebar-expanded');
+    expect(css).toContain('--jp-layout-shell-mobile-max');
+    expect(css).toContain('--jp-color-shell-sidebar-bg');
+    expect(css).toContain('--jp-z-shell-drawer');
+    expect(css).toContain('--jp-color-assistant-panel-bg');
+    expect(css).toContain('--jp-z-assistant-panel');
+    expect(css).toContain('--jp-size-assistant-panel-width');
   });
 
   it('tokens.compact.css contains compact density overrides', () => {
@@ -197,6 +206,20 @@ describe('generated artifacts', () => {
       getByPath(json, 'semantic.accent.cobalt.color.accent.solid'),
     ).toBeTruthy();
     expect(getByPath(json, 'semantic.density.compact.space.md')).toBeTruthy();
+    expect(getByPath(json, 'semantic.base.size.sidebar.expanded')).toBe(
+      '16rem',
+    );
+    expect(getByPath(json, 'semantic.base.layout.shell.mobile-max')).toBe(
+      '48rem',
+    );
+    expect(
+      getByPath(json, 'semantic.base.color.shell.sidebar-bg'),
+    ).toBeTruthy();
+    expect(getByPath(json, 'semantic.base.z.shell.drawer')).toBe('50');
+    expect(getByPath(json, 'semantic.base.z.assistant.panel')).toBe('55');
+    expect(getByPath(json, 'semantic.base.size.assistant.panel-width')).toBe(
+      '22rem',
+    );
   });
 });
 

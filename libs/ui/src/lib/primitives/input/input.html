@@ -1,0 +1,26 @@
+<div class="jp-input__field">
+  @if (label()) {
+  <label class="jp-input__label" [attr.for]="resolvedId()">{{ label() }}</label>
+  }
+  <input
+    class="jp-input__control"
+    [attr.id]="resolvedId()"
+    [attr.type]="type()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.aria-invalid]="invalid() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonly()"
+    [value]="value()"
+    [style.--jp-field-height]="controlHeight()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+  @if (error()) {
+  <p class="jp-input__error" [attr.id]="errorId()" role="alert">
+    {{ error() }}
+  </p>
+  } @else if (hint()) {
+  <p class="jp-input__hint" [attr.id]="hintId()">{{ hint() }}</p>
+  }
+</div>
