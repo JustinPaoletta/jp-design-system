@@ -18,11 +18,11 @@ test.describe('app shell', () => {
     await expect(main).toBeVisible();
     await expect(page.locator('h1')).toContainText('App Shell Dashboard');
     await expect(activeNav).toContainText('App Shell');
-    await expect(sidebar).toHaveAttribute('aria-expanded', 'true');
+    await expect(collapseToggle).toHaveAttribute('aria-expanded', 'true');
 
     await collapseToggle.click();
     await expect(shell).toHaveClass(/jp-app-shell--collapsed/);
-    await expect(sidebar).toHaveAttribute('aria-expanded', 'false');
+    await expect(collapseToggle).toHaveAttribute('aria-expanded', 'false');
     await expect(collapseToggle).toHaveAttribute(
       'aria-label',
       'Expand sidebar',
