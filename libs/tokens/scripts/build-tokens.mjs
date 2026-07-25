@@ -279,7 +279,13 @@ export async function buildTokens({
       ' */',
     ].join('\n');
 
-    const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n`;
+    // Fold the compact density overrides into the main bundle so that a single
+    // tokens.css import drives every runtime mode: `:root` defaults, the
+    // [data-jp-accent] swaps, and the [data-jp-density="compact"] block. The
+    // compact rule is appended last so it wins over `:root` (equal specificity)
+    // when the density attribute is present. tokens.compact.css is still emitted
+    // as a standalone partial for consumers that only want the overrides.
+    const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n\n${compactCss}\n`;
     const compactOutput = `${header}\n\n${compactCss}\n`;
 
     const sources = await loadTokenSources();

@@ -79,31 +79,36 @@
   white-space: nowrap;
 }
 
-:host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__root {
-  justify-content: center;
-  padding-inline: var(--jp-space-2xs);
-}
+/* Collapsed (icon rail) styles only apply at desktop widths — below the
+   shell's mobile breakpoint the sidebar becomes a full-width drawer and
+   labels must stay visible even when sidebarCollapsed is true. */
+@media (width > 48rem) {
+  :host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__root {
+    justify-content: center;
+    padding-inline: var(--jp-space-2xs);
+  }
 
-:host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
+  :host-context(.jp-app-shell--collapsed) .jp-app-shell-nav-item__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
-:host-context(.jp-app-shell--collapsed)
-  .jp-app-shell-nav-item__icon:not(:empty) {
-  display: inline-flex;
-}
+  :host-context(.jp-app-shell--collapsed)
+    .jp-app-shell-nav-item__icon:not(:empty) {
+    display: inline-flex;
+  }
 
-:host-context(.jp-app-shell--collapsed).jp-app-shell-nav-item--active
-  .jp-app-shell-nav-item__root::before {
-  display: none;
+  :host-context(.jp-app-shell--collapsed).jp-app-shell-nav-item--active
+    .jp-app-shell-nav-item__root::before {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

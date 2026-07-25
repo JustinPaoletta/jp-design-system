@@ -7,6 +7,18 @@
   line-height: var(--jp-font-line-height-normal);
 }
 
+.jp-assistant-message__role {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .jp-assistant-message__content {
   margin: 0;
   white-space: pre-wrap;

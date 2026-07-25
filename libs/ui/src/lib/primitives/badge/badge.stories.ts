@@ -95,13 +95,24 @@ export const Small: Story = {
 export const AllTones: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <div style="display: flex; flex-wrap: wrap; gap: var(--jp-space-sm);">
         <jp-badge tone="neutral">Neutral</jp-badge>
         <jp-badge tone="accent">Accent</jp-badge>
         <jp-badge tone="success">Success</jp-badge>
         <jp-badge tone="warning">Warning</jp-badge>
         <jp-badge tone="error">Error</jp-badge>
         <jp-badge tone="info">Info</jp-badge>
+      </div>
+    `,
+  }),
+};
+
+export const Sizes: Story = {
+  render: () => ({
+    template: `
+      <div style="display: flex; align-items: center; gap: var(--jp-space-sm);">
+        <jp-badge tone="accent" size="sm">Small</jp-badge>
+        <jp-badge tone="accent" size="md">Medium</jp-badge>
       </div>
     `,
   }),

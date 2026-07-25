@@ -58,9 +58,18 @@ import { JpTooltip } from './tooltip/tooltip';
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
       <nav jpAppShellSidebar>
-        <jp-app-shell-nav-item href="#" [active]="true"
-          >Overlays</jp-app-shell-nav-item
+        <jp-app-shell-nav-item
+          href="#"
+          [active]="true"
+          (click)="$event.preventDefault()"
         >
+          <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          Overlays
+        </jp-app-shell-nav-item>
       </nav>
       <main jpAppShellMain>
         <jp-box padding="lg" maxWidth="wide">
@@ -223,6 +232,19 @@ export const Default: Story = {
       await expect(
         canvasElement.querySelector('[role="dialog"][aria-modal="true"]'),
       ).toBeTruthy();
+
+      // Close the dialog so the story doesn't end with a modal scrim
+      // blocking every click on the canvas.
+      const cancelButton = Array.from(
+        canvasElement.querySelectorAll('button'),
+      ).find((button) => button.textContent?.trim() === 'Cancel');
+      await expect(cancelButton).toBeTruthy();
+      if (cancelButton) {
+        await userEvent.click(cancelButton);
+      }
+      await expect(
+        canvasElement.querySelector('[role="dialog"][aria-modal="true"]'),
+      ).toBeFalsy();
     }
   },
 };

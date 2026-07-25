@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { ShellLayout } from './layout/shell-layout';
 import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
 import { AppShellPage } from './pages/app-shell/app-shell.page';
 import { ControlsPage } from './pages/controls/controls.page';
@@ -9,31 +10,37 @@ import { AssistantPage } from './pages/assistant/assistant.page';
 export const appRoutes: Route[] = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'assistant',
-  },
-  {
-    path: 'layout-dashboard',
-    component: LayoutDashboardPage,
-  },
-  {
-    path: 'app-shell',
-    component: AppShellPage,
-  },
-  {
-    path: 'controls',
-    component: ControlsPage,
-  },
-  {
-    path: 'data',
-    component: DataPage,
-  },
-  {
-    path: 'overlays',
-    component: OverlaysPage,
-  },
-  {
-    path: 'assistant',
-    component: AssistantPage,
+    component: ShellLayout,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'assistant',
+      },
+      {
+        path: 'layout-dashboard',
+        component: LayoutDashboardPage,
+      },
+      {
+        path: 'app-shell',
+        component: AppShellPage,
+      },
+      {
+        path: 'controls',
+        component: ControlsPage,
+      },
+      {
+        path: 'data',
+        component: DataPage,
+      },
+      {
+        path: 'overlays',
+        component: OverlaysPage,
+      },
+      {
+        path: 'assistant',
+        component: AssistantPage,
+      },
+    ],
   },
 ];

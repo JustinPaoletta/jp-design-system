@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect } from 'storybook/test';
@@ -34,18 +35,22 @@ const meta: Meta<AppShellDashboardArgs> = {
       ],
     }),
   ],
-  render: (args, { updateArgs }) => ({
+  render: (args) => {
+    const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
+    const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
+    return {
     props: {
-      ...args,
+      sidebarCollapsed,
+      mobileNavOpen,
       documentAccent:
         document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
       documentDensity:
         document.documentElement.getAttribute('data-jp-density') ?? 'default',
       onSidebarCollapsedChange(next: boolean) {
-        updateArgs({ sidebarCollapsed: next });
+        sidebarCollapsed.set(next);
       },
       onMobileNavOpenChange(next: boolean) {
-        updateArgs({ mobileNavOpen: next });
+        mobileNavOpen.set(next);
       },
     },
     template: `
@@ -78,20 +83,44 @@ const meta: Meta<AppShellDashboardArgs> = {
       </style>
 
       <jp-app-shell
-        [sidebarCollapsed]="sidebarCollapsed"
-        [mobileNavOpen]="mobileNavOpen"
+        [sidebarCollapsed]="sidebarCollapsed()"
+        [mobileNavOpen]="mobileNavOpen()"
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <nav jpAppShellSidebar>
+        <nav jpAppShellSidebar aria-label="Primary">
           <jp-stack gap="2xs">
-            <jp-app-shell-nav-item href="#overview" [active]="true">
+            <jp-app-shell-nav-item
+              href="#overview"
+              [active]="true"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+              </svg>
               Overview
             </jp-app-shell-nav-item>
-            <jp-app-shell-nav-item href="#activity">
+            <jp-app-shell-nav-item
+              href="#activity"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
               Activity
             </jp-app-shell-nav-item>
-            <jp-app-shell-nav-item href="#settings">
+            <jp-app-shell-nav-item
+              href="#settings"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+                <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+                <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/>
+                <line x1="17" y1="16" x2="23" y2="16"/>
+              </svg>
               Settings
             </jp-app-shell-nav-item>
           </jp-stack>
@@ -121,19 +150,19 @@ const meta: Meta<AppShellDashboardArgs> = {
                 <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
                   <jp-stack gap="xs">
                     <jp-text as="small" tone="muted">Active sessions</jp-text>
-                    <jp-heading as="h3">1,284</jp-heading>
+                    <jp-text size="body-lg">1,284</jp-text>
                   </jp-stack>
                 </jp-surface>
                 <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
                   <jp-stack gap="xs">
                     <jp-text as="small" tone="muted">Error rate</jp-text>
-                    <jp-heading as="h3">0.14%</jp-heading>
+                    <jp-text size="body-lg">0.14%</jp-text>
                   </jp-stack>
                 </jp-surface>
                 <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
                   <jp-stack gap="xs">
                     <jp-text as="small" tone="muted">Avg response</jp-text>
-                    <jp-heading as="h3">182ms</jp-heading>
+                    <jp-text size="body-lg">182ms</jp-text>
                   </jp-stack>
                 </jp-surface>
               </jp-grid>
@@ -141,7 +170,7 @@ const meta: Meta<AppShellDashboardArgs> = {
               <jp-grid columns="2" gap="md">
                 <jp-surface tone="raised" padding="md">
                   <jp-stack gap="sm">
-                    <jp-heading as="h3">Activity</jp-heading>
+                    <jp-heading as="h2">Activity</jp-heading>
                     <jp-stack gap="xs">
                       <jp-text tone="secondary">Shell tokens applied</jp-text>
                       <jp-text tone="secondary">Nav active accent signal</jp-text>
@@ -151,7 +180,7 @@ const meta: Meta<AppShellDashboardArgs> = {
                 </jp-surface>
                 <jp-surface tone="raised" padding="md">
                   <jp-stack gap="sm">
-                    <jp-heading as="h3">Insights</jp-heading>
+                    <jp-heading as="h2">Insights</jp-heading>
                     <jp-text tone="secondary">
                       Accent and density toolbars apply on this composition story.
                     </jp-text>
@@ -163,10 +192,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </main>
       </jp-app-shell>
     `,
-  }),
+    };
+  },
   args: {
     sidebarCollapsed: false,
     mobileNavOpen: false,
+  },
+  argTypes: {
+    sidebarCollapsed: {
+      control: 'boolean',
+      description: 'Collapse the sidebar to the icon rail width.',
+    },
+    mobileNavOpen: {
+      control: 'boolean',
+      description: 'Open the mobile navigation drawer.',
+    },
   },
 };
 

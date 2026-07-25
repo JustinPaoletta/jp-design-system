@@ -10,10 +10,15 @@
   grid-template-columns: var(--jp-size-sidebar-expanded) minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   min-height: 100vh;
-  transition: var(--jp-motion-transition-shell);
+  /* The shared shell transition targets width/transform; the desktop rail
+     collapse animates the grid track, so transition that property here. */
+  transition: grid-template-columns var(--jp-motion-duration-shell)
+    var(--jp-motion-easing-shell);
 }
 
-@media (min-width: 48.0625rem) {
+/* `width > 48rem` complements the mobile `max-width: 48rem` query exactly,
+   leaving no gap at fractional viewport widths (e.g. browser zoom). */
+@media (width > 48rem) {
   :host(.jp-app-shell--collapsed) .jp-app-shell__layout {
     grid-template-columns: var(--jp-size-sidebar-collapsed) minmax(0, 1fr);
   }
@@ -125,20 +130,23 @@
   border-bottom: 1px solid var(--jp-color-shell-border);
 }
 
-:host(.jp-app-shell--collapsed) .jp-app-shell__sidebar-toolbar {
-  justify-content: center;
+@media (width > 48rem) {
+  :host(.jp-app-shell--collapsed) .jp-app-shell__sidebar-toolbar {
+    justify-content: center;
+  }
 }
 
+/* Chevron points toward the action: "<" to collapse, ">" to expand. */
 .jp-app-shell__collapse-toggle-icon {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg) translate(-1px, -1px);
+  transform: rotate(135deg) translate(-1px, -1px);
   transition: transform var(--jp-motion-duration-shell)
     var(--jp-motion-easing-shell);
 }
 
 :host(.jp-app-shell--collapsed) .jp-app-shell__collapse-toggle-icon {
-  transform: rotate(135deg) translate(-1px, -1px);
+  transform: rotate(-45deg) translate(-1px, -1px);
 }
 
 .jp-app-shell__sidebar-content {

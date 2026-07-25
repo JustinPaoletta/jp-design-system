@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -14,7 +14,7 @@ export type JpAppShellNavItemTag = (typeof JP_APP_SHELL_NAV_ITEM_TAGS)[number];
 
 @Component({
   selector: 'jp-app-shell-nav-item',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './app-shell-nav-item.html',
   styleUrl: './app-shell-nav-item.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

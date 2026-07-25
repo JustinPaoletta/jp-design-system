@@ -22,6 +22,10 @@ const variants = {
     format: 'css/variables',
     options: {
       selector: ':root',
+      // Emit var() references so accent-derived semantic tokens (focus ring,
+      // nav indicator, primary button, etc.) follow [data-jp-accent] swaps at
+      // runtime instead of baking in the neon values.
+      outputReferences: true,
     },
   },
   accentNeon: {

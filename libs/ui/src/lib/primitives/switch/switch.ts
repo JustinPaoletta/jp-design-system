@@ -43,6 +43,7 @@ export class JpSwitch implements ControlValueAccessor {
   readonly invalid = input(false, { transform: booleanAttribute });
 
   readonly resolvedId = computed(() => this.id() || this.generatedId);
+  readonly labelId = computed(() => `${this.resolvedId()}-label`);
   readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
 
   writeValue(value: boolean | null): void {

@@ -55,3 +55,18 @@ export const TitleOnly: Story = {
     `,
   }),
 };
+
+export const WithoutAction: Story = {
+  args: {
+    title: 'No results',
+    description: 'Try adjusting your search or filters.',
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <jp-empty-state [title]="title" [description]="description">
+        <span jpEmptyStateIcon aria-hidden="true">◇</span>
+      </jp-empty-state>
+    `,
+  }),
+};

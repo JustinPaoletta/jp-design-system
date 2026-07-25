@@ -89,6 +89,17 @@ export const Populated: Story = {
   },
 };
 
+export const Plain: Story = {
+  args: { striped: false },
+  play: async ({ canvasElement }) => {
+    await expect(
+      (canvasElement.querySelector('jp-table') as HTMLElement).classList.contains(
+        'jp-table--striped',
+      ),
+    ).toBe(false);
+  },
+};
+
 export const Empty: Story = {
   args: { empty: true },
   play: async ({ canvasElement }) => {
@@ -96,5 +107,88 @@ export const Empty: Story = {
     await expect(
       canvasElement.querySelector('.jp-empty-state__title')?.textContent,
     ).toContain('No deployments');
+  },
+};
+
+const wideColumns = [
+  { key: 'name', header: 'Service' },
+  { key: 'env', header: 'Environment' },
+  { key: 'status', header: 'Status' },
+  { key: 'region', header: 'Region' },
+  { key: 'owner', header: 'Owner' },
+  { key: 'lastDeploy', header: 'Last deploy' },
+  { key: 'requests', header: 'Requests / min', align: 'end' as const },
+  { key: 'latency', header: 'p95 latency (ms)', align: 'end' as const },
+];
+
+const wideRows = [
+  {
+    name: 'api-gateway',
+    env: 'production',
+    status: 'Healthy',
+    region: 'us-east-1',
+    owner: 'platform',
+    lastDeploy: '2m ago',
+    requests: 12480,
+    latency: 84,
+  },
+  {
+    name: 'worker',
+    env: 'production',
+    status: 'Degraded',
+    region: 'eu-west-1',
+    owner: 'payments',
+    lastDeploy: '1h ago',
+    requests: 3120,
+    latency: 212,
+  },
+  {
+    name: 'ingest',
+    env: 'staging',
+    status: 'Healthy',
+    region: 'us-west-2',
+    owner: 'data',
+    lastDeploy: '3d ago',
+    requests: 640,
+    latency: 57,
+  },
+];
+
+export const Scrollable: Story = {
+  render: () => ({
+    props: {
+      columns: wideColumns,
+      rows: wideRows,
+      statusTone(value: string) {
+        if (value === 'Healthy') {
+          return 'success';
+        }
+        if (value === 'Degraded') {
+          return 'warning';
+        }
+        return 'neutral';
+      },
+    },
+    template: `
+      <div style="max-width: 32rem;">
+        <jp-table
+          caption="Service health (scroll horizontally)"
+          [columns]="columns"
+          [rows]="rows"
+          [striped]="true"
+        >
+          <ng-template jpTableCell="status" let-value>
+            <jp-badge [tone]="statusTone(value)">{{ value }}</jp-badge>
+          </ng-template>
+        </jp-table>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector(
+      '.jp-table__frame',
+    ) as HTMLElement | null;
+    await expect(frame).toBeTruthy();
+    await expect(canvasElement.querySelectorAll('th').length).toBe(8);
   },
 };

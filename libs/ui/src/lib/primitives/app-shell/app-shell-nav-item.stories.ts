@@ -16,6 +16,9 @@ const meta: Meta<NavItemStoryArgs> = {
   globals: {
     accent: 'neon',
   },
+  parameters: {
+    a11y: { test: 'error' },
+  },
   render: (args) => ({
     props: {
       ...args,
@@ -37,6 +40,7 @@ const meta: Meta<NavItemStoryArgs> = {
           [href]="href"
           [active]="active"
           [disabled]="disabled"
+          (click)="$event.preventDefault()"
         >
           {{ label }}
         </jp-app-shell-nav-item>
@@ -124,5 +128,75 @@ export const Disabled: Story = {
     ) as HTMLButtonElement;
     await expect(host).toBeTruthy();
     await expect(root.disabled).toBe(true);
+  },
+};
+
+/** Active item with a projected leading icon and the accent indicator bar. */
+export const WithIcon: Story = {
+  args: {
+    active: true,
+    label: 'Overview',
+  },
+  render: (args) => ({
+    props: { ...args, asTag: args.as },
+    template: `
+      <div class="jp-app-shell-nav-item-story" style="max-width:16rem;padding:var(--jp-space-sm);background:var(--jp-color-shell-sidebar-bg);border:1px solid var(--jp-color-shell-border);border-radius:var(--jp-radius-md);">
+        <jp-app-shell-nav-item
+          [as]="asTag"
+          [href]="href"
+          [active]="active"
+          [disabled]="disabled"
+          (click)="$event.preventDefault()"
+        >
+          <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+          {{ label }}
+        </jp-app-shell-nav-item>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    await expect(
+      canvasElement.querySelector('.jp-app-shell-nav-item__icon'),
+    ).toBeTruthy();
+    await expect(canvasElement.querySelector('svg')).toBeTruthy();
+  },
+};
+
+/**
+ * Collapsed icon rail: inside a `.jp-app-shell--collapsed` context the label is
+ * visually hidden (kept for screen readers) and only the icon shows.
+ */
+export const CollapsedRail: Story = {
+  args: {
+    active: true,
+    label: 'Overview',
+  },
+  render: (args) => ({
+    props: { ...args, asTag: args.as },
+    template: `
+      <div class="jp-app-shell--collapsed" style="width:var(--jp-size-sidebar-collapsed);padding:var(--jp-space-sm);background:var(--jp-color-shell-sidebar-bg);border:1px solid var(--jp-color-shell-border);border-radius:var(--jp-radius-md);">
+        <jp-app-shell-nav-item
+          [as]="asTag"
+          [href]="href"
+          [active]="active"
+          [disabled]="disabled"
+          (click)="$event.preventDefault()"
+        >
+          <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+          {{ label }}
+        </jp-app-shell-nav-item>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    // Label stays in the accessible tree even when visually collapsed.
+    const label = canvasElement.querySelector('.jp-app-shell-nav-item__label');
+    await expect(label?.textContent?.trim()).toBe('Overview');
   },
 };

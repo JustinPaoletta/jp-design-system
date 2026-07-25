@@ -113,7 +113,8 @@
 .jp-assistant-panel__context-description {
   font-size: var(--jp-font-size-caption);
   line-height: var(--jp-font-line-height-normal);
-  color: var(--jp-color-text-secondary);
+  /* Inherit context chip ink color — secondary text fails contrast on accent-soft. */
+  opacity: 0.85;
 }
 
 .jp-assistant-panel__messages {

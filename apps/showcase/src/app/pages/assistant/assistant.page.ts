@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  JpAppShell,
-  JpAppShellNavItem,
   JpAssistantPanel,
   JpAssistantService,
   JpAssistantTrigger,
@@ -18,8 +16,6 @@ import {
 @Component({
   selector: 'app-assistant-page',
   imports: [
-    JpAppShell,
-    JpAppShellNavItem,
     JpBox,
     JpStack,
     JpInline,
@@ -37,8 +33,6 @@ import {
 export class AssistantPage {
   private readonly assistant = inject(JpAssistantService);
 
-  sidebarCollapsed = false;
-  mobileNavOpen = false;
   lastReply = 'None yet';
 
   readonly accent =

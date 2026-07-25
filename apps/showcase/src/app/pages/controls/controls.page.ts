@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  JpAppShell,
-  JpAppShellNavItem,
   JpBox,
   JpButton,
   JpCheckbox,
@@ -22,8 +20,6 @@ import {
   selector: 'app-controls-page',
   imports: [
     FormsModule,
-    JpAppShell,
-    JpAppShellNavItem,
     JpBox,
     JpStack,
     JpInline,
@@ -43,9 +39,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlsPage {
-  sidebarCollapsed = false;
-  mobileNavOpen = false;
-
   email = '';
   notes = '';
   role = 'editor';

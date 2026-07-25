@@ -102,3 +102,98 @@ export const Default: Story = {
     await expect(root).toBeTruthy();
   },
 };
+
+/** All six levels stacked so the type scale and hierarchy read at a glance. */
+export const Scale: Story = {
+  render: () => ({
+    template: `
+      <style>
+        .jp-heading-story__scale {
+          display: grid;
+          gap: var(--jp-space-md);
+          max-width: calc(var(--jp-space-3xl) * 6);
+          padding: var(--jp-space-lg);
+          border: 1px dashed var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-sunken);
+        }
+
+        .jp-heading-story__row {
+          display: grid;
+          gap: var(--jp-space-2xs);
+        }
+
+        .jp-heading-story__eyebrow {
+          color: var(--jp-color-foreground-muted);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+          text-transform: uppercase;
+        }
+      </style>
+
+      <div class="jp-heading-story__scale">
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h1</div>
+          <jp-heading as="h1">The quick brown fox</jp-heading>
+        </div>
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h2</div>
+          <jp-heading as="h2">The quick brown fox</jp-heading>
+        </div>
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h3</div>
+          <jp-heading as="h3">The quick brown fox</jp-heading>
+        </div>
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h4</div>
+          <jp-heading as="h4">The quick brown fox</jp-heading>
+        </div>
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h5</div>
+          <jp-heading as="h5">The quick brown fox</jp-heading>
+        </div>
+        <div class="jp-heading-story__row">
+          <div class="jp-heading-story__eyebrow">h6</div>
+          <jp-heading as="h6">The quick brown fox</jp-heading>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    for (const level of JP_HEADING_TAGS) {
+      await expect(
+        canvasElement.querySelector(`${level}.jp-heading__root`),
+      ).toBeTruthy();
+    }
+  },
+};
+
+/** Tonal treatments — primary through disabled — on a single level. */
+export const Tones: Story = {
+  render: () => ({
+    template: `
+      <style>
+        .jp-heading-story__tones {
+          display: grid;
+          gap: var(--jp-space-sm);
+          max-width: calc(var(--jp-space-3xl) * 6);
+          padding: var(--jp-space-lg);
+          border: 1px dashed var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-sunken);
+        }
+      </style>
+
+      <div class="jp-heading-story__tones">
+        <jp-heading as="h3" tone="primary">Primary heading</jp-heading>
+        <jp-heading as="h3" tone="secondary">Secondary heading</jp-heading>
+        <jp-heading as="h3" tone="muted">Muted heading</jp-heading>
+        <jp-heading as="h3" tone="disabled">Disabled heading</jp-heading>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const headings = canvasElement.querySelectorAll('h3.jp-heading__root');
+    await expect(headings.length).toBe(4);
+  },
+};

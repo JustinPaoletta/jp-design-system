@@ -1,9 +1,20 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import {
   type JpAssistantMessageRole,
   JP_ASSISTANT_MESSAGE_ROLES,
 } from '../shared/primitive-types';
 import { createStringUnionTransform } from '../shared/token-maps';
+
+const ROLE_LABELS: Record<JpAssistantMessageRole, string> = {
+  user: 'You',
+  assistant: 'Assistant',
+  system: 'System',
+};
 
 @Component({
   selector: 'jp-assistant-message',
@@ -12,13 +23,17 @@ import { createStringUnionTransform } from '../shared/token-maps';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-assistant-message',
-    '[class.jp-assistant-message--user]': 'role() === "user"',
-    '[class.jp-assistant-message--assistant]': 'role() === "assistant"',
-    '[class.jp-assistant-message--system]': 'role() === "system"',
+    '[class.jp-assistant-message--user]': 'messageRole() === "user"',
+    '[class.jp-assistant-message--assistant]': 'messageRole() === "assistant"',
+    '[class.jp-assistant-message--system]': 'messageRole() === "system"',
   },
 })
 export class JpAssistantMessage {
-  readonly role = input<JpAssistantMessageRole, unknown>('assistant', {
+  /**
+   * Named `messageRole` (not `role`) so templates never set the HTML `role`
+   * attribute to non-ARIA values like "system" / "assistant".
+   */
+  readonly messageRole = input<JpAssistantMessageRole, unknown>('assistant', {
     transform: createStringUnionTransform(
       JP_ASSISTANT_MESSAGE_ROLES,
       'assistant',
@@ -26,4 +41,6 @@ export class JpAssistantMessage {
   });
 
   readonly content = input.required<string>();
+
+  readonly roleLabel = computed(() => ROLE_LABELS[this.messageRole()]);
 }

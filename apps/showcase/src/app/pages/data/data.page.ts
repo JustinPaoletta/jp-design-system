@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  JpAppShell,
-  JpAppShellNavItem,
   JpBadge,
   type JpBadgeTone,
   JpBox,
@@ -23,8 +21,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-data-page',
   imports: [
     FormsModule,
-    JpAppShell,
-    JpAppShellNavItem,
     JpBox,
     JpStack,
     JpInline,
@@ -43,8 +39,6 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataPage {
-  sidebarCollapsed = false;
-  mobileNavOpen = false;
   showEmpty = false;
 
   readonly columns: JpTableColumn[] = [

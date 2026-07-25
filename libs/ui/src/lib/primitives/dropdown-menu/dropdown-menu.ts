@@ -1,10 +1,10 @@
 import {
+  afterRenderEffect,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   output,
@@ -69,22 +69,60 @@ export class JpDropdownMenuItem {
   host: {
     class: 'jp-dropdown-menu',
     '[class.jp-dropdown-menu--open]': 'open()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
+    '(document:pointerdown)': 'onDocumentPointerDown($event)',
   },
 })
 export class JpDropdownMenu {
   private readonly host = inject(ElementRef<HTMLElement>);
+  private lastOpen = false;
+  private previousFocus: HTMLElement | null = null;
 
   readonly open = input(false, { transform: booleanAttribute });
   readonly openChange = output<boolean>();
 
   readonly menuId = `jp-dropdown-menu-${Math.random().toString(36).slice(2, 9)}`;
 
-  toggle(): void {
-    const next = !this.open();
-    this.openChange.emit(next);
-    if (next) {
-      queueMicrotask(() => this.focusFirstItem());
+  constructor() {
+    // Focus must wait until the panel is rendered without [hidden];
+    // a microtask in toggle() would run before change detection.
+    afterRenderEffect(() => {
+      const isOpen = this.open();
+
+      if (isOpen && !this.lastOpen) {
+        this.previousFocus = document.activeElement as HTMLElement | null;
+        this.focusFirstItem();
+      }
+
+      if (!isOpen && this.lastOpen) {
+        this.restoreFocus();
+      }
+
+      this.lastOpen = isOpen;
+    });
+  }
+
+  /**
+   * Return focus to the trigger when the menu closes while focus is still
+   * inside it (Escape or item selection), matching the APG menu-button
+   * pattern. Skipped when the user closed the menu by clicking elsewhere so
+   * we never steal focus from wherever they clicked.
+   */
+  private restoreFocus(): void {
+    const trigger = this.previousFocus;
+    this.previousFocus = null;
+    if (!trigger) {
+      return;
     }
+    const active = document.activeElement;
+    const hostEl = this.host.nativeElement;
+    if (active === null || active === document.body || hostEl.contains(active)) {
+      trigger.focus();
+    }
+  }
+
+  toggle(): void {
+    this.openChange.emit(!this.open());
   }
 
   close(): void {
@@ -147,7 +185,6 @@ export class JpDropdownMenu {
     }
   }
 
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape' && this.open()) {
       event.preventDefault();
@@ -155,7 +192,6 @@ export class JpDropdownMenu {
     }
   }
 
-  @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
     if (!this.open()) {
       return;

@@ -5,7 +5,6 @@ import {
   Component,
   Directive,
   ElementRef,
-  HostListener,
   input,
   output,
   viewChild,
@@ -30,6 +29,7 @@ export class JpDialogActions {}
   host: {
     class: 'jp-dialog',
     '[class.jp-dialog--open]': 'open()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class JpDialog {
@@ -76,7 +76,6 @@ export class JpDialog {
     this.close();
   }
 
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeydown(event: KeyboardEvent): void {
     if (!this.open()) {
       return;

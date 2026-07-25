@@ -7,7 +7,7 @@
   <select
     class="jp-select__control"
     [attr.id]="resolvedId()"
-    [attr.aria-invalid]="invalid() ? true : null"
+    [attr.aria-invalid]="isInvalid() ? true : null"
     [attr.aria-describedby]="describedBy()"
     [disabled]="isDisabled()"
     [value]="value()"

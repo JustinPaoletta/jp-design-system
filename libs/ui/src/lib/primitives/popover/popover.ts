@@ -4,7 +4,6 @@ import {
   Component,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   output,
@@ -50,6 +49,8 @@ export class JpPopoverContent {
   host: {
     class: 'jp-popover',
     '[class.jp-popover--open]': 'open()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
+    '(document:pointerdown)': 'onDocumentPointerDown($event)',
   },
 })
 export class JpPopover {
@@ -70,7 +71,6 @@ export class JpPopover {
     }
   }
 
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape' && this.open()) {
       event.preventDefault();
@@ -78,7 +78,6 @@ export class JpPopover {
     }
   }
 
-  @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
     if (!this.open()) {
       return;

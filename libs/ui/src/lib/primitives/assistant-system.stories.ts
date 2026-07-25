@@ -39,9 +39,16 @@ import { JpText } from './text/text';
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
       <nav jpAppShellSidebar>
-        <jp-app-shell-nav-item href="#" [active]="true"
-          >Assistant</jp-app-shell-nav-item
+        <jp-app-shell-nav-item
+          href="#"
+          [active]="true"
+          (click)="$event.preventDefault()"
         >
+          <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Assistant
+        </jp-app-shell-nav-item>
       </nav>
       <main jpAppShellMain>
         <jp-box padding="lg" maxWidth="wide">
@@ -131,7 +138,7 @@ class AssistantCompositionHost {
   }
 }
 
-const meta: Meta = {
+const meta: Meta<JpAppShell> = {
   title: 'Compositions/Assistant System',
   component: JpAppShell,
   globals: {
@@ -148,7 +155,7 @@ const meta: Meta = {
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<JpAppShell>;
 
 export const Default: Story = {
   play: async ({ canvasElement }) => {
@@ -166,5 +173,16 @@ export const Default: Story = {
         canvasElement.querySelector('[role="complementary"]'),
       ).toBeTruthy();
     }
+  },
+};
+
+/**
+ * Same composition rendered with the compact density token set, so spacing on
+ * the shell, triggers, and panel tightens while tones and accent signals hold.
+ */
+export const Compact: Story = {
+  globals: {
+    accent: 'neon',
+    density: 'compact',
   },
 };

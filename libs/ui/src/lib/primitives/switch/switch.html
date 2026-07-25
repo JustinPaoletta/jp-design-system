@@ -6,6 +6,7 @@
     [attr.id]="resolvedId()"
     [attr.aria-checked]="checked()"
     [attr.aria-invalid]="invalid() ? true : null"
+    [attr.aria-labelledby]="labelId()"
     [disabled]="isDisabled()"
     (click)="toggle()"
     (keydown)="onKeydown($event)"
@@ -15,7 +16,7 @@
       <span class="jp-switch__thumb"></span>
     </span>
   </button>
-  <span class="jp-switch__label">
+  <span class="jp-switch__label" [attr.id]="labelId()">
     <ng-content />
   </span>
 </label>

@@ -11,7 +11,7 @@
       "primary": { "value": "{primitive.color.neutral.50}" },
       "secondary": { "value": "{primitive.color.neutral.200}" },
       "muted": { "value": "{primitive.color.neutral.400}" },
-      "disabled": { "value": "{primitive.color.neutral.500}" }
+      "disabled": { "value": "{primitive.color.neutral.400}" }
     },
     "foreground": {
       "primary": { "value": "{color.text.primary}" },
@@ -97,7 +97,7 @@
       "fg": { "value": "{color.text.primary}" },
       "placeholder": { "value": "{color.text.muted}" },
       "label": { "value": "{color.text.secondary}" },
-      "error": { "value": "{color.state.error.text}" }
+      "error": { "value": "{color.state.error.border}" }
     },
     "selection": {
       "track": { "value": "{color.surface.emphasis}" },
@@ -112,15 +112,15 @@
       "neutral-bg": { "value": "{color.surface.emphasis}" },
       "neutral-fg": { "value": "{color.text.secondary}" },
       "accent-bg": { "value": "{color.accent.soft}" },
-      "accent-fg": { "value": "{color.accent.strong}" },
+      "accent-fg": { "value": "{color.accent.contrast}" },
       "success-bg": { "value": "{color.state.success.soft}" },
-      "success-fg": { "value": "{color.state.success.text}" },
+      "success-fg": { "value": "{color.state.success.strong}" },
       "warning-bg": { "value": "{color.state.warning.soft}" },
-      "warning-fg": { "value": "{color.state.warning.text}" },
+      "warning-fg": { "value": "{color.state.warning.strong}" },
       "error-bg": { "value": "{color.state.error.soft}" },
-      "error-fg": { "value": "{color.state.error.text}" },
+      "error-fg": { "value": "{color.state.error.strong}" },
       "info-bg": { "value": "{color.state.info.soft}" },
-      "info-fg": { "value": "{color.state.info.text}" }
+      "info-fg": { "value": "{color.state.info.strong}" }
     },
     "table": {
       "header-bg": { "value": "{color.surface.subtle}" },
@@ -164,7 +164,7 @@
       "assistant-fg": { "value": "{color.text.primary}" },
       "system-fg": { "value": "{color.text.muted}" },
       "context-bg": { "value": "{color.accent.soft}" },
-      "context-fg": { "value": "{color.accent.strong}" },
+      "context-fg": { "value": "{color.accent.contrast}" },
       "context-border": { "value": "{color.accent.muted}" }
     }
   },

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, waitFor } from 'storybook/test';
 import { Component, inject } from '@angular/core';
 import { JpButton } from '../button/button';
 import { JpInline } from '../inline/inline';
@@ -27,7 +27,10 @@ import { JpAssistantService } from './assistant.service';
           Ask about deployment
         </jp-button>
         <jp-button type="button" variant="ghost" (click)="seed()">
-          Seed messages
+          Seed conversation
+        </jp-button>
+        <jp-button type="button" variant="ghost" (click)="openEmpty()">
+          Open empty
         </jp-button>
       </jp-inline>
       <jp-assistant-panel (messageSubmit)="onSubmit($event)" />
@@ -45,7 +48,7 @@ class AssistantStoryHost {
   };
 
   seed(): void {
-    this.assistant.open();
+    this.assistant.open({ context: this.deploymentContext });
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
@@ -55,6 +58,14 @@ class AssistantStoryHost {
       role: 'assistant',
       content: 'I can summarize status, risks, and next steps.',
     });
+    this.assistant.addMessage({
+      role: 'user',
+      content: 'What changed in this rollout?',
+    });
+  }
+
+  openEmpty(): void {
+    this.assistant.open({ context: null, clearMessages: true });
   }
 
   onSubmit(content: string): void {
@@ -65,7 +76,7 @@ class AssistantStoryHost {
   }
 }
 
-const meta: Meta = {
+const meta: Meta<JpAssistantPanel> = {
   title: 'Primitives/Assistant/Panel',
   component: JpAssistantPanel,
   globals: {
@@ -73,6 +84,7 @@ const meta: Meta = {
   },
   parameters: {
     layout: 'fullscreen',
+    a11y: { test: 'error' },
   },
   decorators: [
     moduleMetadata({
@@ -90,30 +102,121 @@ const meta: Meta = {
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<JpAssistantPanel>;
 
+/**
+ * Message role tones stay neutral: system is muted, assistant sits on a sunken
+ * surface, user is a subtle right-aligned bubble. Accent is reserved as a signal
+ * elsewhere (context chip + Send button), not on message bodies.
+ */
 export const MessageRoles: Story = {
   render: () => ({
     template: `
-      <div class="jp-assistant-message-story" style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;">
-        <jp-assistant-message role="system" content="System: context attached" />
-        <jp-assistant-message role="assistant" content="Assistant reply stays calm and neutral." />
-        <jp-assistant-message role="user" content="User question about this deployment." />
+      <div
+        class="jp-assistant-panel__message-list"
+        style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
+      >
+        <jp-assistant-message messageRole="system" content="Context loaded for dep-1042" />
+        <jp-assistant-message messageRole="assistant" content="Assistant reply stays calm and neutral." />
+        <jp-assistant-message messageRole="user" content="User question about this deployment." />
       </div>
     `,
   }),
 };
 
+/** Empty state shown when the panel is open but no messages exist yet. */
+export const EmptyState: Story = {
+  render: () => ({
+    template: `<jp-assistant-story-host />`,
+  }),
+  play: async ({ canvasElement }) => {
+    const openEmpty = Array.from(
+      canvasElement.querySelectorAll('button'),
+    ).find((button) => button.textContent?.trim() === 'Open empty');
+    await userEvent.click(openEmpty as HTMLButtonElement);
+    await expect(canvasElement.textContent).toContain('Ask about this surface');
+  },
+};
+
+/** A seeded conversation covering all three message roles inside the panel. */
+export const Conversation: Story = {
+  render: () => ({
+    template: `<jp-assistant-story-host />`,
+  }),
+  play: async ({ canvasElement }) => {
+    const seed = Array.from(canvasElement.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Seed conversation',
+    );
+    await userEvent.click(seed as HTMLButtonElement);
+    await expect(canvasElement.textContent).toContain(
+      'I can summarize status, risks, and next steps.',
+    );
+    await expect(
+      canvasElement.querySelectorAll('jp-assistant-message').length,
+    ).toBe(3);
+  },
+};
+
+/**
+ * Opening from a context trigger attaches the accent-signalled context chip and
+ * moves focus to the composer. The Send button is disabled until text is typed.
+ */
 export const ContextTrigger: Story = {
   render: () => ({
     template: `<jp-assistant-story-host />`,
   }),
   play: async ({ canvasElement }) => {
-    const button = canvasElement.querySelector('button') as HTMLButtonElement;
-    await userEvent.click(button);
+    const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Ask about deployment',
+    );
+    await userEvent.click(trigger as HTMLButtonElement);
+
     await expect(canvasElement.textContent).toContain('Deployment dep-1042');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
+
+    const composer = canvasElement.querySelector(
+      '.jp-assistant-panel__composer-input',
+    ) as HTMLTextAreaElement;
+    await waitFor(() => expect(document.activeElement).toBe(composer));
+
+    const send = canvasElement.querySelector(
+      '.jp-assistant-panel__composer-actions button',
+    ) as HTMLButtonElement;
+    await expect(send.disabled).toBe(true);
+  },
+};
+
+/**
+ * Composer behavior: empty draft cannot send, typing enables Send, and Enter
+ * submits (Shift+Enter would insert a newline instead).
+ */
+export const ComposerInteraction: Story = {
+  render: () => ({
+    template: `<jp-assistant-story-host />`,
+  }),
+  play: async ({ canvasElement }) => {
+    const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Ask about deployment',
+    );
+    await userEvent.click(trigger as HTMLButtonElement);
+
+    const composer = canvasElement.querySelector(
+      '.jp-assistant-panel__composer-input',
+    ) as HTMLTextAreaElement;
+    await waitFor(() => expect(composer).toBeTruthy());
+
+    await userEvent.type(composer, 'What is the deployment status?');
+    const send = canvasElement.querySelector(
+      '.jp-assistant-panel__composer-actions button',
+    ) as HTMLButtonElement;
+    await expect(send.disabled).toBe(false);
+
+    await userEvent.keyboard('{Enter}');
+    await expect(canvasElement.textContent).toContain(
+      'What is the deployment status?',
+    );
+    await expect(canvasElement.textContent).toContain('Noted:');
   },
 };

@@ -78,3 +78,38 @@ export const MenuOpen: Story = {
     await expect(canvasElement.textContent).toContain('Edit');
   },
 };
+
+export const KeyboardNavigation: Story = {
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector('button') as HTMLButtonElement;
+    await userEvent.click(trigger);
+
+    const items = canvasElement.querySelectorAll<HTMLButtonElement>(
+      '[jpdropdownmenuitem]',
+    );
+    // Opening the menu moves focus to the first item.
+    await expect(document.activeElement).toBe(items[0]);
+
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(document.activeElement).toBe(items[1]);
+
+    // ArrowUp wraps back to the first item.
+    await userEvent.keyboard('{ArrowUp}');
+    await expect(document.activeElement).toBe(items[0]);
+  },
+};
+
+export const WithDisabledItem: Story = {
+  render: () => ({
+    template: `
+      <jp-dropdown-menu [open]="true">
+        <jp-button jpDropdownTrigger type="button" variant="secondary">
+          Actions
+        </jp-button>
+        <button type="button" jpDropdownMenuItem>Edit</button>
+        <button type="button" jpDropdownMenuItem disabled>Delete</button>
+        <button type="button" jpDropdownMenuItem>Duplicate</button>
+      </jp-dropdown-menu>
+    `,
+  }),
+};

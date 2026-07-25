@@ -2,7 +2,6 @@ import {
   booleanAttribute,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
 } from '@angular/core';
@@ -65,13 +64,15 @@ export function trapTabKey(event: KeyboardEvent, container: HTMLElement): void {
 @Directive({
   selector: '[jpFocusTrap]',
   standalone: true,
+  host: {
+    '(keydown)': 'onKeydown($event)',
+  },
 })
 export class JpFocusTrap {
   private readonly host = inject(ElementRef<HTMLElement>);
 
   readonly jpFocusTrap = input(true, { transform: booleanAttribute });
 
-  @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
     if (!this.jpFocusTrap()) {
       return;

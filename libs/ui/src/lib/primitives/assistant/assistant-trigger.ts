@@ -1,10 +1,4 @@
-import {
-  booleanAttribute,
-  Directive,
-  HostListener,
-  inject,
-  input,
-} from '@angular/core';
+import { booleanAttribute, Directive, inject, input } from '@angular/core';
 import { type JpAssistantContext } from '../shared/primitive-types';
 import { JpAssistantService } from './assistant.service';
 
@@ -13,6 +7,7 @@ import { JpAssistantService } from './assistant.service';
   standalone: true,
   host: {
     class: 'jp-assistant-trigger',
+    '(click)': 'onClick()',
   },
 })
 export class JpAssistantTrigger {
@@ -23,7 +18,6 @@ export class JpAssistantTrigger {
     transform: booleanAttribute,
   });
 
-  @HostListener('click')
   onClick(): void {
     this.assistant.open({
       context: this.jpAssistantContext(),

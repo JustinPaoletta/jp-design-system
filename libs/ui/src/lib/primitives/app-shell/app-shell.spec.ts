@@ -254,10 +254,13 @@ describe('JpAppShell', () => {
       '.jp-app-shell__menu-toggle',
     ) as HTMLButtonElement;
 
-    expect(sidebar.getAttribute('aria-expanded')).toBe('true');
+    // aria-expanded is not a valid attribute on the complementary landmark
+    // itself; the disclosure state lives on the controlling toggle button.
+    expect(sidebar.getAttribute('aria-expanded')).toBeNull();
     expect(sidebar.getAttribute('aria-label')).toBe('Primary');
     expect(toggle.getAttribute('aria-label')).toBe('Collapse sidebar');
-    expect(toggle.getAttribute('aria-pressed')).toBe('false');
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-controls')).toBe('jp-app-shell-sidebar');
     expect(menuToggle.getAttribute('aria-expanded')).toBe('false');
     expect(menuToggle.getAttribute('aria-controls')).toBe(
       'jp-app-shell-sidebar',
@@ -292,9 +295,9 @@ describe('JpAppShell', () => {
       '.jp-app-shell__collapse-toggle',
     ) as HTMLButtonElement;
 
-    expect(sidebar.getAttribute('aria-expanded')).toBe('false');
+    expect(sidebar.getAttribute('aria-expanded')).toBeNull();
     expect(toggle.getAttribute('aria-label')).toBe('Expand sidebar');
-    expect(toggle.getAttribute('aria-pressed')).toBe('true');
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('marks main inert while mobile drawer is open', () => {
@@ -317,8 +320,10 @@ describe('JpAppShell', () => {
     fixture.componentRef.setInput('mobileNavOpen', true);
     fixture.detectChanges();
 
+    // The desktop-only collapse toggle is hidden at mobile widths, so the
+    // drawer close button is the first control that should receive focus.
     const firstFocusable = fixture.nativeElement.querySelector(
-      '.jp-app-shell__sidebar button, .jp-app-shell__sidebar a',
+      '.jp-app-shell__drawer-close',
     ) as HTMLElement;
     expect(document.activeElement).toBe(firstFocusable);
   });
@@ -344,9 +349,18 @@ describe('JpAppShell', () => {
     fixture.componentRef.setInput('mobileNavOpen', true);
     fixture.detectChanges();
 
+    const sidebarContent = fixture.nativeElement.querySelector(
+      '.jp-app-shell__sidebar-content',
+    ) as HTMLElement;
+    const navLink = document.createElement('a');
+    navLink.href = '#nav';
+    navLink.textContent = 'Nav';
+    sidebarContent.appendChild(navLink);
+    fixture.detectChanges();
+
     const focusables = Array.from(
       fixture.nativeElement.querySelectorAll(
-        '.jp-app-shell__sidebar button, .jp-app-shell__sidebar a[href]',
+        '.jp-app-shell__sidebar button:not(.jp-app-shell__collapse-toggle), .jp-app-shell__sidebar a[href]',
       ),
     ) as HTMLElement[];
     expect(focusables.length).toBeGreaterThan(1);
@@ -409,11 +423,15 @@ describe('JpAppShell', () => {
     extra.type = 'button';
     extra.textContent = 'Extra';
     sidebarContent.appendChild(extra);
+    const extraLast = document.createElement('button');
+    extraLast.type = 'button';
+    extraLast.textContent = 'Extra last';
+    sidebarContent.appendChild(extraLast);
     fixture.detectChanges();
 
     const focusables = Array.from(
       fixture.nativeElement.querySelectorAll(
-        '.jp-app-shell__sidebar button:not([disabled]), .jp-app-shell__sidebar a[href]',
+        '.jp-app-shell__sidebar button:not([disabled]):not(.jp-app-shell__collapse-toggle), .jp-app-shell__sidebar a[href]',
       ),
     ) as HTMLElement[];
     expect(focusables.length).toBeGreaterThan(2);

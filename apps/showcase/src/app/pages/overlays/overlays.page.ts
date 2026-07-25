@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  JpAppShell,
-  JpAppShellNavItem,
   JpBox,
   JpButton,
   JpDialog,
@@ -25,8 +23,6 @@ import {
 @Component({
   selector: 'app-overlays-page',
   imports: [
-    JpAppShell,
-    JpAppShellNavItem,
     JpBox,
     JpStack,
     JpInline,
@@ -52,8 +48,6 @@ import {
 export class OverlaysPage {
   private readonly toasts = inject(JpToastService);
 
-  sidebarCollapsed = false;
-  mobileNavOpen = false;
   dialogOpen = false;
   popoverOpen = false;
   menuOpen = false;

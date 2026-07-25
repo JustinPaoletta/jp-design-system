@@ -114,3 +114,22 @@ export const Disabled: Story = {
     await expect(button?.disabled).toBe(true);
   },
 };
+
+export const Sizes: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <jp-button [variant]="variant" size="sm">Small</jp-button>
+        <jp-button [variant]="variant" size="md">Medium</jp-button>
+        <jp-button [variant]="variant" size="lg">Large</jp-button>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const buttons = canvasElement.querySelectorAll('jp-button');
+    await expect(buttons.length).toBe(3);
+    await expect(buttons[0].classList.contains('jp-button--sm')).toBe(true);
+    await expect(buttons[2].classList.contains('jp-button--lg')).toBe(true);
+  },
+};

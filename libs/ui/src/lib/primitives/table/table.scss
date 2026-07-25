@@ -12,6 +12,11 @@
   background: var(--jp-color-table-row-bg);
 }
 
+.jp-table__frame:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
 .jp-table__root {
   width: 100%;
   border-collapse: collapse;

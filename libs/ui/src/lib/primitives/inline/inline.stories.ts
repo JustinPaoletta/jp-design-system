@@ -260,6 +260,11 @@ export const NoWrap: Story = {
           overflow-x: auto;
         }
 
+        .jp-inline-story__viewport:focus-visible {
+          outline: 2px solid var(--jp-color-focus-ring);
+          outline-offset: 2px;
+        }
+
         .jp-inline-story__viewport > jp-inline {
           flex: 1;
           min-height: 0;
@@ -282,7 +287,12 @@ export const NoWrap: Story = {
           <div class="jp-inline-story__hint">
             wrap off — items stay on one row; a narrow viewport scrolls horizontally.
           </div>
-          <div class="jp-inline-story__viewport">
+          <div
+            class="jp-inline-story__viewport"
+            tabindex="0"
+            role="region"
+            aria-label="Horizontally scrollable inline demo"
+          >
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
               <span class="jp-inline-story__item">Alpha Item</span>
               <span class="jp-inline-story__item">Beta Item</span>

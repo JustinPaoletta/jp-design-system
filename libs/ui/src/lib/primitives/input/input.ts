@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -24,7 +23,6 @@ let nextInputId = 0;
 
 @Component({
   selector: 'jp-input',
-  imports: [CommonModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,7 +38,7 @@ let nextInputId = 0;
     '[class.jp-input--sm]': 'size() === "sm"',
     '[class.jp-input--md]': 'size() === "md"',
     '[class.jp-input--lg]': 'size() === "lg"',
-    '[class.jp-input--invalid]': 'invalid()',
+    '[class.jp-input--invalid]': 'isInvalid()',
     '[class.jp-input--disabled]': 'isDisabled()',
   },
 })
@@ -83,6 +81,7 @@ export class JpInput implements ControlValueAccessor {
     return ids.length > 0 ? ids.join(' ') : null;
   });
   readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
+  readonly isInvalid = computed(() => this.invalid() || this.error().length > 0);
   readonly controlHeight = computed(() => controlSizeToCssVar(this.size()));
 
   writeValue(value: string | null): void {

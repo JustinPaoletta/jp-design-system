@@ -93,7 +93,7 @@ const meta: Meta<JpSurface> = {
 
         .jp-surface-story__label {
           margin-bottom: var(--jp-space-xs);
-          color: var(--jp-color-foreground-muted);
+          color: var(--jp-color-foreground-secondary);
           font: var(--jp-font-label-sm);
           letter-spacing: var(--jp-font-letter-spacing-wide);
           text-transform: uppercase;
@@ -242,7 +242,7 @@ export const ElevationLadder: Story = {
 
         .jp-surface-story__label {
           margin-bottom: var(--jp-space-xs);
-          color: var(--jp-color-foreground-muted);
+          color: var(--jp-color-foreground-secondary);
           font: var(--jp-font-label-sm);
           letter-spacing: var(--jp-font-letter-spacing-wide);
         }

@@ -7,7 +7,6 @@ import {
   ElementRef,
   inject,
   input,
-  NgZone,
   OnInit,
   output,
   signal,
@@ -32,12 +31,12 @@ let nextAssistantPanelId = 0;
   host: {
     class: 'jp-assistant-panel',
     '[class.jp-assistant-panel--open]': 'isOpen()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class JpAssistantPanel implements OnInit {
   private readonly assistantService = inject(JpAssistantService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly zone = inject(NgZone);
 
   private readonly composerRef =
     viewChild<ElementRef<HTMLTextAreaElement>>('composer');
@@ -85,16 +84,6 @@ export class JpAssistantPanel implements OnInit {
 
       this.lastOpen = open;
     });
-
-    if (typeof document !== 'undefined') {
-      const onKeydown = (event: KeyboardEvent) => {
-        this.onDocumentKeydown(event);
-      };
-      document.addEventListener('keydown', onKeydown);
-      this.destroyRef.onDestroy(() => {
-        document.removeEventListener('keydown', onKeydown);
-      });
-    }
   }
 
   ngOnInit(): void {
@@ -142,13 +131,6 @@ export class JpAssistantPanel implements OnInit {
     }
   }
 
-  onSurfaceKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      this.close();
-    }
-  }
-
   submit(): void {
     const content = this.draft().trim();
     if (!content) {
@@ -174,6 +156,6 @@ export class JpAssistantPanel implements OnInit {
       return;
     }
     event.preventDefault();
-    this.zone.run(() => this.close());
+    this.close();
   }
 }

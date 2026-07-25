@@ -1,4 +1,9 @@
-<div class="jp-table__frame">
+<div
+  class="jp-table__frame"
+  tabindex="0"
+  role="region"
+  [attr.aria-label]="caption() || 'Data table'"
+>
   <table class="jp-table__root">
     @if (caption()) {
     <caption class="jp-table__caption">

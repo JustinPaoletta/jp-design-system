@@ -7,7 +7,7 @@
     [attr.id]="resolvedId()"
     [attr.type]="type()"
     [attr.placeholder]="placeholder() || null"
-    [attr.aria-invalid]="invalid() ? true : null"
+    [attr.aria-invalid]="isInvalid() ? true : null"
     [attr.aria-describedby]="describedBy()"
     [disabled]="isDisabled()"
     [readOnly]="readonly()"

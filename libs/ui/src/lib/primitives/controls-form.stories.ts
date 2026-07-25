@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
@@ -65,9 +66,14 @@ const meta: Meta<ControlsFormArgs> = {
     subscribe: true,
     compact: false,
   },
-  render: (args, { updateArgs }) => ({
+  render: (args) => {
+    const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
+    const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
+    return {
     props: {
       ...args,
+      sidebarCollapsed,
+      mobileNavOpen,
       documentAccent:
         document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
       documentDensity:
@@ -78,25 +84,43 @@ const meta: Meta<ControlsFormArgs> = {
         { value: 'viewer', label: 'Viewer' },
       ],
       onSidebarCollapsedChange(next: boolean) {
-        updateArgs({ sidebarCollapsed: next });
+        sidebarCollapsed.set(next);
       },
       onMobileNavOpenChange(next: boolean) {
-        updateArgs({ mobileNavOpen: next });
+        mobileNavOpen.set(next);
       },
     },
     template: `
       <jp-app-shell
-        [sidebarCollapsed]="sidebarCollapsed"
-        [mobileNavOpen]="mobileNavOpen"
+        [sidebarCollapsed]="sidebarCollapsed()"
+        [mobileNavOpen]="mobileNavOpen()"
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
         <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
-            <jp-app-shell-nav-item href="#settings" [active]="true">
+            <jp-app-shell-nav-item
+              href="#settings"
+              [active]="true"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+                <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+                <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/>
+                <line x1="17" y1="16" x2="23" y2="16"/>
+              </svg>
               Settings
             </jp-app-shell-nav-item>
-            <jp-app-shell-nav-item href="#profile">
+            <jp-app-shell-nav-item
+              href="#profile"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
               Profile
             </jp-app-shell-nav-item>
           </jp-stack>
@@ -168,7 +192,8 @@ const meta: Meta<ControlsFormArgs> = {
         </main>
       </jp-app-shell>
     `,
-  }),
+    };
+  },
 };
 
 export default meta;

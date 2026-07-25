@@ -71,3 +71,11 @@ export const Invalid: Story = {
     await expect(select?.getAttribute('aria-invalid')).toBe('true');
   },
 };
+
+export const Disabled: Story = {
+  args: { disabled: true },
+  play: async ({ canvasElement }) => {
+    const select = canvasElement.querySelector('select');
+    await expect(select?.disabled).toBe(true);
+  },
+};

@@ -97,7 +97,7 @@ describe('JpAssistantMessage', () => {
   it('applies role host classes and falls back for invalid roles', () => {
     const fixture = TestBed.createComponent(JpAssistantMessage);
     fixture.componentRef.setInput('content', 'Hello');
-    fixture.componentRef.setInput('role', 'user');
+    fixture.componentRef.setInput('messageRole', 'user');
     fixture.detectChanges();
 
     expect(
@@ -105,9 +105,9 @@ describe('JpAssistantMessage', () => {
     ).toBe(true);
     expect(fixture.nativeElement.textContent).toContain('Hello');
 
-    fixture.componentRef.setInput('role', 'bad' as never);
+    fixture.componentRef.setInput('messageRole', 'bad' as never);
     fixture.detectChanges();
-    expect(fixture.componentInstance.role()).toBe('assistant');
+    expect(fixture.componentInstance.messageRole()).toBe('assistant');
   });
 });
 

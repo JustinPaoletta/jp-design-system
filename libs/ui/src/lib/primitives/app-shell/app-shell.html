@@ -28,7 +28,6 @@
     class="jp-app-shell__sidebar"
     [id]="sidebarId"
     [attr.aria-label]="sidebarLabel()"
-    [attr.aria-expanded]="!sidebarCollapsed()"
   >
     <div class="jp-app-shell__sidebar-toolbar">
       <button
@@ -37,7 +36,8 @@
         [attr.aria-label]="
           sidebarCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'
         "
-        [attr.aria-pressed]="sidebarCollapsed()"
+        [attr.aria-expanded]="!sidebarCollapsed()"
+        [attr.aria-controls]="sidebarId"
         (click)="toggleSidebar()"
       >
         <span

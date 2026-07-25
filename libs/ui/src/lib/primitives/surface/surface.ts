@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -30,7 +30,7 @@ import {
 
 @Component({
   selector: 'jp-surface',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './surface.html',
   styleUrl: './surface.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

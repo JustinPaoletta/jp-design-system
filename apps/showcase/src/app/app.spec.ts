@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { appRoutes } from './app.routes';
+import { ShellLayout } from './layout/shell-layout';
 import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
 import { AppShellPage } from './pages/app-shell/app-shell.page';
 import { ControlsPage } from './pages/controls/controls.page';
@@ -119,19 +120,17 @@ describe('App', () => {
     expect(router.url).toBe('/assistant');
   });
 
-  it('should toggle shell collapse state from the assistant page', async () => {
+  it('should toggle shell collapse state from the shared layout', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);
     await router.navigateByUrl('/assistant');
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const page = fixture.debugElement.query(By.directive(AssistantPage))
-      .componentInstance as AssistantPage;
-    expect(page.sidebarCollapsed).toBe(false);
-    expect(page.mobileNavOpen).toBe(false);
-    expect(page.accent).toBe('neon');
-    expect(page.density).toBe('default');
+    const layout = fixture.debugElement.query(By.directive(ShellLayout))
+      .componentInstance as ShellLayout;
+    expect(layout.sidebarCollapsed).toBe(false);
+    expect(layout.mobileNavOpen).toBe(false);
 
     const toggle = fixture.nativeElement.querySelector(
       '.jp-app-shell__collapse-toggle',
@@ -139,7 +138,39 @@ describe('App', () => {
     toggle.click();
     fixture.detectChanges();
 
-    expect(page.sidebarCollapsed).toBe(true);
+    expect(layout.sidebarCollapsed).toBe(true);
+  });
+
+  it('should navigate via the router and preserve shell state', async () => {
+    const router = TestBed.inject(Router);
+    const fixture = TestBed.createComponent(App);
+    await router.navigateByUrl('/assistant');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const layout = fixture.debugElement.query(By.directive(ShellLayout))
+      .componentInstance as ShellLayout;
+    expect(layout.isActive('/assistant')).toBe(true);
+
+    layout.sidebarCollapsed = true;
+    layout.mobileNavOpen = true;
+
+    const event = new MouseEvent('click', { cancelable: true });
+    layout.onNavClick(event, '/data');
+    expect(event.defaultPrevented).toBe(true);
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(router.url).toBe('/data');
+    expect(layout.isActive('/data')).toBe(true);
+    expect(layout.isActive('/assistant')).toBe(false);
+    // Collapse survives navigation; the mobile drawer closes.
+    expect(layout.sidebarCollapsed).toBe(true);
+    expect(layout.mobileNavOpen).toBe(false);
+    expect(
+      fixture.nativeElement.querySelector('app-data-page'),
+    ).toBeTruthy();
   });
 });
 

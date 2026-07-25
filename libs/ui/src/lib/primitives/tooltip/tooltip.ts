@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   inject,
   input,
   signal,
@@ -28,6 +27,11 @@ let tooltipIdCounter = 0;
     '[class.jp-tooltip--left]': 'placement() === "left"',
     '[class.jp-tooltip--right]': 'placement() === "right"',
     '[class.jp-tooltip--open]': 'open()',
+    '(pointerenter)': 'show()',
+    '(pointerleave)': 'hide()',
+    '(focusin)': 'show()',
+    '(focusout)': 'hide()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class JpTooltip {
@@ -60,27 +64,6 @@ export class JpTooltip {
     this.syncDescribedBy();
   }
 
-  @HostListener('pointerenter')
-  onPointerEnter(): void {
-    this.show();
-  }
-
-  @HostListener('pointerleave')
-  onPointerLeave(): void {
-    this.hide();
-  }
-
-  @HostListener('focusin')
-  onFocusIn(): void {
-    this.show();
-  }
-
-  @HostListener('focusout')
-  onFocusOut(): void {
-    this.hide();
-  }
-
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape' && this.open()) {
       this.hide();

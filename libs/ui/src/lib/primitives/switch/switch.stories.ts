@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
 import { expect, userEvent } from 'storybook/test';
 import { JpSwitch } from './switch';
 
@@ -40,7 +42,41 @@ export const Default: Story = {
     if (control) {
       await userEvent.click(control);
       await expect(control.getAttribute('aria-checked')).toBe('true');
+      // Toggle back so the canvas matches the story args.
+      await userEvent.click(control);
+      await expect(control.getAttribute('aria-checked')).toBe('false');
     }
+  },
+};
+
+export const On: Story = {
+  decorators: [moduleMetadata({ imports: [FormsModule] })],
+  render: () => ({
+    // Host prop must not be named `checked` — that collides with the CVA
+    // component's internal `checked` signal when Storybook binds story props.
+    props: { isOn: true },
+    template: `
+      <jp-switch [(ngModel)]="isOn">
+        Compact density
+      </jp-switch>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const control = canvasElement.querySelector('[role="switch"]');
+    await expect(control?.getAttribute('aria-checked')).toBe('true');
+    await expect(
+      canvasElement
+        .querySelector('jp-switch')
+        ?.classList.contains('jp-switch--checked'),
+    ).toBe(true);
+  },
+};
+
+export const Invalid: Story = {
+  args: { invalid: true },
+  play: async ({ canvasElement }) => {
+    const control = canvasElement.querySelector('[role="switch"]');
+    await expect(control?.getAttribute('aria-invalid')).toBe('true');
   },
 };
 

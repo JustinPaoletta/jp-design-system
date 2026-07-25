@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -23,7 +22,6 @@ let nextTextareaId = 0;
 
 @Component({
   selector: 'jp-textarea',
-  imports: [CommonModule],
   templateUrl: './textarea.html',
   styleUrl: './textarea.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +37,7 @@ let nextTextareaId = 0;
     '[class.jp-textarea--sm]': 'size() === "sm"',
     '[class.jp-textarea--md]': 'size() === "md"',
     '[class.jp-textarea--lg]': 'size() === "lg"',
-    '[class.jp-textarea--invalid]': 'invalid()',
+    '[class.jp-textarea--invalid]': 'isInvalid()',
     '[class.jp-textarea--disabled]': 'isDisabled()',
   },
 })
@@ -79,6 +77,7 @@ export class JpTextarea implements ControlValueAccessor {
     return ids.length > 0 ? ids.join(' ') : null;
   });
   readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
+  readonly isInvalid = computed(() => this.invalid() || this.error().length > 0);
   readonly controlMinHeight = computed(() => controlSizeToCssVar(this.size()));
 
   writeValue(value: string | null): void {

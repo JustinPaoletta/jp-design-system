@@ -73,3 +73,19 @@ export const Invalid: Story = {
     await expect(textarea?.getAttribute('aria-invalid')).toBe('true');
   },
 };
+
+export const Disabled: Story = {
+  args: { disabled: true },
+  play: async ({ canvasElement }) => {
+    const textarea = canvasElement.querySelector('textarea');
+    await expect(textarea?.disabled).toBe(true);
+  },
+};
+
+export const Readonly: Story = {
+  args: { readonly: true, hint: 'This value cannot be edited.' },
+  play: async ({ canvasElement }) => {
+    const textarea = canvasElement.querySelector('textarea');
+    await expect(textarea?.readOnly).toBe(true);
+  },
+};

@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
 import {
   afterRenderEffect,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnInit,
@@ -14,20 +13,12 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { getFocusableElements } from '../shared/focus-trap';
 
 const SHELL_MOBILE_MEDIA = '(max-width: 48rem)';
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button:not([disabled])',
-  'textarea:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(', ');
 
 @Component({
   selector: 'jp-app-shell',
-  imports: [CommonModule],
   templateUrl: './app-shell.html',
   styleUrl: './app-shell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +26,7 @@ const FOCUSABLE_SELECTOR = [
     class: 'jp-app-shell',
     '[class.jp-app-shell--collapsed]': 'sidebarCollapsed()',
     '[class.jp-app-shell--mobile-nav-open]': 'mobileNavOpen()',
+    '(document:keydown)': 'onDocumentKeydown($event)',
   },
 })
 export class JpAppShell implements OnInit {
@@ -58,6 +50,11 @@ export class JpAppShell implements OnInit {
 
   readonly sidebarCollapsedChange = output<boolean>();
   readonly mobileNavOpenChange = output<boolean>();
+
+  /** The main region is inert only while the mobile drawer overlays it. */
+  readonly mainInert = computed(
+    () => this.mobileNavOpen() && this.isMobileViewport(),
+  );
 
   constructor() {
     afterRenderEffect(() => {
@@ -120,11 +117,6 @@ export class JpAppShell implements OnInit {
     }
   }
 
-  mainInert(): boolean {
-    return this.mobileNavOpen() && this.isMobileViewport();
-  }
-
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeydown(event: KeyboardEvent): void {
     if (!this.mobileNavOpen() || !this.isMobileViewport()) {
       return;
@@ -175,8 +167,12 @@ export class JpAppShell implements OnInit {
       return [];
     }
 
-    return Array.from(
-      sidebar.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-    ).filter((element) => !element.hasAttribute('disabled'));
+    // Reuse the shared focusable-element helper, then drop the collapse
+    // toggle: it is display: none at mobile widths, and this list only drives
+    // mobile drawer focus management, so focus must land on a visible control.
+    return getFocusableElements(sidebar).filter(
+      (element) =>
+        !element.classList.contains('jp-app-shell__collapse-toggle'),
+    );
   }
 }

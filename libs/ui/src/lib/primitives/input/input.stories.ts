@@ -87,6 +87,36 @@ export const Disabled: Story = {
   },
 };
 
+export const Readonly: Story = {
+  args: {
+    readonly: true,
+    hint: 'This value cannot be edited.',
+  },
+  play: async ({ canvasElement }) => {
+    const input = canvasElement.querySelector('input');
+    await expect(input?.readOnly).toBe(true);
+  },
+};
+
+export const Sizes: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <jp-input label="Small" size="sm" placeholder="Small" [hint]="''" />
+        <jp-input label="Medium" size="md" placeholder="Medium" [hint]="''" />
+        <jp-input label="Large" size="lg" placeholder="Large" [hint]="''" />
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const inputs = canvasElement.querySelectorAll('jp-input');
+    await expect(inputs.length).toBe(3);
+    await expect(inputs[0].classList.contains('jp-input--sm')).toBe(true);
+    await expect(inputs[2].classList.contains('jp-input--lg')).toBe(true);
+  },
+};
+
 export const Typing: Story = {
   play: async ({ canvasElement }) => {
     const input = canvasElement.querySelector('input');

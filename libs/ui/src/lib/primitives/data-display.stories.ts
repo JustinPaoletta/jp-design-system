@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
@@ -82,9 +83,15 @@ const meta: Meta<DataDisplayArgs> = {
     mobileNavOpen: false,
     showEmpty: false,
   },
-  render: (args, { updateArgs }) => ({
+  render: (args) => {
+    const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
+    const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
+    const showEmpty = signal(Boolean(args.showEmpty));
+    return {
     props: {
-      ...args,
+      sidebarCollapsed,
+      mobileNavOpen,
+      showEmpty,
       columns,
       rows,
       documentAccent:
@@ -101,28 +108,47 @@ const meta: Meta<DataDisplayArgs> = {
         return 'neutral';
       },
       onSidebarCollapsedChange(next: boolean) {
-        updateArgs({ sidebarCollapsed: next });
+        sidebarCollapsed.set(next);
       },
       onMobileNavOpenChange(next: boolean) {
-        updateArgs({ mobileNavOpen: next });
+        mobileNavOpen.set(next);
       },
       onShowEmptyChange(next: boolean) {
-        updateArgs({ showEmpty: next });
+        showEmpty.set(next);
       },
     },
     template: `
       <jp-app-shell
-        [sidebarCollapsed]="sidebarCollapsed"
-        [mobileNavOpen]="mobileNavOpen"
+        [sidebarCollapsed]="sidebarCollapsed()"
+        [mobileNavOpen]="mobileNavOpen()"
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
         <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
-            <jp-app-shell-nav-item href="#data" [active]="true">
+            <jp-app-shell-nav-item
+              href="#data"
+              [active]="true"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
               Data
             </jp-app-shell-nav-item>
-            <jp-app-shell-nav-item href="#controls">
+            <jp-app-shell-nav-item
+              href="#controls"
+              (click)="$event.preventDefault()"
+            >
+              <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+                <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+                <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/>
+                <line x1="17" y1="16" x2="23" y2="16"/>
+              </svg>
               Controls
             </jp-app-shell-nav-item>
           </jp-stack>
@@ -154,7 +180,7 @@ const meta: Meta<DataDisplayArgs> = {
                   <jp-inline align="center" gap="sm" justify="between" wrap="true">
                     <jp-heading as="h2">Deployments</jp-heading>
                     <jp-switch
-                      [ngModel]="showEmpty"
+                      [ngModel]="showEmpty()"
                       (ngModelChange)="onShowEmptyChange($event)"
                       name="showEmpty"
                     >
@@ -165,7 +191,7 @@ const meta: Meta<DataDisplayArgs> = {
                   <jp-table
                     caption="Recent deployments"
                     [columns]="columns"
-                    [rows]="showEmpty ? [] : rows"
+                    [rows]="showEmpty() ? [] : rows"
                     [striped]="true"
                   >
                     <ng-template jpTableCell="status" let-value>
@@ -191,7 +217,8 @@ const meta: Meta<DataDisplayArgs> = {
         </main>
       </jp-app-shell>
     `,
-  }),
+    };
+  },
 };
 
 export default meta;
@@ -212,6 +239,8 @@ export const Default: Story = {
       'jp-switch button, jp-switch [role="switch"]',
     ) as HTMLElement | null;
     if (toggle) {
+      await userEvent.click(toggle);
+      // Toggle back so the story ends showing the populated table.
       await userEvent.click(toggle);
     }
   },
