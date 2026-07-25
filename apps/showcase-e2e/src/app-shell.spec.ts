@@ -16,10 +16,8 @@ test.describe('app shell', () => {
     await expect(shell).toBeVisible();
     await expect(sidebar).toBeVisible();
     await expect(main).toBeVisible();
-    await expect(page.locator('h1')).toContainText(
-      'App Shell Dashboard',
-    );
-    await expect(activeNav).toContainText('Overview');
+    await expect(page.locator('h1')).toContainText('App Shell Dashboard');
+    await expect(activeNav).toContainText('App Shell');
     await expect(sidebar).toHaveAttribute('aria-expanded', 'true');
 
     await collapseToggle.click();

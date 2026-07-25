@@ -171,8 +171,7 @@ export class JpAppShell implements OnInit {
     // toggle: it is display: none at mobile widths, and this list only drives
     // mobile drawer focus management, so focus must land on a visible control.
     return getFocusableElements(sidebar).filter(
-      (element) =>
-        !element.classList.contains('jp-app-shell__collapse-toggle'),
+      (element) => !element.classList.contains('jp-app-shell__collapse-toggle'),
     );
   }
 }

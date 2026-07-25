@@ -93,9 +93,9 @@ export const Plain: Story = {
   args: { striped: false },
   play: async ({ canvasElement }) => {
     await expect(
-      (canvasElement.querySelector('jp-table') as HTMLElement).classList.contains(
-        'jp-table--striped',
-      ),
+      (
+        canvasElement.querySelector('jp-table') as HTMLElement
+      ).classList.contains('jp-table--striped'),
     ).toBe(false);
   },
 };

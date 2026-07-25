@@ -66,15 +66,15 @@ to trigger or edit.
 
 ## Non-goals (defer)
 
-| Defer                                    | Why / where                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------ |
-| Date picker, combobox, slider            | Later epic once core patterns stabilize                            |
-| File upload                              | Needs separate a11y + UX pass                                      |
-| Form-level validation engine             | Expose states (`invalid`, `error` text); leave schema libs to apps |
-| `RouterLink` inside button               | Apps compose; primitive stays presentational                       |
-| Toast / dialog / popover                 | Feedback & Overlays                                                            |
-| Table bulk actions patterns              | Data Display consumes buttons; doesn’t own them                         |
-| Visual regression baselines              | Quality hardening                                                            |
+| Defer                                   | Why / where                                                        |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| Date picker, combobox, slider           | Later epic once core patterns stabilize                            |
+| File upload                             | Needs separate a11y + UX pass                                      |
+| Form-level validation engine            | Expose states (`invalid`, `error` text); leave schema libs to apps |
+| `RouterLink` inside button              | Apps compose; primitive stays presentational                       |
+| Toast / dialog / popover                | Feedback & Overlays                                                |
+| Table bulk actions patterns             | Data Display consumes buttons; doesn’t own them                    |
+| Visual regression baselines             | Quality hardening                                                  |
 | Replacing shell chrome buttons mid-epic | Optional follow-up once `jp-icon-button` exists                    |
 
 ---
@@ -284,7 +284,7 @@ npx nx run showcase-e2e:e2e -- --project=chromium
 | Label API              | Prop vs projection vs both                 | Decide in 4.0; prefer one primary path              |
 | Icon system            | Inline SVG slot vs icon font vs later pack | Content projection slot in v1                       |
 | Shell button migration | Immediate vs follow-up                     | Follow-up after 4.2; don’t block the epic           |
-| Showcase route         | Replace `/app-shell` vs add `/controls`             | Add `/controls`; keep `/app-shell`               |
+| Showcase route         | Replace `/app-shell` vs add `/controls`    | Add `/controls`; keep `/app-shell`                  |
 | PR granularity         | One epic PR vs per-control PRs             | Prefer 4.0+4.1 first PR; then fields; then showcase |
 
 ---

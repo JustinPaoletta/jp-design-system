@@ -86,8 +86,12 @@ export const Sizes: Story = {
   play: async ({ canvasElement }) => {
     const buttons = canvasElement.querySelectorAll('jp-icon-button');
     await expect(buttons.length).toBe(3);
-    await expect(buttons[0].classList.contains('jp-icon-button--sm')).toBe(true);
-    await expect(buttons[2].classList.contains('jp-icon-button--lg')).toBe(true);
+    await expect(buttons[0].classList.contains('jp-icon-button--sm')).toBe(
+      true,
+    );
+    await expect(buttons[2].classList.contains('jp-icon-button--lg')).toBe(
+      true,
+    );
   },
 };
 

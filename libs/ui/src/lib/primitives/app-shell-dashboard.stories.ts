@@ -39,21 +39,21 @@ const meta: Meta<AppShellDashboardArgs> = {
     const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     return {
-    props: {
-      sidebarCollapsed,
-      mobileNavOpen,
-      documentAccent:
-        document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
-      documentDensity:
-        document.documentElement.getAttribute('data-jp-density') ?? 'default',
-      onSidebarCollapsedChange(next: boolean) {
-        sidebarCollapsed.set(next);
+      props: {
+        sidebarCollapsed,
+        mobileNavOpen,
+        documentAccent:
+          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+        documentDensity:
+          document.documentElement.getAttribute('data-jp-density') ?? 'default',
+        onSidebarCollapsedChange(next: boolean) {
+          sidebarCollapsed.set(next);
+        },
+        onMobileNavOpenChange(next: boolean) {
+          mobileNavOpen.set(next);
+        },
       },
-      onMobileNavOpenChange(next: boolean) {
-        mobileNavOpen.set(next);
-      },
-    },
-    template: `
+      template: `
       <style>
         .jp-app-shell-dashboard-story__accent-badge {
           display: inline-flex;

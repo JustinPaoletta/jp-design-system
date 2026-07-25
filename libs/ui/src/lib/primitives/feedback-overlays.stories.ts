@@ -63,10 +63,20 @@ import { JpTooltip } from './tooltip/tooltip';
           [active]="true"
           (click)="$event.preventDefault()"
         >
-          <svg jpAppShellNavIcon viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-            <polyline points="2 17 12 22 22 17"/>
-            <polyline points="2 12 12 17 22 12"/>
+          <svg
+            jpAppShellNavIcon
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polygon points="12 2 2 7 12 12 22 7 12 2" />
+            <polyline points="2 17 12 22 22 17" />
+            <polyline points="2 12 12 17 22 12" />
           </svg>
           Overlays
         </jp-app-shell-nav-item>

@@ -9,14 +9,14 @@
 
 ## Locked decisions (Stories 3.2–3.5)
 
-| Decision             | Choice                                                                |
-| -------------------- | --------------------------------------------------------------------- |
+| Decision             | Choice                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------- |
 | Route naming         | Add `/app-shell`; keep `/layout-dashboard`; root → `/app-shell` (interim; now `/assistant`) |
-| Sub-components       | `jp-app-shell` + `jp-app-shell-nav-item` only (no sidebar/main split) |
-| Collapse persistence | Session-only (Showcase local state)                                   |
-| Icons in nav         | Optional `[jpAppShellNavIcon]` slot; text labels required             |
-| Breakpoint           | `48rem` (`--jp-layout-shell-mobile-max`)                              |
-| Collapsed width      | `4rem` (`--jp-size-sidebar-collapsed`) so the rail fits the toggle    |
+| Sub-components       | `jp-app-shell` + `jp-app-shell-nav-item` only (no sidebar/main split)                       |
+| Collapse persistence | Session-only (Showcase local state)                                                         |
+| Icons in nav         | Optional `[jpAppShellNavIcon]` slot; text labels required                                   |
+| Breakpoint           | `48rem` (`--jp-layout-shell-mobile-max`)                                                    |
+| Collapsed width      | `4rem` (`--jp-size-sidebar-collapsed`) so the rail fits the toggle                          |
 
 ---
 
@@ -286,13 +286,13 @@ Record failures in the PR description, not a separate QA ledger.
 
 ## Risks and decisions
 
-| Decision             | Options                                               | Recommendation                                                     |
-| -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------ |
+| Decision             | Options                                      | Recommendation                                                          |
+| -------------------- | -------------------------------------------- | ----------------------------------------------------------------------- |
 | Route naming         | Keep `/layout-dashboard` vs add `/app-shell` | Add `/app-shell`; keep `/layout-dashboard` route until Controls cleanup |
-| Sub-components       | Monolith vs split                                     | Start monolith; split if complexity grows                          |
-| Collapse persistence | Session-only vs `localStorage`                        | Session-only for v1; persistence is a Showcase concern             |
-| Icons in nav         | Placeholder spans vs SVG                              | Text-only labels in v1; icon slot as ng-content                    |
-| Breakpoint value     | 768 vs 1024                                           | 768 to align with Layout responsive testing                       |
+| Sub-components       | Monolith vs split                            | Start monolith; split if complexity grows                               |
+| Collapse persistence | Session-only vs `localStorage`               | Session-only for v1; persistence is a Showcase concern                  |
+| Icons in nav         | Placeholder spans vs SVG                     | Text-only labels in v1; icon slot as ng-content                         |
+| Breakpoint value     | 768 vs 1024                                  | 768 to align with Layout responsive testing                             |
 
 ---
 

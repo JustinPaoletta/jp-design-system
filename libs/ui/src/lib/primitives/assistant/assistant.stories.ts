@@ -130,9 +130,9 @@ export const EmptyState: Story = {
     template: `<jp-assistant-story-host />`,
   }),
   play: async ({ canvasElement }) => {
-    const openEmpty = Array.from(
-      canvasElement.querySelectorAll('button'),
-    ).find((button) => button.textContent?.trim() === 'Open empty');
+    const openEmpty = Array.from(canvasElement.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Open empty',
+    );
     await userEvent.click(openEmpty as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain('Ask about this surface');
   },

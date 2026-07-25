@@ -70,27 +70,27 @@ const meta: Meta<ControlsFormArgs> = {
     const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     return {
-    props: {
-      ...args,
-      sidebarCollapsed,
-      mobileNavOpen,
-      documentAccent:
-        document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
-      documentDensity:
-        document.documentElement.getAttribute('data-jp-density') ?? 'default',
-      roleOptions: [
-        { value: 'admin', label: 'Admin' },
-        { value: 'editor', label: 'Editor' },
-        { value: 'viewer', label: 'Viewer' },
-      ],
-      onSidebarCollapsedChange(next: boolean) {
-        sidebarCollapsed.set(next);
+      props: {
+        ...args,
+        sidebarCollapsed,
+        mobileNavOpen,
+        documentAccent:
+          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+        documentDensity:
+          document.documentElement.getAttribute('data-jp-density') ?? 'default',
+        roleOptions: [
+          { value: 'admin', label: 'Admin' },
+          { value: 'editor', label: 'Editor' },
+          { value: 'viewer', label: 'Viewer' },
+        ],
+        onSidebarCollapsedChange(next: boolean) {
+          sidebarCollapsed.set(next);
+        },
+        onMobileNavOpenChange(next: boolean) {
+          mobileNavOpen.set(next);
+        },
       },
-      onMobileNavOpenChange(next: boolean) {
-        mobileNavOpen.set(next);
-      },
-    },
-    template: `
+      template: `
       <jp-app-shell
         [sidebarCollapsed]="sidebarCollapsed()"
         [mobileNavOpen]="mobileNavOpen()"

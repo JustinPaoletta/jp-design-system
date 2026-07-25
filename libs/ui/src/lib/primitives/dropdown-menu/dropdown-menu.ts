@@ -116,7 +116,11 @@ export class JpDropdownMenu {
     }
     const active = document.activeElement;
     const hostEl = this.host.nativeElement;
-    if (active === null || active === document.body || hostEl.contains(active)) {
+    if (
+      active === null ||
+      active === document.body ||
+      hostEl.contains(active)
+    ) {
       trigger.focus();
     }
   }

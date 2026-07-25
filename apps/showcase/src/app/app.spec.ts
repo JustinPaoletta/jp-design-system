@@ -168,9 +168,7 @@ describe('App', () => {
     // Collapse survives navigation; the mobile drawer closes.
     expect(layout.sidebarCollapsed).toBe(true);
     expect(layout.mobileNavOpen).toBe(false);
-    expect(
-      fixture.nativeElement.querySelector('app-data-page'),
-    ).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('app-data-page')).toBeTruthy();
   });
 });
 

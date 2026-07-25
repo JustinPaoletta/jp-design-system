@@ -88,36 +88,36 @@ const meta: Meta<DataDisplayArgs> = {
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     const showEmpty = signal(Boolean(args.showEmpty));
     return {
-    props: {
-      sidebarCollapsed,
-      mobileNavOpen,
-      showEmpty,
-      columns,
-      rows,
-      documentAccent:
-        document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
-      documentDensity:
-        document.documentElement.getAttribute('data-jp-density') ?? 'default',
-      statusTone(status: string) {
-        if (status === 'Healthy') {
-          return 'success';
-        }
-        if (status === 'Degraded') {
-          return 'warning';
-        }
-        return 'neutral';
+      props: {
+        sidebarCollapsed,
+        mobileNavOpen,
+        showEmpty,
+        columns,
+        rows,
+        documentAccent:
+          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+        documentDensity:
+          document.documentElement.getAttribute('data-jp-density') ?? 'default',
+        statusTone(status: string) {
+          if (status === 'Healthy') {
+            return 'success';
+          }
+          if (status === 'Degraded') {
+            return 'warning';
+          }
+          return 'neutral';
+        },
+        onSidebarCollapsedChange(next: boolean) {
+          sidebarCollapsed.set(next);
+        },
+        onMobileNavOpenChange(next: boolean) {
+          mobileNavOpen.set(next);
+        },
+        onShowEmptyChange(next: boolean) {
+          showEmpty.set(next);
+        },
       },
-      onSidebarCollapsedChange(next: boolean) {
-        sidebarCollapsed.set(next);
-      },
-      onMobileNavOpenChange(next: boolean) {
-        mobileNavOpen.set(next);
-      },
-      onShowEmptyChange(next: boolean) {
-        showEmpty.set(next);
-      },
-    },
-    template: `
+      template: `
       <jp-app-shell
         [sidebarCollapsed]="sidebarCollapsed()"
         [mobileNavOpen]="mobileNavOpen()"

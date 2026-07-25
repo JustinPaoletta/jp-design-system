@@ -75,8 +75,8 @@ patterns, and Showcase cannot prove a real interaction layer.
 | Nested modal stacks / focus restoration queue | Single modal at a time is enough for Showcase  |
 | Toast persistence / undo history              | Apps own domain persistence                    |
 | Context menus / right-click                   | Defer; dropdown covers intentional triggers    |
-| Assistant panel                               | Assistant                                        |
-| Visual regression baselines                   | Quality hardening                                        |
+| Assistant panel                               | Assistant                                      |
+| Visual regression baselines                   | Quality hardening                              |
 
 ---
 
@@ -295,14 +295,14 @@ npx nx run showcase-e2e:e2e -- --project=chromium
 
 ## Risks and decisions
 
-| Decision       | Options                            | Recommendation                                        |
-| -------------- | ---------------------------------- | ----------------------------------------------------- |
-| Overlay engine | CDK Overlay vs lightweight CSS     | Lightweight CSS + shared focus helpers for v1         |
-| Toast API      | Component-only vs service + outlet | Service + outlet (matches product usage)              |
-| Dialog control | Uncontrolled vs controlled `open`  | Controlled for Showcase/testability                   |
-| Menu items     | Buttons vs custom role elements    | Native buttons with menu roles                        |
-| Showcase route | Replace `/data` vs add `/overlays`     | Add `/overlays`; keep `/data`; root → `/overlays` |
-| PR granularity | One epic PR vs per-component       | Single epic PR chained on the prior tip       |
+| Decision       | Options                            | Recommendation                                    |
+| -------------- | ---------------------------------- | ------------------------------------------------- |
+| Overlay engine | CDK Overlay vs lightweight CSS     | Lightweight CSS + shared focus helpers for v1     |
+| Toast API      | Component-only vs service + outlet | Service + outlet (matches product usage)          |
+| Dialog control | Uncontrolled vs controlled `open`  | Controlled for Showcase/testability               |
+| Menu items     | Buttons vs custom role elements    | Native buttons with menu roles                    |
+| Showcase route | Replace `/data` vs add `/overlays` | Add `/overlays`; keep `/data`; root → `/overlays` |
+| PR granularity | One epic PR vs per-component       | Single epic PR chained on the prior tip           |
 
 ---
 
@@ -324,9 +324,9 @@ App Shell through Data Display.
 
 ## Suggested PR sequence
 
-| PR      | Contents                                                                  | Depends on            |
-| ------- | ------------------------------------------------------------------------- | --------------------- |
-| 6.0–6.7 | Tokens + focus + tooltip + toast + dialog + popover + dropdown + Showcase | Prior tip |
+| PR      | Contents                                                                  | Depends on |
+| ------- | ------------------------------------------------------------------------- | ---------- |
+| 6.0–6.7 | Tokens + focus + tooltip + toast + dialog + popover + dropdown + Showcase | Prior tip  |
 
 Single epic PR is preferred for this epic given the tightly coupled overlay set.
 
@@ -356,6 +356,6 @@ Single epic PR is preferred for this epic given the tightly coupled overlay set.
 | Dialog API         | Controlled `open` / `openChange`; required `title`; `[jpDialogActions]` |
 | Popover API        | Controlled `open`; `[jpPopoverTrigger]` + `[jpPopoverContent]`          |
 | Dropdown API       | `[jpDropdownTrigger]` + `jpDropdownMenuItem` items                      |
-| Showcase route     | `/overlays`; keep prior routes; root redirect → `/overlays`         |
+| Showcase route     | `/overlays`; keep prior routes; root redirect → `/overlays`             |
 | Collision / flip   | Deferred                                                                |
-| Next epic            | Not started in this epic                                                |
+| Next epic          | Not started in this epic                                                |

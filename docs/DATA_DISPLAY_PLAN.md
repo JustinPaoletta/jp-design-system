@@ -4,7 +4,7 @@
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
 **Note:** Showcase root currently redirects to `/assistant` (Epic 7). Story criteria that mention root → `/data` describe the interim redirect at Data Display delivery.  
-**Depends on:** Controls complete ([CONTROLS_PLAN.md](./CONTROLS_PLAN.md))  
+**Depends on:** Controls complete ([CONTROLS_PLAN.md](./CONTROLS_PLAN.md))
 
 ---
 
@@ -66,14 +66,14 @@ against, and Showcase cannot prove a real dashboard data surface.
 
 ## Non-goals (defer)
 
-| Defer                                      | Why / where                                      |
-| ------------------------------------------ | ------------------------------------------------ |
-| Sortable / filterable / resizable columns  | Product data-grid epic later                     |
-| Virtualized rows / infinite scroll         | Performance epic; not needed for Showcase proof  |
-| Row selection / bulk actions chrome        | Apps compose with Controls checkbox + button      |
-| Editable cells                             | Forms stay on Controls                   |
-| Toast / dialog / popover                   | Feedback & Overlays                                          |
-| Visual regression baselines                | Quality hardening                                          |
+| Defer                                       | Why / where                                      |
+| ------------------------------------------- | ------------------------------------------------ |
+| Sortable / filterable / resizable columns   | Product data-grid epic later                     |
+| Virtualized rows / infinite scroll          | Performance epic; not needed for Showcase proof  |
+| Row selection / bulk actions chrome         | Apps compose with Controls checkbox + button     |
+| Editable cells                              | Forms stay on Controls                           |
+| Toast / dialog / popover                    | Feedback & Overlays                              |
+| Visual regression baselines                 | Quality hardening                                |
 | Replacing Controls Showcase as root forever | Root redirects to `/data` for the milestone only |
 
 ---
@@ -259,8 +259,8 @@ npx nx run showcase-e2e:e2e -- --project=chromium
 | Rich cells        | Strings only vs templates                 | `jpTableCell` templates for badges in Showcase          |
 | Empty composition | Separate page section vs table-integrated | Both: table hosts empty; Showcase also shows standalone |
 | Sort/filter       | Build now vs defer                        | Defer                                                   |
-| Showcase route    | Replace `/controls` vs add `/data`            | Add `/data`; keep `/controls`; root → `/data`       |
-| PR granularity    | One epic PR vs per-component              | Single epic PR chained on the prior tip             |
+| Showcase route    | Replace `/controls` vs add `/data`        | Add `/data`; keep `/controls`; root → `/data`           |
+| PR granularity    | One epic PR vs per-component              | Single epic PR chained on the prior tip                 |
 
 ---
 
@@ -280,9 +280,9 @@ product list/detail surfaces on top of the app shell and Controls.
 
 ## Suggested PR sequence
 
-| PR      | Contents                                                 | Depends on        |
-| ------- | -------------------------------------------------------- | ----------------- |
-| 5.0–5.4 | Tokens + badge + empty-state + table + Showcase/e2e/docs | Prior tip |
+| PR      | Contents                                                 | Depends on |
+| ------- | -------------------------------------------------------- | ---------- |
+| 5.0–5.4 | Tokens + badge + empty-state + table + Showcase/e2e/docs | Prior tip  |
 
 Single epic PR is preferred for this epic given the small component count.
 
@@ -312,5 +312,5 @@ Single epic PR is preferred for this epic given the small component count.
 | Striped rows           | `striped` boolean input (default `false`)                                                        |
 | Empty integration      | Project `jp-empty-state` into `jp-table`; fallback title when none projected                     |
 | Empty-state API        | `title` + optional `description`; icon slot `[jpEmptyStateIcon]`; actions via default projection |
-| Showcase route         | `/data`; keep prior routes; root redirect → `/data`                                      |
+| Showcase route         | `/data`; keep prior routes; root redirect → `/data`                                              |
 | Sort / filter / select | Deferred                                                                                         |

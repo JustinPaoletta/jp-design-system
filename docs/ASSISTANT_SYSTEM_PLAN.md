@@ -74,7 +74,7 @@ filter set, etc.).
 | Multi-panel / multi-assistant registry  | Single branded assistant is enough |
 | Markdown / code-block rich rendering    | Plain text messages for v1         |
 | Voice input / attachments               | Later product epic                 |
-| Visual regression baselines             | Quality hardening                            |
+| Visual regression baselines             | Quality hardening                  |
 | npm publish / docs site                 | Publish                            |
 
 ---
@@ -287,14 +287,14 @@ npx nx run showcase-e2e:e2e -- --project=chromium
 
 ## Risks and decisions
 
-| Decision          | Options                           | Recommendation                                         |
-| ----------------- | --------------------------------- | ------------------------------------------------------ |
-| Panel ownership   | Controlled inputs vs service      | Service + panel (matches toast outlet pattern)         |
-| Context API       | Service-only vs trigger directive | Both: service for apps, directive for markup triggers  |
-| Message rendering | Markdown vs plain text            | Plain text for v1                                      |
-| LLM integration   | Built-in mock vs host-owned       | Host-owned via `messageSubmit` + `addMessage`          |
-| Showcase route    | Replace `/overlays` vs add `/assistant`    | Add `/assistant`; keep `/overlays`; root → `/assistant` |
-| PR granularity    | One epic PR vs per-component      | Single epic PR chained on the prior tip   |
+| Decision          | Options                                 | Recommendation                                          |
+| ----------------- | --------------------------------------- | ------------------------------------------------------- |
+| Panel ownership   | Controlled inputs vs service            | Service + panel (matches toast outlet pattern)          |
+| Context API       | Service-only vs trigger directive       | Both: service for apps, directive for markup triggers   |
+| Message rendering | Markdown vs plain text                  | Plain text for v1                                       |
+| LLM integration   | Built-in mock vs host-owned             | Host-owned via `messageSubmit` + `addMessage`           |
+| Showcase route    | Replace `/overlays` vs add `/assistant` | Add `/assistant`; keep `/overlays`; root → `/assistant` |
+| PR granularity    | One epic PR vs per-component            | Single epic PR chained on the prior tip                 |
 
 ---
 
@@ -315,9 +315,9 @@ tones, and panel ready for product assistant surfaces on top of App Shell throug
 
 ## Suggested PR sequence
 
-| PR      | Contents                                                       | Depends on                 |
-| ------- | -------------------------------------------------------------- | -------------------------- |
-| 7.0–7.5 | Tokens + service + trigger + message + panel + Showcase + docs | Prior tip |
+| PR      | Contents                                                       | Depends on |
+| ------- | -------------------------------------------------------------- | ---------- |
+| 7.0–7.5 | Tokens + service + trigger + message + panel + Showcase + docs | Prior tip  |
 
 Single epic PR is preferred for this epic given the tightly coupled assistant set.
 
@@ -335,17 +335,17 @@ Single epic PR is preferred for this epic given the tightly coupled assistant se
 
 ## Locked decisions
 
-| Decision        | Choice                                                           |
-| --------------- | ---------------------------------------------------------------- |
-| Panel delivery  | `JpAssistantService` + `<jp-assistant-panel />`                  |
-| Context trigger | `jpAssistantTrigger` + optional `[jpAssistantContext]`           |
-| Context shape   | `{ label, description?, entityType?, entityId? }`                |
-| Message roles   | `user` \| `assistant` \| `system`                                |
-| Host replies    | Panel `messageSubmit` output; apps call `addMessage`             |
-| Desktop layout  | Fixed right dock (`size.assistant.panel-width`)                  |
-| Mobile layout   | Scrim + full-height overlay                                      |
-| Z-index         | Below dialog (90/100); above shell drawer (50)                   |
-| Tone refinement | Neutral chrome; accent only on send + context chip               |
-| Showcase route  | `/assistant`; keep prior routes; root redirect → `/assistant` |
-| LLM / streaming | Deferred                                                         |
-| Quality hardening    | Not started in this epic                                         |
+| Decision          | Choice                                                        |
+| ----------------- | ------------------------------------------------------------- |
+| Panel delivery    | `JpAssistantService` + `<jp-assistant-panel />`               |
+| Context trigger   | `jpAssistantTrigger` + optional `[jpAssistantContext]`        |
+| Context shape     | `{ label, description?, entityType?, entityId? }`             |
+| Message roles     | `user` \| `assistant` \| `system`                             |
+| Host replies      | Panel `messageSubmit` output; apps call `addMessage`          |
+| Desktop layout    | Fixed right dock (`size.assistant.panel-width`)               |
+| Mobile layout     | Scrim + full-height overlay                                   |
+| Z-index           | Below dialog (90/100); above shell drawer (50)                |
+| Tone refinement   | Neutral chrome; accent only on send + context chip            |
+| Showcase route    | `/assistant`; keep prior routes; root redirect → `/assistant` |
+| LLM / streaming   | Deferred                                                      |
+| Quality hardening | Not started in this epic                                      |

@@ -140,7 +140,9 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const sidebar = canvasElement.querySelector('.jp-app-shell__sidebar');
     const main = canvasElement.querySelector('.jp-app-shell__main');
-    const toggle = canvasElement.querySelector('.jp-app-shell__collapse-toggle');
+    const toggle = canvasElement.querySelector(
+      '.jp-app-shell__collapse-toggle',
+    );
     const activeNav = canvasElement.querySelector(
       '.jp-app-shell-nav-item--active .jp-app-shell-nav-item__root',
     );
@@ -166,7 +168,9 @@ export const Collapsed: Story = {
     await expect(
       canvasElement.querySelector('.jp-app-shell--collapsed'),
     ).toBeTruthy();
-    const toggle = canvasElement.querySelector('.jp-app-shell__collapse-toggle');
+    const toggle = canvasElement.querySelector(
+      '.jp-app-shell__collapse-toggle',
+    );
     await expect(toggle?.getAttribute('aria-expanded')).toBe('false');
     await expect(toggle?.getAttribute('aria-label')).toBe('Expand sidebar');
   },
@@ -182,13 +186,19 @@ export const CollapseToggle: Story = {
 
     await userEvent.click(toggle);
     await waitFor(() =>
-      expect(canvasElement.querySelector('.jp-app-shell--collapsed')).toBeTruthy(),
+      expect(
+        canvasElement.querySelector('.jp-app-shell--collapsed'),
+      ).toBeTruthy(),
     );
 
-    const expand = await canvas.findByRole('button', { name: 'Expand sidebar' });
+    const expand = await canvas.findByRole('button', {
+      name: 'Expand sidebar',
+    });
     await userEvent.click(expand);
     await waitFor(() =>
-      expect(canvasElement.querySelector('.jp-app-shell--collapsed')).toBeNull(),
+      expect(
+        canvasElement.querySelector('.jp-app-shell--collapsed'),
+      ).toBeNull(),
     );
   },
 };

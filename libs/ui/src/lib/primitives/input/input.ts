@@ -81,7 +81,9 @@ export class JpInput implements ControlValueAccessor {
     return ids.length > 0 ? ids.join(' ') : null;
   });
   readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
-  readonly isInvalid = computed(() => this.invalid() || this.error().length > 0);
+  readonly isInvalid = computed(
+    () => this.invalid() || this.error().length > 0,
+  );
   readonly controlHeight = computed(() => controlSizeToCssVar(this.size()));
 
   writeValue(value: string | null): void {

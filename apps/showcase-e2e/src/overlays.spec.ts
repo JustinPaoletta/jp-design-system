@@ -9,9 +9,7 @@ test.describe('feedback overlays', () => {
 
     const shell = page.locator('jp-app-shell');
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText(
-      'Feedback & Overlays',
-    );
+    await expect(page.locator('h1')).toContainText('Feedback & Overlays');
 
     await page.getByRole('button', { name: 'Delete deployment' }).click();
     const dialog = page.getByRole('dialog', { name: 'Delete deployment?' });
