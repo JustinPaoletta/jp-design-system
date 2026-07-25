@@ -145,7 +145,7 @@ Quality gates:
 - CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
 
 Component or token releases should include manual Storybook and Showcase review for affected surfaces.
-See [MANUAL_QA.md](./MANUAL_QA.md) for the App Shell through Assistant checklist.
+See [MANUAL_QA.md](./MANUAL_QA.md) for the Storybook manual QA checklist (layout through assistant).
 
 ## Release Process
 
@@ -163,7 +163,7 @@ See [MANUAL_QA.md](./MANUAL_QA.md) for the App Shell through Assistant checklist
 - Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, Showcase `/controls`
 - Data Display: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/data`
 - Feedback & Overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/overlays`
-- Assistant: `JpAssistantService`, `jp-assistant-panel`, Showcase `/assistant`
+- Assistant: `JpAssistantService`, `jpAssistantTrigger`, `jp-assistant-message`, `jp-assistant-panel`, Showcase `/assistant`
 
 ## License
 

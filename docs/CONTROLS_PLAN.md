@@ -3,7 +3,8 @@
 **Status:** Complete — Stories 4.0–4.6 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
-**Depends on:** App Shell App Shell complete ([APP_SHELL_PLAN.md](./APP_SHELL_PLAN.md))
+**Depends on:** App Shell complete ([APP_SHELL_PLAN.md](./APP_SHELL_PLAN.md))  
+**Note:** Showcase root currently redirects to `/assistant` (Epic 7). Story criteria below that mention an interim root redirect describe the state at Controls delivery.
 
 ---
 
@@ -164,49 +165,49 @@ wherever possible. Run `tokens:build` / `tokens:check` in CI.
 
 **Acceptance criteria:**
 
-- [ ] Semantic control/button/field tokens added (only what components need)
-- [ ] Generated artifacts rebuilt; `tokens:check` passes
-- [ ] Written decision: label strategy, CVA approach, size scale
-- [ ] Documented in `libs/tokens/README.md`
+- [x] Semantic control/button/field tokens added (only what components need)
+- [x] Generated artifacts rebuilt; `tokens:check` passes
+- [x] Written decision: label strategy, CVA approach, size scale
+- [x] Documented in `libs/tokens/README.md`
 
 ### Story 4.1 — `jp-button`
 
 **Acceptance criteria:**
 
-- [ ] Variants: `primary`, `secondary`, `ghost`, `destructive`
-- [ ] Sizes: `sm`, `md`, `lg` (or documented subset)
-- [ ] `type`, `disabled`, focus-visible, hover/active
-- [ ] Unit tests + Storybook (all variants; disabled; focus)
-- [ ] Accent toolbar meaningful on primary only (composition or globals enabled)
+- [x] Variants: `primary`, `secondary`, `ghost`, `destructive`
+- [x] Sizes: `sm`, `md`, `lg` (or documented subset)
+- [x] `type`, `disabled`, focus-visible, hover/active
+- [x] Unit tests + Storybook (all variants; disabled; focus)
+- [x] Accent toolbar meaningful on primary only (composition or globals enabled)
 
 ### Story 4.2 — `jp-icon-button`
 
 **Acceptance criteria:**
 
-- [ ] Square control using icon size tokens
-- [ ] Requires accessible name (`ariaLabel` input or equivalent)
-- [ ] Variants aligned with button ghost/secondary (keep surface area small)
-- [ ] Unit + Storybook coverage
-- [ ] Optional: replace shell collapse/menu native buttons in a follow-up PR (not blocking)
+- [x] Square control using icon size tokens
+- [x] Requires accessible name (`ariaLabel` input or equivalent)
+- [x] Variants aligned with button ghost/secondary (keep surface area small)
+- [x] Unit + Storybook coverage
+- [x] Optional: replace shell collapse/menu native buttons in a follow-up PR (not blocking)
 
 ### Story 4.3 — `jp-input` + `jp-textarea`
 
 **Acceptance criteria:**
 
-- [ ] Text input + textarea with shared field chrome
-- [ ] `disabled`, `readonly`, `invalid` (or `error`) visual states
-- [ ] CVA + reactive forms smoke test
-- [ ] Label + hint/error slot or props per Story 4.0 decision
-- [ ] Unit + Storybook (including invalid + disabled)
+- [x] Text input + textarea with shared field chrome
+- [x] `disabled`, `readonly`, `invalid` (or `error`) visual states
+- [x] CVA + reactive forms smoke test
+- [x] Label + hint/error slot or props per Story 4.0 decision
+- [x] Unit + Storybook (including invalid + disabled)
 
 ### Story 4.4 — `jp-select`
 
 **Acceptance criteria:**
 
-- [ ] Native `<select>` styled via tokens for v1 (custom listbox deferred unless spike says otherwise)
-- [ ] Options via input array or projected `<option>` — pick one in 4.0 and stick to it
-- [ ] CVA, disabled, invalid
-- [ ] Unit + Storybook
+- [x] Native `<select>` styled via tokens for v1 (custom listbox deferred unless spike says otherwise)
+- [x] Options via input array or projected `<option>` — pick one in 4.0 and stick to it
+- [x] CVA, disabled, invalid
+- [x] Unit + Storybook
 
 **Risk note:** Custom select/listbox is a large a11y surface. Prefer **styled native
 select for v1** unless product requirements force custom. Document the choice.
@@ -215,23 +216,23 @@ select for v1** unless product requirements force custom. Document the choice.
 
 **Acceptance criteria:**
 
-- [ ] Checkbox: unchecked / checked / disabled / invalid; label association
-- [ ] Switch: on/off with accent on checked track (signal, not neon slab)
-- [ ] CVA for both; keyboard operable
-- [ ] Unit + Storybook; reduced-motion safe thumb transition
+- [x] Checkbox: unchecked / checked / disabled / invalid; label association
+- [x] Switch: on/off with accent on checked track (signal, not neon slab)
+- [x] CVA for both; keyboard operable
+- [x] Unit + Storybook; reduced-motion safe thumb transition
 
 ### Story 4.6 — Showcase composition + e2e
 
 **Acceptance criteria:**
 
-- [ ] New route e.g. `/controls` (keep prior showcase routes)
-- [ ] Form lives inside `jp-app-shell` with sample nav
-- [ ] Demonstrates button variants + a short form (input, textarea, select, checkbox, switch)
-- [ ] Root redirect may stay on `/app-shell` until this story lands; then optionally point to `/controls`
-- [ ] `showcase-e2e` asserts landmarks, primary button, and one field interaction
-- [ ] Storybook `Compositions/Controls Form` with accent/density toolbars
-- [ ] Coverage gates still ≥ 90% on `ui` / `showcase`
-- [ ] PRIMITIVES.md + CHANGELOG + roadmap updated
+- [x] New route e.g. `/controls` (keep prior showcase routes)
+- [x] Form lives inside `jp-app-shell` with sample nav
+- [x] Demonstrates button variants + a short form (input, textarea, select, checkbox, switch)
+- [x] Root redirect optionally pointed at `/controls` for this milestone (later superseded by `/assistant`)
+- [x] `showcase-e2e` asserts landmarks, primary button, and one field interaction
+- [x] Storybook `Compositions/Controls Form` with accent/density toolbars
+- [x] Coverage gates still ≥ 90% on `ui` / `showcase`
+- [x] PRIMITIVES.md + CHANGELOG + roadmap updated
 
 ---
 

@@ -8,7 +8,7 @@ density.
 
 ---
 
-## Current Progress (as of July 10, 2026)
+## Current Progress (as of July 24, 2026)
 
 - Foundation is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
@@ -181,7 +181,7 @@ Implementation plan: [DATA_DISPLAY_PLAN.md](./DATA_DISPLAY_PLAN.md)
 - [x] Story 5.3 — `jp-table`
 - [x] Story 5.4 — Showcase composition + e2e
 
-Deliverable: Dashboard data page.
+Deliverable: Dashboard data page. Completed.
 
 ---
 
@@ -200,7 +200,7 @@ Implementation plan: [FEEDBACK_OVERLAYS_PLAN.md](./FEEDBACK_OVERLAYS_PLAN.md)
 - [x] Story 6.6 — `jp-dropdown-menu`
 - [x] Story 6.7 — Showcase composition + e2e
 
-Deliverable: Full interaction layer.
+Deliverable: Full interaction layer. Completed.
 
 ---
 
@@ -217,7 +217,7 @@ Implementation plan: [ASSISTANT_SYSTEM_PLAN.md](./ASSISTANT_SYSTEM_PLAN.md)
 - [x] Story 7.4 — `jp-assistant-panel`
 - [x] Story 7.5 — Showcase composition + e2e
 
-Deliverable: Branded assistant integration.
+Deliverable: Branded assistant integration. Completed.
 
 ---
 

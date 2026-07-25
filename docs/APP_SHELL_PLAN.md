@@ -2,7 +2,8 @@
 
 **Status:** Complete — Stories 3.0–3.5 delivered  
 **Delivered:** Complete  
-**Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)
+**Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
+**Note:** Showcase root currently redirects to `/assistant` (Epic 7). The root → `/app-shell` decision below was the interim redirect at App Shell delivery.
 
 ---
 
@@ -10,7 +11,7 @@
 
 | Decision             | Choice                                                                |
 | -------------------- | --------------------------------------------------------------------- |
-| Route naming         | Add `/app-shell`; keep `/layout-dashboard`; root → `/app-shell`   |
+| Route naming         | Add `/app-shell`; keep `/layout-dashboard`; root → `/app-shell` (interim; now `/assistant`) |
 | Sub-components       | `jp-app-shell` + `jp-app-shell-nav-item` only (no sidebar/main split) |
 | Collapse persistence | Session-only (Showcase local state)                                   |
 | Icons in nav         | Optional `[jpAppShellNavIcon]` slot; text labels required             |

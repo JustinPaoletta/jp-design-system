@@ -4,6 +4,7 @@
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
 **Depends on:** Feedback & Overlays complete ([FEEDBACK_OVERLAYS_PLAN.md](./FEEDBACK_OVERLAYS_PLAN.md))  
+**Current Showcase root:** `/` → `/assistant`
 
 ---
 

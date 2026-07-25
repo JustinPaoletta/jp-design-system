@@ -443,17 +443,22 @@ Attribute directive. Click opens the panel via `JpAssistantService`.
 
 | Input | Values | Default | Notes |
 | --------- | ----------------------------- | ----------- | ------------ |
-| `role` | `user`, `assistant`, `system` | `assistant` | Tone classes |
+| `messageRole` | `user`, `assistant`, `system` | `assistant` | Tone classes (not HTML `role`) |
 | `content` | string | — | Required |
 
 ### `jp-assistant-panel`
 
 | Input / output | Type | Default | Notes |
-| --------------------- | -------- | ------------------- | --------------------------- |
+| --------------------- | -------- | ------------------------------------------------------------------- | --------------------------- |
 | `title` | string | `'JP Assistant'` | Labels complementary region |
 | `closeLabel` | string | `'Close assistant'` | Close control name |
+| `clearContextLabel` | string | `'Clear context'` | Context chip dismiss name |
+| `composerLabel` | string | `'Message the assistant'` | Composer accessible name |
+| `sendLabel` | string | `'Send'` | Send button label |
+| `emptyTitle` | string | `'Ask about this surface'` | Empty-state title |
+| `emptyDescription` | string | `'Open the assistant from a context trigger, then send a question.'` | Empty-state description |
+| `placeholder` | string | `'Ask a question…'` | Composer placeholder |
 | `messageSubmit` | `output` | — | Emits user message text |
-| composer / empty copy | strings | sensible defaults | Overridable labels |
 
 Reads open/context/messages from `JpAssistantService`. Escape closes. Focus moves
 to the composer on open. Desktop: fixed right dock. Mobile: scrim + overlay.

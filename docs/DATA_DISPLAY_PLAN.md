@@ -3,7 +3,8 @@
 **Status:** Complete — Stories 5.0–5.4 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
-**Depends on:** Controls Core Controls complete ([CONTROLS_PLAN.md](./CONTROLS_PLAN.md))  
+**Note:** Showcase root currently redirects to `/assistant` (Epic 7). Story criteria that mention root → `/data` describe the interim redirect at Data Display delivery.  
+**Depends on:** Controls complete ([CONTROLS_PLAN.md](./CONTROLS_PLAN.md))  
 
 ---
 

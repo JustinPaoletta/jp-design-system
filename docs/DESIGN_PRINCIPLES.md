@@ -141,7 +141,10 @@ Professional does not mean cold. Approachable does not mean casual.
 Code quality is part of design quality.
 
 The system enforces: - Strict typing - Token usage - Lint rules - Test
-coverage - Visual regression safeguards
+coverage
+
+Visual regression baselines are planned under quality hardening (see
+[JP_ROADMAP.md](./JP_ROADMAP.md)).
 
 A design system is infrastructure. Infrastructure must be reliable.
 

@@ -38,8 +38,9 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Changed
 
 - Showcase routes renamed to feature paths (`/assistant`, `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`); page titles and nav no longer reference delivery milestones
-- Epic plan docs renamed to feature filenames (`APP_SHELL_PLAN.md`, `CONTROLS_PLAN.md`, `DATA_DISPLAY_PLAN.md`, `FEEDBACK_OVERLAYS_PLAN.md`, `ASSISTANT_SYSTEM_PLAN.md`); `MANUAL_QA.md` checklist IDs use area prefixes (`SH`, `CT`, `DD`, `FO`, `AT`)
+- Epic plan docs renamed to feature filenames (`APP_SHELL_PLAN.md`, `CONTROLS_PLAN.md`, `DATA_DISPLAY_PLAN.md`, `FEEDBACK_OVERLAYS_PLAN.md`, `ASSISTANT_SYSTEM_PLAN.md`); `MANUAL_QA.md` is the Storybook top-to-bottom checklist (layout through assistant compositions)
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
 - Showcase root redirect now points to `/assistant`
+- Documentation audit: Controls plan acceptance criteria marked complete; plan docs note current Showcase root (`/assistant`); `PRIMITIVES.md` / `libs/ui` README / `MANUAL_QA.md` aligned to shipped APIs and Storybook paths

@@ -4,6 +4,7 @@
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
 **Depends on:** Data Display complete ([DATA_DISPLAY_PLAN.md](./DATA_DISPLAY_PLAN.md))  
+**Note:** Showcase root currently redirects to `/assistant` (Epic 7). Story criteria that mention root → `/overlays` describe the interim redirect at Feedback & Overlays delivery.
 
 ---
 
