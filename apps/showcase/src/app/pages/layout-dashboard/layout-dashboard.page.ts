@@ -8,6 +8,7 @@ import {
   JpSurface,
   JpText,
 } from '@jp-design-system/ui';
+import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-layout-dashboard-page',
@@ -17,8 +18,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutDashboardPage {
-  readonly accent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
-  readonly density =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
+  private readonly theme = injectDocumentTheme();
+
+  readonly accent = this.theme.accent;
+  readonly density = this.theme.density;
 }

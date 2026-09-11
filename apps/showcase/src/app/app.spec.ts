@@ -11,6 +11,7 @@ import { ControlsPage } from './pages/controls/controls.page';
 import { DataPage } from './pages/data/data.page';
 import { OverlaysPage } from './pages/overlays/overlays.page';
 import { AssistantPage } from './pages/assistant/assistant.page';
+import { JpAssistantService } from '@jp-design-system/ui';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -186,8 +187,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('neon');
-    expect(fixture.componentInstance.density).toBe('default');
+    expect(fixture.componentInstance.accent()).toBe('neon');
+    expect(fixture.componentInstance.density()).toBe('default');
   });
 
   it('reads document accent and density attributes on layout dashboard', async () => {
@@ -201,8 +202,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
   });
 
   it('reads document accent and density attributes on app shell', async () => {
@@ -216,8 +217,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(AppShellPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
   });
 
   it('reads document accent and density attributes on controls', async () => {
@@ -231,8 +232,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(ControlsPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
   });
 
   it('reads document accent and density attributes on data', async () => {
@@ -246,8 +247,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(DataPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
   });
 
   it('reads document accent and density attributes on overlays', async () => {
@@ -261,8 +262,8 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(OverlaysPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
   });
 
   it('reads document accent and density attributes on assistant', async () => {
@@ -276,8 +277,49 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(AssistantPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent).toBe('cobalt');
-    expect(fixture.componentInstance.density).toBe('compact');
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
+  });
+
+  it('updates accent and density when document attributes change', async () => {
+    await TestBed.configureTestingModule({
+      imports: [LayoutDashboardPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(LayoutDashboardPage);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.accent()).toBe('neon');
+
+    document.documentElement.setAttribute('data-jp-accent', 'cobalt');
+    document.documentElement.setAttribute('data-jp-density', 'compact');
+    await Promise.resolve();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.accent()).toBe('cobalt');
+    expect(fixture.componentInstance.density()).toBe('compact');
+  });
+
+  it('resets assistant service state when the assistant page is destroyed', async () => {
+    await TestBed.configureTestingModule({
+      imports: [AssistantPage],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AssistantPage);
+    const assistant = TestBed.inject(JpAssistantService);
+    fixture.detectChanges();
+
+    assistant.open({
+      context: { label: 'Deployment dep-1042' },
+    });
+    assistant.addMessage({ role: 'user', content: 'hello' });
+    expect(assistant.isOpen()).toBe(true);
+    expect(assistant.messages().length).toBe(1);
+
+    fixture.destroy();
+
+    expect(assistant.isOpen()).toBe(false);
+    expect(assistant.context()).toBeNull();
+    expect(assistant.messages()).toEqual([]);
   });
 
   it('toggles empty table rows on data page', async () => {

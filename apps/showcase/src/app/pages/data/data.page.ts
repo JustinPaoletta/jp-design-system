@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   JpBadge,
   type JpBadgeTone,
@@ -15,7 +16,7 @@ import {
   type JpTableColumn,
   JpText,
 } from '@jp-design-system/ui';
-import { FormsModule } from '@angular/forms';
+import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-data-page',
@@ -39,6 +40,8 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataPage {
+  private readonly theme = injectDocumentTheme();
+
   showEmpty = false;
 
   readonly columns: JpTableColumn[] = [
@@ -75,10 +78,8 @@ export class DataPage {
     },
   ];
 
-  readonly accent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
-  readonly density =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
+  readonly accent = this.theme.accent;
+  readonly density = this.theme.density;
 
   get visibleRows() {
     return this.showEmpty ? [] : this.rows;

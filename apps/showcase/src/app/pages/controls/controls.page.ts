@@ -15,6 +15,7 @@ import {
   JpText,
   JpTextarea,
 } from '@jp-design-system/ui';
+import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-controls-page',
@@ -39,6 +40,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlsPage {
+  private readonly theme = injectDocumentTheme();
+
   email = '';
   notes = '';
   role = 'editor';
@@ -51,8 +54,6 @@ export class ControlsPage {
     { value: 'viewer', label: 'Viewer' },
   ];
 
-  readonly accent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
-  readonly density =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
+  readonly accent = this.theme.accent;
+  readonly density = this.theme.density;
 }

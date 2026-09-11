@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import {
   JpAssistantPanel,
   JpAssistantService,
@@ -12,6 +17,7 @@ import {
   JpText,
   type JpAssistantContext,
 } from '@jp-design-system/ui';
+import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-assistant-page',
@@ -30,15 +36,14 @@ import {
   styleUrl: './assistant.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AssistantPage {
+export class AssistantPage implements OnDestroy {
   private readonly assistant = inject(JpAssistantService);
+  private readonly theme = injectDocumentTheme();
 
   lastReply = 'None yet';
 
-  readonly accent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
-  readonly density =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
+  readonly accent = this.theme.accent;
+  readonly density = this.theme.density;
 
   readonly deploymentContext: JpAssistantContext = {
     label: 'Deployment dep-1042',
@@ -59,6 +64,14 @@ export class AssistantPage {
     description: 'Production + staging',
     entityType: 'filters',
   };
+
+  ngOnDestroy(): void {
+    // Panel only mounts on this route; clear root service state so returning
+    // does not remount an already-open panel with a stale conversation.
+    this.assistant.close();
+    this.assistant.clearContext();
+    this.assistant.clearMessages();
+  }
 
   seedToneDemo(): void {
     this.assistant.open({ clearMessages: true, context: null });
