@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -25,7 +25,7 @@ import {
 
 @Component({
   selector: 'jp-inline',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './inline.html',
   styleUrl: './inline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,20 @@
+:host {
+  position: fixed;
+  right: var(--jp-space-md);
+  bottom: var(--jp-space-md);
+  z-index: var(--jp-z-overlay-toast);
+  display: block;
+  pointer-events: none;
+}
+
+.jp-toast-outlet__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--jp-space-xs);
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.jp-toast-outlet__stack > * {
+  pointer-events: auto;
+}

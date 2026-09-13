@@ -29,3 +29,8 @@ Release branches such as `release/v0.1.0` should still flow back through pull re
 The `Test` job runs `npm run test`, `npx nx run ui:test-storybook`, and
 `npx nx run showcase-e2e:e2e -- --project=chromium`. Those steps are part of
 the `Test` check name — no separate status checks are required for them.
+
+Unit tests collect coverage by default. Each Jest project enforces a
+`coverageThreshold`. For `ui` and `showcase`, the gate is 90% across
+statements, branches, functions, and lines. `tokens` and `storybook` remain
+at 100%. Dropping below a project threshold fails the `Test` job.

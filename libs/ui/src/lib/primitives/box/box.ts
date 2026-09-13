@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -22,7 +22,7 @@ import {
 
 @Component({
   selector: 'jp-box',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './box.html',
   styleUrl: './box.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -20,11 +20,11 @@ const meta: Meta = {
   render: () => ({
     template: `
       <style>
-        .jp-phase2-dashboard-story__header {
+        .jp-layout-dashboard-story__header {
           align-items: flex-start;
         }
 
-        .jp-phase2-dashboard-story__accent-badge {
+        .jp-layout-dashboard-story__accent-badge {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -39,7 +39,7 @@ const meta: Meta = {
           text-transform: uppercase;
         }
 
-        .jp-phase2-dashboard-story__accent-rule {
+        .jp-layout-dashboard-story__accent-rule {
           width: 100%;
           height: var(--jp-space-2xs);
           border-radius: var(--jp-radius-full);
@@ -50,17 +50,17 @@ const meta: Meta = {
           );
         }
 
-        .jp-phase2-dashboard-story__accent-value {
+        .jp-layout-dashboard-story__accent-value {
           color: var(--jp-color-accent-muted);
         }
       </style>
 
       <jp-box padding="lg" maxWidth="wide">
         <jp-stack gap="lg">
-          <jp-stack gap="sm" class="jp-phase2-dashboard-story__header">
+          <jp-stack gap="sm" class="jp-layout-dashboard-story__header">
             <jp-inline align="center" gap="sm">
               <jp-heading as="h1">Layout Dashboard</jp-heading>
-              <span class="jp-phase2-dashboard-story__accent-badge">
+              <span class="jp-layout-dashboard-story__accent-badge">
                 {{ documentAccent }}
               </span>
             </jp-inline>
@@ -69,28 +69,28 @@ const meta: Meta = {
               <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
               <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
             </jp-inline>
-            <div class="jp-phase2-dashboard-story__accent-rule" aria-hidden="true"></div>
+            <div class="jp-layout-dashboard-story__accent-rule" aria-hidden="true"></div>
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Active sessions</jp-text>
-                <jp-heading as="h3">
-                  <span class="jp-phase2-dashboard-story__accent-value">1,284</span>
-                </jp-heading>
+                <jp-text size="body-lg">
+                  <span class="jp-layout-dashboard-story__accent-value">1,284</span>
+                </jp-text>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Error rate</jp-text>
-                <jp-heading as="h3">0.14%</jp-heading>
+                <jp-text size="body-lg">0.14%</jp-text>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Avg response</jp-text>
-                <jp-heading as="h3">182ms</jp-heading>
+                <jp-text size="body-lg">182ms</jp-text>
               </jp-stack>
             </jp-surface>
           </jp-grid>
@@ -98,7 +98,7 @@ const meta: Meta = {
           <jp-grid columns="2" gap="md">
             <jp-surface tone="raised" padding="md">
               <jp-stack gap="sm">
-                <jp-heading as="h3">Activity</jp-heading>
+                <jp-heading as="h2">Activity</jp-heading>
                 <jp-stack gap="xs">
                   <jp-text tone="secondary">Design token sync completed</jp-text>
                   <jp-text tone="secondary">Storybook interaction checks passing</jp-text>
@@ -108,7 +108,7 @@ const meta: Meta = {
             </jp-surface>
             <jp-surface tone="raised" padding="md">
               <jp-stack gap="sm">
-                <jp-heading as="h3">Insights</jp-heading>
+                <jp-heading as="h2">Insights</jp-heading>
                 <jp-text tone="secondary">
                   Component APIs are token-only and semantic-first.
                 </jp-text>
@@ -118,7 +118,7 @@ const meta: Meta = {
 
           <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
             <jp-stack gap="sm">
-              <jp-heading as="h3">Recent Events</jp-heading>
+              <jp-heading as="h2">Recent Events</jp-heading>
               <jp-stack gap="xs">
                 <jp-inline justify="between">
                   <jp-text>Grid min-column tokens added</jp-text>

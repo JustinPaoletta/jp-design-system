@@ -1,0 +1,62 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.jp-icon-button__root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-icon-button-size, var(--jp-size-control-md));
+  height: var(--jp-icon-button-size, var(--jp-size-control-md));
+  min-width: var(--jp-icon-button-size, var(--jp-size-control-md));
+  min-height: var(--jp-icon-button-size, var(--jp-size-control-md));
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--jp-radius-md);
+  background: transparent;
+  color: var(--jp-color-button-ghost-fg);
+  cursor: pointer;
+  transition: var(--jp-motion-transition-base);
+}
+
+.jp-icon-button__root:hover:not(:disabled) {
+  background: var(--jp-color-button-ghost-bg-hover);
+  color: var(--jp-color-button-ghost-fg-hover);
+}
+
+.jp-icon-button__root:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.jp-icon-button__root:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.jp-icon-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-size-icon-md);
+  height: var(--jp-size-icon-md);
+  line-height: 1;
+}
+
+:host(.jp-icon-button--sm) .jp-icon-button__icon {
+  width: var(--jp-size-icon-sm);
+  height: var(--jp-size-icon-sm);
+}
+
+:host(.jp-icon-button--lg) .jp-icon-button__icon {
+  width: var(--jp-size-icon-lg);
+  height: var(--jp-size-icon-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-icon-button__root {
+    transition: none;
+  }
+}

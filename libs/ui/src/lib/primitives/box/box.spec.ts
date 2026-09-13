@@ -66,4 +66,17 @@ describe('JpBox', () => {
     expect(component.as()).toBe('div');
     expect(component.padding()).toBe('none');
   });
+
+  it('clears optional axis overrides for empty and invalid values', () => {
+    fixture.componentRef.setInput('padding', 'md');
+    fixture.componentRef.setInput('paddingX', '' as never);
+    fixture.componentRef.setInput('paddingY', 'nope' as never);
+    fixture.detectChanges();
+
+    expect(component.paddingX()).toBeNull();
+    expect(component.paddingY()).toBeNull();
+    expect(component.rootPadding()).toBe(
+      'var(--jp-space-md) var(--jp-space-md)',
+    );
+  });
 });

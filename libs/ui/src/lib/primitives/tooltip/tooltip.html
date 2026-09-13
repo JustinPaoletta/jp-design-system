@@ -1,0 +1,8 @@
+<span class="jp-tooltip__trigger">
+  <ng-content />
+</span>
+@if (open()) {
+<span class="jp-tooltip__content" role="tooltip" [attr.id]="tooltipId">
+  {{ content() }}
+</span>
+}

@@ -124,3 +124,123 @@ export type JpFontWeight = (typeof JP_FONT_WEIGHTS)[number];
 export const JP_HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 export type JpHeadingTag = (typeof JP_HEADING_TAGS)[number];
+
+export const JP_CONTROL_SIZES = ['sm', 'md', 'lg'] as const;
+
+export type JpControlSize = (typeof JP_CONTROL_SIZES)[number];
+
+export const JP_BUTTON_VARIANTS = [
+  'primary',
+  'secondary',
+  'ghost',
+  'destructive',
+] as const;
+
+export type JpButtonVariant = (typeof JP_BUTTON_VARIANTS)[number];
+
+export const JP_BUTTON_TYPES = ['button', 'submit', 'reset'] as const;
+
+export type JpButtonType = (typeof JP_BUTTON_TYPES)[number];
+
+export const JP_INPUT_TYPES = [
+  'text',
+  'email',
+  'password',
+  'search',
+  'tel',
+  'url',
+  'number',
+] as const;
+
+export type JpInputType = (typeof JP_INPUT_TYPES)[number];
+
+export const JP_BADGE_TONES = [
+  'neutral',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'info',
+] as const;
+
+export type JpBadgeTone = (typeof JP_BADGE_TONES)[number];
+
+export const JP_BADGE_SIZES = ['sm', 'md'] as const;
+
+export type JpBadgeSize = (typeof JP_BADGE_SIZES)[number];
+
+export const JP_TABLE_ALIGNS = ['start', 'center', 'end'] as const;
+
+export type JpTableAlign = (typeof JP_TABLE_ALIGNS)[number];
+
+export type JpTableCellValue = string | number | null | undefined;
+
+export interface JpTableColumn {
+  key: string;
+  header: string;
+  align?: JpTableAlign;
+}
+
+export const JP_TOOLTIP_PLACEMENTS = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+] as const;
+
+export type JpTooltipPlacement = (typeof JP_TOOLTIP_PLACEMENTS)[number];
+
+export const JP_TOAST_TONES = [
+  'neutral',
+  'success',
+  'warning',
+  'error',
+  'info',
+] as const;
+
+export type JpToastTone = (typeof JP_TOAST_TONES)[number];
+
+export interface JpToastOptions {
+  message: string;
+  tone?: JpToastTone;
+  durationMs?: number;
+}
+
+export interface JpToastItem {
+  id: number;
+  message: string;
+  tone: JpToastTone;
+  durationMs: number;
+}
+
+export const JP_ASSISTANT_MESSAGE_ROLES = [
+  'user',
+  'assistant',
+  'system',
+] as const;
+
+export type JpAssistantMessageRole =
+  (typeof JP_ASSISTANT_MESSAGE_ROLES)[number];
+
+export interface JpAssistantContext {
+  label: string;
+  description?: string;
+  entityType?: string;
+  entityId?: string;
+}
+
+export interface JpAssistantMessageItem {
+  id: number;
+  role: JpAssistantMessageRole;
+  content: string;
+}
+
+export interface JpAssistantOpenOptions {
+  context?: JpAssistantContext | null;
+  clearMessages?: boolean;
+}
+
+export interface JpAssistantAddMessageOptions {
+  role: JpAssistantMessageRole;
+  content: string;
+}

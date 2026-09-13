@@ -1,13 +1,13 @@
 <jp-box padding="lg" maxWidth="wide">
   <jp-stack gap="lg">
     <jp-stack gap="xs">
-      <jp-heading as="h1">Phase 2 Layout Dashboard</jp-heading>
+      <jp-heading as="h1">App Shell Dashboard</jp-heading>
       <jp-text tone="secondary"
-        >Layout-only composition using JP primitives.</jp-text
+        >Dashboard content inside the persistent app shell.</jp-text
       >
       <jp-inline gap="sm">
-        <jp-text as="small" tone="muted">accent: {{ accent }}</jp-text>
-        <jp-text as="small" tone="muted">density: {{ density }}</jp-text>
+        <jp-text as="small" tone="muted">accent: {{ accent() }}</jp-text>
+        <jp-text as="small" tone="muted">density: {{ density() }}</jp-text>
       </jp-inline>
     </jp-stack>
 
@@ -37,12 +37,12 @@
         <jp-stack gap="sm">
           <jp-heading as="h3">Activity</jp-heading>
           <jp-stack gap="xs">
-            <jp-text tone="secondary">Design token sync completed</jp-text>
+            <jp-text tone="secondary">App shell tokens applied</jp-text>
             <jp-text tone="secondary"
-              >Storybook interaction checks passing</jp-text
+              >Sidebar collapse and mobile drawer ready</jp-text
             >
             <jp-text tone="secondary"
-              >Showcase route composed with primitives</jp-text
+              >Nav item active state uses accent signal</jp-text
             >
           </jp-stack>
         </jp-stack>
@@ -51,7 +51,7 @@
         <jp-stack gap="sm">
           <jp-heading as="h3">Insights</jp-heading>
           <jp-text tone="secondary">
-            Component APIs are token-only and semantic-first.
+            Shell chrome is token-driven and reusable across dashboard pages.
           </jp-text>
         </jp-stack>
       </jp-surface>
@@ -62,16 +62,16 @@
         <jp-heading as="h3">Recent Events</jp-heading>
         <jp-stack gap="xs">
           <jp-inline justify="between">
-            <jp-text>Grid min-column tokens added</jp-text>
-            <jp-text as="small" tone="muted">10m ago</jp-text>
+            <jp-text>jp-app-shell-nav-item added</jp-text>
+            <jp-text as="small" tone="muted">just now</jp-text>
           </jp-inline>
           <jp-inline justify="between">
-            <jp-text>Legacy lib-ui marked deprecated</jp-text>
-            <jp-text as="small" tone="muted">22m ago</jp-text>
+            <jp-text>Mobile drawer focus trap enabled</jp-text>
+            <jp-text as="small" tone="muted">just now</jp-text>
           </jp-inline>
           <jp-inline justify="between">
-            <jp-text>CI dashboard e2e added</jp-text>
-            <jp-text as="small" tone="muted">38m ago</jp-text>
+            <jp-text>Layout composition preserved</jp-text>
+            <jp-text as="small" tone="muted">earlier</jp-text>
           </jp-inline>
         </jp-stack>
       </jp-stack>

@@ -1,0 +1,84 @@
+:host {
+  display: block;
+}
+
+.jp-input__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--jp-space-2xs);
+}
+
+.jp-input__label {
+  color: var(--jp-color-field-label);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-input__control {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--jp-field-height, var(--jp-size-control-md));
+  padding-inline: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+  transition: var(--jp-motion-transition-base);
+}
+
+.jp-input__control::placeholder {
+  color: var(--jp-color-field-placeholder);
+}
+
+.jp-input__control:hover:not(:disabled):not(:read-only) {
+  border-color: var(--jp-color-field-border-hover);
+}
+
+.jp-input__control:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+:host(.jp-input--invalid) .jp-input__control {
+  border-color: var(--jp-color-field-border-invalid);
+}
+
+:host(.jp-input--sm) .jp-input__control {
+  font-size: var(--jp-font-size-caption);
+  padding-inline: var(--jp-space-xs);
+}
+
+:host(.jp-input--lg) .jp-input__control {
+  font-size: var(--jp-font-size-body-lg);
+  padding-inline: var(--jp-space-md);
+}
+
+.jp-input__control:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.jp-input__hint {
+  margin: 0;
+  color: var(--jp-color-foreground-muted);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-input__error {
+  margin: 0;
+  color: var(--jp-color-field-error);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-input__control {
+    transition: none;
+  }
+}

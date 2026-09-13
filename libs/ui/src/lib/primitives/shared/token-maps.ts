@@ -2,6 +2,7 @@ import {
   type JpAlignItems,
   type JpBorderTone,
   type JpBoxMaxWidth,
+  type JpControlSize,
   type JpElevationToken,
   type JpFontWeight,
   type JpGridMinColumn,
@@ -221,4 +222,14 @@ export function fontWeightToCssVar(weight: JpFontWeight): string {
 
 export function gridMinColumnToCssVar(minColumn: JpGridMinColumn): string {
   return GRID_MIN_COLUMN_TO_CSS_VAR[minColumn];
+}
+
+const CONTROL_SIZE_TO_CSS_VAR: Record<JpControlSize, string> = {
+  sm: 'var(--jp-size-control-sm)',
+  md: 'var(--jp-size-control-md)',
+  lg: 'var(--jp-size-control-lg)',
+};
+
+export function controlSizeToCssVar(size: JpControlSize): string {
+  return CONTROL_SIZE_TO_CSS_VAR[size];
 }

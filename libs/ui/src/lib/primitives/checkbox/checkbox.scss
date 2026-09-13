@@ -1,0 +1,77 @@
+:host {
+  display: inline-flex;
+}
+
+.jp-checkbox__root {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--jp-space-sm);
+  cursor: pointer;
+  color: var(--jp-color-foreground-primary);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.jp-checkbox__box {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  margin-top: var(--jp-space-2xs);
+  border: 1px solid var(--jp-color-selection-checkbox-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-selection-checkbox-bg);
+  color: transparent;
+  transition: var(--jp-motion-transition-base);
+}
+
+.jp-checkbox__check {
+  width: var(--jp-size-icon-sm);
+  height: var(--jp-size-icon-sm);
+}
+
+:host(.jp-checkbox--checked) .jp-checkbox__box {
+  background: var(--jp-color-selection-checkbox-bg-checked);
+  border-color: var(--jp-color-selection-checkbox-bg-checked);
+  color: var(--jp-color-selection-checkbox-fg);
+}
+
+.jp-checkbox__input:focus-visible + .jp-checkbox__box {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+:host(.jp-checkbox--invalid) .jp-checkbox__box {
+  border-color: var(--jp-color-field-border-invalid);
+}
+
+:host(.jp-checkbox--disabled) .jp-checkbox__root {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.jp-checkbox__label {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-checkbox__box {
+    transition: none;
+  }
+}

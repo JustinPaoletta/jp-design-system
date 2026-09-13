@@ -7,6 +7,8 @@ context.
   that (`npx nx run ui:storybook`).
 - **Purpose** — prove primitives and compositions render correctly outside
   Storybook (routing, tokens, real Angular bootstrap).
+- **Theme readouts** — pages display live `accent` / `density` from
+  `data-jp-accent` and `data-jp-density` on `<html>`.
 
 ## Run
 
@@ -14,7 +16,9 @@ context.
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200/phase-2-dashboard (root `/` redirects here).
+Open http://localhost:4200 (root `/` redirects to `/assistant`).
+
+Other routes: `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`.
 
 ## E2E
 

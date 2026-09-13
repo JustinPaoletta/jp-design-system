@@ -23,10 +23,7 @@
         "port": 4400,
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
-        "styles": [
-          "libs/tokens/src/generated/tokens.css",
-          "libs/tokens/src/generated/tokens.compact.css"
-        ],
+        "styles": ["libs/tokens/src/generated/tokens.css"],
         "compodoc": false
       },
       "configurations": {
@@ -42,10 +39,7 @@
         "outputDir": "dist/storybook/ui",
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
-        "styles": [
-          "libs/tokens/src/generated/tokens.css",
-          "libs/tokens/src/generated/tokens.compact.css"
-        ],
+        "styles": ["libs/tokens/src/generated/tokens.css"],
         "compodoc": false
       },
       "configurations": {

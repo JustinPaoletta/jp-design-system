@@ -15,10 +15,15 @@ function isDefinePlugin(
 
 const config: StorybookConfig = {
   stories: ['../**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
-  addons: [],
+  addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {
     name: '@storybook/angular',
     options: {},
+  },
+  // Stock Backgrounds mounts on Docs too. We replace it with a Canvas-only
+  // stage tool in manager.ts (see preview.ts for Docs fixed-stage painting).
+  features: {
+    backgrounds: false,
   },
   webpackFinal: async (webpackConfig: Configuration) => {
     const definitions: Record<string, unknown> = {};

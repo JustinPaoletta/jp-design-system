@@ -1,0 +1,87 @@
+:host {
+  display: contents;
+}
+
+.jp-dialog__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--jp-z-overlay-dialog-scrim);
+  background: var(--jp-color-overlay-scrim);
+}
+
+.jp-dialog__panel {
+  position: fixed;
+  z-index: var(--jp-z-overlay-dialog);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: min(28rem, calc(100vw - 2 * var(--jp-space-md)));
+  max-height: calc(100vh - 2 * var(--jp-space-lg));
+  overflow: auto;
+  padding: var(--jp-space-lg);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-overlay);
+  font-family: var(--jp-font-family-base);
+}
+
+.jp-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  margin-bottom: var(--jp-space-md);
+}
+
+.jp-dialog__title {
+  margin: 0;
+  font-size: var(--jp-font-size-heading-h3);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
+  color: var(--jp-color-text-primary);
+}
+
+.jp-dialog__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-lg);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.jp-dialog__close:hover {
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+}
+
+.jp-dialog__close:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.jp-dialog__body {
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-text-secondary);
+}
+
+:host ::ng-deep .jp-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--jp-space-sm);
+  margin-top: var(--jp-space-lg);
+}

@@ -40,4 +40,11 @@ describe('JpInline', () => {
     expect(component.justify()).toBe('start');
     expect(component.gap()).toBe('sm');
   });
+
+  it('disables wrapping when wrap is false', () => {
+    fixture.componentRef.setInput('wrap', false);
+    fixture.detectChanges();
+
+    expect(component.rootWrap()).toBe('nowrap');
+  });
 });
