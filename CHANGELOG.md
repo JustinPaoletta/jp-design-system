@@ -44,3 +44,6 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
 - Showcase root redirect now points to `/assistant`
 - Documentation audit: Controls plan acceptance criteria marked complete; plan docs note current Showcase root (`/assistant`); `PRIMITIVES.md` / `libs/ui` README / `MANUAL_QA.md` aligned to shipped APIs and Storybook paths
+- Storybook preview: story-owned sunken page (`.jp-storybook-page`) with an independent Canvas-only Dark/Light stage toolbar; Docs keeps a fixed dark stage
+- Showcase pages reactively read `data-jp-accent` / `data-jp-density` for live theme readouts
+- Documentation audit (Sep 2026): corrected Accent toolbar guidance; documented Storybook page vs stage; refreshed roadmap progress date; pointed `docs/qa` at `MANUAL_QA.md`

@@ -13,8 +13,10 @@ See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_R
 
 - **Selectors:** `jp-*` (e.g. `jp-box`, `jp-heading`). Legacy `lib-ui` is deprecated.
 - **No style/class inputs:** Visual values come from token-backed props only.
-- **Accent toolbar:** Disabled on layout and typography primitive stories. Accent
-  tokens apply on composition stories (e.g. Layout Dashboard) and Showcase pages.
+- **Accent toolbar:** Available globally (stories default to Neon). Layout and
+  typography primitives have little/no accent-driven UI, so Neon → Cobalt may look
+  unchanged there. Accent is meaningful on controls, accent badges, active shell
+  nav, assistant chrome, composition stories, and Showcase pages.
 - **Semantic `as` props:** Set the rendered HTML tag for accessibility. Behavior
   differs by primitive — see typography section below.
 
@@ -480,6 +482,10 @@ Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typogra
 `Compositions/Controls Form`, `Compositions/Data Display`,
 `Compositions/Feedback Overlays`, and `Compositions/Assistant System`.
 
+Stories wrap in `.jp-storybook-page` (sunken page fill). Canvas adds a **Dark stage** /
+**Light stage** toolbar (plus grid) for the mat behind the page; Docs keeps a fixed
+dark stage with no stage control. Manual checklist: [MANUAL_QA.md](../MANUAL_QA.md).
+
 ---
 
 ## Showcase
@@ -493,3 +499,6 @@ npx nx run showcase:serve
 
 Open http://localhost:4200/assistant (also `/overlays`,
 `/data`, `/controls`, `/app-shell`, `/layout-dashboard`).
+
+Showcase pages show live `accent` / `density` readouts from `data-jp-accent` and
+`data-jp-density` on `<html>` (handy when toggling those attributes in DevTools).

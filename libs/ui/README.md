@@ -42,7 +42,8 @@ Runs at http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typo
 `Compositions/Data Display`, `Compositions/Feedback Overlays`, and
 `Compositions/Assistant System`.
 
-Manual checklist: [MANUAL_QA.md](../../MANUAL_QA.md).
+Canvas: sunken story page plus independent **Dark stage** / **Light stage** mat
+(Docs uses a fixed dark stage). Manual checklist: [MANUAL_QA.md](../../MANUAL_QA.md).
 
 ## Showcase
 

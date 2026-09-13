@@ -7,6 +7,8 @@ context.
   that (`npx nx run ui:storybook`).
 - **Purpose** — prove primitives and compositions render correctly outside
   Storybook (routing, tokens, real Angular bootstrap).
+- **Theme readouts** — pages display live `accent` / `density` from
+  `data-jp-accent` and `data-jp-density` on `<html>`.
 
 ## Run
 

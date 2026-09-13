@@ -12,17 +12,22 @@ toolbar state on the PR.
 npx nx run ui:storybook
 ```
 
-Open http://localhost:4400. Theme is **dark** (sunken canvas background).
+Open http://localhost:4400.
+
+**Page vs stage:** Each story renders inside `.jp-storybook-page` with the sunken page fill (`--jp-color-surface-sunken`). The Storybook **stage** is the mat behind that page and is independent of it.
 
 | Tool                                    | What to use it for                                                                                                    |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | **Accent** toolbar (Neon / Cobalt)      | Recolors accent-driven UI only                                                                                        |
 | **Density** toolbar (Default / Compact) | Tightens spacing + control sizes (~0.75×)                                                                             |
+| **Stage** toolbar (Canvas only)         | **Dark stage** / **Light stage** mat behind the page, plus **Toggle grid visibility**. Docs keeps a fixed dark stage. |
 | **Viewport** toolbar                    | Mobile shell/assistant checks (shell breakpoint = `48rem` / 768px)                                                    |
 | **Interactions** panel                  | Every story with a `play` function should show **Pass** (green) on load                                               |
 | **Accessibility** panel                 | **No violations** on every story (global gate is `a11y.test: 'error'`; same as CI via `npx nx run ui:test-storybook`) |
 
 Optional once: enable OS **Reduce motion**, then spot-check shell collapse, switch thumb, assistant panel slide, and toast enter — motion should be minimal/off with no layout jump.
+
+Stage check (Canvas only): Dark → Light should change only the mat around the page; the sunken page fill and component colors stay put. Docs has no stage control.
 
 ### Global toolbar expectations (every story)
 
@@ -352,7 +357,7 @@ Storybook path: **Primitives → Assistant → Panel**
 
 | Story                       | Do                                                    | Expect                                                                                                                                                                                                                                                                                                                                                                                             |
 | --------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **MessageRoles**            | Look; switch Accent; optional SR                      | Three messages only (no panel chrome): muted full-width **System** ("Context loaded for dep-1042"), left **Assistant** on sunken surface, right **User** on subtle surface. Bodies stay neutral. Accent does **not** recolor bubbles. Visually-hidden role labels announce You / Assistant / System to AT.                                                                                         |
+| **MessageRoles**            | Look; switch Accent; optional SR                      | Three messages only (no panel chrome): muted full-width **System** ("Context loaded for dep-1042"), left **Assistant** ("Assistant reply stays calm and neutral.") on sunken surface, right **User** ("User question about this deployment.") on subtle surface. Bodies stay neutral. Accent does **not** recolor bubbles. Visually-hidden role labels announce You / Assistant / System to AT. |
 | **EmptyState**              | Click **Open empty** (or let play run)                | Panel opens from the right; empty title **"Ask about this surface"** and description **"Open the assistant from a context trigger, then send a question."** No context chip. Composer placeholder **"Ask a question…"**. Send disabled while composer empty. Interactions **Pass**. Accessibility clean.                                                                                           |
 | **Conversation**            | Click **Seed conversation** (or let play run)         | Panel opens with context chip **"Deployment dep-1042"** (soft accent fill + **dark ink** label text) and description **"Production rollout"** (same ink family, slightly softer). Three messages including assistant line **"I can summarize status, risks, and next steps."** Header/composer stay put while messages scroll. Neon↔Cobalt changes chip + Send only.                              |
 | **ContextTrigger**          | Click **Ask about deployment**; clear chip; Escape; × | Panel `role="complementary"`. Chip shows Deployment dep-1042 / Production rollout. Focus moves to the composer textarea. Send starts disabled. Chip × clears context; panel stays open. Escape or header × closes and restores focus to the trigger.                                                                                                                                               |
