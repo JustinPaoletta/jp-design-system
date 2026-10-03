@@ -64,6 +64,9 @@ jobs:
       - name: Storybook interaction tests
         run: npx nx run ui:test-storybook
 
+      - name: Live Storybook middleware interaction tests
+        run: npx nx run ui:test-storybook-dev
+
       - name: Showcase functional and accessibility checks (Chromium and WebKit)
         run: npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
 

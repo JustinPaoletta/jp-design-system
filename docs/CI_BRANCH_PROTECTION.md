@@ -11,7 +11,7 @@ The workflow also defines `Visual regression (macOS)`, `Package consumer`, and `
 ## Job scope
 
 - `Lint`: formatting, ESLint, hardcoded-color/primitive-token guards, and generated token drift.
-- `Test`: unit coverage, Storybook interactions, and Chromium/WebKit functional and axe checks; excludes platform-specific visual snapshots.
+- `Test`: unit coverage, static and live-development Storybook interactions, and Chromium/WebKit functional and axe checks; excludes platform-specific visual snapshots.
 - `Build`: Angular type/template checks and all production build targets.
 - `Visual regression (macOS)`: reviewed Chromium PNG comparisons without automatic updates; failure diffs are uploaded.
 - `Package consumer`: builds real tarballs and compiles an isolated Angular consumer without workspace aliases.

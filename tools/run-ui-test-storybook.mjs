@@ -2,6 +2,7 @@
 
 import { spawn } from 'node:child_process';
 
+const DEVELOPMENT_SERVER = process.argv.includes('--development');
 const STORYBOOK_URL = process.env.STORYBOOK_URL || 'http://localhost:4500';
 const READY_TIMEOUT_MS = Number(
   process.env.STORYBOOK_READY_TIMEOUT_MS || 300000,
@@ -63,8 +64,10 @@ async function main() {
   const storybook = spawnCommand('npx', [
     'nx',
     'run',
-    'ui:static-storybook',
-    '--watch=false',
+    DEVELOPMENT_SERVER ? 'ui:storybook' : 'ui:static-storybook',
+    ...(DEVELOPMENT_SERVER
+      ? ['--ci=true', '--open=false', '--host=127.0.0.1']
+      : ['--watch=false']),
     '--port=4500',
   ]);
 

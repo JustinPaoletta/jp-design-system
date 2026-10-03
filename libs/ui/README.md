@@ -68,4 +68,5 @@ Build Angular Package Format output with `npx nx run packages:build`. Install th
 ```bash
 npx nx run ui:test
 npx nx run ui:test-storybook
+npx nx run ui:test-storybook-dev
 ```

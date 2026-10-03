@@ -44,6 +44,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Security
 
 - Patched compatible build-tool dependencies, constrained Nx overrides to audited leaf packages, rejected prototype-related token keys, and limited reference lookup to own properties
+- Validated patched UUID and Storybook middleware major overrides with 148 live development-server interaction/accessibility tests; added the live suite to CI. Only the unpatched braces development advisory remains.
 - Restricted workflow token permissions, pinned official actions, and added runtime audit gating; documented remaining development-tool advisories in `docs/SECURITY_REVIEW.md`
 
 ### Changed

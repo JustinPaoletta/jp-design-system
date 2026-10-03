@@ -27,6 +27,7 @@ npm run test
 npm run typecheck
 npm run build
 npx nx run ui:test-storybook
+npx nx run ui:test-storybook-dev
 npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
 npx nx run packages:smoke
 npm audit --omit=dev --audit-level=moderate
