@@ -12,24 +12,63 @@
     }
     <thead class="jp-table__head">
       <tr>
-        @for (column of columns(); track column.key) {
+        @if (selectable()) {
+        <th class="jp-table__header jp-table__selection" scope="col">
+          <jp-checkbox
+            [ngModel]="allSelected()"
+            [indeterminate]="someSelected()"
+            [disabled]="pageKeys().length === 0"
+            (ngModelChange)="selectPage($event)"
+            ><span class="jp-table__sr-only"
+              >Select all rows on this page</span
+            ></jp-checkbox
+          >
+        </th>
+        } @for (column of columns(); track column.key) {
         <th
           class="jp-table__header"
           scope="col"
+          [attr.aria-sort]="ariaSort(column)"
           [class.jp-table__header--start]="columnAlign(column) === 'start'"
           [class.jp-table__header--center]="columnAlign(column) === 'center'"
           [class.jp-table__header--end]="columnAlign(column) === 'end'"
         >
-          {{ column.header }}
+          @if (column.sortable) {
+          <button
+            class="jp-table__sort"
+            type="button"
+            (click)="requestSort(column)"
+          >
+            {{ column.header }}
+            <span aria-hidden="true"
+              >{{ ariaSort(column) === 'ascending' ? '↑' : ariaSort(column) ===
+              'descending' ? '↓' : '↕' }}</span
+            >
+          </button>
+          } @else { {{ column.header }} }
         </th>
         }
       </tr>
     </thead>
     @if (hasRows()) {
     <tbody class="jp-table__body">
-      @for (row of rows(); track $index) {
-      <tr class="jp-table__row">
-        @for (column of columns(); track column.key) {
+      @for (row of rows(); track keyFor(row)) {
+      <tr
+        class="jp-table__row"
+        [class.jp-table__row--selected]="selectable() && isSelected(row)"
+      >
+        @if (selectable()) {
+        <td class="jp-table__cell jp-table__selection">
+          <jp-checkbox
+            [ngModel]="isSelected(row)"
+            [disabled]="!canSelect(row)"
+            (ngModelChange)="selectRow(row, $event)"
+            ><span class="jp-table__sr-only"
+              >Select {{ rowLabel()(row) }}</span
+            ></jp-checkbox
+          >
+        </td>
+        } @for (column of columns(); track column.key) {
         <td
           class="jp-table__cell"
           [class.jp-table__cell--start]="columnAlign(column) === 'start'"

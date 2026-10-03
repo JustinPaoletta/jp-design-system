@@ -1,3 +1,6 @@
+// Storybook's manager esbuild does not resolve Nx workspace path aliases.
+// eslint-disable-next-line @nx/enforce-module-boundaries -- Consume the canonical public generated token artifact in tooling config.
+import tokens from '../../tokens/src/generated/tokens.json';
 import { createElement, Fragment, memo, useCallback } from 'react';
 import { CircleIcon, GridIcon, PhotoIcon } from '@storybook/icons';
 import { Select, ToggleButton } from 'storybook/internal/components';
@@ -11,8 +14,11 @@ const ADDON_ID = 'jp/story-stage';
 const PARAM_KEY = 'backgrounds';
 
 const STAGE_OPTIONS: Record<string, { name: string; value: string }> = {
-  dark: { name: 'Dark stage', value: '#070b13' },
-  light: { name: 'Light stage', value: '#f8f8f8' },
+  dark: {
+    name: 'Dark stage',
+    value: tokens.semantic.base.color.surface.canvas,
+  },
+  light: { name: 'Light stage', value: tokens.primitive.color.neutral[50] },
 };
 
 type BackgroundsGlobal = {
@@ -64,9 +70,9 @@ const StageTool = memo(function StageTool() {
       tooltip: 'Change background',
       defaultOptions: backgroundName,
       options,
-      onSelect: (selected: string | number | undefined) =>
+      onSelect: (selected: unknown) =>
         update({
-          value: selected === undefined ? undefined : String(selected),
+          value: selected == null ? undefined : String(selected),
           grid: isGrid,
         }),
     }),

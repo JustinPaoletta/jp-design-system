@@ -76,4 +76,27 @@ describe('JpTextarea', () => {
     expect(onChange).toHaveBeenCalledWith('updated');
     expect(onTouched).toHaveBeenCalled();
   });
+
+  it('forwards native required, name, autocomplete and accessible name', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.componentRef.setInput('ariaLabel', 'Account field');
+    fixture.componentRef.setInput('required', true);
+    fixture.componentRef.setInput('name', 'account');
+    fixture.componentRef.setInput('autocomplete', 'email');
+    fixture.detectChanges();
+    const control = fixture.nativeElement.querySelector('textarea');
+    expect(control.required).toBe(true);
+    expect(control.name).toBe('account');
+    expect(control.getAttribute('autocomplete')).toBe('email');
+    expect(control.getAttribute('aria-label')).toBe('Account field');
+  });
+
+  it('forwards native text length constraints', () => {
+    fixture.componentRef.setInput('minLength', 3);
+    fixture.componentRef.setInput('maxLength', 100);
+    fixture.detectChanges();
+    const control = fixture.nativeElement.querySelector('textarea');
+    expect(control.minLength).toBe(3);
+    expect(control.maxLength).toBe(100);
+  });
 });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -10,6 +10,7 @@ import {
 @Component({
   standalone: true,
   imports: [JpDropdownMenu, JpDropdownTrigger, JpDropdownMenuItem],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <jp-dropdown-menu [open]="open" (openChange)="open = $event">
       <button type="button" jpDropdownTrigger>Actions</button>
@@ -113,6 +114,26 @@ describe('JpDropdownMenu', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.open).toBe(false);
+  });
+
+  it('restores its trigger when pointer activation did not focus that button', () => {
+    const unrelated = document.createElement('input');
+    document.body.append(unrelated);
+    unrelated.focus();
+    openMenu();
+    const trigger = fixture.nativeElement.querySelector(
+      '[jpdropdowntrigger]',
+    ) as HTMLButtonElement;
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape',
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(trigger);
+    unrelated.remove();
   });
 
   it('supports ArrowUp, Home, End, and item Escape', () => {

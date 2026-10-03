@@ -1,5 +1,7 @@
 # Epic 7 — Assistant System Implementation Plan
 
+> Historical delivery plan: the scope, draft APIs, prerequisites, and deferrals below record the original epic. They are not the current implementation reference. Current assistant UI also supports pending/complete/error/cancelled responses and stale-safe update/cancel/retry operations. Network transport and LLM policy remain application-owned. See [PRIMITIVES.md](PRIMITIVES.md), [PRODUCT_RECIPES.md](PRODUCT_RECIPES.md), and [QUALITY.md](QUALITY.md) for the current contract.
+
 **Status:** Complete — Stories 7.0–7.5 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
@@ -26,7 +28,7 @@ to ship a branded assistant integration inside the app shell using Controls and 
 
 ---
 
-## Prerequisites
+## Prerequisites at original delivery
 
 1. Feedback & Overlays (PR #10) is the tip of the open delivery chain.
 2. Branch from the prior tip (not from

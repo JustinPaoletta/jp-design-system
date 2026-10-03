@@ -197,3 +197,12 @@
     transition: none;
   }
 }
+
+.jp-assistant-panel__pending {
+  display: flex;
+  flex-direction: column;
+  gap: var(--jp-space-sm);
+  padding: var(--jp-space-md);
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-secondary);
+}

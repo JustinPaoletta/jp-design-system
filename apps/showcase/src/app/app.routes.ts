@@ -1,3 +1,4 @@
+import { ProductRecipesPage } from './pages/product-recipes/product-recipes.page';
 import { Route } from '@angular/router';
 import { ShellLayout } from './layout/shell-layout';
 import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
@@ -12,6 +13,7 @@ export const appRoutes: Route[] = [
     path: '',
     component: ShellLayout,
     children: [
+      { path: 'product-recipes', component: ProductRecipesPage },
       {
         path: '',
         pathMatch: 'full',

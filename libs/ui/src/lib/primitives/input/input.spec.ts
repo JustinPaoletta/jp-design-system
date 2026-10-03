@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { JpInput } from './input';
 
 @Component({
   imports: [JpInput, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<jp-input label="Email" [formControl]="control" />`,
 })
 class InputHost {
@@ -111,5 +112,41 @@ describe('JpInput', () => {
   it('writeValue treats null as empty string', () => {
     component.writeValue(null);
     expect(component.value()).toBe('');
+  });
+
+  it('forwards native required, name, autocomplete and accessible name', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.componentRef.setInput('ariaLabel', 'Account field');
+    fixture.componentRef.setInput('required', true);
+    fixture.componentRef.setInput('name', 'account');
+    fixture.componentRef.setInput('autocomplete', 'email');
+    fixture.detectChanges();
+    const control = fixture.nativeElement.querySelector('input');
+    expect(control.required).toBe(true);
+    expect(control.name).toBe('account');
+    expect(control.getAttribute('autocomplete')).toBe('email');
+    expect(control.getAttribute('aria-label')).toBe('Account field');
+  });
+
+  it('forwards numeric and text constraints to native validation', () => {
+    fixture.componentRef.setInput('type', 'number');
+    fixture.componentRef.setInput('min', 2);
+    fixture.componentRef.setInput('max', 8);
+    fixture.componentRef.setInput('step', 2);
+    fixture.componentRef.setInput('inputMode', 'numeric');
+    fixture.detectChanges();
+    const control = fixture.nativeElement.querySelector('input');
+    expect(control.min).toBe('2');
+    expect(control.max).toBe('8');
+    expect(control.step).toBe('2');
+    expect(control.inputMode).toBe('numeric');
+    fixture.componentRef.setInput('type', 'text');
+    fixture.componentRef.setInput('minLength', 3);
+    fixture.componentRef.setInput('maxLength', 10);
+    fixture.componentRef.setInput('pattern', '[A-Z]+');
+    fixture.detectChanges();
+    expect(control.minLength).toBe(3);
+    expect(control.maxLength).toBe(10);
+    expect(control.pattern).toBe('[A-Z]+');
   });
 });

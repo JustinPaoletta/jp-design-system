@@ -2,7 +2,13 @@
   <ng-content />
 </span>
 @if (open()) {
-<span class="jp-tooltip__content" role="tooltip" [attr.id]="tooltipId">
+<span
+  class="jp-tooltip__content"
+  role="tooltip"
+  [attr.id]="tooltipId"
+  (pointerenter)="onPointerEnter()"
+  (pointerleave)="onPointerLeave()"
+>
   {{ content() }}
 </span>
 }

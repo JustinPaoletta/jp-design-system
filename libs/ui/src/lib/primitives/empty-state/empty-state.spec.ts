@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { JpEmptyState } from './empty-state';
 
 @Component({
   selector: 'jp-empty-state-host',
   imports: [JpEmptyState],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <jp-empty-state [title]="title()" [description]="description()">
       <span jpEmptyStateIcon>◇</span>

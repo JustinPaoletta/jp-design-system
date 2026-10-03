@@ -6,7 +6,8 @@ This repository uses a manual changelog + release branch workflow.
 
 - Use Semantic Versioning.
 - Create Git tags as `vX.Y.Z`.
-- Keep `package.json` and `CHANGELOG.md` aligned to the release version.
+- Keep the root `package.json`, lockfile, and `CHANGELOG.md` aligned to the repository release version.
+- UI/token package versions are separate metadata in `libs/ui/package.json` and `libs/tokens/package.distribution.json` (currently `0.1.0`). Coordinate those deliberately; `npm version` at the root does not bump them.
 - Treat `CHANGELOG.md` as the source of truth for GitHub Release notes.
 - Cut release branches as `release/vX.Y.Z` from the protected default branch.
 
@@ -23,8 +24,16 @@ Run these before opening a release PR:
 npm run format:check
 npm run lint
 npm run test
+npm run typecheck
 npm run build
+npx nx run ui:test-storybook
+npx nx run ui:test-storybook-dev
+npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
+npx nx run packages:smoke
+npm audit --omit=dev --audit-level=moderate
 ```
+
+Also run the reviewed macOS Chromium visual check from [QUALITY.md](docs/QUALITY.md), review the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md), and complete affected manual QA. Hosted CI results must pass before merging.
 
 ## Release Checklist
 
@@ -39,7 +48,7 @@ npm run build
    git checkout -b release/vX.Y.Z
    ```
 
-5. Bump the repository version without creating a tag yet:
+5. Coordinate the UI/token package versions if shipping package artifacts, then bump the repository version without creating a tag yet:
 
    ```bash
    npm version --no-git-tag-version X.Y.Z
@@ -50,7 +59,7 @@ npm run build
 8. Commit the release branch changes:
 
    ```bash
-   git add package.json package-lock.json CHANGELOG.md README.md RELEASE.md
+   git add package.json package-lock.json libs/ui/package.json libs/tokens/package.distribution.json CHANGELOG.md README.md RELEASE.md
    git commit -m "chore(release): prepare vX.Y.Z"
    ```
 

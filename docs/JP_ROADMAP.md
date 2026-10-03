@@ -8,7 +8,7 @@ density.
 
 ---
 
-## Current Progress (as of September 10, 2026)
+## Current Progress (as of October 2, 2026)
 
 - Foundation is complete.
 - Story 0.1 (Initialize Nx Workspace) is complete and QA-tested.
@@ -23,7 +23,8 @@ density.
 - Feedback & Overlays, Epic 6 (Feedback & Overlays) is complete.
 - Assistant, Epic 7 (Assistant System) is complete.
 - Implementation plan: [ASSISTANT_SYSTEM_PLAN.md](./ASSISTANT_SYSTEM_PLAN.md).
-- Next milestone: quality hardening (tests, a11y audit, visual regression, bundle size).
+- Product readiness additions, Angular 22.2.1 upgrade, local package distribution, and automated quality gates are implemented.
+- Next: manual assistive-technology review, verify the new CI jobs on hosted runners, and decide release automation/publication.
 
 ---
 
@@ -225,12 +226,15 @@ Deliverable: Branded assistant integration. Completed.
 
 ## EPIC 8
 
-- Unit tests
-- Accessibility audit
-- Visual regression setup
-- Bundle size audit
+- [x] Unit coverage and Angular form regressions
+- [x] Automated axe checks on rendered Showcase routes in Chromium and WebKit
+- [x] Four macOS Chromium visual baselines across both accents/densities
+- [x] Production bundle and component stylesheet budgets
+- [x] Dependency/source security review and runtime audit CI gate
+- [ ] Manual assistive-technology review and wider bundle analysis
+- [ ] Verify hosted Linux/macOS CI results for this upgrade
 
-Deliverable: Production-grade stability.
+See [QUALITY.md](QUALITY.md) and [SECURITY_REVIEW.md](SECURITY_REVIEW.md) for scope and limits.
 
 ---
 
@@ -238,9 +242,14 @@ Deliverable: Production-grade stability.
 
 ## EPIC 9
 
-- Library build output
-- Semantic versioning automation
-- Private npm publish (optional)
-- Documentation site
+- [x] Angular Package Format UI output and typed ESM/CSS/JSON token exports
+- [x] Isolated tarball consumer installation and strict Angular compilation
+- [ ] Semantic versioning automation
+- [ ] Private npm publish (optional; no publication performed)
+- [ ] Documentation site
 
-Deliverable: Releasable design system.
+See [DISTRIBUTION.md](DISTRIBUTION.md) for the local `0.1.0` package contract.
+
+# Product readiness additions
+
+Implemented: skeleton/progress/inline alert, loading buttons, assistant begin/update/complete/fail/cancel/retry lifecycle, native form attributes, indeterminate checkbox, radio group, searchable combobox, controlled table sorting/selection, toolbar/pagination, manual-activation tabs, breadcrumbs, and native top-layer overlays with viewport positioning. Showcase `/product-recipes` demonstrates successful and failed application actions with simulated transport. Authentication, backend authorization, and real transport remain consumer responsibilities.

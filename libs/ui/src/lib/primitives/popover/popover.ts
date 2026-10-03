@@ -1,5 +1,7 @@
 import {
+  afterRenderEffect,
   booleanAttribute,
+  DestroyRef,
   ChangeDetectionStrategy,
   Component,
   Directive,
@@ -8,6 +10,12 @@ import {
   input,
   output,
 } from '@angular/core';
+
+import {
+  claimOverlayEvent,
+  positionOverlay,
+  registerOverlay,
+} from '../shared/overlay-manager';
 
 @Directive({
   selector: '[jpPopoverTrigger]',
@@ -54,12 +62,39 @@ export class JpPopoverContent {
   },
 })
 export class JpPopover {
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private overlayCleanup?: () => void;
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   readonly open = input(false, { transform: booleanAttribute });
   readonly openChange = output<boolean>();
 
   readonly contentId = `jp-popover-${Math.random().toString(36).slice(2, 9)}`;
+
+  constructor() {
+    this.destroyRef.onDestroy(() => this.overlayCleanup?.());
+    afterRenderEffect(() => {
+      const isOpen = this.open();
+      if (isOpen && !this.overlayCleanup) {
+        const host = this.host.nativeElement;
+        const panel = host.querySelector<HTMLElement>('.jp-popover__content');
+        const anchor = host.querySelector<HTMLElement>('[jppopovertrigger]');
+        if (panel && anchor) {
+          const unregister = registerOverlay(this, host.ownerDocument);
+          const unposition = positionOverlay(panel, anchor);
+          this.overlayCleanup = () => {
+            unposition();
+            unregister();
+          };
+        }
+      }
+      if (!isOpen) {
+        this.overlayCleanup?.();
+        this.overlayCleanup = undefined;
+      }
+    });
+  }
 
   toggle(): void {
     this.openChange.emit(!this.open());
@@ -72,7 +107,11 @@ export class JpPopover {
   }
 
   onDocumentKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape' && this.open()) {
+    if (
+      event.key === 'Escape' &&
+      this.open() &&
+      claimOverlayEvent(this, event, this.host.nativeElement.ownerDocument)
+    ) {
       event.preventDefault();
       this.close();
     }
@@ -83,7 +122,11 @@ export class JpPopover {
       return;
     }
     const target = event.target as Node | null;
-    if (target && !this.host.nativeElement.contains(target)) {
+    if (
+      target &&
+      !this.host.nativeElement.contains(target) &&
+      claimOverlayEvent(this, event, this.host.nativeElement.ownerDocument)
+    ) {
       this.close();
     }
   }

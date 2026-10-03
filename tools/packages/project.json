@@ -1,0 +1,23 @@
+{
+  "name": "packages",
+  "projectType": "library",
+  "root": "tools/packages",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["tokens:build-tokens"],
+      "outputs": ["{workspaceRoot}/dist/packages"],
+      "options": {
+        "command": "node tools/build-packages.mjs"
+      }
+    },
+    "smoke": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "cache": false,
+      "options": {
+        "command": "node tools/consumer-smoke.mjs"
+      }
+    }
+  }
+}

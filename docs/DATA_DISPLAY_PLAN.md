@@ -1,5 +1,7 @@
 # Epic 5 — Data Display Implementation Plan
 
+> Historical delivery plan: the scope, draft APIs, prerequisites, and deferrals below record the original epic. They are not the current implementation reference. Current tables also expose controlled sorting and selection; toolbar and one-based pagination are separate primitives. Applications still own data fetching and filtering. See [PRIMITIVES.md](PRIMITIVES.md), [PRODUCT_RECIPES.md](PRODUCT_RECIPES.md), and [QUALITY.md](QUALITY.md) for the current contract.
+
 **Status:** Complete — Stories 5.0–5.4 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
@@ -26,7 +28,7 @@ actions.
 
 ---
 
-## Prerequisites
+## Prerequisites at original delivery
 
 1. Controls (PR #8) is the tip of the open delivery chain.
 2. Branch from the prior tip (not from `main` while the

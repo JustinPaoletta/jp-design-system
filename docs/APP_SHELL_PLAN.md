@@ -1,5 +1,7 @@
 # Epic 3 — App Shell Implementation Plan
 
+> Historical delivery plan: the scope, draft APIs, prerequisites, and deferrals below record the original epic. They are not the current implementation reference. The current shell uses desktop layout above 48rem and mobile layout at or below 48rem. See [PRIMITIVES.md](PRIMITIVES.md), [PRODUCT_RECIPES.md](PRODUCT_RECIPES.md), and [QUALITY.md](QUALITY.md) for the current contract.
+
 **Status:** Complete — Stories 3.0–3.5 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
@@ -32,7 +34,7 @@ rebuilding layout chrome.
 
 ---
 
-## Prerequisites
+## Prerequisites at original delivery
 
 Complete before starting implementation:
 

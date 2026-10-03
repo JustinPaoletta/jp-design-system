@@ -16,8 +16,16 @@
     "baseUrl": ".",
     "paths": {
       "@jp-design-system/tokens": ["libs/tokens/src/index.ts"],
-      "@jp-design-system/ui": ["libs/ui/src/index.ts"]
-    }
+      "@jp-design-system/ui": ["libs/ui/src/index.ts"],
+      "@jp-design-system/tokens/tokens.json": [
+        "libs/tokens/src/generated/tokens.json"
+      ]
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp"]
 }

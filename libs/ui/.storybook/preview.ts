@@ -1,14 +1,12 @@
-import {
-  type Preview,
-  componentWrapperDecorator,
-} from '@storybook/angular';
+import tokens from '@jp-design-system/tokens/tokens.json';
+import { type Preview, componentWrapperDecorator } from '@storybook/angular';
 import { create } from 'storybook/theming';
 
 /** JP page fill — owned by the story, not the Storybook stage. */
-const JP_PAGE_BG = '#0c111c'; // --jp-color-surface-sunken / neutral-1000
+const JP_PAGE_BG = tokens.semantic.base.color.surface.sunken; // --jp-color-surface-sunken / neutral-1000
 /** Default / Docs-fixed Storybook stage (mat around the page). */
-const JP_STAGE_DARK = '#070b13'; // --jp-color-surface-canvas / neutral-1100
-const JP_STAGE_LIGHT = '#f8f8f8';
+const JP_STAGE_DARK = tokens.semantic.base.color.surface.canvas; // --jp-color-surface-canvas / neutral-1100
+const JP_STAGE_LIGHT = tokens.primitive.color.neutral[50];
 
 const STAGE_STYLE_ID = 'jp-storybook-stage';
 const GRID_STYLE_ID = 'jp-storybook-stage-grid';
@@ -34,9 +32,9 @@ type BackgroundsGlobal = {
   grid?: boolean;
 };
 
-function resolveStageValue(
-  globals: { backgrounds?: string | BackgroundsGlobal },
-): string {
+function resolveStageValue(globals: {
+  backgrounds?: string | BackgroundsGlobal;
+}): string {
   const data = globals.backgrounds;
   const name = typeof data === 'string' ? data : data?.value;
   if (!name) {
@@ -103,10 +101,10 @@ function applyStage(
         background-position: ${offset}px ${offset}px, ${offset}px ${offset}px, ${offset}px ${offset}px, ${offset}px ${offset}px !important;
         background-blend-mode: difference !important;
         background-image:
-          linear-gradient(rgba(130, 130, 130, ${opacity}) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(130, 130, 130, ${opacity}) 1px, transparent 1px),
-          linear-gradient(rgba(130, 130, 130, ${opacity / 2}) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(130, 130, 130, ${opacity / 2}) 1px, transparent 1px) !important;
+          linear-gradient(color-mix(in srgb, var(--jp-color-text-muted) ${opacity * 100}%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in srgb, var(--jp-color-text-muted) ${opacity * 100}%, transparent) 1px, transparent 1px),
+          linear-gradient(color-mix(in srgb, var(--jp-color-text-muted) ${(opacity / 2) * 100}%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in srgb, var(--jp-color-text-muted) ${(opacity / 2) * 100}%, transparent) 1px, transparent 1px) !important;
       }
     `,
   );

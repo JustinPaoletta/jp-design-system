@@ -1,17 +1,13 @@
 @if (open()) {
-<div
-  class="jp-dialog__scrim"
-  aria-hidden="true"
-  (pointerdown)="onScrimClick()"
-></div>
-<div
+<dialog
   #panel
   class="jp-dialog__panel"
   role="dialog"
   aria-modal="true"
   [attr.aria-labelledby]="titleId"
   [jpFocusTrap]="true"
-  (pointerdown)="$event.stopPropagation()"
+  (pointerdown)="onBackdropPointer($event)"
+  (cancel)="onNativeCancel($event)"
 >
   <div class="jp-dialog__header">
     <h2 class="jp-dialog__title" [id]="titleId">{{ title() }}</h2>
@@ -28,5 +24,5 @@
     <ng-content />
   </div>
   <ng-content select="[jpDialogActions]" />
-</div>
+</dialog>
 }

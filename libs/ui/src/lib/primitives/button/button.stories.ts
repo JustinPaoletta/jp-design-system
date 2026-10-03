@@ -15,6 +15,8 @@ type ButtonStoryArgs = {
   size: JpControlSize;
   type: JpButtonType;
   disabled: boolean;
+  loading: boolean;
+  loadingLabel: string;
   label: string;
 };
 
@@ -52,6 +54,8 @@ const meta: Meta<ButtonStoryArgs> = {
     size: 'md',
     type: 'button',
     disabled: false,
+    loading: false,
+    loadingLabel: 'Loading',
     label: 'Button',
   },
   render: (args) => ({
@@ -62,6 +66,8 @@ const meta: Meta<ButtonStoryArgs> = {
         [size]="size"
         [type]="type"
         [disabled]="disabled"
+        [loading]="loading"
+        [loadingLabel]="loadingLabel"
       >
         {{ label }}
       </jp-button>
@@ -131,5 +137,16 @@ export const Sizes: Story = {
     await expect(buttons.length).toBe(3);
     await expect(buttons[0].classList.contains('jp-button--sm')).toBe(true);
     await expect(buttons[2].classList.contains('jp-button--lg')).toBe(true);
+  },
+};
+
+export const Loading: Story = {
+  args: { loading: true, loadingLabel: 'Saving', label: 'Save changes' },
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector('button');
+    await expect(button?.disabled).toBe(true);
+    await expect(button?.getAttribute('aria-busy')).toBe('true');
+    await expect(button).toHaveAccessibleName('Saving');
+    await expect(button?.textContent).toContain('Save changes');
   },
 };

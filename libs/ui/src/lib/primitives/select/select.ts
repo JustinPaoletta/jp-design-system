@@ -20,6 +20,7 @@ import {
 export type JpSelectOption = {
   value: string;
   label: string;
+  disabled?: boolean;
 };
 
 let nextSelectId = 0;
@@ -52,6 +53,11 @@ export class JpSelect implements ControlValueAccessor {
   private onTouched: () => void = () => undefined;
 
   readonly value = signal('');
+
+  readonly ariaLabel = input('');
+  readonly name = input('');
+  readonly autocomplete = input('');
+  readonly required = input(false, { transform: booleanAttribute });
 
   readonly label = input('');
   readonly hint = input('');

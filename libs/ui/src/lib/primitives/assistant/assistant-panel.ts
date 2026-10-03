@@ -13,6 +13,8 @@ import {
   viewChild,
 } from '@angular/core';
 import { JpButton } from '../button/button';
+import { JpInlineAlert } from '../inline-alert/inline-alert';
+import { JpProgress } from '../progress/progress';
 import { JpEmptyState } from '../empty-state/empty-state';
 import { JpFocusTrap } from '../shared/focus-trap';
 import { JpAssistantMessage } from './assistant-message';
@@ -24,7 +26,14 @@ let nextAssistantPanelId = 0;
 
 @Component({
   selector: 'jp-assistant-panel',
-  imports: [JpAssistantMessage, JpButton, JpEmptyState, JpFocusTrap],
+  imports: [
+    JpAssistantMessage,
+    JpButton,
+    JpEmptyState,
+    JpFocusTrap,
+    JpInlineAlert,
+    JpProgress,
+  ],
   templateUrl: './assistant-panel.html',
   styleUrl: './assistant-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,12 +60,19 @@ export class JpAssistantPanel implements OnInit {
   readonly isOpen = this.assistantService.isOpen;
   readonly context = this.assistantService.context;
   readonly messages = this.assistantService.messages;
+  readonly isPending = this.assistantService.isPending;
 
   readonly title = input('JP Assistant');
   readonly closeLabel = input('Close assistant');
   readonly clearContextLabel = input('Clear context');
   readonly composerLabel = input('Message the assistant');
   readonly sendLabel = input('Send');
+  readonly pendingLabel = input('Generating response');
+  readonly cancelLabel = input('Stop response');
+  readonly retryLabel = input('Retry');
+  readonly cancelledLabel = input('Response stopped');
+  readonly responseCancel = output<number>();
+  readonly responseRetry = output<{ previousId: number; responseId: number }>();
   readonly emptyTitle = input('Ask about this surface');
   readonly emptyDescription = input(
     'Open the assistant from a context trigger, then send a question.',
@@ -107,6 +123,18 @@ export class JpAssistantPanel implements OnInit {
     });
   }
 
+  cancelResponse(id: number): void {
+    this.assistantService.cancelResponse(id);
+    this.responseCancel.emit(id);
+  }
+
+  retryResponse(id: number): void {
+    const responseId = this.assistantService.retryResponse(id);
+    if (responseId !== null) {
+      this.responseRetry.emit({ previousId: id, responseId });
+    }
+  }
+
   close(): void {
     this.assistantService.close();
   }
@@ -133,7 +161,7 @@ export class JpAssistantPanel implements OnInit {
 
   submit(): void {
     const content = this.draft().trim();
-    if (!content) {
+    if (!content || this.isPending()) {
       return;
     }
 

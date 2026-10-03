@@ -155,4 +155,32 @@ describe('build-tokens script', () => {
       await fs.rm(outputDir, { recursive: true, force: true });
     }
   });
+  it.each(['__proto__', 'constructor', 'prototype'])(
+    'rejects unsafe %s keys before generating artifacts',
+    async (key) => {
+      const tokensRoot = await createIsolatedTokensRoot();
+      const outputDir = await fs.mkdtemp(
+        path.join(os.tmpdir(), 'jp-token-output-'),
+      );
+      try {
+        const source = path.join(tokensRoot, 'semantic/base.json');
+        const original = await fs.readFile(source, 'utf8');
+        await fs.writeFile(
+          source,
+          original.replace('{', `{"${key}": {"polluted": true},`),
+        );
+        const result = await runBuildScript(['--output-dir', outputDir], {
+          JP_TOKEN_SOURCE_ROOT: tokensRoot,
+        });
+        expect(result.code).not.toBe(0);
+        expect(result.stderr).toContain(
+          `Unsafe token key in semantic/base.json: ${key}`,
+        );
+        expect(await fs.readdir(outputDir)).toEqual([]);
+      } finally {
+        await fs.rm(path.dirname(tokensRoot), { recursive: true, force: true });
+        await fs.rm(outputDir, { recursive: true, force: true });
+      }
+    },
+  );
 });

@@ -50,6 +50,18 @@ export class JpInput implements ControlValueAccessor {
 
   readonly value = signal('');
 
+  readonly ariaLabel = input('');
+  readonly name = input('');
+  readonly autocomplete = input('');
+  readonly required = input(false, { transform: booleanAttribute });
+  readonly minLength = input<number | null>(null);
+  readonly maxLength = input<number | null>(null);
+  readonly min = input<string | number | null>(null);
+  readonly max = input<string | number | null>(null);
+  readonly step = input<string | number | null>(null);
+  readonly pattern = input('');
+  readonly inputMode = input('');
+
   readonly label = input('');
   readonly hint = input('');
   readonly error = input('');

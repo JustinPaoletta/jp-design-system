@@ -23,7 +23,7 @@
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
   box-shadow: var(--jp-elevation-floating);
-  pointer-events: none;
+  pointer-events: auto;
   white-space: normal;
 }
 

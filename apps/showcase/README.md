@@ -1,27 +1,19 @@
 # Showcase
 
-Read-only Angular host app for viewing JP compositions in a real application
-context.
+Interactive Angular host app that proves JP compositions work outside Storybook with real routing, tokens, forms, and application state. Storybook remains the primitive prop explorer. Theme readouts display `data-jp-accent` and `data-jp-density` from `<html>`.
 
-- **Not editable** — no controls, toggles, or prop editing. Use Storybook for
-  that (`npx nx run ui:storybook`).
-- **Purpose** — prove primitives and compositions render correctly outside
-  Storybook (routing, tokens, real Angular bootstrap).
-- **Theme readouts** — pages display live `accent` / `density` from
-  `data-jp-accent` and `data-jp-density` on `<html>`.
-
-## Run
-
-```bash
+```sh
 npx nx run showcase:serve
 ```
 
-Open http://localhost:4200 (root `/` redirects to `/assistant`).
+Open http://localhost:4200 (`/` redirects to `/assistant`). Routes include `/product-recipes`, `/assistant`, `/overlays`, `/data`, `/controls`, `/app-shell`, and `/layout-dashboard`.
 
-Other routes: `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`.
+`/product-recipes` demonstrates validated forms, async save/retry, searchable paginated tables, bulk selection, destructive confirmation, and assistant response recovery. Its API is simulated locally; it does not connect to a backend or LLM service.
 
-## E2E
+Run Chromium and WebKit functional/accessibility checks:
 
-```bash
-npx nx run showcase-e2e:e2e -- --project=chromium
+```sh
+npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
 ```
+
+See [Product recipes](../../docs/PRODUCT_RECIPES.md) and [Quality verification](../../docs/QUALITY.md) for integration contracts and macOS visual baseline commands.

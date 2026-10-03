@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * @deprecated Temporary compatibility component.
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
   selector: 'lib-ui',
   imports: [],
   templateUrl: './ui.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './ui.scss',
 })
 export class Ui {}

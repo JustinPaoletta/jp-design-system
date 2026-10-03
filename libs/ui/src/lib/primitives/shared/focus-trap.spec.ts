@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   focusFirstElement,
@@ -10,6 +10,7 @@ import {
 @Component({
   standalone: true,
   imports: [JpFocusTrap],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div id="trap" [jpFocusTrap]="true">
       <button type="button" id="first">First</button>
@@ -22,6 +23,7 @@ class FocusTrapHost {}
 @Component({
   standalone: true,
   imports: [JpFocusTrap],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div id="trap" [jpFocusTrap]="false">
       <button type="button" id="first">First</button>
@@ -157,5 +159,61 @@ describe('JpFocusTrap', () => {
 
     focusFirstElement(empty);
     empty.remove();
+  });
+});
+
+describe('hidden focus targets', () => {
+  it('excludes hidden/inert/disabled ancestors and negative tabindex', () => {
+    const root = document.createElement('div');
+    root.innerHTML = `<button id="valid">Valid</button><div hidden><button>Hidden</button></div><div inert><button>Inert</button></div><div style="display:none"><button>CSS hidden</button></div><fieldset disabled><input /></fieldset><button tabindex="-2">Programmatic</button>`;
+    document.body.append(root);
+    expect(getFocusableElements(root).map((el) => el.id)).toEqual(['valid']);
+    root.remove();
+  });
+
+  it('focuses an empty trap and recovers escaped focus', () => {
+    const root = document.createElement('div');
+    document.body.append(root);
+    focusFirstElement(root);
+    expect(document.activeElement).toBe(root);
+    root.innerHTML = '<button>First</button><button>Last</button>';
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    outside.focus();
+    trapTabKey(
+      new KeyboardEvent('keydown', { key: 'Tab', cancelable: true }),
+      root,
+    );
+    expect(document.activeElement).toBe(root.firstElementChild);
+    root.remove();
+    outside.remove();
+  });
+});
+
+describe('explicit keyboard focus movement', () => {
+  it('moves forward and backward between interior buttons without native Tab behavior', () => {
+    const root = document.createElement('div');
+    root.innerHTML =
+      '<button>First</button><button>Middle</button><button disabled>Unavailable</button><button>Last</button>';
+    document.body.append(root);
+    const [first, middle, last] = getFocusableElements(root);
+    middle.focus();
+    const forward = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      cancelable: true,
+    });
+    trapTabKey(forward, root);
+    expect(forward.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(last);
+    middle.focus();
+    const backward = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      cancelable: true,
+    });
+    trapTabKey(backward, root);
+    expect(backward.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(first);
+    root.remove();
   });
 });

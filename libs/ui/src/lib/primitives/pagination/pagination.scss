@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+.jp-pagination,
+.jp-pagination__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.jp-pagination {
+  justify-content: space-between;
+  padding-block: var(--jp-space-sm);
+}
+.jp-pagination__summary {
+  margin: 0;
+  color: var(--jp-color-table-caption-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
