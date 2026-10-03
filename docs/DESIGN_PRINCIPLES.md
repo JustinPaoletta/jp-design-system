@@ -143,8 +143,7 @@ Code quality is part of design quality.
 The system enforces: - Strict typing - Token usage - Lint rules - Test
 coverage
 
-Visual regression baselines are planned under quality hardening (see
-[JP_ROADMAP.md](./JP_ROADMAP.md)).
+Reviewed macOS Chromium visual baselines now cover both accents and densities. Functional and axe checks also run in Chromium and WebKit. See [QUALITY.md](QUALITY.md) for commands, platform limits, and remaining manual review.
 
 A design system is infrastructure. Infrastructure must be reliable.
 

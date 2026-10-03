@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-md);
+  padding: var(--jp-space-md);
+  border: 1px solid var(--jp-color-border-default);
+  border-inline-start-width: var(--jp-space-xs);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+.jp-inline-alert__copy {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+p {
+  margin: 0;
+}
+:host(.jp-inline-alert--info) {
+  border-inline-start-color: var(--jp-color-state-info-border);
+}
+:host(.jp-inline-alert--success) {
+  border-inline-start-color: var(--jp-color-state-success-border);
+}
+:host(.jp-inline-alert--warning) {
+  border-inline-start-color: var(--jp-color-state-warning-border);
+}
+:host(.jp-inline-alert--error) {
+  border-inline-start-color: var(--jp-color-state-error-border);
+}

@@ -8,9 +8,13 @@ Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-app-shel
 
 Typography: `jp-text`, `jp-heading`
 
-Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`
+Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, `jp-radio-group`, `jp-combobox`
 
-Data display: `jp-badge`, `jp-empty-state`, `jp-table`
+Data display: `jp-badge`, `jp-empty-state`, controlled `jp-table`, `jp-table-toolbar`, `jp-pagination`
+
+Navigation: `jp-tabs` (+ `jpTabPanel`), `jp-breadcrumbs`
+
+Async feedback: `jp-skeleton`, `jp-progress`, `jp-inline-alert`; loading buttons and assistant response lifecycle
 
 Feedback & overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast` (+ `JpToastService` / `jp-toast-outlet`), `jp-dialog`, `jp-popover`, `jp-dropdown-menu`
 
@@ -36,7 +40,7 @@ npx nx run ui:storybook
 ```
 
 Runs at http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`,
+`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`, `Primitives/Navigation/*`,
 `Primitives/Assistant/*`, `Compositions/Layout Dashboard`,
 `Compositions/App Shell Dashboard`, `Compositions/Controls Form`,
 `Compositions/Data Display`, `Compositions/Feedback Overlays`, and
@@ -47,13 +51,17 @@ Canvas: sunken story page plus independent **Dark stage** / **Light stage** mat
 
 ## Showcase
 
-Read-only integration app for compositions:
+Interactive integration app for compositions and `/product-recipes`:
 
 ```bash
 npx nx run showcase:serve
 ```
 
 Runs at http://localhost:4200 (`/` redirects to `/assistant`)
+
+## Distribution
+
+Build Angular Package Format output with `npx nx run packages:build`. Install the built tarball, rather than this source folder. See [DISTRIBUTION.md](../../docs/DISTRIBUTION.md) for stylesheet imports, peer versions, and isolated consumer validation.
 
 ## Tests
 

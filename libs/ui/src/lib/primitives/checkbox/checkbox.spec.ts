@@ -74,4 +74,24 @@ describe('JpCheckbox', () => {
     expect(onChange).toHaveBeenCalledWith(false);
     expect(onTouched).toHaveBeenCalled();
   });
+
+  it('exposes native mixed state while keeping the CVA value boolean', () => {
+    const change = jest.fn();
+    component.registerOnChange(change);
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.componentRef.setInput('ariaLabel', 'Select all rows');
+    fixture.componentRef.setInput('error', 'Select at least one row');
+    fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector(
+      'input',
+    ) as HTMLInputElement;
+    expect(input.indeterminate).toBe(true);
+    expect(input.getAttribute('aria-label')).toBe('Select all rows');
+    expect(input.getAttribute('aria-describedby')).toContain('-error');
+    input.click();
+    expect(change).toHaveBeenCalledWith(true);
+    fixture.componentRef.setInput('indeterminate', false);
+    fixture.detectChanges();
+    expect(input.indeterminate).toBe(false);
+  });
 });

@@ -32,7 +32,8 @@ import {
     '[class.jp-button--sm]': 'size() === "sm"',
     '[class.jp-button--md]': 'size() === "md"',
     '[class.jp-button--lg]': 'size() === "lg"',
-    '[class.jp-button--disabled]': 'disabled()',
+    '[class.jp-button--disabled]': 'disabled() || loading()',
+    '[class.jp-button--loading]': 'loading()',
   },
 })
 export class JpButton {
@@ -49,6 +50,9 @@ export class JpButton {
   });
 
   readonly disabled = input(false, { transform: booleanAttribute });
+
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly loadingLabel = input('Loading');
 
   readonly rootHeight = computed(() => controlSizeToCssVar(this.size()));
 }

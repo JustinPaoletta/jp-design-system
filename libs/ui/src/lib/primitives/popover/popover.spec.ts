@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { JpPopover, JpPopoverContent, JpPopoverTrigger } from './popover';
@@ -6,6 +6,7 @@ import { JpPopover, JpPopoverContent, JpPopoverTrigger } from './popover';
 @Component({
   standalone: true,
   imports: [JpPopover, JpPopoverTrigger, JpPopoverContent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <jp-popover [open]="open" (openChange)="open = $event">
       <button type="button" jpPopoverTrigger>Filters</button>

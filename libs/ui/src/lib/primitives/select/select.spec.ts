@@ -80,4 +80,26 @@ describe('JpSelect', () => {
     expect(onChange).toHaveBeenCalledWith('editor');
     expect(onTouched).toHaveBeenCalled();
   });
+
+  it('forwards native required, name, autocomplete and accessible name', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.componentRef.setInput('ariaLabel', 'Account field');
+    fixture.componentRef.setInput('required', true);
+    fixture.componentRef.setInput('name', 'account');
+    fixture.componentRef.setInput('autocomplete', 'email');
+    fixture.detectChanges();
+    const control = fixture.nativeElement.querySelector('select');
+    expect(control.required).toBe(true);
+    expect(control.name).toBe('account');
+    expect(control.getAttribute('autocomplete')).toBe('email');
+    expect(control.getAttribute('aria-label')).toBe('Account field');
+  });
+
+  it('supports disabled choices', () => {
+    fixture.componentRef.setInput('options', [
+      { value: 'archived', label: 'Archived', disabled: true },
+    ]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('option').disabled).toBe(true);
+  });
 });

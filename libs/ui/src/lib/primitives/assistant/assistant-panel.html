@@ -46,20 +46,54 @@
   </div>
   }
 
-  <div class="jp-assistant-panel__messages" role="log" aria-live="polite">
+  <div
+    class="jp-assistant-panel__messages"
+    role="log"
+    aria-live="polite"
+    [attr.aria-busy]="isPending()"
+  >
     @if (messages().length === 0) {
     <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
     } @else {
     <div class="jp-assistant-panel__message-list">
-      @for (message of messages(); track message.id) {
+      @for (message of messages(); track message.id) { @if (message.content) {
       <jp-assistant-message
         [messageRole]="message.role"
         [content]="message.content"
       />
-      }
+      } @if (message.responseStatus === 'error') {
+      <jp-inline-alert
+        tone="error"
+        [message]="message.error || 'Response failed'"
+        [actionLabel]="retryLabel()"
+        (action)="retryResponse(message.id)"
+      />
+      } @else if (message.responseStatus === 'cancelled') {
+      <jp-inline-alert
+        [message]="cancelledLabel()"
+        [actionLabel]="retryLabel()"
+        (action)="retryResponse(message.id)"
+      />
+      } }
     </div>
     }
   </div>
+
+  @if (isPending()) {
+  <div class="jp-assistant-panel__pending">
+    <span role="status">{{ pendingLabel() }}</span>
+    <jp-progress [label]="pendingLabel()" />
+    @for (message of messages(); track message.id) { @if (message.responseStatus
+    === 'pending') {
+    <jp-button
+      variant="secondary"
+      size="sm"
+      (click)="cancelResponse(message.id)"
+      >{{ cancelLabel() }}</jp-button
+    >
+    } }
+  </div>
+  }
 
   <form
     class="jp-assistant-panel__composer"
@@ -83,7 +117,7 @@
         type="submit"
         variant="primary"
         size="sm"
-        [disabled]="!draft().trim()"
+        [disabled]="!draft().trim() || isPending()"
       >
         {{ sendLabel() }}
       </jp-button>

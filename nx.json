@@ -30,9 +30,11 @@
       },
       "inputs": [
         "default",
+        "^default",
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.mjs"
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/tools/eslint-rules/**/*"
       ]
     },
     "@nx/jest:jest": {
@@ -40,7 +42,9 @@
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "options": {
         "passWithNoTests": true,
-        "codeCoverage": true
+        "codeCoverage": true,
+        "runInBand": true,
+        "coverageReporters": ["text-summary", "json", "json-summary", "html"]
       },
       "configurations": {
         "ci": {

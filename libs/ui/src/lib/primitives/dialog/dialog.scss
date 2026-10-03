@@ -2,19 +2,15 @@
   display: contents;
 }
 
-.jp-dialog__scrim {
-  position: fixed;
-  inset: 0;
-  z-index: var(--jp-z-overlay-dialog-scrim);
+.jp-dialog__panel::backdrop {
   background: var(--jp-color-overlay-scrim);
 }
 
 .jp-dialog__panel {
   position: fixed;
   z-index: var(--jp-z-overlay-dialog);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
+  inset: 0;
   box-sizing: border-box;
   width: min(28rem, calc(100vw - 2 * var(--jp-space-md)));
   max-height: calc(100vh - 2 * var(--jp-space-lg));

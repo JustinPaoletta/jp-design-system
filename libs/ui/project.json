@@ -67,6 +67,12 @@
           "buildTarget": "ui:build-storybook:ci"
         }
       }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p libs/ui/tsconfig.lib.json --noEmit"
+      }
     }
   }
 }

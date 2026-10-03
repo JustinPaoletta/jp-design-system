@@ -49,6 +49,13 @@ export class JpTextarea implements ControlValueAccessor {
 
   readonly value = signal('');
 
+  readonly ariaLabel = input('');
+  readonly name = input('');
+  readonly autocomplete = input('');
+  readonly required = input(false, { transform: booleanAttribute });
+  readonly minLength = input<number | null>(null);
+  readonly maxLength = input<number | null>(null);
+
   readonly label = input('');
   readonly hint = input('');
   readonly error = input('');

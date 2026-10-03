@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  min-height: var(--jp-font-size-body);
+  background: var(--jp-color-surface-emphasis);
+  border-radius: var(--jp-radius-sm);
+}
+:host(.jp-skeleton--circle) {
+  border-radius: var(--jp-radius-full);
+  aspect-ratio: 1;
+}
+:host(.jp-skeleton--animated) {
+  animation: jp-skeleton-pulse calc(var(--jp-motion-duration-slow) * 4)
+    var(--jp-motion-easing-standard) infinite alternate;
+}
+@keyframes jp-skeleton-pulse {
+  to {
+    opacity: 0.5;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :host(.jp-skeleton--animated) {
+    animation: none;
+  }
+}

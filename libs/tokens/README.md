@@ -220,6 +220,7 @@ confirmations can still layer over the panel.
 - `:root` variables
 - `data-jp-accent="neon"`
 - `data-jp-accent="cobalt"`
+- compact overrides under `data-jp-density="compact"` (also emitted separately)
 
 `tokens.compact.css` includes compact overrides under:
 
@@ -234,12 +235,16 @@ confirmations can still layer over the panel.
 
 ## Usage
 
-Import generated CSS where needed:
+Within this workspace, import generated CSS where needed:
 
 ```scss
 @import '../../../libs/tokens/src/generated/tokens.css';
 @import '../../../libs/tokens/src/generated/tokens.compact.css';
 ```
+
+Built-package consumers import `@jp-design-system/tokens/tokens.css` from their global stylesheet. That bundle includes compact density; `@jp-design-system/tokens/tokens.compact.css` is an optional standalone override export. Build/install instructions are in [DISTRIBUTION.md](../../docs/DISTRIBUTION.md).
+
+Token JSON is validated before Style Dictionary runs: prototype-related keys are rejected, and custom reference lookup uses own properties only. `JP_TOKEN_SOURCE_ROOT` is a trusted developer configuration for local fixture/build inputs, not an upload API.
 
 Switch accent or density on a root element:
 

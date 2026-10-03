@@ -32,3 +32,13 @@ export * from './lib/primitives/assistant/assistant-panel';
 
 /** @deprecated Temporary compatibility export. */
 export * from './lib/ui/ui';
+
+export * from './lib/primitives/skeleton/skeleton';
+export * from './lib/primitives/progress/progress';
+export * from './lib/primitives/inline-alert/inline-alert';
+export * from './lib/primitives/radio-group/radio-group';
+export * from './lib/primitives/combobox/combobox';
+export * from './lib/primitives/pagination/pagination';
+export * from './lib/primitives/table-toolbar/table-toolbar';
+export * from './lib/primitives/tabs/tabs';
+export * from './lib/primitives/breadcrumbs/breadcrumbs';

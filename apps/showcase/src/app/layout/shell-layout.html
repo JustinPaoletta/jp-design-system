@@ -7,6 +7,12 @@
   <nav jpAppShellSidebar aria-label="Primary">
     <jp-stack gap="2xs">
       <jp-app-shell-nav-item
+        href="/product-recipes"
+        [active]="isActive('/product-recipes')"
+        (click)="onNavClick($event, '/product-recipes')"
+        >Recipes</jp-app-shell-nav-item
+      >
+      <jp-app-shell-nav-item
         href="/assistant"
         [active]="isActive('/assistant')"
         (click)="onNavClick($event, '/assistant')"

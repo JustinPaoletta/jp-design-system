@@ -1,5 +1,7 @@
 # Epic 4 — Core Controls Implementation Plan
 
+> Historical delivery plan: the scope, draft APIs, prerequisites, and deferrals below record the original epic. They are not the current implementation reference. Current controls also include loading buttons, forwarded native field attributes, checkbox indeterminate state, radio group, and searchable combobox. See [PRIMITIVES.md](PRIMITIVES.md), [PRODUCT_RECIPES.md](PRODUCT_RECIPES.md), and [QUALITY.md](QUALITY.md) for the current contract.
+
 **Status:** Complete — Stories 4.0–4.6 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
@@ -25,7 +27,7 @@ inside the app shell without inventing one-off styles.
 
 ---
 
-## Prerequisites
+## Prerequisites at original delivery
 
 1. Merge App Shell (PR #7) into `main`.
 2. Pull latest `main`; create the feature branch.

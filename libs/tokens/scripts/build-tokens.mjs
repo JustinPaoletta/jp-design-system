@@ -91,7 +91,11 @@ function getByPath(object, pathValue) {
     .split('.')
     .reduce(
       (current, segment) =>
-        current && typeof current === 'object' ? current[segment] : undefined,
+        current &&
+        typeof current === 'object' &&
+        Object.hasOwn(current, segment)
+          ? current[segment]
+          : undefined,
       object,
     );
 }
@@ -145,7 +149,12 @@ function unwrapTokenTree(node, context, trail = []) {
 async function readJson(relativePath) {
   const filePath = path.join(TOKENS_ROOT, relativePath);
   const content = await fs.readFile(filePath, 'utf8');
-  return JSON.parse(content);
+  return JSON.parse(content, (key, value) => {
+    if (['__proto__', 'constructor', 'prototype'].includes(key)) {
+      throw new Error(`Unsafe token key in ${relativePath}: ${key}`);
+    }
+    return value;
+  });
 }
 
 async function loadTokenSources() {
@@ -256,6 +265,8 @@ export async function buildTokens({
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'jp-tokens-build-'));
 
   try {
+    // Validate every source before passing it to Style Dictionary or merging it.
+    const sources = await loadTokenSources();
     const variants = ['base', 'accentNeon', 'accentCobalt', 'compact'];
     for (const variant of variants) {
       await runStyleDictionaryVariant(variant, tempDir);
@@ -288,7 +299,6 @@ export async function buildTokens({
     const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n\n${compactCss}\n`;
     const compactOutput = `${header}\n\n${compactCss}\n`;
 
-    const sources = await loadTokenSources();
     const resolvedJson = buildResolvedJson(sources);
 
     await fs.mkdir(resolvedOutputDir, { recursive: true });

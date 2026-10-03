@@ -7,9 +7,9 @@ The JP Design System is a structured Angular component library for professional 
 ## Status
 
 - Type: private component-library monorepo
-- Current version: `0.0.0`
-- **Current milestone:** Assistant system complete — Showcase `/assistant`, composition + e2e
-- **Next:** Quality hardening — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
+- Repository version: `0.0.0`; local UI and token package versions: `0.1.0`
+- **Current milestone:** Product readiness: interactive recipes, expanded controls/navigation/data APIs, native overlays, quality gates, and local packages
+- **Next:** Manual assistive-technology review, CI verification, and release automation — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
 - Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
 
 ## Quick Links
@@ -41,7 +41,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 
 ```text
 /apps
- /showcase # read-only integration app (e.g. /assistant)
+ /showcase # interactive integration app (including /product-recipes)
  /showcase-e2e # Playwright e2e for showcase
  /storybook # placeholder Angular shell (not the component Storybook)
  /storybook-e2e # Playwright scaffold for the storybook app
@@ -51,14 +51,14 @@ This system is opinionated by design. Customization that weakens consistency is 
  /ui # Angular primitives + Storybook target (port 4400)
 ```
 
-**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is a read-only Angular host app that proves compositions render correctly outside Storybook. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
+**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is an Angular host app that proves compositions render correctly outside Storybook, including interactive product recipes backed by local simulated responses. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
 
 ## Tech Stack
 
-- Angular 21
-- Nx 22
-- TypeScript
-- Storybook 10
+- Angular 22.2.1
+- Nx 23.2.1
+- TypeScript 6.0.3
+- Storybook 10.6.1
 - Jest and Playwright
 - Style Dictionary
 
@@ -72,7 +72,7 @@ This system is opinionated by design. Customization that weakens consistency is 
 - Density modes (`data-jp-density`)
 - Dark-first theme
 
-No component may use hardcoded visual values.
+Visual styling uses semantic tokens. Overlay positioning uses measured geometry and small pixel offsets; those coordinates are not theme values.
 
 ### UI Library (`libs/ui`)
 
@@ -80,7 +80,7 @@ Standalone Angular components with:
 
 - Strict typing
 - Token-based styling
-- WCAG AA minimum accessibility
+- WCAG A/AA accessibility target, backed by automated checks and manual review
 - Constrained API surface
 
 ## Development Standards
@@ -91,15 +91,23 @@ Standalone Angular components with:
 - Token usage for spacing, color, radius, motion
 - CI-enforced lint + test + build
 
+## Product readiness additions
+
+Working examples live at Showcase `/product-recipes`: async save/retry, validated forms, search/sort/pagination, selection and destructive recovery. New primitives include skeleton, progress, inline alert, radio group, combobox, tabs, breadcrumbs, table toolbar and pagination.
+
+- [Product recipes](docs/PRODUCT_RECIPES.md)
+- [Quality checks](docs/QUALITY.md)
+- [Distribution and consumer smoke](docs/DISTRIBUTION.md)
+
 ## Quick Start
 
-Install dependencies:
+Use the project Node version in `.nvmrc` (`nvm install` followed by `nvm use`); this does not change your global default. Install dependencies:
 
 ```bash
 npm ci
 ```
 
-Run Showcase (read-only composition host):
+Run Showcase (interactive composition host):
 
 ```bash
 npx nx run showcase:serve
@@ -117,6 +125,7 @@ Run baseline quality checks:
 npm run format:check
 npm run lint
 npm run test
+npm run typecheck
 npm run build
 ```
 
@@ -133,7 +142,7 @@ npx nx show projects
 
 ## Testing & Quality Gates
 
-Local baseline: `npm run format:check`, `npm run lint`, `npm run test`, and `npm run build`.
+Local baseline: formatting, lint/token drift, unit coverage, typecheck, and production builds. See [QUALITY.md](docs/QUALITY.md) for Storybook, Chromium/WebKit, and platform-specific visual checks; [DISTRIBUTION.md](docs/DISTRIBUTION.md) for isolated package compilation; [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) for dependency audit scope and remaining tooling advisories.
 
 Quality gates:
 
@@ -142,7 +151,7 @@ Quality gates:
 - Hardcoded colors blocked (`npm run lint:colors`)
 - Primitive token usage blocked in components (`npm run lint:primitives`)
 - Token artifact drift blocked (`npm run tokens:check`)
-- CI: lint, test (unit + Storybook interaction + Showcase e2e), build (`.github/workflows/ci.yml`)
+- CI: lint, unit/Storybook/Chromium/WebKit tests, typecheck/build, macOS visual regression, isolated package consumer, and runtime dependency audit (`.github/workflows/ci.yml`)
 
 Component or token releases should include manual Storybook and Showcase review for affected surfaces.
 See [MANUAL_QA.md](./MANUAL_QA.md) for the Storybook manual QA checklist (layout through assistant).
@@ -164,6 +173,7 @@ See [MANUAL_QA.md](./MANUAL_QA.md) for the Storybook manual QA checklist (layout
 - Data Display: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/data`
 - Feedback & Overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/overlays`
 - Assistant: `JpAssistantService`, `jpAssistantTrigger`, `jp-assistant-message`, `jp-assistant-panel`, Showcase `/assistant`
+- Product readiness: loading/recovery primitives, radio group/combobox, controlled table toolkit, tabs/breadcrumbs, request lifecycle, native overlay positioning, Showcase `/product-recipes`, and local APF/ESM packages
 
 ## License
 

@@ -87,3 +87,14 @@ export const Disabled: Story = {
     await expect(input?.disabled).toBe(true);
   },
 };
+
+export const Indeterminate: Story = {
+  render: () => ({
+    template: `<jp-checkbox indeterminate>Select all rows (some selected)</jp-checkbox>`,
+  }),
+  play: async ({ canvasElement }) => {
+    await expect(
+      (canvasElement.querySelector('input') as HTMLInputElement).indeterminate,
+    ).toBe(true);
+  },
+};

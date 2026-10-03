@@ -1,36 +1,20 @@
-# CI Branch Protection Setup
+# CI and branch protection
 
-Story 0.4 requires merge blocking on failed checks. GitHub Actions alone
-does not enforce that; the branch protection rule must require CI checks.
+GitHub Actions runs on pull requests to any branch (including stacked feature PRs), pushes to `main`, and manual dispatch. Workflow permissions are restricted to `contents: read`; third-party workflow execution is avoided and official actions are pinned to commit SHAs.
 
-## Required Setup (GitHub UI)
+## Current protection
 
-1. Open repository Settings.
-2. Open Branches.
-3. Add or edit the protection rule for the protected default branch (`main`).
-4. Enable "Require status checks to pass before merging".
-5. Add these required checks from the `CI` workflow:
-   - `Lint`
-   - `Test`
-   - `Build`
-6. Enable "Require branches to be up to date before merging".
-7. Save changes.
+Verified October 2, 2026: `main` requires `Lint`, `Test`, and `Build`, with strict up-to-date checks enabled. GitHub Actions alone does not require every new job before merge.
 
-After this is configured, any failed CI job will block merges into the protected default branch.
+The workflow also defines `Visual regression (macOS)`, `Package consumer`, and `Runtime dependency audit`. These additional names are **not yet configured as required checks**. After their first hosted run, add them to the `main` protection rule under Settings → Branches → Require status checks to pass before merging. Keep “Require branches to be up to date” enabled. No protection settings were changed as part of this work.
 
-Release branches such as `release/v0.1.0` should still flow back through pull requests into the protected default branch so the same required checks are enforced before release merges.
+## Job scope
 
-## Current Repo State
+- `Lint`: formatting, ESLint, hardcoded-color/primitive-token guards, and generated token drift.
+- `Test`: unit coverage, Storybook interactions, and Chromium/WebKit functional and axe checks; excludes platform-specific visual snapshots.
+- `Build`: Angular type/template checks and all production build targets.
+- `Visual regression (macOS)`: reviewed Chromium PNG comparisons without automatic updates; failure diffs are uploaded.
+- `Package consumer`: builds real tarballs and compiles an isolated Angular consumer without workspace aliases.
+- `Runtime dependency audit`: fails for moderate-or-higher runtime advisories and uploads the complete dependency audit, including development-tool findings. The development report is informational because known upstream advisories remain; see [SECURITY_REVIEW.md](SECURITY_REVIEW.md).
 
-- Default branch: `main`
-- Required checks configured: `Lint`, `Test`, `Build`
-- Strict status checks: enabled
-
-The `Test` job runs `npm run test`, `npx nx run ui:test-storybook`, and
-`npx nx run showcase-e2e:e2e -- --project=chromium`. Those steps are part of
-the `Test` check name — no separate status checks are required for them.
-
-Unit tests collect coverage by default. Each Jest project enforces a
-`coverageThreshold`. For `ui` and `showcase`, the gate is 90% across
-statements, branches, functions, and lines. `tokens` and `storybook` remain
-at 100%. Dropping below a project threshold fails the `Test` job.
+UI and Showcase coverage gates remain 90% across statements, branches, functions, and lines; tokens and the placeholder Storybook app remain 100%. See [QUALITY.md](QUALITY.md) for local commands and platform limits. Release branches should merge through protected `main` PRs.

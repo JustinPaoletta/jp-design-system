@@ -76,6 +76,66 @@ class AssistantStoryHost {
   }
 }
 
+@Component({
+  selector: 'jp-assistant-async-story-host',
+  imports: [JpButton, JpAssistantPanel, JpInline, JpStack],
+  template: `
+    <jp-stack gap="md">
+      <jp-inline gap="sm" wrap="true">
+        <jp-button variant="secondary" (click)="start()"
+          >Start response</jp-button
+        >
+        <jp-button variant="ghost" (click)="stream()">Stream chunk</jp-button>
+        <jp-button variant="ghost" (click)="fail()">Fail response</jp-button>
+        <jp-button variant="ghost" (click)="complete()"
+          >Complete response</jp-button
+        >
+      </jp-inline>
+      <jp-assistant-panel
+        (messageSubmit)="respond()"
+        (responseRetry)="retry($event.responseId)"
+      />
+    </jp-stack>
+  `,
+})
+class AssistantAsyncStoryHost {
+  private readonly assistant = inject(JpAssistantService);
+  private responseId = 0;
+
+  start(): void {
+    this.assistant.open({ context: null, clearMessages: true });
+    this.assistant.addMessage({
+      role: 'user',
+      content: 'Summarize this deployment.',
+    });
+    this.respond();
+  }
+  respond(): void {
+    this.responseId = this.assistant.beginResponse();
+  }
+  stream(): void {
+    this.assistant.updateResponse(
+      this.responseId,
+      'The deployment is healthy. Checking the final stage…',
+    );
+  }
+  fail(): void {
+    this.assistant.failResponse(
+      this.responseId,
+      'Connection lost. Your question has been preserved.',
+    );
+  }
+  complete(): void {
+    this.assistant.completeResponse(
+      this.responseId,
+      'All stages completed successfully.',
+    );
+  }
+  retry(id: number): void {
+    this.responseId = id;
+  }
+}
+
 const meta: Meta<JpAssistantPanel> = {
   title: 'Primitives/Assistant/Panel',
   component: JpAssistantPanel,
@@ -96,6 +156,7 @@ const meta: Meta<JpAssistantPanel> = {
         JpStack,
         JpText,
         AssistantStoryHost,
+        AssistantAsyncStoryHost,
       ],
     }),
   ],
@@ -218,5 +279,49 @@ export const ComposerInteraction: Story = {
       'What is the deployment status?',
     );
     await expect(canvasElement.textContent).toContain('Noted:');
+  },
+};
+
+export const PendingAndStreaming: Story = {
+  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  play: async ({ canvasElement }) => {
+    const button = (label: string) =>
+      Array.from(canvasElement.querySelectorAll('button')).find(
+        (item) => item.textContent?.trim() === label,
+      ) as HTMLButtonElement;
+    await userEvent.click(button('Start response'));
+    await expect(
+      canvasElement.querySelector('[role="progressbar"]'),
+    ).toBeTruthy();
+    await userEvent.click(button('Stream chunk'));
+    await expect(canvasElement.textContent).toContain(
+      'Checking the final stage',
+    );
+    await userEvent.click(button('Stop response'));
+    await expect(canvasElement.textContent).toContain('Response stopped');
+    await expect(
+      canvasElement.querySelector('[role="progressbar"]'),
+    ).toBeNull();
+  },
+};
+
+export const FailedAndRetry: Story = {
+  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  play: async ({ canvasElement }) => {
+    const button = (label: string) =>
+      Array.from(canvasElement.querySelectorAll('button')).find(
+        (item) => item.textContent?.trim() === label,
+      ) as HTMLButtonElement;
+    await userEvent.click(button('Start response'));
+    await userEvent.click(button('Fail response'));
+    await expect(canvasElement.textContent).toContain('Connection lost');
+    await userEvent.click(button('Retry'));
+    await expect(
+      canvasElement.querySelector('[role="progressbar"]'),
+    ).toBeTruthy();
+    await userEvent.click(button('Complete response'));
+    await expect(canvasElement.textContent).toContain(
+      'All stages completed successfully.',
+    );
   },
 };

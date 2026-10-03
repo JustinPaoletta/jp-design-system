@@ -1,0 +1,162 @@
+<jp-box padding="lg" maxWidth="wide">
+  <jp-stack gap="lg">
+    <jp-breadcrumbs [items]="breadcrumbs" />
+    <jp-heading as="h1">Product recipes</jp-heading>
+    <jp-text tone="secondary"
+      >Working examples of validation, save/retry, searchable records, and
+      destructive confirmation. This demo uses a simulated API: the first
+      request for each action fails, then retry succeeds.</jp-text
+    >
+    <jp-tabs
+      [tabs]="tabs"
+      [selectedValue]="tab()"
+      (selectedValueChange)="tab.set($event)"
+      ariaLabel="Product examples"
+      id="recipe-tabs"
+    >
+      <ng-template jpTabPanel="services">
+        <jp-stack gap="md">
+          <jp-heading as="h2">Services</jp-heading>
+          <jp-table-toolbar
+            [activeFilters]="filters()"
+            [selectedCount]="selected().length"
+            (removeFilter)="setSearch('')"
+            (clearFilters)="setSearch('')"
+          >
+            <jp-input
+              jpTableSearch
+              label="Search services"
+              type="search"
+              [ngModel]="search()"
+              (ngModelChange)="setSearch($event)"
+            />
+            <jp-button
+              jpTableActions
+              variant="secondary"
+              [loading]="loading()"
+              loadingLabel="Refreshing"
+              (click)="refresh()"
+              >Refresh services</jp-button
+            >
+            <jp-button
+              jpTableBulkActions
+              variant="destructive"
+              (click)="deleteError.set(''); dialogOpen.set(true)"
+              >Delete selected</jp-button
+            >
+          </jp-table-toolbar>
+          @if (loading()) {
+          <jp-progress
+            label="Refreshing services"
+          /><jp-skeleton /><jp-skeleton /> } @if (loadError()) {
+          <jp-inline-alert
+            tone="error"
+            title="Refresh failed"
+            [message]="loadError()"
+            actionLabel="Retry refresh"
+            (action)="refresh()"
+          />
+          }
+          <jp-table
+            caption="Service inventory"
+            [columns]="columns"
+            [rows]="visible()"
+            [sort]="sort()"
+            (sortChange)="setSort($event)"
+            [selectable]="true"
+            [selectedKeys]="selected()"
+            (selectionChange)="selected.set($event)"
+            emptyTitle="No matching services"
+            emptyDescription="Clear your search or choose a different query."
+          />
+          <jp-pagination
+            [page]="page()"
+            [pageSize]="pageSize"
+            [total]="filtered().length"
+            (pageChange)="page.set($event)"
+          />
+        </jp-stack>
+      </ng-template>
+      <ng-template jpTabPanel="settings">
+        <jp-surface tone="raised" padding="md" border="subtle">
+          <form [formGroup]="form" (ngSubmit)="save()">
+            <jp-stack gap="md">
+              <jp-heading as="h2">Account settings</jp-heading>
+              <jp-input
+                label="Notification email"
+                type="email"
+                name="notification-email"
+                autocomplete="email"
+                [required]="true"
+                formControlName="email"
+                [error]="form.controls.email.touched && form.controls.email.invalid ? 'Enter a valid notification email.' : ''"
+              />
+              <jp-combobox
+                label="Region"
+                [options]="regions"
+                formControlName="region"
+                [required]="true"
+              />
+              <jp-radio-group
+                label="Support plan"
+                [options]="plans"
+                formControlName="plan"
+                [required]="true"
+              />
+              @if (saveError()) {
+              <jp-inline-alert
+                tone="error"
+                title="Save failed"
+                [message]="saveError()"
+                actionLabel="Retry save"
+                (action)="save()"
+              />
+              } @if (saved()) {
+              <jp-inline-alert
+                tone="success"
+                title="Settings saved"
+                message="Your changes are now saved."
+              />
+              }
+              <jp-button
+                type="submit"
+                [loading]="saving()"
+                loadingLabel="Saving settings"
+                >Save settings</jp-button
+              >
+            </jp-stack>
+          </form>
+        </jp-surface>
+      </ng-template>
+    </jp-tabs>
+  </jp-stack>
+</jp-box>
+<jp-dialog
+  title="Delete selected services?"
+  [open]="dialogOpen()"
+  (openChange)="dialogOpen.set($event)"
+>
+  <jp-text>This removes the selected records from this demonstration.</jp-text>
+  @if (deleteError()) {
+  <jp-inline-alert
+    tone="error"
+    title="Delete failed"
+    [message]="deleteError()"
+  />
+  }
+  <div jpDialogActions>
+    <jp-button
+      variant="secondary"
+      [disabled]="deleting()"
+      (click)="dialogOpen.set(false)"
+      >Cancel</jp-button
+    >
+    <jp-button
+      variant="destructive"
+      [loading]="deleting()"
+      loadingLabel="Deleting services"
+      (click)="confirmDelete()"
+      >Confirm deletion</jp-button
+    >
+  </div>
+</jp-dialog>

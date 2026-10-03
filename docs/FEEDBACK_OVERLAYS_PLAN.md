@@ -1,5 +1,7 @@
 # Epic 6 — Feedback & Overlays Implementation Plan
 
+> Historical delivery plan: the scope, draft APIs, prerequisites, and deferrals below record the original epic. They are not the current implementation reference. Current dialogs use native modal top-layer behavior; anchored overlays use native popovers with viewport flip/clamp positioning and nested dismissal coordination. See [PRIMITIVES.md](PRIMITIVES.md), [PRODUCT_RECIPES.md](PRODUCT_RECIPES.md), and [QUALITY.md](QUALITY.md) for the current contract.
+
 **Status:** Complete — Stories 6.0–6.7 delivered  
 **Delivered:** Complete  
 **Roadmap:** [JP_ROADMAP.md](./JP_ROADMAP.md) · **Principles:** [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)  
@@ -28,7 +30,7 @@ shell using Controls buttons and Data Display status chips.
 
 ---
 
-## Prerequisites
+## Prerequisites at original delivery
 
 1. Data Display (PR #9) is the tip of the open delivery chain.
 2. Branch from the prior tip (not from `main`

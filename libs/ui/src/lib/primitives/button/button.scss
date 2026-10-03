@@ -85,3 +85,31 @@
     transition: none;
   }
 }
+
+.jp-button__spinner {
+  width: var(--jp-size-icon-sm);
+  height: var(--jp-size-icon-sm);
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--jp-radius-full);
+  animation: jp-button-spin var(--jp-motion-duration-slow) linear infinite;
+}
+.jp-button__loading-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@keyframes jp-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jp-button__spinner {
+    animation: none;
+  }
+}

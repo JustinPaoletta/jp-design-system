@@ -357,7 +357,7 @@ Storybook path: **Primitives → Assistant → Panel**
 
 | Story                       | Do                                                    | Expect                                                                                                                                                                                                                                                                                                                                                                                             |
 | --------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **MessageRoles**            | Look; switch Accent; optional SR                      | Three messages only (no panel chrome): muted full-width **System** ("Context loaded for dep-1042"), left **Assistant** ("Assistant reply stays calm and neutral.") on sunken surface, right **User** ("User question about this deployment.") on subtle surface. Bodies stay neutral. Accent does **not** recolor bubbles. Visually-hidden role labels announce You / Assistant / System to AT. |
+| **MessageRoles**            | Look; switch Accent; optional SR                      | Three messages only (no panel chrome): muted full-width **System** ("Context loaded for dep-1042"), left **Assistant** ("Assistant reply stays calm and neutral.") on sunken surface, right **User** ("User question about this deployment.") on subtle surface. Bodies stay neutral. Accent does **not** recolor bubbles. Visually-hidden role labels announce You / Assistant / System to AT.    |
 | **EmptyState**              | Click **Open empty** (or let play run)                | Panel opens from the right; empty title **"Ask about this surface"** and description **"Open the assistant from a context trigger, then send a question."** No context chip. Composer placeholder **"Ask a question…"**. Send disabled while composer empty. Interactions **Pass**. Accessibility clean.                                                                                           |
 | **Conversation**            | Click **Seed conversation** (or let play run)         | Panel opens with context chip **"Deployment dep-1042"** (soft accent fill + **dark ink** label text) and description **"Production rollout"** (same ink family, slightly softer). Three messages including assistant line **"I can summarize status, risks, and next steps."** Header/composer stay put while messages scroll. Neon↔Cobalt changes chip + Send only.                              |
 | **ContextTrigger**          | Click **Ask about deployment**; clear chip; Escape; × | Panel `role="complementary"`. Chip shows Deployment dep-1042 / Production rollout. Focus moves to the composer textarea. Send starts disabled. Chip × clears context; panel stays open. Escape or header × closes and restores focus to the trigger.                                                                                                                                               |
@@ -449,6 +449,23 @@ Storybook path: **Compositions → Assistant System**
 1. **Select empty value** — If a consumer binds an empty string and no matching option exists, the browser may show the first option while the model stays empty. Out of scope for these primitives.
 
 **Automated gate:** `parameters.a11y.test: 'error'` in `libs/ui/.storybook/preview.ts`. `npx nx run ui:test-storybook` must stay green; the Accessibility panel matches that standard.
+
+---
+
+## Added components and product recipes
+
+Use the matching primitive stories and Showcase `/product-recipes`. Check both accents and densities, then repeat the composed flow at 390px width.
+
+- [ ] **Loading / Skeleton / Progress / Inline Alert** — Loading preserves a meaningful button name and blocks duplicate actions. Determinate progress reports its value; indeterminate progress has no misleading value. Reduced motion stops decorative animation. Retry remains keyboard reachable.
+- [ ] **Radio Group / Combobox / Checkbox** — Test reactive and template-driven forms, required/disabled states, selected values and indeterminate selection. Combobox arrows, Enter, Escape, empty search, loading and error states remain understandable; submitting a native form includes the selected value.
+- [ ] **Table / Toolbar / Pagination** — Sort cycles ascending → descending → none, query resets page, selection survives page changes, select-all reports mixed state, and removing a filter updates controlled state. Page controls disable at boundaries.
+- [ ] **Tabs / Breadcrumbs** — Arrows/Home/End move focus without selecting; Enter/Space activates. Disabled tabs are skipped; RTL direction works. Only the active panel is exposed, and breadcrumb current-page text has no misleading link.
+- [ ] **Native overlays** — In Chromium and Safari/WebKit, repeat Tab/Shift+Tab within a dialog, Escape and menu-to-dialog handoff. Closing restores the actual opener. Panels remain visible under clipped/transformed containers, near viewport edges and while scrolling; nested Escape dismisses one layer. Moving the pointer onto a tooltip keeps it visible.
+- [ ] **Assistant response lifecycle** — Begin a request, stream text, cancel, retry and fail. Completed/cancelled/stale request IDs cannot alter later messages; retry and cancellation reach the consumer transport handlers.
+- [ ] **Settings recipe** — Submit missing/invalid email, correct it, save, see simulated failure with retained values, then retry successfully. Pending actions cannot be submitted twice.
+- [ ] **Services recipe** — Search, sort, paginate and select rows; refresh failure keeps records visible. Confirm a bulk deletion, see simulated failure, retry, and verify only selected records disappear.
+
+These boxes are a checklist for future manual sign-off; automated test passes do not mark them complete or establish assistive-technology coverage.
 
 ---
 

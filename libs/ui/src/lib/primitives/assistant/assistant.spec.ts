@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { JpButton } from '../button/button';
@@ -10,6 +10,7 @@ import { JpAssistantService } from './assistant.service';
 @Component({
   standalone: true,
   imports: [JpAssistantPanel, JpAssistantTrigger, JpButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button
       type="button"
@@ -83,6 +84,48 @@ describe('JpAssistantService', () => {
     expect(service.isOpen()).toBe(false);
     service.clearMessages();
     expect(service.messages()).toEqual([]);
+  });
+
+  it('streams responses and ignores updates after completion', () => {
+    const id = service.beginResponse();
+    expect(service.isPending()).toBe(true);
+    service.updateResponse(id, 'Partial');
+    expect(service.messages()[0].content).toBe('Partial');
+    service.completeResponse(id, 'Complete');
+    service.updateResponse(id, 'Late chunk');
+    service.failResponse(id, 'Late error');
+    expect(service.messages()[0].content).toBe('Complete');
+    expect(service.messages()[0].responseStatus).toBe('complete');
+    expect(service.isPending()).toBe(false);
+  });
+
+  it('retries a failed response with a fresh ID and ignores stale transport results', () => {
+    const id = service.beginResponse('Draft');
+    service.failResponse(id, 'Network unavailable');
+    expect(service.messages()[0].error).toBe('Network unavailable');
+    const nextId = service.retryResponse(id);
+    expect(nextId).not.toBeNull();
+    expect(nextId).not.toBe(id);
+    expect(service.isPending()).toBe(true);
+    service.completeResponse(id, 'Stale completion');
+    expect(service.messages()[0].content).toBe('');
+    service.completeResponse(nextId as number, 'Recovered');
+    expect(service.messages()[0].content).toBe('Recovered');
+    expect(service.retryResponse(nextId as number)).toBeNull();
+    expect(service.retryResponse(-1)).toBeNull();
+  });
+
+  it('cancels pending responses and clearing conversation invalidates in-flight updates', () => {
+    const id = service.beginResponse('Partial');
+    service.cancelResponse(id);
+    service.completeResponse(id, 'Late');
+    expect(service.messages()[0].responseStatus).toBe('cancelled');
+    expect(service.messages()[0].content).toBe('Partial');
+    const pending = service.beginResponse();
+    service.clearMessages();
+    service.updateResponse(pending, 'Stale');
+    expect(service.messages()).toEqual([]);
+    expect(service.isPending()).toBe(false);
   });
 
   it('sets and clears context', () => {
@@ -195,6 +238,36 @@ describe('JpAssistantPanel + trigger', () => {
     expect(service.messages()).toHaveLength(1);
     expect(service.messages()[0].role).toBe('user');
     expect(service.messages()[0].content).toBe('What is the status?');
+  });
+
+  it('blocks duplicate submits while pending and exposes retry/cancel events', () => {
+    service.open();
+    const id = service.beginResponse();
+    fixture.detectChanges();
+    const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
+      .componentInstance as JpAssistantPanel;
+    const cancel = jest.fn();
+    const retry = jest.fn();
+    panel.responseCancel.subscribe(cancel);
+    panel.responseRetry.subscribe(retry);
+    panel.draft.set('Do not duplicate');
+    panel.submit();
+    expect(service.messages()).toHaveLength(1);
+    expect(
+      fixture.nativeElement.querySelector('[role="progressbar"]'),
+    ).toBeTruthy();
+    panel.cancelResponse(id);
+    expect(cancel).toHaveBeenCalledWith(id);
+    panel.retryResponse(id);
+    expect(retry).toHaveBeenCalledWith({
+      previousId: id,
+      responseId: service.messages()[0].id,
+    });
+    service.failResponse(service.messages()[0].id, 'Network unavailable');
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('[role="alert"]').textContent,
+    ).toContain('Network unavailable');
   });
 
   it('clears context from the chip dismiss control', () => {

@@ -1,0 +1,27 @@
+{
+  "name": "@jp-design-system/tokens",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": ["./*.css"],
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./tokens.css": "./tokens.css",
+    "./tokens.compact.css": "./tokens.compact.css",
+    "./tokens.json": "./tokens.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib",
+    "*.css",
+    "tokens.json",
+    "README.md"
+  ]
+}

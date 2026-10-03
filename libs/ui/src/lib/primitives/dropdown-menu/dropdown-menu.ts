@@ -1,6 +1,7 @@
 import {
   afterRenderEffect,
   booleanAttribute,
+  DestroyRef,
   ChangeDetectionStrategy,
   Component,
   Directive,
@@ -10,6 +11,12 @@ import {
   output,
 } from '@angular/core';
 import { getFocusableElements } from '../shared/focus-trap';
+
+import {
+  claimOverlayEvent,
+  positionOverlay,
+  registerOverlay,
+} from '../shared/overlay-manager';
 
 @Directive({
   selector: '[jpDropdownTrigger]',
@@ -36,13 +43,15 @@ export class JpDropdownTrigger {
   host: {
     class: 'jp-dropdown-menu__item',
     role: 'menuitem',
+    '[attr.aria-disabled]': 'disabled() || null',
+    '[attr.tabindex]': 'disabled() ? -1 : 0',
     '(click)': 'onClick($event)',
     '(keydown)': 'onKeydown($event)',
   },
 })
 export class JpDropdownMenuItem {
   private readonly menu = inject(JpDropdownMenu);
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly itemSelect = output<void>();
@@ -74,7 +83,10 @@ export class JpDropdownMenuItem {
   },
 })
 export class JpDropdownMenu {
-  private readonly host = inject(ElementRef<HTMLElement>);
+  private overlayCleanup?: () => void;
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private lastOpen = false;
   private previousFocus: HTMLElement | null = null;
 
@@ -84,13 +96,40 @@ export class JpDropdownMenu {
   readonly menuId = `jp-dropdown-menu-${Math.random().toString(36).slice(2, 9)}`;
 
   constructor() {
+    this.destroyRef.onDestroy(() => this.overlayCleanup?.());
     // Focus must wait until the panel is rendered without [hidden];
     // a microtask in toggle() would run before change detection.
     afterRenderEffect(() => {
       const isOpen = this.open();
+      if (isOpen && !this.overlayCleanup) {
+        const host = this.host.nativeElement;
+        const panel = host.querySelector<HTMLElement>(
+          '.jp-dropdown-menu__panel',
+        );
+        const anchor = host.querySelector<HTMLElement>('[jpdropdowntrigger]');
+        if (panel && anchor) {
+          const unregister = registerOverlay(this, host.ownerDocument);
+          const unposition = positionOverlay(panel, anchor);
+          this.overlayCleanup = () => {
+            unposition();
+            unregister();
+          };
+        }
+      }
+      if (!isOpen) {
+        this.overlayCleanup?.();
+        this.overlayCleanup = undefined;
+      }
 
       if (isOpen && !this.lastOpen) {
-        this.previousFocus = document.activeElement as HTMLElement | null;
+        const trigger = this.host.nativeElement.querySelector<HTMLElement>(
+          '[jpdropdowntrigger]',
+        );
+        // Safari pointer clicks need not focus the button. Restore its actual
+        // trigger rather than an unrelated element that happened to be active.
+        this.previousFocus = trigger
+          ? (getFocusableElements(trigger)[0] ?? trigger)
+          : null;
         this.focusFirstItem();
       }
 
@@ -121,7 +160,7 @@ export class JpDropdownMenu {
       active === document.body ||
       hostEl.contains(active)
     ) {
-      trigger.focus();
+      if (trigger.isConnected) trigger.focus();
     }
   }
 
@@ -183,14 +222,15 @@ export class JpDropdownMenu {
       return;
     }
 
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      this.close();
-    }
+    if (event.key === 'Escape') this.onDocumentKeydown(event);
   }
 
   onDocumentKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape' && this.open()) {
+    if (
+      event.key === 'Escape' &&
+      this.open() &&
+      claimOverlayEvent(this, event, this.host.nativeElement.ownerDocument)
+    ) {
       event.preventDefault();
       this.close();
     }
@@ -201,7 +241,11 @@ export class JpDropdownMenu {
       return;
     }
     const target = event.target as Node | null;
-    if (target && !this.host.nativeElement.contains(target)) {
+    if (
+      target &&
+      !this.host.nativeElement.contains(target) &&
+      claimOverlayEvent(this, event, this.host.nativeElement.ownerDocument)
+    ) {
       this.close();
     }
   }

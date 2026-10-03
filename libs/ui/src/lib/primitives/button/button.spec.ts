@@ -63,6 +63,28 @@ describe('JpButton', () => {
     ).toBe(true);
   });
 
+  it('prevents activation while loading and restores the disabled contract afterward', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.componentRef.setInput('loadingLabel', 'Saving');
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+    expect(button.getAttribute('aria-busy')).toBe('true');
+    expect(button.getAttribute('aria-label')).toBe('Saving');
+    expect(button.textContent).toContain('Saving');
+    fixture.componentRef.setInput('disabled', true);
+    fixture.componentRef.setInput('loading', false);
+    fixture.detectChanges();
+    expect(button.disabled).toBe(true);
+    expect(button.hasAttribute('aria-busy')).toBe(false);
+    expect(button.hasAttribute('aria-label')).toBe(false);
+    fixture.componentRef.setInput('disabled', false);
+    fixture.detectChanges();
+    expect(button.disabled).toBe(false);
+  });
+
   it('sets native button type', () => {
     fixture.componentRef.setInput('type', 'submit');
     fixture.detectChanges();

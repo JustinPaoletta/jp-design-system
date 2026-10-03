@@ -25,8 +25,9 @@ let nextCheckboxId = 0;
   ],
   host: {
     class: 'jp-checkbox',
+    '[class.jp-checkbox--indeterminate]': 'indeterminate()',
     '[class.jp-checkbox--checked]': 'checked()',
-    '[class.jp-checkbox--invalid]': 'invalid()',
+    '[class.jp-checkbox--invalid]': 'invalid() || error().length > 0',
     '[class.jp-checkbox--disabled]': 'isDisabled()',
   },
 })
@@ -37,6 +38,20 @@ export class JpCheckbox implements ControlValueAccessor {
   private onTouched: () => void = () => undefined;
 
   readonly checked = signal(false);
+
+  readonly indeterminate = input(false, { transform: booleanAttribute });
+  readonly required = input(false, { transform: booleanAttribute });
+  readonly name = input('');
+  readonly ariaLabel = input('');
+  readonly hint = input('');
+  readonly error = input('');
+  readonly describedBy = computed(() =>
+    this.error()
+      ? `${this.resolvedId()}-error`
+      : this.hint()
+        ? `${this.resolvedId()}-hint`
+        : null,
+  );
 
   readonly id = input<string | undefined>(undefined);
   readonly disabled = input(false, { transform: booleanAttribute });

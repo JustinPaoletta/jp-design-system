@@ -79,6 +79,12 @@
         "staticFilePath": "dist/apps/showcase/browser",
         "spa": true
       }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p apps/showcase/tsconfig.app.json --noEmit"
+      }
     }
   }
 }

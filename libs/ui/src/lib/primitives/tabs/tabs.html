@@ -1,0 +1,38 @@
+<div
+  class="jp-tabs__list"
+  role="tablist"
+  (focusout)="onListFocusout($event)"
+  aria-orientation="horizontal"
+  [attr.aria-label]="ariaLabel()"
+>
+  @for (tab of tabs(); track tab.value; let index = $index) {
+  <button
+    #tabButton
+    class="jp-tabs__tab"
+    type="button"
+    role="tab"
+    [id]="tabId(index)"
+    [attr.aria-controls]="panelId(index)"
+    [attr.aria-selected]="activeValue() === tab.value"
+    [disabled]="tab.disabled"
+    [tabIndex]="rovingValue() === tab.value ? 0 : -1"
+    (focus)="onFocus(tab.value)"
+    (click)="select(tab)"
+    (keydown)="onKeydown($event, index)"
+  >
+    {{ tab.label }}
+  </button>
+  }
+</div>
+@for (tab of tabs(); track tab.value; let index = $index) {
+<div
+  class="jp-tabs__panel"
+  role="tabpanel"
+  [id]="panelId(index)"
+  [attr.aria-labelledby]="tabId(index)"
+  [hidden]="activeValue() !== tab.value"
+  tabindex="0"
+>
+  <ng-container [ngTemplateOutlet]="panelTemplate(tab.value)" />
+</div>
+}

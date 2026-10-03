@@ -1,0 +1,76 @@
+@if (label()) { <label [for]="resolvedId()">{{ label() }}</label> }
+<div class="jp-combobox__field">
+  <input
+    #control
+    role="combobox"
+    type="text"
+    [id]="resolvedId()"
+    [attr.aria-label]="ariaLabel() || null"
+    aria-autocomplete="list"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="isOpen() ? resolvedId() + '-listbox' : null"
+    [attr.aria-activedescendant]="activeId()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="isInvalid() ? true : null"
+    [attr.aria-required]="required() ? true : null"
+    autocomplete="off"
+    [required]="required()"
+    [disabled]="isDisabled()"
+    [value]="displayValue()"
+    [placeholder]="placeholder()"
+    (focus)="onFocus()"
+    (click)="onFocus()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    (keydown)="onKeydown($event)"
+  />
+  @if (name()) {
+  <input
+    type="hidden"
+    [name]="name()"
+    [value]="value()"
+    [disabled]="isDisabled()"
+  />
+  }
+  <div #popup class="jp-combobox__popup" [hidden]="!isOpen()">
+    @if (isOpen()) {
+    <div
+      role="listbox"
+      [id]="resolvedId() + '-listbox'"
+      [attr.aria-label]="label() || ariaLabel()"
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { @for (option of filteredOptions(); track option.value;
+      let i = $index) {
+      <button
+        type="button"
+        tabindex="-1"
+        [disabled]="option.disabled || false"
+        role="option"
+        [id]="resolvedId() + '-option-' + i"
+        [attr.aria-selected]="value() === option.value"
+        [attr.aria-disabled]="option.disabled || null"
+        [class.jp-combobox__option--active]="activeIndex() === i"
+        class="jp-combobox__option"
+        (mousedown)="$event.preventDefault()"
+        (click)="choose(option)"
+      >
+        {{ option.label }}
+      </button>
+      } }
+    </div>
+    @if (loading()) {
+    <p role="status">{{ loadingText() }}</p>
+    } @else if (!filteredOptions().length) {
+    <p role="status">{{ emptyText() }}</p>
+    } }
+  </div>
+</div>
+@if (error()) {
+<p class="jp-combobox__error" [id]="resolvedId() + '-error'" role="alert">
+  {{ error() }}
+</p>
+} @else if (hint()) {
+<p class="jp-combobox__hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { JpTooltip } from './tooltip';
@@ -6,6 +6,7 @@ import { JpTooltip } from './tooltip';
 @Component({
   standalone: true,
   imports: [JpTooltip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <jp-tooltip content="Helpful tip" placement="top">
       <button type="button">Trigger</button>
@@ -17,6 +18,7 @@ class TooltipHost {}
 @Component({
   standalone: true,
   imports: [JpTooltip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <jp-tooltip content="Helpful tip" placement="bottom">
       <button type="button">Trigger</button>
@@ -45,6 +47,7 @@ describe('JpTooltip', () => {
     expect(host.querySelector('[role="tooltip"]')).toBeTruthy();
 
     host.dispatchEvent(new Event('pointerleave'));
+    await new Promise((resolve) => setTimeout(resolve, 110));
     fixture.detectChanges();
     expect(host.classList.contains('jp-tooltip--open')).toBe(false);
   });
@@ -133,5 +136,33 @@ describe('JpTooltip', () => {
     fixture.componentInstance.show();
     fixture.detectChanges();
     expect(fixture.componentInstance.open()).toBe(false);
+  });
+});
+
+describe('tooltip description composition', () => {
+  it('preserves other descriptions when opening, closing and destroying', async () => {
+    await TestBed.configureTestingModule({
+      imports: [TooltipHost],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(TooltipHost);
+    fixture.detectChanges();
+    const trigger = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+    trigger.setAttribute('aria-describedby', 'help validation');
+    const tooltip = fixture.debugElement.query(By.directive(JpTooltip))
+      .componentInstance as JpTooltip;
+    tooltip.show();
+    fixture.detectChanges();
+    expect(trigger.getAttribute('aria-describedby')).toBe(
+      `help validation ${tooltip.tooltipId}`,
+    );
+    tooltip.hide();
+    fixture.detectChanges();
+    expect(trigger.getAttribute('aria-describedby')).toBe('help validation');
+    tooltip.show();
+    fixture.detectChanges();
+    fixture.destroy();
+    expect(trigger.getAttribute('aria-describedby')).toBe('help validation');
   });
 });
