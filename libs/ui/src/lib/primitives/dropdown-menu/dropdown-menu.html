@@ -1,0 +1,11 @@
+<div class="jp-dropdown-menu__anchor">
+  <ng-content select="[jpDropdownTrigger]" />
+  <div
+    class="jp-dropdown-menu__panel"
+    role="menu"
+    [attr.id]="menuId"
+    [hidden]="!open()"
+  >
+    <ng-content />
+  </div>
+</div>

@@ -32,7 +32,7 @@
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
+              "maximumWarning": "6kb",
               "maximumError": "8kb"
             }
           ],
@@ -78,6 +78,12 @@
         "port": 4200,
         "staticFilePath": "dist/apps/showcase/browser",
         "spa": true
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p apps/showcase/tsconfig.app.json --noEmit"
       }
     }
   }

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -25,7 +25,7 @@ import {
 
 @Component({
   selector: 'jp-text',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './text.html',
   styleUrl: './text.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

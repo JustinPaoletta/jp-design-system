@@ -1,0 +1,29 @@
+<ng-template #content>
+  <span class="jp-app-shell-nav-item__icon" aria-hidden="true">
+    <ng-content select="[jpAppShellNavIcon]" />
+  </span>
+  <span class="jp-app-shell-nav-item__label">
+    <ng-content />
+  </span>
+</ng-template>
+
+@switch (tag()) { @case ('button') {
+<button
+  type="button"
+  class="jp-app-shell-nav-item__root"
+  [disabled]="disabled()"
+  [attr.aria-current]="ariaCurrent()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</button>
+} @default {
+<a
+  class="jp-app-shell-nav-item__root"
+  [attr.href]="resolvedHref()"
+  [attr.aria-current]="ariaCurrent()"
+  [attr.aria-disabled]="disabled() ? true : null"
+  [attr.tabindex]="tabIndex()"
+>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
+</a>
+} }

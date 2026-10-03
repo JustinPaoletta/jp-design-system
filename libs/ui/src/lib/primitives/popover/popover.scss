@@ -1,0 +1,33 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.jp-popover__anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+:host ::ng-deep .jp-popover__content {
+  position: absolute;
+  top: calc(100% + var(--jp-space-2xs));
+  left: 0;
+  z-index: var(--jp-z-overlay-popover);
+  box-sizing: border-box;
+  min-width: 14rem;
+  max-width: 20rem;
+  padding: var(--jp-space-md);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-floating);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+:host ::ng-deep .jp-popover__content[hidden] {
+  display: none !important;
+}

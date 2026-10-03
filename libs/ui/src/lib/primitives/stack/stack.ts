@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +24,7 @@ import {
 
 @Component({
   selector: 'jp-stack',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './stack.html',
   styleUrl: './stack.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

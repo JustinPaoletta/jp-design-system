@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.jp-empty-state__root {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-md);
+  padding-block: var(--jp-space-2xl);
+  padding-inline: var(--jp-space-lg);
+  text-align: center;
+}
+
+.jp-empty-state__icon:empty {
+  display: none;
+}
+
+.jp-empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--jp-color-foreground-muted);
+}
+
+.jp-empty-state__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--jp-space-xs);
+  max-width: 28rem;
+}
+
+.jp-empty-state__title {
+  margin: 0;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-title);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
+  color: var(--jp-color-foreground-primary);
+}
+
+.jp-empty-state__description {
+  margin: 0;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-regular);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-foreground-secondary);
+}
+
+.jp-empty-state__actions:empty {
+  display: none;
+}
+
+.jp-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-sm);
+}

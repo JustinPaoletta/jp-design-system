@@ -126,3 +126,127 @@ export const Default: Story = {
     await expect(root).toBeTruthy();
   },
 };
+
+/** The three body sizes stacked for comparison. */
+export const Sizes: Story = {
+  render: () => ({
+    template: `
+      <style>
+        .jp-text-story__scale {
+          display: grid;
+          gap: var(--jp-space-sm);
+          max-width: calc(var(--jp-space-3xl) * 6);
+          padding: var(--jp-space-lg);
+          border: 1px dashed var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-sunken);
+        }
+      </style>
+
+      <div class="jp-text-story__scale">
+        <jp-text size="body-lg">Body large — comfortable lead paragraph copy.</jp-text>
+        <jp-text size="body">Body — the default reading size for most content.</jp-text>
+        <jp-text size="caption">Caption — supporting metadata and helper text.</jp-text>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const items = canvasElement.querySelectorAll('.jp-text__root');
+    await expect(items.length).toBe(3);
+  },
+};
+
+/** Tonal treatments from primary through disabled. */
+export const Tones: Story = {
+  render: () => ({
+    template: `
+      <style>
+        .jp-text-story__tones {
+          display: grid;
+          gap: var(--jp-space-sm);
+          max-width: calc(var(--jp-space-3xl) * 6);
+          padding: var(--jp-space-lg);
+          border: 1px dashed var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-sunken);
+        }
+      </style>
+
+      <div class="jp-text-story__tones">
+        <jp-text tone="primary">Primary — highest contrast body text.</jp-text>
+        <jp-text tone="secondary">Secondary — supporting body text.</jp-text>
+        <jp-text tone="muted">Muted — de-emphasized metadata.</jp-text>
+        <jp-text tone="disabled">Disabled — inactive text.</jp-text>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const items = canvasElement.querySelectorAll('.jp-text__root');
+    await expect(items.length).toBe(4);
+  },
+};
+
+/** Truncation clips overflow to a single line with an ellipsis. */
+export const Truncated: Story = {
+  args: {
+    truncate: true,
+  },
+  render: (args) => ({
+    props: { ...args, asTag: args.as },
+    template: `
+      <style>
+        .jp-text-story__frame {
+          display: grid;
+          gap: var(--jp-space-xs);
+          width: 100%;
+          max-width: calc(var(--jp-space-3xl) * 4);
+          min-width: 0;
+          padding: var(--jp-space-sm);
+          border: 1px dashed var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-sunken);
+        }
+
+        .jp-text-story__hint {
+          color: var(--jp-color-foreground-secondary);
+          font: var(--jp-font-label-sm);
+          letter-spacing: var(--jp-font-letter-spacing-wide);
+        }
+
+        .jp-text-story__sample {
+          min-width: 0;
+          width: 100%;
+          padding: var(--jp-space-sm);
+          border: 1px solid var(--jp-color-border-default);
+          border-radius: var(--jp-radius-md);
+          background: var(--jp-color-surface-raised);
+        }
+      </style>
+
+      <div class="jp-text-story__frame">
+        <div class="jp-text-story__hint">
+          Container is intentionally narrow — the single line clips with an ellipsis instead of wrapping.
+        </div>
+        <div class="jp-text-story__sample">
+          <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
+            This sentence is deliberately long so that it overflows the narrow container and demonstrates single-line truncation.
+          </jp-text>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector(
+      'jp-text.jp-text--truncate',
+    ) as HTMLElement | null;
+    await expect(host).toBeTruthy();
+    const root = host?.querySelector('.jp-text__root') as HTMLElement | null;
+    await expect(root).toBeTruthy();
+    await expect(getComputedStyle(root as HTMLElement).textOverflow).toBe(
+      'ellipsis',
+    );
+    await expect(getComputedStyle(root as HTMLElement).whiteSpace).toBe(
+      'nowrap',
+    );
+  },
+};

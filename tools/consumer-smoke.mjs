@@ -1,0 +1,272 @@
+import { execFileSync } from 'node:child_process';
+import {
+  access,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  writeFile,
+} from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const require = createRequire(path.join(root, 'package.json'));
+const artifacts = path.join(root, 'dist/packages');
+const temporary = await mkdtemp(
+  path.join(os.tmpdir(), 'jp-design-system-consumer-'),
+);
+const report = {
+  passed: false,
+  angular: require('@angular/core/package.json').version,
+};
+const run = (command, args, cwd = temporary, capture = false) =>
+  execFileSync(command, args, {
+    cwd,
+    env: { ...process.env, CI: 'true', NG_CLI_ANALYTICS: 'false' },
+    stdio: capture ? ['ignore', 'pipe', 'pipe'] : 'inherit',
+    encoding: 'utf8',
+  });
+const json = (name, value) =>
+  writeFile(path.join(temporary, name), `${JSON.stringify(value, null, 2)}\n`);
+const versions = (names) =>
+  Object.fromEntries(
+    names.map((name) => [name, require(`${name}/package.json`).version]),
+  );
+try {
+  await mkdir(artifacts, { recursive: true });
+  const tarballs = {};
+  for (const name of ['tokens', 'ui']) {
+    await access(path.join(artifacts, name, 'package.json'));
+    const packed = JSON.parse(
+      run(
+        'npm',
+        ['pack', '--json', '--pack-destination', temporary],
+        path.join(artifacts, name),
+        true,
+      ),
+    )[0];
+    tarballs[name] = `file:./${packed.filename}`;
+    if (
+      packed.files.some(({ path: file }) =>
+        /\.spec\.|\.stories\.|src\//.test(file),
+      )
+    ) {
+      throw new Error(`${name} tarball includes development sources`);
+    }
+    if (!packed.files.some(({ path: file }) => file.endsWith('.d.ts'))) {
+      throw new Error(`${name} tarball lacks declarations`);
+    }
+    if (
+      name === 'tokens' &&
+      !packed.files.some(({ path: file }) => file === 'tokens.css')
+    ) {
+      throw new Error('Token tarball lacks public stylesheet');
+    }
+  }
+  await json('package.json', {
+    name: 'jp-design-system-external-consumer-smoke',
+    version: '0.0.0',
+    private: true,
+    dependencies: {
+      ...versions([
+        '@angular/common',
+        '@angular/compiler',
+        '@angular/core',
+        '@angular/forms',
+        '@angular/platform-browser',
+        'rxjs',
+        'tslib',
+      ]),
+      '@jp-design-system/tokens': tarballs.tokens,
+      '@jp-design-system/ui': tarballs.ui,
+    },
+    devDependencies: versions([
+      '@angular-devkit/architect',
+      '@angular-devkit/core',
+      '@angular/build',
+      '@angular/compiler-cli',
+      'typescript',
+    ]),
+  });
+  await json('angular.json', {
+    version: 1,
+    projects: {
+      consumer: {
+        projectType: 'application',
+        root: '',
+        sourceRoot: 'src',
+        architect: {
+          build: {
+            builder: '@angular/build:application',
+            options: {
+              browser: 'src/main.ts',
+              index: 'src/index.html',
+              tsConfig: 'tsconfig.json',
+              outputPath: 'dist/consumer',
+              outputHashing: 'none',
+              styles: ['src/styles.css'],
+            },
+          },
+        },
+      },
+    },
+  });
+  await json('tsconfig.json', {
+    compilerOptions: {
+      target: 'ES2022',
+      module: 'preserve',
+      moduleResolution: 'bundler',
+      strict: true,
+      experimentalDecorators: true,
+      skipLibCheck: true,
+      lib: ['ES2022', 'DOM'],
+    },
+    angularCompilerOptions: { strictTemplates: true },
+    files: ['src/main.ts'],
+  });
+  await mkdir(path.join(temporary, 'src'));
+  await writeFile(
+    path.join(temporary, 'src/index.html'),
+    '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JP package smoke</title><base href="/"></head><body><smoke-root></smoke-root></body></html>',
+  );
+  await writeFile(
+    path.join(temporary, 'src/styles.css'),
+    '@import "@jp-design-system/tokens/tokens.css";\n@import "@jp-design-system/tokens/tokens.compact.css";\n',
+  );
+  await writeFile(
+    path.join(temporary, 'src/main.ts'),
+    `
+import { Component } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  JpButton, JpInput, JpCheckbox, JpRadioGroup, JpCombobox, JpProgress,
+  JpTable, JpTabs, JpTabPanel,
+  type JpRadioOption, type JpComboboxOption, type JpSortableTableColumn,
+  type JpTableCellValue, type JpTableRowKey, type JpTableSort, type JpTab,
+} from '@jp-design-system/ui';
+import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens';
+@Component({
+  selector: 'smoke-root',
+  imports: [
+    JpButton, JpInput, JpCheckbox, JpRadioGroup, JpCombobox, JpProgress,
+    JpTable, JpTabs, JpTabPanel, FormsModule, ReactiveFormsModule,
+  ],
+  template: \`
+    <main [attr.data-jp-accent]="accent">
+      <jp-input label="Template-driven name" [(ngModel)]="name" />
+      <jp-checkbox label="Accept terms" [(ngModel)]="accepted" [indeterminate]="true" />
+      <form [formGroup]="form">
+        <jp-input label="Project name" formControlName="project" required autocomplete="organization" />
+        <jp-radio-group label="Visibility" formControlName="visibility" [options]="visibilityOptions" required />
+        <jp-combobox label="Owner" formControlName="owner" [options]="ownerOptions" [loading]="false" required />
+        <jp-checkbox label="Notifications" formControlName="notifications" />
+        <jp-button type="submit" [loading]="saving" loadingLabel="Saving project" [disabled]="form.invalid">Save</jp-button>
+      </form>
+      <jp-progress label="Import progress" [value]="40" [max]="100" valueText="40 of 100 rows" />
+      <jp-tabs ariaLabel="Project details" [tabs]="tabs" [(selectedValue)]="activeTab">
+        <ng-template jpTabPanel="members">
+          <jp-table caption="Project members" [columns]="columns" [rows]="rows" rowKey="id"
+            [selectable]="true" [selectedKeys]="selectedKeys" (selectionChange)="selectedKeys = $event"
+            [sort]="sort" (sortChange)="sort = $event" />
+        </ng-template>
+        <ng-template jpTabPanel="settings">Project settings</ng-template>
+      </jp-tabs>
+    </main>
+  \`,
+})
+class ConsumerApp {
+  accent: JpAccentFamily = JP_DEFAULT_ACCENT;
+  name = 'Package consumer';
+  accepted = false;
+  saving = false;
+  readonly form = new FormGroup({
+    project: new FormControl('Smoke project', { nonNullable: true, validators: [Validators.required] }),
+    visibility: new FormControl('private', { nonNullable: true }),
+    owner: new FormControl('justin', { nonNullable: true }),
+    notifications: new FormControl(true, { nonNullable: true }),
+  });
+  readonly visibilityOptions: JpRadioOption[] = [
+    { value: 'private', label: 'Private' }, { value: 'team', label: 'Team' },
+  ];
+  readonly ownerOptions: JpComboboxOption[] = [
+    { value: 'justin', label: 'Justin' }, { value: 'team', label: 'Team' },
+  ];
+  readonly columns: JpSortableTableColumn[] = [{ key: 'name', header: 'Member', sortable: true }];
+  readonly rows: Record<string, JpTableCellValue>[] = [{ id: 'justin', name: 'Justin' }];
+  selectedKeys: JpTableRowKey[] = [];
+  sort: JpTableSort | null = null;
+  readonly tabs: JpTab[] = [{ value: 'members', label: 'Members' }, { value: 'settings', label: 'Settings' }];
+  activeTab = 'members';
+}
+bootstrapApplication(ConsumerApp).catch(console.error);
+`,
+  );
+  // Exact installed workspace versions, real tarballs, no workspace aliases/symlinks.
+  // Prefer cache; on cache miss use only the official registry.
+  try {
+    run('npm', [
+      'install',
+      '--offline',
+      '--no-audit',
+      '--no-fund',
+      '--registry=https://registry.npmjs.org',
+    ]);
+  } catch {
+    run('npm', [
+      'install',
+      '--no-audit',
+      '--no-fund',
+      '--registry=https://registry.npmjs.org',
+    ]);
+  }
+  // This isolated consumer is not an Nx workspace; use its own Angular builder.
+  const builder = path.join(temporary, 'build.mjs');
+  await writeFile(
+    builder,
+    `import { Architect } from '@angular-devkit/architect';
+import { WorkspaceNodeModulesArchitectHost } from '@angular-devkit/architect/node/index.js';
+import { workspaces } from '@angular-devkit/core';
+import { NodeJsSyncHost } from '@angular-devkit/core/node/index.js';
+const host = workspaces.createWorkspaceHost(new NodeJsSyncHost());
+const { workspace } = await workspaces.readWorkspace('angular.json', host);
+const architect = new Architect(new WorkspaceNodeModulesArchitectHost(workspace, process.cwd()));
+const run = await architect.scheduleTarget({project: 'consumer', target: 'build'});
+try { const result = await run.result; if (!result.success) process.exitCode = 1; }
+finally { await run.stop(); }
+`,
+  );
+  run(process.execPath, [builder]);
+  const css = await readFile(
+    path.join(temporary, 'dist/consumer/browser/styles.css'),
+    'utf8',
+  );
+  if (!css.includes('--jp-'))
+    throw new Error('Consumer output lacks bundled token CSS');
+  run(process.execPath, [
+    '--input-type=module',
+    '-e',
+    'import { JP_DEFAULT_ACCENT } from "@jp-design-system/tokens"; if (JP_DEFAULT_ACCENT !== "neon") throw new Error("Token ESM import failed")',
+  ]);
+  report.passed = true;
+  console.log(
+    `Isolated Angular ${report.angular} tarball consumer build passed.`,
+  );
+} catch (error) {
+  report.error = error.message;
+  throw error;
+} finally {
+  await mkdir(artifacts, { recursive: true });
+  await writeFile(
+    path.join(artifacts, 'consumer-smoke.json'),
+    `${JSON.stringify(report, null, 2)}\n`,
+  );
+  if (process.env.KEEP_CONSUMER_SMOKE === '1') {
+    console.log(`Consumer retained for diagnosis: ${temporary}`);
+  } else {
+    await rm(temporary, { recursive: true, force: true });
+  }
+}

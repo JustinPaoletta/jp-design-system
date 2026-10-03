@@ -1,0 +1,34 @@
+<div class="jp-textarea__field">
+  @if (label()) {
+  <label class="jp-textarea__label" [attr.for]="resolvedId()"
+    >{{ label() }}</label
+  >
+  }
+  <textarea
+    class="jp-textarea__control"
+    [attr.id]="resolvedId()"
+    [attr.rows]="rows()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.aria-invalid]="isInvalid() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.name]="name() || null"
+    [attr.autocomplete]="autocomplete() || null"
+    [required]="required()"
+    [attr.minlength]="minLength()"
+    [attr.maxlength]="maxLength()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonly()"
+    [value]="value()"
+    [style.--jp-field-min-height]="controlMinHeight()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  ></textarea>
+  @if (error()) {
+  <p class="jp-textarea__error" [attr.id]="errorId()" role="alert">
+    {{ error() }}
+  </p>
+  } @else if (hint()) {
+  <p class="jp-textarea__hint" [attr.id]="hintId()">{{ hint() }}</p>
+  }
+</div>

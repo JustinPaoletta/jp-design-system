@@ -1,0 +1,14 @@
+<button
+  class="jp-button__root"
+  [attr.type]="type()"
+  [disabled]="disabled() || loading()"
+  [attr.aria-busy]="loading() ? true : null"
+  [attr.aria-label]="loading() ? loadingLabel() : null"
+  [style.--jp-button-height]="rootHeight()"
+>
+  @if (loading()) {
+  <span class="jp-button__spinner" aria-hidden="true"></span>
+  <span class="jp-button__loading-label">{{ loadingLabel() }}</span>
+  }
+  <ng-content />
+</button>

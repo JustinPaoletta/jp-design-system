@@ -42,4 +42,11 @@ describe('JpGrid', () => {
     expect(component.columns()).toBe(3);
     expect(component.mode()).toBe('fixed');
   });
+
+  it('accepts numeric column values provided as strings', () => {
+    fixture.componentRef.setInput('columns', '2' as never);
+    fixture.detectChanges();
+
+    expect(component.columns()).toBe(2);
+  });
 });

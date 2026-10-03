@@ -1,0 +1,39 @@
+<div class="jp-select__field">
+  @if (label()) {
+  <label class="jp-select__label" [attr.for]="resolvedId()"
+    >{{ label() }}</label
+  >
+  }
+  <select
+    class="jp-select__control"
+    [attr.id]="resolvedId()"
+    [attr.aria-invalid]="isInvalid() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.name]="name() || null"
+    [attr.autocomplete]="autocomplete() || null"
+    [required]="required()"
+    [disabled]="isDisabled()"
+    [value]="value()"
+    [style.--jp-field-height]="controlHeight()"
+    (change)="onSelectChange($event)"
+    (blur)="onBlur()"
+  >
+    @for (option of options(); track option.value) {
+    <option
+      [value]="option.value"
+      [disabled]="option.disabled ?? false"
+      [selected]="option.value === value()"
+    >
+      {{ option.label }}
+    </option>
+    }
+  </select>
+  @if (error()) {
+  <p class="jp-select__error" [attr.id]="errorId()" role="alert">
+    {{ error() }}
+  </p>
+  } @else if (hint()) {
+  <p class="jp-select__hint" [attr.id]="hintId()">{{ hint() }}</p>
+  }
+</div>

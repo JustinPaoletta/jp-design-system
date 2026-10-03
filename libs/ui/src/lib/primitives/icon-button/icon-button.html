@@ -1,0 +1,11 @@
+<button
+  class="jp-icon-button__root"
+  [attr.type]="type()"
+  [attr.aria-label]="ariaLabel()"
+  [disabled]="disabled()"
+  [style.--jp-icon-button-size]="rootSize()"
+>
+  <span class="jp-icon-button__icon" aria-hidden="true">
+    <ng-content />
+  </span>
+</button>

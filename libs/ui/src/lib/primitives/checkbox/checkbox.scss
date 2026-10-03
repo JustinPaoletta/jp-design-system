@@ -1,0 +1,94 @@
+:host {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--jp-space-2xs);
+}
+
+.jp-checkbox__root {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--jp-space-sm);
+  cursor: pointer;
+  color: var(--jp-color-foreground-primary);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+
+.jp-checkbox__input {
+  position: absolute;
+  z-index: 1;
+  top: var(--jp-space-2xs);
+  left: 0;
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.jp-checkbox__box {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  margin-top: var(--jp-space-2xs);
+  border: 1px solid var(--jp-color-selection-checkbox-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-selection-checkbox-bg);
+  color: transparent;
+  transition: var(--jp-motion-transition-base);
+}
+
+.jp-checkbox__check {
+  width: var(--jp-size-icon-sm);
+  height: var(--jp-size-icon-sm);
+}
+
+:host(.jp-checkbox--checked) .jp-checkbox__box,
+:host(.jp-checkbox--indeterminate) .jp-checkbox__box {
+  background: var(--jp-color-selection-checkbox-bg-checked);
+  border-color: var(--jp-color-selection-checkbox-bg-checked);
+  color: var(--jp-color-selection-checkbox-fg);
+}
+
+.jp-checkbox__input:focus-visible + .jp-checkbox__box {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+
+:host(.jp-checkbox--invalid) .jp-checkbox__box {
+  border-color: var(--jp-color-field-border-invalid);
+}
+
+:host(.jp-checkbox--disabled) .jp-checkbox__root {
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.jp-checkbox__label {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-checkbox__box {
+    transition: none;
+  }
+}
+
+.jp-checkbox__hint,
+.jp-checkbox__error {
+  margin: 0;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-foreground-muted);
+}
+.jp-checkbox__error {
+  color: var(--jp-color-field-error);
+}

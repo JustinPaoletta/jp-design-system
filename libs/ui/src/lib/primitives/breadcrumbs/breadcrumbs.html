@@ -1,0 +1,18 @@
+<nav [attr.aria-label]="ariaLabel()">
+  <ol class="jp-breadcrumbs__list">
+    @for (item of items(); track $index; let last = $last) {
+    <li class="jp-breadcrumbs__item">
+      @if (last) {
+      <span class="jp-breadcrumbs__current" aria-current="page"
+        >{{ item.label }}</span
+      >
+      } @else if (item.href) {
+      <a class="jp-breadcrumbs__link" [href]="item.href">{{ item.label }}</a>
+      } @else {
+      <span>{{ item.label }}</span>
+      } @if (!last) {
+      <span class="jp-breadcrumbs__separator" aria-hidden="true">/</span> }
+    </li>
+    }
+  </ol>
+</nav>

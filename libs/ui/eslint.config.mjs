@@ -40,6 +40,14 @@ export default [
     },
   },
   {
+    files: ['**/*.spec.ts'],
+    rules: {
+      // Test hosts deliberately exercise imperative bindings with Eager detection.
+      // Angular 22's migration preserved their pre-upgrade behavior.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+    },
+  },
+  {
     files: ['**/*.html'],
     // Override or add rules here
     rules: {},

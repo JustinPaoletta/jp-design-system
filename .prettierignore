@@ -6,3 +6,9 @@
 .angular
 libs/tokens/src/generated/tokens.css
 libs/tokens/src/generated/tokens.compact.css
+pnpm-lock.yaml
+
+# Local browser automation artifacts (not source)
+.playwright-cli
+
+.nx/self-healing

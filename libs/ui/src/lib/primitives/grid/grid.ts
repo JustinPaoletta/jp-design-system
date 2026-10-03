@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,7 +26,7 @@ import {
 
 @Component({
   selector: 'jp-grid',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './grid.html',
   styleUrl: './grid.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

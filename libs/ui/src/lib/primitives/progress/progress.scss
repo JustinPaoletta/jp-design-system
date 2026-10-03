@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  overflow: hidden;
+  height: var(--jp-space-xs);
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-surface-emphasis);
+}
+.jp-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--jp-color-accent-solid);
+}
+:host(.jp-progress--indeterminate) .jp-progress__fill {
+  animation: jp-progress-slide calc(var(--jp-motion-duration-slow) * 4)
+    var(--jp-motion-easing-standard) infinite alternate;
+}
+@keyframes jp-progress-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :host(.jp-progress--indeterminate) .jp-progress__fill {
+    animation: none;
+  }
+}

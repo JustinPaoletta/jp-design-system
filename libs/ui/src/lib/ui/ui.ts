@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * @deprecated Temporary compatibility component.
- * Use phase 2 primitives from `@jp-design-system/ui` instead.
+ * Use layout and typography primitives from `@jp-design-system/ui` instead.
  */
 @Component({
   selector: 'lib-ui',
   imports: [],
   templateUrl: './ui.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './ui.scss',
 })
 export class Ui {}

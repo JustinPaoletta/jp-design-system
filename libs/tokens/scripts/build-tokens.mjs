@@ -91,7 +91,11 @@ function getByPath(object, pathValue) {
     .split('.')
     .reduce(
       (current, segment) =>
-        current && typeof current === 'object' ? current[segment] : undefined,
+        current &&
+        typeof current === 'object' &&
+        Object.hasOwn(current, segment)
+          ? current[segment]
+          : undefined,
       object,
     );
 }
@@ -145,7 +149,12 @@ function unwrapTokenTree(node, context, trail = []) {
 async function readJson(relativePath) {
   const filePath = path.join(TOKENS_ROOT, relativePath);
   const content = await fs.readFile(filePath, 'utf8');
-  return JSON.parse(content);
+  return JSON.parse(content, (key, value) => {
+    if (['__proto__', 'constructor', 'prototype'].includes(key)) {
+      throw new Error(`Unsafe token key in ${relativePath}: ${key}`);
+    }
+    return value;
+  });
 }
 
 async function loadTokenSources() {
@@ -157,6 +166,7 @@ async function loadTokenSources() {
     'primitives/radius.json',
     'primitives/elevation.json',
     'primitives/motion.json',
+    'primitives/z-index.json',
   ];
 
   let primitives = {};
@@ -255,6 +265,8 @@ export async function buildTokens({
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'jp-tokens-build-'));
 
   try {
+    // Validate every source before passing it to Style Dictionary or merging it.
+    const sources = await loadTokenSources();
     const variants = ['base', 'accentNeon', 'accentCobalt', 'compact'];
     for (const variant of variants) {
       await runStyleDictionaryVariant(variant, tempDir);
@@ -278,10 +290,15 @@ export async function buildTokens({
       ' */',
     ].join('\n');
 
-    const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n`;
+    // Fold the compact density overrides into the main bundle so that a single
+    // tokens.css import drives every runtime mode: `:root` defaults, the
+    // [data-jp-accent] swaps, and the [data-jp-density="compact"] block. The
+    // compact rule is appended last so it wins over `:root` (equal specificity)
+    // when the density attribute is present. tokens.compact.css is still emitted
+    // as a standalone partial for consumers that only want the overrides.
+    const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n\n${compactCss}\n`;
     const compactOutput = `${header}\n\n${compactCss}\n`;
 
-    const sources = await loadTokenSources();
     const resolvedJson = buildResolvedJson(sources);
 
     await fs.mkdir(resolvedOutputDir, { recursive: true });

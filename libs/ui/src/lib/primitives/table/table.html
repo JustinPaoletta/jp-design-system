@@ -1,0 +1,105 @@
+<div
+  class="jp-table__frame"
+  tabindex="0"
+  role="region"
+  [attr.aria-label]="caption() || 'Data table'"
+>
+  <table class="jp-table__root">
+    @if (caption()) {
+    <caption class="jp-table__caption">
+      {{ caption() }}
+    </caption>
+    }
+    <thead class="jp-table__head">
+      <tr>
+        @if (selectable()) {
+        <th class="jp-table__header jp-table__selection" scope="col">
+          <jp-checkbox
+            [ngModel]="allSelected()"
+            [indeterminate]="someSelected()"
+            [disabled]="pageKeys().length === 0"
+            (ngModelChange)="selectPage($event)"
+            ><span class="jp-table__sr-only"
+              >Select all rows on this page</span
+            ></jp-checkbox
+          >
+        </th>
+        } @for (column of columns(); track column.key) {
+        <th
+          class="jp-table__header"
+          scope="col"
+          [attr.aria-sort]="ariaSort(column)"
+          [class.jp-table__header--start]="columnAlign(column) === 'start'"
+          [class.jp-table__header--center]="columnAlign(column) === 'center'"
+          [class.jp-table__header--end]="columnAlign(column) === 'end'"
+        >
+          @if (column.sortable) {
+          <button
+            class="jp-table__sort"
+            type="button"
+            (click)="requestSort(column)"
+          >
+            {{ column.header }}
+            <span aria-hidden="true"
+              >{{ ariaSort(column) === 'ascending' ? '↑' : ariaSort(column) ===
+              'descending' ? '↓' : '↕' }}</span
+            >
+          </button>
+          } @else { {{ column.header }} }
+        </th>
+        }
+      </tr>
+    </thead>
+    @if (hasRows()) {
+    <tbody class="jp-table__body">
+      @for (row of rows(); track keyFor(row)) {
+      <tr
+        class="jp-table__row"
+        [class.jp-table__row--selected]="selectable() && isSelected(row)"
+      >
+        @if (selectable()) {
+        <td class="jp-table__cell jp-table__selection">
+          <jp-checkbox
+            [ngModel]="isSelected(row)"
+            [disabled]="!canSelect(row)"
+            (ngModelChange)="selectRow(row, $event)"
+            ><span class="jp-table__sr-only"
+              >Select {{ rowLabel()(row) }}</span
+            ></jp-checkbox
+          >
+        </td>
+        } @for (column of columns(); track column.key) {
+        <td
+          class="jp-table__cell"
+          [class.jp-table__cell--start]="columnAlign(column) === 'start'"
+          [class.jp-table__cell--center]="columnAlign(column) === 'center'"
+          [class.jp-table__cell--end]="columnAlign(column) === 'end'"
+        >
+          @if (cellTemplate(column.key); as template) {
+          <ng-container
+            [ngTemplateOutlet]="template"
+            [ngTemplateOutletContext]="{
+                      $implicit: cellValue(row, column.key),
+                      value: cellValue(row, column.key),
+                      row: row,
+                      column: column,
+                    }"
+          />
+          } @else { {{ displayValue(cellValue(row, column.key)) }} }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+    }
+  </table>
+
+  @if (!hasRows()) {
+  <div class="jp-table__empty">
+    <ng-content select="jp-empty-state" />
+    @if (!projectedEmpty()) {
+    <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
+    }
+  </div>
+  }
+</div>

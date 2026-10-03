@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+.jp-table-toolbar {
+  display: grid;
+  gap: var(--jp-space-sm);
+  padding-block: var(--jp-space-sm);
+}
+.jp-table-toolbar__controls,
+.jp-table-toolbar__selection,
+.jp-table-toolbar__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.jp-table-toolbar__search {
+  flex: 1;
+  min-width: 12rem;
+}
+.jp-table-toolbar__actions {
+  margin-inline-start: auto;
+}
+.jp-table-toolbar__selection {
+  color: var(--jp-color-table-caption-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+}
+.jp-table-toolbar__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
