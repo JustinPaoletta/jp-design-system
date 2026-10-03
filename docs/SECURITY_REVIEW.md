@@ -32,7 +32,7 @@ The full audit intentionally still exits nonzero. Do not run `npm audit fix --fo
 
 Application text, assistant messages, option labels, and table text render with Angular interpolation. No trusted-HTML bypass, raw `innerHTML`, `eval`, embedded application credential, or application transport endpoint was found in the reviewed source. Link values use Angular bindings; applications must still validate allowed destinations and own authorization. Build/test child processes use argument-based spawn/exec APIs rather than interpolated shell strings.
 
-A targeted credential-pattern scan of 373 candidate text files found no private-key blocks, GitHub tokens, AWS access-key IDs, or long hardcoded credential literals. It excluded unrelated local browser artifacts and skill files. This scan does not inspect Git history, external services, arbitrary binary files, or all possible secret formats. The consuming application still owns authentication, backend permission checks, transport cancellation, persistence, and LLM/content policy.
+A targeted credential-pattern scan of 376 candidate text files found no private-key blocks, GitHub tokens, AWS access-key IDs, or long hardcoded credential literals. It excluded unrelated local browser artifacts and skill files. This scan does not inspect Git history, external services, arbitrary binary files, or all possible secret formats. The consuming application still owns authentication, backend permission checks, transport cancellation, persistence, and LLM/content policy.
 
 ## Validation boundary
 

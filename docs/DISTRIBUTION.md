@@ -7,7 +7,7 @@ The repository builds two local npm packages:
 | `@jp-design-system/ui`     | `dist/packages/ui`     | Angular components, directives, services, and types from `libs/ui/src/index.ts` |
 | `@jp-design-system/tokens` | `dist/packages/tokens` | Typed token utilities; `tokens.css`, `tokens.compact.css`, and `tokens.json`    |
 
-UI uses Angular Package Format, ESM bundles, declarations, and partial Angular compilation through `ng-packagr`. Component styles are bundled with the components. Tokens are emitted as native ES modules with declarations and explicit stylesheet exports. Distribution metadata is separate from the existing workspace token metadata.
+UI uses Angular Package Format, ESM bundles, declarations, and partial Angular compilation through `ng-packagr`. Component styles are bundled with the components. Tokens are emitted as native ES modules with declarations and explicit stylesheet exports. Distribution metadata is separate from the existing workspace token metadata. Dedicated `README.package.md` guides are copied into the built packages, so installed consumers receive public import examples instead of workspace-relative documentation links.
 
 The UI peer contract is Angular `^22.2.1` and RxJS `^7.8.0`. Keep Angular packages on the same version in a consuming application. Angular 21 compatibility is not claimed. Use the supported project Node version documented in the repository before installing or building.
 

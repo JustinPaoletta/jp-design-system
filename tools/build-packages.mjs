@@ -51,11 +51,15 @@ await cp(
   path.join(tokensOutput, 'package.json'),
 );
 await cp(
-  path.join(root, 'libs/tokens/README.md'),
+  path.join(root, 'libs/tokens/README.package.md'),
   path.join(tokensOutput, 'README.md'),
 );
 await ngPackagr()
   .forProject(path.join(root, 'libs/ui/ng-package.json'))
   .withTsConfig(path.join(root, 'libs/ui/tsconfig.packaging.json'))
   .build();
+await cp(
+  path.join(root, 'libs/ui/README.package.md'),
+  path.join(output, 'ui/README.md'),
+);
 console.log('Built local packages: dist/packages/tokens and dist/packages/ui');
