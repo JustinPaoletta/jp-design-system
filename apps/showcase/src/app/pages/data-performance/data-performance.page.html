@@ -1,0 +1,59 @@
+<div class="page">
+  <jp-page-header
+    title="Charts and large datasets"
+    description="Service analytics with equivalent data access and a bounded 10,000-row table."
+    ><a jpPageActions jpLink routerLink="/hierarchy">Hierarchy</a
+    ><a jpPageActions jpLink routerLink="/scheduling">Scheduling</a
+    ><a jpPageActions jpLink routerLink="/interaction-tools"
+      >Interaction tools</a
+    ></jp-page-header
+  >
+  <jp-card title="Delivery trends"
+    ><div class="actions">
+      <jp-button
+        variant="secondary"
+        (click)="type.set(type() === 'bar' ? 'line' : 'bar')"
+        >{{ type() === 'bar' ? 'Show line chart' : 'Show bar chart'
+        }}</jp-button
+      >
+    </div>
+    <jp-chart
+      id="delivery-chart"
+      label="Completed work by team"
+      description="Monthly delivery counts from April through September. Series controls and the data table provide the same information as the plot."
+      [labels]="labels"
+      [series]="series"
+      [type]="type()"
+  /></jp-card>
+  <jp-card title="Service inventory"
+    ><p>
+      10,000 fixed-height rows. Scroll to browse or switch to paginated rows for
+      complete table navigation. Sorting and selection are controlled by this
+      screen.
+    </p>
+    <details class="rendering-options">
+      <summary>Rendering options</summary>
+      <jp-number-stepper
+        id="inventory-overscan"
+        label="Extra rows around viewport"
+        hint="Compare a minimal window with buffered scrolling. Zero renders only visible rows."
+        [min]="0"
+        [max]="50"
+        [ngModel]="overscan()"
+        (ngModelChange)="overscan.set($event ?? 6)"
+      />
+    </details>
+    <jp-virtual-table
+      label="Large service inventory"
+      [columns]="columns"
+      [rows]="rows()"
+      [overscan]="overscan()"
+      selectable
+      [selectedKeys]="selected()"
+      (selectionChange)="selected.set($event)"
+      [sort]="sort()"
+      (sortChange)="sort.set($event)"
+    />
+    <p role="status">{{ selected().length }} services selected</p></jp-card
+  >
+</div>

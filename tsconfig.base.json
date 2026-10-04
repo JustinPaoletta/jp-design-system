@@ -19,7 +19,8 @@
       "@jp-design-system/ui": ["libs/ui/src/index.ts"],
       "@jp-design-system/tokens/tokens.json": [
         "libs/tokens/src/generated/tokens.json"
-      ]
+      ],
+      "@jp-design-system/ui/primitives/*": ["libs/ui/src/lib/primitives/*"]
     },
     "strict": false,
     "noUncheckedSideEffectImports": false,

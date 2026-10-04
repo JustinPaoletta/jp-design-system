@@ -1,0 +1,86 @@
+<section
+  role="region"
+  [attr.aria-label]="label()"
+  [attr.aria-roledescription]="messages.carouselRole"
+>
+  <div class="controls">
+    @if (autoRotate() && slides().length > 1) {
+    <button
+      type="button"
+      [disabled]="disabled() || reducedMotion()"
+      (click)="toggleRotation()"
+    >
+      {{ rotating() ? messages.pause : messages.play }}
+    </button>
+    }
+    <button
+      #previous
+      type="button"
+      [disabled]="disabled() || slides().length < 2 || (!loop() && current() === 0)"
+      (click)="step(-1)"
+    >
+      {{ messages.previous }}
+    </button>
+    <span class="position"><bdi>{{ position() }}</bdi></span>
+    <button
+      type="button"
+      [disabled]="disabled() || slides().length < 2 || (!loop() && current() === slides().length - 1)"
+      (click)="step(1)"
+    >
+      {{ messages.next }}
+    </button>
+  </div>
+  <div
+    #viewport
+    class="viewport"
+    role="group"
+    tabindex="0"
+    [attr.aria-label]="label()"
+    (keydown)="onKey($event)"
+    (pointerdown)="pointerStart($event)"
+    (pointerup)="pointerEnd($event)"
+    (pointercancel)="pointerEnd($event, true)"
+    (lostpointercapture)="pointerEnd($event, true)"
+  >
+    @for (slide of slides(); track slide.key(); let i = $index) {
+    <div
+      class="slide"
+      role="group"
+      [attr.aria-roledescription]="messages.slideRole"
+      [attr.aria-label]="slide.label() || messages.slide({ index: i + 1, total: slides().length })"
+      [id]="id() + '-slide-' + i"
+      [attr.data-slide]="i"
+      [hidden]="i !== current()"
+      [attr.inert]="i !== current() ? '' : null"
+    >
+      <ng-container [ngTemplateOutlet]="slide.template" />
+    </div>
+    } @empty {
+    <p class="empty">{{ messages.empty }}</p>
+    }
+  </div>
+  @if (slides().length > 1) {
+  <div class="pickers" role="group" [attr.aria-label]="messages.chooseLabel">
+    @for (slide of slides(); track slide.key(); let i = $index) {
+    <button
+      type="button"
+      [disabled]="disabled()"
+      [attr.aria-label]="slide.label() || messages.choose(i + 1)"
+      [attr.aria-controls]="id() + '-slide-' + i"
+      [attr.aria-disabled]="i === current()"
+      [class.current]="i === current()"
+      (click)="choose(i)"
+    >
+      <span aria-hidden="true">{{ i + 1 }}</span>
+    </button>
+    }
+  </div>
+  }
+  <p
+    class="sr-only"
+    [attr.aria-live]="running() ? 'off' : 'polite'"
+    aria-atomic="true"
+  >
+    {{ position() }}
+  </p>
+</section>

@@ -1,16 +1,39 @@
 import { Route } from '@angular/router';
 import { ShellLayout } from './layout/shell-layout';
-import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
-import { AppShellPage } from './pages/app-shell/app-shell.page';
-import { ControlsPage } from './pages/controls/controls.page';
-import { OverlaysPage } from './pages/overlays/overlays.page';
-import { AssistantPage } from './pages/assistant/assistant.page';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     component: ShellLayout,
     children: [
+      {
+        path: 'hierarchy',
+        loadComponent: () =>
+          import('./pages/hierarchy/hierarchy.page').then(
+            (m) => m.HierarchyPage,
+          ),
+      },
+      {
+        path: 'scheduling',
+        loadComponent: () =>
+          import('./pages/scheduling/scheduling.page').then(
+            (m) => m.SchedulingPage,
+          ),
+      },
+      {
+        path: 'interaction-tools',
+        loadComponent: () =>
+          import('./pages/interaction-tools/interaction-tools.page').then(
+            (m) => m.InteractionToolsPage,
+          ),
+      },
+      {
+        path: 'data-performance',
+        loadComponent: () =>
+          import('./pages/data-performance/data-performance.page').then(
+            (m) => m.DataPerformancePage,
+          ),
+      },
       {
         path: 'advanced-layout',
         loadComponent: () =>
@@ -53,15 +76,22 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'layout-dashboard',
-        component: LayoutDashboardPage,
+        loadComponent: () =>
+          import('./pages/layout-dashboard/layout-dashboard.page').then(
+            (m) => m.LayoutDashboardPage,
+          ),
       },
       {
         path: 'app-shell',
-        component: AppShellPage,
+        loadComponent: () =>
+          import('./pages/app-shell/app-shell.page').then(
+            (m) => m.AppShellPage,
+          ),
       },
       {
         path: 'controls',
-        component: ControlsPage,
+        loadComponent: () =>
+          import('./pages/controls/controls.page').then((m) => m.ControlsPage),
       },
       {
         path: 'data',
@@ -70,11 +100,15 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'overlays',
-        component: OverlaysPage,
+        loadComponent: () =>
+          import('./pages/overlays/overlays.page').then((m) => m.OverlaysPage),
       },
       {
         path: 'assistant',
-        component: AssistantPage,
+        loadComponent: () =>
+          import('./pages/assistant/assistant.page').then(
+            (m) => m.AssistantPage,
+          ),
       },
     ],
   },

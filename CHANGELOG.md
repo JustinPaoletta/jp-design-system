@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Add preview tree view, native hierarchical table, timezone-aware scheduling calendar,
+  accessible reordering, optional carousel, Chart.js bar/line integration and fixed-height
+  virtual table with a native paginated alternative. Include four lazy consumer screens,
+  localized contracts, semantic chart tokens and unit/Storybook/browser/package verification.
+
 - Add preview split panes and resilient image frames, plus table column visibility,
   validated preference persistence, sticky regions, expandable details, and pointer/exact
   column resizing. Include a lazy Showcase workspace, localized copy, public APIs,

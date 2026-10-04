@@ -1,0 +1,142 @@
+<div class="modes">
+  <button
+    type="button"
+    [attr.aria-pressed]="virtual()"
+    (click)="chooseMode(true)"
+  >
+    {{ messages.virtualTable.virtual }}</button
+  ><button
+    type="button"
+    [attr.aria-pressed]="!virtual()"
+    (click)="chooseMode(false)"
+  >
+    {{ messages.virtualTable.pages }}
+  </button>
+</div>
+<div [attr.aria-busy]="loading()">
+  @if (loading()) {
+  <p role="status">{{ messages.virtualTable.loading }}</p>
+  } @else if (error()) {
+  <p role="alert">{{ error() }}</p>
+  <jp-button variant="secondary" (click)="retry.emit()"
+    >{{ messages.virtualTable.retry }}</jp-button
+  >
+  } @else if (invalid()) {
+  <p role="alert">{{ messages.virtualTable.invalid }}</p>
+  } @else if (virtual()) {
+  <div
+    #frame
+    class="frame"
+    tabindex="0"
+    role="region"
+    [attr.aria-label]="label()"
+    [style.block-size.px]="safeHeight()"
+    [style.--row-height]="safeRowHeight() + 'px'"
+    (scroll)="onScroll($event)"
+  >
+    <table
+      [attr.aria-rowcount]="rows().length + 1"
+      [attr.aria-colcount]="columnCount()"
+    >
+      <caption class="sr-only">
+        {{ label() }}
+      </caption>
+      <thead>
+        <tr aria-rowindex="1">
+          @if (selectable()) {
+          <th scope="col" class="selection" aria-colindex="1">
+            <span class="sr-only">{{ messages.table.selectRow(label()) }}</span>
+          </th>
+          } @for (column of columns(); track column.key; let i = $index) {
+          <th
+            scope="col"
+            [attr.aria-colindex]="i + 1 + (selectable() ? 1 : 0)"
+            [attr.aria-sort]="ariaSort(column)"
+            [style.width.px]="column.width || null"
+          >
+            @if (column.sortable) {
+            <button type="button" (click)="requestSort(column)">
+              {{ column.header }}
+              <span aria-hidden="true"
+                >{{ ariaSort(column) === 'ascending' ? '↑' : ariaSort(column)
+                === 'descending' ? '↓' : '↕' }}</span
+              >
+            </button>
+            } @else { {{ column.header }} }
+          </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @if (range().start > 0) {
+        <tr aria-hidden="true" class="spacer">
+          <td
+            [attr.colspan]="columnCount()"
+            [style.height.px]="range().start * safeRowHeight()"
+          ></td>
+        </tr>
+        } @for (row of visible(); track keyFor(row); let i = $index) {
+        <tr
+          [attr.data-row-index]="range().start + i"
+          [attr.data-row-key]="rowToken(row)"
+          [attr.aria-rowindex]="range().start + i + 2"
+          [class.selected]="selectedKeys().includes(keyFor(row)!)"
+        >
+          @if (selectable()) {
+          <td class="selection" aria-colindex="1">
+            <span
+              ><jp-checkbox
+                [ngModel]="selectedKeys().includes(keyFor(row)!)"
+                (ngModelChange)="select(row, $event)"
+                ><span class="sr-only"
+                  >{{ messages.table.selectRow(rowLabel(row)) }}</span
+                ></jp-checkbox
+              ></span
+            >
+          </td>
+          } @for (column of columns(); track column.key; let c = $index) {
+          <td
+            [attr.aria-colindex]="c + 1 + (selectable() ? 1 : 0)"
+            [style.text-align]="column.align || 'start'"
+          >
+            <span [title]="text(row[column.key])"
+              >{{ text(row[column.key]) }}</span
+            >
+          </td>
+          }
+        </tr>
+        } @if (range().end < rows().length) {
+        <tr aria-hidden="true" class="spacer">
+          <td
+            [attr.colspan]="columnCount()"
+            [style.height.px]="(rows().length - range().end) * safeRowHeight()"
+          ></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    @if (!rows().length) {
+    <p>{{ messages.virtualTable.empty }}</p>
+    }
+  </div>
+  <p class="range">{{ rangeLabel() }}</p>
+  } @else {
+  <jp-table
+    [caption]="label()"
+    [columns]="columns()"
+    [rows]="pagedRows()"
+    [rowKey]="rowKey()"
+    [selectable]="selectable()"
+    [selectedKeys]="selectedKeys()"
+    (selectionChange)="selectionChange.emit($event)"
+    [sort]="sort()"
+    (sortChange)="sortChange.emit($event)"
+  />
+  <jp-pagination
+    [page]="currentPage()"
+    [pageSize]="safePageSize()"
+    [total]="rows().length"
+    (pageChange)="page.set($event)"
+  />
+  }
+</div>

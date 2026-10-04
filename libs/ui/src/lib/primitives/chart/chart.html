@@ -1,0 +1,99 @@
+<figure [attr.aria-busy]="loading()">
+  <figcaption>{{ label() }}</figcaption>
+  @if (description()) {
+  <p [id]="id() + '-description'">{{ description() }}</p>
+  } @if (loading()) {
+  <p role="status">{{ messages.loading }}</p>
+  } @else if (error()) {
+  <p role="alert">{{ error() }}</p>
+  <jp-button variant="secondary" (click)="retry.emit()"
+    >{{ messages.retry }}</jp-button
+  >
+  } @else if (invalid()) {
+  <p role="alert">{{ messages.invalid }}</p>
+  } @else if (!labels().length || !series().length) {
+  <p>{{ messages.empty }}</p>
+  } @else {
+  <div class="legend" role="group" [attr.aria-label]="messages.series">
+    @for (item of series(); track item.id; let i = $index) {
+    <button
+      type="button"
+      [attr.aria-pressed]="!hiddenSeries().includes(item.id)"
+      (click)="toggle(item.id)"
+    >
+      <span
+        class="swatch"
+        aria-hidden="true"
+        [style.background]="'var(--jp-color-chart-series-' + (i + 1) + ')'"
+        >{{ i + 1 }}</span
+      >{{ item.label }}
+    </button>
+    }
+  </div>
+  @if (visible().length) {
+  <div class="plot" [attr.data-rendered]="rendered()">
+    <canvas
+      #canvas
+      role="img"
+      [attr.aria-label]="label()"
+      [attr.aria-describedby]="description() ? id() + '-description' : null"
+    ></canvas>
+  </div>
+  } @else {
+  <p>{{ messages.empty }}</p>
+  } @if (engineError()) {
+  <p role="status">{{ messages.failed }}</p>
+  }
+  <label class="inspect"
+    >{{ messages.category }}<select
+      [value]="index()"
+      (change)="inspect($event)"
+    >
+      @for (category of labels(); track $index; let i = $index) {
+      <option [value]="i">{{ category }}</option>
+      }
+    </select></label
+  >
+  <dl aria-live="polite">
+    @for (item of visible(); track item.id) {
+    <div>
+      <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
+      <dd>{{ format(item.values[index()]) }}</dd>
+    </div>
+    }
+  </dl>
+  <details [open]="forcedColors()">
+    <summary>{{ messages.data }}</summary>
+    <div
+      class="data"
+      tabindex="0"
+      role="region"
+      [attr.aria-label]="messages.data"
+    >
+      <table>
+        <caption>
+          {{ label() }}
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">{{ messages.category }}</th>
+            @for (item of series(); track item.id) {
+            <th scope="col">{{ item.label }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of labels(); track $index; let i = $index) {
+          <tr>
+            <th scope="row">{{ category }}</th>
+            @for (item of series(); track item.id) {
+            <td>{{ format(item.values[i]) }}</td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </details>
+  }
+</figure>

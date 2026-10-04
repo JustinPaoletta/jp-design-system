@@ -1,23 +1,18 @@
 # Component Expansion Task List
 
-Updated: October 4, 2026. Remaining work: seven feature items and five promotion and
-integration items. Completed work is documented in the
+Updated: October 4, 2026. Remaining work: five promotion and integration items.
+Completed feature work is documented in the
 [component APIs and limits](docs/COMPONENT_EXPANSION.md),
 [workflow component APIs](docs/WORKFLOW_COMPONENTS.md),
-[advanced layout and table APIs](docs/ADVANCED_LAYOUT_COMPONENTS.md), and
+[advanced layout and table APIs](docs/ADVANCED_LAYOUT_COMPONENTS.md),
+[hierarchy APIs](docs/HIERARCHY_COMPONENTS.md),
+[scheduling calendar API](docs/SCHEDULING_CALENDAR.md),
+[reordering and carousel APIs](docs/INTERACTION_COMPONENTS.md),
+[chart and virtual-table APIs](docs/DATA_PERFORMANCE_COMPONENTS.md),
+[larger feature verification](docs/qa/LARGE_FEATURES.md), and
 [changelog](CHANGELOG.md). Implemented components remain preview APIs pending
 the promotion checks below. This file complements
 [PROFESSIONAL_READINESS_PLAN.md](PROFESSIONAL_READINESS_PLAN.md).
-
-## Larger features: design and consumer use case first
-
-- [ ] Tree view: define navigation/selection model, expansion, lazy loading, and keyboard contract
-- [ ] Tree table: define hierarchical rows and table-versus-grid semantics
-- [ ] Scheduling calendar: distinguish appointment layouts from the date-picker calendar
-- [ ] Table virtualization after measuring actual row-count/performance requirements
-- [ ] Carousel after identifying a product use case; include keyboard, touch, motion, and pause behavior
-- [ ] Charts: select an integration and define semantic series colors, formatting, legends, tooltips, and accessible alternatives
-- [ ] Drag-and-drop/reordering with keyboard alternatives and announcements
 
 ## Promotion and integration follow-up
 

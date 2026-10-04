@@ -7,6 +7,96 @@ import { InjectionToken, inject, type Provider } from '@angular/core';
  * existed. Count functions receive raw numbers; they do not call Intl.
  */
 export interface JpMessages {
+  tree: {
+    empty: string;
+    loading: string;
+    failed: string;
+    retry: string;
+    expand: (label: string) => string;
+    collapse: (label: string) => string;
+  };
+  calendar: {
+    previous: string;
+    next: string;
+    today: string;
+    day: string;
+    week: string;
+    agenda: string;
+    schedule: string;
+    invalid: string;
+    empty: string;
+    loading: string;
+    failed: string;
+    retry: string;
+    allDay: string;
+    events: (count: number) => string;
+    invalidEvents: (count: number) => string;
+  };
+  reorder: {
+    moveUp: string;
+    moveDown: string;
+    pickUp: string;
+    drop: string;
+    cancel: string;
+    empty: string;
+    instructions: string;
+    picked: (label: string) => string;
+    moved: ({
+      label,
+      position,
+      total,
+    }: {
+      label: string;
+      position: number;
+      total: number;
+    }) => string;
+    dropped: (label: string) => string;
+    cancelled: (label: string) => string;
+  };
+  carousel: {
+    previous: string;
+    next: string;
+    pause: string;
+    play: string;
+    empty: string;
+    carouselRole: string;
+    slideRole: string;
+    chooseLabel: string;
+    slide: ({ index, total }: { index: number; total: number }) => string;
+    choose: (index: number) => string;
+  };
+  chart: {
+    data: string;
+    category: string;
+    empty: string;
+    loading: string;
+    failed: string;
+    retry: string;
+    invalid: string;
+    series: string;
+    value: string;
+    missing: string;
+  };
+  virtualTable: {
+    invalid: string;
+    virtual: string;
+    pages: string;
+    previous: string;
+    next: string;
+    empty: string;
+    loading: string;
+    failed: string;
+    retry: string;
+    range: ({
+      start,
+      end,
+      total,
+    }: {
+      start: number;
+      end: number;
+      total: number;
+    }) => string;
+  };
   media: { loading: string; error: string };
   actions: { more: string; skip: string };
   dates: { start: string; end: string };
@@ -163,6 +253,84 @@ export type JpMessagesOverride = {
 };
 
 export const JP_DEFAULT_MESSAGES: JpMessages = {
+  tree: {
+    empty: 'No items',
+    loading: 'Loading items…',
+    failed: 'Could not load items',
+    retry: 'Retry',
+    expand: (label) => `Expand ${label}`,
+    collapse: (label) => `Collapse ${label}`,
+  },
+  calendar: {
+    previous: 'Previous',
+    next: 'Next',
+    today: 'Today',
+    day: 'Day',
+    week: 'Week',
+    agenda: 'Agenda',
+    schedule: 'Schedule',
+    invalid: 'Check the date, locale, and time zone.',
+    empty: 'No appointments',
+    loading: 'Loading appointments…',
+    failed: 'Could not load appointments',
+    retry: 'Retry',
+    allDay: 'All day',
+    events: (count) => `${count} appointments`,
+    invalidEvents: (count) =>
+      `${count} appointments could not be displayed. Check their dates and identifiers.`,
+  },
+  reorder: {
+    moveUp: 'Move up',
+    moveDown: 'Move down',
+    pickUp: 'Reorder',
+    drop: 'Drop',
+    cancel: 'Cancel',
+    empty: 'No items',
+    instructions:
+      'Press Space to pick up an item, use arrow keys to move it, then Space to drop or Escape to cancel.',
+    picked: (label) => `Picked up ${label}`,
+    moved: ({ label, position, total }) =>
+      `${label}, position ${position} of ${total}`,
+    dropped: (label) => `Dropped ${label}`,
+    cancelled: (label) => `Cancelled reordering ${label}`,
+  },
+  carousel: {
+    previous: 'Previous slide',
+    next: 'Next slide',
+    pause: 'Pause rotation',
+    play: 'Start rotation',
+    empty: 'No slides',
+    carouselRole: 'carousel',
+    slideRole: 'slide',
+    chooseLabel: 'Choose slide',
+    slide: ({ index, total }) => `Slide ${index} of ${total}`,
+    choose: (index) => `Go to slide ${index}`,
+  },
+  chart: {
+    data: 'View chart data',
+    category: 'Inspect category',
+    empty: 'No chart data',
+    loading: 'Loading chart…',
+    failed: 'Chart unavailable',
+    retry: 'Retry',
+    invalid: 'Check chart labels, series identifiers, and numeric values.',
+    series: 'Series',
+    value: 'Value',
+    missing: 'No value',
+  },
+  virtualTable: {
+    invalid:
+      'Rows must have unique identifiers and columns must have unique keys.',
+    virtual: 'Scrollable rows',
+    pages: 'Paginated rows',
+    previous: 'Previous page',
+    next: 'Next page',
+    empty: 'No rows',
+    loading: 'Loading rows…',
+    failed: 'Could not load rows',
+    retry: 'Retry',
+    range: ({ start, end, total }) => `${start}–${end} of ${total} rows`,
+  },
   media: { loading: 'Loading image…', error: 'Image unavailable' },
   actions: { more: 'More actions', skip: 'Skip to content' },
   dates: { start: 'Start date', end: 'End date' },
@@ -321,6 +489,12 @@ export function mergeJpMessages(
   overrides: JpMessagesOverride = {},
 ): JpMessages {
   return {
+    tree: { ...base.tree, ...overrides.tree },
+    calendar: { ...base.calendar, ...overrides.calendar },
+    reorder: { ...base.reorder, ...overrides.reorder },
+    carousel: { ...base.carousel, ...overrides.carousel },
+    chart: { ...base.chart, ...overrides.chart },
+    virtualTable: { ...base.virtualTable, ...overrides.virtualTable },
     media: { ...base.media, ...overrides.media },
     actions: { ...base.actions, ...overrides.actions },
     dates: { ...base.dates, ...overrides.dates },

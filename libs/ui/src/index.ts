@@ -99,3 +99,42 @@ export * from './lib/primitives/live-announcer/live-announcer';
 export * from './lib/primitives/split-pane/split-pane';
 export * from './lib/primitives/media/media';
 export * from './lib/primitives/table/table-preferences';
+
+export { JpChart, type JpChartSeries } from './lib/primitives/chart/chart';
+export {
+  JpVirtualTable,
+  jpVirtualRange,
+  type JpVirtualRange,
+} from './lib/primitives/virtual-table/virtual-table';
+
+export {
+  JpTreeView,
+  type JpTreeNode,
+  type JpTreeLoadState,
+  type JpTreeSelection,
+} from './lib/primitives/tree-view/tree-view';
+export {
+  JpTreeTable,
+  type JpTreeTableRow,
+  type JpTreeTableColumn,
+} from './lib/primitives/tree-table/tree-table';
+export {
+  JpReorder,
+  JpReorderContent,
+  type JpReorderItem,
+  type JpReorderContext,
+} from './lib/primitives/reorder/reorder';
+export {
+  JpCarousel,
+  JpCarouselSlide,
+} from './lib/primitives/carousel/carousel';
+export { JpSchedulingCalendar } from './lib/primitives/scheduling-calendar/scheduling-calendar';
+export {
+  type JpCalendarEvent,
+  type JpCalendarLayout,
+  type JpCalendarDay,
+  type JpCalendarPlacement,
+  buildJpCalendarLayout,
+  isJpCalendarDate,
+  addJpCalendarDays,
+} from './lib/primitives/scheduling-calendar/calendar-layout';

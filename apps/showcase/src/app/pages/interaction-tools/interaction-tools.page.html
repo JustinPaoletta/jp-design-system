@@ -1,0 +1,70 @@
+<div class="page">
+  <jp-page-header
+    title="Interaction tools"
+    description="Prioritize work and browse reference cards with explicit controls."
+  />
+  <jp-card title="Release priorities">
+    <div class="toolbar">
+      <jp-button variant="secondary" (click)="reset()"
+        >Reset priorities</jp-button
+      >
+      <p>{{ storageStatus() }}</p>
+    </div>
+    <jp-reorder
+      id="release-priorities"
+      label="Release priorities"
+      [items]="priorities"
+      [order]="order()"
+      (orderChange)="save($event)"
+    />
+  </jp-card>
+  <jp-card title="Workspace reference cards">
+    <p>
+      Browse a short onboarding guide. Navigation keeps your place and does not
+      rotate automatically.
+    </p>
+    <jp-carousel
+      id="workspace-guide"
+      label="Workspace reference"
+      [index]="slide()"
+      (indexChange)="slide.set($event)"
+    >
+      <ng-template jpCarouselSlide="team" label="Invite your team">
+        <h2>Invite your team</h2>
+        <p>
+          Give each workspace a clear owner and invite the people who will use
+          it.
+        </p>
+        <jp-button
+          variant="secondary"
+          (click)="action.set('Invitations opened')"
+          >Open invitations</jp-button
+        >
+      </ng-template>
+      <ng-template jpCarouselSlide="priorities" label="Set priorities">
+        <h2>Set priorities</h2>
+        <p>
+          Choose a few concrete outcomes. Keep work ordered so everyone knows
+          what comes next.
+        </p>
+        <label for="workspace-note">Workspace note</label
+        ><input
+          id="workspace-note"
+          [value]="note()"
+          (input)="updateNote($event)"
+        />
+      </ng-template>
+      <ng-template jpCarouselSlide="review" label="Review progress">
+        <h2>Review progress</h2>
+        <p>
+          Check completed work, gather feedback, and adjust the next priorities
+          together.
+        </p>
+        <jp-button variant="secondary" (click)="action.set('Review scheduled')"
+          >Schedule a review</jp-button
+        >
+      </ng-template>
+    </jp-carousel>
+    <p role="status" aria-live="polite">{{ action() }}</p>
+  </jp-card>
+</div>

@@ -1,0 +1,59 @@
+<div class="page">
+  <jp-page-header
+    title="Scheduling calendar"
+    description="Day and week appointments, readable agendas, and explicit time zones."
+  />
+  <div class="actions">
+    <jp-button variant="secondary" (click)="showDst()"
+      >Inspect clock change</jp-button
+    >
+    <jp-button variant="secondary" (click)="reset()">Reset schedule</jp-button>
+    <label
+      >Time zone
+      <select [value]="zone()" (change)="zone.set($any($event.target).value)">
+        <option value="America/New_York">America/New_York</option>
+        <option value="UTC">UTC</option>
+        <option value="Europe/London">Europe/London</option>
+      </select></label
+    >
+    <jp-button
+      variant="ghost"
+      (click)="state.set(state() === 'loading' ? 'ready' : 'loading')"
+      >{{ state() === 'loading' ? 'Restore schedule' : 'Show loading'
+      }}</jp-button
+    >
+    <jp-button variant="ghost" (click)="state.set('error')"
+      >Show calendar error</jp-button
+    >
+  </div>
+  <jp-card>
+    <jp-scheduling-calendar
+      label="Team appointments"
+      [(date)]="date"
+      [(view)]="view"
+      [events]="appointments"
+      [timeZone]="zone()"
+      today="2026-10-05"
+      [loading]="state() === 'loading'"
+      [error]="state() === 'error' ? 'Appointments could not be loaded.' : ''"
+      (retry)="state.set('ready')"
+      (eventActivated)="selected.set($event)"
+    />
+  </jp-card>
+  <jp-card>
+    <aside aria-label="Appointment details">
+      <h2>{{ selected()?.title ?? 'Appointment details' }}</h2>
+      <p role="status">{{ detail() }}</p>
+      @if (selected()) {
+      <p>{{ selected()?.start }} — {{ selected()?.end }}</p>
+      <jp-button variant="secondary" (click)="selected.set(null)"
+        >Close details</jp-button
+      >
+      }
+    </aside>
+  </jp-card>
+  <p class="note">
+    Dates are deterministic in this example. Appointment editing, recurrence,
+    permissions, and invitations belong to the consuming application.
+  </p>
+</div>

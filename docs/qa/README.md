@@ -36,3 +36,5 @@ Commands and results are filled in [MANUAL_QA.md](../../MANUAL_QA.md) under
 [Everyday workflows verification](WORKFLOWS.md) records the third batch, native-picker limits, visual matrix, and remaining manual review.
 
 [Advanced layout verification](ADVANCED_LAYOUT.md) covers adjustable panes, images, column preferences, pinned regions, resizing and row details.
+
+[Larger feature verification](LARGE_FEATURES.md) covers all seven remaining component features and promotion limits.

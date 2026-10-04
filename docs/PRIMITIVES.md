@@ -592,3 +592,12 @@ Showcase pages show live `accent` / `density` readouts from `data-jp-accent` and
 Command palette, context menu, native date/range/time fields, file upload queue, notification inbox, button group/toggle/split, inline editing, skip link and announcement outlet/service are documented in [WORKFLOW_COMPONENTS.md](WORKFLOW_COMPONENTS.md). All are preview exports.
 
 Advanced layout preview APIs: [split panes, resilient images, and table extensions](ADVANCED_LAYOUT_COMPONENTS.md).
+
+## Larger preview features
+
+- [Tree view and hierarchical tables](HIERARCHY_COMPONENTS.md)
+- [Scheduling calendar](SCHEDULING_CALENDAR.md)
+- [Reordering and carousel](INTERACTION_COMPONENTS.md)
+- [Charts and large flat datasets](DATA_PERFORMANCE_COMPONENTS.md)
+
+[Verification and limits](qa/LARGE_FEATURES.md) describe the supported contracts and outstanding promotion reviews.

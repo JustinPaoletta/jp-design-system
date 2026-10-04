@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
-import { JpAppShell, JpAppShellNavItem, JpStack } from '@jp-design-system/ui';
+import { JpAppShell } from '@jp-design-system/ui/primitives/app-shell/app-shell';
+import { JpAppShellNavItem } from '@jp-design-system/ui/primitives/app-shell/app-shell-nav-item';
+import { JpStack } from '@jp-design-system/ui/primitives/stack/stack';
 
 /**
  * Shared shell for all showcase pages. Navigation goes through the Angular

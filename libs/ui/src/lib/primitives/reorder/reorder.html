@@ -1,0 +1,71 @@
+<p class="instructions" [id]="id() + '-instructions'">
+  {{ messages.instructions }}
+</p>
+<ol
+  [attr.aria-label]="label()"
+  [attr.aria-describedby]="id() + '-instructions'"
+>
+  @for (item of rows(); track item.id; let index = $index) {
+  <li [attr.data-row]="item.id" [class.picked]="activeId() === item.id">
+    <button
+      type="button"
+      class="handle"
+      [attr.data-item]="item.id"
+      data-action="handle"
+      [disabled]="disabled() || item.disabled"
+      [attr.aria-label]="(activeId() === item.id ? messages.drop : messages.pickUp) + ': ' + item.label"
+      [attr.aria-describedby]="id() + '-instructions'"
+      [attr.aria-pressed]="activeId() === item.id"
+      (click)="toggle(item)"
+      (keydown)="onKey($event, item)"
+      (pointerdown)="pointerStart($event, item)"
+    >
+      <span aria-hidden="true">{{ index + 1 }}</span>
+    </button>
+    <div class="content">
+      @if (content(); as custom) {
+      <ng-container
+        [ngTemplateOutlet]="custom.template"
+        [ngTemplateOutletContext]="{ $implicit: item, index: index }"
+      />
+      } @else { <span class="label">{{ item.label }}</span> @if
+      (item.description) {
+      <span class="description">{{ item.description }}</span> } }
+    </div>
+    <div class="actions">
+      <button
+        type="button"
+        [attr.data-item]="item.id"
+        data-action="up"
+        [disabled]="disabled() || item.disabled"
+        [attr.aria-disabled]="index === 0 || !!activeId()"
+        [attr.aria-label]="messages.moveUp + ': ' + item.label"
+        (click)="move(item, -1, 'up')"
+      >
+        {{ messages.moveUp }}
+      </button>
+      <button
+        type="button"
+        [attr.data-item]="item.id"
+        data-action="down"
+        [disabled]="disabled() || item.disabled"
+        [attr.aria-disabled]="index === rows().length - 1 || !!activeId()"
+        [attr.aria-label]="messages.moveDown + ': ' + item.label"
+        (click)="move(item, 1, 'down')"
+      >
+        {{ messages.moveDown }}
+      </button>
+    </div>
+  </li>
+  } @empty {
+  <li class="empty">{{ messages.empty }}</li>
+  }
+</ol>
+@if (activeId()) {
+<button type="button" class="cancel" (click)="cancel()">
+  {{ messages.cancel }}
+</button>
+}
+<p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+  {{ announcement() }}
+</p>

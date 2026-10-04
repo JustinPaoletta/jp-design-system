@@ -62,10 +62,10 @@ Public **classes** (components, directives, services) from `libs/ui/src/index.ts
 | Maturity     | Classes |
 | ------------ | ------: |
 | stable       |      36 |
-| preview      |      40 |
+| preview      |      74 |
 | experimental |       0 |
 | deprecated   |       1 |
-| **Total**    |  **77** |
+| **Total**    | **111** |
 
 Token package design entries (`libs/tokens/package.distribution.json`):
 
@@ -306,3 +306,17 @@ owned by JP maintainers. Existing table defaults retain their established
 contract. See [API contracts](../ADVANCED_LAYOUT_COMPONENTS.md) and
 [verification limits](../qa/ADVANCED_LAYOUT.md). Manual review and promotion
 remain open.
+
+## Larger feature preview inventory
+
+`JpTreeView`, `JpTreeTable`, `JpSchedulingCalendar`, `JpReorder`, `JpCarousel`,
+`JpChart`, and `JpVirtualTable`, plus supporting `JpReorderContent` and
+`JpCarouselSlide`, are preview APIs owned by JP maintainers. Their exported
+interfaces/helpers share preview status. The summary includes earlier expansion
+batches and all nine new classes; no maturity promotion is implied.
+
+Contracts: [hierarchy](../HIERARCHY_COMPONENTS.md),
+[scheduling](../SCHEDULING_CALENDAR.md), [interactions](../INTERACTION_COMPONENTS.md),
+and [charts/virtual tables](../DATA_PERFORMANCE_COMPONENTS.md).
+[Verification](../qa/LARGE_FEATURES.md) distinguishes automated evidence from
+manual assistive-technology, forced-colors, consumer review and release work.

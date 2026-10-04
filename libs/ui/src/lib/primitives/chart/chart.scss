@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  color: var(--jp-color-text-primary);
+  font: var(--jp-font-size-body) / var(--jp-font-line-height-normal)
+    var(--jp-font-family-base);
+}
+figure {
+  margin: 0;
+  display: grid;
+  gap: var(--jp-space-md);
+}
+figcaption {
+  font-weight: var(--jp-font-weight-semibold);
+}
+p {
+  margin: 0;
+}
+.plot {
+  position: relative;
+  block-size: 20rem;
+  min-inline-size: 0;
+}
+.legend,
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm);
+}
+.legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jp-space-xs);
+  min-block-size: var(--jp-size-control-md);
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-sm);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  background: var(--jp-color-surface-subtle);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.legend button[aria-pressed='false'] {
+  text-decoration: line-through;
+}
+.swatch {
+  min-inline-size: 1.5rem;
+  block-size: 1.5rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--jp-color-surface-canvas);
+  color: var(--jp-color-surface-canvas);
+  font-weight: var(--jp-font-weight-semibold);
+}
+.inspect {
+  display: grid;
+  gap: var(--jp-space-xs);
+  max-inline-size: 24rem;
+}
+select {
+  box-sizing: border-box;
+  min-block-size: var(--jp-size-control-md);
+  padding-inline: var(--jp-space-sm);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-sm);
+  font: inherit;
+}
+dl {
+  margin: 0;
+}
+dl div {
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  background: var(--jp-color-surface-subtle);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-sm);
+}
+dt {
+  font-size: var(--jp-font-size-caption);
+}
+dd {
+  margin: 0;
+  font-weight: var(--jp-font-weight-semibold);
+}
+summary {
+  cursor: pointer;
+  padding-block: var(--jp-space-xs);
+}
+.data {
+  overflow: auto;
+  max-block-size: 24rem;
+  margin-block-start: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-table-row-border);
+}
+table {
+  border-collapse: collapse;
+  inline-size: 100%;
+}
+caption,
+th,
+td {
+  padding: var(--jp-space-sm);
+  text-align: start;
+}
+th,
+td {
+  border-block-end: 1px solid var(--jp-color-table-row-border);
+}
+th {
+  background: var(--jp-color-table-header-bg);
+}
+button:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+.data:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  .plot {
+    display: none;
+  }
+  .swatch {
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+}

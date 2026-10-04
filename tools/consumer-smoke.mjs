@@ -157,6 +157,8 @@ import {
   JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
   JpInlineEdit, JpSkipLink, JpLiveAnnouncer,
   JpMedia, JpSplitPane, JpTableRowDetail, parseJpTablePreferences,
+  JpTreeView, JpTreeTable, JpSchedulingCalendar, JpReorder, JpReorderContent,
+  JpCarousel, JpCarouselSlide, JpChart, JpVirtualTable,
   JpAnnouncer, type JpUploadItem, type JpDateRangeValue,
   type JpRadioOption, type JpComboboxOption, type JpSortableTableColumn,
   type JpTableCellValue, type JpTableRowKey, type JpTableSort, type JpTab,
@@ -178,6 +180,8 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
   JpCommandPalette, JpContextMenu, JpDatePicker, JpDateRangePicker, JpTimePicker,
   JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
   JpInlineEdit, JpSkipLink, JpLiveAnnouncer, JpMedia, JpSplitPane, JpTableRowDetail,
+  JpTreeView, JpTreeTable, JpSchedulingCalendar, JpReorder, JpReorderContent,
+  JpCarousel, JpCarouselSlide, JpChart, JpVirtualTable,
   ],
   template: \`
     <main [attr.data-jp-accent]="accent">
@@ -229,6 +233,18 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
         [columnWidths]="preferences.columnWidths" [expandedKeys]="selectedKeys" (expandedKeysChange)="selectedKeys=$event">
         <ng-template jpTableRowDetail let-row>{{ row.name }}</ng-template>
       </jp-table>
+      <jp-tree-view id="consumer-tree" label="Assets" [nodes]="treeNodes" />
+      <jp-tree-table id="consumer-tree-table" caption="Projects" nameHeader="Project" [columns]="[{key:'owner',header:'Owner'}]" [rows]="treeRows" />
+      <jp-scheduling-calendar label="Appointments" [date]="dateValue" [events]="[]" timeZone="UTC" />
+      <jp-reorder id="consumer-priorities" label="Priorities" [items]="[{id:'one',label:'First'},{id:'two',label:'Second'}]">
+        <ng-template jpReorderContent let-item>{{ item.label }}</ng-template>
+      </jp-reorder>
+      <jp-carousel id="consumer-carousel" label="Reference">
+        <ng-template jpCarouselSlide="first" label="First card"><p>First</p></ng-template>
+        <ng-template jpCarouselSlide="second" label="Second card"><p>Second</p></ng-template>
+      </jp-carousel>
+      <jp-chart id="consumer-chart" label="Delivery" [labels]="['April','May']" [series]="[{id:'team',label:'Team',values:[12,18]}]" />
+      <jp-virtual-table label="Inventory" [columns]="columns" [rows]="rows" [selectedKeys]="selectedKeys" />
       <jp-input label="Template-driven name" [(ngModel)]="name" />
       <jp-checkbox label="Accept terms" [(ngModel)]="accepted" [indeterminate]="true" />
       <form [formGroup]="form">
@@ -292,6 +308,8 @@ class ConsumerApp {
   activeTab = 'members';
   paneSize = 40;
   readonly preferences = parseJpTablePreferences(null, this.columns);
+  readonly treeNodes = [{key:'root',label:'Root',children:[{key:'child',label:'Child'}]}];
+  readonly treeRows = [{key:'root',label:'Root',cells:{owner:'Team'},children:[{key:'child',label:'Child',cells:{owner:'Team'}}]}];
 }
 bootstrapApplication(ConsumerApp).catch(console.error);
 `,

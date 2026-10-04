@@ -1,0 +1,100 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--jp-font-family-base);
+  color: var(--jp-color-text-primary);
+}
+.tree {
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  padding: var(--jp-space-xs);
+  font-size: var(--jp-font-size-body);
+}
+.item {
+  outline: none;
+}
+.row {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--jp-size-control-xl);
+  gap: var(--jp-space-xs);
+  padding: var(--jp-space-xs);
+  border-radius: var(--jp-radius-sm);
+  cursor: pointer;
+}
+.row:hover {
+  background: var(--jp-color-surface-subtle);
+}
+.row.selected {
+  background: var(--jp-color-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--jp-color-border-strong);
+  font-weight: var(--jp-font-weight-medium);
+}
+.item:focus-visible > .row,
+.tree:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  line-height: var(--jp-font-line-height-normal);
+}
+.group {
+  padding-inline-start: var(--jp-space-lg);
+}
+.disclosure {
+  flex: 0 0 var(--jp-space-lg);
+  text-align: center;
+  font-size: var(--jp-font-size-body-lg);
+  user-select: none;
+}
+:host-context([dir='rtl']) .disclosure {
+  transform: scaleX(-1);
+}
+.disclosure.open {
+  transform: rotate(90deg);
+}
+:host-context([dir='rtl']) .disclosure.open {
+  transform: rotate(90deg);
+}
+.disabled {
+  color: var(--jp-color-text-muted);
+  cursor: not-allowed;
+}
+.description {
+  margin-inline-start: var(--jp-space-xl);
+  padding-block-end: var(--jp-space-xs);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  overflow-wrap: anywhere;
+}
+.root-state {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  padding: var(--jp-space-md);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body);
+}
+button {
+  font: inherit;
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-sm);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+@media (forced-colors: active) {
+  .row.selected {
+    border: 1px solid Highlight;
+  }
+  .item:focus-visible > .row {
+    outline-color: Highlight;
+  }
+}
