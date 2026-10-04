@@ -1,0 +1,34 @@
+<section
+  #primary
+  class="jp-split-pane__primary"
+  tabindex="-1"
+  [id]="id() + '-primary'"
+  [attr.aria-label]="primaryLabel()"
+  [hidden]="primaryCollapsed()"
+  [style.flex-basis.%]="value()"
+>
+  <ng-content select="[jpSplitPrimary]" />
+</section>
+<div
+  #separator
+  class="jp-split-pane__separator"
+  role="separator"
+  tabindex="0"
+  [attr.aria-label]="primaryLabel()"
+  [attr.aria-controls]="id() + '-primary'"
+  [attr.aria-orientation]="orientation() === 'horizontal' ? 'vertical' : 'horizontal'"
+  [attr.aria-valuemin]="collapsible() ? 0 : bounds().min"
+  [attr.aria-valuemax]="bounds().max"
+  [attr.aria-valuenow]="primaryCollapsed() ? 0 : value()"
+  (keydown)="onKey($event)"
+  (pointerdown)="startDrag($event)"
+  (pointermove)="moveDrag($event)"
+  (pointerup)="endDrag($event)"
+  (pointercancel)="endDrag($event)"
+  (lostpointercapture)="endDrag($event)"
+>
+  <span aria-hidden="true"></span>
+</div>
+<section class="jp-split-pane__secondary" [attr.aria-label]="secondaryLabel()">
+  <ng-content select="[jpSplitSecondary]" />
+</section>

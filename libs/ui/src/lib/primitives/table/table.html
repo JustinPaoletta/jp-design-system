@@ -1,19 +1,75 @@
+@if (columnChooser() || resizable()) {
+<details class="jp-table__settings">
+  <summary>{{ messages.table.columns }}</summary>
+  <div class="jp-table__settings-body">
+    @for (column of columns(); track column.key) {
+    <div class="jp-table__column-setting">
+      @if (columnChooser()) {
+      <jp-checkbox
+        [ngModel]="isVisible(column.key)"
+        [disabled]="isVisible(column.key) && visibleColumns().length === 1"
+        (ngModelChange)="toggleColumn(column.key, $event)"
+        >{{ column.header }}</jp-checkbox
+      >
+      } @if (resizable()) {
+      <label
+        >{{ messages.table.width(column.header) }}
+        <input
+          type="number"
+          [min]="widthBounds(column).min"
+          [max]="widthBounds(column).max"
+          step="1"
+          [value]="widthFor(column)"
+          (change)="resizeColumn(column, $any($event.target).valueAsNumber)"
+        />
+      </label>
+      }
+    </div>
+    }
+  </div>
+</details>
+}
 <div
   class="jp-table__frame"
   tabindex="0"
   role="region"
   [attr.aria-label]="caption() || messages.table.regionLabel"
+  [style.max-block-size]="maxHeight() || null"
+  [class.jp-table__frame--sticky-header]="stickyHeader()"
+  [class.jp-table__frame--sticky-first]="stickyFirstColumn()"
+  [style.--jp-table-leading-offset]="utilityCount() * 48 + 'px'"
 >
-  <table class="jp-table__root">
+  <table
+    class="jp-table__root"
+    [style.width.px]="resizable() ? tableWidth() : null"
+    [class.jp-table__root--resizable]="resizable()"
+    [class.jp-table__root--advanced]="resizable() || expandable() || stickyFirstColumn()"
+    [attr.aria-colcount]="fullColumnCount()"
+  >
     @if (caption()) {
     <caption class="jp-table__caption">
       {{ caption() }}
     </caption>
+    } @if (resizable()) {
+    <colgroup>
+      @if (selectable()) {
+      <col style="width: 48px" />
+      } @if (expandable()) {
+      <col style="width: 48px" />
+      } @for (column of visibleColumns(); track column.key) {
+      <col [style.width.px]="widthFor(column)" />
+      }
+    </colgroup>
     }
     <thead class="jp-table__head">
       <tr>
         @if (selectable()) {
-        <th class="jp-table__header jp-table__selection" scope="col">
+        <th
+          class="jp-table__header jp-table__selection jp-table__pinned-utility"
+          scope="col"
+          aria-colindex="1"
+          style="inset-inline-start: 0"
+        >
           <jp-checkbox
             [ngModel]="allSelected()"
             [indeterminate]="someSelected()"
@@ -24,11 +80,23 @@
             ></jp-checkbox
           >
         </th>
-        } @for (column of columns(); track column.key) {
+        } @if (expandable()) {
+        <th
+          class="jp-table__header jp-table__selection jp-table__pinned-utility"
+          scope="col"
+          [attr.aria-colindex]="selectable() ? 2 : 1"
+          [style.inset-inline-start.px]="selectable() ? 48 : 0"
+        >
+          <span class="jp-table__sr-only">{{ messages.table.details }}</span>
+        </th>
+        } @for (column of visibleColumns(); track column.key; let first =
+        $first) {
         <th
           class="jp-table__header"
           scope="col"
+          [attr.aria-colindex]="columnIndex(column)"
           [attr.aria-sort]="ariaSort(column)"
+          [class.jp-table__pinned-data]="first"
           [class.jp-table__header--start]="columnAlign(column) === 'start'"
           [class.jp-table__header--center]="columnAlign(column) === 'center'"
           [class.jp-table__header--end]="columnAlign(column) === 'end'"
@@ -40,14 +108,23 @@
             (click)="requestSort(column)"
           >
             {{ column.header }} @if (sortLabel(column); as phrase) {
-            <span class="jp-table__sr-only">{{ phrase }}</span>
-            }
+            <span class="jp-table__sr-only">{{ phrase }}</span> }
             <span aria-hidden="true"
               >{{ ariaSort(column) === 'ascending' ? '↑' : ariaSort(column) ===
               'descending' ? '↓' : '↕' }}</span
             >
           </button>
-          } @else { {{ column.header }} }
+          } @else { {{ column.header }} } @if (resizable()) {
+          <span
+            class="jp-table__resize"
+            aria-hidden="true"
+            (pointerdown)="startResize($event, column)"
+            (pointermove)="moveResize($event)"
+            (pointerup)="endResize($event)"
+            (pointercancel)="endResize($event)"
+            (lostpointercapture)="endResize($event)"
+          ></span>
+          }
         </th>
         }
       </tr>
@@ -60,19 +137,46 @@
         [class.jp-table__row--selected]="selectable() && isSelected(row)"
       >
         @if (selectable()) {
-        <td class="jp-table__cell jp-table__selection">
+        <td
+          class="jp-table__cell jp-table__selection jp-table__pinned-utility"
+          aria-colindex="1"
+          style="inset-inline-start: 0"
+        >
           <jp-checkbox
             [ngModel]="isSelected(row)"
             [disabled]="!canSelect(row)"
             (ngModelChange)="selectRow(row, $event)"
-            ><span class="jp-table__sr-only"
-              >{{ messages.table.selectRow(rowLabel()(row)) }}</span
-            ></jp-checkbox
           >
+            <span class="jp-table__sr-only"
+              >{{ messages.table.selectRow(rowLabel()(row)) }}</span
+            >
+          </jp-checkbox>
         </td>
-        } @for (column of columns(); track column.key) {
+        } @if (expandable()) {
+        <td
+          class="jp-table__cell jp-table__selection jp-table__pinned-utility"
+          [attr.aria-colindex]="selectable() ? 2 : 1"
+          [style.inset-inline-start.px]="selectable() ? 48 : 0"
+        >
+          <button
+            class="jp-table__expand"
+            type="button"
+            [id]="detailId(row) + '-button'"
+            [disabled]="!canSelect(row)"
+            [attr.aria-label]="isExpanded(row) ? messages.table.collapseRow(rowLabel()(row)) : messages.table.expandRow(rowLabel()(row))"
+            [attr.aria-expanded]="isExpanded(row)"
+            [attr.aria-controls]="isExpanded(row) ? detailId(row) : null"
+            (click)="toggleRow(row)"
+          >
+            <span aria-hidden="true">{{ isExpanded(row) ? '−' : '+' }}</span>
+          </button>
+        </td>
+        } @for (column of visibleColumns(); track column.key; let first =
+        $first) {
         <td
           class="jp-table__cell"
+          [attr.aria-colindex]="columnIndex(column)"
+          [class.jp-table__pinned-data]="first"
           [class.jp-table__cell--start]="columnAlign(column) === 'start'"
           [class.jp-table__cell--center]="columnAlign(column) === 'center'"
           [class.jp-table__cell--end]="columnAlign(column) === 'end'"
@@ -80,26 +184,35 @@
           @if (cellTemplate(column.key); as template) {
           <ng-container
             [ngTemplateOutlet]="template"
-            [ngTemplateOutletContext]="{
-                      $implicit: cellValue(row, column.key),
-                      value: cellValue(row, column.key),
-                      row: row,
-                      column: column,
-                    }"
+            [ngTemplateOutletContext]="{ $implicit: cellValue(row, column.key), value: cellValue(row, column.key), row: row, column: column }"
           />
           } @else { {{ displayValue(cellValue(row, column.key)) }} }
         </td>
         }
       </tr>
-      }
+      @if (expandable() && isExpanded(row)) {
+      <tr class="jp-table__detail-row">
+        <td
+          class="jp-table__cell"
+          [attr.colspan]="visibleCount()"
+          [attr.aria-colspan]="fullColumnCount()"
+          aria-colindex="1"
+        >
+          <div [id]="detailId(row)">
+            <ng-container
+              [ngTemplateOutlet]="detail()!.templateRef"
+              [ngTemplateOutletContext]="{ $implicit: row, row: row }"
+            />
+          </div>
+        </td>
+      </tr>
+      } }
     </tbody>
     }
   </table>
-
   @if (!hasRows()) {
   <div class="jp-table__empty">
-    <ng-content select="jp-empty-state" />
-    @if (!projectedEmpty()) {
+    <ng-content select="jp-empty-state" /> @if (!projectedEmpty()) {
     <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
     }
   </div>

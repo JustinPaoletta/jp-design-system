@@ -7,6 +7,7 @@ import { InjectionToken, inject, type Provider } from '@angular/core';
  * existed. Count functions receive raw numbers; they do not call Intl.
  */
 export interface JpMessages {
+  media: { loading: string; error: string };
   actions: { more: string; skip: string };
   dates: { start: string; end: string };
   commands: { title: string; search: string; empty: string };
@@ -80,6 +81,11 @@ export interface JpMessages {
     dismiss: string;
   };
   table: {
+    columns: string;
+    details: string;
+    expandRow: (label: string) => string;
+    collapseRow: (label: string) => string;
+    width: (label: string) => string;
     regionLabel: string;
     selectAll: string;
     selectRow: (label: string) => string;
@@ -157,6 +163,7 @@ export type JpMessagesOverride = {
 };
 
 export const JP_DEFAULT_MESSAGES: JpMessages = {
+  media: { loading: 'Loading image…', error: 'Image unavailable' },
   actions: { more: 'More actions', skip: 'Skip to content' },
   dates: { start: 'Start date', end: 'End date' },
   commands: {
@@ -239,6 +246,11 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
     dismiss: 'Dismiss notification',
   },
   table: {
+    columns: 'Columns',
+    details: 'Details',
+    expandRow: (label) => `Show details: ${label}`,
+    collapseRow: (label) => `Hide details: ${label}`,
+    width: (label) => `Width in pixels: ${label}`,
     regionLabel: 'Data table',
     selectAll: 'Select all rows on this page',
     selectRow: (label) => `Select ${label}`,
@@ -309,6 +321,7 @@ export function mergeJpMessages(
   overrides: JpMessagesOverride = {},
 ): JpMessages {
   return {
+    media: { ...base.media, ...overrides.media },
     actions: { ...base.actions, ...overrides.actions },
     dates: { ...base.dates, ...overrides.dates },
     commands: { ...base.commands, ...overrides.commands },

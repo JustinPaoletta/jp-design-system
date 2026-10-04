@@ -590,3 +590,5 @@ Showcase pages show live `accent` / `density` readouts from `data-jp-accent` and
 ## Everyday workflow primitives
 
 Command palette, context menu, native date/range/time fields, file upload queue, notification inbox, button group/toggle/split, inline editing, skip link and announcement outlet/service are documented in [WORKFLOW_COMPONENTS.md](WORKFLOW_COMPONENTS.md). All are preview exports.
+
+Advanced layout preview APIs: [split panes, resilient images, and table extensions](ADVANCED_LAYOUT_COMPONENTS.md).

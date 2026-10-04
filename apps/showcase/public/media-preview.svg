@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="hsl(218 20% 15%)"/>
+  <g fill="none" stroke="hsl(214 30% 70%)" stroke-width="4"><path d="M150 180H490M320 90V270"/></g>
+  <g fill="hsl(216 60% 42%)" stroke="hsl(214 30% 80%)" stroke-width="3"><rect x="65" y="140" width="170" height="80" rx="12"/><rect x="405" y="140" width="170" height="80" rx="12"/><rect x="250" y="50" width="140" height="80" rx="12"/><rect x="250" y="230" width="140" height="80" rx="12"/></g>
+  <g fill="white" font-family="sans-serif" font-size="24" text-anchor="middle"><text x="150" y="188">API</text><text x="490" y="188">Jobs</text><text x="320" y="98">Search</text><text x="320" y="278">Assets</text></g>
+</svg>

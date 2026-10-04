@@ -1,4 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { JpInput } from '../input/input';
 import { JpPagination } from '../pagination/pagination';
@@ -10,7 +15,7 @@ import { expect, userEvent, within } from 'storybook/test';
 import { JpBadge } from '../badge/badge';
 import { JpButton } from '../button/button';
 import { JpEmptyState } from '../empty-state/empty-state';
-import { JpTable, JpTableCellDef } from './table';
+import { JpTable, JpTableCellDef, JpTableRowDetail } from './table';
 
 type TableArgs = {
   caption: string;
@@ -315,5 +320,79 @@ export const ControlledToolkit: Story = {
       canvas.getByRole('button', { name: 'Clear filters' }),
     );
     await expect(canvasElement.querySelectorAll('tbody tr')).toHaveLength(2);
+  },
+};
+
+@Component({
+  selector: 'jp-table-advanced-example',
+  imports: [JpTable, JpTableRowDetail],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<jp-table
+    id="advanced-table-story"
+    caption="Advanced services"
+    [columns]="columns"
+    [rows]="rows"
+    columnChooser
+    resizable
+    stickyHeader
+    stickyFirstColumn
+    maxHeight="20rem"
+    [visibleColumnKeys]="visible()"
+    (visibleColumnKeysChange)="visible.set($event)"
+    [columnWidths]="widths()"
+    (columnWidthsChange)="widths.set($event)"
+    [expandedKeys]="expanded()"
+    (expandedKeysChange)="expanded.set($event)"
+  >
+    <ng-template jpTableRowDetail let-row
+      ><p>Owner: {{ row.owner }}</p>
+      <button type="button">Review {{ row.name }}</button></ng-template
+    >
+  </jp-table>`,
+})
+class AdvancedTableExample {
+  readonly columns = [
+    { key: 'name', header: 'Service', width: 240 },
+    { key: 'owner', header: 'Owner', width: 220 },
+    { key: 'region', header: 'Region', width: 220 },
+  ];
+  readonly rows = [
+    { id: 'api', name: 'API gateway', owner: 'Platform', region: 'us-east-1' },
+    {
+      id: 'jobs',
+      name: 'Background jobs',
+      owner: 'Product',
+      region: 'eu-west-1',
+    },
+  ];
+  readonly visible = signal(['name', 'owner', 'region']);
+  readonly widths = signal<Record<string, number>>({});
+  readonly expanded = signal<JpTableRowKey[]>([]);
+}
+export const AdvancedControls: Story = {
+  decorators: [moduleMetadata({ imports: [AdvancedTableExample] })],
+  render: () => ({ template: '<jp-table-advanced-example />' }),
+  play: async ({ canvasElement }) => {
+    const c = within(canvasElement);
+    await userEvent.click(c.getByText('Columns', { selector: 'summary' }));
+    await userEvent.click(c.getByRole('checkbox', { name: 'Owner' }));
+    await expect(c.queryByRole('columnheader', { name: 'Owner' })).toBeNull();
+    const width = c.getByRole('spinbutton', {
+      name: 'Width in pixels: Service',
+    });
+    await userEvent.clear(width);
+    await userEvent.type(width, '320');
+    await userEvent.tab();
+    await expect(width).toHaveValue(320);
+    const expand = c.getByRole('button', { name: 'Show details: API gateway' });
+    await userEvent.click(expand);
+    await expect(expand).toHaveAttribute('aria-expanded', 'true');
+    await expect(
+      c.getByRole('button', { name: 'Review API gateway' }),
+    ).toBeVisible();
+    await userEvent.click(expand);
+    await expect(
+      c.queryByRole('button', { name: 'Review API gateway' }),
+    ).toBeNull();
   },
 };

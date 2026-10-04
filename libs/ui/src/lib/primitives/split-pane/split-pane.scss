@@ -1,0 +1,67 @@
+:host {
+  display: flex;
+  min-inline-size: 0;
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+.jp-split-pane__primary,
+.jp-split-pane__secondary {
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: auto;
+}
+.jp-split-pane__primary {
+  flex: 0 0 auto;
+}
+.jp-split-pane__primary[hidden] {
+  display: none;
+}
+.jp-split-pane__secondary {
+  flex: 1 1 0;
+}
+.jp-split-pane__separator {
+  flex: 0 0 var(--jp-space-lg);
+  display: grid;
+  place-items: center;
+  cursor: col-resize;
+  touch-action: none;
+}
+.jp-split-pane__separator span {
+  inline-size: 3px;
+  block-size: 100%;
+  min-block-size: var(--jp-size-control-md);
+  background: var(--jp-color-border-strong);
+}
+.jp-split-pane__separator:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: -2px;
+}
+:host(.jp-split-pane--vertical) {
+  flex-direction: column;
+}
+:host(.jp-split-pane--vertical) .jp-split-pane__separator {
+  cursor: row-resize;
+}
+:host(.jp-split-pane--vertical) .jp-split-pane__separator span {
+  inline-size: 100%;
+  block-size: 3px;
+  min-block-size: 0;
+}
+:host(.jp-split-pane--mobile) {
+  flex-direction: column;
+  gap: var(--jp-space-md);
+}
+:host(.jp-split-pane--mobile) .jp-split-pane__primary {
+  flex-basis: auto !important;
+}
+:host(.jp-split-pane--mobile) .jp-split-pane__secondary {
+  flex-basis: auto;
+}
+:host(.jp-split-pane--mobile) .jp-split-pane__separator {
+  display: none;
+}
+@media (forced-colors: active) {
+  .jp-split-pane__separator span {
+    background: CanvasText;
+  }
+}

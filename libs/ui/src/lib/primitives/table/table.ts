@@ -10,6 +10,7 @@ import {
   inject,
   input,
   output,
+  ElementRef,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { JP_MESSAGES } from '../../i18n';
@@ -30,6 +31,9 @@ export interface JpTableSort {
 }
 export interface JpSortableTableColumn extends JpTableColumn {
   sortable?: boolean;
+  width?: number;
+  minWidth?: number;
+  maxWidth?: number;
 }
 
 export interface JpTableCellContext {
@@ -47,6 +51,15 @@ export class JpTableCellDef {
   readonly templateRef = inject(TemplateRef<JpTableCellContext>);
 }
 
+export interface JpTableRowDetailContext {
+  $implicit: Record<string, JpTableCellValue>;
+  row: Record<string, JpTableCellValue>;
+}
+@Directive({ selector: 'ng-template[jpTableRowDetail]' })
+export class JpTableRowDetail {
+  readonly templateRef = inject(TemplateRef<JpTableRowDetailContext>);
+}
+
 @Component({
   selector: 'jp-table',
   imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState],
@@ -61,6 +74,158 @@ export class JpTableCellDef {
 })
 export class JpTable {
   private readonly messages = inject(JP_MESSAGES);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  readonly id = input('');
+  /** null shows every column. Invalid/empty keys fall back to the first column. */
+  readonly visibleColumnKeys = input<readonly string[] | null>(null);
+  readonly visibleColumnKeysChange = output<string[]>();
+  readonly columnChooser = input(false, { transform: booleanAttribute });
+  readonly stickyHeader = input(false, { transform: booleanAttribute });
+  readonly stickyFirstColumn = input(false, { transform: booleanAttribute });
+  readonly maxHeight = input('');
+  readonly resizable = input(false, { transform: booleanAttribute });
+  readonly columnWidths = input<Readonly<Record<string, number>>>({});
+  readonly columnWidthsChange = output<Record<string, number>>();
+  readonly expandedKeys = input<readonly JpTableRowKey[]>([]);
+  readonly expandedKeysChange = output<JpTableRowKey[]>();
+  readonly detail = contentChild(JpTableRowDetail);
+  readonly expandable = computed(() => !!this.id().trim() && !!this.detail());
+  readonly visibleColumns = computed(() => {
+    const keys = this.visibleColumnKeys();
+    const columns = this.columns();
+    if (keys === null) return columns;
+    const visible = columns.filter((column) => keys.includes(column.key));
+    return visible.length ? visible : columns.slice(0, 1);
+  });
+  readonly utilityCount = computed(
+    () => Number(this.selectable()) + Number(this.expandable()),
+  );
+  readonly fullColumnCount = computed(
+    () => this.columns().length + this.utilityCount(),
+  );
+  readonly visibleCount = computed(
+    () => this.visibleColumns().length + this.utilityCount(),
+  );
+  readonly tableWidth = computed(
+    () =>
+      this.utilityCount() * 48 +
+      this.visibleColumns().reduce(
+        (total, column) => total + this.widthFor(column),
+        0,
+      ),
+  );
+  private drag: {
+    id: number;
+    key: string;
+    start: number;
+    width: number;
+    direction: number;
+  } | null = null;
+
+  isVisible(key: string): boolean {
+    return this.visibleColumns().some((column) => column.key === key);
+  }
+  toggleColumn(key: string, visible: boolean): void {
+    if (!this.columns().some((column) => column.key === key)) return;
+    const keys = new Set(this.visibleColumns().map((column) => column.key));
+    if (visible) keys.add(key);
+    else keys.delete(key);
+    if (!keys.size) return;
+    this.visibleColumnKeysChange.emit(
+      this.columns()
+        .filter((column) => keys.has(column.key))
+        .map((column) => column.key),
+    );
+  }
+  columnIndex(column: JpTableColumn): number {
+    return (
+      this.columns().findIndex((value) => value.key === column.key) +
+      this.utilityCount() +
+      1
+    );
+  }
+  widthBounds(column: JpSortableTableColumn): { min: number; max: number } {
+    const min = Number.isFinite(column.minWidth)
+      ? Math.max(80, column.minWidth ?? 80)
+      : 80;
+    const max = Number.isFinite(column.maxWidth)
+      ? Math.max(min, column.maxWidth ?? 960)
+      : Math.max(min, 960);
+    return { min, max };
+  }
+  widthFor(column: JpSortableTableColumn): number {
+    const { min, max } = this.widthBounds(column);
+    const value = this.columnWidths()[column.key] ?? column.width ?? 180;
+    return Math.round(
+      Math.min(max, Math.max(min, Number.isFinite(value) ? value : 180)),
+    );
+  }
+  resizeColumn(column: JpSortableTableColumn, value: number): void {
+    if (!this.resizable() || !Number.isFinite(value)) return;
+    const { min, max } = this.widthBounds(column);
+    this.columnWidthsChange.emit({
+      ...this.columnWidths(),
+      [column.key]: Math.round(Math.min(max, Math.max(min, value))),
+    });
+  }
+  startResize(event: PointerEvent, column: JpSortableTableColumn): void {
+    if (!this.resizable() || event.button !== 0) return;
+    const handle = event.currentTarget as HTMLElement;
+    this.drag = {
+      id: event.pointerId,
+      key: column.key,
+      start: event.clientX,
+      width: this.widthFor(column),
+      direction:
+        this.host.nativeElement.ownerDocument.defaultView?.getComputedStyle(
+          this.host.nativeElement,
+        ).direction === 'rtl'
+          ? -1
+          : 1,
+    };
+    handle.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+  moveResize(event: PointerEvent): void {
+    const drag = this.drag;
+    if (!drag || drag.id !== event.pointerId) return;
+    const column = this.columns().find((value) => value.key === drag.key);
+    if (column)
+      this.resizeColumn(
+        column,
+        drag.width + (event.clientX - drag.start) * drag.direction,
+      );
+  }
+  endResize(event: PointerEvent): void {
+    if (this.drag?.id === event.pointerId) this.drag = null;
+  }
+  isExpanded(row: Record<string, JpTableCellValue>): boolean {
+    const key = this.keyFor(row);
+    return typeof key !== 'object' && this.expandedKeys().includes(key);
+  }
+  detailId(row: Record<string, JpTableCellValue>): string {
+    const key = this.keyFor(row);
+    return (
+      this.id() +
+      '-detail-' +
+      typeof key +
+      '-' +
+      encodeURIComponent(String(key))
+    );
+  }
+  toggleRow(row: Record<string, JpTableCellValue>): void {
+    const key = this.keyFor(row);
+    if (!this.expandable() || typeof key === 'object') return;
+    const keys = new Set(this.expandedKeys());
+    if (keys.has(key)) {
+      keys.delete(key);
+      const doc = this.host.nativeElement.ownerDocument;
+      if (doc.getElementById(this.detailId(row))?.contains(doc.activeElement))
+        doc.getElementById(this.detailId(row) + '-button')?.focus();
+    } else keys.add(key);
+    this.expandedKeysChange.emit([...keys]);
+  }
+
   readonly caption = input('');
   readonly columns = input<JpSortableTableColumn[]>([]);
   readonly rows = input<Record<string, JpTableCellValue>[]>([]);

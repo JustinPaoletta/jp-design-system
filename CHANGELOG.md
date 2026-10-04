@@ -7,6 +7,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Add preview split panes and resilient image frames, plus table column visibility,
+  validated preference persistence, sticky regions, expandable details, and pointer/exact
+  column resizing. Include a lazy Showcase workspace, localized copy, public APIs,
+  Storybook, package-consumer and browser/visual coverage.
+- Lazy-load the existing Showcase data page to keep the initial bundle within budget.
+
 - Add thirteen preview components and an announcer service for commands, context menus, native dates/times, file queues, notifications, button combinations, inline editing, skip links and announcements.
 - Add lazy Showcase workflows, public exports, localization, native/form/async contracts, Storybook, browser/accessibility/visual checks and isolated consumer compilation.
 - Keep concurrent Storybook preview/test output isolation and runtime guards.

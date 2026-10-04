@@ -95,3 +95,7 @@ export * from './lib/primitives/split-button/split-button';
 export * from './lib/primitives/inline-edit/inline-edit';
 export * from './lib/primitives/skip-link/skip-link';
 export * from './lib/primitives/live-announcer/live-announcer';
+
+export * from './lib/primitives/split-pane/split-pane';
+export * from './lib/primitives/media/media';
+export * from './lib/primitives/table/table-preferences';

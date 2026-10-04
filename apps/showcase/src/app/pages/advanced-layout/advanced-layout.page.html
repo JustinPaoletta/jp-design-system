@@ -1,0 +1,98 @@
+<div class="page">
+  <jp-page-header
+    title="Advanced layout and data"
+    description="Adjustable workspaces, saved table preferences, and resilient images."
+  >
+    <a jpPageActions jpLink routerLink="/workflows">Everyday workflows</a>
+  </jp-page-header>
+  <jp-card title="Service workspace">
+    <div class="actions">
+      <jp-button variant="secondary" (click)="reset()"
+        >Reset preferences</jp-button
+      >
+      <jp-button
+        variant="secondary"
+        [disabled]="workspace.mobile()"
+        (click)="workspace.toggle()"
+        >{{ collapsed() ? 'Restore overview' : 'Collapse overview' }}</jp-button
+      >
+      <p>{{ storageStatus() }}</p>
+    </div>
+    <p>
+      Drag the divider or focus it and use arrow keys. Enter collapses or
+      restores the overview. On small screens both panes stack.
+    </p>
+    <jp-split-pane
+      #workspace
+      id="service-workspace"
+      primaryLabel="Service overview"
+      secondaryLabel="Service inventory"
+      [size]="size()"
+      (sizeChange)="resize($event)"
+      [collapsed]="collapsed()"
+      (collapsedChange)="collapsed.set($event)"
+      [min]="20"
+      [max]="70"
+    >
+      <div jpSplitPrimary class="overview">
+        <h2>Service overview</h2>
+        <jp-media
+          [src]="mediaSource()"
+          alt="Diagram of the service architecture"
+          caption="An original illustration for the service workspace."
+        />
+        <jp-button
+          variant="secondary"
+          (click)="mediaSource.set(mediaSource() === '/media-preview.svg' ? '/missing-demo-image.svg' : '/media-preview.svg')"
+          >{{ mediaSource() === '/media-preview.svg' ? 'Show image error' :
+          'Restore image' }}</jp-button
+        >
+        <p>
+          16 services across two regions. Expand a row to inspect its owner and
+          review its deployment.
+        </p>
+      </div>
+      <div jpSplitSecondary class="inventory">
+        <h2>Service inventory</h2>
+        <jp-table
+          id="service-inventory"
+          caption="Services"
+          [columns]="columns"
+          [rows]="rows"
+          rowKey="id"
+          columnChooser
+          resizable
+          stickyHeader
+          stickyFirstColumn
+          maxHeight="26rem"
+          selectable
+          [visibleColumnKeys]="preferences().visibleColumnKeys"
+          (visibleColumnKeysChange)="updatePreferences({visibleColumnKeys: $event})"
+          [columnWidths]="preferences().columnWidths"
+          (columnWidthsChange)="updatePreferences({columnWidths: $event})"
+          [expandedKeys]="expanded()"
+          (expandedKeysChange)="expanded.set($event)"
+          [selectedKeys]="selected()"
+          (selectionChange)="selected.set($event)"
+        >
+          <ng-template jpTableRowDetail let-row>
+            <div class="detail">
+              <p>
+                <strong>{{ row.name }}</strong> is managed by {{ row.owner }} in
+                {{ row.region }}.
+              </p>
+              <jp-button
+                variant="secondary"
+                (click)="detailAction.set('Reviewed ' + row.name)"
+                >Review deployment</jp-button
+              >
+            </div>
+          </ng-template>
+        </jp-table>
+      </div>
+    </jp-split-pane>
+    @if (detailAction()) {
+    <p role="status">{{ detailAction() }}</p>
+    }
+  </jp-card>
+</div>

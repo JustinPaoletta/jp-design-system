@@ -297,3 +297,12 @@ records all contracts and limits.
 ## Everyday workflows preview inventory
 
 The third batch adds `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDateRangePicker`, `JpTimePicker`, `JpFileUpload`, `JpNotificationList`, `JpButtonGroup`, `JpToggleButton`, `JpSplitButton`, `JpInlineEdit`, `JpSkipLink`, `JpLiveAnnouncer` and supporting `JpAnnouncer`, all preview and owned by JP maintainers. See [contracts](../WORKFLOW_COMPONENTS.md) and [verification limits](../qa/WORKFLOWS.md). No maturity promotion or release is implied.
+
+## Advanced layout and data preview inventory
+
+`JpSplitPane`, `JpMedia`, `JpTableRowDetail`, the table-preference helpers/types,
+and optional table visibility, resizing, pinning and expansion are preview,
+owned by JP maintainers. Existing table defaults retain their established
+contract. See [API contracts](../ADVANCED_LAYOUT_COMPONENTS.md) and
+[verification limits](../qa/ADVANCED_LAYOUT.md). Manual review and promotion
+remain open.

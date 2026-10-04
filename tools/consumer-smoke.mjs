@@ -156,6 +156,7 @@ import {
   JpCommandPalette, JpContextMenu, JpDatePicker, JpDateRangePicker, JpTimePicker,
   JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
   JpInlineEdit, JpSkipLink, JpLiveAnnouncer,
+  JpMedia, JpSplitPane, JpTableRowDetail, parseJpTablePreferences,
   JpAnnouncer, type JpUploadItem, type JpDateRangeValue,
   type JpRadioOption, type JpComboboxOption, type JpSortableTableColumn,
   type JpTableCellValue, type JpTableRowKey, type JpTableSort, type JpTab,
@@ -176,7 +177,7 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
     JpTimeline, JpCodeBlock, JpInlineCode, JpCopyButton, JpOverflowChip,
   JpCommandPalette, JpContextMenu, JpDatePicker, JpDateRangePicker, JpTimePicker,
   JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
-  JpInlineEdit, JpSkipLink, JpLiveAnnouncer,
+  JpInlineEdit, JpSkipLink, JpLiveAnnouncer, JpMedia, JpSplitPane, JpTableRowDetail,
   ],
   template: \`
     <main [attr.data-jp-accent]="accent">
@@ -219,6 +220,15 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
       <jp-file-upload label="Files" [items]="uploadItems" />
       <jp-notification-list label="Inbox" [items]="[{id:'review',title:'Review',unread:true}]" />
       <jp-skip-link target="consumer-native" /><jp-live-announcer />
+      <jp-media src="/image.svg" alt="Architecture" caption="Package preview" />
+      <jp-split-pane id="consumer-split" primaryLabel="Overview" secondaryLabel="Detail" [(size)]="paneSize">
+        <p jpSplitPrimary>Overview</p><p jpSplitSecondary>Detail</p>
+      </jp-split-pane>
+      <jp-table id="consumer-advanced-table" caption="Advanced table" [columns]="columns" [rows]="rows"
+        columnChooser resizable stickyHeader stickyFirstColumn [visibleColumnKeys]="preferences.visibleColumnKeys"
+        [columnWidths]="preferences.columnWidths" [expandedKeys]="selectedKeys" (expandedKeysChange)="selectedKeys=$event">
+        <ng-template jpTableRowDetail let-row>{{ row.name }}</ng-template>
+      </jp-table>
       <jp-input label="Template-driven name" [(ngModel)]="name" />
       <jp-checkbox label="Accept terms" [(ngModel)]="accepted" [indeterminate]="true" />
       <form [formGroup]="form">
@@ -280,6 +290,8 @@ class ConsumerApp {
   sort: JpTableSort | null = null;
   readonly tabs: JpTab[] = [{ value: 'members', label: 'Members' }, { value: 'settings', label: 'Settings' }];
   activeTab = 'members';
+  paneSize = 40;
+  readonly preferences = parseJpTablePreferences(null, this.columns);
 }
 bootstrapApplication(ConsumerApp).catch(console.error);
 `,

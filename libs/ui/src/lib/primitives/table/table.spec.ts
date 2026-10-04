@@ -2,7 +2,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { JpBadge } from '../badge/badge';
 import { JpEmptyState } from '../empty-state/empty-state';
-import { JpTable, JpTableCellDef } from './table';
+import {
+  JpTable,
+  JpTableCellDef,
+  JpTableRowDetail,
+  type JpTableRowKey,
+} from './table';
+import { By } from '@angular/platform-browser';
 
 @Component({
   selector: 'jp-table-populated-host',
@@ -272,5 +278,234 @@ describe('JpTable controlled toolkit', () => {
     expect(
       fixture.componentInstance.columnAlign({ key: 'name', header: 'Name' }),
     ).toBe('start');
+  });
+});
+
+@Component({
+  selector: 'jp-table-advanced-test',
+  imports: [JpTable, JpTableRowDetail],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<jp-table
+    id="test-table"
+    [columns]="columns"
+    [rows]="rows"
+    columnChooser
+    resizable
+    stickyHeader
+    stickyFirstColumn
+    selectable
+    maxHeight="20rem"
+    [visibleColumnKeys]="visible"
+    (visibleColumnKeysChange)="visible = $event"
+    [columnWidths]="widths"
+    (columnWidthsChange)="widths = $event"
+    [expandedKeys]="expanded"
+    (expandedKeysChange)="expanded = $event"
+  >
+    <ng-template jpTableRowDetail let-row
+      ><button type="button">Review {{ row.name }}</button></ng-template
+    >
+  </jp-table>`,
+})
+class TableAdvancedTest {
+  readonly columns = [
+    { key: 'name', header: 'Name', width: 200, minWidth: 120, maxWidth: 400 },
+    { key: 'owner', header: 'Owner' },
+    { key: 'status', header: 'Status' },
+  ];
+  rows = [
+    { id: 'one', name: 'API', owner: 'Product', status: 'Healthy' },
+    { id: 'two', name: 'Jobs', owner: 'Platform', status: 'Healthy' },
+  ];
+  visible = ['name', 'owner', 'status'];
+  widths: Record<string, number> = {};
+  expanded: JpTableRowKey[] = [];
+}
+describe('JpTable advanced features', () => {
+  function setup() {
+    const fixture = TestBed.createComponent(TableAdvancedTest);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    return fixture;
+  }
+  it('preserves original column indices and prevents hiding every column', async () => {
+    const fixture = setup();
+    await fixture.whenStable();
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    const host = fixture.componentInstance;
+    const table = fixture.debugElement.query(By.directive(JpTable))
+      .componentInstance as JpTable;
+    table.toggleColumn('owner', false);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(host.visible).toEqual(['name', 'status']);
+    expect(
+      Array.from(fixture.nativeElement.querySelectorAll('thead th')).map(
+        (th: unknown) => (th as HTMLElement).getAttribute('aria-colindex'),
+      ),
+    ).toEqual(['1', '2', '3', '5']);
+    expect(
+      fixture.nativeElement
+        .querySelector('table')
+        .getAttribute('aria-colcount'),
+    ).toBe('5');
+    table.toggleColumn('status', false);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    table.toggleColumn('name', false);
+    expect(host.visible).toEqual(['name']);
+    table.toggleColumn('missing', true);
+    expect(host.visible).toEqual(['name']);
+    table.toggleColumn('owner', true);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(host.visible).toEqual(['name', 'owner']);
+    host.visible = [];
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(table.visibleColumns().map((column) => column.key)).toEqual([
+      'name',
+    ]);
+  });
+  it('keeps expansion controlled, stable across reordering, and preserves off-page keys', () => {
+    const fixture = setup();
+    const table = fixture.debugElement.query(By.directive(JpTable))
+      .componentInstance as JpTable;
+    fixture.componentInstance.expanded = ['off-page'];
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector(
+      '.jp-table__expand',
+    ) as HTMLButtonElement;
+    button.click();
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.expanded).toEqual(['off-page', 'one']);
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(button.getAttribute('aria-controls')).toBe(
+      'test-table-detail-string-one',
+    );
+    expect(
+      fixture.nativeElement.querySelector('.jp-table__detail-row td').colSpan,
+    ).toBe(5);
+    fixture.componentInstance.rows = fixture.componentInstance.rows
+      .slice()
+      .reverse();
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('.jp-table__detail-row').textContent,
+    ).toContain('Review API');
+    document.body.appendChild(fixture.nativeElement);
+    const detail = fixture.nativeElement.querySelector(
+      '.jp-table__detail-row button',
+    ) as HTMLButtonElement;
+    detail.focus();
+    table.toggleRow(fixture.componentInstance.rows[1]);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(button);
+    expect(fixture.componentInstance.expanded).toEqual(['off-page']);
+    fixture.nativeElement.remove();
+  });
+  it('requires explicit unique identity and a template before enabling expansion', () => {
+    const fixture = TestBed.createComponent(JpTable);
+    fixture.componentRef.setInput('rows', [{ name: 'Legacy' }]);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    const emit = jest.spyOn(
+      fixture.componentInstance.expandedKeysChange,
+      'emit',
+    );
+    fixture.componentInstance.toggleRow({ name: 'Legacy' });
+    expect(emit).not.toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.jp-table__expand')).toBeNull();
+    const hosted = setup();
+    const table = hosted.debugElement.query(By.directive(JpTable))
+      .componentInstance as JpTable;
+    table.toggleRow({ name: 'Legacy' });
+    expect(hosted.componentInstance.expanded).toEqual([]);
+  });
+  it('clamps exact column widths and ignores invalid changes', () => {
+    const fixture = setup();
+    const table = fixture.debugElement.query(By.directive(JpTable))
+      .componentInstance as JpTable;
+    table.resizeColumn(fixture.componentInstance.columns[0], 10);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.widths).toEqual({ name: 120 });
+    table.resizeColumn(fixture.componentInstance.columns[0], 900);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(table.widthFor(fixture.componentInstance.columns[0])).toBe(400);
+    table.resizeColumn(fixture.componentInstance.columns[0], NaN);
+    expect(fixture.componentInstance.widths).toEqual({ name: 400 });
+    expect(
+      table.widthBounds({
+        key: 'x',
+        header: 'X',
+        minWidth: NaN,
+        maxWidth: NaN,
+      }),
+    ).toEqual({ min: 80, max: 960 });
+    expect(
+      table.widthBounds({
+        key: 'x',
+        header: 'X',
+        minWidth: 300,
+        maxWidth: 100,
+      }),
+    ).toEqual({ min: 300, max: 300 });
+    expect(table.widthFor({ key: 'x', header: 'X', width: Infinity })).toBe(
+      180,
+    );
+    const isolated = TestBed.createComponent(JpTable);
+    isolated.componentInstance.resizeColumn({ key: 'x', header: 'X' }, 200);
+    expect(isolated.componentInstance.columnWidths()).toEqual({});
+  });
+  it('supports pointer resize, cancellation, mismatched pointers and RTL direction', () => {
+    const fixture = setup();
+    const table = fixture.debugElement.query(By.directive(JpTable))
+      .componentInstance as JpTable;
+    const column = fixture.componentInstance.columns[0];
+    const handle = fixture.nativeElement.querySelector(
+      '.jp-table__resize',
+    ) as HTMLElement;
+    handle.setPointerCapture = jest.fn();
+    const pointer = (overrides: object = {}) =>
+      ({
+        button: 0,
+        pointerId: 1,
+        clientX: 200,
+        currentTarget: handle,
+        preventDefault: jest.fn(),
+        ...overrides,
+      }) as unknown as PointerEvent;
+    table.startResize(pointer({ button: 2 }), column);
+    table.moveResize(pointer({ clientX: 250 }));
+    expect(fixture.componentInstance.widths).toEqual({});
+    table.startResize(pointer(), column);
+    table.moveResize(pointer({ pointerId: 2, clientX: 250 }));
+    expect(fixture.componentInstance.widths).toEqual({});
+    table.moveResize(pointer({ clientX: 250 }));
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.widths.name).toBe(250);
+    table.endResize(pointer({ pointerId: 2 }));
+    table.moveResize(pointer({ clientX: 260 }));
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.widths.name).toBe(260);
+    table.endResize(pointer());
+    table.moveResize(pointer({ clientX: 500 }));
+    expect(fixture.componentInstance.widths.name).toBe(260);
+    fixture.nativeElement.querySelector('jp-table').style.direction = 'rtl';
+    table.startResize(pointer(), column);
+    table.moveResize(pointer({ clientX: 240 }));
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.widths.name).toBe(220);
+    table.endResize(pointer());
   });
 });

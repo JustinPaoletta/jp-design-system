@@ -3,7 +3,6 @@ import { ShellLayout } from './layout/shell-layout';
 import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
 import { AppShellPage } from './pages/app-shell/app-shell.page';
 import { ControlsPage } from './pages/controls/controls.page';
-import { DataPage } from './pages/data/data.page';
 import { OverlaysPage } from './pages/overlays/overlays.page';
 import { AssistantPage } from './pages/assistant/assistant.page';
 
@@ -12,6 +11,13 @@ export const appRoutes: Route[] = [
     path: '',
     component: ShellLayout,
     children: [
+      {
+        path: 'advanced-layout',
+        loadComponent: () =>
+          import('./pages/advanced-layout/advanced-layout.page').then(
+            (module) => module.AdvancedLayoutPage,
+          ),
+      },
       {
         path: 'workflows',
         loadComponent: () =>
@@ -59,7 +65,8 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'data',
-        component: DataPage,
+        loadComponent: () =>
+          import('./pages/data/data.page').then((module) => module.DataPage),
       },
       {
         path: 'overlays',
