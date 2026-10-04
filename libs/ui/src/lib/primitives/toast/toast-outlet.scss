@@ -1,7 +1,7 @@
 :host {
   position: fixed;
-  right: var(--jp-space-md);
-  bottom: var(--jp-space-md);
+  inset-inline-end: var(--jp-space-md);
+  inset-block-end: var(--jp-space-md);
   z-index: var(--jp-z-overlay-toast);
   display: block;
   pointer-events: none;

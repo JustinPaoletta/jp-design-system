@@ -1,0 +1,9 @@
+<jp-dialog
+  [open]="open()"
+  [title]="title()"
+  [placement]="side()"
+  [closeLabel]="closeLabel()"
+  (openChange)="openChange.emit($event)"
+  ><ng-content />
+  <div jpDialogActions><ng-content select="[jpDrawerActions]" /></div
+></jp-dialog>

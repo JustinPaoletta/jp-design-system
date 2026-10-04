@@ -13,6 +13,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import { getFocusableElements } from '../shared/focus-trap';
 
 const SHELL_MOBILE_MEDIA = '(max-width: 48rem)';
@@ -30,6 +31,7 @@ const SHELL_MOBILE_MEDIA = '(max-width: 48rem)';
   },
 })
 export class JpAppShell implements OnInit {
+  private readonly messages = inject(JP_MESSAGES);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly sidebarRef =
@@ -46,7 +48,7 @@ export class JpAppShell implements OnInit {
 
   readonly sidebarCollapsed = input(false, { transform: booleanAttribute });
   readonly mobileNavOpen = input(false, { transform: booleanAttribute });
-  readonly sidebarLabel = input('Primary');
+  readonly sidebarLabel = input(this.messages.appShell.sidebarLabel);
 
   readonly sidebarCollapsedChange = output<boolean>();
   readonly mobileNavOpenChange = output<boolean>();

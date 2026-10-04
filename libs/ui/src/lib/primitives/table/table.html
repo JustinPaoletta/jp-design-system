@@ -2,7 +2,7 @@
   class="jp-table__frame"
   tabindex="0"
   role="region"
-  [attr.aria-label]="caption() || 'Data table'"
+  [attr.aria-label]="caption() || messages.table.regionLabel"
 >
   <table class="jp-table__root">
     @if (caption()) {
@@ -20,7 +20,7 @@
             [disabled]="pageKeys().length === 0"
             (ngModelChange)="selectPage($event)"
             ><span class="jp-table__sr-only"
-              >Select all rows on this page</span
+              >{{ messages.table.selectAll }}</span
             ></jp-checkbox
           >
         </th>
@@ -39,7 +39,9 @@
             type="button"
             (click)="requestSort(column)"
           >
-            {{ column.header }}
+            {{ column.header }} @if (sortLabel(column); as phrase) {
+            <span class="jp-table__sr-only">{{ phrase }}</span>
+            }
             <span aria-hidden="true"
               >{{ ariaSort(column) === 'ascending' ? '↑' : ariaSort(column) ===
               'descending' ? '↓' : '↕' }}</span
@@ -64,7 +66,7 @@
             [disabled]="!canSelect(row)"
             (ngModelChange)="selectRow(row, $event)"
             ><span class="jp-table__sr-only"
-              >Select {{ rowLabel()(row) }}</span
+              >{{ messages.table.selectRow(rowLabel()(row)) }}</span
             ></jp-checkbox
           >
         </td>

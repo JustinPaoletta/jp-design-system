@@ -14,6 +14,7 @@
 }
 .jp-pagination__summary {
   margin: 0;
+  overflow-wrap: anywhere;
   color: var(--jp-color-table-caption-fg);
   font-family: var(--jp-font-family-base);
   font-size: var(--jp-font-size-caption);

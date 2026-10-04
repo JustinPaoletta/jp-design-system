@@ -5,7 +5,7 @@
       "muted": { "value": "{primitive.color.accent.cobalt.300}" },
       "solid": { "value": "{primitive.color.accent.cobalt.500}" },
       "strong": { "value": "{primitive.color.accent.cobalt.600}" },
-      "contrast": { "value": "{primitive.color.neutral.1100}" },
+      "contrast": { "value": "{primitive.color.neutral.0}" },
       "focus": { "value": "{primitive.color.accent.cobalt.500}" }
     }
   }

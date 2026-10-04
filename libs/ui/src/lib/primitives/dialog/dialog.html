@@ -2,6 +2,9 @@
 <dialog
   #panel
   class="jp-dialog__panel"
+  [class.jp-dialog__panel--start]="placement() === 'start'"
+  [class.jp-dialog__panel--end]="placement() === 'end'"
+  [class.jp-dialog__panel--bottom]="placement() === 'bottom'"
   role="dialog"
   aria-modal="true"
   [attr.aria-labelledby]="titleId"

@@ -7,7 +7,23 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Add thirteen preview components and an announcer service for commands, context menus, native dates/times, file queues, notifications, button combinations, inline editing, skip links and announcements.
+- Add lazy Showcase workflows, public exports, localization, native/form/async contracts, Storybook, browser/accessibility/visual checks and isolated consumer compilation.
+- Keep concurrent Storybook preview/test output isolation and runtime guards.
+
+- Added preview checklist, stepper, slider/range, number stepper, timeline,
+  overflow chip, code/inline-code, and clipboard action APIs, with a validated
+  Showcase wizard and Storybook examples.
+- Isolated Storybook development bundles per server port and added compiler/runtime
+  checks to prevent concurrent live tests from causing continuous preview reloads.
+
 ### Added
+
+- Preview component expansion: icons/native links, disclosure/accordion, identity,
+  spinner/meter, structured content, form wrappers/groups, multi-select,
+  search/password fields, validation summary, page banner, and general drawers
+- Lazy-loaded Showcase component expansion with Chromium/WebKit interaction and
+  accessibility regressions, Storybook examples, and extended package-consumer checks
 
 - Product recipes for validated forms, async save/retry, controlled search/sort/pagination, bulk selection, destructive recovery, and assistant response recovery
 - Skeleton, progress, inline alert, radio group, combobox, tabs/panels, breadcrumbs, table toolbar, and one-based pagination
@@ -63,3 +79,10 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Storybook preview: story-owned sunken page (`.jp-storybook-page`) with an independent Canvas-only Dark/Light stage toolbar; Docs keeps a fixed dark stage
 - Showcase pages reactively read `data-jp-accent` / `data-jp-density` for live theme readouts
 - Documentation audit (Sep 2026): corrected Accent toolbar guidance; documented Storybook page vs stage; refreshed roadmap progress date; pointed `docs/qa` at `MANUAL_QA.md`
+
+### Component expansion corrections
+
+- Restore native label association for static input IDs and defer focus recovery
+  until rendered content is available.
+- Keep banner, error-summary, and disabled-chip text readable; correct cobalt
+  primary-button text contrast on normal and hover surfaces.

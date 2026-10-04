@@ -469,6 +469,36 @@ These boxes are a checklist for future manual sign-off; automated test passes do
 
 ---
 
+## Accessibility matrix and local automation (October 4, 2026)
+
+The supported target is [docs/qa/SUPPORT_MATRIX.md](docs/qa/SUPPORT_MATRIX.md).
+
+- Automated axe level is **WCAG 2.1 A/AA** (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`). WCAG 2.2 is not asserted. axe-core 4.13 keeps `target-size` disabled.
+- Functional and axe automation: macOS Chromium and WebKit locally; Linux Chromium and WebKit in CI.
+- Visual baselines: macOS Chromium. Recipe page covers neon/cobalt and default/compact. Mobile shell, open dialog, assistant response, and settings validation error are neon / default only.
+- VoiceOver is the intended macOS reader. **Not reviewed.**
+- NVDA is the intended Windows reader. **Not reviewed.**
+- JAWS is **out of scope** (no consumer requirement in the repo).
+- Reduced motion is partially automated (shell sidebar, collapse toggle, assistant panel surface). 200% zoom, 400% zoom, and Windows forced colors were not run. Findings that were not patched: [docs/qa/FINDINGS.md](docs/qa/FINDINGS.md).
+
+**No manual screen reader review was performed.** Passing Playwright or axe does not check the boxes above.
+
+Local commands from this macOS workspace on October 4, 2026:
+
+```bash
+npx nx run showcase-e2e:e2e -- --project=chromium --grep="a11y state coverage"
+npx nx run showcase-e2e:e2e -- --project=webkit --grep="a11y state coverage"
+npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual neon default (mobile shell|open dialog|assistant response|settings error)" --update-snapshots
+```
+
+| Command                                 | Result                                                                                                                                                                                                                                       |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chromium `a11y state coverage`          | **12 passed, 1 failed** before the combobox color fix. After `.jp-combobox__popup` and options were set to `--jp-color-field-fg`, Chromium `combobox results meet WCAG AA` **passed**. The other 12 tests were not re-run in that follow-up. |
+| WebKit `a11y state coverage`            | **12 passed, 1 failed** on the same combobox contrast bug, before the color fix. WebKit was not re-run after the fix. The first WebKit launch had no browser binary; `npx playwright install webkit` was run, then the suite was re-run.     |
+| Chromium new `recipes visual` snapshots | **4 passed** after `--update-snapshots`, and **4 passed** again without updating. PNGs show the mobile shell, open delete dialog, seeded assistant panel, and settings email error. Existing recipe PNGs were not rewritten.                 |
+
+---
+
 ## Sign-off
 
 | Gate                                                                | Pass? |
@@ -483,3 +513,45 @@ These boxes are a checklist for future manual sign-off; automated test passes do
 If anything fails, note story path, viewport, Accent/Density, and repro steps on the PR.
 
 Tester: **\*\***\_\_**\*\*** Date: **\*\***\_\_**\*\***
+
+## Component expansion local automation (October 4, 2026)
+
+This later pass adds 25 preview components and three public directives. The
+remaining work is in [COMPONENT_EXPANSION_PLAN.md](COMPONENT_EXPANSION_PLAN.md).
+These results supplement the earlier log above.
+
+| Local check                                                       | Result                                                                                            |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| UI unit tests                                                     | 296 passed; all coverage categories exceed 90%                                                    |
+| Showcase unit tests                                               | 29 passed; all coverage categories exceed 90%                                                     |
+| Token unit tests                                                  | 17 passed, including accent normal/hover contrast                                                 |
+| Static Storybook interaction/accessibility                        | 198 passed across 66 suites                                                                       |
+| Live Storybook interaction/accessibility                          | 198 passed across 66 suites                                                                       |
+| Chromium + WebKit functional and WCAG 2.1 A/AA checks             | 88 passed, including all existing state checks and the component expansion                        |
+| macOS Chromium visuals                                            | 16 baselines: eight recipe/state shots and eight new component shots; reviewed navigation changes |
+| Production Showcase build                                         | Passed; 470.30 kB initial bundle within existing budgets                                          |
+| Repository formatting                                             | Passed                                                                                            |
+| Type checks, lint, semantic-token policies, generated-token check | Passed                                                                                            |
+| Isolated tarball Angular 22.2.1 consumer                          | Build passed with all new public imports, templates, and form bindings                            |
+
+Commands use Node 24.21.0 and package-manager-prefixed Nx. Native local servers
+and browser checks were run outside the filesystem sandbox. The Chromium/WebKit
+functional command excludes `recipes visual|component expansion visual|product tools visual`; the
+macOS Chromium visual command selects that same expression. The CI workflow
+uses the matching filters. Theme contrast checks use reduced motion.
+
+No manual screen-reader or Windows forced-colors review was performed. Preview
+APIs still require the acceptance and consumer review process before promotion.
+
+## Product tools automation — October 4, 2026
+
+See [product tools verification](docs/qa/PRODUCT_TOOLS.md): 320 UI and 31 Showcase unit tests, 231 static/live Storybook checks, 102 Chromium/WebKit functional and WCAG 2.1 A/AA checks, package consumer compilation, and 24 macOS Chromium visual states. These are automated checks and visual review; manual assistive-technology and physical touch reviews remain pending.
+
+## Everyday workflow manual review — pending
+
+- [ ] VoiceOver/NVDA: command results, context menu, temporal fields and native picker dialogs.
+- [ ] Physical touch: date/time pickers, file picker and visible context action trigger.
+- [ ] Forced colors and 200%/400% zoom: pending, errors, input affordances and menu focus.
+- [ ] Alternate locale formats and repeated polite/assertive announcements.
+
+Automated coverage and limits: [workflow verification](docs/qa/WORKFLOWS.md).

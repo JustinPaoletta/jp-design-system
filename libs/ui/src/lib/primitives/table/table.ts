@@ -12,6 +12,7 @@ import {
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { JP_MESSAGES } from '../../i18n';
 import { JpCheckbox } from '../checkbox/checkbox';
 import { NgTemplateOutlet } from '@angular/common';
 import { JpEmptyState } from '../empty-state/empty-state';
@@ -59,11 +60,12 @@ export class JpTableCellDef {
   },
 })
 export class JpTable {
+  private readonly messages = inject(JP_MESSAGES);
   readonly caption = input('');
   readonly columns = input<JpSortableTableColumn[]>([]);
   readonly rows = input<Record<string, JpTableCellValue>[]>([]);
   readonly striped = input(false, { transform: booleanAttribute });
-  readonly emptyTitle = input('No data');
+  readonly emptyTitle = input(this.messages.table.emptyTitle);
   readonly emptyDescription = input('');
   /** Use a unique field or function for stable identity across server pages. */
   readonly rowKey = input<
@@ -139,6 +141,17 @@ export class JpTable {
           ? { key: column.key, direction: 'desc' }
           : null,
     );
+  }
+
+  sortLabel(column: JpSortableTableColumn): string {
+    switch (this.ariaSort(column)) {
+      case 'ascending':
+        return this.messages.table.sortAscending;
+      case 'descending':
+        return this.messages.table.sortDescending;
+      default:
+        return this.messages.table.sortNone;
+    }
   }
 
   ariaSort(

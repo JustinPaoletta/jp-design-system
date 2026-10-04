@@ -15,7 +15,7 @@
   --jp-primitive-color-accent-cobalt-200: #b8d0ff;
   --jp-primitive-color-accent-cobalt-300: #8db2ff;
   --jp-primitive-color-accent-cobalt-400: #6292f0;
-  --jp-primitive-color-accent-cobalt-500: #4674d0;
+  --jp-primitive-color-accent-cobalt-500: #426fcb;
   --jp-primitive-color-accent-cobalt-600: #3158a8;
   --jp-primitive-color-accent-cobalt-700: #223f7c;
   --jp-primitive-color-neutral-0: #ffffff;
@@ -329,10 +329,10 @@
 [data-jp-accent="cobalt"] {
   --jp-color-accent-soft: #b8d0ff;
   --jp-color-accent-muted: #8db2ff;
-  --jp-color-accent-solid: #4674d0;
+  --jp-color-accent-solid: #426fcb;
   --jp-color-accent-strong: #3158a8;
-  --jp-color-accent-contrast: #070b13;
-  --jp-color-accent-focus: #4674d0;
+  --jp-color-accent-contrast: #ffffff;
+  --jp-color-accent-focus: #426fcb;
 }
 
 [data-jp-density="compact"] {

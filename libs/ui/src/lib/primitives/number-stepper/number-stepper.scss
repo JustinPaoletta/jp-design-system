@@ -1,0 +1,69 @@
+:host {
+  display: block;
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+label {
+  display: block;
+  margin-block-end: var(--jp-space-xs);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+}
+.control {
+  display: flex;
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-field-bg);
+  overflow: hidden;
+}
+input {
+  min-inline-size: 0;
+  inline-size: 100%;
+  text-align: center;
+  appearance: textfield;
+  border: 0;
+  font: inherit;
+  font-size: var(--jp-font-size-body);
+  background: transparent;
+  color: var(--jp-color-field-fg);
+  padding-inline: var(--jp-space-xs);
+}
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  min-inline-size: var(--jp-size-control-lg);
+  min-block-size: var(--jp-size-control-lg);
+  background: transparent;
+  color: var(--jp-color-text-primary);
+  border: 0;
+  cursor: pointer;
+}
+button:hover:not(:disabled) {
+  background: var(--jp-color-surface-raised);
+}
+button:disabled {
+  color: var(--jp-color-text-secondary);
+  cursor: not-allowed;
+}
+.control:focus-within {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.hint,
+.error {
+  margin-block: var(--jp-space-xs) 0;
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+.hint {
+  color: var(--jp-color-text-secondary);
+}
+.error {
+  color: var(--jp-color-field-error);
+}

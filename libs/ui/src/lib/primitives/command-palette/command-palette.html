@@ -1,0 +1,56 @@
+<jp-dialog [open]="open()" [title]="title()" (openChange)="close()">
+  <label class="jp-input__label" [for]="prefix+'-search'"
+    >{{searchLabel()}}</label
+  >
+  <input
+    #search
+    class="jp-input__control"
+    [id]="prefix+'-search'"
+    type="search"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="prefix+'-list'"
+    [attr.aria-activedescendant]="activeId()"
+    [value]="query()"
+    (input)="searchInput($event)"
+    (keydown)="keydown($event)"
+    autocomplete="off"
+  />
+  <div
+    class="results"
+    role="listbox"
+    [id]="prefix+'-list'"
+    [attr.aria-label]="title()"
+  >
+    @for(group of groups();track group.label){
+    <div role="group" [attr.aria-label]="group.label || title()">
+      @if(group.label){
+      <p class="section">{{group.label}}</p>
+      } @for(command of group.items;track command.id){<button
+        type="button"
+        role="option"
+        tabindex="-1"
+        [id]="optionId(command.id)"
+        [attr.aria-selected]="active()===command.id"
+        [disabled]="command.disabled"
+        [class.active]="active()===command.id"
+        (mousedown)="$event.preventDefault()"
+        (click)="choose(command)"
+      >
+        <span class="copy"
+          ><span>{{command.label}}</span
+          >@if(command.description){<small>{{command.description}}</small>}</span
+        >
+        @if(command.shortcut?.length){<jp-keyboard-hint
+          [keys]="command.shortcut!"
+        />}</button
+      >}
+    </div>
+    }
+  </div>
+  @if(!filtered().length){
+  <p role="status">{{emptyText()}}</p>
+  }
+</jp-dialog>

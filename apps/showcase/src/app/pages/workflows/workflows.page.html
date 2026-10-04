@@ -1,0 +1,133 @@
+<jp-skip-link target="workflow-main" /><jp-live-announcer />
+<div class="page" id="workflow-main" tabindex="-1">
+  <jp-page-header
+    title="Everyday workflows"
+    description="Commands, scheduling, uploads, notifications, and editing."
+    ><a jpPageActions jpLink routerLink="/product-tools"
+      >Product tools</a
+    ></jp-page-header
+  >
+  <div class="grid">
+    <jp-card title="Commands and actions"
+      ><div class="stack">
+        <jp-button (click)="commandOpen.set(true)">Open commands</jp-button>
+        <p>Use Control or Command + K outside a text field.</p>
+        <jp-button-group label="Project actions"
+          ><jp-toggle-button
+            label="Favorite"
+            [formControl]="favorite" /><jp-split-button
+            label="Create project"
+            [actions]="menuActions"
+            (primary)="record('create')"
+            (actionSelected)="record($event)"
+        /></jp-button-group>
+        <jp-context-menu
+          label="Launch plan"
+          [actions]="menuActions"
+          (actionSelected)="record($event)"
+          ><p>
+            Launch plan — right-click here, or use Shift + F10.
+          </p></jp-context-menu
+        >
+        <p role="status">Last action: {{action()}}</p>
+      </div></jp-card
+    >
+    <jp-card title="Project name"
+      ><div class="stack">
+        <jp-inline-edit
+          label="Project name"
+          [value]="projectName()"
+          (valueChange)="projectName.set($event)"
+          [save]="saveName"
+          required
+          [maxLength]="60"
+        /><jp-checkbox [(ngModel)]="failNextSave"
+          >Simulate next save failure</jp-checkbox
+        >
+        <p>The save example supports retry and cancellation.</p>
+      </div></jp-card
+    >
+    <jp-card title="Schedule"
+      ><form (submit)="$event.preventDefault();saveSchedule()" novalidate>
+        <jp-error-summary [errors]="errors()" />
+        <jp-date-picker
+          id="launch-date"
+          label="Launch date"
+          [formControl]="launch"
+          min="2026-10-01"
+          max="2026-10-31"
+          required
+          [error]="submitted() && launch.invalid?'Choose a date in October 2026.':''"
+        />
+        <jp-date-range-picker
+          id="event-dates"
+          label="Event dates"
+          [formControl]="dates"
+          min="2026-10-01"
+          max="2026-10-31"
+          required
+          [error]="submitted() && dates.invalid?'Start must be on or before end.':''"
+        />
+        <jp-time-picker
+          id="event-time"
+          label="Start time"
+          [formControl]="time"
+          min="09:00"
+          max="17:00"
+          [step]="900"
+          hint="Local time, in 15-minute steps. Your product chooses the time zone."
+          [error]="submitted() && time.invalid?'Choose a valid time.':''"
+        />
+        <jp-button type="submit">Save schedule</jp-button>@if(scheduleSaved()){
+        <p role="status">Schedule saved.</p>
+        }
+      </form></jp-card
+    >
+    <jp-card title="Files"
+      ><jp-file-upload
+        label="Attachments"
+        accept=".txt,.md"
+        [maxBytes]="1024"
+        [maxFiles]="3"
+        hint="Up to three text files, 1 KB each. This demo keeps files on your device."
+        [items]="uploads()"
+        (filesSelected)="addFiles($event)"
+        (action)="uploadAction($event)"
+      /><jp-button-group label="Upload demo states"
+        ><jp-button
+          variant="secondary"
+          [disabled]="!uploads().length"
+          (click)="uploadState('uploading')"
+          >Start demo upload</jp-button
+        ><jp-button
+          variant="secondary"
+          [disabled]="!uploads().length"
+          (click)="uploadState('error')"
+          >Fail demo upload</jp-button
+        ><jp-button
+          variant="secondary"
+          [disabled]="!uploads().length"
+          (click)="uploadState('complete')"
+          >Complete demo upload</jp-button
+        ></jp-button-group
+      ></jp-card
+    >
+    <jp-card title="Inbox"
+      ><div #notificationRegion tabindex="-1" aria-label="Notification updates">
+        <jp-notification-list
+          label="Project notifications"
+          [items]="notifications()"
+          (readChange)="changeRead($event)"
+          (dismissRequested)="dismiss($event)"
+          (markAllRequested)="markAll()"
+        /></div
+    ></jp-card>
+  </div>
+</div>
+<jp-command-palette
+  [open]="commandOpen()"
+  (openChange)="commandOpen.set($event)"
+  [commands]="commands"
+  shortcutEnabled
+  (commandSelected)="record($event)"
+/>

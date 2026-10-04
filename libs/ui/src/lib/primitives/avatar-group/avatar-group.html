@@ -1,0 +1,12 @@
+<div role="group" [attr.aria-label]="label()">
+  @for (person of visible(); track person.id) {
+  <jp-avatar [name]="person.name" [src]="person.src || ''" /> } @if (extra()) {
+  <span
+    class="overflow"
+    role="img"
+    [attr.aria-label]="hiddenNames()"
+    [attr.title]="hiddenNames()"
+    >{{ overflowLabel()(extra()) }}</span
+  >
+  }
+</div>

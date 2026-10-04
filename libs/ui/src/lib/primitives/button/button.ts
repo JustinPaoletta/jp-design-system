@@ -3,8 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import {
   type JpButtonType,
   JP_BUTTON_TYPES,
@@ -37,6 +39,7 @@ import {
   },
 })
 export class JpButton {
+  private readonly messages = inject(JP_MESSAGES);
   readonly variant = input<JpButtonVariant, unknown>('primary', {
     transform: createStringUnionTransform(JP_BUTTON_VARIANTS, 'primary'),
   });
@@ -52,7 +55,7 @@ export class JpButton {
   readonly disabled = input(false, { transform: booleanAttribute });
 
   readonly loading = input(false, { transform: booleanAttribute });
-  readonly loadingLabel = input('Loading');
+  readonly loadingLabel = input(this.messages.button.loading);
 
   readonly rootHeight = computed(() => controlSizeToCssVar(this.size()));
 }

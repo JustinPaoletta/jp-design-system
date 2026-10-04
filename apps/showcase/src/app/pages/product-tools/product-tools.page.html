@@ -1,0 +1,95 @@
+<div class="page">
+  <jp-page-header
+    title="Product tools"
+    description="Task completion, numeric controls, activity, and a setup wizard."
+    ><a jpPageActions jpLink routerLink="/workflows"
+      >Everyday workflows</a
+    ></jp-page-header
+  >
+  <div class="grid">
+    <jp-card title="Project setup">
+      <jp-stepper
+        label="Project setup"
+        [steps]="steps()"
+        [currentId]="current()"
+        navigable
+        (stepSelected)="selectStep($event)"
+      />
+      <form
+        (submit)="$event.preventDefault(); current() === 'details' ? next() : save()"
+      >
+        <jp-error-summary [errors]="errors()" />
+        @if (current() === 'details') {
+        <h3 #stepHeading tabindex="-1">Project details</h3>
+        <jp-input
+          id="wizard-email"
+          label="Notification email"
+          type="email"
+          [formControl]="email"
+          [error]="submitted() && email.invalid ? 'Enter a valid email address.' : ''"
+        />
+        <jp-number-stepper
+          id="wizard-seats"
+          label="Seats"
+          [min]="1"
+          [max]="10"
+          [formControl]="seats"
+          [error]="submitted() && seats.invalid ? 'Choose between one and ten seats.' : ''"
+        />
+        <jp-button type="submit">Continue</jp-button>
+        } @else {
+        <h3 #stepHeading tabindex="-1">Review project</h3>
+        <p>Notification email: {{ email.value }}</p>
+        <p>Seats: {{ seats.value }}</p>
+        <div class="actions">
+          <jp-button variant="secondary" (click)="back()">Back</jp-button
+          ><jp-button type="submit">Save project</jp-button>
+        </div>
+        @if (saved()) {
+        <p role="status">Project saved.</p>
+        } }
+      </form>
+    </jp-card>
+    <jp-card title="Release checklist"
+      ><jp-checklist
+        label="Release tasks"
+        [items]="checklist"
+        [formControl]="tasks"
+    /></jp-card>
+    <jp-card title="Numeric controls">
+      <div class="numeric">
+        <jp-slider
+          label="Volume"
+          [min]="0"
+          [max]="100"
+          [step]="5"
+          [formControl]="volume"
+          hint="Use arrow keys or enter an exact value."
+        />
+        <jp-range-slider
+          label="Budget"
+          lowerLabel="From"
+          upperLabel="To"
+          [min]="0"
+          [max]="100"
+          [step]="5"
+          [formControl]="budget"
+        />
+      </div>
+    </jp-card>
+    <jp-card title="Activity"
+      ><jp-timeline label="Project activity" [events]="events"
+    /></jp-card>
+    <jp-card title="Reviewers"
+      ><div class="reviewers">
+        <span>Primary reviewer</span
+        ><jp-overflow-chip label="Other reviewers" [items]="overflow" /></div
+    ></jp-card>
+    <jp-card title="Code examples"
+      ><p>
+        Import <code jpInlineCode>JpNumberStepper</code> from the UI package.
+      </p>
+      <jp-code-block label="Seat count field" language="HTML" [code]="example"
+    /></jp-card>
+  </div>
+</div>

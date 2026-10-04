@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+.page {
+  max-inline-size: 80rem;
+  margin-inline: auto;
+  padding: var(--jp-space-lg);
+  display: grid;
+  gap: var(--jp-space-lg);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--jp-space-lg);
+}
+.stack,
+form {
+  display: grid;
+  gap: var(--jp-space-md);
+}
+p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--jp-font-size-body);
+}
+jp-button-group {
+  margin-block-start: var(--jp-space-sm);
+}
+[tabindex='-1']:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .page {
+    padding: var(--jp-space-md);
+  }
+}

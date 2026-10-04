@@ -1,0 +1,11 @@
+<jp-button
+  variant="secondary"
+  [disabled]="disabled() || state() === 'pending'"
+  (click)="copy()"
+  ><jp-icon name="copy" />{{ label() }}</jp-button
+>
+<span class="feedback" role="status" aria-live="polite"
+  >@if (state() === 'pending') { {{ pendingLabel() }} } @else if (state() ===
+  'success') { {{ successLabel() }} } @else if (state() === 'failure') { {{
+  failureLabel() }} }</span
+>

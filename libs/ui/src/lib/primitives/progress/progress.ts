@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 
 @Component({
   selector: 'jp-progress',
@@ -23,7 +25,8 @@ import {
   },
 })
 export class JpProgress {
-  readonly label = input('Loading');
+  private readonly messages = inject(JP_MESSAGES);
+  readonly label = input(this.messages.progress.loading);
   /** Null represents an indeterminate operation. */
   readonly value = input<number | null>(null);
   readonly max = input(100);

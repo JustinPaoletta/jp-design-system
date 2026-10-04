@@ -18,6 +18,7 @@ import {
   JP_FOCUSABLE_SELECTOR,
 } from '../shared/focus-trap';
 
+import { JP_MESSAGES } from '../../i18n';
 import { claimOverlayEvent, registerOverlay } from '../shared/overlay-manager';
 
 @Directive({
@@ -50,9 +51,12 @@ export class JpDialog {
   private pointerOpener: HTMLElement | null = null;
   private lastOpen = false;
 
+  private readonly messages = inject(JP_MESSAGES);
   readonly open = input(false, { transform: booleanAttribute });
   readonly title = input.required<string>();
-  readonly closeLabel = input('Close dialog');
+  /** Edge placement powers the general-purpose drawer while sharing modal behavior. */
+  readonly placement = input<'center' | 'start' | 'end' | 'bottom'>('center');
+  readonly closeLabel = input(this.messages.dialog.close);
 
   readonly openChange = output<boolean>();
 

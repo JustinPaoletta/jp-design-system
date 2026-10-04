@@ -13,6 +13,7 @@ import {
   signal,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { JP_MESSAGES } from '../../i18n';
 
 import {
   claimOverlayEvent,
@@ -45,6 +46,7 @@ let nextComboboxId = 0;
   },
 })
 export class JpCombobox implements ControlValueAccessor {
+  private readonly messages = inject(JP_MESSAGES);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly control = viewChild<ElementRef<HTMLInputElement>>('control');
@@ -110,10 +112,10 @@ export class JpCombobox implements ControlValueAccessor {
 
   private readonly generatedId = `jp-combobox-${++nextComboboxId}`;
   readonly options = input<readonly JpComboboxOption[]>([]);
-  readonly placeholder = input('Search options');
+  readonly placeholder = input(this.messages.combobox.placeholder);
   readonly loading = input(false, { transform: booleanAttribute });
-  readonly loadingText = input('Loading options…');
-  readonly emptyText = input('No results found.');
+  readonly loadingText = input(this.messages.combobox.loading);
+  readonly emptyText = input(this.messages.combobox.empty);
   readonly open = signal(false);
   readonly query = signal('');
   readonly activeIndex = signal(-1);

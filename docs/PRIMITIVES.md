@@ -575,8 +575,18 @@ Interactive Angular host app for compositions and simulated product workflows. U
 npx nx run showcase:serve
 ```
 
+The preview catalogue extends these APIs with checklist, stepper, numeric/range,
+timeline, overflow, and code/copy controls. See
+[COMPONENT_EXPANSION.md](COMPONENT_EXPANSION.md#product-tools-second-batch) for
+their full contracts, and Showcase `/product-tools` for the validated wizard
+and combined examples.
+
 Open http://localhost:4200/assistant (also `/product-recipes`, `/overlays`,
 `/data`, `/controls`, `/app-shell`, `/layout-dashboard`).
 
 Showcase pages show live `accent` / `density` readouts from `data-jp-accent` and
 `data-jp-density` on `<html>` (handy when toggling those attributes in DevTools).
+
+## Everyday workflow primitives
+
+Command palette, context menu, native date/range/time fields, file upload queue, notification inbox, button group/toggle/split, inline editing, skip link and announcement outlet/service are documented in [WORKFLOW_COMPONENTS.md](WORKFLOW_COMPONENTS.md). All are preview exports.

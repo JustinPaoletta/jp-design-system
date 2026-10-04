@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+.page {
+  display: grid;
+  gap: var(--jp-space-lg);
+  padding: var(--jp-space-lg);
+  max-width: var(--jp-size-container-wide);
+  margin-inline: auto;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--jp-size-column-min-sm)), 1fr)
+  );
+  gap: var(--jp-space-lg);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  margin-block-end: var(--jp-space-md);
+}
+.measurement {
+  display: grid;
+  gap: var(--jp-space-xs);
+  margin-block: var(--jp-space-md);
+}
+form {
+  display: grid;
+  gap: var(--jp-space-lg);
+}
+.native-field {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: var(--jp-size-control-md);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
+  padding-inline: var(--jp-space-sm);
+  font: inherit;
+}
+.native-field:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+p {
+  margin-block: var(--jp-space-xs);
+  color: var(--jp-color-text-secondary);
+}
+@media (max-width: 480px) {
+  .page {
+    padding: var(--jp-space-md);
+  }
+}

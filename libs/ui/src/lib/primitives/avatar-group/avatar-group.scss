@@ -1,0 +1,23 @@
+:host {
+  display: inline-flex;
+}
+div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-2xs);
+}
+.overflow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--jp-size-control-md);
+  min-height: var(--jp-size-control-md);
+  padding-inline: var(--jp-space-2xs);
+  box-sizing: border-box;
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-full);
+  color: var(--jp-color-text-secondary);
+  background: var(--jp-color-surface-subtle);
+  font-size: var(--jp-font-size-caption);
+}

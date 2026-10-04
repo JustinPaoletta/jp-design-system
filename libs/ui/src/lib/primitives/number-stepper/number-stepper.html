@@ -1,0 +1,39 @@
+<label [for]="resolvedId()">{{ label() }}</label>
+<div class="control">
+  <button
+    type="button"
+    [disabled]="!canDecrease()"
+    [attr.aria-label]="decreaseLabel() + ' ' + label()"
+    (click)="adjust(-1)"
+  >
+    <jp-icon name="minus" />
+  </button>
+  <input
+    type="number"
+    [id]="resolvedId()"
+    [attr.name]="name() || null"
+    [value]="value() ?? ''"
+    [min]="safeMin()"
+    [max]="safeMax()"
+    [step]="safeStep()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonly()"
+    [attr.aria-invalid]="error() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+    (blur)="blur()"
+  />
+  <button
+    type="button"
+    [disabled]="!canIncrease()"
+    [attr.aria-label]="increaseLabel() + ' ' + label()"
+    (click)="adjust(1)"
+  >
+    <jp-icon name="plus" />
+  </button>
+</div>
+@if (hint()) {
+<p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+} @if (error()) {
+<p class="error" [id]="resolvedId() + '-error'">{{ error() }}</p>
+}

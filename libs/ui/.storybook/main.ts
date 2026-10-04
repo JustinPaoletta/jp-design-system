@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/angular';
+import { join } from 'node:path';
 import type { Configuration } from 'webpack';
 import webpack from 'webpack';
 
@@ -25,7 +26,17 @@ const config: StorybookConfig = {
   features: {
     backgrounds: false,
   },
-  webpackFinal: async (webpackConfig: Configuration) => {
+  webpackFinal: async (webpackConfig: Configuration, options) => {
+    // The patched dev middleware serves writeToDisk assets from disk. Storybook
+    // otherwise shares this directory across ports, so a live test server can
+    // replace another preview's runtime and trigger an endless HMR reload loop.
+    if (options.configType === 'DEVELOPMENT' && webpackConfig.output?.path) {
+      webpackConfig.output.path = join(
+        webpackConfig.output.path,
+        `dev-${options.port ?? process.pid}`,
+      );
+    }
+
     const definitions: Record<string, unknown> = {};
     const plugins = webpackConfig.plugins ?? [];
 

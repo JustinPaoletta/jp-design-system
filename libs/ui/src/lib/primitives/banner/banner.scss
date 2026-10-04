@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--jp-space-md);
+  padding: var(--jp-space-md) var(--jp-space-lg);
+  border: 1px solid;
+  border-radius: var(--jp-radius-md);
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+.copy {
+  flex: 1 1 var(--jp-size-column-min-sm);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+p {
+  margin-block: var(--jp-space-xs) 0;
+  font-size: var(--jp-font-size-body);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm);
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--jp-size-control-sm);
+  min-height: var(--jp-size-control-sm);
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}

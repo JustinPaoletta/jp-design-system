@@ -1,0 +1,20 @@
+:host {
+  color: var(--jp-color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: var(--jp-space-2xs);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+:host(:hover) {
+  color: var(--jp-color-text-secondary);
+}
+:host(:focus-visible) {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--jp-radius-sm);
+}
+@media (forced-colors: active) {
+  :host {
+    color: LinkText;
+  }
+}

@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+dl {
+  display: grid;
+  gap: var(--jp-space-md);
+  margin: 0;
+  font-family: var(--jp-font-family-base);
+}
+dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--jp-space-sm);
+}
+dt {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+dd {
+  margin: 0;
+  color: var(--jp-color-text-primary);
+  overflow-wrap: anywhere;
+  font-size: var(--jp-font-size-body);
+}
+@media (max-width: 480px) {
+  dl > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--jp-space-2xs);
+  }
+}

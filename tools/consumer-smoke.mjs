@@ -139,12 +139,24 @@ try {
   await writeFile(
     path.join(temporary, 'src/main.ts'),
     `
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   JpButton, JpInput, JpCheckbox, JpRadioGroup, JpCombobox, JpProgress,
   JpTable, JpTabs, JpTabPanel,
+  JpIcon, JpLink, JpDivider, JpDisclosure, JpAccordion,
+  JpAvatar, JpAvatarGroup, JpStatusDot, JpSpinner, JpMeter, JpKeyboardHint,
+  JpDescriptionList, JpCard, JpPageHeader, JpList, JpListItemTemplate,
+  JpFormField, JpFieldControl, JpFormSection, JpErrorSummary,
+  JpBanner, JpDrawer, JpCheckboxGroup, JpSegmentedControl, JpMultiSelect,
+  JpSearchField, JpPasswordField, JpVisuallyHidden,
+  JpChecklist, JpStepper, JpNumberStepper, JpSlider, JpRangeSlider,
+  JpTimeline, JpCodeBlock, JpInlineCode, JpCopyButton, JpOverflowChip,
+  JpCommandPalette, JpContextMenu, JpDatePicker, JpDateRangePicker, JpTimePicker,
+  JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
+  JpInlineEdit, JpSkipLink, JpLiveAnnouncer,
+  JpAnnouncer, type JpUploadItem, type JpDateRangeValue,
   type JpRadioOption, type JpComboboxOption, type JpSortableTableColumn,
   type JpTableCellValue, type JpTableRowKey, type JpTableSort, type JpTab,
 } from '@jp-design-system/ui';
@@ -154,9 +166,59 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
   imports: [
     JpButton, JpInput, JpCheckbox, JpRadioGroup, JpCombobox, JpProgress,
     JpTable, JpTabs, JpTabPanel, FormsModule, ReactiveFormsModule,
+    JpIcon, JpLink, JpDivider, JpDisclosure, JpAccordion,
+    JpAvatar, JpAvatarGroup, JpStatusDot, JpSpinner, JpMeter, JpKeyboardHint,
+    JpDescriptionList, JpCard, JpPageHeader, JpList, JpListItemTemplate,
+    JpFormField, JpFieldControl, JpFormSection, JpErrorSummary,
+    JpBanner, JpDrawer, JpCheckboxGroup, JpSegmentedControl, JpMultiSelect,
+    JpSearchField, JpPasswordField, JpVisuallyHidden,
+    JpChecklist, JpStepper, JpNumberStepper, JpSlider, JpRangeSlider,
+    JpTimeline, JpCodeBlock, JpInlineCode, JpCopyButton, JpOverflowChip,
+  JpCommandPalette, JpContextMenu, JpDatePicker, JpDateRangePicker, JpTimePicker,
+  JpFileUpload, JpNotificationList, JpButtonGroup, JpToggleButton, JpSplitButton,
+  JpInlineEdit, JpSkipLink, JpLiveAnnouncer,
   ],
   template: \`
     <main [attr.data-jp-accent]="accent">
+      <jp-page-header title="Package consumer"><span jpPageMeta>Preview</span></jp-page-header>
+      <a jpLink href="#settings">Settings</a><jp-icon name="check" label="Complete" />
+      <jp-divider decorative /><jp-keyboard-hint [keys]="['Control', 'K']" />
+      <jp-avatar name="Package Consumer" /><jp-avatar-group label="Reviewers" [people]="people" [max]="1" />
+      <jp-status-dot tone="success" label="Online" /><jp-spinner label="Refreshing" />
+      <jp-meter label="Storage" [value]="40" />
+      <jp-card title="Details"><jp-description-list [items]="details" /><button jpCardActions type="button">Edit</button></jp-card>
+      <jp-list [items]="listItems"><ng-template jpListItem let-item><span>{{ item.title }}</span></ng-template></jp-list>
+      <jp-accordion id="consumer-settings" label="Settings"><jp-disclosure title="Advanced">Details</jp-disclosure></jp-accordion>
+      <jp-form-section legend="Preferences"><jp-form-field controlId="consumer-native" label="Native field"><input jpFieldControl /></jp-form-field></jp-form-section>
+      <jp-error-summary [errors]="fieldErrors" />
+      <jp-banner title="Preview" message="Ready for integration testing" />
+      <jp-drawer title="Details" [open]="drawerOpen" (openChange)="drawerOpen = $event"><button jpDrawerActions type="button">Done</button></jp-drawer>
+      <jp-checkbox-group label="Access" [options]="ownerOptions" [(ngModel)]="memberValues" />
+      <jp-segmented-control label="Owner" [options]="ownerOptions" [(ngModel)]="segment" />
+      <jp-multi-select label="Members" [options]="ownerOptions" [(ngModel)]="memberValues" />
+      <jp-search-field label="Search" [(ngModel)]="query" />
+      <jp-password-field label="Password" [(ngModel)]="password" />
+      <span jpVisuallyHidden>Accessible extra context</span>
+      <jp-checklist label="Tasks" [items]="[{id:'task',label:'Task'}]" [(ngModel)]="memberValues" />
+      <jp-stepper label="Setup" currentId="details" [steps]="[{id:'details',label:'Details'}]" />
+      <jp-number-stepper label="Seats" [min]="1" [max]="10" [(ngModel)]="numericValue" />
+      <jp-slider label="Volume" [(ngModel)]="numericValue" />
+      <jp-range-slider label="Budget" [(ngModel)]="rangeValue" />
+      <jp-timeline label="Activity" [events]="[{id:'created',title:'Created'}]" />
+      <code jpInlineCode>Example</code><jp-code-block label="Example code" code="const value = 1;" />
+      <jp-copy-button text="Example" /><jp-overflow-chip label="Other items" [items]="[{id:'extra',label:'Extra'}]" />
+      <jp-date-picker label="Date" [(ngModel)]="dateValue" min="2026-10-01" max="2026-10-31" />
+      <jp-date-range-picker label="Dates" [(ngModel)]="dateRangeValue" />
+      <jp-time-picker label="Time" [(ngModel)]="timeValue" [step]="900" />
+      <jp-toggle-button label="Favorite" [(ngModel)]="accepted" />
+      <jp-button-group label="Actions"><button type="button">Save</button></jp-button-group>
+      <jp-split-button label="Create" [actions]="[{id:'template',label:'From template'}]" />
+      <jp-context-menu label="Project" [actions]="[{id:'rename',label:'Rename'}]">Project</jp-context-menu>
+      <jp-command-palette [commands]="[{id:'home',label:'Home'}]" />
+      <jp-inline-edit label="Name" [value]="name" (valueChange)="name=$event" [save]="saveInline" />
+      <jp-file-upload label="Files" [items]="uploadItems" />
+      <jp-notification-list label="Inbox" [items]="[{id:'review',title:'Review',unread:true}]" />
+      <jp-skip-link target="consumer-native" /><jp-live-announcer />
       <jp-input label="Template-driven name" [(ngModel)]="name" />
       <jp-checkbox label="Accept terms" [(ngModel)]="accepted" [indeterminate]="true" />
       <form [formGroup]="form">
@@ -179,6 +241,23 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
   \`,
 })
 class ConsumerApp {
+  readonly announcer = inject(JpAnnouncer);
+  readonly uploadItems: readonly JpUploadItem[] = [];
+  dateValue = '2026-10-10';
+  dateRangeValue: JpDateRangeValue = ['2026-10-10', '2026-10-12'];
+  timeValue = '09:00';
+  readonly saveInline = async (_value: string, _signal: AbortSignal): Promise<void> => undefined;
+  readonly people = [{ id: 'one', name: 'Package Consumer' }, { id: 'two', name: 'Reviewer' }];
+  readonly details = [{ term: 'Region', description: 'us-east-1' }];
+  readonly listItems = [{ id: 'one', title: 'Package consumer' }];
+  readonly fieldErrors = [{ controlId: 'consumer-native', message: 'Enter a value' }];
+  drawerOpen = false;
+  memberValues: readonly string[] = [];
+  numericValue: number | null = 3;
+  rangeValue: readonly [number, number] = [10, 30];
+  segment = 'justin';
+  query = '';
+  password = '';
   accent: JpAccentFamily = JP_DEFAULT_ACCENT;
   name = 'Package consumer';
   accepted = false;
@@ -259,14 +338,16 @@ finally { await run.stop(); }
   report.error = error.message;
   throw error;
 } finally {
-  await mkdir(artifacts, { recursive: true });
-  await writeFile(
-    path.join(artifacts, 'consumer-smoke.json'),
-    `${JSON.stringify(report, null, 2)}\n`,
-  );
+  // Release the disposable install before writing the report. A full disk must
+  // not make reporting throw before cleanup and strand the largest artifact.
   if (process.env.KEEP_CONSUMER_SMOKE === '1') {
     console.log(`Consumer retained for diagnosis: ${temporary}`);
   } else {
     await rm(temporary, { recursive: true, force: true });
   }
+  await mkdir(artifacts, { recursive: true });
+  await writeFile(
+    path.join(artifacts, 'consumer-smoke.json'),
+    `${JSON.stringify(report, null, 2)}\n`,
+  );
 }

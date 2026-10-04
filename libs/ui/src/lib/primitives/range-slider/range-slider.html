@@ -1,0 +1,50 @@
+<fieldset [disabled]="isDisabled()">
+  <legend>{{ label() }}</legend>
+  @for (index of [0, 1]; track index) {
+  <div class="endpoint">
+    <div class="heading">
+      <label [for]="resolvedId() + '-' + index"
+        >{{ index === 0 ? lowerLabel() : upperLabel() }}</label
+      ><span class="value">{{ valueText()(displayedValue()[index]) }}</span>
+    </div>
+    <div class="controls">
+      <input
+        class="slider"
+        type="range"
+        [id]="resolvedId() + '-' + index"
+        [value]="displayedValue()[index]"
+        [min]="index === 0 ? safeMin() : displayedValue()[0]"
+        [max]="index === 0 ? displayedValue()[1] : safeMax()"
+        [step]="safeStep()"
+        [disabled]="isDisabled() || readonly()"
+        [attr.aria-valuetext]="valueText()(displayedValue()[index])"
+        [attr.aria-describedby]="describedBy()"
+        [attr.aria-invalid]="error() ? true : null"
+        (input)="change(index === 0 ? 0 : 1, $event)"
+        (blur)="blur()"
+      />
+      @if (showNumberInputs()) {
+      <input
+        class="number"
+        type="number"
+        [attr.aria-label]="index === 0 ? lowerLabel() : upperLabel()"
+        [value]="displayedValue()[index]"
+        [min]="index === 0 ? safeMin() : displayedValue()[0]"
+        [max]="index === 0 ? displayedValue()[1] : safeMax()"
+        [step]="safeStep()"
+        [disabled]="isDisabled()"
+        [readOnly]="readonly()"
+        [attr.aria-describedby]="describedBy()"
+        [attr.aria-invalid]="error() ? true : null"
+        (change)="change(index === 0 ? 0 : 1, $event)"
+        (blur)="blur()"
+      />
+      }
+    </div>
+  </div>
+  } @if (hint()) {
+  <p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+  } @if (error()) {
+  <p class="error" [id]="resolvedId() + '-error'">{{ error() }}</p>
+  }
+</fieldset>

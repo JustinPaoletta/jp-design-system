@@ -7,7 +7,9 @@
       [attr.aria-expanded]="mobileNavOpen()"
       [attr.aria-controls]="sidebarId"
       [attr.aria-label]="
-        mobileNavOpen() ? 'Close navigation' : 'Open navigation'
+        mobileNavOpen()
+          ? messages.appShell.closeNavigation
+          : messages.appShell.openNavigation
       "
       (click)="toggleMobileNav()"
     >
@@ -34,7 +36,9 @@
         type="button"
         class="jp-app-shell__collapse-toggle"
         [attr.aria-label]="
-          sidebarCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'
+          sidebarCollapsed()
+            ? messages.appShell.expandSidebar
+            : messages.appShell.collapseSidebar
         "
         [attr.aria-expanded]="!sidebarCollapsed()"
         [attr.aria-controls]="sidebarId"
@@ -49,7 +53,7 @@
       <button
         type="button"
         class="jp-app-shell__drawer-close"
-        aria-label="Close navigation"
+        [attr.aria-label]="messages.appShell.closeNavigation"
         (click)="closeMobileNav()"
       >
         <span class="jp-app-shell__drawer-close-icon" aria-hidden="true"></span>

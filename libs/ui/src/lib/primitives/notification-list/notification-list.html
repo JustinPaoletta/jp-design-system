@@ -1,0 +1,76 @@
+<section [attr.aria-label]="label()" [attr.aria-busy]="loading()">
+  <div class="toolbar">
+    <div role="group" [attr.aria-label]="label()">
+      <button
+        type="button"
+        [attr.aria-pressed]="filter()==='all'"
+        (click)="filter.set('all')"
+      >
+        {{messages.all}}</button
+      ><button
+        type="button"
+        [attr.aria-pressed]="filter()==='unread'"
+        (click)="filter.set('unread')"
+      >
+        {{messages.unread}} <bdi>{{unreadCount()}}</bdi>
+      </button>
+    </div>
+    <button
+      type="button"
+      [disabled]="loading() || !unreadCount()"
+      (click)="markAll()"
+    >
+      {{messages.markAll}}
+    </button>
+  </div>
+  @if(loading()){
+  <p role="status">{{messages.loading}}</p>
+  } @else if(error()){
+  <p role="alert">{{error()}}</p>
+  <button type="button" (click)="retry()">{{messages.retry}}</button>} @else {
+  @for(group of groups();track group.name){
+  <section [attr.aria-label]="group.name || label()">
+    @if(group.name){
+    <h3>{{group.name}}</h3>
+    }
+    <ul>
+      @for(item of group.items;track item.id){
+      <li [class.unread]="item.unread" [attr.data-jp-notification]="item.id">
+        <div class="title">
+          @if(item.href){<a jpLink [href]="item.href">{{item.title}}</a>}@else
+          {<strong>{{item.title}}</strong>}<span class="status"
+            >{{item.unread?messages.unread:messages.read}}</span
+          >
+        </div>
+        @if(item.description){
+        <p>{{item.description}}</p>
+        } @if(item.timeLabel){@if(item.dateTime){<time
+          [attr.datetime]="item.dateTime"
+          ><bdi>{{item.timeLabel}}</bdi></time
+        >}@else{<span class="time"><bdi>{{item.timeLabel}}</bdi></span
+        >}}
+        <div class="actions">
+          <button
+            type="button"
+            [attr.aria-label]="(item.unread?messages.markRead:messages.markUnread)+': '+item.title"
+            (click)="mark(item)"
+          >
+            {{item.unread?messages.markRead:messages.markUnread}}</button
+          ><button
+            type="button"
+            [attr.aria-label]="messages.dismiss+': '+item.title"
+            (click)="dismiss(item)"
+          >
+            {{messages.dismiss}}
+          </button>
+        </div>
+      </li>
+      }
+    </ul>
+  </section>
+  } @if(!groups().length){
+  <p role="status">
+    {{filter()==='unread'?messages.emptyUnread:messages.empty}}
+  </p>
+  } }
+</section>

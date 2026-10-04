@@ -1,0 +1,29 @@
+:host {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+:host:focus-within {
+  position: fixed;
+  inset-block-start: var(--jp-space-sm);
+  inset-inline-start: var(--jp-space-sm);
+  inline-size: auto;
+  block-size: auto;
+  clip-path: none;
+  overflow: visible;
+  z-index: var(--jp-z-overlay-dialog);
+}
+a {
+  display: block;
+  padding: var(--jp-space-sm);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+  font-family: var(--jp-font-family-base);
+}
+a:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}

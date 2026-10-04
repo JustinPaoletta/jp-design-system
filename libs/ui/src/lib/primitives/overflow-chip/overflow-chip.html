@@ -1,0 +1,21 @@
+@if (items().length) {
+<jp-popover [open]="open()" (openChange)="setOpen($event)">
+  <button
+    type="button"
+    jpPopoverTrigger
+    [attr.aria-label]="moreLabel()(items().length) + ': ' + label()"
+  >
+    <bdi dir="ltr">+{{ items().length }}</bdi>
+  </button>
+  <div jpPopoverContent [attr.aria-label]="label()">
+    <ul>
+      @for (item of items(); track item.id) {
+      <li>
+        @if (item.href) { <a jpLink [href]="item.href">{{ item.label }}</a> }
+        @else { {{ item.label }} }
+      </li>
+      }
+    </ul>
+  </div>
+</jp-popover>
+}

@@ -1,0 +1,78 @@
+:host {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+button {
+  min-block-size: var(--jp-size-control-md);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-button-secondary-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-button-secondary-bg);
+  color: var(--jp-color-button-secondary-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+button:hover:not(:disabled) {
+  background: var(--jp-color-button-secondary-bg-hover);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+.toolbar,
+.toolbar div,
+.actions,
+.title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--jp-space-xs);
+}
+.toolbar {
+  justify-content: space-between;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--jp-space-sm) 0;
+  display: grid;
+  gap: var(--jp-space-sm);
+}
+li {
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  padding: var(--jp-space-sm);
+  overflow-wrap: anywhere;
+}
+.unread {
+  border-inline-start: 3px solid var(--jp-color-accent-solid);
+}
+h3 {
+  font-size: var(--jp-font-size-body);
+}
+.status,
+time,
+.time {
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-secondary);
+}
+.actions {
+  margin-block-start: var(--jp-space-sm);
+}
+button[aria-pressed='true'] {
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+}
+p {
+  margin-block: var(--jp-space-xs);
+}

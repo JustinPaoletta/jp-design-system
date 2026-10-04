@@ -1,0 +1,14 @@
+<fieldset
+  [disabled]="disabled()"
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-invalid]="error() ? true : null"
+>
+  <legend>{{ legend() }}</legend>
+  @if (hint()) {
+  <p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+  }
+  <div class="controls"><ng-content /></div>
+  @if (error()) {
+  <p class="error" [id]="resolvedId() + '-error'" role="alert">{{ error() }}</p>
+  }
+</fieldset>

@@ -1,0 +1,64 @@
+<div class="jp-input__field">
+  <label class="jp-input__label" [for]="resolvedId()">{{label()}}</label>
+  <input
+    class="jp-input__control"
+    type="file"
+    [id]="resolvedId()"
+    [accept]="accept()"
+    [multiple]="multiple()"
+    [disabled]="disabled()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="error() || rejections().length?true:null"
+    (change)="select($event)"
+  />
+  @if(hint()){
+  <p class="jp-input__hint" [id]="resolvedId()+'-hint'">{{hint()}}</p>
+  }
+  <div [id]="resolvedId()+'-error'" class="jp-input__error" role="alert">
+    @if(error()){
+    <p>{{error()}}</p>
+    }@for(rejection of rejections();track $index){
+    <p>{{rejection.message}}</p>
+    }
+  </div>
+</div>
+<ul [attr.aria-label]="label() + ': ' + messages.queue">
+  @for(item of items();track item.id){
+  <li>
+    <div class="file">
+      <bdi>{{item.file.name}}</bdi><span class="status">{{status(item)}}</span>
+    </div>
+    @if(item.status==='uploading'){<jp-progress
+      [label]="label()+': '+item.file.name"
+      [value]="item.progress ?? null"
+    /><button
+      type="button"
+      [disabled]="disabled()"
+      [attr.aria-label]="messages.cancel+': '+item.file.name"
+      (click)="act(item,'cancel')"
+    >
+      {{messages.cancel}}</button
+    >} @else { @if(item.status==='error'){
+    <p class="jp-input__error">{{item.error || messages.failed}}</p>
+    <button
+      type="button"
+      [disabled]="disabled()"
+      [attr.aria-label]="messages.retry+': '+item.file.name"
+      (click)="act(item,'retry')"
+    >
+      {{messages.retry}}</button
+    >}
+    <button
+      type="button"
+      [disabled]="disabled()"
+      [attr.aria-label]="messages.remove+': '+item.file.name"
+      (click)="act(item,'remove')"
+    >
+      {{messages.remove}}</button
+    >}
+  </li>
+  }
+</ul>
+<p role="status" aria-live="polite">
+  @if(!items().length){ {{messages.empty}} }
+</p>

@@ -68,7 +68,17 @@ jobs:
         run: npx nx run ui:test-storybook-dev
 
       - name: Showcase functional and accessibility checks (Chromium and WebKit)
-        run: npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
+        run: npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual"
+
+      - name: Upload test failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-failure-artifacts
+          if-no-files-found: ignore
+          path: |
+            coverage
+            dist/.playwright
 
   build:
     name: Build
@@ -105,7 +115,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install chromium
-      - run: npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual"
+      - run: npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: failure()
         with:

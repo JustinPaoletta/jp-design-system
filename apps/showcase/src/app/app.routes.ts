@@ -1,4 +1,3 @@
-import { ProductRecipesPage } from './pages/product-recipes/product-recipes.page';
 import { Route } from '@angular/router';
 import { ShellLayout } from './layout/shell-layout';
 import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
@@ -13,7 +12,34 @@ export const appRoutes: Route[] = [
     path: '',
     component: ShellLayout,
     children: [
-      { path: 'product-recipes', component: ProductRecipesPage },
+      {
+        path: 'workflows',
+        loadComponent: () =>
+          import('./pages/workflows/workflows.page').then(
+            (module) => module.WorkflowsPage,
+          ),
+      },
+      {
+        path: 'product-tools',
+        loadComponent: () =>
+          import('./pages/product-tools/product-tools.page').then(
+            (module) => module.ProductToolsPage,
+          ),
+      },
+      {
+        path: 'product-recipes',
+        loadComponent: () =>
+          import('./pages/product-recipes/product-recipes.page').then(
+            (module) => module.ProductRecipesPage,
+          ),
+      },
+      {
+        path: 'component-expansion',
+        loadComponent: () =>
+          import('./pages/component-expansion/component-expansion.page').then(
+            (module) => module.ComponentExpansionPage,
+          ),
+      },
       {
         path: '',
         pathMatch: 'full',

@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  font-family: var(--jp-font-family-base);
+}
+.field {
+  display: grid;
+  gap: var(--jp-space-2xs);
+}
+label {
+  color: var(--jp-color-field-label);
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+}
+.selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-2xs);
+}
+.selected:empty {
+  display: none;
+}
+input {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--jp-size-control-md);
+  padding-inline: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
+  font: inherit;
+  font-size: var(--jp-font-size-body);
+}
+input:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.popup {
+  box-sizing: border-box;
+  min-width: min(
+    var(--jp-size-column-min-sm),
+    calc(100vw - 2 * var(--jp-space-md))
+  );
+  max-height: var(--jp-size-container-narrow);
+  padding: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-overlay);
+}
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-xs);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border-radius: var(--jp-radius-sm);
+  cursor: pointer;
+}
+.option.active,
+.option:hover {
+  background: var(--jp-color-surface-emphasis);
+  outline: 1px solid var(--jp-color-border-strong);
+}
+.option[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+p {
+  margin: 0;
+  font-size: var(--jp-font-size-caption);
+}
+.hint {
+  color: var(--jp-color-text-secondary);
+}
+.error {
+  color: var(--jp-color-field-error);
+}
+@media (forced-colors: active) {
+  .option.active {
+    outline-color: Highlight;
+  }
+}

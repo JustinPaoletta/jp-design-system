@@ -1,0 +1,9 @@
+<button
+  type="button"
+  [attr.aria-pressed]="value()"
+  [disabled]="isDisabled()"
+  (click)="toggle()"
+  (blur)="blur()"
+>
+  {{ label() }}
+</button>

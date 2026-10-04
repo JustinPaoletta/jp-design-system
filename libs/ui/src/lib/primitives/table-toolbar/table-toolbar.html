@@ -10,19 +10,24 @@
   </div>
   @if (selectedCount() > 0) {
   <div class="jp-table-toolbar__selection">
-    <span role="status">{{ selectedCount() }} selected</span
+    <span role="status"
+      >{{ messages.tableToolbar.selected(selectedCount()) }}</span
     ><ng-content select="[jpTableBulkActions]" />
   </div>
   } @if (activeFilters().length > 0) {
-  <div class="jp-table-toolbar__filters" aria-label="Active filters">
+  <div
+    class="jp-table-toolbar__filters"
+    [attr.aria-label]="messages.tableToolbar.activeFilters"
+  >
     @for (filter of activeFilters(); track filter.key) {
     <jp-button
       variant="secondary"
       size="sm"
       [disabled]="disabled()"
       (click)="remove(filter.key)"
-      ><span class="jp-table-toolbar__sr-only">Remove filter: </span>{{
-      filter.label }} <span aria-hidden="true">×</span></jp-button
+      ><span class="jp-table-toolbar__sr-only"
+        >{{ messages.tableToolbar.removeFilter(filter.label) }}</span
+      ><span aria-hidden="true">{{ filter.label }} ×</span></jp-button
     >
     }
     <jp-button
@@ -30,7 +35,7 @@
       size="sm"
       [disabled]="disabled()"
       (click)="clear()"
-      >Clear filters</jp-button
+      >{{ messages.tableToolbar.clearFilters }}</jp-button
     >
   </div>
   }

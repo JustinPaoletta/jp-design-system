@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  font-family: var(--jp-font-family-base);
+}
+label,
+legend {
+  color: var(--jp-color-field-label);
+  font-weight: var(--jp-font-weight-medium);
+  font-size: var(--jp-font-size-caption);
+}
+label {
+  display: block;
+  margin-block-end: var(--jp-space-2xs);
+}
+.hint,
+.error {
+  margin-block: var(--jp-space-2xs) 0;
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+.hint {
+  color: var(--jp-color-text-secondary);
+}
+.error {
+  color: var(--jp-color-field-error);
+}
+.required {
+  color: var(--jp-color-text-secondary);
+}
+fieldset {
+  min-inline-size: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.options {
+  display: grid;
+  gap: var(--jp-space-xs);
+  margin-block-start: var(--jp-space-sm);
+}
+.options label {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  font-size: var(--jp-font-size-body);
+  color: var(--jp-color-text-primary);
+  font-weight: var(--jp-font-weight-regular);
+  cursor: pointer;
+}
+input {
+  width: var(--jp-size-control-sm);
+  height: var(--jp-size-control-sm);
+  margin: 0;
+  accent-color: var(--jp-color-accent-solid);
+  flex-shrink: 0;
+}
+input:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -253,3 +253,20 @@ See [DISTRIBUTION.md](DISTRIBUTION.md) for the local `0.1.0` package contract.
 # Product readiness additions
 
 Implemented: skeleton/progress/inline alert, loading buttons, assistant begin/update/complete/fail/cancel/retry lifecycle, native form attributes, indeterminate checkbox, radio group, searchable combobox, controlled table sorting/selection, toolbar/pagination, manual-activation tabs, breadcrumbs, and native top-layer overlays with viewport positioning. Showcase `/product-recipes` demonstrates successful and failed application actions with simulated transport. Authentication, backend authorization, and real transport remain consumer responsibilities.
+
+# Component catalogue expansion
+
+October 4, 2026: 25 preview components plus field/list-template/accessibility
+directives extend the original milestone scope. Showcase `/component-expansion`
+demonstrates the new APIs. See [COMPONENT_EXPANSION.md](COMPONENT_EXPANSION.md)
+and the [remaining component task list](../COMPONENT_EXPANSION_PLAN.md).
+
+The second batch adds nine preview components and an inline-code directive:
+checklist, stepper/wizard recipe, slider/range, number stepper, timeline, overflow,
+and code/copy controls. Showcase `/product-tools` demonstrates their composition.
+Contracts and limits are in the [component guide](COMPONENT_EXPANSION.md#product-tools-second-batch).
+Storybook development output is isolated per server port, with runtime checks
+protecting concurrent preview/test servers; see the [regression note](qa/STORYBOOK_RELOAD_REGRESSION.md).
+Manual review and maturity promotion remain open.
+
+The remaining everyday catalogue now has working preview implementations. Larger tree, table, calendar, resizing and media features remain in [the task list](../COMPONENT_EXPANSION_PLAN.md). See [workflow APIs](WORKFLOW_COMPONENTS.md); manual accessibility and release promotion are still required.

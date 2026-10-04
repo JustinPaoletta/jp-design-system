@@ -1,0 +1,10 @@
+<div
+  role="meter"
+  [attr.aria-label]="label()"
+  [attr.aria-valuemin]="safeMin()"
+  [attr.aria-valuemax]="safeMax()"
+  [attr.aria-valuenow]="safeValue()"
+  [attr.aria-valuetext]="valueText() || null"
+>
+  <span [style.width.%]="percent()"></span>
+</div>

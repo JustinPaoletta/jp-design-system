@@ -1,0 +1,11 @@
+<span
+  class="avatar"
+  [class.small]="size() === 'sm'"
+  [class.large]="size() === 'lg'"
+  role="img"
+  [attr.aria-label]="name()"
+>
+  @if (src() && !failed()) {
+  <img [src]="src()" alt="" (error)="failed.set(true)" /> } @else {
+  <span aria-hidden="true">{{ initials().toUpperCase() }}</span> }
+</span>

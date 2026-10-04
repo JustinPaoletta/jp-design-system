@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+details {
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+details[open] summary jp-icon {
+  transform: rotate(180deg);
+}
+.content {
+  padding: var(--jp-space-md);
+  padding-block-start: var(--jp-space-xs);
+  color: var(--jp-color-text-secondary);
+  overflow-wrap: anywhere;
+}
+@media (forced-colors: active) {
+  details {
+    border-color: CanvasText;
+  }
+}

@@ -25,6 +25,7 @@ The JP Design System is a structured Angular component library for professional 
 - Feedback & Overlays plan: [docs/FEEDBACK_OVERLAYS_PLAN.md](./docs/FEEDBACK_OVERLAYS_PLAN.md)
 - Assistant System plan: [docs/ASSISTANT_SYSTEM_PLAN.md](./docs/ASSISTANT_SYSTEM_PLAN.md)
 - CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
+- Consumer guide: [docs/consumers/README.md](./docs/consumers/README.md)
 
 ## Core Philosophy
 
@@ -80,7 +81,7 @@ Standalone Angular components with:
 
 - Strict typing
 - Token-based styling
-- WCAG A/AA accessibility target, backed by automated checks and manual review
+- WCAG 2.1 A/AA accessibility target, backed by automated checks. Manual assistive-technology review is still open.
 - Constrained API surface
 
 ## Development Standards
@@ -118,6 +119,13 @@ Run UI Storybook (component primitives):
 ```bash
 npx nx run ui:storybook
 ```
+
+Showcase `/product-tools` demonstrates the second component batch: a validated
+wizard, nested checklist, numeric controls, timeline, overflow, and code copying.
+See [component contracts](docs/COMPONENT_EXPANSION.md#product-tools-second-batch)
+and the [remaining component task list](COMPONENT_EXPANSION_PLAN.md).
+Storybook contributors must preserve [per-server output isolation](docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated)
+to prevent continuous preview reloads.
 
 Run baseline quality checks:
 
@@ -178,3 +186,13 @@ See [MANUAL_QA.md](./MANUAL_QA.md) for the Storybook manual QA checklist (layout
 ## License
 
 MIT.
+
+## Component expansion
+
+The preview catalogue now includes 25 additional components for navigation,
+identity, structured content, forms, feedback, and drawers. Explore Showcase
+`/component-expansion` and [the API guide](docs/COMPONENT_EXPANSION.md).
+The [component task list](COMPONENT_EXPANSION_PLAN.md) records completed and
+remaining work; manual assistive-technology review remains pending.
+
+Everyday workflows adds thirteen preview components for commands, context actions, native dates/times, uploads, notifications, button combinations, editing and accessibility helpers. See [API contracts](docs/WORKFLOW_COMPONENTS.md) and [verification](docs/qa/WORKFLOWS.md). Showcase `/workflows` is linked from Product tools.

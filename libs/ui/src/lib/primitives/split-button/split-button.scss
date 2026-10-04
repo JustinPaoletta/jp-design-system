@@ -1,0 +1,38 @@
+:host {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+button {
+  min-block-size: var(--jp-size-control-md);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-button-secondary-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-button-secondary-bg);
+  color: var(--jp-color-button-secondary-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+button:hover:not(:disabled) {
+  background: var(--jp-color-button-secondary-bg-hover);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+div[role='group'] {
+  display: flex;
+  gap: var(--jp-space-2xs);
+}
+.primary {
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+}
+.primary:hover:not(:disabled) {
+  background: var(--jp-color-button-primary-bg-hover);
+}

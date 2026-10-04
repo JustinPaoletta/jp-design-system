@@ -1,6 +1,7 @@
 <nav class="jp-pagination" [attr.aria-label]="label()">
   <p class="jp-pagination__summary" aria-live="polite" aria-atomic="true">
-    {{ start() }}–{{ end() }} of {{ safeTotal() }}
+    {{ messages.pagination.range({ start: start(), end: end(), total:
+    safeTotal(), }) }}
   </p>
   <div class="jp-pagination__controls">
     <jp-button
@@ -8,31 +9,32 @@
       size="sm"
       [disabled]="disabled() || currentPage() === 1"
       (click)="goTo(1)"
-      >First page</jp-button
+      >{{ messages.pagination.first }}</jp-button
     >
     <jp-button
       variant="secondary"
       size="sm"
       [disabled]="disabled() || currentPage() === 1"
       (click)="goTo(currentPage() - 1)"
-      >Previous</jp-button
+      >{{ messages.pagination.previous }}</jp-button
     >
     <span class="jp-pagination__summary"
-      >Page {{ currentPage() }} of {{ pageCount() }}</span
+      >{{ messages.pagination.page({ page: currentPage(), pageCount:
+      pageCount(), }) }}</span
     >
     <jp-button
       variant="secondary"
       size="sm"
       [disabled]="disabled() || currentPage() === pageCount()"
       (click)="goTo(currentPage() + 1)"
-      >Next</jp-button
+      >{{ messages.pagination.next }}</jp-button
     >
     <jp-button
       variant="ghost"
       size="sm"
       [disabled]="disabled() || currentPage() === pageCount()"
       (click)="goTo(pageCount())"
-      >Last page</jp-button
+      >{{ messages.pagination.last }}</jp-button
     >
   </div>
 </nav>

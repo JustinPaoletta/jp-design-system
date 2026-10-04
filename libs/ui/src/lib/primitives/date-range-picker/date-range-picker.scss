@@ -1,0 +1,29 @@
+@use '../input/input';
+fieldset {
+  min-inline-size: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--jp-space-xs);
+  font-family: var(--jp-font-family-base);
+}
+legend {
+  padding: 0;
+  color: var(--jp-color-field-label);
+  font-size: var(--jp-font-size-body);
+  margin-block-end: var(--jp-space-xs);
+}
+.dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--jp-space-sm);
+}
+input[aria-invalid='true'] {
+  border-color: var(--jp-color-field-border-invalid);
+}
+@media (max-width: 480px) {
+  .dates {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 
 export type JpBreadcrumb = {
   label: string;
@@ -14,6 +20,7 @@ export type JpBreadcrumb = {
   host: { class: 'jp-breadcrumbs' },
 })
 export class JpBreadcrumbs {
+  private readonly messages = inject(JP_MESSAGES);
   readonly items = input<readonly JpBreadcrumb[]>([]);
-  readonly ariaLabel = input('Breadcrumb');
+  readonly ariaLabel = input(this.messages.breadcrumbs.label);
 }

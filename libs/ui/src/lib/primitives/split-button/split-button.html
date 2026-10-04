@@ -1,0 +1,31 @@
+<div role="group" [attr.aria-label]="label()">
+  <button
+    type="button"
+    class="primary"
+    [disabled]="disabled()"
+    (click)="runPrimary()"
+  >
+    {{ label() }}
+  </button>
+  <jp-dropdown-menu
+    [open]="open() && !disabled()"
+    (openChange)="open.set($event)"
+  >
+    <button
+      type="button"
+      jpDropdownTrigger
+      [disabled]="disabled() || !actions().length"
+      [attr.aria-label]="menuLabel() + ': ' + label()"
+    >
+      ▾
+    </button>
+    @for(action of actions();track action.id){<button
+      type="button"
+      jpDropdownMenuItem
+      [disabled]="disabled() || action.disabled"
+      (click)="select(action)"
+    >
+      {{ action.label }}</button
+    >}
+  </jp-dropdown-menu>
+</div>

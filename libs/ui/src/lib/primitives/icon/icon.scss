@@ -1,0 +1,12 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+svg {
+  display: block;
+}
+
+:host-context([dir='rtl']) svg.directional {
+  transform: scaleX(-1);
+}

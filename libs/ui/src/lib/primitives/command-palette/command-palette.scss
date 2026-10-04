@@ -1,0 +1,47 @@
+@use '../input/input';
+.results {
+  max-block-size: 24rem;
+  overflow: auto;
+  margin-block-start: var(--jp-space-sm);
+}
+button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  inline-size: 100%;
+  padding: var(--jp-space-sm);
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
+  color: var(--jp-color-text-primary);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+button.active,
+button:hover:not(:disabled) {
+  background: var(--jp-color-surface-subtle);
+}
+button:disabled {
+  color: var(--jp-color-text-disabled);
+  cursor: not-allowed;
+}
+.copy {
+  min-inline-size: 0;
+  display: grid;
+  gap: var(--jp-space-2xs);
+  overflow-wrap: anywhere;
+}
+small,
+.section {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.section {
+  margin: var(--jp-space-sm);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: -2px;
+}

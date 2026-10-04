@@ -1,0 +1,16 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+span {
+  display: block;
+  width: var(--jp-space-xs);
+  height: var(--jp-space-xs);
+  border-radius: var(--jp-radius-full);
+  border: 1px solid currentColor;
+}
+@media (forced-colors: active) {
+  span {
+    background: CanvasText !important;
+  }
+}

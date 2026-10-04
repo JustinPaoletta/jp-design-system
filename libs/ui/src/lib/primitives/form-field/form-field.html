@@ -1,0 +1,8 @@
+<label [attr.for]="controlId()"
+  >{{ label() }}@if (required()) {
+  <span class="required" aria-hidden="true"> *</span> }</label
+><ng-content /> @if (hint()) {
+<p class="hint" [id]="hintId()">{{ hint() }}</p>
+} @if (error()) {
+<p class="error" [id]="errorId()" role="alert">{{ error() }}</p>
+}

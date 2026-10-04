@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  font-family: var(--jp-font-family-base);
+  color: var(--jp-color-text-primary);
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+legend {
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+}
+.summary,
+.description {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+.summary {
+  margin-block: var(--jp-space-xs) var(--jp-space-sm);
+}
+ul {
+  list-style: none;
+  display: grid;
+  gap: var(--jp-space-sm);
+  padding: 0;
+  margin: 0;
+}
+ul ul {
+  padding-inline-start: var(--jp-space-lg);
+  margin-block-start: var(--jp-space-sm);
+}
+label {
+  position: relative;
+  display: flex;
+  align-items: start;
+  gap: var(--jp-space-sm);
+  cursor: pointer;
+  min-inline-size: 0;
+}
+label > span {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.name,
+.description {
+  display: block;
+}
+.name {
+  font-size: var(--jp-font-size-body);
+}
+input {
+  margin: 0;
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  opacity: 0;
+  cursor: inherit;
+  inline-size: var(--jp-size-control-md);
+  block-size: var(--jp-size-control-md);
+}
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  inline-size: var(--jp-size-control-md);
+  block-size: var(--jp-size-control-md);
+  border: 1px solid var(--jp-color-selection-checkbox-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-selection-checkbox-bg);
+  color: var(--jp-color-selection-checkbox-fg);
+}
+.box.selected {
+  background: var(--jp-color-selection-checkbox-bg-checked);
+  border-color: var(--jp-color-selection-checkbox-bg-checked);
+}
+input:focus-visible + .box {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+label:has(input:disabled) {
+  cursor: not-allowed;
+}
+@media (forced-colors: active) {
+  .box {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .box.selected {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+}

@@ -9,8 +9,8 @@
 
 .jp-assistant-panel__surface {
   position: fixed;
-  top: 0;
-  right: 0;
+  inset-block-start: 0;
+  inset-inline-end: 0;
   z-index: var(--jp-z-assistant-panel);
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   width: var(--jp-size-assistant-panel-width);
   max-width: 100vw;
   height: 100vh;
-  border-left: 1px solid var(--jp-color-assistant-panel-border);
+  border-inline-start: 1px solid var(--jp-color-assistant-panel-border);
   background: var(--jp-color-assistant-panel-bg);
   color: var(--jp-color-text-primary);
   box-shadow: var(--jp-elevation-floating);
@@ -26,6 +26,11 @@
   transition: transform var(--jp-motion-duration-normal)
     var(--jp-motion-easing-standard);
   pointer-events: none;
+}
+
+/* Off-canvas motion is physical; :dir hides the panel on its inline-end side. */
+.jp-assistant-panel__surface:dir(rtl) {
+  transform: translateX(-100%);
 }
 
 :host(.jp-assistant-panel--open) .jp-assistant-panel__surface {
