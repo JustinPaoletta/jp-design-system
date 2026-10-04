@@ -65,7 +65,7 @@
       <tr>
         @if (selectable()) {
         <th
-          class="jp-table__header jp-table__selection jp-table__pinned-utility"
+          class="jp-table__header jp-table__selection jp-table__pin-control"
           scope="col"
           aria-colindex="1"
           style="inset-inline-start: 0"
@@ -82,7 +82,7 @@
         </th>
         } @if (expandable()) {
         <th
-          class="jp-table__header jp-table__selection jp-table__pinned-utility"
+          class="jp-table__header jp-table__selection jp-table__pin-control"
           scope="col"
           [attr.aria-colindex]="selectable() ? 2 : 1"
           [style.inset-inline-start.px]="selectable() ? 48 : 0"
@@ -96,7 +96,7 @@
           scope="col"
           [attr.aria-colindex]="columnIndex(column)"
           [attr.aria-sort]="ariaSort(column)"
-          [class.jp-table__pinned-data]="first"
+          [class.jp-table__pin]="first"
           [class.jp-table__header--start]="columnAlign(column) === 'start'"
           [class.jp-table__header--center]="columnAlign(column) === 'center'"
           [class.jp-table__header--end]="columnAlign(column) === 'end'"
@@ -138,7 +138,7 @@
       >
         @if (selectable()) {
         <td
-          class="jp-table__cell jp-table__selection jp-table__pinned-utility"
+          class="jp-table__cell jp-table__selection jp-table__pin-control"
           aria-colindex="1"
           style="inset-inline-start: 0"
         >
@@ -154,7 +154,7 @@
         </td>
         } @if (expandable()) {
         <td
-          class="jp-table__cell jp-table__selection jp-table__pinned-utility"
+          class="jp-table__cell jp-table__selection jp-table__pin-control"
           [attr.aria-colindex]="selectable() ? 2 : 1"
           [style.inset-inline-start.px]="selectable() ? 48 : 0"
         >
@@ -176,7 +176,7 @@
         <td
           class="jp-table__cell"
           [attr.aria-colindex]="columnIndex(column)"
-          [class.jp-table__pinned-data]="first"
+          [class.jp-table__pin]="first"
           [class.jp-table__cell--start]="columnAlign(column) === 'start'"
           [class.jp-table__cell--center]="columnAlign(column) === 'center'"
           [class.jp-table__cell--end]="columnAlign(column) === 'end'"

@@ -204,21 +204,21 @@
   inset-block-start: 0;
   z-index: 2;
 }
-.jp-table__frame--sticky-first .jp-table__pinned-data {
+.jp-table__frame--sticky-first .jp-table__pin {
   position: sticky;
   inset-inline-start: var(--jp-table-leading-offset);
   z-index: 1;
 }
-.jp-table__frame--sticky-first .jp-table__pinned-utility {
+.jp-table__frame--sticky-first .jp-table__pin-control {
   position: sticky;
   z-index: 1;
 }
 .jp-table__frame--sticky-first
-  .jp-table__cell:is(.jp-table__pinned-data, .jp-table__pinned-utility) {
+  .jp-table__cell:is(.jp-table__pin, .jp-table__pin-control) {
   background: inherit;
 }
 .jp-table__frame--sticky-header.jp-table__frame--sticky-first
-  .jp-table__header:is(.jp-table__pinned-data, .jp-table__pinned-utility) {
+  .jp-table__header:is(.jp-table__pin, .jp-table__pin-control) {
   z-index: 3;
 }
 .jp-table__resize {
@@ -264,12 +264,12 @@
   border-spacing: 0;
 }
 @container jp-table-frame (max-width: 28rem) {
-  .jp-table__frame--sticky-first .jp-table__pinned-data,
-  .jp-table__frame--sticky-first .jp-table__pinned-utility {
+  .jp-table__frame--sticky-first .jp-table__pin,
+  .jp-table__frame--sticky-first .jp-table__pin-control {
     position: static;
   }
   .jp-table__frame--sticky-header.jp-table__frame--sticky-first
-    .jp-table__header:is(.jp-table__pinned-data, .jp-table__pinned-utility) {
+    .jp-table__header:is(.jp-table__pin, .jp-table__pin-control) {
     position: sticky;
     inset-inline-start: auto !important;
   }

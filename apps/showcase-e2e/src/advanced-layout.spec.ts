@@ -99,7 +99,7 @@ for (const dir of ['ltr', 'rtl'])
       const cell = page
         .locator('.jp-table__row')
         .first()
-        .locator('.jp-table__pinned-data');
+        .locator('.jp-table__pin');
       const initial = await boxFor(header);
       const cellInitial = await boxFor(cell);
       await frame.evaluate((el) => {
@@ -196,7 +196,7 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
     const cell = page
       .locator('.jp-table__row')
       .first()
-      .locator('.jp-table__pinned-data');
+      .locator('.jp-table__pin');
     const initial = await boxFor(cell);
     await frame.evaluate((el) => {
       el.scrollLeft = el.ownerDocument.dir === 'rtl' ? -180 : 180;
