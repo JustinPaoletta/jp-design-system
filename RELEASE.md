@@ -1,6 +1,6 @@
 # Release Process
 
-UI and tokens ship together as one repository release. There is no independent package versioning. The release pull request is the review gate. Tagging and the GitHub Release are a reviewed human step after that pull request merges.
+UI and tokens ship together as one repository release. They do not have independent package versions. The release pull request is the approval gate. After merge, a person creates the tag and GitHub Release.
 
 The first tagged release is not cut. No git tag, GitHub Release, or package publish has been created.
 
@@ -34,7 +34,7 @@ Use `0.x` until the API and design-token contract are intentionally stabilized. 
 Do not tag `1.0.0` until all of the following are true:
 
 1. The acceptance checklist is complete for every component classified as stable.
-2. Required CI is green on the release pull request: Lint, Test, Build, Visual regression (macOS), Package consumer, and Runtime dependency audit. Those jobs cover formatting, lint, unit tests, Storybook interaction tests, live Storybook middleware tests, Showcase Chromium and WebKit checks, typecheck, production build, the macOS visual baselines, `packages:smoke`, and `npm audit --omit=dev --audit-level=moderate`.
+2. The release pull request passes all required CI jobs. See the job names and commands in [Required checks before artifacts](#required-checks-before-artifacts).
 3. Consumer smoke is green: `npm exec -- nx run packages:smoke` installs the workspace tarballs in an isolated Angular application and passes.
 4. The changelog is complete: `## [Unreleased]` describes the release, and `prepare.mjs` can move that section into `## [1.0.0] - YYYY-MM-DD`.
 
@@ -46,7 +46,7 @@ The prepare script reminds the operator of these criteria. It does not judge the
 pairing, changelog handling, invalid-input guards, dry-run behavior and recovery
 after a failed write. It runs on every PR in the Build job and in the Release
 dry-run workflow. The checks use temporary fixtures and synthetic versions;
-they do not choose or publish a release.
+they do not select or publish a release.
 
 `tools/release/prepare.mjs` accepts `--version X.Y.Z` (or `--version X.Y.Z-rc.N`) and `--dry-run`.
 
@@ -87,15 +87,17 @@ Hosted CI jobs, matching [.github/workflows/ci.yml](.github/workflows/ci.yml):
 | Consumer smoke      | Package consumer          | `npm exec -- nx run packages:smoke`                                                                       |
 | Runtime audit       | Runtime dependency audit  | `npm audit --omit=dev --audit-level=moderate`                                                             |
 
-Also review the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the reviewed check described in [QUALITY.md](docs/QUALITY.md).
+Also examine the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the examined check described in [QUALITY.md](docs/QUALITY.md).
 
-`.github/workflows/release.yml` is `workflow_dispatch` only. It takes a `version` input and refuses to run except to demonstrate a dry-run on a `release/*` branch or manual dispatch. It checks out the repository, runs `npm ci`, runs `node tools/release/prepare.mjs --version <input> --dry-run`, then `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:build` and `npm exec -- nx run packages:smoke`. Permissions are `contents: read`. It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.
+`.github/workflows/release.yml` is `workflow_dispatch` only. It takes a `version` input and refuses to run except to demonstrate a dry-run on a `release/*` branch or manual dispatch. It checks out the repository, runs `npm ci`, runs `node tools/release/prepare.mjs --version <input> --dry-run`, then `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:build` and `npm exec -- nx run packages:smoke`. Permissions are `contents: read`.
+
+It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.
 
 ## Release checklist
 
 1. Update your local copy of the protected default branch.
-2. Review `CHANGELOG.md` and confirm `## [Unreleased]` describes the release.
-3. Choose the next version using SemVer, the pre-1.0 rule, and the `1.0.0` criteria above.
+2. Examine `CHANGELOG.md` and confirm `## [Unreleased]` describes the release.
+3. Select the next version using SemVer, the pre-1.0 rule, and the `1.0.0` criteria above.
 4. Create the release branch:
 
    ```bash
@@ -122,7 +124,7 @@ Also review the full development dependency audit against [SECURITY_REVIEW.md](d
 
    Include `README.md` in that commit only when its version sentence changed.
 
-9. Open a pull request from `release/vX.Y.Z` into the protected default branch. Merge it only after review and the required checks are green.
+9. Open a pull request from `release/vX.Y.Z` into the protected default branch. Merge it only after inspection and the required checks are green.
 10. After merge, tag that commit and push the tag. This remains a human step:
 
     ```bash
@@ -146,7 +148,7 @@ Do not delete a tag that has been pushed.
 
 If the release pull request has not merged, fix the branch or close it. No tag exists yet. Uncommitted prepare writes can be restored with `git checkout --` on the files the script changed.
 
-If a GitHub Release is bad, mark that version superseded in `CHANGELOG.md` and say so on the GitHub Release, pointing consumers at the previous good tag. Leave the git tag in place.
+If a GitHub Release is incorrect, mark that version as replaced in `CHANGELOG.md`. State the problem on the GitHub Release. Give consumers a link to the previous good tag. Leave the git tag in place.
 
 Consumers roll back by reinstalling the previous UI and tokens tarballs. There is no registry unpublish step.
 

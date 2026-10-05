@@ -9,7 +9,7 @@ and translation providers are documented in [Message contract](CONTRACT.md).
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Angular            | UI peers on `^22.2.1`; workspace and isolated consumer smoke use 22.2.1. The peer range permits later 22.x versions, which are not all independently tested.     |
 | RxJS               | UI peers on `^7.8.0`; workspace dependency is `~7.8.0`.                                                                                                          |
-| Node/npm           | Development uses Node 24.21.0 from `.nvmrc` and npm 11. Root engines allow Node `^24.15.0` and npm `>=11 <12`.                                                   |
+| Node/npm           | Development uses Node 24.21.0 from `.nvmrc` and npm 11. Root engines accept Node `^24.15.0` and npm `>=11 <12`.                                                  |
 | Browsers           | Chromium/WebKit functional and axe checks on macOS locally and Linux CI; macOS Chromium visual baselines. Firefox is configured but outside the verified matrix. |
 | Direction/language | Set `dir` and `lang` on an ancestor. Logical CSS follows direction; individual keyboard/placement behavior is defined by each API.                               |
 
@@ -32,7 +32,7 @@ inertness. See individual APIs before relying on those differences.
 
 Native date/time picker appearance, keyboard conventions and popup UI belong
 to the browser/OS. Automated tests cover control values and validation;
-manual native-picker review remains open. Repeated `details.name` grouping
+manual native-picker inspection remains open. Repeated `details.name` grouping
 is tested in the declared Chromium/WebKit matrix.
 
 ## SSR and hydration
@@ -56,7 +56,7 @@ Vertical sort arrows are not mirrored. See [icon direction](../content/ICONS.md)
 
 ## Locale and formatting
 
-`JP_MESSAGES` provides built-in copy, not automatic locale detection or ICU.
+`JP_MESSAGES` gives built-in copy, not automatic locale detection or ICU.
 Applications supply message overrides, `lang`/`dir`, and locale/time-zone
 inputs. Providers merge with the parent token when their injector is created;
 they do not watch later locale changes.

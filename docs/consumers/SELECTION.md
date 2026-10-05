@@ -55,8 +55,7 @@ page. Pair it with [`jp-table-toolbar`](../PRIMITIVES.md#jp-table-toolbar) and
 filters, bulk actions, or pages. The [search recipe](./RECIPES.md#search-sort-and-pagination)
 owns the row array.
 
-Use preview `JpList` for a semantic collection with an optional item template;
-use a stack/surface composition for unlike content blocks. `JpDescriptionList`
+Use preview `JpList` for a semantic collection with an optional item template. Use a stack/surface composition for different content blocks. `JpDescriptionList`
 pairs terms and values. These contracts are in
 [Component expansion](../COMPONENT_EXPANSION.md). Zero rows use
 [`jp-empty-state`](../PRIMITIVES.md#jp-empty-state), either projected into the
@@ -113,11 +112,11 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
 | Page-wide feedback or longer-lived history  | `JpBanner` / `JpNotificationList`; keep contextual errors near the control.                                                     |
 | Indeterminate work or a bounded measurement | `JpSpinner` / `JpMeter`; progress describes task completion.                                                                    |
 | A side/bottom task panel                    | `JpDrawer`; app-shell navigation is separate.                                                                                   |
-| Nested navigation/data                      | `JpTreeView` / `JpTreeTable`; provide stable IDs and controlled selection/expansion.                                            |
+| Nested navigation/data                      | `JpTreeView` / `JpTreeTable`; give stable IDs and controlled selection/expansion.                                               |
 | Large flat datasets                         | `JpVirtualTable` with fixed row height and paginated accessibility mode; ordinary tables support richer row details.            |
 | Appointments rather than date entry         | `JpSchedulingCalendar`; native pickers edit civil date/time strings.                                                            |
 | Compare values visually                     | `JpChart` plus equivalent native data; the application owns aggregation and dataset meaning.                                    |
-| Rearrange items or browse optional slides   | `JpReorder` / `JpCarousel`; carousel rotation is opt-in.                                                                        |
+| Rearrange items or browse optional slides   | `JpReorder` / `JpCarousel`; carousel rotation is optional.                                                                      |
 
 All additional APIs above are preview. Use the [catalog](COMPONENTS.md) for
 contracts and limits, and [maturity](../governance/MATURITY.md) before adoption.

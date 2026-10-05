@@ -1,8 +1,12 @@
 # Interaction components (preview)
 
-The interaction tools support two concrete workflows: reorder release priorities in a single list, and browse a short onboarding/reference-card guide. Both use existing semantic color, typography, space, radius, and focus tokens. Neither adds animation; the carousel is manual by default. All new APIs remain preview until consumer and assistive-technology review.
+These components let users reorder one list or view reference cards.
+They use existing semantic tokens. They do not add movement animation.
+The carousel stays manual by default. Both APIs must have application and manual
+accessibility inspection before approval as stable APIs.
 
-See the `/interaction-tools` showcase route and the **Reorder** and **Carousel** Storybook groups.
+Examples are on `/interaction-tools` and in the Reorder and Carousel
+Storybook groups.
 
 ## Reordering
 
@@ -10,9 +14,18 @@ See the `/interaction-tools` showcase route and the **Reorder** and **Carousel**
 import { JpReorder, JpReorderContent, type JpReorderItem } from '@jp-design-system/ui';
 ```
 
-`jp-reorder` accepts a required document-unique `id`, accessible `label`, and `items: readonly JpReorderItem[]`. Each item has a non-empty unique `id`, `label`, optional `description`, and optional `disabled`. Invalid item identity throws an actionable error rather than silently reusing the wrong DOM node.
+`jp-reorder` must have a unique document `id`, accessible `label` and
+`items: readonly JpReorderItem[]`. Each item must have a unique, non-empty string `id`
+and a non-empty `label`. Optional fields are `description` and `disabled`.
+Invalid IDs cause an error with recovery instructions.
 
-The `order` model accepts an array of ids. Unknown/duplicate ids are removed and new items append in source order. Bind `[order]` and `(orderChange)`, or use `[(order)]`. The consumer owns persistence, validation, saving, and errors. The demonstration validates persisted data and catches denied storage; the primitive never accesses storage.
+The `order` model contains item IDs. The component removes unknown and duplicate
+IDs. It appends new items in source order. Bind `[order]` with `(orderChange)`,
+or use `[(order)]`.
+
+The application saves the order and handles validation and errors.
+The example validates saved data and handles denied storage access.
+The component does not use storage.
 
 ```html
 <jp-reorder id="release-priorities" label="Release priorities" [items]="items" [order]="order()" (orderChange)="save($event)">
@@ -22,17 +35,60 @@ The `order` model accepts an array of ids. Unknown/duplicate ids are removed and
 </jp-reorder>
 ```
 
-`JpReorderContent` is optional. Its typed context exposes `$implicit: JpReorderItem` and `index`; default content renders the label and description. It does not change handle or action-button semantics.
+`JpReorderContent` supplies optional item content. Its context gives
+`$implicit: JpReorderItem` and `index`. Default content shows the label and
+description. The template does not change the handle or action buttons.
 
-- **Pointer/touch:** drag the numbered handle vertically. A six-pixel threshold separates a click from a drag; pointer capture stays on the unmoving component host. Pointer cancellation or lost capture restores the draft.
-- **Keyboard:** activate the handle with Space or Enter to pick up; Up/Down move one place, Home/End move to bounds; Space/Enter drop and Escape cancels. Normal Tab behavior remains intact. A visible Cancel button also cancels.
-- **Click alternative:** explicit Move up/Move down buttons perform the same changes without dragging. Boundary buttons remain focusable with `aria-disabled`; no-op actions emit no order change. This supplies a single-pointer alternative alongside the keyboard path, following [WCAG 2.2 dragging-movements guidance](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html).
-- **Commit contract:** pointer and keyboard movement changes only a local draft until drop. Escape/cancellation emits nothing. Click alternatives commit immediately. Focus returns to the same stable item/action after movement, including boundary positions.
-- **External changes:** changed committed order, removed/disabled active items, or a disabled component cancel an active draft. The consumer's newest state wins.
+### Pointer and touch
 
-The list uses native ordered-list semantics. A polite atomic status announces pickup, position, drop, and cancellation. Built-in copy comes from `JP_MESSAGES.reorder`; supplied item labels and descriptions are consumer content. Component `disabled` or item `disabled` blocks initiating movement for that item; a disabled item is not a pinned position and may shift when other items move around it.
+1. Drag the numbered handle vertically.
+2. Release the handle to save the new order.
 
-This is one vertical list: no cross-list transfer, external file drag, grid positioning, multi-item pickup, automatic scrolling, undo history, or tree reparenting. Keep the whole target range visible; long lists should use a dedicated workflow or the click alternatives. This scope avoids implying that a generic drag framework has shipped.
+Movement below six pixels counts as a click. Pointer capture stays on the
+stationary component host. Pointer cancellation or lost capture cancels the draft.
+
+### Keyboard
+
+| Key                           | Result                                         |
+| ----------------------------- | ---------------------------------------------- |
+| Space / Enter on the handle   | Picks up the item.                             |
+| Up / Down                     | Moves the draft one position.                  |
+| Home / End                    | Moves the draft to the first or last position. |
+| Space / Enter during movement | Saves the draft order.                         |
+| Escape                        | Cancels the draft order.                       |
+
+Tab keeps its normal behavior. A visible Cancel button also cancels the draft.
+
+### Move buttons and state
+
+Move up and Move down give the same result without a drag gesture.
+Boundary buttons stay focusable with `aria-disabled`. An action that changes
+nothing does not emit an order change. These controls follow
+[WCAG drag-alternative guidance](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html).
+
+Pointer and keyboard movement change a local draft until drop.
+Cancellation emits no change. Move buttons save changes immediately.
+Focus returns to the same item and action, including at a boundary.
+
+An external order change cancels the draft. Removal or disabling of the active
+item also cancels it. Disabling the component has the same result.
+The latest application state wins.
+
+The native ordered list has a polite, atomic status message.
+It announces pickup, position, drop and cancellation. Built-in copy uses
+`JP_MESSAGES.reorder`. The application supplies translated item labels and descriptions.
+
+A disabled item cannot start movement. It does not have a fixed position:
+other items can move past it.
+
+### Limits
+
+The component supports one vertical list. It does not include cross-list
+movement, file drag, grid placement, multiple-item pickup, automatic scroll,
+undo history or tree movement.
+
+Keep the target range visible. For a long list, use the move buttons or an
+application flow designed for that list.
 
 ## Reference-card carousel
 
@@ -40,7 +96,12 @@ This is one vertical list: no cross-list transfer, external file drag, grid posi
 import { JpCarousel, JpCarouselSlide } from '@jp-design-system/ui';
 ```
 
-`jp-carousel` requires a document-unique `id` and accessible `label`. Project keyed slide templates with `jpCarouselSlide`; keys must be unique and non-empty. The optional slide `label` describes its content. Without one, a localized position/count is used. The consumer owns slide content, selected `index`, and any inputs within slides.
+`jp-carousel` must have a unique document `id` and accessible `label`.
+Project templates with `jpCarouselSlide`. Each key must be unique and non-empty.
+An optional slide `label` describes its content. Otherwise, the label gives
+the translated slide position and count.
+
+The application owns slide content, selected `index` and controls inside slides.
 
 ```html
 <jp-carousel id="team-guide" label="Getting started" [index]="index()" (indexChange)="index.set($event)">
@@ -55,18 +116,64 @@ import { JpCarousel, JpCarouselSlide } from '@jp-design-system/ui';
 </jp-carousel>
 ```
 
-The model uses a zero-based index. Non-finite/out-of-range values display a clamped position without mutating consumer state during render. `loop` defaults to `true`; set `false` to disable Previous/Next at the ends. `disabled` blocks navigation and automatic rotation. Empty and single-slide states suppress unnecessary picker/rotation controls.
+### Selection and keyboard
 
-Native Previous/Next buttons and grouped numbered picker buttons retain focus. The current picker uses `aria-disabled` and remains discoverable. The viewport itself is a tab stop: Left/Right follows visual direction in LTR/RTL, Home/End selects the bounds. Key events from inputs, links, buttons, and other slide descendants are not intercepted. Horizontal swipes support touch/pointer gestures; vertical gestures, gestures starting on interactive content, pointer cancellation, and short gestures do not navigate. Buttons provide the same navigation without gestures.
+The model uses a zero-based index. Invalid or out-of-range values show a
+bounded position. This adjustment does not change application state during render.
+`loop` defaults to `true`. With `false`, Previous and Next stop at the ends.
+`disabled` stops navigation and automatic rotation.
 
-Inactive panels have both `hidden` and `inert`, removing their content from display, interaction, and accessibility navigation. Templates stay instantiated so consumer input state survives navigation. Before a focused panel becomes hidden, focus moves to the viewport; external index changes receive the same protection. Use a consistent slide layout and meaningful content labels; the viewport has a 12rem minimum height but does not clip long content.
+Empty and single-slide views hide unnecessary picker and rotation controls.
+Native Previous, Next and numbered picker buttons keep focus.
+The selected picker has `aria-disabled` and stays in the focus order.
 
-The carousel follows the [W3C APG carousel pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/): labeled region and slide groups, native action controls, and explicit control of any rotation. Built-in labels and role descriptions come from `JP_MESSAGES.carousel`.
+The viewport can receive focus. Left and Right follow LTR or RTL direction.
+Home and End select the first or last slide. Keys from controls inside slides
+keep their normal behavior.
+
+A horizontal swipe can change the slide. Vertical gestures, short gestures
+and pointer cancellation do not change it. Gestures that start on a control
+also keep their normal behavior. Buttons give access without gestures.
+
+### Hidden slides and focus
+
+Inactive panels have `hidden` and `inert`. Their content is unavailable for
+view, interaction and accessibility navigation. Templates stay in the DOM,
+so application input values survive slide changes.
+
+Before a focused slide becomes hidden, focus moves to the viewport.
+External index changes use the same protection. The viewport has a 12rem
+minimum height and does not clip long content.
+
+The component follows the
+[W3C carousel pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
+Built-in labels and role descriptions use `JP_MESSAGES.carousel`.
 
 ### Optional rotation
 
-`autoRotate` defaults to `false`. It is explicit consumer opt-in; the reference-card showcase leaves it off. `interval` defaults to 6000ms and clamps to at least 1000ms. Timers begin only after browser render, are cleaned up with the component, and do not run during server rendering.
+`autoRotate` defaults to `false`. The example leaves it off.
+`interval` defaults to 6000ms, with a minimum of 1000ms.
+Timers start after browser render. Component destruction removes them.
+They do not run on the server.
 
-When opted in, a Pause/Start rotation control precedes the slide content. Hover suspends the timer. Any keyboard focus stops rotation until the user explicitly resumes it; manual navigation also stops it. While rotation is running the positional live region is off; during manual navigation it is polite. `prefers-reduced-motion: reduce` blocks rotation and disables its Start control, with no slide animation in either mode. Preference changes are observed and listeners cleaned up. Non-looping rotation stops at the final slide.
+With rotation enabled, a Pause/Start control comes before slide content.
+Hover pauses the timer. Keyboard focus stops rotation until the user starts
+it again. Manual navigation also stops rotation.
 
-Limits: one visible slide, grouped picker buttons rather than a tablist, no virtualization/media playback/zoom/lightbox, and no animated transition. Keep a modest number of short reference cards; a long document, product grid, or mandatory form sequence should use another pattern. Automated keyboard, browser, cancellation, persistence, and axe checks support the preview APIs; manual screen-reader and forced-colors review is still required for maturity promotion.
+During rotation, the position live region is off. During manual navigation,
+it is polite. `prefers-reduced-motion: reduce` stops rotation and disables Start.
+There is no slide animation in either mode. Preference changes update this
+behavior. Component destruction removes the listeners.
+
+Without a loop, rotation stops at the final slide.
+
+### Limits and inspection
+
+The component shows one slide and uses grouped picker buttons.
+It does not use a tablist. It has no virtualization, media controls, zoom,
+lightbox or animated transition.
+
+Use a small set of short reference cards. Use another pattern for long documents,
+product grids or required form steps. Automated keyboard, browser, cancellation,
+storage and axe tests cover these APIs. Manual screen-reader and Windows
+forced-colors inspection remain necessary.

@@ -11,7 +11,7 @@ The package scope is `@jp-design-system`, which is the scope already used by tho
 
 UI uses Angular Package Format, ESM bundles, declarations, and partial Angular compilation through `ng-packagr`. Component styles are bundled with the components. Tokens are emitted as native ES modules with declarations and explicit stylesheet exports. Distribution metadata is separate from the existing workspace token metadata. Dedicated `README.package.md` guides are copied into the built packages, so installed consumers receive public import examples instead of workspace-relative documentation links.
 
-The UI peer contract is Angular `^22.2.1` and RxJS `^7.8.0`. Keep Angular packages on the same version in a consuming application. Angular 21 compatibility is not claimed. Use the supported project Node version documented in the repository before installing or building. Chart.js 4.5.1 is an MIT-licensed UI dependency, dynamically imported by `JpChart` after browser render; other UI imports do not eagerly register it.
+The UI peer contract is Angular `^22.2.1` and RxJS `^7.8.0`. Keep Angular packages on the same version in an application. Angular 21 compatibility is not claimed. Use the supported project Node version documented in the repository before installing or building. Chart.js 4.5.1 is an MIT-licensed UI dependency, dynamically imported by `JpChart` after browser render; other UI imports do not eagerly register it.
 
 ## Build and validate
 
@@ -20,11 +20,32 @@ npm exec -- nx run packages:build
 npm exec -- nx run packages:smoke
 ```
 
-`packages:build` runs `tools/build-packages.mjs`. It regenerates tokens, writes `dist/packages/tokens` and `dist/packages/ui`, and does not publish. `packages:smoke` runs `tools/consumer-smoke.mjs`, which creates tarballs with `npm pack`, checks that declarations and token CSS are present and stories/tests/source files are excluded, and installs those tarballs in a separate temporary Angular application. There are no workspace path aliases or package symlinks in that application.
+`packages:build` runs `tools/build-packages.mjs`.
+It regenerates tokens and writes `dist/packages/tokens` and `dist/packages/ui`.
+It does not publish packages.
 
-The consumer uses exact versions from the installed workspace dependencies. npm tries the local cache first, then the official npm registry when the cache is incomplete. That registry lookup is only for the consumer's Angular and tooling dependencies, not for publishing JP. The application builds with strict Angular templates and imports token types and both exported token stylesheets. It compiles template-driven `ngModel` controls and a reactive `FormGroup` using input, checkbox, radio group, and combobox value accessors, plus loading button, progress, selectable/sortable table, and projected tab panel APIs. The consumer also compiles the expansion/workflow/advanced APIs and tree, scheduling, reorder/carousel, chart and virtual-table examples. The check also verifies token CSS reaches the output and token utilities import in native Node ESM. Results are recorded in `dist/packages/consumer-smoke.json`. A failed result is not a validation pass.
+`packages:smoke` runs `tools/consumer-smoke.mjs`.
+The script creates tarballs with `npm pack`.
+It makes sure declarations and token CSS exist.
+It also makes sure stories, tests and source files are excluded.
+Then it installs the tarballs in a separate temporary Angular application.
+That application has no workspace aliases or package symlinks.
 
-The temporary application is removed after success or failure; only artifacts created by the smoke script are removed. To retain the application for diagnosis:
+The application uses exact dependency versions from the installed workspace.
+Installation tries the npm cache first, then the official registry if necessary.
+Registry access installs application dependencies; it does not publish JP.
+
+The application compiles with strict Angular templates.
+It imports token types and both exported stylesheets.
+It compiles `ngModel`, reactive forms with `FormGroup`, controls, tables and projected tabs.
+It also compiles expansion, workflow, hierarchy, scheduling, interaction and data-performance APIs.
+
+The check makes sure token CSS reaches build output.
+It imports token helpers through native Node ESM.
+`dist/packages/consumer-smoke.json` records the result.
+A failed result is not a pass.
+
+The temporary application is removed after success or failure; only artifacts created by the smoke script are removed. To keep the application for diagnosis:
 
 ```sh
 KEEP_CONSUMER_SMOKE=1 npm exec -- nx run packages:smoke
@@ -42,7 +63,7 @@ npm pack ./dist/packages/tokens --pack-destination /tmp
 npm pack ./dist/packages/ui --pack-destination /tmp
 ```
 
-Install both resulting `.tgz` files in the consuming application:
+Install both resulting `.tgz` files in the application:
 
 ```sh
 npm install /absolute/path/to/jp-design-system-tokens-X.Y.Z.tgz /absolute/path/to/jp-design-system-ui-X.Y.Z.tgz
@@ -76,6 +97,6 @@ The first tagged release is not cut. Building tarballs from the current branch p
 
 ## Failed-release recovery
 
-Do not delete a tag that has been pushed. Mark a bad GitHub Release superseded in `CHANGELOG.md` and on the GitHub Release, and point consumers at the previous tag.
+Do not delete a tag that has been pushed. Mark a bad GitHub Release replaced in `CHANGELOG.md` and on the GitHub Release, and point consumers at the previous tag.
 
 Rollback is reinstalling the previous UI and tokens tarballs with `npm install` of those `.tgz` files. There is no registry unpublish flow, because these packages are not published to a registry.

@@ -1,15 +1,15 @@
-# Acceptance automation and remaining review
+# Acceptance automation and remaining inspection
 
 Recorded October 4, 2026. The five remaining expansion tasks combine automated
-evidence with decisions or platform checks that still require people.
+evidence with decisions or platform checks that people must do.
 
-| Remaining task                         | Automated evidence                                                                                                                  | Human work still required                                                                                                                   |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Assistive technology and forced colors | axe, keyboard/focus tests, Chromium forced-colors behavior, 320/640 CSS-pixel reflow                                                | VoiceOver and NVDA sessions; Windows high contrast with real user palettes; actual 200%/400% browser zoom                                   |
-| Consuming-product API review           | Four working Showcase consumer screens, consumer unit/browser tests, isolated Angular tarball compilation                           | Feedback from a real consuming product and decisions about its workflow/API needs                                                           |
-| Browser compatibility                  | Chromium/WebKit functional and accessibility CI, including native `details.name` grouping and repeated keyboard toggling            | Native picker dialogs, physical touch, real browser/OS combinations outside the automated engine matrix, documented overlay fallback review |
-| API promotion                          | Repeatable tests, stories, lint/token/type/package checks and documented contracts provide acceptance evidence                      | A maintainer reviews the acceptance checklist and changes each maturity rating after its specific gaps close                                |
-| Release coordination                   | Version/changelog preparation, release safety tests, package build, isolated consumer install and a manual-dispatch release dry-run | Select the version, review notes, approve/tag the release, choose distribution and decide whether a design kit is needed                    |
+| Remaining task                         | Automated evidence                                                                                                                  | Human work still required                                                                                                                       |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assistive technology and forced colors | axe, keyboard/focus tests, Chromium forced-colors behavior, 320/640 CSS-pixel reflow                                                | VoiceOver and NVDA sessions; Windows high contrast with real user palettes; actual 200%/400% browser zoom                                       |
+| Consuming-product API inspection       | Four working Showcase consumer screens, consumer unit/browser tests, isolated Angular tarball compilation                           | Feedback from a real application and decisions about its workflow/API requirements                                                              |
+| Browser compatibility                  | Chromium/WebKit functional and accessibility CI, including native `details.name` grouping and repeated keyboard toggling            | Native picker dialogs, physical touch, real browser/OS combinations outside the automated engine matrix, documented overlay fallback inspection |
+| API promotion                          | Repeatable tests, stories, lint/token/type/package checks and documented contracts give acceptance evidence                         | A maintainer examines the acceptance checklist and changes each maturity rating after its specific gaps close                                   |
+| Release coordination                   | Version/changelog preparation, release safety tests, package build, isolated consumer install and a manual-dispatch release dry-run | Select the version, examine notes, approve/tag the release, select distribution and decide whether a design kit is needed                       |
 
 Passing automation does not finish the manual tasks or promote a preview API.
 The supported matrix is [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md), acceptance is
@@ -25,9 +25,7 @@ The supported matrix is [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md), acceptance is
   320px RTL, in Chromium and WebKit. Interactions run before document-overflow
   assertions. Native tables may scroll inside their frames.
 - WCAG 2.1 A/AA axe scans of each screen at 320px LTR.
-- Chromium `forced-colors: active` checks for tree/table selection and focus,
-  reorder pickup/drop and carousel controls, scheduling mode/appointment
-  activation, and chart data-table fallback plus virtual-table selection.
+- Chromium `forced-colors: active` tests exercise tree/table selection and focus, reorder pickup/drop and carousel controls. They also exercise scheduling mode/appointment activation, chart data-table fallback and virtual-table selection.
   The chart test also changes the media preference at runtime and verifies
   restoration of its canvas.
 
@@ -35,7 +33,7 @@ The supported matrix is [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md), acceptance is
 They do not exercise browser zoom itself, text-only zoom, magnification or
 screen-reader announcements. Forced-colors checks use the default theme/density
 and Chromium emulation; the four cases intentionally skip WebKit. They do not
-claim Windows high-contrast conformance or review of every preview component.
+claim Windows high-contrast conformance or inspection of every preview component.
 
 The accordion test in `component-expansion.spec.ts` also asserts the native
 `HTMLDetailsElement.name` property and exclusive opening after Enter, click,
@@ -48,8 +46,8 @@ calculation: authored pale text was compared with the forced white background.
 This matches [axe-core issue #3978](https://github.com/dequelabs/axe-core/issues/3978).
 The tests assert the controls, state and focus outlines with forced colors
 active, then restore normal colors before the complete axe scan. No axe rule
-is disabled and no violations are filtered. These scans therefore do not
-measure forced-color contrast; palette/readability review stays manual.
+is disabled and no violations are filtered. These scans thus do not
+measure forced-color contrast; palette/readability inspection stays manual.
 
 Run through the existing Nx target:
 
@@ -58,7 +56,7 @@ npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --gre
 ```
 
 The existing Linux functional CI job picks up these non-visual tests. Visual
-baselines remain the separately reviewed macOS Chromium suite.
+baselines remain the separately examined macOS Chromium suite.
 
 Local macOS verification: **30 passed, four intentional WebKit skips** in the
 selection above. This comprises 24 reflow cases, four Chromium forced-colors
@@ -69,7 +67,7 @@ cases, and two strengthened native-disclosure cases.
 `tools/release/prepare.spec.mjs` adds seven checks for the existing release tool:
 
 - Documented SemVer/RC arguments and rejection of malformed arguments.
-- Paired distributed versions, preserved dependency versions and unchanged
+- Paired distributed versions, kept dependency versions and unchanged
   package identities.
 - Changelog notes/history/line endings and duplicate-version rejection.
 - Refusal of mismatched lockfile roots and unexpected package identities.
@@ -82,7 +80,7 @@ npm exec -- nx run packages:check-release
 ```
 
 The Build CI job and Release dry-run workflow both run this target. Tests use
-synthetic versions and temporary files; they do not choose a release version.
+synthetic versions and temporary files; they do not select a release version.
 Package consumer CI already builds and compiles the distributed tarballs.
 The release workflow still has read-only GitHub permissions and does not tag
 or publish.

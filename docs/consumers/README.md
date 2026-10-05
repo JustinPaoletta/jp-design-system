@@ -22,7 +22,7 @@ http://localhost:4200).
 | --------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | [Getting started](./GETTING_STARTED.md) | Install the tarballs, load token CSS, import standalone components, set accent and density, and bind forms |
 | [Components](./COMPONENTS.md)           | Look up every public component, directive, and service                                                     |
-| [Selection](./SELECTION.md)             | Choose between related components                                                                          |
+| [Selection](./SELECTION.md)             | Select between related components                                                                          |
 | [Accessibility](./ACCESSIBILITY.md)     | See what JP implements and what the application owns                                                       |
 | [Layout](./LAYOUT.md)                   | Plan responsive shell, table overflow, theme, and density                                                  |
 | [Recipes](./RECIPES.md)                 | Copy product flows for forms, tables, deletion, and assistant transport                                    |
@@ -45,7 +45,8 @@ Related references:
 These pages are GitHub-rendered Markdown in the repository. A pull request runs
 [`.github/workflows/docs.yml`](../../.github/workflows/docs.yml), which checks
 out the branch, installs dependencies with `npm ci`, and runs
-`node tools/docs/check-links.mjs`. The rendered pull request is the preview.
+`node tools/docs/check-links.mjs` and `node tools/docs/check-writing.mjs`.
+The rendered pull request is the preview.
 
 This guide does not add a documentation framework or an Angular docs
 application.

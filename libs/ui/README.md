@@ -28,7 +28,7 @@ http://localhost:4200 and redirects `/` to `/assistant`.
 
 Static and live Storybook test targets use port 4500; run them sequentially.
 Development output is isolated per port to prevent shared runtime/HMR reloads.
-Preserve [the contributor guard](../../docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated)
+Keep [the contributor guard](../../docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated)
 when changing that infrastructure.
 
 ## Distribution and verification
@@ -42,5 +42,5 @@ Install generated APF tarballs and load the token stylesheet; do not install
 this source directory. Angular peers, the Chart.js dependency, stylesheet
 exports and isolated consumer validation are in
 [Distribution](../../docs/DISTRIBUTION.md).
-[Quality](../../docs/QUALITY.md) provides browser/visual commands and
+[Quality](../../docs/QUALITY.md) gives browser/visual commands and
 [manual QA](../../MANUAL_QA.md) records the outstanding human checks.

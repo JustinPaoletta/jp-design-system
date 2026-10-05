@@ -24,7 +24,7 @@ Public token entries: `.`, `./tokens.css`, `./tokens.compact.css`, `./tokens.jso
 
 ## Breaking changes
 
-A break is a change a consumer cannot absorb by recompiling against the same
+A break is a change a consumer cannot absorb by compiling again against the same
 imports and the same documented inputs.
 
 ### Angular APIs
@@ -34,10 +34,7 @@ imports and the same documented inputs.
   rest of the public selectors).
 - Remove an input or output, change its type, or make an optional input
   required.
-- Change a default when existing templates rely on it (`jp-button` variant
-  `primary`, `jp-text` size `body`, `jp-heading` level `h2`, pagination
-  `page` `1` / `pageSize` `10`, and the other defaults in
-  [PRIMITIVES.md](../PRIMITIVES.md)).
+- Change a default that existing templates use. Examples include `jp-button` variant `primary`, `jp-text` size `body` and `jp-heading` level `h2`. Pagination defaults are `page` `1` and `pageSize` `10`. See the other defaults in [PRIMITIVES.md](../PRIMITIVES.md).
 - Change a `ControlValueAccessor` value type (`string` for input, textarea,
   select, radio group, and combobox; `boolean` for checkbox and switch).
 - Change a content-projection selector, including selectors that are not
@@ -47,7 +44,7 @@ imports and the same documented inputs.
 - Change keyboard activation that [PRIMITIVES.md](../PRIMITIVES.md) specifies
   (manual tab activation, menu item buttons, combobox Enter to select).
 
-Adding an optional input with a default that preserves current behavior is not
+Adding an optional input with a default that keeps current behavior is not
 a break. Adding a new export is not a break.
 
 ### Tokens
@@ -141,7 +138,7 @@ Before removal:
 Patch releases do not remove deprecated APIs.
 
 Experimental exports, once any exist, may change inside the maturity rules in
-[MATURITY.md](./MATURITY.md). They still need a changelog note when a consumer
+[MATURITY.md](./MATURITY.md). They still must have a changelog note when a consumer
 could have imported them. There are no experimental exports on October 4, 2026.
 
 ---

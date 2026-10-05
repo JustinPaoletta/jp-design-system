@@ -3,24 +3,24 @@
 Updated October 4, 2026. Automated results are in
 [Verification](docs/qa/VERIFICATION.md), with supported platforms and limits in
 [Support matrix](docs/qa/SUPPORT_MATRIX.md). This checklist records remaining
-human review; it does not claim those sessions have passed.
+human inspection; it does not establish those sessions have passed.
 
-## Outstanding review
+## Outstanding inspection
 
-| Review                                             | Status                                              |
+| Inspection                                         | Status                                              |
 | -------------------------------------------------- | --------------------------------------------------- |
-| VoiceOver on macOS                                 | Not reviewed                                        |
-| NVDA on Windows                                    | Not reviewed                                        |
-| Windows high contrast with real user palettes      | Not reviewed                                        |
-| Actual 200%/400% browser zoom and text-only zoom   | Not reviewed                                        |
-| Physical touch and native date/time picker dialogs | Not reviewed                                        |
+| VoiceOver on macOS                                 | Not examined                                        |
+| NVDA on Windows                                    | Not examined                                        |
+| Windows high contrast with real user palettes      | Not examined                                        |
+| Actual 200%/400% browser zoom and text-only zoom   | Not examined                                        |
+| Physical touch and native date/time picker dialogs | Not examined                                        |
 | JAWS                                               | Out of scope unless a consumer requirement names it |
 
 Chromium forced-colors emulation and 320/640 CSS-pixel reflow are automated
 for the seven larger features. They are partial evidence, not completion of
-the Windows/zoom review. SSR and hydration are outside the current contract.
+the Windows/zoom inspection. SSR and hydration are outside the current contract.
 
-## Prepare a review
+## Prepare an inspection
 
 ```sh
 npm exec -- nx run ui:storybook
@@ -44,7 +44,7 @@ real browser zoom rather than shrinking the viewport alone.
       selection counts and context changes.
 - [ ] Content remains usable at 200%/400% and with text-only zoom; horizontal
       table overflow stays inside its labeled region.
-- [ ] Windows high contrast preserves borders, selection, focus, validation
+- [ ] Windows high contrast keeps borders, selection, focus, validation
       and chart equivalents with different user palettes.
 - [ ] Reduced motion stops unnecessary transitions/rotation; content and
       task completion do not depend on animation.
@@ -52,7 +52,7 @@ real browser zoom rather than shrinking the viewport alone.
 
 ## Component and flow checks
 
-| Area                 | Human review focus                                                                                                                                                                              |
+| Area                 | Human inspection focus                                                                                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Forms/selection      | Required/disabled/invalid states, summaries and recovery; password reveal/search clear names; checkbox/multi-select/segmented state; slider/range/number announcements                          |
 | Navigation/hierarchy | Disclosure grouping, tabs, menus/command palette, lazy-loading tree feedback, tree-table relationships and selection                                                                            |
@@ -69,7 +69,7 @@ The automated target is WCAG 2.1 A/AA; existing 20px controls have no blanket
 WCAG 2.2 target-size claim. Record any defect in
 [QA findings](docs/qa/FINDINGS.md) using the [triage policy](docs/governance/TRIAGE.md).
 
-## Review record template
+## Inspection record template
 
 ```text
 Commit:
@@ -84,9 +84,9 @@ Evidence location and issue reference:
 Retest commit and result:
 ```
 
-Mark a review complete only with an actual session record and resolved blocking
+Mark an inspection complete only with an actual session record and resolved blocking
 findings. Update the [remaining task list](COMPONENT_EXPANSION_PLAN.md) and
 individual [maturity entries](docs/governance/MATURITY.md) through the
-[acceptance process](docs/governance/ACCEPTANCE.md). Preserve the
+[acceptance process](docs/governance/ACCEPTANCE.md). Keep the
 [Storybook isolation requirement](docs/qa/STORYBOOK_RELOAD_REGRESSION.md) when
 changing preview/test infrastructure.

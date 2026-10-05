@@ -73,5 +73,5 @@ assigned, the kit has to match the implementation that already exists:
 - A release check that updates the kit in the same change as a breaking token
   or API change ([COMPATIBILITY.md](./COMPATIBILITY.md)).
 
-Revisit this decision when a designer owner is assigned. Until then, design
+Examine this decision when a designer owner is assigned. Until then, design
 changes land in tokens, primitives, and stories first.

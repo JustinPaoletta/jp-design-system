@@ -1,23 +1,14 @@
 # Component Expansion Task List
 
-Updated: October 4, 2026. Remaining work: five promotion and integration items.
-Completed feature work is documented in the
-[component APIs and limits](docs/COMPONENT_EXPANSION.md),
-[workflow component APIs](docs/WORKFLOW_COMPONENTS.md),
-[advanced layout and table APIs](docs/ADVANCED_LAYOUT_COMPONENTS.md),
-[hierarchy APIs](docs/HIERARCHY_COMPONENTS.md),
-[scheduling calendar API](docs/SCHEDULING_CALENDAR.md),
-[reordering and carousel APIs](docs/INTERACTION_COMPONENTS.md),
-[chart and virtual-table APIs](docs/DATA_PERFORMANCE_COMPONENTS.md),
-[verification evidence](docs/qa/VERIFICATION.md), and
-[changelog](CHANGELOG.md). Implemented components remain preview APIs pending
-the promotion checks below. This is the single remaining-work task list.
+Updated: October 4, 2026. Remaining work: five promotion and integration items. The [documentation index](docs/README.md) links completed feature work. The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
+
+The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
 
 ## Promotion and integration follow-up
 
-- [ ] Complete manual assistive-technology and forced-colors review of preview components
-- [ ] Review component APIs with consuming-product screens and resolve feedback
-- [ ] Complete compatibility review beyond the automated Chromium/WebKit matrix
+- [ ] Complete manual assistive-technology and forced-colors inspection of preview components
+- [ ] Examine component APIs with consuming-product screens and resolve feedback
+- [ ] Complete compatibility inspection beyond the automated Chromium/WebKit matrix
 - [ ] Promote individual APIs through the acceptance and maturity process
 - [ ] Coordinate release notes, versions, distribution, and the optional design kit
 
@@ -27,7 +18,7 @@ release preparation safety. Consumer screen tests and isolated package
 compilation also run in CI. These are partial evidence for the five tasks;
 screen-reader sessions, actual Windows high contrast/zoom, product feedback,
 maturity approval and release decisions remain open. See
-[acceptance automation and remaining review](docs/qa/ACCEPTANCE_AUTOMATION.md).
+[acceptance automation and remaining inspection](docs/qa/ACCEPTANCE_AUTOMATION.md).
 
 Every later component should include its token contract, states, keyboard/form
 behavior, localization, Storybook examples, consumer documentation, and relevant

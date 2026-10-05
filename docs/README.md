@@ -26,17 +26,17 @@ record its limits. Remaining delivery work belongs in the
 ## Contracts and maintenance
 
 - [Design principles](DESIGN_PRINCIPLES.md)
-- [Content standards](content/README.md)
+- [Content standards](content/README.md) and [ASD-STE100 writing rules](content/WRITING.md)
 - [Localization messages](localization/CONTRACT.md) and [runtime support](localization/SUPPORT.md)
 - [Governance](governance/README.md): acceptance, maturity, compatibility,
   contribution, triage and optional design-kit policy
 - [Quality commands](QUALITY.md) and [QA index](qa/README.md)
-- [Verification evidence](qa/VERIFICATION.md), [manual review checklist](../MANUAL_QA.md)
+- [Verification evidence](qa/VERIFICATION.md), [manual inspection checklist](../MANUAL_QA.md)
   and [remaining acceptance work](qa/ACCEPTANCE_AUTOMATION.md)
-- [CI protection](CI_BRANCH_PROTECTION.md) and [security review](SECURITY_REVIEW.md)
+- [CI protection](CI_BRANCH_PROTECTION.md) and [security inspection](SECURITY_REVIEW.md)
 - [Changelog](../CHANGELOG.md) and [release procedure](../RELEASE.md)
 
-Implementation plans and superseded batch QA logs have been removed. Git history
-preserves those records; current contracts and evidence live in the references
-above. Update the relevant guide and task list when behavior or review status
+Implementation plans and replaced batch QA logs have been removed. Git history
+keeps those records; current contracts and evidence live in the references
+above. Update the relevant guide and task list when behavior or inspection status
 changes.

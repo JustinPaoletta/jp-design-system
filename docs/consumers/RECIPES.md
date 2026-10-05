@@ -153,13 +153,8 @@ abort(id: number): void {
 }
 ```
 
-The panel appends the user message before `messageSubmit`. `beginResponse`
-then appends the pending assistant message and returns the id to pass into
-later updates. Updates for a settled, replaced, or cleared id are ignored.
-`responseCancel` means the panel already marked that id cancelled. Abort the
-matching transport there. `responseRetry` emits `{ previousId, responseId }`
-after `retryResponse` has replaced the old message with a new pending id.
-Pass `responseId` to the next send. Do not call `beginResponse` again for
-that retry. The application owns the transport, authorization, persistence,
-and content policy. `this.transport.send` is that application client, not a
-JP export.
+The panel appends the user message before `messageSubmit`. `beginResponse` then appends the pending assistant message and returns the id to pass into later updates. Updates for a settled, replaced, or cleared id are ignored. `responseCancel` means the panel already marked that id cancelled.
+
+Abort the matching transport there. `responseRetry` emits `{ previousId, responseId }` after `retryResponse` has replaced the old message with a new pending id. Pass `responseId` to the next send. Do not call `beginResponse` again for that retry.
+
+The application owns the transport, authorization, persistence, and content policy. `this.transport.send` is that application client, not a JP export.

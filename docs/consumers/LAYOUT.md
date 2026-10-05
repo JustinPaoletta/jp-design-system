@@ -13,14 +13,9 @@ Layout primitives are `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, and
 Media queries cannot read that custom property, so the stylesheet repeats
 the length. The two queries meet with no gap.
 
-Above `48rem` the shell is a two-column grid: sidebar, then main. The
-expanded width is `--jp-size-sidebar-expanded`. `sidebarCollapsed` switches
-the column to `--jp-size-sidebar-collapsed`. The collapse control is
-visible. The mobile bar is hidden. In the collapsed rail, nav labels are
-clipped for sighted users and remain available to assistive technology.
-Labels stay visible in the mobile drawer even when `sidebarCollapsed` is
-true. Project an icon with `[jpAppShellNavIcon]` if the rail should show a
-glyph.
+Above `48rem` the shell is a two-column grid: sidebar, then main. The expanded width is `--jp-size-sidebar-expanded`. `sidebarCollapsed` switches the column to `--jp-size-sidebar-collapsed`. The collapse control is visible.
+
+The mobile bar is hidden. In the collapsed rail, nav labels are clipped for sighted users and remain available to assistive technology. Labels stay visible in the mobile drawer even when `sidebarCollapsed` is true. Project an icon with `[jpAppShellNavIcon]` if the rail should show a glyph.
 
 At `48rem` and below the grid is one column. A menu button opens a fixed
 drawer (`min(expanded width, 85vw)`) and a scrim. Escape, the scrim, and the
@@ -53,13 +48,9 @@ Give the main column `min-width: 0` (the shell already does) so the frame
 can shrink and scroll. `jp-text` `truncate` ellipsizes a single line when
 its container is narrower than the text. The host sets `min-width: 0`.
 
-`jp-grid` `mode="fixed"` (the default) repeats the requested column count
-(`1`, `2`, `3`, `4`, or `6`) with `minmax(0, 1fr)`. Those columns share the
-row. They do not wrap onto new rows. `mode="auto-fit"` uses
-`repeat(auto-fit, minmax(min(<min column>, 100%), 1fr))`. `minColumn` is
-`sm`, `md`, or `lg` and maps to `--jp-size-column-min-*`. Use `auto-fit` for
-dashboard cards that should reflow. Use a fixed count when the columns are a
-known layout.
+`jp-grid` `mode="fixed"` (the default) repeats the requested column count (`1`, `2`, `3`, `4`, or `6`) with `minmax(0, 1fr)`. Those columns share the row. They do not wrap onto new rows. `mode="auto-fit"` uses `repeat(auto-fit, minmax(min(<min column>, 100%), 1fr))`.
+
+`minColumn` is `sm`, `md`, or `lg` and maps to `--jp-size-column-min-*`. Use `auto-fit` for dashboard cards that should reflow. Use a fixed count when the columns are a known layout.
 
 `jp-inline` wraps by default (`wrap` defaults to `true`). Set `wrap` to
 `false` only when a single row is required and overflow is acceptable.

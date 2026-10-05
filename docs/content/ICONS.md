@@ -33,11 +33,11 @@ library scale. Colors come from `currentColor` and semantic parent tokens.
 
 An empty `label` makes `JpIcon` decorative. Name an icon-only action on its
 containing control; do not name both the icon and button. For a standalone
-meaningful image, supply `label`. A status also needs understandable text,
+meaningful image, supply `label`. A status also must have understandable text,
 rather than relying on a tooltip or color alone.
 
 Projected decorative SVG uses `aria-hidden="true"` without a redundant title
-or image role. Preserve the projection marker expected by the component,
+or image role. Keep the projection marker expected by the component,
 such as `[jpEmptyStateIcon]` or `[jpAppShellNavIcon]`.
 
 ## Authored SVG and licensing
@@ -45,8 +45,7 @@ such as `[jpEmptyStateIcon]` or `[jpAppShellNavIcon]`.
 Prefer the built-in glyph when it represents the action. For additional
 geometry, use a 16-unit view box, `fill="none"`, `stroke="currentColor"`,
 stroke width 1.5 and rounded caps/joins. Keep strokes inside the view box.
-Align icons and labels through flex alignment and semantic gaps; allow the
-label to wrap without shrinking the icon.
+Align icons and labels through flex alignment and semantic gaps; let the label wrap without shrinking the icon.
 
 Do not copy paths from another icon family into JP without an explicit
 licensing and dependency decision. New glyphs must have known authorship and
@@ -55,11 +54,6 @@ consumer or historical Showcase artwork.
 
 ## Direction
 
-The built-in `chevron-right` mirrors automatically under an RTL ancestor.
-Other glyphs do not automatically mirror. Mirror additional projected
-directional arrows for previous/next/back through consumer styles, for example
-a wrapper with `:dir(rtl) { transform: scaleX(-1); }`. Avoid double-mirroring
-the built-in chevron.
-Do not mirror close, plus, minus, check, search, status symbols or brand marks.
-Keep sort arrows vertical. A direction change must update any directional
-styling along with document `dir`.
+The built-in `chevron-right` mirrors automatically under an RTL ancestor. Other glyphs do not automatically mirror. Mirror additional projected directional arrows for previous/next/back through consumer styles, for example a wrapper with `:dir(rtl) { transform: scaleX(-1); }`. Avoid double-mirroring the built-in chevron.
+
+Do not mirror close, plus, minus, check, search, status symbols or brand marks. Keep sort arrows vertical. A direction change must update any directional styling along with document `dir`.

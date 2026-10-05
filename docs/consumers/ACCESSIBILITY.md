@@ -1,13 +1,8 @@
 # Accessibility
 
-JP ships keyboard behavior, roles, and focus movement for its components.
-The application supplies names, structure, and the meaning of its data.
-Principles are in [Design principles](../DESIGN_PRINCIPLES.md). Per-component
-behavior is in [Components](./COMPONENTS.md). Maturity and the open
-assistive-technology review are in [Maturity](../governance/MATURITY.md) and
-[Acceptance](../governance/ACCEPTANCE.md). Quality commands are in
-[QUALITY.md](../QUALITY.md). The Storybook click-through list is
-[MANUAL_QA.md](../../MANUAL_QA.md).
+JP ships keyboard behavior, roles, and focus movement for its components. The application supplies names, structure, and the meaning of its data. Principles are in [Design principles](../DESIGN_PRINCIPLES.md). Per-component behavior is in [Components](./COMPONENTS.md).
+
+Maturity and the open assistive-technology inspection are in [Maturity](../governance/MATURITY.md) and [Acceptance](../governance/ACCEPTANCE.md). Quality commands are in [QUALITY.md](../QUALITY.md). The Storybook click-through list is [MANUAL_QA.md](../../MANUAL_QA.md).
 
 The dark theme targets WCAG AA contrast through semantic tokens. Status uses
 tone plus text. Do not encode status with color alone in application content.
@@ -24,7 +19,7 @@ tone plus text. Do not encode status with color alone in application content.
 - `jp-progress` as `role="progressbar"` with value attributes. `value` of
   `null` is indeterminate.
 - `jp-dialog` as a modal dialog: native `showModal()` when the browser
-  provides it, focus trapped with `jpFocusTrap`, focus restored to the opener.
+  gives it, focus trapped with `jpFocusTrap`, focus restored to the opener.
 - Dropdown items as `menuitem` buttons. Arrow keys, Home, and End move inside
   the open menu.
 - Tabs with manual activation: arrows move focus, Enter or Space selects.
@@ -39,20 +34,19 @@ tone plus text. Do not encode status with color alone in application content.
 - Table captions, `aria-sort` on sortable headers, and a row checkbox name
   from `rowLabel`. The scroll frame is a focusable region.
 - An empty state with `role="status"`. Skeletons are `aria-hidden`.
-- Focus movement for the mobile shell drawer and the assistant panel, and a
-  focus trap while the mobile drawer or the mobile assistant panel is open.
+- Focus movement for the mobile shell drawer and assistant panel. Focus is trapped while the mobile drawer or mobile assistant panel is open.
 - Reduced motion for shell and assistant transitions and for the button
   spinner.
 
 Dialog, popover, dropdown, tooltip, and combobox positioning use the native
-top layer when the browser supports it. The fallback does not claim the same
+top layer when the browser supports it. The fallback does not establish the same
 clipping and inert behavior. That limit is part of
 [compatibility](../governance/COMPATIBILITY.md) and
 [maturity](../governance/MATURITY.md).
 
 Generated ids are client counters or `Math.random()` values. Server rendering
 is not a contract. Pass a stable `id` on fields, radio groups, combobox, and
-tabs when the page needs one. Dialog, popover, and dropdown ids are not
+tabs when the page must have one. Dialog, popover, and dropdown ids are not
 inputs.
 
 ## What the application owns
@@ -84,18 +78,16 @@ inputs.
   drawer closes. It does not move focus to the new page's heading.
 - Icon meaning. Decorative icons use `jpAppShellNavIcon` or
   `jpEmptyStateIcon`, which the components mark as hidden from the
-  accessibility tree. An icon that carries meaning needs text or an
+  accessibility tree. An icon that carries meaning must have text or an
   accessible name. Icon guidance is in [Icons](../content/ICONS.md).
 - Product language. Writing guidance is in [Writing](../content/WRITING.md).
   Built-in pagination, table toolbar, shell, chip removal and assistant-role
   copy is configurable through `JP_MESSAGES`. Caller-owned labels/content
-  need application translation. See the
+  must have application translation. See the
   [message contract](../localization/CONTRACT.md).
 
-## Preview interaction review
+## Preview interaction inspection
 
 Expanded controls, trees, scheduling, reordering, carousel, charts and virtual
-tables have automated keyboard/axe evidence but still require the human review
-in [MANUAL_QA.md](../../MANUAL_QA.md). Chart data equivalents and the virtual
-table's paginated mode support alternative reading/navigation; exercise them
-with the consumer's screen reader rather than treating automation as approval.
+tables have automated keyboard/axe evidence but still must have the human inspection
+in [MANUAL_QA.md](../../MANUAL_QA.md). Chart data equivalents and the virtual table's paginated mode give other ways to read and navigate data. Do a test of both with the application's screen reader. Automation does not replace this approval.

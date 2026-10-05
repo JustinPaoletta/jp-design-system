@@ -10,9 +10,9 @@ Repository version: `0.0.0`. UI and distributed token package versions: `0.1.0`.
 No tagged release has been cut. The public class inventory is 36 stable,
 76 preview and one deprecated export; [maturity](docs/governance/MATURITY.md)
 records the contracts and limits. The accessibility target is WCAG 2.1 A/AA,
-with automated checks and manual assistive-technology review still open.
+with automated checks and manual assistive-technology inspection still open.
 
-The [remaining task list](COMPONENT_EXPANSION_PLAN.md) contains five review,
+The [remaining task list](COMPONENT_EXPANSION_PLAN.md) contains five inspection,
 promotion and release items. Feature implementation and automated acceptance
 coverage are recorded in the [documentation index](docs/README.md) and
 [verification reference](docs/qa/VERIFICATION.md).
@@ -64,15 +64,17 @@ npm run typecheck
 npm run build
 npm exec -- nx run packages:check-release
 node tools/docs/check-links.mjs
+node tools/docs/check-writing.mjs
+node --test tools/docs/check-writing.spec.mjs
 ```
 
 Use [Quality verification](docs/QUALITY.md) for Storybook, browser and visual
 commands. `npm run tokens:build` regenerates token output;
 `npm run tokens:check` checks drift. UI/application lint targets enforce zero
-warnings; inferred e2e lint targets currently retain existing warnings.
+warnings; inferred e2e lint targets currently keep existing warnings.
 Semantic-token guards reject hardcoded colors and primitive tokens in UI code.
 
-Storybook infrastructure changes must preserve
+Storybook infrastructure changes must keep
 [per-port development output isolation](docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated).
 The [reload incident](docs/qa/STORYBOOK_RELOAD_REGRESSION.md) explains the
 regression and its automated prevention.
@@ -80,10 +82,11 @@ regression and its automated prevention.
 ## References
 
 - [Documentation and API guides](docs/README.md)
+- [ASD-STE100 writing rules](docs/content/WRITING.md)
 - [Design principles](docs/DESIGN_PRINCIPLES.md)
 - [Consumer guide](docs/consumers/README.md)
 - [Accessibility/browser support](docs/qa/SUPPORT_MATRIX.md)
 - [Contribution and acceptance policy](docs/governance/README.md)
-- [Dependency security review](docs/SECURITY_REVIEW.md)
+- [Dependency security inspection](docs/SECURITY_REVIEW.md)
 - [CI and branch protection](docs/CI_BRANCH_PROTECTION.md)
 - [Changelog](CHANGELOG.md) and [release process](RELEASE.md)

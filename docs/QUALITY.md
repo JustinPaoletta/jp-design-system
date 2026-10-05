@@ -17,10 +17,16 @@ npm exec -- nx run packages:build
 npm exec -- nx run packages:smoke
 npm exec -- nx run packages:check-release
 node tools/docs/check-links.mjs
+node tools/docs/check-writing.mjs
+node --test tools/docs/check-writing.spec.mjs
 ```
 
+The Docs workflow runs the link and writing checks and the writing-check tests.
+The writing check covers selected [ASD-STE100 clarity rules](content/WRITING.md).
+It does not replace a person's examination of meaning or technical accuracy.
+
 UI/Showcase unit coverage gates are 90% for statements, branches, functions
-and lines. Tokens and the placeholder Storybook app require 100%.
+and lines. Tokens and the placeholder Storybook app must reach 100%.
 Production Showcase budgets are 500kB warning/1MB error for the initial bundle
 and 6kB warning/8kB error for a component stylesheet. These budgets do not
 measure an isolated consumer's tree-shaken library cost.
@@ -60,7 +66,7 @@ npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual
 ```
 
 Use the visual command with `--update-snapshots` only when deliberately
-reviewing new baselines; narrow the grep to the new states. Commit reviewed
+examining new baselines; narrow the grep to the new states. Commit examined
 PNG files. CI compares snapshots and never updates them automatically.
 Linux functional checks do not establish macOS pixel parity.
 
@@ -83,6 +89,6 @@ unreviewed. Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility
 
-Storybook 10 loads its usual `test-runner.ts` through a process-wide Node loader, which Jest 30.5 rejects inside its test sandbox. The documented custom Jest configuration in `.storybook/test-runner-jest.config.mjs` retains the stock story transforms and browser environment, and replaces only the hook-loading setup. `test-runner.hooks.ts` keeps the existing desktop/mobile viewport selection; `runner-jest-setup.mjs` registers it with the runner's exported `setPreVisit` and `setupPage`. Interaction and accessibility assertions remain enabled. Revisit this adapter when the upstream loader integration changes. See [Storybook test runner configuration](https://storybook.js.org/docs/writing-tests/integrations/test-runner#configure).
+Storybook 10 loads its usual `test-runner.ts` through a process-wide Node loader, which Jest 30.5 rejects inside its test sandbox. The documented custom Jest configuration in `.storybook/test-runner-jest.config.mjs` keeps the stock story transforms and browser environment, and replaces only the hook-loading setup. `test-runner.hooks.ts` keeps the existing desktop/mobile viewport selection; `runner-jest-setup.mjs` registers it with the runner's exported `setPreVisit` and `setupPage`. Interaction and accessibility assertions remain enabled. Examine this adapter when the upstream loader integration changes. See [Storybook test runner configuration](https://storybook.js.org/docs/writing-tests/integrations/test-runner#configure).
 
-The runner limits Jest to two workers, allows five minutes for the production build/server to become ready, fails early if that child exits, and cleans up its own Unix process group on termination.
+The runner limits Jest to two workers. It gives five minutes for the production build/server to become ready. If that child exits early, the run fails. On termination, the runner removes its own Unix process group.

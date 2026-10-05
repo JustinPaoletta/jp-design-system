@@ -27,11 +27,7 @@ S1 and S2 are defects. S3 is fixed in the normal queue. S4 is a proposal under
 A finding is **release-blocking** when any of these are true:
 
 - Severity is S1.
-- Severity is S2 on a `stable` export, or on a `preview` export in the part of
-  the behavior the library does claim (keyboard for menus, dialog focus
-  restore, pagination page math). The native top-layer parity limit in
-  [MATURITY.md](./MATURITY.md) is a known limit, not an open S2, until a `docs/qa/`
-  note shows a failure inside the claimed fallback.
+- Severity is S2 on a `stable` export or on supported behavior of a `preview` export. Examples include menu keyboard controls, dialog focus restoration and pagination calculations. [MATURITY.md](./MATURITY.md) states the native top-layer fallback limits. Those limits become S2 only when a `docs/qa/` note shows a failure of supported fallback behavior.
 - CI already fails or would fail: `npm exec -- nx test ui`, `npm exec -- nx test tokens`,
   `npm run tokens:check`, Storybook interaction or axe failures, showcase axe,
   or the recipe visual job in [QUALITY.md](../QUALITY.md).
@@ -45,7 +41,7 @@ and the follow-up. It is written under `docs/qa/`.
 Not release-blocking by themselves:
 
 - Missing VoiceOver or NVDA evidence while [ACCEPTANCE.md](./ACCEPTANCE.md)
-  still lists that review as outside the merge gate
+  still lists that inspection as outside the merge gate
 - Absence of a light theme
 - Fixed English on exports already marked `preview` for that copy
 - Browser differences inside the documented popover/dialog fallback, until they
@@ -68,7 +64,7 @@ Include:
 
 Link the note from [the QA index](../qa/README.md). Keep reproduction notes
 and evidence references next to that index; use
-[MANUAL_QA.md](../../MANUAL_QA.md) for the review procedure and session template.
+[MANUAL_QA.md](../../MANUAL_QA.md) for the inspection procedure and session template.
 
 Storybook mismatches found while walking [MANUAL_QA.md](../../MANUAL_QA.md) use
 the same note. Include the story path and the toolbar state, as that checklist
@@ -82,10 +78,8 @@ already asks.
 2. Reproduce on the component story, then on the showcase route if one exists
    (`/overlays`, `/controls`, `/data`, `/app-shell`, `/assistant`,
    `/product-recipes`).
-3. If the story's accessibility panel or showcase axe already covers the state,
-   add or extend the failing test in the same change as the fix.
-4. If the failure is only visible to VoiceOver, NVDA, high contrast, or zoom,
-   record that in `docs/qa/` even when no automated test can lock it yet.
+3. If an existing axe test covers the state, add or extend the test that fails. Include it with the fix.
+4. If only a screen reader, high contrast or zoom shows the failure, record it in `docs/qa/`. Keep this record even when automation cannot detect the failure.
 
 Keyboard regressions on dialog, menu, combobox, tabs, and the shell drawer are
 S1 or S2. Treat a focus trap with no exit as S1.
@@ -116,10 +110,12 @@ contract. Fix the source JSON or the generator; do not hand-edit
 Consumers report issues on this repository's GitHub issues. JP maintainers
 triage them with the same severity scale.
 
-Ask for the package version (`@jp-design-system/ui` and
-`@jp-design-system/tokens`, currently `0.1.0` in distribution metadata), the
-import they used, Angular version, and whether they styled through tokens or
-through unsupported internal classes.
+Ask for this information:
+
+- Versions of `@jp-design-system/ui` and `@jp-design-system/tokens`. Both are currently `0.1.0` in distribution metadata.
+- The import used.
+- The Angular version.
+- The styling method: tokens or unsupported internal classes.
 
 Feedback that asks for a new component follows [CONTRIBUTING.md](./CONTRIBUTING.md).
 Feedback that reports a broken contract becomes a `docs/qa/` note when it is

@@ -1,8 +1,8 @@
 # Component expansion
 
 Implemented October 4, 2026. These additions are **preview** APIs. They have
-unit tests and Storybook examples; manual assistive-technology review remains
-pending. Remaining review, promotion and release work is tracked in
+unit tests and Storybook examples; manual assistive-technology inspection remains
+pending. Remaining inspection, promotion and release work is tracked in
 [COMPONENT_EXPANSION_PLAN.md](../COMPONENT_EXPANSION_PLAN.md).
 
 Explore Showcase `/component-expansion` or the corresponding `Primitives` stories.
@@ -87,13 +87,9 @@ Avatar-group overflow is informational and does not implicitly open a menu.
 | `JpSearchField`      | Inherits the full JpInput API; defaults to search type and `clearable=true`. Clear updates the form value and returns focus to the input.                                                                   |
 | `JpPasswordField`    | Inherits the full JpInput API; defaults to password type and `revealPassword=true`. Reveal changes visibility without altering the form value.                                                              |
 
-`JpChoiceOption` contains unique `value`, `label`, and optional `disabled`.
-Groups support `id`, `hint`, `error`, and `disabled`. Multi-select additionally
-supports `required`, `placeholder`, `loading`, `loadingText`, and `emptyText`.
-Unknown selected values remain in the form value and use that value as fallback
-chip text. Search text never replaces the committed selection. Arrow keys move
-among enabled options; Home/End jump; Enter toggles; Escape/Tab dismiss.
-Selection does not dismiss the listbox.
+`JpChoiceOption` contains unique `value`, `label`, and optional `disabled`. Groups support `id`, `hint`, `error`, and `disabled`. Multi-select additionally supports `required`, `placeholder`, `loading`, `loadingText`, and `emptyText`. Unknown selected values remain in the form value and use that value as fallback chip text.
+
+Search text never replaces the committed selection. Arrow keys move among enabled options; Home/End jump; Enter toggles; Escape/Tab dismiss. Selection does not dismiss the listbox.
 
 All new CVA controls work with reactive forms and ngModel. Applications own
 validation and submission; use Angular validators for required multi-selection
@@ -131,7 +127,7 @@ backdrop handling, and focus restoration. `JpDialog.placement` now supports
 `center/start/end/bottom`; its default remains center. Drawers are modal; a
 persistent non-modal side panel is a separate future pattern.
 
-Banner announcements are opt-in. Persistent page notices default to named
+Banner announcements are optional. Persistent page notices default to named
 regions; dynamic announced errors use alert, other tones use status. Error
 summaries do not automatically focus on every field edit; call `focus()` after
 rendering a failed submission. Avoid duplicate announcements in the surrounding
@@ -154,8 +150,8 @@ Additional default copy is configurable through `provideJpMessages`:
   and desktop/mobile drawer layouts.
 - The isolated package consumer imports every new component and compiles
   templates and form bindings from built tarballs.
-- Manual screen-reader review and Windows forced-colors review remain pending.
-  Native exclusive disclosure grouping requires details-name support in the
+- Manual screen-reader inspection and Windows forced-colors inspection remain pending.
+  Native exclusive disclosure grouping uses native details-name behavior in the
   supported browser versions. SSR/hydration support is not introduced here.
 
 ## Product tools: second batch
@@ -171,7 +167,7 @@ composition; all classes and types below are exported from the UI package.
 | `JpNumberStepper` / `jp-number-stepper` | Required `label`. CVA value: `number \| null`. Native number field, plus/minus buttons, `min/max=null`, `step=1`, `readonly/disabled=false`, `id/name/hint/error=''`.                                                                                                              |
 | `JpSlider` / `jp-slider`                | Required `label`. Numeric CVA. Same numeric inputs as number stepper; unset min/max produce 0–100. `showNumberInput=true` supplies an exact-value alternative. `valueText(value)` defaults to String(value).                                                                       |
 | `JpRangeSlider` / `jp-range-slider`     | Required `label`. CVA value: readonly tuple `JpRangeValue = [number, number]`. Defaults min=0, max=100, step=1. Localizable `lowerLabel/upperLabel`; `showNumberInputs=true`; `valueText(value)`, `id/hint/error`, disabled/readonly.                                              |
-| `JpTimeline` / `jp-timeline`            | Required `label` and readonly `events: JpTimelineEvent[]`. Preserves supplied order. Optional emptyText. No sorting, fetching, or live announcements.                                                                                                                              |
+| `JpTimeline` / `jp-timeline`            | Required `label` and readonly `events: JpTimelineEvent[]`. Keeps supplied order. Optional emptyText. No sorting, fetching, or live announcements.                                                                                                                                  |
 | `JpOverflowChip` / `jp-overflow-chip`   | Required `label` and readonly `items: JpOverflowItem[]`. Displays +N, opens a named popover with every hidden item, closes on Escape/outside pointer, and restores focus if it was inside the closing panel. Empty items omit the action. `moreLabel(count)` localizes the action. |
 | `JpCopyButton` / `jp-copy-button`       | Required plain `text`. Optional disabled and label/pendingLabel/successLabel/failureLabel. Emits copied or copyFailed after the clipboard promise settles. Prevents duplicate pending requests.                                                                                    |
 | `JpCodeBlock` / `jp-code-block`         | Required plain `code` and `label`; optional language; copyable=true. Renders escaped text in pre/code, with keyboard scrolling and selectable source. No syntax highlighter dependency or HTML input.                                                                              |
@@ -179,10 +175,10 @@ composition; all classes and types below are exported from the UI package.
 
 Checklist item shape: unique `id`, `label`, optional `description`, `disabled`,
 and readonly `children`. A parent checks all enabled descendant leaves.
-Disabled descendants retain their current completion, including when a parent
+Disabled descendants keep their current completion, including when a parent
 toggles; a disabled parent disables its whole subtree. A parent is checked only
 when every descendant leaf is complete, and mixed when some are complete.
-Unknown external IDs are preserved in the form value but do not count as tasks.
+Unknown external IDs are kept in the form value but do not count as tasks.
 `summaryLabel({ completed, total })` and emptyText are localizable.
 
 Step shape: unique `id`, `label`, optional description, disabled, and state
@@ -190,7 +186,7 @@ Step shape: unique `id`, `label`, optional description, disabled, and state
 and error states include text, with configurable completeLabel/errorLabel.
 The consumer owns step validation, which steps can be visited, and asynchronous
 save behavior. The Showcase wizard blocks invalid progression, focuses an
-error summary, preserves values on Back, and focuses the new step heading.
+error summary, keeps values on Back, and focuses the new step heading.
 
 Number stepper button actions align to a grid anchored at min (or zero), clamp
 to bounds, and avoid visible floating-point artifacts for ordinary decimals.
@@ -200,17 +196,11 @@ produces null. Applications supply Angular required/min/max/custom validators.
 Native number entry follows the browser's numeric editing rules; the component
 does not parse localized grouped numbers, currencies, or units.
 
-Sliders use native range keyboard and pointer/touch behavior. Number alternatives
-commit on change/blur. Display and user changes snap to the step grid anchored
-at min; an off-grid max resolves to the last full step. External values normalize
-for display without silently mutating the Angular form model. Missing slider
-values display min; missing range values display the full valid interval.
-Reversed external range endpoints sort for display; user changes cannot cross
-the other endpoint. Handles remain separately labelled and tab into both controls.
-The range is two native tracks, not an overlapping graphical track.
-Invalid bounds/steps fall back to usable defaults. Each control supports CVA
-disabled/touched state. Read-only slider tracks are disabled; numeric alternatives
-remain readable.
+Sliders use native range keyboard and pointer/touch behavior. Number alternatives commit on change/blur. Display and user changes snap to the step grid anchored at min; an off-grid max resolves to the last full step. External values normalize for display without silently mutating the Angular form model.
+
+Missing slider values display min; missing range values display the full valid interval. Reversed external range endpoints sort for display; user changes cannot cross the other endpoint. Handles remain separately labeled and tab into both controls. The range is two native tracks, not an overlapping graphical track.
+
+Invalid bounds/steps fall back to usable defaults. Each control supports CVA disabled/touched state. Read-only slider tracks are disabled; numeric alternatives remain readable.
 
 Timeline event shape: unique id, title, optional description, timeLabel, dateTime.
 The app formats visible times with its own locale and time zone. An ISO dateTime
@@ -220,17 +210,23 @@ and permissions. This component does not measure row fit automatically: the
 consumer supplies the items it decided to hide.
 
 Copying uses the browser Clipboard API in a secure context. Denied or unavailable
-access produces visible, polite failure feedback and allows retry. The library
+access produces visible, polite failure feedback and lets the user try again. The library
 does not request permissions, emulate clipboard writes, or claim success after
 failure. Keep code selectable for manual copying. Changing text resets feedback
 and suppresses stale completion. Syntax highlighting, line numbers, and executable
 code demos are outside this preview API.
 
-Additional defaults are configurable through provideJpMessages:
-checklist.completed/empty, stepper.complete/error, numberStepper.increase/decrease,
-rangeSlider.lower/upper, timeline.empty, copy.action/pending/success/failure,
-and overflow.more. Use valueText and consumer-formatted timeline labels for
-locale-aware numeric/date presentation.
+Use `provideJpMessages` to configure these additional message defaults:
+
+- `checklist.completed` and `checklist.empty`
+- `stepper.complete` and `stepper.error`
+- `numberStepper.increase` and `numberStepper.decrease`
+- `rangeSlider.lower` and `rangeSlider.upper`
+- `timeline.empty`
+- `copy.action`, `copy.pending`, `copy.success` and `copy.failure`
+- `overflow.more`
+
+Use `valueText` and application-formatted timeline labels for numbers and dates in the selected locale.
 
 ```html
 <jp-checklist label="Release tasks" [items]="tasks" [formControl]="completed" />
@@ -239,11 +235,9 @@ locale-aware numeric/date presentation.
 <jp-code-block label="Install" language="Shell" code="npm install @jp-design-system/ui" />
 ```
 
-Browser tests exercise Chromium and WebKit wizard recovery, native slider keys,
-range boundaries, nested completion, overflow focus, and closed/open/error-state
-WCAG 2.1 A/AA checks. Clipboard denial/retry uses a controlled boundary in browser
+Chromium and WebKit tests exercise wizard recovery, native slider keys, range boundaries, nested completion and overflow focus. They include WCAG 2.1 A/AA checks for closed, open and error states. Clipboard denial/retry uses a controlled boundary in browser
 tests; manual permission behavior remains browser-owned. Manual screen-reader
-and physical touch-device review remain pending.
+and physical touch-device inspection remain pending.
 
 ## Third batch — everyday workflows
 

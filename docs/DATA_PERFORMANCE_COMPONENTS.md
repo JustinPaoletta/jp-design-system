@@ -15,7 +15,7 @@ stale asynchronous imports cannot create a chart after teardown.
 
 This integration follows the official
 [bundle integration guidance](https://www.chartjs.org/docs/latest/getting-started/integration.html).
-Chart.js canvas contents require an accessible alternative, as described in its
+Chart.js canvas contents must have an accessible alternative, as described in its
 [accessibility guidance](https://www.chartjs.org/docs/latest/general/accessibility.html).
 
 ```html
@@ -38,7 +38,7 @@ Chart.js canvas contents require an accessible alternative, as described in its
   exposes tooltip-equivalent formatted values to keyboard and screen-reader users.
 - `loading`, `error`, and `retry` cover consumer data states. An engine failure
   leaves the native data controls usable.
-- The canvas has an image label; the native details/table provides all values,
+- The canvas has an image label; the native details/table gives all values,
   including explicit missing values. Forced colors automatically opens the data
   table and suppresses the canvas.
 - Chart.js animation is always disabled. Series have consistent numbered legend
@@ -51,13 +51,13 @@ Chart.js canvas contents require an accessible alternative, as described in its
 
 Not included: stacked/pie/time/scatter charts, arbitrary Chart.js configuration,
 streaming, zooming, financial plotting, exporting, or hundreds of series. Those
-need a product requirement and their own accessibility/formatting contract.
+must have a product requirement and their own accessibility/formatting contract.
 
 ## Fixed-height virtual table
 
 `JpVirtualTable` is an optional separate component. Existing `JpTable` behavior is
-unchanged. Use normal table pagination for small or variable-height datasets;
-virtualization is intended for large flat datasets that need continuous browsing.
+unchanged. Use normal table pagination for small or variable-height datasets.
+Virtualization is for large flat datasets with continuous navigation.
 
 ```html
 <jp-virtual-table label="Service inventory" [columns]="columns" [rows]="services" rowKey="id" [height]="360" [rowHeight]="48" [overscan]="6" selectable [selectedKeys]="selected" (selectionChange)="selected = $event" [sort]="sort" (sortChange)="sort = $event" />
@@ -85,12 +85,12 @@ virtualization is intended for large flat datasets that need continuous browsing
   scroll region before that row is removed. Input-driven sorting, filtering,
   removal and selection-control changes use the same recovery before DOM updates.
   Dataset shrink clamps the scroll offset.
-- `virtual`/`virtualChange` allow an explicit native paginated alternative. In
+- `virtual`/`virtualChange` give an explicit native paginated alternative. In
   paginated mode `page`/`pageChange` and `pageSize` (default 50, maximum 500) expose
   every row through existing table and pagination components. This alternative
   avoids relying on assistive technology navigating a partially mounted table.
-  Selecting the already-active mode preserves its scroll position and page.
-- `loading`, `error`, and `retry` are consumer-owned. Copy uses
+  Selecting the already-active mode keeps its scroll position and page.
+- The application controls `loading`, `error` and `retry`. Copy uses
   `provideJpMessages({ virtualTable: … })`, plus existing table/pagination messages.
 - Styling uses table, text, border, focus, spacing, typography and control tokens.
   No scroll, row entrance or reorder animation is introduced.
@@ -101,16 +101,12 @@ Compose those with the normal table or propose a measured extension first.
 
 ## Measurement and verification
 
-The browser regression uses the real 10,000-service consumer screen and asserts
-fewer than 30 mounted data rows, exact 48 px row geometry, access to the last row,
-selection across distant windows, sorting, and complete paginated access. It also
-attaches a reproducible full native-table construction/layout measurement for
-10,000 rows and three columns. That baseline is native DOM, **not an Angular
-rendering benchmark**; elapsed times are diagnostic and have no flaky speed gate.
-Actual per-browser results are recorded in [QA evidence](qa/VERIFICATION.md).
+The browser regression uses the real 10,000-service application screen. It makes sure that fewer than 30 data rows are mounted and the row height is exactly 48 px. It exercises access to the last row, selection across distant windows and sorting. It also examines paginated access to all rows.
+
+It also attaches a reproducible full native-table construction/layout measurement for 10,000 rows and three columns. That baseline is native DOM, **not an Angular rendering benchmark**; elapsed times are diagnostic and have no flaky speed gate. Actual per-browser results are recorded in [QA evidence](qa/VERIFICATION.md).
 
 The native table semantics follow the
 [W3C table guidance](https://www.w3.org/WAI/ARIA/apg/patterns/table/).
 Unit, Storybook, browser, axe, visual and packaged-consumer checks cover the
-implemented contract. Manual assistive-technology/forced-colors review and
+implemented contract. Manual assistive-technology/forced-colors inspection and
 consumer API feedback remain promotion requirements.

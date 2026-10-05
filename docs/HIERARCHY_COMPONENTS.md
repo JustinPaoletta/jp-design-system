@@ -1,59 +1,145 @@
-# Hierarchy components (preview)
+# Hierarchy components
 
-The hierarchy package supplies a selection/activation tree and a native data table with nested rows. The `/hierarchy` showcase is an asset browser and project breakdown. Both components use immutable input data, stable keys and consumer-owned state. They introduce no entrance, resizing or disclosure animation.
+`JpTreeView` and `JpTreeTable` are preview APIs. The `/hierarchy` Showcase page
+shows both components. Import them from `@jp-design-system/ui`.
+When data changes, replace the input arrays.
 
 ## Tree view
 
-`JpTreeView` (`jp-tree-view`) requires a document-unique `id` and a nonempty accessible `label`.
+`JpTreeView` (`jp-tree-view`) must have an `id` and a non-empty accessible `label`.
+The `id` must be unique in the document. The component shows a hierarchy with
+one keyboard focus position.
 
-| Input/output                             | Contract                                                                                                                                                                                                             |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nodes: readonly JpTreeNode[]`           | Each node has a nonempty globally unique string `key`, a nonempty `label`, optional `description`, `disabled`, and recursive `children`. Duplicate/empty keys fail immediately instead of rendering conflicting IDs. |
-| `expandedKeys` / `expandedKeysChange`    | Controlled expansion. Hidden descendant expansion keys survive collapse.                                                                                                                                             |
-| `selection: 'single' \| 'none'`          | Single selection by default. `none` is an activation-only contract for a consumer handling navigation.                                                                                                               |
-| `selectedKey` / `selectedKeyChange`      | Controlled single selection, independent of keyboard focus. Invisible/off-page selection is retained by the consumer.                                                                                                |
-| `activated: JpTreeNode`                  | Enter or row click asks the consumer to open the item. The component does not navigate, fetch, or own a router.                                                                                                      |
-| `state: 'ready' \| 'loading' \| 'error'` | Root state; existing data can remain visible during refresh. Empty data has a focusable named tree and localized status.                                                                                             |
-| `loadRequested: JpTreeNode`              | Emitted when an unloaded branch opens, or its failed request is retried.                                                                                                                                             |
-| `retryRequested: void`                   | Requests retry for a root error.                                                                                                                                                                                     |
-| `disabled`                               | Prevents activation, selection, expansion and retry. Nodes remain keyboard discoverable with `aria-disabled`.                                                                                                        |
+| API                                      | Meaning                                                                                                                                                                             |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nodes: readonly JpTreeNode[]`           | Each node must have a unique, non-empty string `key` and a non-empty `label`. Optional fields are `description`, `disabled` and `children`. Empty or duplicate keys cause an error. |
+| `expandedKeys` / `expandedKeysChange`    | The application controls open branches. Keys for hidden children remain in the value.                                                                                               |
+| `selection: 'single' \| 'none'`          | The default is `single`. With `none`, the application can handle activation without selection.                                                                                      |
+| `selectedKey` / `selectedKeyChange`      | The application controls one selected key. Focus and selection are separate. The application keeps hidden or off-page selections.                                                   |
+| `activated: JpTreeNode`                  | Enter or a row click sends the node to the application. The application handles navigation.                                                                                         |
+| `state: 'ready' \| 'loading' \| 'error'` | This value sets the root state. Existing nodes can stay visible during a refresh. An empty tree has a name, focus position and status.                                              |
+| `loadRequested: JpTreeNode`              | The output sends the node when an unloaded branch opens or its failed request starts again.                                                                                         |
+| `retryRequested: void`                   | This output asks the application to repeat a failed root request.                                                                                                                   |
+| `disabled`                               | This input stops activation, selection, expansion and retries. Keyboard users can still find disabled nodes. Those nodes have `aria-disabled`.                                      |
 
-Example controlled bindings:
+### Bind the state
 
 ```html
 <jp-tree-view id="assets" label="Design assets" [nodes]="assets()" [expandedKeys]="expanded()" (expandedKeysChange)="expanded.set($event)" [selectedKey]="selected()" (selectedKeyChange)="selected.set($event)" (activated)="openAsset($event)" (loadRequested)="loadChildren($event)" />
 ```
 
-Arrow Up/Down, Home/End and a 700 ms prefix search move focus among visible nodes. Repeated letters cycle through matching labels. Arrow Right opens a branch or enters its first child; Arrow Left closes it or returns to its parent. These horizontal directions reverse in RTL. Enter selects and activates; Space selects without activating. In activation-only mode, Enter activates and Space toggles a branch. Tab exits the tree. Control, Meta and Alt shortcuts are left to the browser. Disabled nodes remain discoverable but cannot act.
+### Keyboard behavior
 
-The roving tab stop initially uses the selected visible node, otherwise the first root. Selection does not follow focus. A focused descendant hidden by an external collapse returns to its closest surviving ancestor; removing the focused node recovers to a surviving root. Recovery does not move focus back from another control.
+| Key        | Result                                            |
+| ---------- | ------------------------------------------------- |
+| Up / Down  | Moves focus to the previous or next visible node. |
+| Home / End | Moves focus to the first or last visible node.    |
+| Right      | Opens a branch or moves into its first child.     |
+| Left       | Closes a branch or moves to its parent.           |
+| Enter      | Selects and activates the node.                   |
+| Space      | Selects the node without activation.              |
+| Tab        | Moves focus outside the tree.                     |
 
-Semantic ownership uses nested `treeitem` and `group` elements, explicit levels, sibling positions and counts. Leaf nodes omit `aria-expanded`. The visible focus outline differs from the selected row background. These behaviors are informed by the [W3C APG tree pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
+Left and Right reverse in RTL. In `selection="none"`, Enter activates the
+node and Space opens or closes a branch. Control, Meta and Alt combinations
+stay with the browser.
+
+Letter keys search label prefixes for 700ms. Repeated letters move through
+matching labels. Disabled nodes remain in the focus order but cannot act.
+
+The first focus position is the selected visible node or the first root.
+Selection does not follow focus. If collapse hides the focused node, focus
+returns to the closest visible ancestor. If removal deletes that node, focus
+returns to a remaining root. This recovery does not take focus from another
+control.
+
+Nested `treeitem` and `group` elements define the hierarchy. Nodes have
+explicit levels, sibling positions and sibling counts. Leaves omit
+`aria-expanded`. Focus has an outline; selection has a row background.
+These rules follow the [W3C tree pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
 
 ### Lazy branches
 
-Set `hasChildren: true` and `loadState: 'idle'` (or omit state) on an unloaded branch. Handle `loadRequested` by immutably replacing that node with `loadState: 'loading'`, then either `loadState: 'loaded', children: [...]` or `loadState: 'error'`. The consumer owns requests, cancellation, stale-response protection and cache policy. Loading branches carry `aria-busy`; failed expanded branches offer a pointer retry control and Enter on the node retries. The retry control stays out of the roving Tab order. A loaded empty child list becomes a leaf.
+1. Set `hasChildren: true` on a branch without loaded children.
+2. Set `loadState: 'idle'`, or omit that field.
+3. Handle `loadRequested` in the application.
+4. Replace the node with a new node that has `loadState: 'loading'`.
+5. After success, supply `loadState: 'loaded'` and `children`.
+6. After failure, supply `loadState: 'error'`.
 
-Repeated opening while the consumer marks a node loading does not request again. A retry keeps its node focused. The showcase demonstrates request failure followed by a successful retry and cancels its demonstration timer when destroyed.
+The application owns requests, cancellation, response order and the cache.
+A loading branch has `aria-busy`. A failed open branch has a retry button;
+Enter on the node also starts a retry. The retry button is outside the tree's
+Tab order.
+
+A loaded empty branch becomes a leaf. An open branch does not request data
+again while its state is `loading`. A retry keeps focus on its node.
+The example cancels its timer when Angular destroys the page.
 
 ## Tree table
 
-`JpTreeTable` (`jp-tree-table`) requires document-unique `id`, visible `caption`, and consumer-provided `nameHeader`. Rows are `JpTreeTableRow`: the same stable `key`/`label` hierarchy, a `cells` record, and recursive row children. Additional columns are `JpTreeTableColumn[]` with unique `key`, `header`, and optional `align: 'start' | 'center' | 'end'`. Null/undefined cell values display an em dash.
+`JpTreeTable` (`jp-tree-table`) must have a unique document `id`, visible `caption`
+and `nameHeader`. `JpTreeTableRow` has `key`, `label`, `cells` and optional
+nested `children`. Keys and labels must be non-empty. Keys must be unique.
 
-Expansion uses `expandedKeys`/`expandedKeysChange`. Each branch is a native button with an accessible expand/collapse label, `aria-expanded` and references to its child row IDs. Descendants remain in the DOM with `hidden` when an ancestor collapses. Row headings include their ancestor path for readers; indentation uses logical padding in RTL.
+Additional columns use `JpTreeTableColumn[]`. Each column must have a unique `key`
+and `header`. Its optional `align` is `start`, `center` or `end`.
+Null and undefined cells show an em dash.
 
-Optional `selectable` enables native checkboxes. `selectedKeys`/`selectedKeysChange` select each row independently; selecting a parent does not select descendants. Hidden and off-page keys are preserved. Disabled rows remain readable with disabled buttons/checkboxes. `state`, `disabled` and `retryRequested` match the tree's root-state contract.
+The application controls `expandedKeys` and handles `expandedKeysChange`.
+A native button opens each branch. It has an accessible label,
+`aria-expanded` and child-row references. Collapsed child rows stay in the
+DOM with `hidden`. Row headings include the ancestor path. Indentation follows
+RTL through logical CSS.
 
-This is a **native HTML table**, using caption, scoped headers and normal Tab order. Enter/Space operate its buttons and checkboxes. It does not set a `treegrid` role or intercept cell-navigation arrows. A hierarchical grid requires a separate focus and editing contract; see the [W3C treegrid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treegrid/) for that interaction distinction. The table scroll region can receive focus to allow keyboard scrolling. Collapsing a focused descendant restores its ancestor disclosure focus.
+With `selectable`, rows have native checkboxes. `selectedKeys` and
+`selectedKeysChange` select rows independently. Parent selection does not
+select its children. Hidden and off-page keys remain selected.
+Disabled rows stay readable; their buttons and checkboxes are disabled.
 
-## Styling, localization and review
+The root `state`, `disabled` and `retryRequested` APIs match the tree view.
+The table uses a native caption, scoped headers and normal Tab order.
+Enter and Space operate buttons and checkboxes. The component does not use
+`treegrid` or custom cell-navigation arrows.
 
-Both components use existing semantic surface, border, text, focus, spacing, control-size and typography tokens. They inherit accent and density, use logical geometry, support long labels and contain table overflow on narrow screens. Forced-colors styles provide explicit selected/focused boundaries. They use static disclosure changes and need no reduced-motion override.
+The [W3C treegrid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treegrid/)
+has separate focus and editing rules. The table's scroll region can receive
+keyboard focus. Collapse returns focus from a hidden child to its ancestor button.
 
-Built-in status and expand/collapse copy comes from `JP_MESSAGES.tree` (`empty`, `loading`, `failed`, `retry`, `expand(label)`, `collapse(label)`). Table checkbox labels reuse `JP_MESSAGES.table.selectRow`. Consumer node labels, headings and table values must already be localized. Typeahead uses browser locale casing and matches label prefixes; it does not provide accent folding or a customizable collation policy.
+## Styling, localization and inspection
 
-Preview limits: no multi-selection tree, cascade selection, drag/reordering, arbitrary interactive node templates, virtualized hierarchy, paged siblings, cell editing or treegrid role. The native tree table displays loaded children only; fetch children in the consumer before supplying them. Consumers must supply a finite acyclic tree and unique IDs/keys. Preserve meaningful labels and avoid unbounded indentation on extremely deep structures. Large trees should be measured before choosing a future virtualization contract. Manual assistive-technology and forced-colors review remain part of promotion.
+Both components use existing semantic tokens and inherit accent and density.
+Long labels can wrap. Table overflow stays inside the table region.
+Forced-colors rules keep selection and focus visible. Disclosure changes have
+no animation.
+
+Built-in labels use `JP_MESSAGES.tree`: `empty`, `loading`, `failed`, `retry`,
+`expand(label)` and `collapse(label)`. Checkbox labels also use
+`JP_MESSAGES.table.selectRow`. The application translates node labels, headings
+and cell values.
+
+Prefix search uses the browser's locale-aware lowercase conversion.
+It does not remove accents or offer a custom collation policy.
+
+### Limits
+
+These APIs do not include:
+
+- Multiple or cascading tree selection
+- Drag movement or tree reordering
+- Arbitrary controls inside tree nodes
+- Virtualized hierarchy or paged siblings
+- Cell editing or a `treegrid` role
+
+The table shows loaded children only. Supply an acyclic, finite tree with
+unique keys. Fetch children in the application. Keep deep indentation readable.
+Measure large trees before use. Manual accessibility and Windows forced-colors
+inspection remain necessary for approval as stable APIs.
 
 ## Verification
 
-Scoped unit tests cover semantic ownership, stable-key rejection, focus separate from selection, keyboard and RTL navigation, typeahead, controlled expansion, focus recovery, lazy request/retry, translated states and independent native table selection. Storybook play stories cover asset navigation, lazy retry, RTL expansion and hidden table selection. Browser specs in `hierarchy.spec.ts` exercise the consumer in Chromium/WebKit, including native Enter/Space behavior, narrow RTL layout and automated accessibility; integrated execution is recorded by the release/QA pass.
+Unit tests cover hierarchy, keys, keyboard focus, selection, RTL and lazy branches.
+Storybook examples cover navigation, retry, expansion and hidden selection.
+`hierarchy.spec.ts` covers the Showcase page in Chromium and WebKit.
+It includes native Enter/Space use, narrow RTL layout and axe scans.
+[Verification](qa/VERIFICATION.md) records the results and limits.

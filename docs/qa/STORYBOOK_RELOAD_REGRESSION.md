@@ -9,7 +9,7 @@ reloads. This affected unrelated stories because the entire preview restarted.
 The live test server on port 4500 shared Storybook's generated bundle directory
 with the running preview. Storybook writes development bundles to disk, and the
 security-patched Webpack middleware serves those disk files. Building the test
-server therefore replaced the preview's runtime with another compiler's output.
+server thus replaced the preview's runtime with another compiler's output.
 The preview's HMR stream reported hash `b7b59d842c2c08ff4c34`, while its served
 runtime reported `dc4e357038b14c3ad2be`. Disabling browser caching did not change
 that mismatch.

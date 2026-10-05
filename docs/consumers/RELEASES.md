@@ -13,8 +13,7 @@ below. This page points at them. The release steps themselves stay in
 | Breaking changes, deprecation window, `Ui` / `lib-ui` migration | [COMPATIBILITY.md](../governance/COMPATIBILITY.md) |
 | What a component change must satisfy                            | [ACCEPTANCE.md](../governance/ACCEPTANCE.md)       |
 
-On October 4, 2026 the UI and token distribution packages are `0.1.0`, the
-repository version is pre-1.0, and the first git tag has not been cut.
+On October 4, 2026, the UI and token distribution packages are `0.1.0`. The repository version is pre-1.0. The first git tag does not exist.
 Consumers install tarballs built from a checkout. They do not install from an
 npm registry.
 

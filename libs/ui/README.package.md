@@ -24,8 +24,21 @@ import { JpButton } from '@jp-design-system/ui';
 export class SaveComponent {}
 ```
 
-The public entry point includes layout/typography, shell, native/form controls, radio group/combobox, badges/table/toolbar/pagination, tabs/breadcrumbs, feedback/native overlays, and assistant primitives. Additional preview APIs cover expanded forms/selection, identity/content, workflows, split panes/media, advanced tables, hierarchy, scheduling, reordering/carousel, charts and virtualized tables with a paginated alternative. Field controls implement ControlValueAccessor for reactive forms and `ngModel`. Consumers own validation, table data operations, transport, authentication, and authorization. Import public names from `@jp-design-system/ui`; internal source folders and bundle filenames are not supported entry points.
+The public entry includes layout, typography, controls, tables, navigation,
+feedback, overlays and assistant APIs.
+Preview APIs add forms, identity, workflows, hierarchy, scheduling and data views.
+They also include split panes, media, advanced tables, reordering and carousel.
+Virtual tables offer a complete paginated alternative.
 
-Accent and density use `data-jp-accent="cobalt"` and `data-jp-density="compact"` on an application root. The default token bundle already contains compact overrides. Light Storybook stage previews do not provide a light component theme.
+Field controls use ControlValueAccessor for reactive forms and `ngModel`.
+The application owns validation, data operations, requests, authentication and permissions.
+Import public names from `@jp-design-system/ui`.
+Internal folders and bundle filenames are not supported entry points.
 
-The [source repository](https://github.com/JustinPaoletta/jp-design-system) contains the documentation index (`docs/README.md`), core API (`docs/PRIMITIVES.md`), component catalog (`docs/consumers/COMPONENTS.md`), maturity/support limits, working recipes (`docs/PRODUCT_RECIPES.md`), distribution instructions (`docs/DISTRIBUTION.md`), and quality/security review. Workspace build/test commands belong in a repository checkout; this installed package is not an Nx workspace.
+Accent and density use `data-jp-accent="cobalt"` and `data-jp-density="compact"` on an application root. The default token bundle already contains compact overrides. Light Storybook stage previews do not give a light component theme.
+
+The [source repository](https://github.com/JustinPaoletta/jp-design-system)
+contains `docs/README.md`, the documentation index.
+It links API guides, support levels, recipes, package instructions and test evidence.
+Workspace commands run in a repository checkout.
+This installed package is not an Nx workspace.

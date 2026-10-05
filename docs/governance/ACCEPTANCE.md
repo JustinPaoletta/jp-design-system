@@ -1,182 +1,137 @@
 # Component acceptance
 
-Checklist for a change to a public JP component, directive, service, or token.
-Use it before merging work that ships in `@jp-design-system/ui` or
-`@jp-design-system/tokens`.
-
-Inventory date for the related maturity ratings: October 4, 2026.
-Principles: [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md).
-API reference: [PRIMITIVES.md](../PRIMITIVES.md).
-
----
+Use this checklist before a public component, directive, service or token change.
+The [API catalog](../consumers/COMPONENTS.md) gives supported behavior.
+[Maturity](MATURITY.md) gives support levels and known limits.
+The inventory date is October 4, 2026.
 
 ## Release-blocking
 
-**Blocking** items must pass before merge when the change touches that surface.
-A blocking failure on a `stable` or `preview` export stops the change.
+Applicable blocking items must pass before merge.
+A blocking failure on a stable or preview API stops the change.
 
-These are blocking for every public component change:
+Every public component change must keep these requirements:
 
-- API shape and typing
-- Semantics (role, name, reading order)
-- Token usage
-- Documented states
-- Documented keyboard behavior and visible focus
-- Unit tests for the change
-- A Storybook story for a visual change
-- Public-API documentation
+- Correct API types
+- Correct roles, names and reading order
+- Semantic tokens
+- Documented states and keyboard behavior
+- Visible focus
+- Unit tests for changed behavior
+- A Storybook example for visual changes
+- Public API documentation
 
-These are blocking only when the change affects them:
+Responsive layouts, new text and existing accessibility behavior are blocking
+when the change affects them. Required CI includes the documented macOS
+snapshots and Chromium/WebKit checks. [Quality](../QUALITY.md) gives the commands.
+RTL behavior is blocking where an API already documents it.
 
-- Responsiveness at a breakpoint the component already documents
-- A new user-visible string
-- Accessibility behavior already covered by axe or by [MANUAL_QA.md](../../MANUAL_QA.md)
-
-These are not merge gates on October 4, 2026. Record the gap; do not treat a
-missing run as a pass:
-
-- VoiceOver, NVDA, and JAWS
-- Windows high contrast / forced colors
-- 200% and 400% zoom
-- RTL (no RTL contract is declared)
-- Server rendering and hydration
-- Visual snapshots other than the four recipe baselines named in
-  [QUALITY.md](../QUALITY.md)
-
----
+Manual screen-reader, real Windows high-contrast and actual zoom sessions remain open.
+They are not general merge gates in the current policy.
+A missing session is not a pass. JAWS is outside scope unless an application
+requirement names it. SSR and hydration are outside the current support rules.
 
 ## Checklist
 
 ### API — blocking
 
-- [ ] Selector stays `jp-*`, or the attribute selector already documented in
-      [PRIMITIVES.md](../PRIMITIVES.md) (`jpFocusTrap`, `jpPopoverTrigger`,
-      `jpTabPanel`, and the other attribute directives).
-- [ ] Inputs are strict unions, booleans, numbers, or documented object types.
-      No `class` or `style` input.
-- [ ] Change detection stays `OnPush`.
-- [ ] Field controls that integrate with forms keep `ControlValueAccessor`.
-      Buttons stay outside CVA.
-- [ ] A new required input, a renamed selector, a changed output type, or a
-      changed CVA value type is handled as a breaking change in
-      [COMPATIBILITY.md](./COMPATIBILITY.md).
-- [ ] Content-projection selectors stay stable. Examples already in the library:
-      `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
-      `[jpEmptyStateIcon]`, `[jpTableSearch]`, `[jpTableFilters]`,
-      `[jpTableActions]`, `[jpTableBulkActions]`, `[jpDialogActions]`,
-      `[jpPopoverTrigger]`, `[jpPopoverContent]`, `[jpDropdownTrigger]`,
-      `[jpDropdownMenuItem]`, `ng-template[jpTableCell]`,
-      `ng-template[jpTabPanel]`.
+- [ ] Keep documented `jp-*` and attribute selectors.
+- [ ] Use strict unions, booleans, numbers or documented object types.
+- [ ] Do not add arbitrary `class` or `style` inputs.
+- [ ] Keep `OnPush` change detection.
+- [ ] Keep `ControlValueAccessor` for form controls.
+- [ ] Keep buttons outside CVA.
+- [ ] Treat new required inputs, renamed selectors and changed output/CVA types as breaks.
+- [ ] Follow [Compatibility](COMPATIBILITY.md) for those breaks.
+- [ ] Keep documented projection selectors and template contexts.
 
 ### Semantics — blocking
 
-- [ ] The rendered element matches the documented tag or role (`as` on layout
-      and type, native controls for fields, `role="switch"` on `jp-switch`,
-      dialog modal semantics, tab and breadcrumb patterns).
-- [ ] The accessible name comes from a visible label, a required `ariaLabel`,
-      or projected text. Icon-only controls do not ship without a name.
-- [ ] `jp-heading` level and `jp-text` size stay independent, per principle 8.
-- [ ] Status is not color alone. Badge, toast, inline alert, and invalid fields
-      keep a text or shape cue.
+- [ ] Match the documented tag and ARIA role.
+- [ ] Keep native field controls and documented dialog, switch, tab and breadcrumb behavior.
+- [ ] Give each control a visible label, necessary `ariaLabel` or projected name.
+- [ ] Give icon-only controls an accessible name.
+- [ ] Keep heading level and body-text size rules from [Design principles](../DESIGN_PRINCIPLES.md).
+- [ ] Show status through text or shape as well as color.
 
 ### Tokens — blocking
 
-- [ ] Color, space, type, radius, elevation, motion, and z-index come from
-      semantic custom properties.
-- [ ] No raw color in `libs/ui`. No direct primitive token use in `libs/ui` or
-      `apps/*`. Both rules already run under `npm run lint`.
-- [ ] Accent stays a signal (primary action, focus, active nav, selection).
-      Semantic success, warning, error, and info do not follow the accent swap.
-- [ ] Density, when it applies, responds to `data-jp-density="compact"`.
-- [ ] New semantic tokens are added under `libs/tokens/src/tokens` and generated
-      with `npm run tokens:build`. `npm run tokens:check` passes.
+- [ ] Use semantic variables for colors, spacing, type, radius, elevation, motion and z-index.
+- [ ] Do not use raw colors or primitive tokens in UI/application styles.
+- [ ] Keep accent for primary actions, focus, active navigation and selection.
+- [ ] Keep success, warning, error and information separate from accent.
+- [ ] Keep applicable compact-density behavior.
+- [ ] Add new semantic tokens in `libs/tokens/src/tokens`.
+- [ ] Regenerate output with `npm run tokens:build`.
+- [ ] Pass `npm run tokens:check`.
 
 ### States — blocking
 
-- [ ] Defaults in [PRIMITIVES.md](../PRIMITIVES.md) still hold, or the doc and
-      the maturity note change with the code.
-- [ ] Disabled, read-only, invalid, loading, empty, and open/closed states that
-      the component already has still work.
-- [ ] Loading and busy UI sets `aria-busy` or an equivalent status where the
-      component already does (`jp-button` loading, `jp-progress`, skeleton
-      regions owned by the app).
-- [ ] Reduced motion does not leave a layout jump. The library does not add
-      bounce or spring timing.
+- [ ] Keep documented defaults, or update the guide and maturity note with the change.
+- [ ] Keep applicable disabled, read-only, invalid, loading, empty and open/closed states.
+- [ ] Keep `aria-busy` or the documented status for active work.
+- [ ] Keep skeleton-region status in the application.
+- [ ] Respect reduced motion without layout jumps.
+- [ ] Do not add bounce or spring timing.
 
 ### Keyboard — blocking
 
-- [ ] Every control is reachable and operable by keyboard.
-- [ ] Focus is visible.
-- [ ] Documented keys still match the implementation: dialog and overlay Escape,
-      menu arrows, tabs (arrows move focus, Enter/Space selects), combobox
-      arrows/Home/End/Enter/Escape, shell drawer Escape.
-- [ ] Focus returns to the opener where that is already specified (dialog,
-      mobile shell drawer).
-- [ ] Nested overlays dismiss the topmost layer first (`registerOverlay` /
-      `claimOverlayEvent` in the private overlay helper).
+- [ ] Give keyboard access to every control.
+- [ ] Keep focus visible.
+- [ ] Keep each API's documented keys, including Escape and arrow behavior.
+- [ ] Keep documented focus restoration to the opener.
+- [ ] Close the topmost registered overlay first.
 
 ### Responsiveness — blocking when the layout is part of the contract
 
-- [ ] `jp-app-shell` keeps the desktop sidebar and the drawer at the shell
-      breakpoint (`48rem`, `--jp-layout-shell-mobile-max`).
-- [ ] `jp-assistant-panel` stays a dock on wide viewports and a scrim overlay
-      on narrow ones.
-- [ ] `jp-inline` wrap and `jp-table` horizontal overflow still behave as
-      documented. Table overflow is intentional.
-- [ ] Touch targets and hit areas are not clipped when density is compact.
+- [ ] Keep the shell sidebar/drawer transition at `48rem`.
+- [ ] Keep the shell token `--jp-layout-shell-mobile-max` aligned with that breakpoint.
+- [ ] Keep the assistant dock on wide screens and its overlay on narrow screens.
+- [ ] Keep inline wrapping and table overflow behavior.
+- [ ] Keep compact touch areas visible and unclipped.
 
 ### Localization — blocking for new strings
 
-- [ ] New built-in user-visible copy is a label input or a typed `JP_MESSAGES`
-      key with a usable default. Any unconfigurable copy must be recorded as
-      a preview gap in [MATURITY.md](./MATURITY.md).
-- [ ] Defaults stay usable in English. The library does not ship empty labels
-      to force configuration.
-- [ ] Sentences are whole strings. Do not split "Page", a number, and "of"
-      into separate translation fragments if you add a new sentence.
-- [ ] Counts and names that the consumer owns (table cells, toast `message`,
-      assistant `content`, option labels) stay out of the library.
+- [ ] Put new built-in text in a label input or typed `JP_MESSAGES` key.
+- [ ] Give usable English defaults.
+- [ ] Record fixed, unconfigurable text as a preview limit.
+- [ ] Keep sentences whole.
+- [ ] Do not divide translated words around bound values.
+- [ ] Keep application names, counts and data content outside the library's message defaults.
 
-Shell chrome, pagination sentences, table-toolbar filter chrome and assistant
-role names now use `JP_MESSAGES`. See the [localization contract](../localization/CONTRACT.md).
-Adding unconfigurable built-in copy to a `stable` component is blocking.
+Shell, pagination, table-toolbar and assistant-role text use `JP_MESSAGES`.
+The [message guide](../localization/CONTRACT.md) explains overrides.
+New fixed text in a stable component is blocking.
 
 ### Tests — blocking
 
-- [ ] The unit spec next to the component covers the behavior you changed.
-- [ ] `npm exec -- nx test ui` passes for UI work. Token work passes
-      `npm exec -- nx test tokens` and `npm run tokens:check`.
-- [ ] Form controls still prove CVA or `ngModel` behavior when their value
-      path changes.
-- [ ] Storybook interaction coverage stays intact when the story has a `play`
-      function. Commands are in [QUALITY.md](../QUALITY.md).
+- [ ] Add unit coverage for changed behavior.
+- [ ] Run `npm exec -- nx test ui` for UI work.
+- [ ] Run `npm exec -- nx test tokens` for token work.
+- [ ] Keep form integration tests when the value path changes.
+- [ ] Keep Storybook interaction tests for stories with `play` functions.
+- [ ] Run affected browser, package and visual checks from [Quality](../QUALITY.md).
 
 ### Documentation — blocking for a public change
 
-- [ ] [PRIMITIVES.md](../PRIMITIVES.md) matches inputs, outputs, defaults, and
-      limitations.
-- [ ] [MATURITY.md](./MATURITY.md) matches maturity and known limitations.
-- [ ] A breaking or deprecating change updates the changelog path described in
-      [COMPATIBILITY.md](./COMPATIBILITY.md).
-- [ ] Token README tables in `libs/tokens/README.md` match any new semantic
-      variable.
+- [ ] Update the applicable API guide for inputs, outputs, defaults and limits.
+- [ ] Update maturity for support-level changes or new limits.
+- [ ] Update migration and changelog notes for breaks and deprecations.
+- [ ] Update token tables for new semantic variables.
+- [ ] Follow [ASD-STE100 writing rules](../content/WRITING.md).
+- [ ] Pass writing, link and formatting checks.
 
 ### Evidence to attach on the PR
 
-- [ ] Acceptance checklist, with blocking items checked or an explicit waiver
-      from JP maintainers.
-- [ ] Spec path and story path.
-- [ ] Visual note: accent (neon/cobalt), density (default/compact), and
-      viewport if layout moved. Recipe-page visual changes follow
-      [QUALITY.md](../QUALITY.md).
-- [ ] Accessibility note: axe result for the touched story, plus any manual
-      path from [MANUAL_QA.md](../../MANUAL_QA.md).
-
----
+- [ ] Completed applicable checklist items or an explicit maintainer waiver.
+- [ ] Unit-test and story paths.
+- [ ] Tested accents, densities and viewports.
+- [ ] Axe results and applicable snapshot results.
+- [ ] Actual manual sessions, or a statement that they did not run.
 
 ## After acceptance
 
-A component that passes this list is eligible for the maturity rating in
-[MATURITY.md](./MATURITY.md). Passing the list does not by itself make an
-export `stable`. Native overlay fallbacks and fixed non-input copy stay
-`preview` until those gaps close.
+Passing this checklist makes an API eligible for a maturity inspection.
+It does not automatically make the API stable.
+Known overlay fallback differences and fixed-copy limits remain preview gaps.
+Maintainers change each rating only after its specific gaps close.

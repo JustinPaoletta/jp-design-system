@@ -8,8 +8,8 @@ The repository does not name a per-component owner.
 
 Evidence rule used here:
 
-- A rendered `jp-*` component is `stable` only when a unit spec and a Storybook
-  story both exist, and this file does not record a preview gap.
+- A rendered `jp-*` component must have a unit test and Storybook example for `stable` status.
+  It must also have no recorded preview gap.
 - A behavior directive may be `stable` with a unit spec and no standalone story
   when a host story already mounts it. `JpFocusTrap` is that case: `focus-trap.spec.ts`
   covers it, and dialog stories mount it.
@@ -39,8 +39,8 @@ proven. **Count today: 0.**
 Supported for product use. Spec and story exist. Breaking changes follow the
 deprecation window.
 
-Use this level when the library itself withholds a behavior claim, or when
-user-visible copy is fixed in the template and is not an input.
+Use this level for an unapproved behavior or a known limit.
+Fixed text without an input or message override is also a preview gap.
 
 ### stable
 
@@ -98,7 +98,7 @@ Limitations are boundaries already in the source or in
 | `JpInline`           | `inline.spec.ts`             | `inline.stories.ts`                         | `wrap` defaults to `true`.                                                                                                                                                                                                                     |
 | `JpGrid`             | `grid.spec.ts`               | `grid.stories.ts`                           | Columns are `1`, `2`, `3`, `4`, `6`.                                                                                                                                                                                                           |
 | `JpSurface`          | `surface.spec.ts`            | `surface.stories.ts`                        | Elevation is token tone, not a heavy shadow.                                                                                                                                                                                                   |
-| `JpText`             | `text.spec.ts`               | `text.stories.ts`                           | `as` and `size` are independent. Truncation needs a bounded container.                                                                                                                                                                         |
+| `JpText`             | `text.spec.ts`               | `text.stories.ts`                           | `as` and `size` are independent. Truncation must have a bounded container.                                                                                                                                                                     |
 | `JpHeading`          | `heading.spec.ts`            | `heading.stories.ts`                        | No `size` input. Level sets tag and scale.                                                                                                                                                                                                     |
 | `JpAppShellNavItem`  | `app-shell-nav-item.spec.ts` | `app-shell-nav-item.stories.ts`             | `href` null on an anchor falls back to `#`. Disabled is non-interactive. Icon slot `[jpAppShellNavIcon]` is not its own class. Also exports `JP_APP_SHELL_NAV_ITEM_TAGS`, `JpAppShellNavItemTag`.                                              |
 | `JpButton`           | `button.spec.ts`             | `button.stories.ts`                         | Not a CVA control. `loadingLabel` defaults to `Loading` and is an input.                                                                                                                                                                       |
@@ -152,7 +152,7 @@ Each row has a spec and a story. The gap is why it is not `stable`.
 | `JpDropdownMenuItem` | `dropdown-menu.spec.ts` | `dropdown-menu.stories.ts` | `button[jpDropdownMenuItem]`. Enter and Space use native button activation.                                                                                                                                                                                                                                                                                  |
 | `JpTooltip`          | `tooltip.spec.ts`       | `tooltip.stories.ts`       | Same `positionOverlay` path. Shows on pointer enter and focus; Escape dismisses. `aria-describedby` is added while open. Id uses an incrementing counter. Also uses `JP_TOOLTIP_PLACEMENTS` and `JpTooltipPlacement` (defined in `primitive-types.ts`, maturity follows this row).                                                                           |
 | `JpCombobox`         | `combobox.spec.ts`      | `combobox.stories.ts`      | List popup uses `positionOverlay`. Filtering is local; the app owns async loading. `open`, `query`, and `activeIndex` are not inputs. Placeholder, loading, and empty strings are inputs. Also exports `JpComboboxOption`. Id counter `jp-combobox-N`.                                                                                                       |
-| `JpChip`             | `chip.spec.ts`          | `chip.stories.ts`          | Removable filter. The remove name is `JP_MESSAGES.chip.remove`. Also exports `JP_CHIP_SIZES` and `JpChipSize`. Documented in [PRIMITIVES.md](../PRIMITIVES.md#jp-chip). Showcase filters still use toolbar buttons; consumer review and promotion remain open.                                                                                               |
+| `JpChip`             | `chip.spec.ts`          | `chip.stories.ts`          | Removable filter. The remove name is `JP_MESSAGES.chip.remove`. Also exports `JP_CHIP_SIZES` and `JpChipSize`. Documented in [PRIMITIVES.md](../PRIMITIVES.md#jp-chip). Showcase filters still use toolbar buttons; consumer inspection and promotion remain open.                                                                                           |
 
 ---
 
@@ -174,22 +174,23 @@ Defined in `libs/ui/src/lib/primitives/shared/primitive-types.ts` and
 `token-maps.spec.ts` plus the component specs that consume the unions. No
 standalone stories; these are not visual components.
 
-Const and type pairs: `JP_SPACE_TOKENS`, `JpSpaceToken`, `JP_RADIUS_TOKENS`,
-`JpRadiusToken`, `JP_LAYOUT_TAGS`, `JpLayoutTag`, `JP_BOX_MAX_WIDTHS`,
-`JpBoxMaxWidth`, `JP_ALIGN_ITEMS`, `JpAlignItems`, `JP_JUSTIFY_CONTENT`,
-`JpJustifyContent`, `JP_GRID_COLUMNS`, `JpGridColumns`, `JP_GRID_MODES`,
-`JpGridMode`, `JP_GRID_MIN_COLUMNS`, `JpGridMinColumn`, `JP_SURFACE_TONES`,
-`JpSurfaceTone`, `JP_BORDER_TONES`, `JpBorderTone`, `JP_ELEVATION_TOKENS`,
-`JpElevationToken`, `JP_TEXT_TAGS`, `JpTextTag`, `JP_TEXT_SIZES`, `JpTextSize`,
-`JP_TEXT_TONES`, `JpTextTone`, `JP_FONT_WEIGHTS`, `JpFontWeight`,
-`JP_HEADING_TAGS`, `JpHeadingTag`, `JP_CONTROL_SIZES`, `JpControlSize`,
-`JP_BUTTON_VARIANTS`, `JpButtonVariant`, `JP_BUTTON_TYPES`, `JpButtonType`,
-`JP_INPUT_TYPES`, `JpInputType`, `JP_BADGE_TONES`, `JpBadgeTone`,
-`JP_BADGE_SIZES`, `JpBadgeSize`, `JP_TABLE_ALIGNS`, `JpTableAlign`,
-`JpTableCellValue`, `JpTableColumn`, `JP_TOAST_TONES`, `JpToastTone`,
-`JpToastOptions`, `JpToastItem`, `JP_ASSISTANT_MESSAGE_ROLES`,
-`JpAssistantMessageRole`, `JpAssistantContext`, `JpAssistantMessageItem`,
-`JpAssistantOpenOptions`, `JpAssistantAddMessageOptions`.
+Constants and types:
+
+- `JP_SPACE_TOKENS`, `JpSpaceToken`, `JP_RADIUS_TOKENS`, `JpRadiusToken`
+- `JP_LAYOUT_TAGS`, `JpLayoutTag`, `JP_BOX_MAX_WIDTHS`, `JpBoxMaxWidth`
+- `JP_ALIGN_ITEMS`, `JpAlignItems`, `JP_JUSTIFY_CONTENT`, `JpJustifyContent`
+- `JP_GRID_COLUMNS`, `JpGridColumns`, `JP_GRID_MODES`, `JpGridMode`
+- `JP_GRID_MIN_COLUMNS`, `JpGridMinColumn`, `JP_SURFACE_TONES`, `JpSurfaceTone`
+- `JP_BORDER_TONES`, `JpBorderTone`, `JP_ELEVATION_TOKENS`, `JpElevationToken`
+- `JP_TEXT_TAGS`, `JpTextTag`, `JP_TEXT_SIZES`, `JpTextSize`
+- `JP_TEXT_TONES`, `JpTextTone`, `JP_FONT_WEIGHTS`, `JpFontWeight`
+- `JP_HEADING_TAGS`, `JpHeadingTag`, `JP_CONTROL_SIZES`, `JpControlSize`
+- `JP_BUTTON_VARIANTS`, `JpButtonVariant`, `JP_BUTTON_TYPES`, `JpButtonType`
+- `JP_INPUT_TYPES`, `JpInputType`, `JP_BADGE_TONES`, `JpBadgeTone`
+- `JP_BADGE_SIZES`, `JpBadgeSize`, `JP_TABLE_ALIGNS`, `JpTableAlign`
+- `JpTableCellValue`, `JpTableColumn`, `JP_TOAST_TONES`, `JpToastTone`
+- `JpToastOptions`, `JpToastItem`, `JP_ASSISTANT_MESSAGE_ROLES`, `JpAssistantMessageRole`
+- `JpAssistantContext`, `JpAssistantMessageItem`, `JpAssistantOpenOptions`, `JpAssistantAddMessageOptions`
 
 `JP_TOOLTIP_PLACEMENTS` and `JpTooltipPlacement` are the exception: `preview`,
 with `JpTooltip`.
@@ -241,24 +242,24 @@ These exist in the repo and are not exports of `libs/ui/src/index.ts`:
 ## Open follow-ups
 
 Recorded October 4, 2026. Ratings change only after the individual acceptance
-and maturity review; new documentation or passing CI alone does not promote an API.
+and maturity inspection; new documentation or passing CI alone does not promote an API.
 
 - `JpPagination`, `JpTableToolbar`, and `JpAssistantMessage` use
   `JP_MESSAGES` and are stable. `JpAppShell` copy uses the same token and
   stays preview because the mobile query is the literal `(max-width: 48rem)`
   and `sidebarId` is `jp-app-shell-sidebar`.
 - `JpChip` is documented in [PRIMITIVES.md](../PRIMITIVES.md#jp-chip).
-  Consumer review and individual maturity approval remain open; documentation
+  Consumer inspection and individual maturity approval remain open; documentation
   alone does not promote it. Showcase filters still use toolbar buttons.
-- Review dialog, popover, dropdown, tooltip and combobox for promotion against
+- Examine dialog, popover, dropdown, tooltip and combobox for promotion against
   [browser support](../localization/SUPPORT.md#native-dialog-and-popover).
   Automated browser evidence exists; full fallback clipping/inert parity and
-  manual assistive-technology review are still unclaimed.
+  manual assistive-technology inspection are still unclaimed.
 - Assign a `Ui` removal version only after `CHANGELOG.md` starts the window in
   [COMPATIBILITY.md](./COMPATIBILITY.md).
-- Manual assistive-technology review is still open for the whole library.
+- Manual assistive-technology inspection is still open for the whole library.
   It is not a per-component maturity downgrade while
-  [ACCEPTANCE.md](./ACCEPTANCE.md) keeps that review off the merge gate.
+  [ACCEPTANCE.md](./ACCEPTANCE.md) keeps that inspection off the merge gate.
 - Visual baselines cover six component/recipe groups, not every state. See
   [QUALITY.md](../QUALITY.md).
 - Server rendering is not a contract. Generated ids (`Math.random()` on dialog,
@@ -270,14 +271,17 @@ and maturity review; new documentation or passing CI alone does not promote an A
 The October 4 expansion adds 25 rendered components and three supporting
 classes, all `preview`, owned by JP maintainers. API details and limits live in
 [COMPONENT_EXPANSION.md](../COMPONENT_EXPANSION.md). Unit/Storybook/browser/package
-checks are part of this change; manual assistive-technology review is pending.
+checks are part of this change; manual assistive-technology inspection is pending.
 
-Components: `JpIcon`, `JpLink`, `JpDivider`, `JpDisclosure`, `JpAccordion`,
-`JpAvatar`, `JpAvatarGroup`, `JpStatusDot`, `JpSpinner`, `JpMeter`,
-`JpKeyboardHint`, `JpDescriptionList`, `JpCard`, `JpPageHeader`, `JpList`,
-`JpFormField`, `JpFormSection`, `JpErrorSummary`, `JpBanner`, `JpDrawer`,
-`JpCheckboxGroup`, `JpSegmentedControl`, `JpMultiSelect`, `JpSearchField`,
-and `JpPasswordField`.
+Components:
+
+- `JpIcon`, `JpLink`, `JpDivider`, `JpDisclosure`
+- `JpAccordion`, `JpAvatar`, `JpAvatarGroup`, `JpStatusDot`
+- `JpSpinner`, `JpMeter`, `JpKeyboardHint`, `JpDescriptionList`
+- `JpCard`, `JpPageHeader`, `JpList`, `JpFormField`
+- `JpFormSection`, `JpErrorSummary`, `JpBanner`, `JpDrawer`
+- `JpCheckboxGroup`, `JpSegmentedControl`, `JpMultiSelect`, `JpSearchField`
+- `JpPasswordField`
 
 Supporting directives: `JpFieldControl`, `JpListItemTemplate`, and `JpVisuallyHidden`.
 Their story/spec coverage comes from the field, list, and spinner hosts.
@@ -291,22 +295,31 @@ The second batch adds nine more preview components: `JpChecklist`, `JpStepper`,
 `JpCopyButton`, and `JpCodeBlock`, plus supporting directive `JpInlineCode`.
 Supporting types `JpChecklistItem`, `JpStep`, `JpRangeValue`, `JpTimelineEvent`,
 and `JpOverflowItem` share preview status. JP maintainers own these APIs.
-Native range handles use separate tracks; exact number entry is provided.
+Native range handles use separate tracks; exact number entry is given.
 Clipboard permission behavior, physical touch, and manual assistive-technology
-review remain open. The [API guide](../COMPONENT_EXPANSION.md#product-tools-second-batch)
+inspection remain open. The [API guide](../COMPONENT_EXPANSION.md#product-tools-second-batch)
 records all contracts and limits.
 
 ## Everyday workflows preview inventory
 
-The third batch adds `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDateRangePicker`, `JpTimePicker`, `JpFileUpload`, `JpNotificationList`, `JpButtonGroup`, `JpToggleButton`, `JpSplitButton`, `JpInlineEdit`, `JpSkipLink`, `JpLiveAnnouncer` and supporting `JpAnnouncer`, all preview and owned by JP maintainers. See [contracts](../WORKFLOW_COMPONENTS.md) and [verification limits](../qa/VERIFICATION.md). No maturity promotion or release is implied.
+These workflow classes are preview APIs owned by JP maintainers:
+
+- `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDateRangePicker`
+- `JpTimePicker`, `JpFileUpload`, `JpNotificationList`, `JpButtonGroup`
+- `JpToggleButton`, `JpSplitButton`, `JpInlineEdit`, `JpSkipLink`
+- `JpLiveAnnouncer` and the `JpAnnouncer` service
+
+See the [API guide](../WORKFLOW_COMPONENTS.md) and
+[test evidence](../qa/VERIFICATION.md). These ratings do not approve a release
+or a change to stable APIs.
 
 ## Advanced layout and data preview inventory
 
 `JpSplitPane`, `JpMedia`, `JpTableRowDetail`, the table-preference helpers/types,
 and optional table visibility, resizing, pinning and expansion are preview,
-owned by JP maintainers. Existing table defaults retain their established
+owned by JP maintainers. Existing table defaults keep their established
 contract. See [API contracts](../ADVANCED_LAYOUT_COMPONENTS.md) and
-[verification limits](../qa/VERIFICATION.md). Manual review and promotion
+[verification limits](../qa/VERIFICATION.md). Manual inspection and promotion
 remain open.
 
 ## Larger feature preview inventory
@@ -321,4 +334,4 @@ Contracts: [hierarchy](../HIERARCHY_COMPONENTS.md),
 [scheduling](../SCHEDULING_CALENDAR.md), [interactions](../INTERACTION_COMPONENTS.md),
 and [charts/virtual tables](../DATA_PERFORMANCE_COMPONENTS.md).
 [Verification](../qa/VERIFICATION.md) distinguishes automated evidence from
-manual assistive-technology, forced-colors, consumer review and release work.
+manual assistive-technology, forced-colors, consumer inspection and release work.

@@ -23,9 +23,7 @@ dismiss text, shell navigation labels and assistant role names use the token.
 | Advanced/larger features | `media`, `tree`, `calendar`, `reorder`, `carousel`, `chart`, `virtualTable`                                                                        |
 
 The source inventory avoids duplicating dozens of defaults here. API guides
-name relevant label inputs and groups. Tooltip content, empty-state titles,
-alert bodies, option labels, data cells, event names, notification content
-and assistant responses are caller-owned and must be translated by the app.
+name relevant label inputs and groups. The application translates its tooltip content, empty-state titles, alert bodies, option labels and data cells. It also translates event names, notification content and assistant responses.
 
 ## Sentences, plurals and numbers
 
@@ -54,18 +52,18 @@ export const appConfig = {
 };
 ```
 
-Use `Intl.PluralRules` inside an override when the language needs additional
-plural categories. `aria-sort` values (`ascending`, `descending`, `none`)
+If the language has additional plural categories, use `Intl.PluralRules` inside an override.
+`aria-sort` values (`ascending`, `descending`, `none`)
 are standardized state values and must not be translated. The optional table
 sort phrase keys append localized copy to the column button name.
 
 ## Locale, dates and time zones
 
-Applications choose locale/time zone. Native pickers retain ISO civil-string
+Applications select locale/time zone. Native pickers keep ISO civil-string
 values while the browser owns their display. Timeline and scheduling format
-with `Intl.DateTimeFormat`; scheduling retains Gregorian civil dates. Chart
+with `Intl.DateTimeFormat`; scheduling keeps Gregorian civil dates. Chart
 numbers use `Intl.NumberFormat`. Configure the relevant API inputs or
-formatting callbacks, and format other caller-owned content in the app. See
+formatting callbacks, and format other application content in the app. See
 [workflow](../WORKFLOW_COMPONENTS.md), [scheduling](../SCHEDULING_CALENDAR.md)
 and [data-performance](../DATA_PERFORMANCE_COMPONENTS.md) contracts.
 

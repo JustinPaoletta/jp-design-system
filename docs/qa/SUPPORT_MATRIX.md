@@ -1,11 +1,11 @@
 # Accessibility support matrix
 
 Recorded October 4, 2026. This file defines the accessibility and browser verification target.
-It describes what automation asserts. It does not record an assistive-technology review.
+It describes what automation asserts. It does not record an assistive-technology inspection.
 
 ## Target level
 
-The root README states a **WCAG 2.1 A/AA** target. It does not claim WCAG 2.2.
+The root README states a **WCAG 2.1 A/AA** target. It does not establish WCAG 2.2.
 
 Showcase axe checks, in `apps/showcase-e2e/src/quality.spec.ts` and
 `apps/showcase-e2e/src/a11y-states.spec.ts`, call `@axe-core/playwright` 4.13.0
@@ -46,19 +46,19 @@ on Linux do not prove macOS pixel parity.
 
 | Reader    | Role                           | Status on October 4, 2026                                                                                                       |
 | --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| VoiceOver | Intended macOS screen reader   | **Not reviewed.** No VoiceOver session was run.                                                                                 |
-| NVDA      | Intended Windows screen reader | **Not reviewed.** This environment is macOS. No NVDA session was run.                                                           |
+| VoiceOver | Intended macOS screen reader   | **Not examined.** No VoiceOver session was run.                                                                                 |
+| NVDA      | Intended Windows screen reader | **Not examined.** This environment is macOS. No NVDA session was run.                                                           |
 | JAWS      | Not required                   | **Out of scope.** Repository docs do not name JAWS as a consumer requirement. Add it only when a consumer requirement names it. |
 
-Automated axe and keyboard checks are not a screen reader review. Accessible
-names, reading order, and announcement behavior still need VoiceOver and NVDA
-before those rows can be marked reviewed.
+Automated axe and keyboard checks are not a screen reader inspection.
+Do tests with VoiceOver and NVDA before you mark those rows as examined.
+Those tests must include names, reading order and announcement behavior.
 
 ## Reduced motion, zoom, and forced colors
 
-| Topic                  | Automated coverage                                                                                                                                                                                                       | Remaining review                                                                                                                                                   |
+| Topic                  | Automated coverage                                                                                                                                                                                                       | Remaining inspection                                                                                                                                               |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes. | No claim that every animation has been manually reviewed.                                                                                                          |
+| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes. | No claim that every animation has been manually examined.                                                                                                          |
 | 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                     | Actual browser zoom and text-only zoom remain manual and unreviewed.                                                                                               |
 | Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/WebKit. Tables may scroll inside their own regions.        | Physical touch and assistive technology at those widths remain unreviewed.                                                                                         |
 | Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                | Real Windows high contrast, user palettes, all preview components and forced-color contrast remain unreviewed. The four emulation cases skip WebKit intentionally. |
@@ -67,7 +67,7 @@ Details, commands and the axe forced-colors limitation are in
 [ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md). Forced-colors interaction
 assertions run with the preference active; complete axe scans run after restoring
 normal colors. No axe rule is disabled or violation filtered. Emulation does not
-count as a Windows review.
+count as a Windows inspection.
 
 ## Interaction states in axe
 
@@ -106,7 +106,7 @@ capturing. The existing suite has 66 baselines covering recipes, expansion,
 product tools, workflows, advanced layout, and the seven larger features.
 Theme, density, viewport and open-state scope are recorded in
 [Verification](VERIFICATION.md). The [manual checklist](../../MANUAL_QA.md)
-covers the remaining human review.
+covers the remaining human inspection.
 
 No forced-colors PNG baseline or actual-zoom baseline is claimed. WebKit and
 Linux are functional/accessibility targets, not visual baseline targets.

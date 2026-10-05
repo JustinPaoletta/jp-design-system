@@ -1,3 +1,12 @@
+# Documentation
+
+Use ASD-STE100 Issue 9 for project documentation.
+Read [the writing rules](docs/content/WRITING.md) before you edit documentation.
+Use [the technical terms](docs/content/TECHNICAL_TERMS.md) consistently.
+Keep API names, code examples, paths, commands and quoted interface text exact.
+Run the writing, link and formatting checks after documentation changes.
+Do not treat an automated writing check as proof of full ASD-STE100 conformance.
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 

@@ -26,3 +26,9 @@ jobs:
 
       - name: Check documentation links
         run: node tools/docs/check-links.mjs
+
+      - name: Test documentation writing check
+        run: node --test tools/docs/check-writing.spec.mjs
+
+      - name: Check documentation writing
+        run: node tools/docs/check-writing.mjs

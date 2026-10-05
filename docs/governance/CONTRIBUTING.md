@@ -1,124 +1,100 @@
 # Contributing
 
-How a component or pattern gets into `@jp-design-system/ui`, and how to keep
-it in the consuming application instead.
+JP maintainers decide which components belong in the library.
+The application keeps product data, requests and permissions.
 
-Owner: JP maintainers. Principles: [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md).
-Acceptance: [ACCEPTANCE.md](./ACCEPTANCE.md). Maturity:
-[MATURITY.md](./MATURITY.md). Compatibility: [COMPATIBILITY.md](./COMPATIBILITY.md).
-
-Quality commands and browser limits: [QUALITY.md](../QUALITY.md).
-Storybook click-through: [MANUAL_QA.md](../../MANUAL_QA.md).
+Read the [design rules](../DESIGN_PRINCIPLES.md),
+[acceptance checklist](ACCEPTANCE.md), [maturity levels](MATURITY.md) and
+[compatibility rules](COMPATIBILITY.md).
+Use the [writing rules](../content/WRITING.md) for documentation changes.
 
 ## Keep live Storybook previews isolated
 
-Development bundle output must remain unique to each server port. Storybook
-writes bundles to disk, and the patched development middleware serves those
-files. Sharing one output directory between the preview on 4400 and a test
-server on 4500 caused continuous iframe reloads across all stories.
+Each development server must have a separate output directory for its port.
+Storybook writes bundles to disk. Development middleware serves those files.
+Shared output between ports 4400 and 4500 caused repeated iframe reloads.
 
-Keep the development output isolation in `.storybook/main.ts` and the runtime
-hash checks in `tools/run-ui-test-storybook.mjs`. When changing Storybook or its
-middleware, run `npm exec -- nx run ui:test-storybook-dev` with the normal preview
-already running on 4400; both servers must pass their compiler/runtime checks.
-Also run the static target sequentially. See the
-[incident and verification evidence](../qa/STORYBOOK_RELOAD_REGRESSION.md).
+1. Keep per-port output in `.storybook/main.ts`.
+2. Keep the runtime checks in `tools/run-ui-test-storybook.mjs`.
+3. Start the normal preview on port 4400.
+4. Run `npm exec -- nx run ui:test-storybook-dev`.
+5. Make sure both servers pass their compiler/runtime checks.
+6. Run the static Storybook target after the live target finishes.
 
----
+Use these steps after a Storybook or middleware change.
+The [incident record](../qa/STORYBOOK_RELOAD_REGRESSION.md) explains the failure.
 
 ## Propose
 
-1. Read [PRIMITIVES.md](../PRIMITIVES.md). Prefer composition of `jp-box`,
-   `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, and `jp-heading`.
-2. Open a GitHub issue or a pull request on this repository. Include:
-   - the product task
-   - why existing primitives cannot express it
-   - the proposed selector and inputs
-   - keyboard behavior, accessible name, and tokens
-   - whether the consuming app must keep ownership of data, auth, or network
-3. JP maintainers accept it, reject it, or tell you to keep it in the app.
+1. Read the [component catalog](../consumers/COMPONENTS.md).
+2. Decide whether existing components can satisfy the requirement.
+3. Open a GitHub issue or pull request with the product task and proposed API.
+4. Describe keyboard behavior, accessible names and tokens.
+5. State which data, permissions and requests the application will own.
 
-A single maintainer still fills in that note. The checklist is not optional
-when only one person is available to review.
+Maintainers accept the proposal, reject it or keep it in the application.
+A proposal note is necessary even when one maintainer does all inspections.
 
----
+## Inspection
 
-## Review
+Maintainers use the acceptance, design and compatibility rules.
+They reject a change that:
 
-Review checks the acceptance list, the design principles, and the compatibility
-rules.
+- Adds arbitrary `class` or `style` inputs
+- Hardcodes colors or uses primitive tokens in UI code
+- Uses accent for large backgrounds
+- Adds bounce, spring effects or decorative motion
+- Duplicates a composition that one application can make
+- Loads application data, uploads files or calls an assistant service from the library
 
-Reject or send back work that:
-
-- adds a `class` or `style` input
-- hardcodes a color or uses a primitive token from `libs/ui`
-- uses accent as a large background
-- introduces bounce, spring, or decorative motion
-- builds a one-screen variant that the app can compose
-- fetches data, uploads files, or calls an assistant transport inside the library
-
-`experimental` is the starting maturity if the spec or the story is not in the
-same change. Promote with a [MATURITY.md](./MATURITY.md) edit when the evidence
-exists. There are no experimental exports on October 4, 2026.
-
----
+An API without its necessary test or story starts as `experimental`.
+A higher maturity level must have evidence and a `MATURITY.md` change.
+There are no experimental exports in the October 4, 2026 inventory.
 
 ## Accept into the library
 
-Accept when all of these are true:
+A component belongs in the library when these conditions hold:
 
-- At least two product surfaces need the same behavior, or an accepted product requirement already
-  lists it and a real screen needs it now.
-- The API can be token-driven and typed.
-- The library can ship it without owning application data, authorization, or
-  network calls.
-- The acceptance checklist can be met, including a spec and a story before the
-  export is rated `stable`.
+- Two product screens use its behavior, or an approved requirement identifies a current screen.
+- Its API has strict types and uses tokens.
+- It does not own application data, permissions or network requests.
+- It meets the acceptance checklist.
+- A stable visual API has a unit test and Storybook example.
 
-Candidates already listed for later evaluation (accordion, link, avatar, chips,
-date picker, upload, multi-select, advanced table) stay out of the library
-until that case is made. This document does not accept them.
-
----
+Shipped components are listed in the [catalog](../consumers/COMPONENTS.md).
+This policy applies to new proposals. It does not exclude components that
+already have approval.
 
 ## Keep it in the consuming app
 
-Keep the pattern in the app when:
+A pattern stays in the application when only that product uses it.
+The application also owns product text, routes, permissions, data operations
+and remote requests. It can compose existing primitives for those requirements.
 
-- only one product uses it
-- it is a composition of existing primitives (page header, validation summary,
-  dashboard arrangement)
-- it owns rows, sorting data, pagination fetches, upload, auth, or assistant
-  transport
-- it needs product copy, routes, or permissions
-
-`jp-table`, `jp-pagination`, `jp-table-toolbar`, and `JpAssistantService` are
-the library's boundary for those jobs. The app keeps the data and the requests.
-Recipes for that split live in [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md).
-
----
+Tables, pagination, toolbars and assistant state supply interface behavior.
+The application supplies rows, sorting, page requests and response transport.
+[Product recipes](../PRODUCT_RECIPES.md) show this division.
 
 ## Pull request checklist
 
-- [ ] Proposal note: task, why it is a library change, and what the app still owns.
-- [ ] [ACCEPTANCE.md](./ACCEPTANCE.md) blocking items checked, or a named waiver.
-- [ ] Unit spec updated. `npm exec -- nx test ui` (and `npm exec -- nx test tokens`
-      when tokens change).
-- [ ] Storybook story updated for a visual change, including disabled, invalid,
-      empty, or open states when those states exist.
-- [ ] [PRIMITIVES.md](../PRIMITIVES.md) updated when inputs, defaults, or
-      limitations change.
-- [ ] [MATURITY.md](./MATURITY.md) updated when maturity or a known limitation
-      changes.
-- [ ] Breaking or deprecating changes follow [COMPATIBILITY.md](./COMPATIBILITY.md)
-      and name the migration in `CHANGELOG.md`.
-- [ ] Visual note: neon/cobalt, default/compact, and viewport if layout moved.
-      Recipe-page screenshots follow [QUALITY.md](../QUALITY.md).
-- [ ] Accessibility note: axe on the touched story, and the [MANUAL_QA.md](../../MANUAL_QA.md)
-      path you actually clicked. Say when VoiceOver or NVDA was not run.
-- [ ] New user-visible strings are inputs, or the maturity row records them as
-      fixed `preview` copy.
-- [ ] No edits to generated `tokens.css` / `tokens.json` by hand. Regenerate
-      with `npm run tokens:build` and pass `npm run tokens:check`.
+- [ ] State the task, library requirement and application responsibilities.
+- [ ] Complete applicable blocking items in [Acceptance](ACCEPTANCE.md).
+- [ ] Record any maintainer waiver.
+- [ ] Update unit tests for changed behavior.
+- [ ] Run `npm exec -- nx test ui` for UI changes.
+- [ ] Run token tests and `npm run tokens:check` for token changes.
+- [ ] Update stories for visual changes and applicable disabled, invalid, empty or open states.
+- [ ] Update the API guide for changed inputs, defaults or limits.
+- [ ] Update maturity when support levels or known limits change.
+- [ ] Follow [Compatibility](COMPATIBILITY.md) for breaks and deprecations.
+- [ ] Add migration instructions to `CHANGELOG.md`.
+- [ ] Record tested accent, density and viewport.
+- [ ] Follow [Quality](../QUALITY.md) for affected snapshots and axe checks.
+- [ ] State which manual checks ran, including VoiceOver or NVDA.
+- [ ] Put new built-in text in a label input or `JP_MESSAGES`.
+- [ ] Record any fixed text as a preview limit.
+- [ ] Regenerate tokens with `npm run tokens:build`.
+- [ ] Do not edit generated files by hand.
+- [ ] Run the documentation writing, link and formatting checks.
 
-Findings from review go to `docs/qa/` using [TRIAGE.md](./TRIAGE.md).
+Record findings under `docs/qa/` with the [triage rules](TRIAGE.md).

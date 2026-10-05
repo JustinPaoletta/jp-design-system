@@ -51,10 +51,17 @@ from `libs/ui` or `libs/tokens`. `libs/tokens/package.json` is private
 workspace metadata. The distributed token package is the tarball built from
 `libs/tokens/package.distribution.json`.
 
-The smoke application pins the workspace's installed versions of
-`@angular/common`, `@angular/compiler`, `@angular/core`, `@angular/forms`,
-`@angular/platform-browser`, `rxjs`, and `tslib`, plus the Angular build
-tooling it needs to compile.
+The smoke application uses the workspace's installed dependency versions:
+
+- `@angular/common`
+- `@angular/compiler`
+- `@angular/core`
+- `@angular/forms`
+- `@angular/platform-browser`
+- `rxjs`
+- `tslib`
+
+It also uses the Angular build tools needed to compile.
 
 ## Token CSS
 
@@ -82,7 +89,7 @@ import { JP_DEFAULT_ACCENT, type JpAccentFamily } from '@jp-design-system/tokens
 ```
 
 The smoke check imports `JP_DEFAULT_ACCENT` from `@jp-design-system/tokens` in
-native Node ESM and requires the value `"neon"`.
+native Node ESM and must return the value `"neon"`.
 
 ## Standalone imports
 
@@ -170,7 +177,7 @@ submit. A non-empty `error` marks the control invalid and replaces `hint` in
 `aria-describedby`.
 
 `loading` disables the button, sets `aria-busy`, and uses `loadingLabel` as
-the accessible name while the request is in flight. The projected label stays
+the accessible name while the request is active. The projected label stays
 visible. Keep the form values when the request fails. The
 [async form recipe](./RECIPES.md#validated-asynchronous-save) shows the retry
 pattern from Showcase `/product-recipes`.

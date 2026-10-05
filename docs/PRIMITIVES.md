@@ -185,7 +185,7 @@ Class `JpText`. Story:
 | `forId`    | string or `null`                              | `null` (the `for` attribute when `as` is `label`) |
 
 `span`, `label`, `small`, `strong`, and `em` render inline. `p` renders as
-a block. `truncate` forces a single line with an ellipsis and requires a
+a block. `truncate` forces a single line with an ellipsis and must have a
 bounded container.
 
 ### jp-heading
@@ -329,7 +329,7 @@ Value type: `string`. Renders a `fieldset` of native radios.
 | `required`, `disabled`, `invalid`             | boolean                    | `false`                      |
 
 `label` is the `legend`. Disabled options cannot be selected. Arrow keys,
-Home, and End move among enabled options and select them. Provide `label`
+Home, and End move among enabled options and select them. Give `label`
 or `ariaLabel`.
 
 ### jp-combobox
@@ -352,12 +352,11 @@ with a listbox popup. A hidden input carries `name` when `name` is set.
 | `id`                                          | string or unset               | generated `jp-combobox-N` |
 | `required`, `disabled`, `invalid`             | boolean                       | `false`                   |
 
-`open`, `query`, `activeIndex`, and `value` are component state, not
-inputs. Filtering compares the typed query to option labels locally. The
-application loads options and sets `loading`. Arrow keys, Home, and End move
-among enabled matches. Enter selects. Escape, Tab, and blur close. Loading
-blocks selection. Clearing the query clears the value. Use `error` for a
-failed request. `emptyText` is an empty successful filter.
+`open`, `query`, `activeIndex`, and `value` are component state, not inputs. Filtering compares the typed query to option labels locally. The application loads options and sets `loading`. Arrow keys, Home, and End move among enabled matches.
+
+Enter selects. Escape, Tab, and blur close. Loading blocks selection. Clearing the query clears the value.
+
+Use `error` for a failed request. `emptyText` is an empty successful filter.
 
 The popup uses the shared overlay positioner (`popover="manual"`, with a
 fixed-position fallback). Full top-layer parity is not claimed.
@@ -394,11 +393,9 @@ with the toolbar's own buttons.
 | `disabled`      | boolean    | `false`                                   |
 | `removed`       | `void`     | click, Enter, Space, Delete, or Backspace |
 
-The remove control is `type="button"`. Its accessible name comes from
-`JP_MESSAGES.chip.remove`. The English default is `Remove` plus the label
-(`Remove Healthy`). The icon is `aria-hidden`. The visible
-text is `label`, which truncates with an ellipsis. The remove button stays
-visible. `disabled` blocks click, Delete, and Backspace.
+The remove control is `type="button"`. Its accessible name comes from `JP_MESSAGES.chip.remove`. The English default is `Remove` plus the label (`Remove Healthy`). The icon is `aria-hidden`.
+
+The visible text is `label`, which truncates with an ellipsis. The remove button stays visible. `disabled` blocks click, Delete, and Backspace.
 
 Tab lands on the remove button. Delete or Backspace while focus is inside
 the chip removes it and calls `preventDefault` so Backspace does not
@@ -451,7 +448,7 @@ Class `JpTable`. Also exports `JpTableCellDef`, `JpTableRowKey`
 The table does not fetch, filter, or reorder `rows`. Sortable headers set
 `aria-sort`. A row whose key is not a string or number can render and cannot
 be selected. The header checkbox selects the current page only.
-`selectionChange` preserves keys that are not on the page.
+`selectionChange` keeps keys that are not on the page.
 
 Rich cells: `<ng-template jpTableCell="columnKey" let-value>`. Context also
 exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.
@@ -502,12 +499,9 @@ Class `JpPagination`. Story:
 | `label`         | string  | `Table pagination`        |
 | `pageChange`    | number  | a different in-range page |
 
-Non-finite page size falls back to `10`. Page size below `1` becomes `1`.
-The summary and buttons use `JP_MESSAGES.pagination`. English defaults are
-`start–end of total`, `First page`, `Previous`, `Page N of M`, `Next`, and
-`Last page`. The summary
-is `aria-live="polite"`. The component does not slice rows. Localization of
-these strings is in [the localization contract](localization/CONTRACT.md).
+Non-finite page size falls back to `10`. Page size below `1` becomes `1`. The summary and buttons use `JP_MESSAGES.pagination`. English defaults are `start–end of total`, `First page`, `Previous`, `Page N of M`, `Next`, and `Last page`.
+
+The summary is `aria-live="polite"`. The component does not slice rows. Localization of these strings is in [the localization contract](localization/CONTRACT.md).
 
 ## Navigation
 
@@ -524,13 +518,11 @@ Class `JpTabs`. Also exports `JpTab`
 | `id`            | string             | generated `jp-tabs-N` |
 | `selectedValue` | model `string`     | `''`                  |
 
-`[(selectedValue)]` and `selectedValueChange` both work. A missing or
-disabled selection falls back to the first enabled tab. Project one
-`<ng-template jpTabPanel="value">` per tab. Inactive panels stay in the DOM
-with the `hidden` attribute. Arrow keys, Home, and End move focus and follow
-writing direction. Enter or Space selects. Click selects. Values should be
-unique. Supply an explicit `id` for repeated instances or application focus targets.
-Server rendering and hydration remain outside the [support contract](localization/SUPPORT.md#ssr-and-hydration).
+`[(selectedValue)]` and `selectedValueChange` both work. A missing or disabled selection falls back to the first enabled tab. Project one `<ng-template jpTabPanel="value">` per tab. Inactive panels stay in the DOM with the `hidden` attribute.
+
+Arrow keys, Home, and End move focus and follow writing direction. Enter or Space selects. Click selects. Values should be unique.
+
+Supply an explicit `id` for repeated instances or application focus targets. Server rendering and hydration remain outside the [support contract](localization/SUPPORT.md#ssr-and-hydration).
 
 ### jpTabPanel
 
@@ -559,7 +551,7 @@ combobox lists, and tooltips use the native popover top layer through the
 private overlay helpers (not re-exported). Positioning flips and clamps to
 the viewport. Escape and outside pointer dismiss the highest registered
 overlay first. If `showModal` or `showPopover` throws, the component falls
-back. That fallback does not claim the same clipping and inert behavior.
+back. That fallback does not establish the same clipping and inert behavior.
 
 ### jp-skeleton
 
@@ -571,10 +563,9 @@ Class `JpSkeleton`. Story:
 | `shape`    | `text`, `rectangle`, `circle` | `text`  |
 | `animated` | boolean                       | `true`  |
 
-The host is `aria-hidden`. `circle` uses a square aspect ratio. `text` and
-`rectangle` share the block styles. Size the host from the parent. Animation
-is disabled under `prefers-reduced-motion`. The application sets `aria-busy`
-and a named `jp-progress` or other status. The skeleton does not announce.
+The host is `aria-hidden`. `circle` uses a square aspect ratio. `text` and `rectangle` share the block styles. Size the host from the parent.
+
+Animation is disabled under `prefers-reduced-motion`. The application sets `aria-busy` and a named `jp-progress` or other status. The skeleton does not announce.
 
 ### jp-progress
 
@@ -630,10 +621,9 @@ Class `JpTooltip`. Story:
 | `content`   | string                           | required |
 | `placement` | `top`, `bottom`, `left`, `right` | `top`    |
 
-Wrap a trigger. Pointer enter and focus show it. It stays open while the
-pointer is over the tooltip. Leave, blur, and Escape hide it. While open it
-appends its id to the trigger's `aria-describedby` and removes that token on
-close. Empty `content` does not open. The id is an incrementing counter.
+Wrap a trigger. Pointer enter and focus show it. It stays open while the pointer is over the tooltip. Leave, blur, and Escape hide it.
+
+While open it appends its id to the trigger's `aria-describedby` and removes that token on close. Empty `content` does not open. The id is an incrementing counter.
 
 ### jp-toast
 
@@ -684,12 +674,9 @@ Class `JpDialog`. Story:
 | `title`         | string    | required (`aria-labelledby`)                        |
 | `closeLabel`    | string    | `Close dialog`                                      |
 
-Uses `<dialog>` with `aria-modal="true"` and `jpFocusTrap` while open.
-Backdrop pointer and the `cancel` event close it. Focus returns to the
-opener, including a dropdown trigger that opened the dialog. Body content is
-the default slot. Actions use `[jpDialogActions]`. `titleId` is
-`Math.random()` and is not an input. The dialog element is created only
-while `open` is true.
+Uses `<dialog>` with `aria-modal="true"` and `jpFocusTrap` while open. Backdrop pointer and the `cancel` event close it. Focus returns to the opener, including a dropdown trigger that opened the dialog. Body content is the default slot.
+
+Actions use `[jpDialogActions]`. `titleId` is `Math.random()` and is not an input. The dialog element is created only while `open` is true.
 
 ### jpDialogActions
 
@@ -776,7 +763,7 @@ Also exports `JpAssistantResponseStatus` and `JpAssistantResponseMessage`.
 | Member                                       | Behavior                                                                                                          |
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `isOpen`, `context`, `messages`, `isPending` | readonly signals                                                                                                  |
-| `open(options?)`                             | opens; `options.context` replaces context when provided; `options.clearMessages` clears history first             |
+| `open(options?)`                             | opens; `options.context` replaces context when given; `options.clearMessages` clears history first                |
 | `close()`                                    | closes                                                                                                            |
 | `toggle(options?)`                           | closes when open, otherwise `open(options)`                                                                       |
 | `setContext` / `clearContext`                | sets or clears context                                                                                            |
@@ -841,14 +828,11 @@ the root service.
 | `responseCancel`    | `number`                                     | the id the user stopped                                            |
 | `responseRetry`     | `{ previousId: number; responseId: number }` | emitted when `retryResponse` returns a new id                      |
 
-Enter sends. Shift+Enter inserts a newline. Escape closes. Focus moves to
-the composer on open and returns to the previous element on close. Submit is
-ignored while `isPending` is true or the draft is empty. The user message is
-added before `messageSubmit` emits. `responseCancel` also marks the response
-cancelled in the service; abort the transport in that handler. Restart
-transport with `responseId` from `responseRetry`. Desktop is a dock. At
-`max-width: 48rem` the panel uses a scrim and traps focus. The composer id
-is `jp-assistant-composer-N`.
+Enter sends. Shift+Enter inserts a newline. Escape closes. Focus moves to the composer on open and returns to the previous element on close.
+
+Submit is ignored while `isPending` is true or the draft is empty. The user message is added before `messageSubmit` emits. `responseCancel` also marks the response cancelled in the service; abort the transport in that handler. Restart transport with `responseId` from `responseRetry`.
+
+Desktop is a dock. At `max-width: 48rem` the panel uses a scrim and traps focus. The composer id is `jp-assistant-composer-N`.
 
 The copyable transport wiring is in [Recipes](consumers/RECIPES.md#assistant-transport).
 
@@ -864,7 +848,7 @@ typography primitives above. Details:
 ## Preview APIs and extensions
 
 The following guides contain the additional component contracts. Their APIs
-remain preview pending the [remaining review tasks](../COMPONENT_EXPANSION_PLAN.md).
+remain preview pending the [remaining inspection tasks](../COMPONENT_EXPANSION_PLAN.md).
 
 | Guide                                              | Components and behaviors                                                                                                                                              |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

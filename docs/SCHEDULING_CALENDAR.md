@@ -1,6 +1,11 @@
 # Scheduling calendar (preview)
 
-`JpSchedulingCalendar` renders appointments in day or week views. Native buttons activate events; the consumer owns event details, editing, recurrence, permissions, reminders, and backend synchronization. The `/scheduling` showcase includes three overlapping appointments, a two-day release, overnight maintenance, loading/retry states, time-zone switching, and a repeated-hour example.
+`JpSchedulingCalendar` shows appointments by day or week.
+Native buttons activate appointments. The application owns details, edits,
+recurrence, permissions, reminders and server data.
+
+The `/scheduling` example includes overlapping, all-day and overnight appointments.
+It also shows retry, time-zone changes and repeated clock hours.
 
 ```html
 <jp-scheduling-calendar label="Team appointments" [(date)]="selectedDate" [(view)]="view" [events]="appointments" timeZone="America/New_York" locale="en-US" [today]="todayInSelectedZone" (eventActivated)="openDetails($event)" />
@@ -8,50 +13,150 @@
 
 ## Inputs and outputs
 
-| API                       | Meaning                                                                                                                            |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `label`                   | Required accessible name of the calendar region.                                                                                   |
-| `date` / `dateChange`     | Required controlled Gregorian civil date, `YYYY-MM-DD`. Day view uses that date; week view starts on its containing week.          |
-| `events`                  | Required readonly array of `JpCalendarEvent`. Supply stable, unique nonempty IDs and titles.                                       |
-| `view` / `viewChange`     | `day` or `week`; default `week`.                                                                                                   |
-| `layout` / `layoutChange` | `schedule` or `agenda`; default `schedule`. The visible controls change this model.                                                |
-| `today`                   | Consumer-supplied civil date in the selected time zone. Empty/invalid hides the Today button. The component never reads the clock. |
-| `timeZone`                | Explicit Intl time zone; default `UTC`.                                                                                            |
-| `locale`                  | Explicit Intl locale; default `en-US`.                                                                                             |
-| `weekStartsOn`            | Gregorian weekday number, Sunday `0` through Saturday `6`; default Monday `1`. Values clamp and nonintegers fall back to Monday.   |
-| `loading`                 | Removes appointment controls and exposes busy/loading status.                                                                      |
-| `error`                   | Consumer-supplied failure text; renders an alert and retry control.                                                                |
-| `eventActivated`          | Emits the original event when its native button is activated.                                                                      |
-| `retry`                   | Requests that the consumer reload appointments.                                                                                    |
+| API                       | Meaning                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`                   | This required value names the calendar region.                                                                                         |
+| `date` / `dateChange`     | The required model is a Gregorian civil date, `YYYY-MM-DD`. Day view uses that date. Week view shows its week.                         |
+| `events`                  | This required array contains `JpCalendarEvent` values. Each event must have a unique, non-empty ID and a non-empty title.              |
+| `view` / `viewChange`     | Values are `day` or `week`. The default is `week`.                                                                                     |
+| `layout` / `layoutChange` | Values are `schedule` or `agenda`. The default is `schedule`. Visible controls change the model.                                       |
+| `today`                   | The application supplies today's date in the selected zone. Empty or invalid values hide Today. The component does not read the clock. |
+| `timeZone`                | This value sets the Intl time zone. The default is `UTC`.                                                                              |
+| `locale`                  | This value sets the Intl locale. The default is `en-US`.                                                                               |
+| `weekStartsOn`            | Sunday is `0`; Saturday is `6`. The default is Monday, `1`. Values stay within that range. Non-integers use Monday.                    |
+| `loading`                 | This input removes appointment buttons and shows busy/loading status.                                                                  |
+| `error`                   | The application supplies failure text. The component shows an alert and retry control.                                                 |
+| `eventActivated`          | This output sends the original event when its native button activates.                                                                 |
+| `retry`                   | This output asks the application to load appointments again.                                                                           |
 
-`JpCalendarEvent` has `id`, `title`, `start`, `end`, optional `allDay`, and optional consumer-owned `description`. Timed events require ISO strings with an explicit `Z` or numeric offset, such as `2026-10-05T09:00:00-04:00`. All-day events require date-only values. Every end is exclusive: `{ start: '2026-10-07', end: '2026-10-09', allDay: true }` appears on October 7 and 8.
+`JpCalendarEvent` has `id`, `title`, `start` and `end`.
+Optional fields are `allDay` and `description`.
+Timed values are ISO strings with `Z` or a numeric offset.
+For example: `2026-10-05T09:00:00-04:00`.
+All-day values contain dates only.
+
+Every end is exclusive. For example,
+`{ start: '2026-10-07', end: '2026-10-09', allDay: true }`
+appears on October 7 and 8.
 
 ## Dates, time zones, and overlap
 
-Timed appointments are instants. Formatting and day membership use the supplied time zone through [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat), with explicit locale and zone. The browser's default time zone cannot silently change the schedule. Local timestamps without offsets, invalid Gregorian dates, zero/negative durations, empty IDs/titles, and duplicate IDs are rejected with a visible localized count; the first valid occurrence of an ID wins. Dates from years 0100 through 9999 are supported, with navigation bounded to that range; a date without a following day boundary displays invalid-input feedback.
+Timed appointments are instants. The selected locale and zone determine their
+display and day through
+[Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
+The browser's default zone does not change the schedule.
 
-A zoned day starts at its first actual instant and ends at the next civil day boundary. Spring and autumn clock changes therefore produce 23- and 25-hour schedules where applicable. Repeated local clock labels include the UTC offset on appointments, and the two occurrences occupy different elapsed-time positions. All-day dates remain civil dates regardless of the selected zone. Historically skipped dates, such as December 30, 2011 in Pacific/Apia, produce invalid-input feedback rather than a fabricated 24-hour day. Consumer-supplied civil dates and calendar arithmetic use the Gregorian calendar.
+The component rejects:
 
-Cross-midnight events appear in each intersected day, clipped to that day's timeline. Activation still emits the original event. Collision groups use equal-width lanes and release lanes at exclusive ends. A short event receives a minimum 2rem visual slot; collision detection includes that display footprint, and end-of-day short slots stay inside the day. Slots shorter than one elapsed hour preserve a readable title line and omit the secondary visible time in schedule mode. Exact timestamps remain available in the accessible name and tooltip; agenda and mobile rows restore the full visible time range. Display positions are a presentation aid, not an editing or drag-to-reschedule contract.
+- Local timestamps without offsets
+- Invalid Gregorian dates
+- Zero or negative durations
+- Empty IDs or titles
+- Duplicate IDs after the first valid event with that ID
 
-The exported pure helper `buildJpCalendarLayout` returns `JpCalendarLayout`, `JpCalendarDay`, and `JpCalendarPlacement` data. `isJpCalendarDate` and `addJpCalendarDays` provide strict civil-date validation and bounded Gregorian navigation. The helper validates time zones/locales and reports invalid configuration without throwing.
+A translated count identifies rejected events. Supported years are 0100–9999.
+Navigation stays in that range. A date without a following day boundary shows
+invalid-input feedback.
+
+A zoned day starts at its first actual instant and ends at the next civil day.
+Clock changes can produce 23-hour or 25-hour days.
+Repeated clock labels include the UTC offset.
+The repeated appointments occupy different elapsed-time positions.
+All-day dates stay civil dates in every zone.
+
+Historically skipped dates show invalid-input feedback.
+For example, Pacific/Apia skipped December 30, 2011.
+The component does not invent a 24-hour day for that date.
+Date inputs and date arithmetic use the Gregorian calendar.
+
+### Appointment positions
+
+An event across midnight appears in each affected day.
+Its visible slot stops at the day boundary.
+Activation still sends the original event.
+Overlapping events use equal-width lanes.
+A lane becomes available at an event's exclusive end.
+
+Short events have a minimum 2rem visible slot.
+Overlap detection includes that visible size.
+Short slots at the day end stay inside the day.
+For slots under one elapsed hour, schedule view shows the title without secondary time text.
+The accessible name and tooltip keep exact timestamps.
+Agenda and mobile rows show the full time range.
+
+Slot positions help users read the schedule.
+They do not permit edits or drag movement.
+
+### Date helpers
+
+`buildJpCalendarLayout` returns `JpCalendarLayout`, `JpCalendarDay` and
+`JpCalendarPlacement` data. `isJpCalendarDate` validates civil dates.
+`addJpCalendarDays` moves through bounded Gregorian dates.
+The layout helper validates zones and locales.
+Invalid configuration gives an error result instead of an exception.
 
 ## Keyboard, narrow screens, and status
 
-Navigation, mode changes, retries, and appointments are [native button interactions](https://www.w3.org/WAI/ARIA/apg/patterns/button/): Tab moves through controls; Enter or Space activates them. Days and appointments retain chronological DOM order, and every appointment name contains its title, visible date, and offset-bearing time range. All-day appointment names include the all-day label. There is no composite grid role or custom arrow-key focus model. Focus remains on native controls after activation; consumer-owned details should use the appropriate inline or dialog focus pattern.
+Calendar controls use [native buttons](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
+Tab moves between controls. Enter and Space activate them.
+Days and appointments stay in chronological DOM order.
+Each appointment name includes title, date, time range and UTC offset.
+All-day names include the all-day label.
 
-At calendar container widths of 56rem or less, appointments become readable chronological agenda rows, without horizontal timeline scrolling or truncated titles. The Agenda control provides the same presentation at any width. Dense schedules can use agenda rows to read full titles and times. Week columns reserve at least 12rem per concurrent appointment lane: three overlapping events give that day a 36rem minimum column. If a week needs more space, horizontal scrolling stays inside the calendar frame, and native focus scrolling reveals appointment buttons as users tab through them. Day view fills the available width. In schedule mode, the scroll frame bounds long days while preserving every appointment in the DOM. Day headings remain sticky, and collision placement uses logical inline positions for RTL.
+There is no composite grid role or custom arrow-key focus model.
+Activation keeps focus on the native control.
+The application manages focus for any details panel or dialog.
 
-Loading removes stale appointment buttons; errors expose an alert and Retry output; empty periods keep navigation and display a localized empty message. Changing the date announces the period and the unique appointment count. An all-day or multi-day appointment is counted once per period.
+### Layout
+
+At container widths up to 56rem, appointments use chronological agenda rows.
+Titles do not truncate, and the timeline does not use horizontal scroll.
+The Agenda control gives this view at any width.
+
+Week columns have at least 12rem for each concurrent lane.
+Three overlapping events use a 36rem column.
+If the week is wider than its frame, scroll stays inside the frame.
+Native focus scrolling reveals appointment buttons.
+Day view fills the available width.
+
+Schedule view limits the scroll frame height but keeps all appointments in the DOM.
+Day headings stay fixed during scroll.
+Logical inline positions follow RTL.
+
+### States
+
+Loading removes stale appointment buttons.
+Failure shows an alert and retry control.
+An empty period keeps navigation and shows a translated empty message.
+A date change announces the period and unique appointment count.
+An all-day or multi-day event counts once per period.
 
 ## Tokens, motion, and localization
 
-Styles use existing foreground, surface, border, focus, spacing, typography, radius, and control-size tokens. No palette or runtime styling dependency is added. There are no entrance, scroll, or reflow animations. Forced-colors styles preserve appointment borders and pressed mode outlines. Manual assistive-technology and forced-colors review remains part of maturity promotion.
+Styles use existing semantic tokens.
+There is no new palette or runtime style dependency.
+There are no entrance, scroll or layout animations.
+Forced-colors rules keep appointment borders and selected mode outlines visible.
+Manual accessibility and Windows inspection remain necessary for approval as stable APIs.
 
-`JP_MESSAGES.calendar` supplies previous/next/today, day/week, schedule/agenda, empty/loading/invalid/failure/retry, all-day, count, and rejected-event copy. Provide translations with `provideJpMessages`; `events` and `invalidEvents` are functions so translations can reorder counts. Event titles/descriptions, accessible region label, consumer errors, and today-date calculation belong to the consumer.
+`JP_MESSAGES.calendar` supplies navigation, modes, states, all-day labels and counts.
+Use `provideJpMessages` for translations.
+Its `events` and `invalidEvents` functions produce translated count sentences.
+The application translates titles, descriptions, region labels and errors.
+The application also calculates `today`.
 
 ## Verification and scope
 
-Unit coverage exercises strict dates, exclusive boundaries, lanes, short slots, zones, repeated/skipped dates, 23/25-hour days, localized diagnostics, model navigation, activation, retry, and example composition. Storybook includes day/week, agenda, empty/loading/error, navigation, and repeated-hour states. Browser cases cover Chromium/WebKit navigation, activation, actual lane geometry, RTL, time-zone conversion, responsive agenda, retry, and axe checks across both accents and densities. Root integration runs these targets against the complete feature batch.
+Unit tests cover dates, exclusive ends, lanes, short slots, zones and clock changes.
+They also cover rejected dates, translated errors, navigation, activation and retry.
+Storybook shows schedule, agenda, loading, empty, error and repeated-hour states.
+Chromium/WebKit tests cover navigation, activation, positions, RTL, zones, agenda and axe scans.
+Both accents and densities have test coverage.
+[Verification](qa/VERIFICATION.md) records results.
 
-The component renders all supplied appointments for the period. Its scroll frame is a named, keyboard-focusable region even for empty periods, so native keyboard scrolling remains available without appointment descendants. It does not virtualize large schedules, implement recurrence rules, manage resources, edit invitations, resolve ambiguous local input into instants, or supply a calendar service. Consumers should expand recurrence and enforce data/permission rules before passing events. APIs remain preview until consumer and manual accessibility reviews are complete.
+The component shows all supplied appointments in the period.
+The named scroll frame can receive focus, including when the period is empty.
+The component does not virtualize schedules or supply recurrence, resource or invitation services.
+It does not convert ambiguous local input into instants.
+The application expands recurrence and enforces data and permission rules before it supplies events.
+These APIs remain preview until application and manual accessibility inspections finish.
