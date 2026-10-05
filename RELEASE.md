@@ -42,6 +42,12 @@ The prepare script reminds the operator of these criteria. It does not judge the
 
 ## Automation
 
+`npm exec -- nx run packages:check-release` verifies the prepare tool's version
+pairing, changelog handling, invalid-input guards, dry-run behavior and recovery
+after a failed write. It runs on every PR in the Build job and in the Release
+dry-run workflow. The checks use temporary fixtures and synthetic versions;
+they do not choose or publish a release.
+
 `tools/release/prepare.mjs` accepts `--version X.Y.Z` (or `--version X.Y.Z-rc.N`) and `--dry-run`.
 
 Dry-run prints the version plan, the changelog heading move from `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD` (UTC date), the files it would touch, and the tag `vX.Y.Z`. It does not write files.

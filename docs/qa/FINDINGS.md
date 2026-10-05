@@ -32,17 +32,20 @@ was performed.
   turn it on. This pass did not enable the rule, so this is not a confirmed
   violation. It becomes relevant if the target moves to WCAG 2.2 AA.
 
-## Forced colors are not styled
+## Forced-colors styles and scoped automation; Windows review remains pending
 
-- **Where:** no `forced-colors` media query under `libs/ui` or `libs/tokens`
-  (searched October 4, 2026).
-- **Behavior:** Windows high contrast / forced colors has no library override
-  for borders, focus, selection, or icons. Nothing was rendered with
-  `forced-colors: active` in this pass, so lost borders were not observed.
-- **Why it is not release-blocking for the current gate:** the automated
-  target is WCAG 2.1 A/AA in Chromium and WebKit, not Windows high contrast.
-  It does block any claim that high contrast has been reviewed. See
-  [SUPPORT_MATRIX.md](SUPPORT_MATRIX.md).
+- **Where:** expansion components now include forced-colors rules for borders,
+  selection and focus. Charts hide the canvas and open an equivalent native
+  data table. The earlier note saying there were no media queries is superseded.
+- **Automation:** `acceptance-environments.spec.ts` asserts the seven larger
+  features with Chromium forced-colors emulation. It does not cover every
+  preview component or real Windows palettes.
+- **Tool limitation:** axe's forced-colors contrast calculation mixed authored
+  text-fill colors with forced background colors in the local run. The full
+  axe scan runs after restoring normal colors; no rules or violations are
+  suppressed. See [ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md).
+- **Still open:** Windows high-contrast readability and platform review remain
+  manual. Emulation does not establish that those checks passed.
 
 ## Resolved: expansion labels, contrast, and focus timing
 

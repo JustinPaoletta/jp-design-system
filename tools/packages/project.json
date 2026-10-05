@@ -3,6 +3,21 @@
   "projectType": "library",
   "root": "tools/packages",
   "targets": {
+    "check-release": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/tools/release/**/*",
+        "{workspaceRoot}/package.json",
+        "{workspaceRoot}/package-lock.json",
+        "{workspaceRoot}/libs/ui/package.json",
+        "{workspaceRoot}/libs/tokens/package.distribution.json",
+        "{workspaceRoot}/CHANGELOG.md"
+      ],
+      "options": {
+        "command": "node --test tools/release/prepare.spec.mjs"
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": ["tokens:build-tokens"],

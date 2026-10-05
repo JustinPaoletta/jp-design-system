@@ -7,6 +7,7 @@ Active Storybook manual QA lives at the repo root:
 - [FINDINGS.md](FINDINGS.md) — gaps that were not patched in component source
 - [STORYBOOK_RELOAD_REGRESSION.md](STORYBOOK_RELOAD_REGRESSION.md) — shared development bundles caused continuous reloads; prevention and two-server verification
 - [PRODUCT_TOOLS.md](PRODUCT_TOOLS.md) — second batch, browser/package checks, and review limits
+- [ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md) — automated portions of the five remaining tasks and the human review boundary
 
 Epic plan docs under `docs/` also include acceptance criteria used during delivery.
 Historical empty capture folders under `phase2-epic2/` are unused; prefer `MANUAL_QA.md`.
@@ -14,8 +15,10 @@ Historical empty capture folders under `phase2-epic2/` are unused; prefer `MANUA
 ## What automation covers
 
 Showcase axe uses tags `wcag2a`, `wcag2aa`, `wcag21a`, and `wcag21aa` only.
-That is WCAG 2.1 A/AA, not WCAG 2.2. VoiceOver, NVDA, JAWS, Windows forced
-colors, and 200%/400% zoom are outside that automation. JAWS is out of scope
+That is WCAG 2.1 A/AA, not WCAG 2.2. Chromium forced-colors behavior and
+320/640 CSS-pixel reflow are now automated for the seven larger features.
+VoiceOver, NVDA, JAWS, actual Windows high contrast, and actual 200%/400%
+browser zoom remain outside that automation. JAWS is out of scope
 until a consumer requirement names it. VoiceOver and NVDA are the intended
 readers and were **not** reviewed on October 4, 2026.
 

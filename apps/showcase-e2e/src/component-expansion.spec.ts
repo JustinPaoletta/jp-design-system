@@ -15,12 +15,25 @@ test('component expansion: native disclosure keyboard operation and exclusive gr
   const advanced = page
     .locator('summary')
     .filter({ hasText: 'Advanced settings' });
+  // Assert the native grouping contract in both supported browser engines.
+  await expect(general.locator('..')).toHaveJSProperty(
+    'name',
+    'showcase-settings',
+  );
+  await expect(advanced.locator('..')).toHaveJSProperty(
+    'name',
+    'showcase-settings',
+  );
   await general.focus();
   await page.keyboard.press('Enter');
   await expect(general.locator('..')).toHaveAttribute('open', '');
   await advanced.click();
   await expect(advanced.locator('..')).toHaveAttribute('open', '');
   await expect(general.locator('..')).not.toHaveAttribute('open', '');
+  await general.focus();
+  await general.press('Space');
+  await expect(general.locator('..')).toHaveAttribute('open', '');
+  await expect(advanced.locator('..')).not.toHaveAttribute('open', '');
 });
 
 test('component expansion: search clearing, password reveal, and form validation recovery', async ({

@@ -56,13 +56,18 @@ before those rows can be marked reviewed.
 
 ## Reduced motion, zoom, and forced colors
 
-| Topic           | What automation covers                                                                                                                                                                                                                                                                                                                                                 | What it does not cover                                                                                                                                                                                                                                                                                                                                                                           |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Reduced motion  | `a11y state coverage › reduced motion removes shell and assistant transitions` sets `prefers-reduced-motion: reduce` and asserts the app shell sidebar, collapse toggle, and assistant panel surface compute `transition-property: none` and `transition-duration: 0s`. The same test asserts the sidebar duration is not `0s` when the preference is `no-preference`. | It does not walk every animated component. CSS already includes `prefers-reduced-motion` in button, icon button, input, textarea, select, checkbox, switch, table row hover, nav item, progress, skeleton, app shell, and assistant panel. Those rules are not each asserted in the browser. Toast enter, switch thumb, and skeleton pulse were not exercised under the preference in this pass. |
-| 200% zoom       | Not automated.                                                                                                                                                                                                                                                                                                                                                         | Manual only. Not performed in this pass.                                                                                                                                                                                                                                                                                                                                                         |
-| 400% zoom       | Not automated.                                                                                                                                                                                                                                                                                                                                                         | Manual only. Not performed in this pass.                                                                                                                                                                                                                                                                                                                                                         |
-| Narrow viewport | Existing `app-shell.spec.ts` opens and closes the drawer at 390×844. `recipes visual neon default mobile shell` stores a macOS Chromium screenshot of that closed mobile shell.                                                                                                                                                                                        | This is a narrow viewport, not browser zoom. Reflow at 200%/400% is still manual.                                                                                                                                                                                                                                                                                                                |
-| Forced colors   | Not automated. Playwright was not set to `forcedColors: 'active'`.                                                                                                                                                                                                                                                                                                     | No `forced-colors` (or Windows high contrast) styles exist under `libs/ui` or `libs/tokens`. Windows high contrast was not reviewed. See [FINDINGS.md](FINDINGS.md).                                                                                                                                                                                                                             |
+| Topic                  | Automated coverage                                                                                                                                                                                                       | Remaining review                                                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes. | No claim that every animation has been manually reviewed.                                                                                                          |
+| 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                     | Actual browser zoom and text-only zoom remain manual and unreviewed.                                                                                               |
+| Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/WebKit. Tables may scroll inside their own regions.        | Physical touch and assistive technology at those widths remain unreviewed.                                                                                         |
+| Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                | Real Windows high contrast, user palettes, all preview components and forced-color contrast remain unreviewed. The four emulation cases skip WebKit intentionally. |
+
+Details, commands and the axe forced-colors limitation are in
+[ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md). Forced-colors interaction
+assertions run with the preference active; complete axe scans run after restoring
+normal colors. No axe rule is disabled or violation filtered. Emulation does not
+count as a Windows review.
 
 ## Interaction states in axe
 
@@ -97,49 +102,42 @@ and tooltip hover. This pass did not duplicate those tests.
 ## Visual matrix
 
 macOS Chromium only. Motion is reduced and animations are disabled while
-capturing, matching the existing recipe shots.
+capturing. The existing suite has 66 baselines covering recipes, expansion,
+product tools, workflows, advanced layout, and the seven larger features.
+Each batch's theme, density, viewport and open-state scope is recorded in:
 
-**Both accents (neon, cobalt) and both densities (default, compact):** the
-product recipes page at 1280×900, full page. Four baselines, titles
-`recipes visual <accent> <density>`.
+- [MANUAL_QA.md](../../MANUAL_QA.md)
+- [PRODUCT_TOOLS.md](PRODUCT_TOOLS.md)
+- [WORKFLOWS.md](WORKFLOWS.md)
+- [ADVANCED_LAYOUT.md](ADVANCED_LAYOUT.md)
+- [LARGE_FEATURES.md](LARGE_FEATURES.md)
 
-**Neon and default density only**, so the matrix stays bounded:
+No forced-colors PNG baseline or actual-zoom baseline is claimed. WebKit and
+Linux are functional/accessibility targets, not visual baseline targets.
 
-| Title                                            | What it captures                                            |
-| ------------------------------------------------ | ----------------------------------------------------------- |
-| `recipes visual neon default mobile shell`       | `/app-shell` at 390×844, drawer closed                      |
-| `recipes visual neon default open dialog`        | `/overlays` with Delete deployment? open                    |
-| `recipes visual neon default assistant response` | `/assistant` after Seed tone demo                           |
-| `recipes visual neon default settings error`     | `/product-recipes` Settings with the email validation alert |
+## CI selection
 
-That is four new PNGs. Cobalt, compact, WebKit, and Linux do not have baselines
-for these extra states.
-
-## CI follow-up
-
-The macOS visual job now selects both `recipes visual` and
-`component expansion visual` titles:
+The macOS visual job selects all six visual title prefixes:
 
 ```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
 ```
 
-The Linux functional job excludes that grep, so the new screenshots stay off
-Linux runners. `a11y-states.spec.ts` titles do not contain `recipes visual`,
-so Chromium and WebKit functional CI already runs them.
+The Linux Chromium/WebKit functional job excludes those same prefixes and
+includes `acceptance-environments.spec.ts`. Firefox remains outside the
+supported matrix.
 
-## Component expansion coverage
+## Expansion and native-browser coverage
 
 `component-expansion.spec.ts` exercises search/password controls, form recovery,
-native disclosures, multi-selection, drawer focus, WCAG 2.1 A/AA axe checks, and
-mobile RTL layout in Chromium and WebKit. Theme checks use reduced motion so
-contrast is measured on the settled theme.
+exclusive native disclosures, multi-selection, drawer focus, WCAG 2.1 A/AA axe
+checks, and mobile RTL layout. The disclosure test asserts the native
+`HTMLDetailsElement.name` property and repeated Enter/click/Space activation in
+Chromium and WebKit. Theme contrast checks use reduced motion so they measure
+the settled theme.
 
-`component-expansion-visual.spec.ts` adds eight macOS Chromium baselines: the full
-page in neon/cobalt and default/compact density; mobile LTR and RTL; a desktop
-drawer; and a mobile RTL drawer. Both drawer screenshots capture the viewport
-rather than expanding the viewport over the full underlying page.
-
-## Everyday workflows
-
-The third batch follows the existing macOS Chromium/WebKit functional and macOS Chromium visual matrix. Native picker dialogs, other browser locales, physical touch, screen readers, forced colors and SSR remain unverified. See [WORKFLOWS.md](WORKFLOWS.md).
+Workflow, product-tool, hierarchy, scheduling, interaction, analytics and
+advanced-layout specs extend the original route/state table above. Their
+verification notes link the exact contracts and remaining platform limits.
+Native picker dialogs, physical touch, screen readers and SSR remain unverified;
+forced-colors emulation now has the limited coverage described above.

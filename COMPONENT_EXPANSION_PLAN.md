@@ -22,6 +22,14 @@ the promotion checks below. This file complements
 - [ ] Promote individual APIs through the acceptance and maturity process
 - [ ] Coordinate release notes, versions, distribution, and the optional design kit
 
+Automation now covers Chromium/WebKit native details-name grouping, the seven
+larger features at 320/640 CSS pixels, Chromium forced-colors behavior, and
+release preparation safety. Consumer screen tests and isolated package
+compilation also run in CI. These are partial evidence for the five tasks;
+screen-reader sessions, actual Windows high contrast/zoom, product feedback,
+maturity approval and release decisions remain open. See
+[acceptance automation and remaining review](docs/qa/ACCEPTANCE_AUTOMATION.md).
+
 Every later component should include its token contract, states, keyboard/form
 behavior, localization, Storybook examples, consumer documentation, and relevant
 browser/package checks. Do not mark a larger feature complete merely because a
