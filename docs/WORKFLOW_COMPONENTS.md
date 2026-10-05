@@ -179,5 +179,5 @@ must exist and be focusable or support tabindex. The Showcase page includes
 a component example; consuming app shells should install the link at the
 start of their page, ahead of navigation.
 
-All these APIs remain preview. See [verification and review limits](qa/WORKFLOWS.md)
+All these APIs remain preview. See [verification and review limits](qa/VERIFICATION.md)
 before claiming browser, assistive-technology, SSR or hydration support.

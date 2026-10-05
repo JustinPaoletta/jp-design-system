@@ -1,58 +1,79 @@
-# Support
+# Runtime and browser support
 
-Recorded October 4, 2026, from this repository. Message wiring is described in [CONTRACT.md](./CONTRACT.md).
+Verified against repository configuration on October 4, 2026. Built-in copy
+and translation providers are documented in [Message contract](CONTRACT.md).
 
-## Supported
+## Versions and platforms
 
-|           |                                                                                                                                                                                                                                                        |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Angular   | 22.2.x. The workspace depends on 22.2.1. `@jp-design-system/ui` peers on `^22.2.1`.                                                                                                                                                                    |
-| RxJS      | 7.8. The workspace depends on `~7.8.0`. The UI package peers on `^7.8.0`.                                                                                                                                                                              |
-| Node      | 24.21.0, from `.nvmrc`.                                                                                                                                                                                                                                |
-| Browsers  | Evergreen Chromium and WebKit, the pair installed and run in `.github/workflows/ci.yml` (`npx playwright install` for `chromium` and `webkit`, then `showcase-e2e` with `--project=chromium` and `--project=webkit`). Firefox is not part of that job. |
-| Direction | `dir` / `lang` on an ancestor. Logical properties follow that direction. Off-canvas motion uses `:dir(rtl)` because CSS has no logical `translateX`.                                                                                                   |
+| Area               | Contract and tested version                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Angular            | UI peers on `^22.2.1`; workspace and isolated consumer smoke use 22.2.1. The peer range permits later 22.x versions, which are not all independently tested.     |
+| RxJS               | UI peers on `^7.8.0`; workspace dependency is `~7.8.0`.                                                                                                          |
+| Node/npm           | Development uses Node 24.21.0 from `.nvmrc` and npm 11. Root engines allow Node `^24.15.0` and npm `>=11 <12`.                                                   |
+| Browsers           | Chromium/WebKit functional and axe checks on macOS locally and Linux CI; macOS Chromium visual baselines. Firefox is configured but outside the verified matrix. |
+| Direction/language | Set `dir` and `lang` on an ancestor. Logical CSS follows direction; individual keyboard/placement behavior is defined by each API.                               |
+
+The [QA support matrix](../qa/SUPPORT_MATRIX.md) records accessibility,
+forced-colors, zoom and assistive-technology boundaries.
 
 ## Native dialog and popover
 
-`jp-dialog` opens a native `<dialog>` with `showModal()` inside `afterRenderEffect`. If `showModal` throws, the panel sets the `open` attribute and continues. Escape and scrim dismissal go through the overlay stack; the native `cancel` event is prevented so the stack, not the user agent, decides which layer closes.
+`JpDialog`/`JpDrawer` use native `<dialog>.showModal()` after browser render.
+If it throws, the component sets the `open` attribute. Native `cancel` is
+prevented so the overlay stack decides which registered layer closes.
 
-Menus, popovers, tooltips, and the combobox popup call `positionOverlay` in `libs/ui/src/lib/primitives/shared/overlay-manager.ts`. That helper sets `popover="manual"` and calls `showPopover()` so the panel uses the top layer. If `showPopover` is missing or throws, it removes the `popover` attribute and keeps a `position: fixed` panel measured from the anchor. Both paths are in the support contract for the Chromium and WebKit versions CI runs.
+Menus, popovers, tooltips and combobox use
+[the overlay manager](../../libs/ui/src/lib/primitives/shared/overlay-manager.ts).
+It sets `popover="manual"` and calls `showPopover()` for the native top layer.
+If unsupported or rejected, it removes the popover attribute and uses a
+fixed-position panel measured from the anchor. Pixel coordinates are geometry,
+not theme tokens. The fallback does not promise identical clipping or page
+inertness. See individual APIs before relying on those differences.
+
+Native date/time picker appearance, keyboard conventions and popup UI belong
+to the browser/OS. Automated tests cover control values and validation;
+manual native-picker review remains open. Repeated `details.name` grouping
+is tested in the declared Chromium/WebKit matrix.
 
 ## SSR and hydration
 
-Server rendering and hydration are **outside** the current contract. This pass does not add them.
-
-The reason is the overlay and shell code, not a general policy:
-
-- `positionOverlay` returns immediately when there is no `window`. When it runs, it reads `getBoundingClientRect`, `visualViewport`, and `ResizeObserver`, then writes pixel `left` and `top`. Tooltip, combobox, and dialog start that work from `afterRenderEffect` / `afterNextRender`. A server document has no layout to measure, and the coordinates are applied after the first render, so server HTML would not match the hydrated client.
-- Dialog title ids use `Math.random()`. Combobox, tabs, tooltip, and assistant ids use module-level counters. Those values are not stable across a server render and a later client render.
-- The app shell and assistant panel read `matchMedia` and `document.activeElement`. They skip `matchMedia` when `window` is missing, which avoids a crash. That guard is not a hydration implementation: drawer state, focus restore, and overlay coordinates still run only in the browser.
+Server rendering and hydration are outside the current contract. Browser-only
+guards avoid some crashes but do not establish hydration support. Overlays
+measure layout and manage focus after render; shell/assistant behavior reads
+`matchMedia` and document focus. Generated IDs include random values and
+module counters that are not guaranteed to match across server/client runs.
+Explicit field/tab IDs support repeated client instances and focus links;
+they do not make the whole library hydration-safe.
 
 ## Directional layout
 
-Converted to logical properties where the inline edge should follow writing direction:
+Shell, assistant, toast, forms and table layouts use logical edges where
+appropriate. Off-canvas `translateX` motion is mirrored under `:dir(rtl)`.
+Tab horizontal arrows follow writing direction; radio-group ArrowRight moves
+to the next enabled option in DOM order. Overlay measurement writes physical
+viewport `left`/`top`; tooltip `left`/`right` placements are physical.
+Vertical sort arrows are not mirrored. See [icon direction](../content/ICONS.md).
 
-- App shell: sidebar `border-inline-end`, mobile drawer `inset-inline-start`, active nav indicator `inset-inline-start`. The collapse chevron stays a physical border glyph and is mirrored with `scale: -1 1` under `:dir(rtl)`. The closed drawer uses `translateX`; `:dir(rtl)` flips the sign. Grid column 1 is already the start column, so the rail moves to the right in RTL without a separate rule.
-- Dropdown menu and popover: panel origin is `inset-inline-start` / `inset-block-start`. Menu item text is `text-align: start`. After `positionOverlay` runs, placement is viewport pixels (`style.left` / `style.top` from `getBoundingClientRect`), not a logical inset. Tooltip `left` and `right` stay physical because they implement the `placement` input (`left` | `right`), including the centered `left: 50%` rules.
-- Toast outlet: `inset-inline-end` and `inset-block-end`.
-- Assistant panel: docks with `inset-inline-end` and `border-inline-start`. Closed `translateX(100%)` flips under `:dir(rtl)`. User and assistant bubbles already use `align-self: flex-end` / `flex-start` on a column, so the cross axis follows direction.
-- Table toolbar already used `margin-inline-start: auto`. Pagination had no physical inline edges; summaries use `overflow-wrap: anywhere` so a long translation can wrap. Tabs had no physical inline edges. Tab arrow keys already compare `ArrowRight` with `getComputedStyle(element).direction`.
+## Locale and formatting
 
-Sort arrows are vertical and are not mirrored. Radio groups still treat ArrowRight as the next option in DOM order; that interaction was not part of this pass.
+`JP_MESSAGES` provides built-in copy, not automatic locale detection or ICU.
+Applications supply message overrides, `lang`/`dir`, and locale/time-zone
+inputs. Providers merge with the parent token when their injector is created;
+they do not watch later locale changes.
 
-## Bundle
+Native date/time fields exchange ISO civil strings and use browser-local
+presentation. Timeline and scheduling use `Intl.DateTimeFormat` with their
+locale/time-zone inputs; scheduling uses a Gregorian date model. Charts use
+`Intl.NumberFormat` and their formatting options. Caller-owned table cells,
+messages, titles and labels remain application content. Message count
+functions use ordinary string interpolation by default; override them for
+plural rules or localized number formatting.
 
-`npx nx run packages:build` on October 4, 2026 wrote `dist/packages/ui/fesm2022/jp-design-system-ui.mjs` at 404,576 bytes (46,065 bytes gzipped). That file is the whole `@jp-design-system/ui` entry, including component styles inlined by ng-packagr. It is not a localization-only delta and not a tree-shaken application bundle.
+## Packages and bundle measurement
 
-`libs/ui/package.json` sets `"sideEffects": false`. Standalone components are separate classes, so a production application bundler is expected to drop unused components imported from the package entry. This pass did not build a sample application that imports one component, so there is no measured shaken size.
-
-## Limitations
-
-- No `@angular/localize`, ICU message format, or locale data loading. Plural and number formatting are the override function's job.
-- JP does not format dates or times.
-- Tooltip text, empty-state titles on `jp-empty-state`, and inline-alert copy are caller content. They are not keys on `JP_MESSAGES`.
-- A set component input overrides the token for that instance. Pagination control labels and the other template sentences have no per-instance input; scope them with `provideJpMessages` on a parent injector.
-- `provideJpMessages` replaces the token in that injector. It merges onto the parent value. It does not watch for later locale changes. Provide a new value if the locale changes at runtime.
-- Overlay coordinates are physical viewport pixels. RTL does not re-anchor a measured menu to the inline-start edge after `positionOverlay` runs.
-- SSR and hydration are outside the contract, as described above.
-- No bundle-budget CI job is added here. Workflows are owned by another workstream.
+The UI package sets `sideEffects: false`; consumer bundlers can remove unused
+exports. Chart.js 4.5.1 is a package dependency loaded by the chart in the
+browser. No isolated one-component tree-shaking benchmark has been recorded.
+The full UI entry size is not the cost of importing one component.
+Showcase production budgets and current build evidence are in
+[Quality](../QUALITY.md) and [Verification](../qa/VERIFICATION.md).

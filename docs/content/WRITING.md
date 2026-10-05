@@ -80,8 +80,8 @@ Consumers translate product strings. JP defaults must be replaceable sentences, 
 - Put the variable at the end of a sentence the consumer can reorder, or accept a single string the consumer has already translated.
 - Avoid idioms, slang, and jokes.
 - Do not split one sentence across a title and a button.
-- Plurals belong to the consumer. A library default that hard-codes "of" or "page" cannot cover other languages. Prefer a label input when the string is visible.
-- Do not embed a formatted date, time, or number inside a JP default. See below.
+- Plural rules belong in message override functions. Use a label input or `JP_MESSAGES` for built-in text; keep sentences whole.
+- Do not bake one locale into caller-owned data. Use the formatting and message contracts below.
 
 ## Message patterns
 
@@ -137,100 +137,39 @@ Do not use a bare "Loading" when the work has a name. Set `aria-busy` while the 
 
 ## Dates, times, and numbers
 
-The consumer owns locale and time zone. JP does not format dates, times, or time zones.
+Applications choose locale and time zone. Timeline, scheduling and charts offer
+`Intl`-based formatting through their documented inputs; native date/time
+pickers keep ISO civil values and browser-owned display. Format other content
+with `Intl.DateTimeFormat` / `Intl.NumberFormat` and an explicit time zone where
+needed. Relative phrases go stale unless the application updates them.
 
-No UI component calls a date formatter. The only `toLocale*` use in the library is `toLocaleLowerCase()` in the combobox, and that is case folding for search matching, not presentation.
-
-Format dates and times in the consumer with `Intl.DateTimeFormat`, and pass an explicit `timeZone`. Do not render a date by concatenating `Date` parts in a template. Relative phrases such as "just now" and "earlier" are consumer copy; they go stale unless the consumer refreshes them. Prefer an absolute date the consumer formats.
-
-Format numbers the person reads (counts, percents, durations) in the consumer with `Intl.NumberFormat`. Do not assume `,` grouping or `.` decimals inside a JP component.
-
-Pagination is the exception that still renders counts itself (`1–10 of 24`, `Page 1 of 3`). That is English copy with an en dash, not locale-aware number formatting. It is recorded in the audit. It is not a date formatter, and new components must not add one.
+Translate count sentences as complete functions through `provideJpMessages`.
+Pagination defaults are ordinary English interpolation, not automatic locale
+number formatting. Use the [message contract](../localization/CONTRACT.md) for
+provider scopes, plural rules and the complete default inventory.
 
 ## Assistant wording
 
-The assistant panel does not invent an answer. Uncertainty, if the model should admit it, is part of the message content the consumer writes. The panel only supplies chrome labels.
+The application owns response content, uncertainty and transport errors. The
+panel supplies chrome labels through inputs or `JP_MESSAGES.assistant`.
 
-Defaults in `assistant-panel.ts` and the error fallback in `assistant-panel.html`:
+- Say what information is missing and how the person can supply it.
+- Describe a failed response with recovery text and a clear retry action.
+- Treat stopping as cancellation, with a status message rather than an error.
+- Name actions consistently: "Stop response", "Retry response", "Clear context".
+- Prefer user-facing terms such as "page" over implementation words such as
+  "surface" or "context trigger" in product empty-state copy.
 
-| Situation                                  | Default today                                                      | Write this                                                                                     |
-| ------------------------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| Uncertainty (no default; consumer message) | none                                                               | "I don't have enough information to answer that. Name the service or ask a narrower question." |
-| Failure                                    | `Response failed`                                                  | "The response failed. Try again."                                                              |
-| Retry action                               | `Retry`                                                            | `Retry response`                                                                               |
-| In progress                                | `Generating response`                                              | `Generating response`                                                                          |
-| Stop action                                | `Stop response`                                                    | `Stop response`                                                                                |
-| Cancelled                                  | `Response stopped`                                                 | `Response stopped.`                                                                            |
-| Empty title                                | `Ask about this surface`                                           | `Ask about this page`                                                                          |
-| Empty description                          | `Open the assistant from a context trigger, then send a question.` | `Select a section, then ask a question.`                                                       |
-| Placeholder                                | `Ask a question…`                                                  | `Ask a question…`                                                                              |
-| Clear context                              | `Clear context`                                                    | `Clear context`                                                                                |
-| Close                                      | `Close assistant`                                                  | `Close assistant`                                                                              |
-| Send                                       | `Send`                                                             | `Send`                                                                                         |
+## Applying defaults
 
-Uncertainty rules:
+Generic English fallbacks keep components usable before configuration. Product
+screens should supply labels that name the task, collection and recovery:
+"Refreshing services" rather than "Loading", or "No matching services" with
+instructions rather than "No data". Override existing label inputs or
+`JP_MESSAGES`; do not duplicate an English string inside a new template.
 
-- Say what is missing and what the person can add.
-- Do not claim a fact the model did not return.
-- Do not write "As an AI" or "I think maybe".
-- Do not hide a failure behind uncertainty. A transport or generation failure uses the failure pattern and `Retry response`.
-
-Cancellation and retry:
-
-- Stopping is successful cancellation, not an error. `Response stopped.` uses the status role, then offers `Retry response`.
-- `Stop response` is the in-progress action. It matches the object used in `Generating response`.
-- Retry starts the response again. The label names the object, the same way `Stop response` does.
-
-`Clear context` clears the attached context. It is not `Remove` plus the context label. A removable filter chip uses `Remove` plus the label; assistant context is a clear action for one attached context. Keep those words distinct.
-
-## Audit of current defaults
-
-These strings were read from the library on October 4, 2026. This pass does not edit the components. Mismatches are for a later copy change.
-
-### Pagination
-
-Source: `pagination.html`, `pagination.ts`.
-
-- Buttons are `First page`, `Previous`, `Next`, `Last page`. `Previous` and `Next` drop the object that `First page` and `Last page` include. Use `Previous page` and `Next page`, or accept a single label input per control.
-- The summary defaults are `{start}–{end} of {total}` and `Page {page} of {pageCount}`. The words and the en dash are English, and the numbers are not passed through `Intl.NumberFormat`. A consumer replaces the whole sentence through `JP_MESSAGES.pagination`.
-- The nav name `Table pagination` is a clear default and can stay as the English fallback.
-
-### Dialog
-
-Source: `dialog.ts` (`closeLabel` default `Close dialog`).
-
-- `Close dialog` matches the Close pattern.
-- The component has no default title or body, which is correct.
-- Showcase examples disagree with each other. Product recipes uses `Confirm deletion`. Overlays uses `Delete` under `Delete deployment?`. The guide's confirm label is `Delete`. `Confirm deletion` is the mismatch.
-
-### Toast
-
-Source: `toast.html`.
-
-- The dismiss control's default accessible name is `Dismiss notification`. The words match the Dismiss pattern. It is not a component input; translate it with `JP_MESSAGES.toast.dismiss`.
-- Story examples: `Saved successfully` repeats the outcome with an adverb the guide drops; write `Settings saved.` or `Deployment saved.` `Deploy failed` is a fragment; write `Deploy failed. Try again.` `Check configuration` does not say what happens if the person continues; write the consequence.
-
-### Empty state
-
-Source: `empty-state.ts` (description defaults to `''`; title is required), `table.ts` (`emptyTitle` default `No data`), `assistant-panel.ts` empty defaults.
-
-- `No data` names neither the collection nor the recovery. Prefer `No matching services` plus a description that says what to do.
-- Assistant empty description `Open the assistant from a context trigger, then send a question.` uses implementation language. Prefer `Select a section, then ask a question.`
-- Product recipes copy is aligned: `No matching services` / `Clear your search or choose a different query.`
-- The data page standalone example uses `Standalone empty state` and `Use outside tables for filtered lists or first-run screens.` That is documentation voice in the product slot.
-- The data page icon is the character `◇`, which does not follow the icon convention. See [Icons](./ICONS.md).
-
-### Assistant
-
-Source: `assistant-panel.ts` and the `message.error || 'Response failed'` fallback in `assistant-panel.html`.
-
-- `Retry` does not name the object. `Stop response` does. Use `Retry response`.
-- `Response failed` is a fragment with no recovery in the message. The action is separate, and the action label is the short `Retry`. Prefer a full failure sentence and `Retry response`.
-- `Response stopped` is the right idea and should end with a period when it is a status sentence.
-- `Generating response`, `Stop response`, `Close assistant`, `Send`, `Clear context`, and `Ask a question…` match the guide.
-- `Ask about this surface` and the "context trigger" description are the empty-state mismatches above.
-- There is no default uncertainty string. Consumers must write that message themselves using the uncertainty rules.
-
-### Related loading default
-
-`jp-button` defaults `loadingLabel` to `Loading`. Named work in the showcase (`Refreshing services`, `Saving settings`, `Deleting services`) matches the guide. The bare default does not. Same pattern on `jp-progress`, whose label defaults to `Loading`.
+The canonical default inventory is
+[messages.ts](../../libs/ui/src/lib/i18n/messages.ts). Update it and the relevant
+API guide together when changing built-in copy. Validate long translations,
+RTL, accessible names and announcement behavior through the
+[acceptance checklist](../governance/ACCEPTANCE.md).

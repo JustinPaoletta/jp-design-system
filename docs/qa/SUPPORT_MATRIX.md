@@ -1,6 +1,6 @@
 # Accessibility support matrix
 
-Recorded October 4, 2026. This file is the supported target for workstream 2.
+Recorded October 4, 2026. This file defines the accessibility and browser verification target.
 It describes what automation asserts. It does not record an assistive-technology review.
 
 ## Target level
@@ -44,11 +44,11 @@ on Linux do not prove macOS pixel parity.
 
 ## Assistive technology
 
-| Reader    | Role                           | Status on October 4, 2026                                                                                                                                           |
-| --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| VoiceOver | Intended macOS screen reader   | **Not reviewed.** No VoiceOver session was run.                                                                                                                     |
-| NVDA      | Intended Windows screen reader | **Not reviewed.** This environment is macOS. No NVDA session was run.                                                                                               |
-| JAWS      | Not required                   | **Out of scope.** Repository docs do not name JAWS as a consumer requirement. The readiness plan says to include JAWS only if target consumers require it. None do. |
+| Reader    | Role                           | Status on October 4, 2026                                                                                                       |
+| --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| VoiceOver | Intended macOS screen reader   | **Not reviewed.** No VoiceOver session was run.                                                                                 |
+| NVDA      | Intended Windows screen reader | **Not reviewed.** This environment is macOS. No NVDA session was run.                                                           |
+| JAWS      | Not required                   | **Out of scope.** Repository docs do not name JAWS as a consumer requirement. Add it only when a consumer requirement names it. |
 
 Automated axe and keyboard checks are not a screen reader review. Accessible
 names, reading order, and announcement behavior still need VoiceOver and NVDA
@@ -104,13 +104,9 @@ and tooltip hover. This pass did not duplicate those tests.
 macOS Chromium only. Motion is reduced and animations are disabled while
 capturing. The existing suite has 66 baselines covering recipes, expansion,
 product tools, workflows, advanced layout, and the seven larger features.
-Each batch's theme, density, viewport and open-state scope is recorded in:
-
-- [MANUAL_QA.md](../../MANUAL_QA.md)
-- [PRODUCT_TOOLS.md](PRODUCT_TOOLS.md)
-- [WORKFLOWS.md](WORKFLOWS.md)
-- [ADVANCED_LAYOUT.md](ADVANCED_LAYOUT.md)
-- [LARGE_FEATURES.md](LARGE_FEATURES.md)
+Theme, density, viewport and open-state scope are recorded in
+[Verification](VERIFICATION.md). The [manual checklist](../../MANUAL_QA.md)
+covers the remaining human review.
 
 No forced-colors PNG baseline or actual-zoom baseline is claimed. WebKit and
 Linux are functional/accessibility targets, not visual baseline targets.
@@ -137,7 +133,7 @@ Chromium and WebKit. Theme contrast checks use reduced motion so they measure
 the settled theme.
 
 Workflow, product-tool, hierarchy, scheduling, interaction, analytics and
-advanced-layout specs extend the original route/state table above. Their
-verification notes link the exact contracts and remaining platform limits.
+advanced-layout specs extend the original route/state table above. The
+[verification reference](VERIFICATION.md) links the current evidence and limits.
 Native picker dialogs, physical touch, screen readers and SSR remain unverified;
 forced-colors emulation now has the limited coverage described above.

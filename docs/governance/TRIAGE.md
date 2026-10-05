@@ -15,7 +15,7 @@ Automated gates: [QUALITY.md](../QUALITY.md).
 | S1    | The documented task cannot be completed, or WCAG A/AA fails on the dark theme for a default state. | No keyboard path to a control. Dialog or shell drawer traps focus with no Escape. Missing name on `jp-icon-button` or a field. Contrast below AA for text or a focus ring. Form value dropped on invalid submit. |
 | S2    | The task can be finished, but a documented behavior is wrong.                                      | Wrong `aria-sort`. Tab arrows select instead of only moving focus. Toast or alert uses the wrong role. Focus does not return to the dialog opener. Nested Escape closes the parent first.                        |
 | S3    | Visual or copy defect inside the token rules. Use is still possible.                               | Compact density clips padding. Accent washes a surface it should not. A default English string is wrong while an input exists to replace it.                                                                     |
-| S4    | Preference or a new component.                                                                     | A second visual theme. A component the roadmap has not accepted.                                                                                                                                                 |
+| S4    | Preference or a new component.                                                                     | A second visual theme. A component maintainers have not accepted.                                                                                                                                                |
 
 S1 and S2 are defects. S3 is fixed in the normal queue. S4 is a proposal under
 [CONTRIBUTING.md](./CONTRIBUTING.md), not a defect, unless it hides an S1 or S2.
@@ -32,7 +32,7 @@ A finding is **release-blocking** when any of these are true:
   restore, pagination page math). The native top-layer parity limit in
   [MATURITY.md](./MATURITY.md) is a known limit, not an open S2, until a `docs/qa/`
   note shows a failure inside the claimed fallback.
-- CI already fails or would fail: `npm exec nx test ui`, `npm exec nx test tokens`,
+- CI already fails or would fail: `npm exec -- nx test ui`, `npm exec -- nx test tokens`,
   `npm run tokens:check`, Storybook interaction or axe failures, showcase axe,
   or the recipe visual job in [QUALITY.md](../QUALITY.md).
 - A `stable` API break ships without the window in
@@ -66,9 +66,9 @@ Include:
 - whether it is release-blocking
 - spec, story, or e2e that should lock the fix
 
-Link the note from [docs/qa/README.md](../qa/README.md). That index currently
-points at [MANUAL_QA.md](../../MANUAL_QA.md) and warns against unused historical
-capture folders. New notes belong next to that index, not in `phase2-epic2/`.
+Link the note from [the QA index](../qa/README.md). Keep reproduction notes
+and evidence references next to that index; use
+[MANUAL_QA.md](../../MANUAL_QA.md) for the review procedure and session template.
 
 Storybook mismatches found while walking [MANUAL_QA.md](../../MANUAL_QA.md) use
 the same note. Include the story path and the toolbar state, as that checklist

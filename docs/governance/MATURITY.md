@@ -62,10 +62,10 @@ Public **classes** (components, directives, services) from `libs/ui/src/index.ts
 | Maturity     | Classes |
 | ------------ | ------: |
 | stable       |      36 |
-| preview      |      74 |
+| preview      |      76 |
 | experimental |       0 |
 | deprecated   |       1 |
-| **Total**    | **111** |
+| **Total**    | **113** |
 
 Token package design entries (`libs/tokens/package.distribution.json`):
 
@@ -152,7 +152,7 @@ Each row has a spec and a story. The gap is why it is not `stable`.
 | `JpDropdownMenuItem` | `dropdown-menu.spec.ts` | `dropdown-menu.stories.ts` | `button[jpDropdownMenuItem]`. Enter and Space use native button activation.                                                                                                                                                                                                                                                                                  |
 | `JpTooltip`          | `tooltip.spec.ts`       | `tooltip.stories.ts`       | Same `positionOverlay` path. Shows on pointer enter and focus; Escape dismisses. `aria-describedby` is added while open. Id uses an incrementing counter. Also uses `JP_TOOLTIP_PLACEMENTS` and `JpTooltipPlacement` (defined in `primitive-types.ts`, maturity follows this row).                                                                           |
 | `JpCombobox`         | `combobox.spec.ts`      | `combobox.stories.ts`      | List popup uses `positionOverlay`. Filtering is local; the app owns async loading. `open`, `query`, and `activeIndex` are not inputs. Placeholder, loading, and empty strings are inputs. Also exports `JpComboboxOption`. Id counter `jp-combobox-N`.                                                                                                       |
-| `JpChip`             | `chip.spec.ts`          | `chip.stories.ts`          | Removable filter. The remove name is `JP_MESSAGES.chip.remove`. Also exports `JP_CHIP_SIZES` and `JpChipSize`. Not yet listed in [PRIMITIVES.md](../PRIMITIVES.md). Showcase filters still use secondary buttons.                                                                                                                                            |
+| `JpChip`             | `chip.spec.ts`          | `chip.stories.ts`          | Removable filter. The remove name is `JP_MESSAGES.chip.remove`. Also exports `JP_CHIP_SIZES` and `JpChipSize`. Documented in [PRIMITIVES.md](../PRIMITIVES.md#jp-chip). Showcase filters still use toolbar buttons; consumer review and promotion remain open.                                                                                               |
 
 ---
 
@@ -240,24 +240,26 @@ These exist in the repo and are not exports of `libs/ui/src/index.ts`:
 
 ## Open follow-ups
 
-Recorded October 4, 2026. They do not change the ratings above until the code
-changes.
+Recorded October 4, 2026. Ratings change only after the individual acceptance
+and maturity review; new documentation or passing CI alone does not promote an API.
 
 - `JpPagination`, `JpTableToolbar`, and `JpAssistantMessage` use
   `JP_MESSAGES` and are stable. `JpAppShell` copy uses the same token and
   stays preview because the mobile query is the literal `(max-width: 48rem)`
   and `sidebarId` is `jp-app-shell-sidebar`.
-- Promote `JpChip` after [PRIMITIVES.md](../PRIMITIVES.md) documents it.
-  Showcase filters still use toolbar buttons.
-- Re-rate dialog, popover, dropdown, tooltip, and combobox after a browser note
-  in `docs/qa/` records top-layer behavior and the fallback. The parity sentence
-  in [PRIMITIVES.md](../PRIMITIVES.md) is still in force.
+- `JpChip` is documented in [PRIMITIVES.md](../PRIMITIVES.md#jp-chip).
+  Consumer review and individual maturity approval remain open; documentation
+  alone does not promote it. Showcase filters still use toolbar buttons.
+- Review dialog, popover, dropdown, tooltip and combobox for promotion against
+  [browser support](../localization/SUPPORT.md#native-dialog-and-popover).
+  Automated browser evidence exists; full fallback clipping/inert parity and
+  manual assistive-technology review are still unclaimed.
 - Assign a `Ui` removal version only after `CHANGELOG.md` starts the window in
   [COMPATIBILITY.md](./COMPATIBILITY.md).
-- Manual assistive-technology review is still open for the whole library
-  (workstream 2). It is not a per-component maturity downgrade while
+- Manual assistive-technology review is still open for the whole library.
+  It is not a per-component maturity downgrade while
   [ACCEPTANCE.md](./ACCEPTANCE.md) keeps that review off the merge gate.
-- Visual baselines cover the recipe page, not every component state. See
+- Visual baselines cover six component/recipe groups, not every state. See
   [QUALITY.md](../QUALITY.md).
 - Server rendering is not a contract. Generated ids (`Math.random()` on dialog,
   popover, and dropdown; module counters on fields) are unsafe to treat as
@@ -296,7 +298,7 @@ records all contracts and limits.
 
 ## Everyday workflows preview inventory
 
-The third batch adds `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDateRangePicker`, `JpTimePicker`, `JpFileUpload`, `JpNotificationList`, `JpButtonGroup`, `JpToggleButton`, `JpSplitButton`, `JpInlineEdit`, `JpSkipLink`, `JpLiveAnnouncer` and supporting `JpAnnouncer`, all preview and owned by JP maintainers. See [contracts](../WORKFLOW_COMPONENTS.md) and [verification limits](../qa/WORKFLOWS.md). No maturity promotion or release is implied.
+The third batch adds `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDateRangePicker`, `JpTimePicker`, `JpFileUpload`, `JpNotificationList`, `JpButtonGroup`, `JpToggleButton`, `JpSplitButton`, `JpInlineEdit`, `JpSkipLink`, `JpLiveAnnouncer` and supporting `JpAnnouncer`, all preview and owned by JP maintainers. See [contracts](../WORKFLOW_COMPONENTS.md) and [verification limits](../qa/VERIFICATION.md). No maturity promotion or release is implied.
 
 ## Advanced layout and data preview inventory
 
@@ -304,7 +306,7 @@ The third batch adds `JpCommandPalette`, `JpContextMenu`, `JpDatePicker`, `JpDat
 and optional table visibility, resizing, pinning and expansion are preview,
 owned by JP maintainers. Existing table defaults retain their established
 contract. See [API contracts](../ADVANCED_LAYOUT_COMPONENTS.md) and
-[verification limits](../qa/ADVANCED_LAYOUT.md). Manual review and promotion
+[verification limits](../qa/VERIFICATION.md). Manual review and promotion
 remain open.
 
 ## Larger feature preview inventory
@@ -318,5 +320,5 @@ batches and all nine new classes; no maturity promotion is implied.
 Contracts: [hierarchy](../HIERARCHY_COMPONENTS.md),
 [scheduling](../SCHEDULING_CALENDAR.md), [interactions](../INTERACTION_COMPONENTS.md),
 and [charts/virtual tables](../DATA_PERFORMANCE_COMPONENTS.md).
-[Verification](../qa/LARGE_FEATURES.md) distinguishes automated evidence from
+[Verification](../qa/VERIFICATION.md) distinguishes automated evidence from
 manual assistive-technology, forced-colors, consumer review and release work.

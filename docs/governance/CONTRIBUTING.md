@@ -67,7 +67,7 @@ exists. There are no experimental exports on October 4, 2026.
 
 Accept when all of these are true:
 
-- At least two product surfaces need the same behavior, or the roadmap already
+- At least two product surfaces need the same behavior, or an accepted product requirement already
   lists it and a real screen needs it now.
 - The API can be token-driven and typed.
 - The library can ship it without owning application data, authorization, or
@@ -102,7 +102,7 @@ Recipes for that split live in [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md).
 
 - [ ] Proposal note: task, why it is a library change, and what the app still owns.
 - [ ] [ACCEPTANCE.md](./ACCEPTANCE.md) blocking items checked, or a named waiver.
-- [ ] Unit spec updated. `npm exec nx test ui` (and `npm exec nx test tokens`
+- [ ] Unit spec updated. `npm exec -- nx test ui` (and `npm exec -- nx test tokens`
       when tokens change).
 - [ ] Storybook story updated for a visual change, including disabled, invalid,
       empty, or open states when those states exist.

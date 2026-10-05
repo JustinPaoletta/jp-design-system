@@ -5,7 +5,7 @@ Existing `JpTable` defaults retain their established contract; the optional
 features below require consumer review before promotion. See the
 [remaining task list](../COMPONENT_EXPANSION_PLAN.md),
 [maturity inventory](governance/MATURITY.md), and
-[verification evidence](qa/ADVANCED_LAYOUT.md).
+[verification evidence](qa/VERIFICATION.md).
 
 ## Split panes
 

@@ -1,8 +1,12 @@
 # Content standards
 
-Guidance for icons and product language in the JP Design System. Recorded October 4, 2026.
+Guidance for icons and product language in the JP Design System.
 
-- [Icons](./ICONS.md) covers the inline SVG convention, accessibility, right-to-left mirroring, and license.
-- [Writing](./WRITING.md) covers voice, UI copy patterns, locale ownership, assistant wording, and an audit of current defaults.
+- [Icons](ICONS.md): built-in JP glyphs, projected SVG, accessible meaning,
+  direction and licensing
+- [Writing](WRITING.md): voice, action labels, UI message patterns, locale
+  ownership and assistant wording
+- [Message contract](../localization/CONTRACT.md): built-in strings and typed
+  translation providers
 
-Component decisions for disclosure, link, avatar, chip, and later candidates are in [Component decisions](../decisions/COMPONENTS.md).
+Component contracts are indexed in [the consumer catalog](../consumers/COMPONENTS.md).

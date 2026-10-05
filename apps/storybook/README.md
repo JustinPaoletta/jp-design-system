@@ -7,7 +7,7 @@ component stories.**
   `libs/ui`. Run:
 
   ```bash
-  npx nx run ui:storybook
+  npm exec -- nx run ui:storybook
   ```
 
   Open http://localhost:4400.
@@ -19,7 +19,7 @@ component stories.**
 ## Run (optional)
 
 ```bash
-npx nx run storybook:serve
+npm exec -- nx run storybook:serve
 ```
 
 This serves the placeholder shell, not the design system component explorer.
@@ -27,5 +27,5 @@ This serves the placeholder shell, not the design system component explorer.
 ## E2E
 
 ```bash
-npx nx run storybook-e2e:e2e -- --project=chromium
+npm exec -- nx run storybook-e2e:e2e -- --project=chromium
 ```

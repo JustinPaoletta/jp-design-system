@@ -1,99 +1,88 @@
 # Quality verification
 
-Unit tests cover component behavior and Angular form integration. Storybook interaction tests cover primitive compositions. Showcase tests exercise full application flows outside Storybook.
+Use Nx through the workspace package manager. These checks cover component
+behavior, Angular forms, Storybook interactions and full Showcase flows.
+Confirmed totals live in [Verification](qa/VERIFICATION.md), and supported
+platforms/limits in [Support matrix](qa/SUPPORT_MATRIX.md).
 
-The supported accessibility target and its limits are in [the QA support matrix](qa/SUPPORT_MATRIX.md). Showcase axe asserts **WCAG 2.1 A/AA** (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`). It does not assert WCAG 2.2. The README's "WCAG A/AA" line does not name a version; the tags above are the automated level. VoiceOver and NVDA are the intended readers and have not been reviewed. JAWS is out of scope. No manual screen reader review is claimed here.
-
-`quality.spec.ts` runs those axe tags against closed Showcase routes and stores visual baselines. `a11y-states.spec.ts` runs the same tags against an open dialog, menu, popover, combobox list, validation error, selected table row, active tab, and assistant response, and checks keyboard open/close plus reduced-motion transitions on the shell and assistant panel. Chromium and WebKit run functional and axe checks in CI on Linux. The visual job runs on macOS Chromium. Baselines are platform-specific; macOS screenshots do not prove Linux visual parity.
-
-## Visual matrix
-
-| States                                                                                      | Accents         | Densities           | Browser        |
-| ------------------------------------------------------------------------------------------- | --------------- | ------------------- | -------------- |
-| Product recipes page (full page, 1280×900)                                                  | neon and cobalt | default and compact | macOS Chromium |
-| Mobile shell (390×844), open delete dialog, seeded assistant response, settings email error | neon only       | default only        | macOS Chromium |
-
-The four extra states are single-theme so runtime stays bounded. Their titles still contain `recipes visual`.
-
-Run functional and axe checks in both browsers, excluding the macOS-only visual suite:
+## Baseline checks
 
 ```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual"
+npm run format:check
+npm run lint
+npm run test
+npm run typecheck
+npm run build
+npm exec -- nx run packages:build
+npm exec -- nx run packages:smoke
+npm exec -- nx run packages:check-release
+node tools/docs/check-links.mjs
 ```
 
-Run every reviewed visual baseline, including the four single-theme states, on macOS Chromium:
+UI/Showcase unit coverage gates are 90% for statements, branches, functions
+and lines. Tokens and the placeholder Storybook app require 100%.
+Production Showcase budgets are 500kB warning/1MB error for the initial bundle
+and 6kB warning/8kB error for a component stylesheet. These budgets do not
+measure an isolated consumer's tree-shaken library cost.
+
+## Storybook checks
 
 ```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual"
+npm exec -- nx run ui:test-storybook
+npm exec -- nx run ui:test-storybook-dev
 ```
 
-Use that same macOS Chromium command with `--update-snapshots` only to deliberately review and establish baselines, then commit the reviewed PNG files. CI never updates baselines automatically. Narrow the grep to new titles when adding snapshots so existing recipe PNGs are not rewritten. Review accessible names, focus order, nested overlay dismissal, contrast, reduced motion, and mobile layout manually as well; automated checks do not replace assistive-technology testing. Reduced motion is only partially automated (shell sidebar, collapse toggle, and assistant surface). 200% zoom, 400% zoom, and Windows forced colors are manual and were not run.
+Run these sequentially: both test runners use port 4500. The static target
+checks the production Storybook; the development target exercises live
+Webpack middleware and compiler/runtime isolation. Accessibility failures
+remain errors. Jest is bounded to two workers; runner-owned child processes
+are cleaned up on termination.
 
-## CI follow-up
+Keep normal previews on port 4400. Development output is isolated per port,
+and the live runner checks its own compiler/runtime hash before and after
+testing. It also checks the default preview if one is present. See
+[the reload incident](qa/STORYBOOK_RELOAD_REGRESSION.md) and
+[contributor requirements](governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated).
 
-The CI workflow selects recipe and component-expansion visual titles in the macOS job, and excludes both from Linux functional runs.
+## Browser and visual checks
 
-Product-tools visual titles follow the same split. Eight new macOS Chromium
-baselines cover neon/cobalt at default/compact density, mobile LTR/RTL, invalid
-wizard submission, and an open overflow panel. Existing screenshots include the
-new Product tools navigation item. Functional tests cover both Chromium and
-WebKit, including native slider keys, exact entry, wizard focus/recovery,
-nested completion, and overflow focus. WebKit uses Option+Tab for native link
-navigation; the test does not force Chromium's Tab convention on it.
-
-The macOS visual job already runs:
+Run functional/axe checks in Chromium and WebKit, excluding all six macOS
+visual title prefixes:
 
 ```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
 ```
 
-These titles match that grep:
+Run the visual suite on macOS Chromium:
 
-- `recipes visual neon default`
-- `recipes visual neon compact`
-- `recipes visual cobalt default`
-- `recipes visual cobalt compact`
-- `recipes visual neon default mobile shell`
-- `recipes visual neon default open dialog`
-- `recipes visual neon default assistant response`
-- `recipes visual neon default settings error`
+```sh
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+```
 
-The Linux functional job uses `--grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual"`, so the new screenshots stay on the macOS job. Interaction tests in `a11y-states.spec.ts` do not use that phrase, so the existing Chromium and WebKit functional job already includes them.
+Use the visual command with `--update-snapshots` only when deliberately
+reviewing new baselines; narrow the grep to the new states. Commit reviewed
+PNG files. CI compares snapshots and never updates them automatically.
+Linux functional checks do not establish macOS pixel parity.
 
-Application production budgets cap the initial bundle and component stylesheet sizes. Distribution smoke checks validate built packages in an isolated application without workspace path aliases.
+Showcase axe scans use `wcag2a`, `wcag2aa`, `wcag21a` and `wcag21aa`:
+WCAG 2.1 A/AA, with no WCAG 2.2 conformance claim. Storybook uses axe's
+ordinary enabled rules. Open overlay, validation, selection and assistant
+states extend the closed-route scans.
+
+The seven larger features have 640px LTR, 320px LTR and 320px RTL reflow
+checks in both browsers. Four forced-colors interaction cases run in Chromium
+and intentionally skip WebKit. Axe runs after restoring default colors
+because of the forced-colors contrast calculation limitation. Native
+`details.name` grouping is asserted through repeated keyboard and click use.
+See [Acceptance automation](qa/ACCEPTANCE_AUTOMATION.md) for the focused
+command, assertions and limits.
+
+VoiceOver/NVDA sessions, real Windows high contrast and actual browser/text
+zoom remain manual. Physical touch and native picker dialogs are also
+unreviewed. Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility
 
 Storybook 10 loads its usual `test-runner.ts` through a process-wide Node loader, which Jest 30.5 rejects inside its test sandbox. The documented custom Jest configuration in `.storybook/test-runner-jest.config.mjs` retains the stock story transforms and browser environment, and replaces only the hook-loading setup. `test-runner.hooks.ts` keeps the existing desktop/mobile viewport selection; `runner-jest-setup.mjs` registers it with the runner's exported `setPreVisit` and `setupPage`. Interaction and accessibility assertions remain enabled. Revisit this adapter when the upstream loader integration changes. See [Storybook test runner configuration](https://storybook.js.org/docs/writing-tests/integrations/test-runner#configure).
 
-The local runner limits Jest to two workers, allows five minutes for the production build/server to become ready, fails early if that child exits, and cleans up its own Unix process group on termination.
-
-## Live development middleware
-
-`npx nx run ui:test-storybook-dev` runs the same interaction/accessibility suite against the live localhost Storybook development server. This exercises Webpack development middleware, which the static production Storybook check does not use. It retains the bounded workers/readiness timeout and cleans up its own processes. Run the static and live targets sequentially because they use the same port. CI runs both to validate the scoped security override when dependencies change.
-
-Development output is isolated by server port. Storybook otherwise shares its
-disk bundle directory across servers for the same configuration; the patched
-middleware serves those disk assets, so a test server on 4500 could overwrite
-the runtime used by a preview on 4400 and cause continuous HMR reloads. The live
-runner compares each server's HMR compiler hash with its served runtime before
-and after the suite. When the default preview on 4400 is already running, it
-checks that preview too. Production output keeps its usual directory.
-
-## Component expansion coverage
-
-`component-expansion.spec.ts` exercises search/password controls, form recovery,
-native disclosures, multi-selection, drawer focus, WCAG 2.1 A/AA axe checks, and
-mobile RTL layout in Chromium and WebKit. Theme checks use reduced motion so
-contrast is measured on the settled theme.
-
-`component-expansion-visual.spec.ts` adds eight macOS Chromium baselines: the full
-page in neon/cobalt and default/compact density; mobile LTR and RTL; a desktop
-drawer; and a mobile RTL drawer. Both drawer screenshots capture the viewport
-rather than expanding the viewport over the full underlying page.
-
-Second-batch coverage and limits are recorded in [PRODUCT_TOOLS.md](qa/PRODUCT_TOOLS.md). The catalogue has 231 Storybook checks; the new page adds seven browser scenarios per supported browser and eight macOS Chromium visual states.
-
-## Everyday workflow verification
-
-See [the workflow QA record](qa/WORKFLOWS.md) for command/menu keyboard and focus, async-save cancellation, native temporal validation, upload/inbox state handling, and the expanded visual/browser matrix.
+The runner limits Jest to two workers, allows five minutes for the production build/server to become ready, fails early if that child exits, and cleans up its own Unix process group on termination.

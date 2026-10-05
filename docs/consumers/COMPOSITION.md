@@ -89,8 +89,8 @@ is for an action that is not a URL. Disabled items set `tabindex` to `-1`
 and drop `href`.
 
 Inside a page, `jp-tabs` plus one `ng-template jpTabPanel` per value splits
-peer sections. Pass a stable `id` when the same tabs render on the server
-and the client. `jp-breadcrumbs` covers the trail above the tabs. The
+peer sections. Supply an explicit `id` for repeated client instances or
+application focus links. SSR/hydration remain outside the support contract. `jp-breadcrumbs` covers the trail above the tabs. The
 recipes page uses both.
 
 ## Empty, loading, and error

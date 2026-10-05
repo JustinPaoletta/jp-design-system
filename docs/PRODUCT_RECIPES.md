@@ -20,4 +20,4 @@ Call `beginResponse()` to obtain a request ID, `updateResponse(id, accumulatedTe
 
 ## Navigation and layout
 
-Tabs use manual activation: arrows/Home/End move focus; Enter/Space selects. Supply stable tab IDs for server rendering and one `ng-template jpTabPanel` per value. Breadcrumbs render the final item as current-page text. Keep semantic tokens and density attributes at the document root; a Light stage in Storybook is a preview mat, not a light component theme.
+Tabs use manual activation: arrows/Home/End move focus; Enter/Space selects. Supply explicit tab IDs for repeated instances or application focus links, and one `ng-template jpTabPanel` per value. SSR/hydration are outside the current support contract. Breadcrumbs render the final item as current-page text. Keep semantic tokens and density attributes at the document root; a Light stage in Storybook is a preview mat, not a light component theme.

@@ -9,16 +9,15 @@ Completed feature work is documented in the
 [scheduling calendar API](docs/SCHEDULING_CALENDAR.md),
 [reordering and carousel APIs](docs/INTERACTION_COMPONENTS.md),
 [chart and virtual-table APIs](docs/DATA_PERFORMANCE_COMPONENTS.md),
-[larger feature verification](docs/qa/LARGE_FEATURES.md), and
+[verification evidence](docs/qa/VERIFICATION.md), and
 [changelog](CHANGELOG.md). Implemented components remain preview APIs pending
-the promotion checks below. This file complements
-[PROFESSIONAL_READINESS_PLAN.md](PROFESSIONAL_READINESS_PLAN.md).
+the promotion checks below. This is the single remaining-work task list.
 
 ## Promotion and integration follow-up
 
 - [ ] Complete manual assistive-technology and forced-colors review of preview components
 - [ ] Review component APIs with consuming-product screens and resolve feedback
-- [ ] Confirm compatibility and native details-name support across the declared browsers
+- [ ] Complete compatibility review beyond the automated Chromium/WebKit matrix
 - [ ] Promote individual APIs through the acceptance and maturity process
 - [ ] Coordinate release notes, versions, distribution, and the optional design kit
 

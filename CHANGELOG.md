@@ -7,6 +7,13 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Automate larger-feature 320/640 CSS-pixel reflow, Chromium forced-colors
+  interactions and repeated native disclosure grouping. Document remaining
+  screen-reader, Windows, product-feedback and maturity/release reviews.
+- Add release-preparation safety tests for parsing, paired metadata, changelog
+  updates, dry-run immutability and write rollback, and run them in CI and
+  the release dry-run workflow.
+
 - Add preview tree view, native hierarchical table, timezone-aware scheduling calendar,
   accessible reordering, optional carousel, Chart.js bar/line integration and fixed-height
   virtual table with a native paginated alternative. Include four lazy consumer screens,
@@ -40,7 +47,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Skeleton, progress, inline alert, radio group, combobox, tabs/panels, breadcrumbs, table toolbar, and one-based pagination
 - Loading buttons, checkbox indeterminate state, native field attributes, controlled table sort/selection, and stale-safe assistant request lifecycle
 - Angular Package Format UI package, typed ESM/CSS/JSON tokens, and isolated tarball consumer smoke check
-- Chromium/WebKit functional and axe regressions, four macOS visual baselines, and CI consumer/visual/runtime-audit jobs
+- Chromium/WebKit functional and axe regressions, reviewed macOS visual baselines, and CI consumer/visual/runtime-audit jobs
 
 - Layout and typography primitives (`jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`)
 - Showcase `/layout-dashboard` route and Playwright e2e gate
@@ -71,25 +78,22 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Security
 
 - Patched compatible build-tool dependencies, constrained Nx overrides to audited leaf packages, rejected prototype-related token keys, and limited reference lookup to own properties
-- Validated patched UUID and Storybook middleware major overrides with 148 live development-server interaction/accessibility tests; added the live suite to CI. Only the unpatched braces development advisory remains.
+- Validated patched UUID and Storybook middleware major overrides through live development-server interaction/accessibility checks; added the live suite to CI. Only the unpatched braces development advisory remains.
 - Restricted workflow token permissions, pinned official actions, and added runtime audit gating; documented remaining development-tool advisories in `docs/SECURITY_REVIEW.md`
 
 ### Changed
 
 - Angular 22.2.1, Nx 23.2.1, TypeScript 6.0.3, Storybook 10.6.1, and project Node 24.21.0; built UI peers require Angular ^22.2.1
 - Dialogs and anchored overlays use native top-layer behavior with viewport positioning, nested dismissal, and focus restoration
-- Documentation aligned with current APIs, interactive recipes, distribution metadata, quality commands, and historical epic scope
+- Consolidated documentation around current API guides, one remaining task list and one verification record; removed completed implementation plans and stale component decisions. Updated maturity counts, support/localization, content standards, quality/release commands and manual review guidance while retaining the Storybook reload prevention notes
 
 - Showcase routes renamed to feature paths (`/assistant`, `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`); page titles and nav no longer reference delivery milestones
-- Epic plan docs renamed to feature filenames (`APP_SHELL_PLAN.md`, `CONTROLS_PLAN.md`, `DATA_DISPLAY_PLAN.md`, `FEEDBACK_OVERLAYS_PLAN.md`, `ASSISTANT_SYSTEM_PLAN.md`); `MANUAL_QA.md` is the Storybook top-to-bottom checklist (layout through assistant compositions)
 - Renamed `playground` app to `showcase` for integration testing
 - No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
 - Showcase root redirect now points to `/assistant`
-- Documentation audit: Controls plan acceptance criteria marked complete; plan docs note current Showcase root (`/assistant`); `PRIMITIVES.md` / `libs/ui` README / `MANUAL_QA.md` aligned to shipped APIs and Storybook paths
 - Storybook preview: story-owned sunken page (`.jp-storybook-page`) with an independent Canvas-only Dark/Light stage toolbar; Docs keeps a fixed dark stage
 - Showcase pages reactively read `data-jp-accent` / `data-jp-density` for live theme readouts
-- Documentation audit (Sep 2026): corrected Accent toolbar guidance; documented Storybook page vs stage; refreshed roadmap progress date; pointed `docs/qa` at `MANUAL_QA.md`
 
 ### Component expansion corrections
 

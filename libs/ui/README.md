@@ -1,72 +1,46 @@
-# ui
+# JP UI library
 
-Angular component library for the JP Design System.
+Standalone Angular components, directives and services using semantic JP
+styles and typed inputs. The public entry is `src/index.ts`; consumers import
+from `@jp-design-system/ui` after installing a built tarball.
 
-## Primitives
+[Core API](../../docs/PRIMITIVES.md) documents layout, typography, controls,
+tables, navigation, overlays, feedback and the assistant lifecycle. The
+[component catalog](../../docs/consumers/COMPONENTS.md) links additional form,
+workflow, hierarchy, scheduling, interaction and data-performance APIs.
+[Maturity](../../docs/governance/MATURITY.md) records support levels; new
+expansion APIs remain preview.
 
-Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-app-shell`, `jp-app-shell-nav-item`
+## Development
 
-Typography: `jp-text`, `jp-heading`
-
-Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, `jp-radio-group`, `jp-combobox`
-
-Data display: `jp-badge`, `jp-empty-state`, controlled `jp-table`, `jp-table-toolbar`, `jp-pagination`
-
-Navigation: `jp-tabs` (+ `jpTabPanel`), `jp-breadcrumbs`
-
-Async feedback: `jp-skeleton`, `jp-progress`, `jp-inline-alert`; loading buttons and assistant response lifecycle
-
-Feedback & overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast` (+ `JpToastService` / `jp-toast-outlet`), `jp-dialog`, `jp-popover`, `jp-dropdown-menu`
-
-Assistant: `JpAssistantService`, `jpAssistantTrigger`, `jp-assistant-message`, `jp-assistant-panel`
-
-Full API, token mappings, and design rationale:
-[docs/PRIMITIVES.md](../../docs/PRIMITIVES.md)
-
-Implementation plans:
-
-- [docs/APP_SHELL_PLAN.md](../../docs/APP_SHELL_PLAN.md)
-- [docs/CONTROLS_PLAN.md](../../docs/CONTROLS_PLAN.md)
-- [docs/DATA_DISPLAY_PLAN.md](../../docs/DATA_DISPLAY_PLAN.md)
-- [docs/FEEDBACK_OVERLAYS_PLAN.md](../../docs/FEEDBACK_OVERLAYS_PLAN.md)
-- [docs/ASSISTANT_SYSTEM_PLAN.md](../../docs/ASSISTANT_SYSTEM_PLAN.md)
-
-## Storybook
-
-Component stories live in `libs/ui` (not `apps/storybook`):
-
-```bash
-npx nx run ui:storybook
+```sh
+npm exec -- nx run ui:storybook
+npm exec -- nx run showcase:serve
+npm exec -- nx run ui:test
+npm exec -- nx run ui:test-storybook
+npm exec -- nx run ui:test-storybook-dev
 ```
 
-Runs at http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`, `Primitives/Navigation/*`,
-`Primitives/Assistant/*`, `Compositions/Layout Dashboard`,
-`Compositions/App Shell Dashboard`, `Compositions/Controls Form`,
-`Compositions/Data Display`, `Compositions/Feedback Overlays`, and
-`Compositions/Assistant System`.
+Component Storybook runs at http://localhost:4400. Stories live in this
+library, rather than `apps/storybook`. The independent Dark/Light stage mat
+does not change the dark component theme. Showcase runs at
+http://localhost:4200 and redirects `/` to `/assistant`.
 
-Canvas: sunken story page plus independent **Dark stage** / **Light stage** mat
-(Docs uses a fixed dark stage). Manual checklist: [MANUAL_QA.md](../../MANUAL_QA.md).
+Static and live Storybook test targets use port 4500; run them sequentially.
+Development output is isolated per port to prevent shared runtime/HMR reloads.
+Preserve [the contributor guard](../../docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated)
+when changing that infrastructure.
 
-## Showcase
+## Distribution and verification
 
-Interactive integration app for compositions and `/product-recipes`:
-
-```bash
-npx nx run showcase:serve
+```sh
+npm exec -- nx run packages:build
+npm exec -- nx run packages:smoke
 ```
 
-Runs at http://localhost:4200 (`/` redirects to `/assistant`)
-
-## Distribution
-
-Build Angular Package Format output with `npx nx run packages:build`. Install the built tarball, rather than this source folder. See [DISTRIBUTION.md](../../docs/DISTRIBUTION.md) for stylesheet imports, peer versions, and isolated consumer validation.
-
-## Tests
-
-```bash
-npx nx run ui:test
-npx nx run ui:test-storybook
-npx nx run ui:test-storybook-dev
-```
+Install generated APF tarballs and load the token stylesheet; do not install
+this source directory. Angular peers, the Chart.js dependency, stylesheet
+exports and isolated consumer validation are in
+[Distribution](../../docs/DISTRIBUTION.md).
+[Quality](../../docs/QUALITY.md) provides browser/visual commands and
+[manual QA](../../MANUAL_QA.md) records the outstanding human checks.

@@ -107,7 +107,7 @@ selection across distant windows, sorting, and complete paginated access. It als
 attaches a reproducible full native-table construction/layout measurement for
 10,000 rows and three columns. That baseline is native DOM, **not an Angular
 rendering benchmark**; elapsed times are diagnostic and have no flaky speed gate.
-Actual per-browser results are recorded in [QA evidence](qa/LARGE_FEATURES.md).
+Actual per-browser results are recorded in [QA evidence](qa/VERIFICATION.md).
 
 The native table semantics follow the
 [W3C table guidance](https://www.w3.org/WAI/ARIA/apg/patterns/table/).

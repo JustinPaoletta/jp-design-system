@@ -2,7 +2,7 @@
 
 Implemented October 4, 2026. These additions are **preview** APIs. They have
 unit tests and Storybook examples; manual assistive-technology review remains
-pending. The full remaining catalogue is tracked in
+pending. Remaining review, promotion and release work is tracked in
 [COMPONENT_EXPANSION_PLAN.md](../COMPONENT_EXPANSION_PLAN.md).
 
 Explore Showcase `/component-expansion` or the corresponding `Primitives` stories.
@@ -247,4 +247,4 @@ and physical touch-device review remain pending.
 
 ## Third batch — everyday workflows
 
-Thirteen further components and `JpAnnouncer` implement the remaining everyday-product entries. See [the complete contracts](WORKFLOW_COMPONENTS.md) and [verification](qa/WORKFLOWS.md). Native date/time UI, transport ownership and manual accessibility limits are explicit.
+Thirteen further components and `JpAnnouncer` implement the remaining everyday-product entries. See [the complete contracts](WORKFLOW_COMPONENTS.md) and [verification](qa/VERIFICATION.md). Native date/time UI, transport ownership and manual accessibility limits are explicit.

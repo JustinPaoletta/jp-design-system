@@ -1,603 +1,888 @@
-# Primitives
+# Core component API
 
-Reference for layout, typography, shell, control, data-display, feedback, and
-assistant primitives in `libs/ui`. All primitives use design tokens, strict typed
-inputs, and OnPush change detection.
+Public components, directives, and services exported from
+`libs/ui/src/index.ts` on October 4, 2026. Import them from
+`@jp-design-system/ui`. Support level and the full export inventory are in
+[Maturity](governance/MATURITY.md). Design rules are in
+[Design principles](DESIGN_PRINCIPLES.md). The complete guide index is in [Documentation](README.md).
 
-See also: [DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md), [JP_ROADMAP.md](./JP_ROADMAP.md),
-[ASSISTANT_SYSTEM_PLAN.md](./ASSISTANT_SYSTEM_PLAN.md).
+`Ui` (`lib-ui`) is deprecated. Do not use it in new templates. Migration is
+in [Compatibility](governance/COMPATIBILITY.md).
 
----
+Storybook titles below link to the story source. Run
+`npm exec -- nx run ui:storybook` and open http://localhost:4400. Groupings:
+`Primitives/Layout`, `Primitives/Typography`, `Primitives/Controls`,
+`Primitives/Data Display`, `Primitives/Navigation`, `Primitives/Feedback`,
+`Primitives/Assistant`, and the `Compositions/*` stories named in
+[Composition](consumers/COMPOSITION.md).
 
 ## Conventions
 
-- **Selectors:** `jp-*` (e.g. `jp-box`, `jp-heading`). Legacy `lib-ui` is deprecated.
-- **No style/class inputs:** Visual values come from token-backed props only.
-- **Accent toolbar:** Available globally (stories default to Neon). Layout and
-  typography primitives have little/no accent-driven UI, so Neon → Cobalt may look
-  unchanged there. Accent is meaningful on controls, accent badges, active shell
-  nav, assistant chrome, composition stories, and Showcase pages.
-- **Semantic `as` props:** Set the rendered HTML tag for accessibility. Behavior
-  differs by primitive — see typography section below.
+- Components use OnPush. There is no `class` or `style` input. Visual choices
+  are the inputs below and the semantic tokens.
+- String-union inputs fall back to the documented default when the value is
+  not in the allowed set. `jp-grid` `columns` also accepts those numbers as
+  numeric strings. Unknown `paddingX` / `paddingY` values become `null`.
+- Boolean inputs use Angular's boolean attribute transform (`disabled` with
+  no value is true; the string `"false"` is false).
+- Field controls implement `ControlValueAccessor`. `disabled` is true when
+  the input is set or when the form control is disabled.
+- A non-empty `error` marks the field invalid and is the `aria-describedby`
+  target. `hint` is used only when `error` is empty.
+- Generated ids are module counters (`jp-input-1`) or `Math.random()`
+  strings. Server rendering is not a contract. Pass `id` where the component
+  offers it.
+- Overlay `open` inputs are controlled. Bind `open` and `openChange`.
+- Projection attributes that are not classes are still part of the contract:
+  `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
+  `[jpEmptyStateIcon]`, `[jpTableSearch]`, `[jpTableFilters]`,
+  `[jpTableActions]`, `[jpTableBulkActions]`.
 
----
+Space tokens: `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`.
+Radius tokens: `none`, `sm`, `md`, `lg`, `xl`, `full`.
+Layout tags: `div`, `section`, `article`, `aside`, `main`, `header`,
+`footer`, `nav`.
 
-## Layout primitives
+## Layout
 
-### `jp-box`
+### jp-box
 
-Structural wrapper — padding and max-width only. No border or background. Use
-`jp-surface` for visual panels.
+Class `JpBox`. Story:
+[Primitives/Layout/Box](../libs/ui/src/lib/primitives/box/box.stories.ts).
 
-| Input      | Values                                                                  | Default |
-| ---------- | ----------------------------------------------------------------------- | ------- |
-| `as`       | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
-| `padding`  | space tokens                                                            | `none`  |
-| `paddingX` | space token or `null` (overrides horizontal; use `none` to clear)       | `null`  |
-| `paddingY` | space token or `null` (overrides vertical; use `none` to clear)         | `null`  |
-| `maxWidth` | `none`, `narrow`, `wide`                                                | `none`  |
+Padding and max-width only. No border or background. Use `jp-surface` for a
+panel.
 
-`paddingX` / `paddingY` axis overrides: `null` inherits the base `padding` value on
-that axis; `'none'` explicitly clears padding on that axis (e.g.
-`padding="lg" paddingX="none"` keeps vertical `lg` and zeroes horizontal padding).
+| Input      | Type                     | Default                     |
+| ---------- | ------------------------ | --------------------------- |
+| `as`       | layout tag               | `div`                       |
+| `padding`  | space token              | `none`                      |
+| `paddingX` | space token or `null`    | `null` (inherits `padding`) |
+| `paddingY` | space token or `null`    | `null` (inherits `padding`) |
+| `maxWidth` | `none`, `narrow`, `wide` | `none`                      |
 
-### `jp-stack`
+`paddingX="none"` clears horizontal padding while `padding` still applies
+vertically.
 
-Vertical flex layout.
+### jp-stack
 
-| Input     | Values                                                                  | Default   |
-| --------- | ----------------------------------------------------------------------- | --------- |
-| `as`      | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`     |
-| `gap`     | space tokens                                                            | `md`      |
-| `align`   | `start`, `center`, `end`, `stretch`                                     | `stretch` |
-| `justify` | `start`, `center`, `end`, `between`                                     | `start`   |
+Class `JpStack`. Story:
+[Primitives/Layout/Stack](../libs/ui/src/lib/primitives/stack/stack.stories.ts).
 
-### `jp-inline`
+Vertical flex.
 
-Horizontal flex layout.
+| Input     | Type                                | Default   |
+| --------- | ----------------------------------- | --------- |
+| `as`      | layout tag                          | `div`     |
+| `gap`     | space token                         | `md`      |
+| `align`   | `start`, `center`, `end`, `stretch` | `stretch` |
+| `justify` | `start`, `center`, `end`, `between` | `start`   |
 
-| Input     | Values                                                                  | Default  |
-| --------- | ----------------------------------------------------------------------- | -------- |
-| `as`      | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`    |
-| `gap`     | space tokens                                                            | `sm`     |
-| `align`   | `start`, `center`, `end`, `stretch`                                     | `center` |
-| `justify` | `start`, `center`, `end`, `between`                                     | `start`  |
-| `wrap`    | boolean                                                                 | `true`   |
+### jp-inline
 
-### `jp-grid`
+Class `JpInline`. Story:
+[Primitives/Layout/Inline](../libs/ui/src/lib/primitives/inline/inline.stories.ts).
 
-CSS grid layout.
+Horizontal flex.
 
-| Input       | Values                                                                  | Default |
-| ----------- | ----------------------------------------------------------------------- | ------- |
-| `as`        | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `div`   |
-| `columns`   | `1`, `2`, `3`, `4`, `6`                                                 | `3`     |
-| `gap`       | space tokens                                                            | `md`    |
-| `mode`      | `fixed`, `auto-fit`                                                     | `fixed` |
-| `minColumn` | `sm`, `md`, `lg`                                                        | `md`    |
+| Input     | Type                                | Default  |
+| --------- | ----------------------------------- | -------- |
+| `as`      | layout tag                          | `div`    |
+| `gap`     | space token                         | `sm`     |
+| `align`   | `start`, `center`, `end`, `stretch` | `center` |
+| `justify` | `start`, `center`, `end`, `between` | `start`  |
+| `wrap`    | boolean                             | `true`   |
 
-### `jp-surface`
+### jp-grid
 
-Visual panel — background, border, elevation, radius, padding.
+Class `JpGrid`. Story:
+[Primitives/Layout/Grid](../libs/ui/src/lib/primitives/grid/grid.stories.ts).
 
-| Input       | Values                                                                  | Default   |
-| ----------- | ----------------------------------------------------------------------- | --------- |
-| `as`        | `div`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav` | `section` |
-| `tone`      | `canvas`, `sunken`, `subtle`, `raised`, `emphasis`                      | `raised`  |
-| `padding`   | space tokens                                                            | `lg`      |
-| `border`    | `none`, `subtle`, `default`, `strong`                                   | `default` |
-| `elevation` | `none`, `raised`, `floating`, `overlay`                                 | `raised`  |
-| `radius`    | radius tokens                                                           | `lg`      |
+| Input       | Type                    | Default |
+| ----------- | ----------------------- | ------- |
+| `as`        | layout tag              | `div`   |
+| `gap`       | space token             | `md`    |
+| `columns`   | `1`, `2`, `3`, `4`, `6` | `3`     |
+| `mode`      | `fixed`, `auto-fit`     | `fixed` |
+| `minColumn` | `sm`, `md`, `lg`        | `md`    |
 
-### `jp-app-shell`
+`fixed` repeats `columns` and does not wrap. `auto-fit` uses `minColumn`.
+See [Layout](consumers/LAYOUT.md).
 
-Application chrome — sidebar + main content regions with desktop collapse and
-mobile drawer.
+### jp-surface
 
-| Input / output           | Type      | Default     | Notes                                        |
-| ------------------------ | --------- | ----------- | -------------------------------------------- |
-| `sidebarCollapsed`       | `boolean` | `false`     | Collapses sidebar to icon rail width         |
-| `sidebarCollapsedChange` | `output`  | —           | Emits when the toolbar toggle is clicked     |
-| `mobileNavOpen`          | `boolean` | `false`     | Opens the off-canvas drawer below breakpoint |
-| `mobileNavOpenChange`    | `output`  | —           | Emits on menu toggle, scrim click, or Escape |
-| `sidebarLabel`           | `string`  | `'Primary'` | `aria-label` for the sidebar landmark        |
+Class `JpSurface`. Story:
+[Primitives/Layout/Surface](../libs/ui/src/lib/primitives/surface/surface.stories.ts).
 
-**Content projection:**
+| Input       | Type                                               | Default   |
+| ----------- | -------------------------------------------------- | --------- |
+| `as`        | layout tag                                         | `section` |
+| `tone`      | `canvas`, `sunken`, `subtle`, `raised`, `emphasis` | `raised`  |
+| `padding`   | space token                                        | `lg`      |
+| `radius`    | radius token                                       | `lg`      |
+| `border`    | `none`, `subtle`, `default`, `strong`              | `default` |
+| `elevation` | `none`, `raised`, `floating`, `overlay`            | `raised`  |
 
-- `[jpAppShellSidebar]` — primary navigation slot (renders inside `<aside>`)
-- `[jpAppShellMain]` — page content slot
+Elevation is the token shadow, kept light on the dark theme.
 
-**Behavior:**
+### jp-app-shell
 
-- Desktop (> `--jp-layout-shell-mobile-max` / `48rem`): sidebar visible; collapse
-  toggles expanded vs icon-rail widths.
-- Mobile (`≤ 48rem`): sidebar hidden by default; menu button opens drawer +
-  scrim; Escape / scrim / close button dismiss; focus moves into the drawer and
-  returns to the menu trigger on close; main is `inert` while open.
+Class `JpAppShell`. Story:
+[Primitives/Layout/App Shell](../libs/ui/src/lib/primitives/app-shell/app-shell.stories.ts).
 
-### `jp-app-shell-nav-item`
+| Input or output          | Type      | Default                                                     |
+| ------------------------ | --------- | ----------------------------------------------------------- |
+| `sidebarCollapsed`       | boolean   | `false`                                                     |
+| `sidebarCollapsedChange` | `boolean` | Emits the next collapsed value                              |
+| `mobileNavOpen`          | boolean   | `false`                                                     |
+| `mobileNavOpenChange`    | `boolean` | Menu, scrim, Escape, close, or a viewport grow past `48rem` |
+| `sidebarLabel`           | string    | `Primary` (`aria-label` on the sidebar)                     |
 
-Single navigation row for use inside the shell sidebar.
+Project navigation with `[jpAppShellSidebar]` and page content with
+`[jpAppShellMain]`. The shell does not store the two booleans. Bind them.
 
-| Input      | Values           | Default | Notes                                                   |
-| ---------- | ---------------- | ------- | ------------------------------------------------------- |
-| `as`       | `a`, `button`    | `a`     | Rendered interactive element                            |
-| `href`     | string or `null` | `null`  | Used when `as="a"` (falls back to `#`)                  |
-| `active`   | boolean          | `false` | Accent indicator + `aria-current="page"`                |
-| `disabled` | boolean          | `false` | Non-interactive; muted chrome (demo stubs, unavailable) |
+Breakpoint behavior and the fixed sidebar id `jp-app-shell-sidebar` are in
+[Layout](consumers/LAYOUT.md). `Open navigation`, `Close navigation`,
+`Expand sidebar`, and `Collapse sidebar` come from `JP_MESSAGES.appShell`.
+One shell per document.
 
-Optional icon slot: project into `[jpAppShellNavIcon]`. Labels are visually
-hidden when the parent shell is collapsed.
+### jp-app-shell-nav-item
 
----
+Class `JpAppShellNavItem`. Also exports `JP_APP_SHELL_NAV_ITEM_TAGS` and
+`JpAppShellNavItemTag`. Story:
+[Primitives/Layout/App Shell Nav Item](../libs/ui/src/lib/primitives/app-shell/app-shell-nav-item.stories.ts).
 
-## Typography primitives
+| Input      | Type             | Default                                      |
+| ---------- | ---------------- | -------------------------------------------- |
+| `as`       | `a`, `button`    | `a`                                          |
+| `href`     | string or `null` | `null` (anchors use `#` when enabled)        |
+| `active`   | boolean          | `false` (`aria-current="page"` when enabled) |
+| `disabled` | boolean          | `false` (removes `href`, `tabindex="-1"`)    |
 
-### Design split: `jp-text` vs `jp-heading`
+The label is projected. An icon goes in `[jpAppShellNavIcon]` and is
+`aria-hidden`. `routerLink` on the host does not reach the inner anchor.
+See [Navigation](consumers/COMPOSITION.md#navigation).
 
-| Concern            | `jp-text`                                      | `jp-heading`                                 |
-| ------------------ | ---------------------------------------------- | -------------------------------------------- |
-| Purpose            | Body copy, labels, inline emphasis             | Page and section titles                      |
-| Semantic tags      | `p`, `span`, `label`, `small`, `strong`, `em`  | `h1`–`h6`                                    |
-| Size control       | **`size` prop** (`caption`, `body`, `body-lg`) | **`as` prop only** — no `size`               |
-| Tag vs visual size | Independent — `as` and `size` are separate     | Coupled — each level has a fixed token scale |
+## Typography
 
-**Why `jp-heading` has no `size` prop:** Heading levels carry both semantic
-meaning and visual hierarchy. A separate size override would fight the level
-system and invite inconsistency. Pick the correct `h*` level instead. For
-non-heading copy at a specific scale, use `jp-text`.
+`jp-text` separates tag (`as`) and visual `size`. `jp-heading` uses `as`
+for both the heading level and the size token. There is no heading `size`
+input.
 
-### `jp-text`
+### jp-text
 
-| Input      | Values                                        | Default   |
-| ---------- | --------------------------------------------- | --------- |
-| `as`       | `p`, `span`, `label`, `small`, `strong`, `em` | `p`       |
-| `size`     | `caption`, `body`, `body-lg`                  | `body`    |
-| `tone`     | `primary`, `secondary`, `muted`, `disabled`   | `primary` |
-| `weight`   | `regular`, `medium`, `semibold`, `bold`       | `regular` |
-| `truncate` | boolean                                       | `false`   |
-| `mono`     | boolean                                       | `false`   |
-| `forId`    | string or `null` (for `label`)                | `null`    |
+Class `JpText`. Story:
+[Primitives/Typography/Text](../libs/ui/src/lib/primitives/text/text.stories.ts).
 
-**Truncate behavior:** When `true`, text stays on one line and shows `…` when the
-**container** is narrower than the content. The host applies `min-width: 0` and
-`max-width: 100%` so truncation works inside flex layouts. When `false`, text
-wraps normally.
+| Input      | Type                                          | Default                                           |
+| ---------- | --------------------------------------------- | ------------------------------------------------- |
+| `as`       | `p`, `span`, `label`, `small`, `strong`, `em` | `p`                                               |
+| `size`     | `caption`, `body`, `body-lg`                  | `body`                                            |
+| `tone`     | `primary`, `secondary`, `muted`, `disabled`   | `primary`                                         |
+| `weight`   | `regular`, `medium`, `semibold`, `bold`       | `regular`                                         |
+| `truncate` | boolean                                       | `false`                                           |
+| `mono`     | boolean                                       | `false`                                           |
+| `forId`    | string or `null`                              | `null` (the `for` attribute when `as` is `label`) |
 
-**Inline behavior:** `span`, `label`, `small`, `strong`, and `em` render inline
-(the host sets `display: inline`). `p` renders as block.
+`span`, `label`, `small`, `strong`, and `em` render inline. `p` renders as
+a block. `truncate` forces a single line with an ellipsis and requires a
+bounded container.
 
-### `jp-heading`
+### jp-heading
 
-| Input    | Values                                      | Default    |
+Class `JpHeading`. Story:
+[Primitives/Typography/Heading](../libs/ui/src/lib/primitives/heading/heading.stories.ts).
+
+| Input    | Type                                        | Default    |
 | -------- | ------------------------------------------- | ---------- |
-| `as`     | `h1`, `h2`, `h3`, `h4`, `h5`, `h6`          | `h2`       |
+| `as`     | `h1` through `h6`                           | `h2`       |
 | `tone`   | `primary`, `secondary`, `muted`, `disabled` | `primary`  |
 | `weight` | `regular`, `medium`, `semibold`, `bold`     | `semibold` |
 
-**Level → size mapping** (via `--jp-font-size-heading-h*` tokens):
+Sizes are `--jp-font-size-heading-h1` (1.5rem) down to
+`--jp-font-size-heading-h6` (0.8125rem).
 
-| Level | Token                       | Default size |
-| ----- | --------------------------- | ------------ |
-| `h1`  | `--jp-font-size-heading-h1` | 1.5rem       |
-| `h2`  | `--jp-font-size-heading-h2` | 1.25rem      |
-| `h3`  | `--jp-font-size-heading-h3` | 1.125rem     |
-| `h4`  | `--jp-font-size-heading-h4` | 1rem         |
-| `h5`  | `--jp-font-size-heading-h5` | 0.875rem     |
-| `h6`  | `--jp-font-size-heading-h6` | 0.8125rem    |
+## Controls
 
-Each step down in level produces a visibly smaller heading. Changing `as` updates
-both the HTML tag and font size.
+Buttons are not value accessors. `jp-input`, `jp-textarea`, `jp-select`,
+`jp-checkbox`, `jp-switch`, `jp-radio-group`, and `jp-combobox` are.
+Control sizes are `sm`, `md`, `lg` and follow density. See
+[Layout](consumers/LAYOUT.md).
 
----
+### jp-button
 
-## Control primitives
+Class `JpButton`. Story:
+[Primitives/Controls/Button](../libs/ui/src/lib/primitives/button/button.stories.ts).
 
-Controls. No `class` / `style` inputs. Field controls implement
-`ControlValueAccessor`. Buttons do not.
+| Input          | Type                                           | Default   |
+| -------------- | ---------------------------------------------- | --------- |
+| `variant`      | `primary`, `secondary`, `ghost`, `destructive` | `primary` |
+| `size`         | `sm`, `md`, `lg`                               | `md`      |
+| `type`         | `button`, `submit`, `reset`                    | `button`  |
+| `disabled`     | boolean                                        | `false`   |
+| `loading`      | boolean                                        | `false`   |
+| `loadingLabel` | string                                         | `Loading` |
 
-### `jp-button`
+The label is projected. `loading` disables the inner button and sets
+`aria-busy`. `loadingLabel` is visually clipped and becomes `aria-label`
+while loading, so it replaces the accessible name. The projected label stays
+on screen. Primary uses accent tokens. Destructive uses error tokens.
 
-| Input      | Values                                         | Default   |
-| ---------- | ---------------------------------------------- | --------- |
-| `variant`  | `primary`, `secondary`, `ghost`, `destructive` | `primary` |
-| `size`     | `sm`, `md`, `lg`                               | `md`      |
-| `type`     | `button`, `submit`, `reset`                    | `button`  |
-| `disabled` | boolean                                        | `false`   |
+### jp-icon-button
 
-`loading` defaults to `false` and disables the inner native button while setting `aria-busy`. `loadingLabel` defaults to `'Loading'`; use a meaningful action-specific label. An empty loading label preserves the projected name.
+Class `JpIconButton`. Story:
+[Primitives/Controls/Icon Button](../libs/ui/src/lib/primitives/icon-button/icon-button.stories.ts).
 
-Label content is projected. Primary uses accent tokens; destructive uses
-state-error tokens.
+| Input       | Type                        | Default  |
+| ----------- | --------------------------- | -------- |
+| `ariaLabel` | string                      | required |
+| `size`      | `sm`, `md`, `lg`            | `md`     |
+| `type`      | `button`, `submit`, `reset` | `button` |
+| `disabled`  | boolean                     | `false`  |
 
-### `jp-icon-button`
+The glyph is projected. There is no `variant` input.
 
-| Input       | Values                      | Default  | Notes                          |
-| ----------- | --------------------------- | -------- | ------------------------------ |
-| `ariaLabel` | string (required)           | —        | Accessible name for the button |
-| `size`      | `sm`, `md`, `lg`            | `md`     | Square control size            |
-| `type`      | `button`, `submit`, `reset` | `button` | Native button type             |
-| `disabled`  | boolean                     | `false`  |                                |
+### jp-input
 
-Icon glyph is projected content. Default styling is ghost-like.
+Class `JpInput`. Story:
+[Primitives/Controls/Input](../libs/ui/src/lib/primitives/input/input.stories.ts).
+Value type: `string`.
 
-### `jp-input`
+| Input                                                                                                | Type                                                          | Default                |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- |
+| `label`, `hint`, `error`, `placeholder`, `ariaLabel`, `name`, `autocomplete`, `pattern`, `inputMode` | string                                                        | `''`                   |
+| `type`                                                                                               | `text`, `email`, `password`, `search`, `tel`, `url`, `number` | `text`                 |
+| `size`                                                                                               | `sm`, `md`, `lg`                                              | `md`                   |
+| `id`                                                                                                 | string or unset                                               | generated `jp-input-N` |
+| `required`, `disabled`, `readonly`, `invalid`                                                        | boolean                                                       | `false`                |
+| `minLength`, `maxLength`                                                                             | number or `null`                                              | `null`                 |
+| `min`, `max`, `step`                                                                                 | string, number, or `null`                                     | `null`                 |
 
-| Input         | Values                                                        | Default   | Notes                                                      |
-| ------------- | ------------------------------------------------------------- | --------- | ---------------------------------------------------------- |
-| `label`       | string                                                        | `''`      | Associated via `for` / `id`                                |
-| `hint`        | string                                                        | `''`      | Linked with `aria-describedby` when no error               |
-| `error`       | string                                                        | `''`      | Linked with `aria-describedby`; takes precedence over hint |
-| `type`        | `text`, `email`, `password`, `search`, `tel`, `url`, `number` | `text`    |                                                            |
-| `size`        | `sm`, `md`, `lg`                                              | `md`      |                                                            |
-| `disabled`    | boolean                                                       | `false`   |                                                            |
-| `readonly`    | boolean                                                       | `false`   |                                                            |
-| `invalid`     | boolean                                                       | `false`   | Sets `aria-invalid` + invalid border                       |
-| `placeholder` | string                                                        | `''`      |                                                            |
-| `id`          | string or unset                                               | generated |                                                            |
+### jp-textarea
 
-CVA value type: `string`.
+Class `JpTextarea`. Story:
+[Primitives/Controls/Textarea](../libs/ui/src/lib/primitives/textarea/textarea.stories.ts).
+Value type: `string`.
 
-### `jp-textarea`
+Same label, hint, error, placeholder, ariaLabel, name, autocomplete, size,
+id, required, disabled, readonly, and invalid inputs as `jp-input`.
+`minLength` and `maxLength` are number or `null`. `rows` is a number,
+default `4` (`numberAttribute`). Id prefix `jp-textarea-N`. No `type`,
+`pattern`, `inputMode`, `min`, `max`, or `step`.
 
-Field inputs: `label`, `hint`, `error`, `size`, `disabled`, `readonly`, `invalid`, `placeholder`, and `id`, plus:
+### jp-select
 
-| Input  | Values | Default |
-| ------ | ------ | ------- |
-| `rows` | number | `4`     |
+Class `JpSelect`. Also exports `JpSelectOption`
+(`{ value: string; label: string; disabled?: boolean }`). Story:
+[Primitives/Controls/Select](../libs/ui/src/lib/primitives/select/select.stories.ts).
 
-CVA value type: `string`.
+Native `<select>`. Value type: `string`. Inputs match the shared field set
+(`label`, `hint`, `error`, `ariaLabel`, `name`, `autocomplete`, `size`,
+`id`, `required`, `disabled`, `invalid`) plus `options` (default `[]`).
+Id prefix `jp-select-N`. There is no `placeholder` input.
 
-### `jp-select`
+### jp-checkbox
 
-Native `<select>` styled with field tokens.
+Class `JpCheckbox`. Story:
+[Primitives/Controls/Checkbox](../libs/ui/src/lib/primitives/checkbox/checkbox.stories.ts).
+Value type: `boolean`.
 
-| Input      | Values                               | Default   | Notes |
-| ---------- | ------------------------------------ | --------- | ----- |
-| `label`    | string                               | `''`      |       |
-| `hint`     | string                               | `''`      |       |
-| `error`    | string                               | `''`      |       |
-| `size`     | `sm`, `md`, `lg`                     | `md`      |       |
-| `disabled` | boolean                              | `false`   |       |
-| `invalid`  | boolean                              | `false`   |       |
-| `options`  | `{ value: string; label: string }[]` | `[]`      |       |
-| `id`       | string or unset                      | generated |       |
+| Input                                | Type            | Default                   |
+| ------------------------------------ | --------------- | ------------------------- |
+| `indeterminate`                      | boolean         | `false`                   |
+| `required`, `disabled`, `invalid`    | boolean         | `false`                   |
+| `name`, `ariaLabel`, `hint`, `error` | string          | `''`                      |
+| `id`                                 | string or unset | generated `jp-checkbox-N` |
 
-CVA value type: `string`.
+The caption is projected content. There is no `label` input.
+`indeterminate` sets the native mixed state. The form value stays boolean.
+A non-empty `error` is `role="alert"`.
 
-### `jp-checkbox`
+### jp-switch
 
-| Input      | Values          | Default   | Notes |
-| ---------- | --------------- | --------- | ----- |
-| `disabled` | boolean         | `false`   |       |
-| `invalid`  | boolean         | `false`   |       |
-| `id`       | string or unset | generated |       |
+Class `JpSwitch`. Story:
+[Primitives/Controls/Switch](../libs/ui/src/lib/primitives/switch/switch.stories.ts).
+Value type: `boolean`.
 
-Label is projected content. CVA value type: `boolean`. Additional inputs: `indeterminate` (`false`), `name`, `ariaLabel`, `hint`, `error` (all empty strings), and `required` (`false`). Indeterminate affects native mixed state; the form value remains boolean.
+| Input                 | Type            | Default                 |
+| --------------------- | --------------- | ----------------------- |
+| `id`                  | string or unset | generated `jp-switch-N` |
+| `disabled`, `invalid` | boolean         | `false`                 |
 
-### `jp-switch`
+The caption is projected and referenced with `aria-labelledby`. The control
+is a button with `role="switch"` and `aria-checked`. Space and Enter toggle
+it. There is no `label`, `hint`, `error`, or `required` input.
 
-| Input      | Values          | Default   | Notes |
-| ---------- | --------------- | --------- | ----- |
-| `disabled` | boolean         | `false`   |       |
-| `invalid`  | boolean         | `false`   |       |
-| `id`       | string or unset | generated |       |
+### jp-radio-group
 
-Uses `role="switch"` and `aria-checked`. Track uses accent when on. Label is
-projected content. CVA value type: `boolean`.
+Class `JpRadioGroup`. Also exports `JpRadioOption`
+(`{ value: string; label: string; disabled?: boolean }`). Story:
+[Primitives/Controls/Radio Group](../libs/ui/src/lib/primitives/radio-group/radio-group.stories.ts).
 
----
+Value type: `string`. Renders a `fieldset` of native radios.
 
-### Native field attributes
+| Input                                         | Type                       | Default                      |
+| --------------------------------------------- | -------------------------- | ---------------------------- |
+| `options`                                     | readonly `JpRadioOption[]` | `[]`                         |
+| `label`, `ariaLabel`, `hint`, `error`, `name` | string                     | `''`                         |
+| `id`                                          | string or unset            | generated `jp-radio-group-N` |
+| `required`, `disabled`, `invalid`             | boolean                    | `false`                      |
 
-`jp-input`, `jp-textarea`, and `jp-select` forward `ariaLabel`, `name`, `autocomplete` (empty strings), and `required` (`false`) to their inner native controls. Input/textarea also forward nullable `minLength` and `maxLength`. Input additionally forwards nullable `min`, `max`, `step`, and empty-string `pattern` and `inputMode`. Use the named Angular input casing (for example `[minLength]`). Error text implies invalid state and overrides hint in `aria-describedby`.
+`label` is the `legend`. Disabled options cannot be selected. Arrow keys,
+Home, and End move among enabled options and select them. Provide `label`
+or `ariaLabel`.
 
-CVA controls integrate with reactive forms and `ngModel`; validation rules and when errors appear belong to the consumer. Native constraints supplement those rules. Stable explicit `id` values are recommended for server rendering. Checkbox and radio groups forward `name`/`required`; combobox uses a named hidden input for the selected value.
+### jp-combobox
 
-### `jp-radio-group`
+Class `JpCombobox`. Also exports `JpComboboxOption` (same shape as
+`JpRadioOption`). Story:
+[Primitives/Controls/Combobox](../libs/ui/src/lib/primitives/combobox/combobox.stories.ts).
 
-String CVA with native radios. Inputs: `options: readonly JpRadioOption[]` (default `[]`, each `{ value: string, label: string, disabled?: boolean }`), `label`, `ariaLabel`, `hint`, `error`, `name` (empty strings), optional `id` (generated), and `required`, `disabled`, `invalid` (all `false`). Disabled options cannot be selected. Provide a visible label or accessible name.
+Value type: `string`. One selected value. The textbox is `role="combobox"`
+with a listbox popup. A hidden input carries `name` when `name` is set.
 
-### `jp-combobox`
+| Input                                         | Type                          | Default                   |
+| --------------------------------------------- | ----------------------------- | ------------------------- |
+| `options`                                     | readonly `JpComboboxOption[]` | `[]`                      |
+| `placeholder`                                 | string                        | `Search options`          |
+| `loading`                                     | boolean                       | `false`                   |
+| `loadingText`                                 | string                        | `Loading options…`        |
+| `emptyText`                                   | string                        | `No results found.`       |
+| `label`, `ariaLabel`, `hint`, `error`, `name` | string                        | `''`                      |
+| `id`                                          | string or unset               | generated `jp-combobox-N` |
+| `required`, `disabled`, `invalid`             | boolean                       | `false`                   |
 
-Searchable string CVA with listbox options. Inputs match radio group fields, using `readonly JpComboboxOption[]` with the same option shape, plus `placeholder` (`'Search options'`), `loading` (`false`), `loadingText` (`'Loading options…'`), and `emptyText` (`'No results found.'`). `error` renders field/request error text; there is no separate request-error input.
+`open`, `query`, `activeIndex`, and `value` are component state, not
+inputs. Filtering compares the typed query to option labels locally. The
+application loads options and sets `loading`. Arrow keys, Home, and End move
+among enabled matches. Enter selects. Escape, Tab, and blur close. Loading
+blocks selection. Clearing the query clears the value. Use `error` for a
+failed request. `emptyText` is an empty successful filter.
 
-Arrows/Home/End navigate enabled matches; Enter selects; Escape/Tab/blur close. Loading prevents selection. Filtering uses option labels locally; applications own asynchronous loading. `open`, `query`, `activeIndex`, and `value` are implementation state, not binding inputs. Provide a stable `id` for server rendering and distinguish empty results from request failure.
+The popup uses the shared overlay positioner (`popover="manual"`, with a
+fixed-position fallback). Full top-layer parity is not claimed.
 
----
+## Data display
 
-## Data display primitives
+### jp-badge
 
-Table sort/selection are controlled. Consumers own rows, filtering, fetching, sorting, and pagination.
+Class `JpBadge`. Story:
+[Primitives/Data Display/Badge](../libs/ui/src/lib/primitives/badge/badge.stories.ts).
 
-### `jp-badge`
-
-| Input  | Values                                                     | Default   |
+| Input  | Type                                                       | Default   |
 | ------ | ---------------------------------------------------------- | --------- |
 | `tone` | `neutral`, `accent`, `success`, `warning`, `error`, `info` | `neutral` |
 | `size` | `sm`, `md`                                                 | `md`      |
 
-Label content is projected. Presentational only (not a button). Accent tone uses
-soft accent fill as a signal chip — not a large accent wash.
+The label is projected. The badge is not a button. A value the user can
+remove is `jp-chip`, not a badge.
+
+### jp-chip
+
+Class `JpChip`. Also exports `JP_CHIP_SIZES` and `JpChipSize`. Story:
+[Primitives/Controls/Chip](../libs/ui/src/lib/primitives/chip/chip.stories.ts).
+
+Removable filter or selection. The application owns the collection and
+deletes the item when `removed` emits. Status that cannot be removed stays
+on `jp-badge`. Showcase `/product-recipes` still removes toolbar filters
+with the toolbar's own buttons.
+
+| Input or output | Type       | Default                                   |
+| --------------- | ---------- | ----------------------------------------- |
+| `label`         | string     | required                                  |
+| `size`          | `sm`, `md` | `md` (any other value falls back to `md`) |
+| `disabled`      | boolean    | `false`                                   |
+| `removed`       | `void`     | click, Enter, Space, Delete, or Backspace |
+
+The remove control is `type="button"`. Its accessible name comes from
+`JP_MESSAGES.chip.remove`. The English default is `Remove` plus the label
+(`Remove Healthy`). The icon is `aria-hidden`. The visible
+text is `label`, which truncates with an ellipsis. The remove button stays
+visible. `disabled` blocks click, Delete, and Backspace.
+
+Tab lands on the remove button. Delete or Backspace while focus is inside
+the chip removes it and calls `preventDefault` so Backspace does not
+navigate. After removal, focus moves to the next enabled sibling chip's
+remove button, or the previous one if there is no next sibling. When no
+sibling button remains, focus is the application's job.
+
+Lay chips out with `jp-inline` (it wraps by default). The chip does not
+build a `+N` overflow menu.
+
+### jp-empty-state
+
+Class `JpEmptyState`. Story:
+[Primitives/Data Display/Empty State](../libs/ui/src/lib/primitives/empty-state/empty-state.stories.ts).
+
+| Input         | Type   | Default  |
+| ------------- | ------ | -------- |
+| `title`       | string | required |
+| `description` | string | `''`     |
+
+Host `role="status"`. Icon slot: `[jpEmptyStateIcon]`. Actions are the
+default slot, usually a `jp-button`.
+
+### jp-table
+
+Class `JpTable`. Also exports `JpTableCellDef`, `JpTableRowKey`
+(`string | number`), `JpTableSort` (`{ key: string; direction: 'asc' | 'desc' }`),
+`JpSortableTableColumn` (`JpTableColumn` plus optional `sortable`), and
+`JpTableCellContext`. `JpTableColumn` is `{ key, header, align? }` with
+`align` of `start`, `center`, or `end`. `JpTableCellValue` is
+`string | number | null | undefined`. Story:
+[Primitives/Data Display/Table](../libs/ui/src/lib/primitives/table/table.stories.ts).
+
+| Input or output    | Type                                   | Default                                |
+| ------------------ | -------------------------------------- | -------------------------------------- |
+| `caption`          | string                                 | `''`                                   |
+| `columns`          | `JpSortableTableColumn[]`              | `[]`                                   |
+| `rows`             | `Record<string, JpTableCellValue>[]`   | `[]`                                   |
+| `striped`          | boolean                                | `false`                                |
+| `emptyTitle`       | string                                 | `No data`                              |
+| `emptyDescription` | string                                 | `''`                                   |
+| `rowKey`           | field name or `(row) => JpTableRowKey` | `'id'`                                 |
+| `sort`             | `JpTableSort` or `null`                | `null`                                 |
+| `sortChange`       | `JpTableSort` or `null`                | asc, then desc, then `null`            |
+| `selectable`       | boolean                                | `false`                                |
+| `selectedKeys`     | readonly `JpTableRowKey[]`             | `[]`                                   |
+| `selectionChange`  | `JpTableRowKey[]`                      | full key list, including off-page keys |
+| `rowLabel`         | `(row) => string`                      | text of the first column               |
+
+The table does not fetch, filter, or reorder `rows`. Sortable headers set
+`aria-sort`. A row whose key is not a string or number can render and cannot
+be selected. The header checkbox selects the current page only.
+`selectionChange` preserves keys that are not on the page.
+
+Rich cells: `<ng-template jpTableCell="columnKey" let-value>`. Context also
+exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.
+`jpTableCell` is required and is the column key.
+
+Project a `jp-empty-state` to replace `emptyTitle` / `emptyDescription`.
+The frame scrolls horizontally. See [Layout](consumers/LAYOUT.md).
+
+### jpTableCell
+
+Directive `JpTableCellDef`, selector `ng-template[jpTableCell]`. Covered by
+the table story. `jpTableCell` is the required column key.
+
+### jp-table-toolbar
+
+Class `JpTableToolbar`. Also exports `JpTableFilter`
+(`{ key: string; label: string }`). Story:
+[Primitives/Data Display/Table Toolbar](../libs/ui/src/lib/primitives/table-toolbar/table-toolbar.stories.ts).
+
+| Input or output | Type                       | Default                                     |
+| --------------- | -------------------------- | ------------------------------------------- |
+| `label`         | string                     | `Table controls` (the section `aria-label`) |
+| `activeFilters` | readonly `JpTableFilter[]` | `[]`                                        |
+| `selectedCount` | number                     | `0`                                         |
+| `disabled`      | boolean                    | `false`                                     |
+| `removeFilter`  | `string`                   | the filter key                              |
+| `clearFilters`  | `void`                     | emitted by Clear filters                    |
+
+Slots, which are not directives: `[jpTableSearch]`, `[jpTableFilters]`,
+`[jpTableActions]`, `[jpTableBulkActions]`. The bulk-action slot renders
+when `selectedCount > 0`, next to `{count} selected` (`role="status"`).
+Each active filter is a button whose accessible name comes from
+`JP_MESSAGES.tableToolbar.removeFilter`. `Clear filters`, `Active filters`,
+and the selection sentence use that same token. The component emits the key.
+The application removes the filter.
+
+### jp-pagination
+
+Class `JpPagination`. Story:
+[Primitives/Data Display/Pagination](../libs/ui/src/lib/primitives/pagination/pagination.stories.ts).
+
+| Input or output | Type    | Default                   |
+| --------------- | ------- | ------------------------- |
+| `page`          | number  | `1` (one-based)           |
+| `pageSize`      | number  | `10`                      |
+| `total`         | number  | `0` (record count)        |
+| `disabled`      | boolean | `false`                   |
+| `label`         | string  | `Table pagination`        |
+| `pageChange`    | number  | a different in-range page |
+
+Non-finite page size falls back to `10`. Page size below `1` becomes `1`.
+The summary and buttons use `JP_MESSAGES.pagination`. English defaults are
+`start–end of total`, `First page`, `Previous`, `Page N of M`, `Next`, and
+`Last page`. The summary
+is `aria-live="polite"`. The component does not slice rows. Localization of
+these strings is in [the localization contract](localization/CONTRACT.md).
+
+## Navigation
+
+### jp-tabs
+
+Class `JpTabs`. Also exports `JpTab`
+(`{ value: string; label: string; disabled?: boolean }`). Story:
+[Primitives/Navigation/Tabs](../libs/ui/src/lib/primitives/tabs/tabs.stories.ts).
+
+| Input or model  | Type               | Default               |
+| --------------- | ------------------ | --------------------- |
+| `tabs`          | readonly `JpTab[]` | `[]`                  |
+| `ariaLabel`     | string             | `Tabs`                |
+| `id`            | string             | generated `jp-tabs-N` |
+| `selectedValue` | model `string`     | `''`                  |
+
+`[(selectedValue)]` and `selectedValueChange` both work. A missing or
+disabled selection falls back to the first enabled tab. Project one
+`<ng-template jpTabPanel="value">` per tab. Inactive panels stay in the DOM
+with the `hidden` attribute. Arrow keys, Home, and End move focus and follow
+writing direction. Enter or Space selects. Click selects. Values should be
+unique. Supply an explicit `id` for repeated instances or application focus targets.
+Server rendering and hydration remain outside the [support contract](localization/SUPPORT.md#ssr-and-hydration).
+
+### jpTabPanel
+
+Directive `JpTabPanel`, selector `ng-template[jpTabPanel]`. The
+`jpTabPanel` input is the required tab value (alias of `value`).
+
+### jp-breadcrumbs
+
+Class `JpBreadcrumbs`. Also exports `JpBreadcrumb`
+(`{ label: string; href?: string }`). Story:
+[Primitives/Navigation/Breadcrumbs](../libs/ui/src/lib/primitives/breadcrumbs/breadcrumbs.stories.ts).
+
+| Input       | Type                      | Default      |
+| ----------- | ------------------------- | ------------ |
+| `items`     | readonly `JpBreadcrumb[]` | `[]`         |
+| `ariaLabel` | string                    | `Breadcrumb` |
+
+Earlier items with `href` are links. Items without `href` are text. The last
+item is always text with `aria-current="page"`, including when it has
+`href`.
+
+## Feedback and overlays
 
-### `jp-empty-state`
+Dialogs call native `showModal()` when it exists. Anchored popovers, menus,
+combobox lists, and tooltips use the native popover top layer through the
+private overlay helpers (not re-exported). Positioning flips and clamps to
+the viewport. Escape and outside pointer dismiss the highest registered
+overlay first. If `showModal` or `showPopover` throws, the component falls
+back. That fallback does not claim the same clipping and inert behavior.
+
+### jp-skeleton
+
+Class `JpSkeleton`. Story:
+[Primitives/Feedback/Skeleton](../libs/ui/src/lib/primitives/skeleton/skeleton.stories.ts).
+
+| Input      | Type                          | Default |
+| ---------- | ----------------------------- | ------- |
+| `shape`    | `text`, `rectangle`, `circle` | `text`  |
+| `animated` | boolean                       | `true`  |
+
+The host is `aria-hidden`. `circle` uses a square aspect ratio. `text` and
+`rectangle` share the block styles. Size the host from the parent. Animation
+is disabled under `prefers-reduced-motion`. The application sets `aria-busy`
+and a named `jp-progress` or other status. The skeleton does not announce.
+
+### jp-progress
 
-| Input         | Values | Default | Notes                    |
-| ------------- | ------ | ------- | ------------------------ |
-| `title`       | string | —       | Required                 |
-| `description` | string | `''`    | Optional supporting copy |
+Class `JpProgress`. Story:
+[Primitives/Feedback/Progress](../libs/ui/src/lib/primitives/progress/progress.stories.ts).
+
+| Input       | Type             | Default                                |
+| ----------- | ---------------- | -------------------------------------- |
+| `label`     | string           | `Loading` (`aria-label`)               |
+| `value`     | number or `null` | `null` (indeterminate)                 |
+| `max`       | number           | `100`                                  |
+| `valueText` | string           | `''` (`aria-valuetext` when non-empty) |
+
+`role="progressbar"`. Non-finite or non-positive `max` becomes `100`.
+Non-finite `value` is indeterminate. Finite values clamp to `0..max`.
+
+### jp-inline-alert
+
+Class `JpInlineAlert`. Also exports `JP_INLINE_ALERT_TONES` and
+`JpInlineAlertTone`. Story:
+[Primitives/Feedback/InlineAlert](../libs/ui/src/lib/primitives/inline-alert/inline-alert.stories.ts).
+
+| Input or output                   | Type                                  | Default                      |
+| --------------------------------- | ------------------------------------- | ---------------------------- |
+| `tone`                            | `info`, `success`, `warning`, `error` | `info`                       |
+| `title`, `message`, `actionLabel` | string                                | `''`                         |
+| `action`                          | `void`                                | emitted by the action button |
 
-Host has `role="status"`. Optional icon via `[jpEmptyStateIcon]`. Actions via
-default content projection (typically `jp-button`).
+`tone="error"` uses `role="alert"`. Other tones use `role="status"`.
+The action button renders only when `actionLabel` is non-empty. Extra
+content can be projected. The application owns retry.
 
-### `jp-table`
+### jpFocusTrap
+
+Directive `JpFocusTrap`, selector `[jpFocusTrap]`. No standalone story. Dialog
+stories mount it. Spec: `libs/ui/src/lib/primitives/shared/focus-trap.ts`.
+
+| Input         | Type    | Default |
+| ------------- | ------- | ------- |
+| `jpFocusTrap` | boolean | `true`  |
+
+When active, Tab cycles inside the host. The directive moves focus itself so
+WebKit does not skip buttons. Also exported: `JP_FOCUSABLE_SELECTOR`,
+`getFocusableElements`, `focusFirstElement`, `trapTabKey`.
 
-| Input              | Values                               | Default     | Notes                                         |
-| ------------------ | ------------------------------------ | ----------- | --------------------------------------------- |
-| `caption`          | string                               | `''`        | Renders `<caption>` when non-empty            |
-| `columns`          | `JpSortableTableColumn[]`            | `[]`        | `key`, `header`, optional `align`, `sortable` |
-| `rows`             | `Record<string, JpTableCellValue>[]` | `[]`        | Cell values: string \| number \| nullish      |
-| `striped`          | boolean                              | `false`     | Alternating row background                    |
-| `emptyTitle`       | string                               | `'No data'` | Fallback when no projected empty state        |
-| `emptyDescription` | string                               | `''`        | Fallback description                          |
+### jp-tooltip
 
-`JpTableColumn.align`: `start` \| `center` \| `end` (default `start`).
+Class `JpTooltip`. Story:
+[Primitives/Feedback/Tooltip](../libs/ui/src/lib/primitives/tooltip/tooltip.stories.ts).
 
-Additional table inputs:
+| Input       | Type                             | Default  |
+| ----------- | -------------------------------- | -------- |
+| `content`   | string                           | required |
+| `placement` | `top`, `bottom`, `left`, `right` | `top`    |
 
-| Input/output      | Type                              | Default/behavior                                     |
-| ----------------- | --------------------------------- | ---------------------------------------------------- |
-| `sort`            | `JpTableSort \| null`             | `null`; `{ key, direction: 'asc' \| 'desc' }`        |
-| `sortChange`      | output                            | asc → desc → null; rows are not automatically sorted |
-| `selectable`      | boolean                           | `false`                                              |
-| `selectedKeys`    | readonly `(string \| number)[]`   | `[]`                                                 |
-| `selectionChange` | output                            | complete selected key array, retaining off-page keys |
-| `rowKey`          | field name or row-to-key function | `'id'`; keys must be unique/stable for selection     |
-| `rowLabel`        | row-to-string function            | first-column text for the row checkbox name          |
+Wrap a trigger. Pointer enter and focus show it. It stays open while the
+pointer is over the tooltip. Leave, blur, and Escape hide it. While open it
+appends its id to the trigger's `aria-describedby` and removes that token on
+close. Empty `content` does not open. The id is an incrementing counter.
 
-Columns enable sorting through `sortable: true`; headers expose `aria-sort`. Rows without a valid string/number key remain displayable but are not selectable.
+### jp-toast
 
-Rich cells: project `ng-template[jpTableCell]="columnKey"` with
-`let-value` (also `value`, `row`, `column` in context).
+Class `JpToast`. Story:
+[Primitives/Feedback/Toast](../libs/ui/src/lib/primitives/toast/toast.stories.ts).
 
-Empty rows: project `jp-empty-state` into the table; otherwise the fallback
-title/description render.
+| Input or output | Type                                             | Default                |
+| --------------- | ------------------------------------------------ | ---------------------- |
+| `message`       | string                                           | required               |
+| `tone`          | `neutral`, `success`, `warning`, `error`, `info` | `neutral`              |
+| `dismissed`     | `void`                                           | emitted by `dismiss()` |
 
----
+Host `role="status"`. Prefer `JpToastService` plus `jp-toast-outlet` for
+application toasts. `jp-toast` is the presentational piece the outlet renders.
 
-### `jp-table-toolbar`
+### JpToastService
 
-Inputs: `label` (`'Table controls'`), `activeFilters: readonly JpTableFilter[]` (`[]`, `{ key: string, label: string }`), `selectedCount` (`0`), `disabled` (`false`). Outputs: `removeFilter` (key string), `clearFilters` (void). Project controls using `[jpTableSearch]`, `[jpTableFilters]`, `[jpTableActions]`, and `[jpTableBulkActions]`; these are projection attributes, not exported directives. The consumer removes filters and executes actions.
+`providedIn: 'root'`. Same toast story as `jp-toast`.
 
-### `jp-pagination`
+| Member          | Behavior                                   |
+| --------------- | ------------------------------------------ |
+| `items`         | readonly signal of `JpToastItem`           |
+| `show(options)` | appends a toast and returns its numeric id |
+| `dismiss(id)`   | removes that id                            |
+| `clear()`       | removes every toast                        |
 
-Inputs: `page` (`1`), `pageSize` (`10`), `total` (`0`, record count), `disabled` (`false`), `label` (`'Table pagination'`). `pageChange` emits a one-based number bounded by available pages; the consumer updates the page and rows.
+`JpToastOptions` is `{ message: string; tone?: JpToastTone; durationMs?: number }`.
+`tone` defaults to `neutral`. `durationMs` defaults to `4000`. A duration
+greater than `0` schedules `dismiss` with `window.setTimeout`. The timer is
+skipped when `window` is undefined or when `durationMs` is not greater than
+`0`.
 
-## Navigation primitives
+### jp-toast-outlet
 
-### `jp-tabs` and `jpTabPanel`
+Class `JpToastOutlet`. Place one outlet near the application root. It reads
+`JpToastService.items`, renders a `jp-toast` per item, and is
+`aria-live="polite"`. It has no inputs.
 
-Inputs: `tabs: readonly JpTab[]` (`[]`, `{ value: string, label: string, disabled?: boolean }`), `ariaLabel` (`'Tabs'`), `id` (generated). `selectedValue` is a string model (`''`), supporting `[(selectedValue)]` and `selectedValueChange`; an absent/disabled selection falls back to the first enabled tab.
+### jp-dialog
 
-Import `JpTabs` and `JpTabPanel`. Project `<ng-template jpTabPanel="value">…</ng-template>` for each value. Panels stay instantiated and hidden while inactive. Activation is manual: arrows/Home/End move focus, Enter/Space selects. Horizontal arrows respect RTL and skip disabled tabs. Use a stable explicit `id` for server rendering.
+Class `JpDialog`. Story:
+[Primitives/Feedback/Dialog](../libs/ui/src/lib/primitives/dialog/dialog.stories.ts).
 
-### `jp-breadcrumbs`
+| Input or output | Type      | Default                                             |
+| --------------- | --------- | --------------------------------------------------- |
+| `open`          | boolean   | `false`                                             |
+| `openChange`    | `boolean` | emits `false` on Escape, scrim, or the close button |
+| `title`         | string    | required (`aria-labelledby`)                        |
+| `closeLabel`    | string    | `Close dialog`                                      |
 
-Inputs: `items: readonly JpBreadcrumb[]` (`[]`, `{ label: string, href?: string }`) and `ariaLabel` (`'Breadcrumb'`). Earlier items with `href` are links; the final item always renders current-page text with `aria-current="page"`.
+Uses `<dialog>` with `aria-modal="true"` and `jpFocusTrap` while open.
+Backdrop pointer and the `cancel` event close it. Focus returns to the
+opener, including a dropdown trigger that opened the dialog. Body content is
+the default slot. Actions use `[jpDialogActions]`. `titleId` is
+`Math.random()` and is not an input. The dialog element is created only
+while `open` is true.
 
----
+### jpDialogActions
+
+Directive `JpDialogActions`, selector `[jpDialogActions]`. Adds the actions
+class. No inputs.
 
-## Feedback & overlay primitives
+### jp-popover
 
-Feedback and overlays use semantic tokens and shared focus/dismissal coordination. Dialogs call native `showModal()`; anchored popovers, menus, combobox lists, and tooltips use the native popover top layer. Positioning flips/clamps to the viewport and updates on scrolling, resizing, and visual-viewport changes. Resources are cleaned up on close/destroy. Escape/outside click dismiss the highest registered overlay first. Browsers without native top-layer APIs use a fallback; full clipping/inert parity is not claimed.
+Class `JpPopover`. Story:
+[Primitives/Feedback/Popover](../libs/ui/src/lib/primitives/popover/popover.stories.ts).
 
-### `jp-skeleton`
+| Input or output | Type      | Default                                |
+| --------------- | --------- | -------------------------------------- |
+| `open`          | boolean   | `false`                                |
+| `openChange`    | `boolean` | Escape, outside pointer, or `toggle()` |
 
-Decorative `aria-hidden` placeholder. Inputs: `shape` (`'text'`, `'rectangle'`, `'circle'`, default `'text'`) and `animated` (`true`). Set `aria-busy` on the loading content region and provide separate status/progress information.
+`contentId` is `Math.random()`. Put `[jpPopoverTrigger]` on the anchor and
+`[jpPopoverContent]` on the panel. Both directives are children of
+`jp-popover` and inject it.
 
-### `jp-progress`
+### jpPopoverTrigger
 
-Named `role="progressbar"`. Inputs: `label` (`'Loading'`), `value: number | null` (`null` for indeterminate), `max` (`100`), `valueText` (`''`). Values are clamped to zero/max; invalid max falls back to 100 and nonfinite values become indeterminate.
+Directive `JpPopoverTrigger`, selector `[jpPopoverTrigger]`. Click toggles
+the parent popover and stops propagation. Sets `aria-expanded` and
+`aria-controls`.
 
-### `jp-inline-alert`
+### jpPopoverContent
 
-Inputs: `tone` (`'info'`, `'success'`, `'warning'`, `'error'`, default `'info'`), `title`, `message`, `actionLabel` (all `''`). Also supports projected content. `action` emits void. Error uses `role="alert"`; other tones use `role="status"`. Application code owns retries and request state.
+Directive `JpPopoverContent`, selector `[jpPopoverContent]`.
+`role="region"`. `hidden` while the popover is closed.
 
-### `jpFocusTrap`
+### jp-dropdown-menu
 
-Attribute directive that traps Tab within the host when active.
+Class `JpDropdownMenu`. Story:
+[Primitives/Feedback/Dropdown Menu](../libs/ui/src/lib/primitives/dropdown-menu/dropdown-menu.stories.ts).
 
-| Input         | Values  | Default | Notes                 |
-| ------------- | ------- | ------- | --------------------- |
-| `jpFocusTrap` | boolean | `true`  | Disable to pause trap |
+| Input or output | Type      | Default                                                 |
+| --------------- | --------- | ------------------------------------------------------- |
+| `open`          | boolean   | `false`                                                 |
+| `openChange`    | `boolean` | Escape, outside pointer, item activation, or `toggle()` |
 
-### `jp-tooltip`
+`menuId` is `Math.random()`. Opening moves focus to the first item. Closing
+returns focus to the trigger when focus is still inside the menu. An outside
+click does not steal focus from the element that was clicked. Arrow keys,
+Home, and End move between items.
+
+### jpDropdownTrigger
+
+Directive `JpDropdownTrigger`, selector `[jpDropdownTrigger]`.
+`aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`. Click toggles
+the parent menu.
+
+### jpDropdownMenuItem
+
+Directive `JpDropdownMenuItem`, selector `[jpDropdownMenuItem]`. Put it on a
+`button`.
+
+| Input or output | Type    | Default                                                   |
+| --------------- | ------- | --------------------------------------------------------- |
+| `disabled`      | boolean | `false` (`aria-disabled`, `tabindex="-1"`, click ignored) |
+| `itemSelect`    | `void`  | emitted before the menu closes                            |
+
+Enter and Space activate the native button.
+
+## Assistant
+
+The service is the source of open state, context, and messages. Content is
+plain text. There is no Markdown and no HTML parsing. The service does not
+perform network requests. Role labels on `jp-assistant-message` come from
+`JP_MESSAGES.assistant.roles`. English defaults are `You`, `Assistant`, and
+`System`.
+
+`JpAssistantContext` is
+`{ label: string; description?: string; entityType?: string; entityId?: string }`.
+`JpAssistantMessageRole` is `user`, `assistant`, or `system`.
+Response status is `pending`, `complete`, `error`, or `cancelled`.
 
-| Input       | Values                           | Default | Notes                 |
-| ----------- | -------------------------------- | ------- | --------------------- |
-| `content`   | string                           | —       | Required tooltip text |
-| `placement` | `top`, `bottom`, `left`, `right` | `top`   |                       |
-
-Wraps a trigger. Shows on pointer enter / focus and remains open while the pointer moves into the tooltip. Leave/blur/Escape dismiss. Its `aria-describedby` token is appended/removed while preserving existing descriptions.
-Sets `aria-describedby` on the trigger while open.
-
-### `jp-toast` / `JpToastService` / `jp-toast-outlet`
-
-| Piece             | Role                                               |
-| ----------------- | -------------------------------------------------- |
-| `JpToastService`  | `show({ message, tone?, durationMs? })`, `dismiss` |
-| `jp-toast-outlet` | Fixed stack host; place once near app root         |
-| `jp-toast`        | Presentational toast (`role="status"`)             |
-
-Toast tones: `neutral` \| `success` \| `warning` \| `error` \| `info`.
-
-### `jp-dialog`
-
-| Input / output | Type     | Default          | Notes                           |
-| -------------- | -------- | ---------------- | ------------------------------- |
-| `open`         | boolean  | `false`          | Controlled visibility           |
-| `openChange`   | `output` | —                | Emits on Escape / scrim / close |
-| `title`        | string   | —                | Required; labels the dialog     |
-| `closeLabel`   | string   | `'Close dialog'` | Close button accessible name    |
-
-Uses native `<dialog>` with `showModal()`, `aria-modal="true"`, focus trap while open, backdrop dismissal, and opener focus restoration on close. Actions slot: `[jpDialogActions]`.
-
-### `jp-popover`
-
-| Input / output | Type     | Default | Notes                  |
-| -------------- | -------- | ------- | ---------------------- |
-| `open`         | boolean  | `false` | Controlled             |
-| `openChange`   | `output` | —       | Escape / outside click |
-
-Trigger: `[jpPopoverTrigger]`. Content: `[jpPopoverContent]` (`role="region"`).
-
-### `jp-dropdown-menu`
-
-| Input / output | Type     | Default | Notes                         |
-| -------------- | -------- | ------- | ----------------------------- |
-| `open`         | boolean  | `false` | Controlled                    |
-| `openChange`   | `output` | —       | Escape / outside click / item |
-
-Trigger: `[jpDropdownTrigger]` (`aria-haspopup="menu"`). Items:
-`button[jpDropdownMenuItem]` with `(itemSelect)` output. Arrow keys move between
-items; Enter/Space activate via native button behavior.
-
----
-
-## Assistant primitives
-
-Branded assistant integration. No `class` / `style` inputs. Panel
-delivery follows the toast pattern: imperative service + panel host.
-
-### Tone refinement
-
-| Surface           | Rule                                                           |
-| ----------------- | -------------------------------------------------------------- |
-| Panel chrome      | Neutral raised/subtle surfaces — never accent wash backgrounds |
-| Context chip      | Compact accent signal (soft fill + strong text)                |
-| User message      | Subtle surface bubble; primary text                            |
-| Assistant message | Sunken/calm bubble; primary text; no brand-color fill          |
-| System message    | Muted caption text, no bubble                                  |
-| Send action       | Primary button (accent as action signal)                       |
-
-### `JpAssistantService`
-
-| Method / signal                | Role                                      |
-| ------------------------------ | ----------------------------------------- |
-| `isOpen`                       | Readonly open signal                      |
-| `context`                      | Readonly `JpAssistantContext \| null`     |
-| `messages`                     | Readonly `JpAssistantMessageItem[]`       |
-| `open(options?)`               | Open; optional `context`, `clearMessages` |
-| `close()`                      | Close panel                               |
-| `toggle()`                     | Toggle open state                         |
-| `setContext` / `clearContext`  | Manage entity context                     |
-| `addMessage` / `clearMessages` | Append or reset message list              |
-
-`JpAssistantContext`: `{ label, description?, entityType?, entityId? }`.
-
-Message roles: `user` \| `assistant` \| `system`. Assistant content renders as plain text, without Markdown or trusted HTML.
-
-Response lifecycle:
-
-| Method/signal                         | Contract                                      |
-| ------------------------------------- | --------------------------------------------- |
-| `isPending`                           | readonly pending-state signal                 |
-| `beginResponse(content = '')`         | returns a new numeric response ID             |
-| `updateResponse(id, accumulatedText)` | replaces accumulated pending content          |
-| `completeResponse(id, content?)`      | settles a pending response                    |
-| `failResponse(id, error?)`            | settles with readable error text              |
-| `cancelResponse(id)`                  | settles as cancelled                          |
-| `retryResponse(id)`                   | returns a new ID or `null` when not retryable |
-
-Messages may expose `responseStatus: 'pending' | 'complete' | 'error' | 'cancelled'`. Updates to settled, stale, or cleared IDs are ignored. The consumer owns transport cancellation and persistence.
-
-### `jpAssistantTrigger`
-
-Attribute directive. Click opens the panel via `JpAssistantService`.
-
-| Input                      | Type                         | Default | Notes         |
-| -------------------------- | ---------------------------- | ------- | ------------- |
-| `jpAssistantContext`       | `JpAssistantContext \| null` | `null`  | Set on open   |
-| `jpAssistantClearMessages` | boolean                      | `false` | Clear history |
-
-### `jp-assistant-message`
-
-| Input         | Values                        | Default     | Notes                          |
-| ------------- | ----------------------------- | ----------- | ------------------------------ |
-| `messageRole` | `user`, `assistant`, `system` | `assistant` | Tone classes (not HTML `role`) |
-| `content`     | string                        | —           | Required                       |
-
-### `jp-assistant-panel`
-
-| Input / output      | Type     | Default                                                              | Notes                       |
-| ------------------- | -------- | -------------------------------------------------------------------- | --------------------------- |
-| `title`             | string   | `'JP Assistant'`                                                     | Labels complementary region |
-| `closeLabel`        | string   | `'Close assistant'`                                                  | Close control name          |
-| `clearContextLabel` | string   | `'Clear context'`                                                    | Context chip dismiss name   |
-| `composerLabel`     | string   | `'Message the assistant'`                                            | Composer accessible name    |
-| `sendLabel`         | string   | `'Send'`                                                             | Send button label           |
-| `emptyTitle`        | string   | `'Ask about this surface'`                                           | Empty-state title           |
-| `emptyDescription`  | string   | `'Open the assistant from a context trigger, then send a question.'` | Empty-state description     |
-| `placeholder`       | string   | `'Ask a question…'`                                                  | Composer placeholder        |
-| `messageSubmit`     | `output` | —                                                                    | Emits user message text     |
-
-Reads open/context/messages from `JpAssistantService`. Escape closes. Focus moves
-to the composer on open. Desktop: fixed right dock. Mobile: scrim + overlay.
-Host apps can append a synchronous message with `addMessage`, or use the response lifecycle for asynchronous transport. Additional label inputs: `pendingLabel` (`'Generating response'`), `cancelLabel` (`'Stop response'`), `retryLabel` (`'Retry'`), `cancelledLabel` (`'Response stopped'`). `responseCancel` emits the cancelled numeric ID; `responseRetry` emits `{ previousId: number, responseId: number }`. Abort/restart your transport in these handlers; the service does not make network requests.
-
----
-
-## Storybook
-
-Component stories live in `libs/ui`:
-
-```bash
-npx nx run ui:storybook
-```
-
-Open http://localhost:4400 — browse `Primitives/Layout/*`, `Primitives/Typography/*`,
-`Primitives/Controls/*`, `Primitives/Data Display/*`, `Primitives/Feedback/*`, `Primitives/Navigation/*`, `Primitives/Assistant/*`,
-`Compositions/Layout Dashboard`, `Compositions/App Shell Dashboard`,
-`Compositions/Controls Form`, `Compositions/Data Display`,
-`Compositions/Feedback Overlays`, and `Compositions/Assistant System`.
-
-Stories wrap in `.jp-storybook-page` (sunken page fill). Canvas adds a **Dark stage** /
-**Light stage** toolbar (plus grid) for the mat behind the page; Docs keeps a fixed
-dark stage with no stage control. Manual checklist: [MANUAL_QA.md](../MANUAL_QA.md).
-
----
-
-## Showcase
-
-Interactive Angular host app for compositions and simulated product workflows. Use Storybook for primitive prop controls and accent/density toolbars:
-
-```bash
-npx nx run showcase:serve
-```
-
-The preview catalogue extends these APIs with checklist, stepper, numeric/range,
-timeline, overflow, and code/copy controls. See
-[COMPONENT_EXPANSION.md](COMPONENT_EXPANSION.md#product-tools-second-batch) for
-their full contracts, and Showcase `/product-tools` for the validated wizard
-and combined examples.
-
-Open http://localhost:4200/assistant (also `/product-recipes`, `/overlays`,
-`/data`, `/controls`, `/app-shell`, `/layout-dashboard`).
-
-Showcase pages show live `accent` / `density` readouts from `data-jp-accent` and
-`data-jp-density` on `<html>` (handy when toggling those attributes in DevTools).
-
-## Everyday workflow primitives
-
-Command palette, context menu, native date/range/time fields, file upload queue, notification inbox, button group/toggle/split, inline editing, skip link and announcement outlet/service are documented in [WORKFLOW_COMPONENTS.md](WORKFLOW_COMPONENTS.md). All are preview exports.
-
-Advanced layout preview APIs: [split panes, resilient images, and table extensions](ADVANCED_LAYOUT_COMPONENTS.md).
-
-## Larger preview features
-
-- [Tree view and hierarchical tables](HIERARCHY_COMPONENTS.md)
-- [Scheduling calendar](SCHEDULING_CALENDAR.md)
-- [Reordering and carousel](INTERACTION_COMPONENTS.md)
-- [Charts and large flat datasets](DATA_PERFORMANCE_COMPONENTS.md)
-
-[Verification and limits](qa/LARGE_FEATURES.md) describe the supported contracts and outstanding promotion reviews.
+### JpAssistantService
+
+`providedIn: 'root'`. Story:
+[Primitives/Assistant/Panel](../libs/ui/src/lib/primitives/assistant/assistant.stories.ts).
+Also exports `JpAssistantResponseStatus` and `JpAssistantResponseMessage`.
+
+| Member                                       | Behavior                                                                                                          |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `isOpen`, `context`, `messages`, `isPending` | readonly signals                                                                                                  |
+| `open(options?)`                             | opens; `options.context` replaces context when provided; `options.clearMessages` clears history first             |
+| `close()`                                    | closes                                                                                                            |
+| `toggle(options?)`                           | closes when open, otherwise `open(options)`                                                                       |
+| `setContext` / `clearContext`                | sets or clears context                                                                                            |
+| `addMessage({ role, content })`              | appends a finished message and returns its id                                                                     |
+| `clearMessages()`                            | removes every message                                                                                             |
+| `beginResponse(content = '')`                | appends a pending assistant message and returns its id                                                            |
+| `updateResponse(id, content)`                | replaces pending text for that id                                                                                 |
+| `completeResponse(id, content?)`             | settles pending as `complete`                                                                                     |
+| `failResponse(id, error?)`                   | settles pending as `error`; default error text is `The response could not be completed. Please try again.`        |
+| `cancelResponse(id)`                         | settles pending as `cancelled`                                                                                    |
+| `retryResponse(id)`                          | if status is `error` or `cancelled`, replaces that message with a new pending id and returns it; otherwise `null` |
+
+Updates for an id that is not pending are ignored. That covers settled,
+replaced, and cleared requests. `retryResponse` changes the id so a late
+chunk from the old transport cannot overwrite the retry.
+
+### jpAssistantTrigger
+
+Directive `JpAssistantTrigger`, selector `[jpAssistantTrigger]`.
+
+| Input                      | Type                           | Default |
+| -------------------------- | ------------------------------ | ------- |
+| `jpAssistantContext`       | `JpAssistantContext` or `null` | `null`  |
+| `jpAssistantClearMessages` | boolean                        | `false` |
+
+Click calls `open` with those values. It does not toggle closed.
+
+### jp-assistant-message
+
+Class `JpAssistantMessage`. Same assistant story.
+
+| Input         | Type                          | Default     |
+| ------------- | ----------------------------- | ----------- |
+| `messageRole` | `user`, `assistant`, `system` | `assistant` |
+| `content`     | string                        | required    |
+
+The input is `messageRole` so a template does not set the HTML `role`
+attribute to `assistant` or `system`. The visible role name defaults to
+`You`, `Assistant`, or `System` and comes from
+`JP_MESSAGES.assistant.roles`.
+
+### jp-assistant-panel
+
+Class `JpAssistantPanel`. Same assistant story. Place one panel. It reads
+the root service.
+
+| Input or output     | Type                                         | Default                                                            |
+| ------------------- | -------------------------------------------- | ------------------------------------------------------------------ |
+| `title`             | string                                       | `JP Assistant`                                                     |
+| `closeLabel`        | string                                       | `Close assistant`                                                  |
+| `clearContextLabel` | string                                       | `Clear context`                                                    |
+| `composerLabel`     | string                                       | `Message the assistant`                                            |
+| `sendLabel`         | string                                       | `Send`                                                             |
+| `pendingLabel`      | string                                       | `Generating response`                                              |
+| `cancelLabel`       | string                                       | `Stop response`                                                    |
+| `retryLabel`        | string                                       | `Retry`                                                            |
+| `cancelledLabel`    | string                                       | `Response stopped`                                                 |
+| `emptyTitle`        | string                                       | `Ask about this surface`                                           |
+| `emptyDescription`  | string                                       | `Open the assistant from a context trigger, then send a question.` |
+| `placeholder`       | string                                       | `Ask a question…`                                                  |
+| `messageSubmit`     | `string`                                     | trimmed composer text                                              |
+| `responseCancel`    | `number`                                     | the id the user stopped                                            |
+| `responseRetry`     | `{ previousId: number; responseId: number }` | emitted when `retryResponse` returns a new id                      |
+
+Enter sends. Shift+Enter inserts a newline. Escape closes. Focus moves to
+the composer on open and returns to the previous element on close. Submit is
+ignored while `isPending` is true or the draft is empty. The user message is
+added before `messageSubmit` emits. `responseCancel` also marks the response
+cancelled in the service; abort the transport in that handler. Restart
+transport with `responseId` from `responseRetry`. Desktop is a dock. At
+`max-width: 48rem` the panel uses a scrim and traps focus. The composer id
+is `jp-assistant-composer-N`.
+
+The copyable transport wiring is in [Recipes](consumers/RECIPES.md#assistant-transport).
+
+## Deprecated
+
+### lib-ui
+
+Class `Ui`, selector `lib-ui`. Exported with `@deprecated`. No Storybook
+story. The removal version is unassigned. New screens use the layout and
+typography primitives above. Details:
+[Compatibility](governance/COMPATIBILITY.md).
+
+## Preview APIs and extensions
+
+The following guides contain the additional component contracts. Their APIs
+remain preview pending the [remaining review tasks](../COMPONENT_EXPANSION_PLAN.md).
+
+| Guide                                              | Components and behaviors                                                                                                                                              |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Component expansion](COMPONENT_EXPANSION.md)      | Icons, links, disclosure, identity, cards/lists, field composition, selection, banners/drawers, stepper/checklist, numeric controls, timeline, overflow and code/copy |
+| [Everyday workflows](WORKFLOW_COMPONENTS.md)       | Commands/context menus, native date/time pickers, upload queues, notifications, grouped actions, inline edit, skip link and announcements                             |
+| [Advanced layout](ADVANCED_LAYOUT_COMPONENTS.md)   | Split panes, media and table visibility, resizing, pinned regions and row details                                                                                     |
+| [Hierarchy](HIERARCHY_COMPONENTS.md)               | Tree view and tree table                                                                                                                                              |
+| [Scheduling](SCHEDULING_CALENDAR.md)               | Day/week/agenda scheduling calendar                                                                                                                                   |
+| [Interactions](INTERACTION_COMPONENTS.md)          | Reordering and carousel                                                                                                                                               |
+| [Data performance](DATA_PERFORMANCE_COMPONENTS.md) | Chart.js integration and virtual table with paginated accessibility mode                                                                                              |
+
+`JpInput` search clearing/password revealing and `JpDialog` edge placements are
+preview extensions to their established default contracts. See the expansion
+guide for `clearable`, `revealPassword`, helper labels and `placement`.
+Optional advanced table behavior is also preview; the core controlled table
+contract above remains supported.
+
+Native dialog/popover top-layer APIs have fixed-position/open-attribute fallbacks.
+Those fallbacks do not promise identical clipping or inert behavior. See
+[browser and runtime support](localization/SUPPORT.md) and
+[verified scope](qa/VERIFICATION.md).

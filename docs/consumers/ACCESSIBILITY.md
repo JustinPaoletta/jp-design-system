@@ -87,7 +87,15 @@ inputs.
   accessibility tree. An icon that carries meaning needs text or an
   accessible name. Icon guidance is in [Icons](../content/ICONS.md).
 - Product language. Writing guidance is in [Writing](../content/WRITING.md).
-  Fixed English strings inside pagination, the table toolbar, the shell
-  chrome, chip remove names, and assistant role labels are listed in
-  [Components](./COMPONENTS.md). The localization contract is
-  [CONTRACT.md](../localization/CONTRACT.md).
+  Built-in pagination, table toolbar, shell, chip removal and assistant-role
+  copy is configurable through `JP_MESSAGES`. Caller-owned labels/content
+  need application translation. See the
+  [message contract](../localization/CONTRACT.md).
+
+## Preview interaction review
+
+Expanded controls, trees, scheduling, reordering, carousel, charts and virtual
+tables have automated keyboard/axe evidence but still require the human review
+in [MANUAL_QA.md](../../MANUAL_QA.md). Chart data equivalents and the virtual
+table's paginated mode support alternative reading/navigation; exercise them
+with the consumer's screen reader rather than treating automation as approval.

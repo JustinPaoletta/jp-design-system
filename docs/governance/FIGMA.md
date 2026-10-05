@@ -14,8 +14,8 @@ Code and Storybook remain the source of truth.
 
 ## Why
 
-Workstream 8 in the readiness plan is conditional on designer adoption. The
-adoption condition is not met:
+The optional design kit in the [remaining task list](../../COMPONENT_EXPANSION_PLAN.md)
+is conditional on designer adoption. The adoption condition is not met:
 
 - No designer is named anywhere in the repo as the kit owner.
 - No `.fig` file, Figma link, or token-sync config is part of the project.
@@ -31,14 +31,14 @@ A kit without an owner would drift from `libs/ui` and from
 
 Use these until a designer owner exists:
 
-| Question                        | Look here                                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Component API, states, keyboard | [PRIMITIVES.md](../PRIMITIVES.md) and Storybook (`npm exec nx run ui:storybook`, http://localhost:4400) |
-| What is safe to depend on       | [MATURITY.md](./MATURITY.md)                                                                            |
-| Visual rules                    | [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md)                                                         |
-| Tokens, accent, density         | `libs/tokens/README.md`, `tokens.css`, `data-jp-accent`, `data-jp-density`                              |
-| Product compositions            | [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md) and the composition stories                                 |
-| Click-through checks            | [MANUAL_QA.md](../../MANUAL_QA.md)                                                                      |
+| Question                        | Look here                                                                                                  |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Component API, states, keyboard | [PRIMITIVES.md](../PRIMITIVES.md) and Storybook (`npm exec -- nx run ui:storybook`, http://localhost:4400) |
+| What is safe to depend on       | [MATURITY.md](./MATURITY.md)                                                                               |
+| Visual rules                    | [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md)                                                            |
+| Tokens, accent, density         | `libs/tokens/README.md`, `tokens.css`, `data-jp-accent`, `data-jp-density`                                 |
+| Product compositions            | [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md) and the composition stories                                    |
+| Click-through checks            | [MANUAL_QA.md](../../MANUAL_QA.md)                                                                         |
 
 Accent values in code: `neon` (default) and `cobalt`. Density: `default` and
 `compact`. The theme is dark-first. The Storybook light stage is a mat behind

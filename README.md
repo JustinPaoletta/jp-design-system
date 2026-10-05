@@ -1,198 +1,89 @@
 # JP Design System
 
-Dark-first. Precision-engineered. Token-driven.
+A dark-first Angular component library for dashboards and software products.
+Components use semantic tokens, constrained APIs and explicit accessibility
+contracts. The private Nx workspace produces local UI and token packages.
 
-The JP Design System is a structured Angular component library for professional dashboards and software products. It prioritizes clarity, accessibility, and long-term maintainability over visual trend cycles.
+## Current status
 
-## Status
+Repository version: `0.0.0`. UI and distributed token package versions: `0.1.0`.
+No tagged release has been cut. The public class inventory is 36 stable,
+76 preview and one deprecated export; [maturity](docs/governance/MATURITY.md)
+records the contracts and limits. The accessibility target is WCAG 2.1 A/AA,
+with automated checks and manual assistive-technology review still open.
 
-- Type: private component-library monorepo
-- Repository version: `0.0.0`; local UI and token package versions: `0.1.0`
-- **Current milestone:** Product readiness: interactive recipes, expanded controls/navigation/data APIs, native overlays, quality gates, and local packages
-- **Next:** Manual assistive-technology review, CI verification, and release automation — see [JP_ROADMAP.md](./docs/JP_ROADMAP.md)
-- Release model: manual changelog + release branch flow in [RELEASE.md](./RELEASE.md)
+The [remaining task list](COMPONENT_EXPANSION_PLAN.md) contains five review,
+promotion and release items. Feature implementation and automated acceptance
+coverage are recorded in the [documentation index](docs/README.md) and
+[verification reference](docs/qa/VERIFICATION.md).
 
-## Quick Links
+## Getting started
 
-- Changelog: [CHANGELOG.md](./CHANGELOG.md)
-- Release process: [RELEASE.md](./RELEASE.md)
-- Roadmap: [docs/JP_ROADMAP.md](./docs/JP_ROADMAP.md)
-- Design principles: [docs/DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)
-- Primitive API: [docs/PRIMITIVES.md](./docs/PRIMITIVES.md)
-- App Shell plan: [docs/APP_SHELL_PLAN.md](./docs/APP_SHELL_PLAN.md)
-- Controls plan: [docs/CONTROLS_PLAN.md](./docs/CONTROLS_PLAN.md)
-- Data Display plan: [docs/DATA_DISPLAY_PLAN.md](./docs/DATA_DISPLAY_PLAN.md)
-- Feedback & Overlays plan: [docs/FEEDBACK_OVERLAYS_PLAN.md](./docs/FEEDBACK_OVERLAYS_PLAN.md)
-- Assistant System plan: [docs/ASSISTANT_SYSTEM_PLAN.md](./docs/ASSISTANT_SYSTEM_PLAN.md)
-- CI and branch protection: [docs/CI_BRANCH_PROTECTION.md](./docs/CI_BRANCH_PROTECTION.md)
-- Consumer guide: [docs/consumers/README.md](./docs/consumers/README.md)
+Use Node `24.21.0` from `.nvmrc` (`nvm install`, then `nvm use`) and npm 11.
+Install workspace dependencies and start either explorer:
 
-## Core Philosophy
-
-- Precision over decoration
-- Signal, not noise
-- Consistency over customization
-- Accessibility by default
-- Controlled brand evolution
-- Engineering-grade discipline
-
-This system is opinionated by design. Customization that weakens consistency is intentionally restricted.
-
-## Monorepo Architecture
-
-```text
-/apps
- /showcase # interactive integration app (including /product-recipes)
- /showcase-e2e # Playwright e2e for showcase
- /storybook # placeholder Angular shell (not the component Storybook)
- /storybook-e2e # Playwright scaffold for the storybook app
-
-/libs
- /tokens # design tokens (Style Dictionary)
- /ui # Angular primitives + Storybook target (port 4400)
-```
-
-**Showcase vs Storybook:** `npx nx run ui:storybook` is the interactive primitive explorer (controls, accent/density toolbar). Showcase is an Angular host app that proves compositions render correctly outside Storybook, including interactive product recipes backed by local simulated responses. The `apps/storybook` project is a minimal Angular shell only — it does not host component stories.
-
-## Tech Stack
-
-- Angular 22.2.1
-- Nx 23.2.1
-- TypeScript 6.0.3
-- Storybook 10.6.1
-- Jest and Playwright
-- Style Dictionary
-
-## Token and UI Principles
-
-### Tokens (`libs/tokens`)
-
-- Primitive tokens (palette, type, spacing, radius, motion)
-- Semantic aliases
-- Accent families (`data-jp-accent`)
-- Density modes (`data-jp-density`)
-- Dark-first theme
-
-Visual styling uses semantic tokens. Overlay positioning uses measured geometry and small pixel offsets; those coordinates are not theme values.
-
-### UI Library (`libs/ui`)
-
-Standalone Angular components with:
-
-- Strict typing
-- Token-based styling
-- WCAG 2.1 A/AA accessibility target, backed by automated checks. Manual assistive-technology review is still open.
-- Constrained API surface
-
-## Development Standards
-
-- Strict TypeScript
-- No `any`
-- No hardcoded colors in components
-- Token usage for spacing, color, radius, motion
-- CI-enforced lint + test + build
-
-## Product readiness additions
-
-Working examples live at Showcase `/product-recipes`: async save/retry, validated forms, search/sort/pagination, selection and destructive recovery. New primitives include skeleton, progress, inline alert, radio group, combobox, tabs, breadcrumbs, table toolbar and pagination.
-
-- [Product recipes](docs/PRODUCT_RECIPES.md)
-- [Quality checks](docs/QUALITY.md)
-- [Distribution and consumer smoke](docs/DISTRIBUTION.md)
-
-## Quick Start
-
-Use the project Node version in `.nvmrc` (`nvm install` followed by `nvm use`); this does not change your global default. Install dependencies:
-
-```bash
+```sh
 npm ci
+npm exec -- nx run ui:storybook
+npm exec -- nx run showcase:serve
 ```
 
-Run Showcase (interactive composition host):
+UI Storybook runs at http://localhost:4400. Showcase runs at
+http://localhost:4200 and redirects `/` to `/assistant`. Showcase demonstrates
+forms, workflows, hierarchy, scheduling, reordering, carousel, charts and
+virtual tables with local application state. `apps/storybook` is a placeholder
+Angular shell; component stories live under `libs/ui`.
 
-```bash
-npx nx run showcase:serve
-```
+Application consumers install the built tarballs and load token CSS. See
+[consumer setup](docs/consumers/GETTING_STARTED.md) and
+[distribution](docs/DISTRIBUTION.md).
 
-Run UI Storybook (component primitives):
+## Workspace
 
-```bash
-npx nx run ui:storybook
-```
+| Location                               | Purpose                                                                 |
+| -------------------------------------- | ----------------------------------------------------------------------- |
+| `libs/tokens`                          | Style Dictionary sources, generated semantic CSS/JSON and typed helpers |
+| `libs/ui`                              | Standalone Angular components, directives, services and Storybook       |
+| `apps/showcase`                        | Lazy-routed integration screens and product recipes                     |
+| `apps/showcase-e2e`                    | Chromium/WebKit functional, axe and macOS visual checks                 |
+| `apps/storybook`, `apps/storybook-e2e` | Placeholder Angular app and scaffolded checks                           |
+| `tools`                                | Documentation, package, release and token validation tools              |
 
-Showcase `/product-tools` demonstrates the second component batch: a validated
-wizard, nested checklist, numeric controls, timeline, overflow, and code copying.
-See [component contracts](docs/COMPONENT_EXPANSION.md#product-tools-second-batch)
-and the [remaining component task list](COMPONENT_EXPANSION_PLAN.md).
-Storybook contributors must preserve [per-server output isolation](docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated)
-to prevent continuous preview reloads.
+Workspace versions: Angular 22.2.1, Nx 23.2.1, TypeScript 6.0.3 and Storybook
+10.6.1. Jest and Playwright verify behavior. Charts use a browser-loaded
+Chart.js dependency. Runtime peer ranges are documented in
+[support](docs/localization/SUPPORT.md).
 
-Run baseline quality checks:
+## Development and verification
 
-```bash
+```sh
 npm run format:check
 npm run lint
 npm run test
 npm run typecheck
 npm run build
+npm exec -- nx run packages:check-release
+node tools/docs/check-links.mjs
 ```
 
-List projects:
+Use [Quality verification](docs/QUALITY.md) for Storybook, browser and visual
+commands. `npm run tokens:build` regenerates token output;
+`npm run tokens:check` checks drift. UI/application lint targets enforce zero
+warnings; inferred e2e lint targets currently retain existing warnings.
+Semantic-token guards reject hardcoded colors and primitive tokens in UI code.
 
-```bash
-npx nx show projects
-```
+Storybook infrastructure changes must preserve
+[per-port development output isolation](docs/governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated).
+The [reload incident](docs/qa/STORYBOOK_RELOAD_REGRESSION.md) explains the
+regression and its automated prevention.
 
-## Common Commands
+## References
 
-- `npm run tokens:build` regenerates token outputs
-- `npm run tokens:check` validates the token pipeline
-
-## Testing & Quality Gates
-
-Local baseline: formatting, lint/token drift, unit coverage, typecheck, and production builds. See [QUALITY.md](docs/QUALITY.md) for Storybook, Chromium/WebKit, and platform-specific visual checks; [DISTRIBUTION.md](docs/DISTRIBUTION.md) for isolated package compilation; [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) for dependency audit scope and remaining tooling advisories.
-
-Quality gates:
-
-- ESLint warnings treated as failures (`maxWarnings: 0`)
-- `@typescript-eslint/no-explicit-any` enforced
-- Hardcoded colors blocked (`npm run lint:colors`)
-- Primitive token usage blocked in components (`npm run lint:primitives`)
-- Token artifact drift blocked (`npm run tokens:check`)
-- CI: lint, unit/Storybook/Chromium/WebKit tests, typecheck/build, macOS visual regression, isolated package consumer, and runtime dependency audit (`.github/workflows/ci.yml`)
-
-Component or token releases should include manual Storybook and Showcase review for affected surfaces.
-See [MANUAL_QA.md](./MANUAL_QA.md) for the Storybook manual QA checklist (layout through assistant).
-
-## Release Process
-
-- Keep `CHANGELOG.md` updated under `## [Unreleased]`
-- Cut release branches as `release/vX.Y.Z` from the protected default branch
-- Until package publishing is introduced, treat releases as repository-level releases rather than per-library npm releases
-- Follow the full checklist in [RELEASE.md](./RELEASE.md)
-
-## Completed Milestones
-
-- Foundation: Nx monorepo, strict TypeScript, ESLint, Prettier, CI
-- Tokens: Token system (primitives, semantic aliases, density, accent, CSS output)
-- Layout: `jp-box`, `jp-stack`, `jp-inline`, `jp-grid`, `jp-surface`, `jp-text`, `jp-heading`, Showcase `/layout-dashboard`, Playwright e2e gate
-- App Shell: `jp-app-shell`, `jp-app-shell-nav-item`, mobile drawer, Showcase `/app-shell`, composition + e2e
-- Controls: `jp-button`, `jp-icon-button`, `jp-input`, `jp-textarea`, `jp-select`, `jp-checkbox`, `jp-switch`, Showcase `/controls`
-- Data Display: `jp-badge`, `jp-empty-state`, `jp-table`, Showcase `/data`
-- Feedback & Overlays: `jpFocusTrap`, `jp-tooltip`, `jp-toast`, `jp-dialog`, `jp-popover`, `jp-dropdown-menu`, Showcase `/overlays`
-- Assistant: `JpAssistantService`, `jpAssistantTrigger`, `jp-assistant-message`, `jp-assistant-panel`, Showcase `/assistant`
-- Product readiness: loading/recovery primitives, radio group/combobox, controlled table toolkit, tabs/breadcrumbs, request lifecycle, native overlay positioning, Showcase `/product-recipes`, and local APF/ESM packages
-
-## License
-
-MIT.
-
-## Component expansion
-
-The preview catalogue now includes 25 additional components for navigation,
-identity, structured content, forms, feedback, and drawers. Explore Showcase
-`/component-expansion` and [the API guide](docs/COMPONENT_EXPANSION.md).
-The [component task list](COMPONENT_EXPANSION_PLAN.md) records completed and
-remaining work; manual assistive-technology review remains pending.
-
-Everyday workflows adds thirteen preview components for commands, context actions, native dates/times, uploads, notifications, button combinations, editing and accessibility helpers. See [API contracts](docs/WORKFLOW_COMPONENTS.md) and [verification](docs/qa/WORKFLOWS.md). Showcase `/workflows` is linked from Product tools.
+- [Documentation and API guides](docs/README.md)
+- [Design principles](docs/DESIGN_PRINCIPLES.md)
+- [Consumer guide](docs/consumers/README.md)
+- [Accessibility/browser support](docs/qa/SUPPORT_MATRIX.md)
+- [Contribution and acceptance policy](docs/governance/README.md)
+- [Dependency security review](docs/SECURITY_REVIEW.md)
+- [CI and branch protection](docs/CI_BRANCH_PROTECTION.md)
+- [Changelog](CHANGELOG.md) and [release process](RELEASE.md)

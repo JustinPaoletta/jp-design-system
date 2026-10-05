@@ -17,7 +17,7 @@ The isolated consumer is `tools/consumer-smoke.mjs`. From a checkout of the
 commit you intend to install, run:
 
 ```sh
-npx nx run packages:smoke
+npm exec -- nx run packages:smoke
 ```
 
 That Nx target depends on `packages:build` (`tools/build-packages.mjs`), which
@@ -43,7 +43,7 @@ does all of the following:
 a pass. To keep the temporary application:
 
 ```sh
-KEEP_CONSUMER_SMOKE=1 npx nx run packages:smoke
+KEEP_CONSUMER_SMOKE=1 npm exec -- nx run packages:smoke
 ```
 
 Repeat that pack and `file:` install in an application you keep. Do not install

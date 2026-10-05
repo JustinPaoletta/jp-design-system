@@ -7,12 +7,12 @@ Support level is in [Maturity](../governance/MATURITY.md).
 
 ## Dialog, popover, dropdown, tooltip
 
-| Need                                                              | Use                                                    | Leave it                            |
-| ----------------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------- |
-| A decision that blocks the page, especially a destructive confirm | [`jp-dialog`](./COMPONENTS.md#jp-dialog)               | A menu or a hint                    |
-| Extra content anchored to a control, still part of the page       | [`jp-popover`](./COMPONENTS.md#jp-popover)             | A modal confirmation                |
-| A list of actions                                                 | [`jp-dropdown-menu`](./COMPONENTS.md#jp-dropdown-menu) | A dialog with one button per action |
-| A short name for an icon control                                  | [`jp-tooltip`](./COMPONENTS.md#jp-tooltip)             | Text the user must read to succeed  |
+| Need                                                              | Use                                                     | Leave it                            |
+| ----------------------------------------------------------------- | ------------------------------------------------------- | ----------------------------------- |
+| A decision that blocks the page, especially a destructive confirm | [`jp-dialog`](../PRIMITIVES.md#jp-dialog)               | A menu or a hint                    |
+| Extra content anchored to a control, still part of the page       | [`jp-popover`](../PRIMITIVES.md#jp-popover)             | A modal confirmation                |
+| A list of actions                                                 | [`jp-dropdown-menu`](../PRIMITIVES.md#jp-dropdown-menu) | A dialog with one button per action |
+| A short name for an icon control                                  | [`jp-tooltip`](../PRIMITIVES.md#jp-tooltip)             | Text the user must read to succeed  |
 
 All four are controlled where they have `open`. Bind `open` and `openChange`
 (`[(open)]` works). Escape closes the topmost registered overlay first.
@@ -25,10 +25,10 @@ that already has a name.
 
 ## Select and combobox
 
-| Need                                           | Use                                          |
-| ---------------------------------------------- | -------------------------------------------- |
-| A short, known list and the platform select UI | [`jp-select`](./COMPONENTS.md#jp-select)     |
-| Typing to narrow a single string value         | [`jp-combobox`](./COMPONENTS.md#jp-combobox) |
+| Need                                           | Use                                           |
+| ---------------------------------------------- | --------------------------------------------- |
+| A short, known list and the platform select UI | [`jp-select`](../PRIMITIVES.md#jp-select)     |
+| Typing to narrow a single string value         | [`jp-combobox`](../PRIMITIVES.md#jp-combobox) |
 
 Both are string `ControlValueAccessor`s. Combobox filters `options` locally
 by label. Set `loading` while the application fetches options, and set
@@ -38,8 +38,8 @@ not keep a set of selected values.
 
 ## Badge and chip
 
-[`jp-badge`](./COMPONENTS.md#jp-badge) is a status label. It does not remove
-anything. [`jp-chip`](./COMPONENTS.md#jp-chip) is one removable filter or
+[`jp-badge`](../PRIMITIVES.md#jp-badge) is a status label. It does not remove
+anything. [`jp-chip`](../PRIMITIVES.md#jp-chip) is one removable filter or
 selected value. The application deletes that value when `removed` emits.
 
 `jp-table-toolbar` still renders its own filter buttons (`Remove filter:`
@@ -48,25 +48,26 @@ toolbar. Use `jp-chip` for a filter row the application draws itself.
 
 ## Table and a simple list
 
-[`jp-table`](./COMPONENTS.md#jp-table) is for rows that share columns, with
+[`jp-table`](../PRIMITIVES.md#jp-table) is for rows that share columns, with
 optional sort and selection. It does not fetch, filter, sort the array, or
-page. Pair it with [`jp-table-toolbar`](./COMPONENTS.md#jp-table-toolbar) and
-[`jp-pagination`](./COMPONENTS.md#jp-pagination) when the screen has search,
+page. Pair it with [`jp-table-toolbar`](../PRIMITIVES.md#jp-table-toolbar) and
+[`jp-pagination`](../PRIMITIVES.md#jp-pagination) when the screen has search,
 filters, bulk actions, or pages. The [search recipe](./RECIPES.md#search-sort-and-pagination)
 owns the row array.
 
-There is no list primitive. A short collection of unlike blocks is
-[`jp-stack`](./COMPONENTS.md#jp-stack) (or [`jp-inline`](./COMPONENTS.md#jp-inline))
-inside [`jp-surface`](./COMPONENTS.md#jp-surface). Zero rows use
-[`jp-empty-state`](./COMPONENTS.md#jp-empty-state), either projected into the
+Use preview `JpList` for a semantic collection with an optional item template;
+use a stack/surface composition for unlike content blocks. `JpDescriptionList`
+pairs terms and values. These contracts are in
+[Component expansion](../COMPONENT_EXPANSION.md). Zero rows use
+[`jp-empty-state`](../PRIMITIVES.md#jp-empty-state), either projected into the
 table or rendered by the table's `emptyTitle`.
 
 ## Toast and inline alert
 
-| Need                                                                           | Use                                                                                                             |
-| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| A transient note that does not block the task                                  | [`JpToastService`](./COMPONENTS.md#jptoastservice) and one [`jp-toast-outlet`](./COMPONENTS.md#jp-toast-outlet) |
-| A failure or success the user must see next to the form or table, with a retry | [`jp-inline-alert`](./COMPONENTS.md#jp-inline-alert)                                                            |
+| Need                                                                           | Use                                                                                                               |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| A transient note that does not block the task                                  | [`JpToastService`](../PRIMITIVES.md#jptoastservice) and one [`jp-toast-outlet`](../PRIMITIVES.md#jp-toast-outlet) |
+| A failure or success the user must see next to the form or table, with a retry | [`jp-inline-alert`](../PRIMITIVES.md#jp-inline-alert)                                                             |
 
 Error alerts use `role="alert"`. Other alert tones and toasts use
 `role="status"`. The outlet is `aria-live="polite"`. Put the retry on the
@@ -101,3 +102,22 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
   [compatibility](../governance/COMPATIBILITY.md).
 - Installing from `libs/ui` or `libs/tokens` instead of the built tarballs.
   See [Getting started](./GETTING_STARTED.md).
+
+## Expanded choices
+
+| Need                                        | Use and boundary                                                                                                                |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Navigate to a destination                   | Native anchor with `jpLink`; use a button for an action. `JpLink` supports `RouterLink` on the same anchor.                     |
+| Several selected values                     | `JpMultiSelect` for searchable choices; `JpCheckboxGroup` for a visible group. `JpSegmentedControl` is a single compact choice. |
+| A search query or password                  | `JpSearchField` / `JpPasswordField`; combobox means choosing an option.                                                         |
+| Page-wide feedback or longer-lived history  | `JpBanner` / `JpNotificationList`; keep contextual errors near the control.                                                     |
+| Indeterminate work or a bounded measurement | `JpSpinner` / `JpMeter`; progress describes task completion.                                                                    |
+| A side/bottom task panel                    | `JpDrawer`; app-shell navigation is separate.                                                                                   |
+| Nested navigation/data                      | `JpTreeView` / `JpTreeTable`; provide stable IDs and controlled selection/expansion.                                            |
+| Large flat datasets                         | `JpVirtualTable` with fixed row height and paginated accessibility mode; ordinary tables support richer row details.            |
+| Appointments rather than date entry         | `JpSchedulingCalendar`; native pickers edit civil date/time strings.                                                            |
+| Compare values visually                     | `JpChart` plus equivalent native data; the application owns aggregation and dataset meaning.                                    |
+| Rearrange items or browse optional slides   | `JpReorder` / `JpCarousel`; carousel rotation is opt-in.                                                                        |
+
+All additional APIs above are preview. Use the [catalog](COMPONENTS.md) for
+contracts and limits, and [maturity](../governance/MATURITY.md) before adoption.

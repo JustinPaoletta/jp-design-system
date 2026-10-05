@@ -127,8 +127,9 @@ missing run as a pass:
 
 ### Localization — blocking for new strings
 
-- [ ] A new user-visible word is an input with a default, or the component is
-      `preview` and [MATURITY.md](./MATURITY.md) names the fixed string.
+- [ ] New built-in user-visible copy is a label input or a typed `JP_MESSAGES`
+      key with a usable default. Any unconfigurable copy must be recorded as
+      a preview gap in [MATURITY.md](./MATURITY.md).
 - [ ] Defaults stay usable in English. The library does not ship empty labels
       to force configuration.
 - [ ] Sentences are whole strings. Do not split "Page", a number, and "of"
@@ -136,16 +137,15 @@ missing run as a pass:
 - [ ] Counts and names that the consumer owns (table cells, toast `message`,
       assistant `content`, option labels) stay out of the library.
 
-Existing fixed copy that is already rated `preview` (shell chrome, pagination
-sentences, table-toolbar filter chrome, assistant role names) is listed in
-[MATURITY.md](./MATURITY.md). Adding another fixed string to a `stable`
-component is blocking.
+Shell chrome, pagination sentences, table-toolbar filter chrome and assistant
+role names now use `JP_MESSAGES`. See the [localization contract](../localization/CONTRACT.md).
+Adding unconfigurable built-in copy to a `stable` component is blocking.
 
 ### Tests — blocking
 
 - [ ] The unit spec next to the component covers the behavior you changed.
-- [ ] `npm exec nx test ui` passes for UI work. Token work passes
-      `npm exec nx test tokens` and `npm run tokens:check`.
+- [ ] `npm exec -- nx test ui` passes for UI work. Token work passes
+      `npm exec -- nx test tokens` and `npm run tokens:check`.
 - [ ] Form controls still prove CVA or `ngModel` behavior when their value
       path changes.
 - [ ] Storybook interaction coverage stays intact when the story has a `play`

@@ -35,7 +35,7 @@ Do not tag `1.0.0` until all of the following are true:
 
 1. The acceptance checklist is complete for every component classified as stable.
 2. Required CI is green on the release pull request: Lint, Test, Build, Visual regression (macOS), Package consumer, and Runtime dependency audit. Those jobs cover formatting, lint, unit tests, Storybook interaction tests, live Storybook middleware tests, Showcase Chromium and WebKit checks, typecheck, production build, the macOS visual baselines, `packages:smoke`, and `npm audit --omit=dev --audit-level=moderate`.
-3. Consumer smoke is green: `npx nx run packages:smoke` installs the workspace tarballs in an isolated Angular application and passes.
+3. Consumer smoke is green: `npm exec -- nx run packages:smoke` installs the workspace tarballs in an isolated Angular application and passes.
 4. The changelog is complete: `## [Unreleased]` describes the release, and `prepare.mjs` can move that section into `## [1.0.0] - YYYY-MM-DD`.
 
 The prepare script reminds the operator of these criteria. It does not judge the checklist or CI.
@@ -75,20 +75,21 @@ The release pull request must be green before merge. Artifacts are the workspace
 
 Hosted CI jobs, matching [.github/workflows/ci.yml](.github/workflows/ci.yml):
 
-| Check               | CI job                    | Command                                                                                             |
-| ------------------- | ------------------------- | --------------------------------------------------------------------------------------------------- |
-| Format and lint     | Lint                      | `npm run format:check` and `npm run lint`                                                           |
-| Unit tests          | Test                      | `npm run test`                                                                                      |
-| Storybook           | Test                      | `npx nx run ui:test-storybook` and `npx nx run ui:test-storybook-dev`                               |
-| Showcase end-to-end | Test                      | `npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"` |
-| Typecheck and build | Build                     | `npm run typecheck` and `npm run build`                                                             |
-| macOS visual        | Visual regression (macOS) | `npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual"`                         |
-| Consumer smoke      | Package consumer          | `npx nx run packages:smoke`                                                                         |
-| Runtime audit       | Runtime dependency audit  | `npm audit --omit=dev --audit-level=moderate`                                                       |
+| Check               | CI job                    | Command                                                                                                   |
+| ------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------- | -------------------- | --------------- | ---------------------- | ------------------------ |
+| Format and lint     | Lint                      | `npm run format:check` and `npm run lint`                                                                 |
+| Unit tests          | Test                      | `npm run test`                                                                                            |
+| Storybook           | Test                      | `npm exec -- nx run ui:test-storybook` and `npm exec -- nx run ui:test-storybook-dev`                     |
+| Showcase end-to-end | Test                      | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"` |
+| Typecheck and build | Build                     | `npm run typecheck` and `npm run build`                                                                   |
+| macOS visual        | Visual regression (macOS) | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual                         | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"` |
+| Release safety      | Build                     | `npm exec -- nx run packages:check-release`                                                               |
+| Consumer smoke      | Package consumer          | `npm exec -- nx run packages:smoke`                                                                       |
+| Runtime audit       | Runtime dependency audit  | `npm audit --omit=dev --audit-level=moderate`                                                             |
 
 Also review the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the reviewed check described in [QUALITY.md](docs/QUALITY.md).
 
-`.github/workflows/release.yml` is `workflow_dispatch` only. It takes a `version` input and refuses to run except to demonstrate a dry-run on a `release/*` branch or manual dispatch. It checks out the repository, runs `npm ci`, runs `node tools/release/prepare.mjs --version <input> --dry-run`, then `npx nx run packages:build` and `npx nx run packages:smoke`. Permissions are `contents: read`. It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.
+`.github/workflows/release.yml` is `workflow_dispatch` only. It takes a `version` input and refuses to run except to demonstrate a dry-run on a `release/*` branch or manual dispatch. It checks out the repository, runs `npm ci`, runs `node tools/release/prepare.mjs --version <input> --dry-run`, then `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:build` and `npm exec -- nx run packages:smoke`. Permissions are `contents: read`. It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.
 
 ## Release checklist
 

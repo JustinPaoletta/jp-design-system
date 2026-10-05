@@ -87,5 +87,5 @@ Package consumer CI already builds and compiles the distributed tarballs.
 The release workflow still has read-only GitHub permissions and does not tag
 or publish.
 
-Local verification: **seven release checks passed**. Formatting, Showcase e2e
-lint and all 403 local documentation links also pass.
+Local verification: **seven release checks passed**. Current integrated CI
+results and evidence revisions are recorded in [Verification](VERIFICATION.md).

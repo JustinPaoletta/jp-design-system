@@ -20,9 +20,13 @@ compiler hash matches the runtime served by that same server. The live test
 runner checks its own server and, when present, the default preview before and
 after the suite. Production output is unaffected.
 
-Verification: all 66 Storybook suites / 198 interaction and accessibility checks
+Incident-time verification: all 66 Storybook suites / 198 interaction and accessibility checks
 passed against port 4500 with the restored preview on 4400 running throughout.
 Both servers passed the compiler/runtime checks before and after testing.
 The static production Storybook suite also passed all 198 checks, and the UI
 lint target passed. The restored browser preview rendered normally with no new
 HMR reload warnings during either run.
+
+The current suite totals and confirmed revisions are recorded in
+[Verification](VERIFICATION.md). Keep the per-port output and runtime guards
+when changing Storybook tooling.

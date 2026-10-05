@@ -4,7 +4,7 @@ Showcase route `/product-recipes` is the working composition for forms,
 search, selection, and destructive confirmation. `/assistant` is the
 assistant surface. The narrative for both is
 [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md). Serve the app with
-`npx nx run showcase:serve` (http://localhost:4200). The page sources are
+`npm exec -- nx run showcase:serve` (http://localhost:4200). The page sources are
 [`product-recipes.page.ts`](../../apps/showcase/src/app/pages/product-recipes/product-recipes.page.ts)
 and
 [`assistant.page.ts`](../../apps/showcase/src/app/pages/assistant/assistant.page.ts).

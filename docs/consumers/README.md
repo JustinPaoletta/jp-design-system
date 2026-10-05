@@ -14,8 +14,8 @@ maturity, and compatibility rules live under
 ## Navigation
 
 This tree is the consumer guide. Live examples are Storybook
-(`npx nx run ui:storybook`, http://localhost:4400). Working application
-compositions are the Showcase app (`npx nx run showcase:serve`,
+(`npm exec -- nx run ui:storybook`, http://localhost:4400). Working application
+compositions are the Showcase app (`npm exec -- nx run showcase:serve`,
 http://localhost:4200).
 
 | Guide                                   | Use it to                                                                                                  |
