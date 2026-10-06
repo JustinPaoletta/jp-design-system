@@ -32,8 +32,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check formatting
-        run: npm run format:check
+      - name: Show formatter output for media template
+        run: |
+          npx prettier --write libs/ui/src/lib/primitives/media/media.html
+          git diff -- libs/ui/src/lib/primitives/media/media.html
+          exit 1
 
       - name: Lint
         run: npm run lint
