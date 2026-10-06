@@ -16,8 +16,7 @@
       [hidden]="phase() === 'failed'"
       (load)="onLoad(imageSrc)"
       (error)="onError(imageSrc)"
-    />}
-    @if (phase() !== 'loaded') {
+    />} @if (phase() !== 'loaded') {
     <span
       class="jp-media__placeholder"
       [attr.role]="alt() && phase() === 'failed' ? 'img' : null"
