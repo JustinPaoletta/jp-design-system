@@ -75,17 +75,17 @@ The release pull request must be green before merge. Artifacts are the workspace
 
 Hosted CI jobs, matching [.github/workflows/ci.yml](.github/workflows/ci.yml):
 
-| Check               | CI job                    | Command                                                                                                   |
-| ------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------- | -------------------- | --------------- | ---------------------- | ------------------------ |
-| Format and lint     | Lint                      | `npm run format:check` and `npm run lint`                                                                 |
-| Unit tests          | Test                      | `npm run test`                                                                                            |
-| Storybook           | Test                      | `npm exec -- nx run ui:test-storybook` and `npm exec -- nx run ui:test-storybook-dev`                     |
-| Showcase end-to-end | Test                      | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
-| Typecheck and build | Build                     | `npm run typecheck` and `npm run build`                                                                   |
-| macOS visual        | Visual regression (macOS) | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
-| Release safety      | Build                     | `npm exec -- nx run packages:check-release`                                                               |
-| Consumer smoke      | Package consumer          | `npm exec -- nx run packages:smoke`                                                                       |
-| Runtime audit       | Runtime dependency audit  | `npm audit --omit=dev --audit-level=moderate`                                                             |
+| Check | CI job | Command |
+| --- | --- | --- |
+| Format and lint | Lint | `npm run format:check` and `npm run lint` |
+| Unit tests | Test | `npm run test` |
+| Storybook | Test | `npm exec -- nx run ui:test-storybook` and `npm exec -- nx run ui:test-storybook-dev` |
+| Showcase end-to-end | Test | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
+| Typecheck and build | Build | `npm run typecheck` and `npm run build` |
+| macOS visual | Visual regression (macOS) | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
+| Release safety | Build | `npm exec -- nx run packages:check-release` |
+| Consumer smoke | Package consumer | `npm exec -- nx run packages:smoke` |
+| Runtime audit | Runtime dependency audit | `npm audit --omit=dev --audit-level=moderate` |
 
 Also examine the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the examined check described in [QUALITY.md](docs/QUALITY.md).
 
