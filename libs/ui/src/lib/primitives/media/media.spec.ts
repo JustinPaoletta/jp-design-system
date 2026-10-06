@@ -50,9 +50,11 @@ describe('JpMedia', () => {
     );
     fixture.componentRef.setInput('src', '/repaired.svg');
     fixture.detectChanges();
-    expect(img.hidden).toBe(false);
+    const repaired = root.querySelector('img') as HTMLImageElement;
+    expect(repaired).not.toBe(img);
+    expect(repaired.hidden).toBe(false);
     expect(fixture.componentInstance.phase()).toBe('loading');
-    img.dispatchEvent(new Event('load'));
+    repaired.dispatchEvent(new Event('load'));
     expect(fixture.componentInstance.phase()).toBe('loaded');
     fixture.componentRef.setInput('aspectRatio', 0);
     expect(fixture.componentInstance.ratio()).toBe(16 / 9);
@@ -79,13 +81,19 @@ describe('JpMedia', () => {
     ).toBe('true');
     expect(root.textContent).toContain('Image indisponible');
   });
-  it('ignores events from a superseded source', () => {
+  it('ignores queued events from the image instance for a superseded source', () => {
     const fixture = setup();
-    const oldImage = document.createElement('img');
-    oldImage.setAttribute('src', '/old.svg');
-    const event = { target: oldImage } as unknown as Event;
-    fixture.componentInstance.onLoad(event);
-    fixture.componentInstance.onError(event);
+    const root = fixture.nativeElement as HTMLElement;
+    const oldImage = root.querySelector('img') as HTMLImageElement;
+    const loaded = jest.spyOn(fixture.componentInstance.loaded, 'emit');
+    const failed = jest.spyOn(fixture.componentInstance.failed, 'emit');
+    fixture.componentRef.setInput('src', '/new.svg');
+    fixture.detectChanges();
+    expect(root.querySelector('img')).not.toBe(oldImage);
+    oldImage.dispatchEvent(new Event('load'));
+    oldImage.dispatchEvent(new Event('error'));
     expect(fixture.componentInstance.phase()).toBe('loading');
+    expect(loaded).not.toHaveBeenCalled();
+    expect(failed).not.toHaveBeenCalled();
   });
 });

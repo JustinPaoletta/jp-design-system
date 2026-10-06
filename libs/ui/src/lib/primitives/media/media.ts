@@ -42,16 +42,14 @@ export class JpMedia {
       ? this.aspectRatio()
       : 16 / 9,
   );
-  onLoad(event: Event): void {
-    if ((event.target as HTMLImageElement).getAttribute('src') !== this.src())
-      return;
-    this.state.set({ src: this.src(), phase: 'loaded' });
+  onLoad(source: string): void {
+    if (source !== this.src()) return;
+    this.state.set({ src: source, phase: 'loaded' });
     this.loaded.emit();
   }
-  onError(event: Event): void {
-    if ((event.target as HTMLImageElement).getAttribute('src') !== this.src())
-      return;
-    this.state.set({ src: this.src(), phase: 'failed' });
+  onError(source: string): void {
+    if (source !== this.src()) return;
+    this.state.set({ src: source, phase: 'failed' });
     this.failed.emit();
   }
 }

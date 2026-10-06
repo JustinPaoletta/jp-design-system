@@ -53,6 +53,7 @@ export class JpContextMenu {
     inject(DestroyRef).onDestroy(() => this.cleanup?.());
     afterRenderEffect(() => {
       this.anchorRevision();
+      if (this.disabled() && this.open()) this.open.set(false);
       const panel = this.panel()?.nativeElement;
       if (this.open() && !this.disabled() && panel && !this.cleanup) {
         const anchor = (this.usePoint ? this.point() : this.trigger())

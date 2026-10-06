@@ -105,6 +105,18 @@ describe('JpContextMenu', () => {
     expect(c.open()).toBe(false);
     expect(document.activeElement).toBe(outside);
     outside.remove();
+    c.show();
+    f.detectChanges();
+    await f.whenStable();
+    expect(c.open()).toBe(true);
+    f.componentRef.setInput('disabled', true);
+    f.detectChanges();
+    await f.whenStable();
+    expect(c.open()).toBe(false);
+    f.componentRef.setInput('disabled', false);
+    f.detectChanges();
+    await f.whenStable();
+    expect(c.open()).toBe(false);
     f.componentRef.setInput('disabled', true);
     f.detectChanges();
     c.show();

@@ -4,8 +4,9 @@
     [style.aspect-ratio]="ratio()"
     [attr.aria-busy]="phase() === 'loading'"
   >
+    @for (imageSrc of [src()]; track imageSrc) {
     <img
-      [src]="src()"
+      [src]="imageSrc"
       [alt]="alt()"
       [attr.srcset]="srcset() || null"
       [attr.sizes]="sizes() || null"
@@ -13,9 +14,10 @@
       decoding="async"
       [style.object-fit]="fit()"
       [hidden]="phase() === 'failed'"
-      (load)="onLoad($event)"
-      (error)="onError($event)"
+      (load)="onLoad(imageSrc)"
+      (error)="onError(imageSrc)"
     />
+    }
     @if (phase() !== 'loaded') {
     <span
       class="jp-media__placeholder"
