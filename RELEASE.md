@@ -75,7 +75,9 @@ The release pull request must be green before merge. Artifacts are the workspace
 
 Hosted CI jobs, matching [.github/workflows/ci.yml](.github/workflows/ci.yml):
 
-Required job checks are Format and lint (Lint), Unit tests and Storybook and Showcase end-to-end (Test), Typecheck and build and Release safety (Build), macOS visual (Visual regression (macOS)), Consumer smoke (Package consumer), and Runtime audit (Runtime dependency audit).
+Required jobs cover formatting, linting, tests, Storybook, browser checks, type checks, builds, release safety, package consumption, and the runtime audit.
+
+The macOS visual job runs the examined visual check. The other browser checks run in the Test job.
 
 Run the non-visual Showcase browser check with this command:
 
