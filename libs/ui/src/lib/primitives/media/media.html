@@ -4,8 +4,7 @@
     [style.aspect-ratio]="ratio()"
     [attr.aria-busy]="phase() === 'loading'"
   >
-    @for (imageSrc of [src()]; track imageSrc) {
-      <img
+    @for(imageSrc of [src()];track imageSrc){<img
         [src]="imageSrc"
         [alt]="alt()"
         [attr.srcset]="srcset() || null"
@@ -16,8 +15,7 @@
         [hidden]="phase() === 'failed'"
         (load)="onLoad(imageSrc)"
         (error)="onError(imageSrc)"
-      />
-    }
+    />}
     @if (phase() !== 'loaded') {
     <span
       class="jp-media__placeholder"
