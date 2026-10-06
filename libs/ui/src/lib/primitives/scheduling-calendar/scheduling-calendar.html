@@ -1,0 +1,147 @@
+<section
+  class="calendar"
+  [attr.aria-label]="label()"
+  [attr.aria-busy]="loading()"
+>
+  <div class="toolbar">
+    <div class="navigation">
+      <jp-button
+        variant="secondary"
+        size="sm"
+        [disabled]="calendar().invalid"
+        (click)="navigate(-1)"
+        >{{ messages.previous }}</jp-button
+      >
+      @if (todayValid()) {
+      <jp-button variant="secondary" size="sm" (click)="goToday()"
+        >{{ messages.today }}</jp-button
+      >
+      }
+      <jp-button
+        variant="secondary"
+        size="sm"
+        [disabled]="calendar().invalid"
+        (click)="navigate(1)"
+        >{{ messages.next }}</jp-button
+      >
+    </div>
+    <div class="modes">
+      <div class="toggle">
+        <button
+          type="button"
+          [attr.aria-pressed]="view() === 'day'"
+          (click)="view.set('day')"
+        >
+          {{ messages.day }}
+        </button>
+        <button
+          type="button"
+          [attr.aria-pressed]="view() === 'week'"
+          (click)="view.set('week')"
+        >
+          {{ messages.week }}
+        </button>
+      </div>
+      <div class="toggle">
+        <button
+          type="button"
+          [attr.aria-pressed]="layout() === 'schedule'"
+          (click)="layout.set('schedule')"
+        >
+          {{ messages.schedule }}
+        </button>
+        <button
+          type="button"
+          [attr.aria-pressed]="layout() === 'agenda'"
+          (click)="layout.set('agenda')"
+        >
+          {{ messages.agenda }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="period" role="status" aria-live="polite" aria-atomic="true">
+    <strong>{{ rangeLabel() }}</strong
+    ><span>{{ timeZone() }} · {{ messages.events(eventCount()) }}</span>
+  </div>
+  @if (loading()) {
+  <p class="state" role="status">{{ messages.loading }}</p>
+  } @else if (error()) {
+  <div class="state" role="alert">
+    <p>{{ error() || messages.failed }}</p>
+    <jp-button variant="secondary" (click)="retry.emit()"
+      >{{ messages.retry }}</jp-button
+    >
+  </div>
+  } @else if (calendar().invalid) {
+  <p class="state" role="alert">{{ messages.invalid }}</p>
+  } @else { @if (calendar().invalidEvents) {
+  <p class="state" role="status">
+    {{ messages.invalidEvents(calendar().invalidEvents) }}
+  </p>
+  } @if (!eventCount()) {
+  <p class="state">{{ messages.empty }}</p>
+  }
+  <div
+    class="days"
+    role="region"
+    tabindex="0"
+    [attr.aria-label]="messages.schedule + ', ' + rangeLabel()"
+    [class.agenda]="layout() === 'agenda'"
+    [style.--columns]="columns()"
+    [style.--all-day-size]="allDaySize() + 'rem'"
+  >
+    @for (day of calendar().days; track day.date) {
+    <section
+      class="day"
+      [attr.aria-label]="day.label"
+      [class.today]="day.date === today()"
+    >
+      <h3><time [attr.datetime]="day.date">{{ day.label }}</time></h3>
+      <ul class="all-day">
+        @for (event of day.allDay; track event.id) {
+        <li>
+          <button
+            type="button"
+            class="appointment"
+            [attr.aria-label]="event.title + ', ' + messages.allDay + ', ' + day.label"
+            (click)="eventActivated.emit(event)"
+          >
+            <strong>{{ event.title }}</strong><span>{{ messages.allDay }}</span>
+          </button>
+        </li>
+        }
+      </ul>
+      <div class="timeline" [style.--minutes]="day.duration">
+        <div class="hours" aria-hidden="true">
+          @for (hour of day.hours; track hour.minute) {
+          <span [style.top.rem]="hour.minute / 20">{{ hour.label }}</span> }
+        </div>
+        <ul class="timed">
+          @for (item of day.timed; track item.event.id) {
+          <li
+            [style.top.rem]="item.displayStart / 20"
+            [style.height.rem]="(item.displayEnd - item.displayStart) / 20"
+            [style.inset-inline-start.%]="item.lane * 100 / item.lanes"
+            [style.width.%]="100 / item.lanes"
+          >
+            <button
+              type="button"
+              class="appointment"
+              [class.appointment--short]="item.displayEnd - item.displayStart < 60"
+              [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
+              [title]="item.event.title + ' · ' + item.timeLabel"
+              (click)="eventActivated.emit(item.event)"
+            >
+              <strong>{{ item.event.title }}</strong
+              ><span>{{ item.timeLabel }}</span>
+            </button>
+          </li>
+          }
+        </ul>
+      </div>
+    </section>
+    }
+  </div>
+  }
+</section>

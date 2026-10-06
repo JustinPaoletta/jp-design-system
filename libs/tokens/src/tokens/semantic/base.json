@@ -166,6 +166,14 @@
       "context-bg": { "value": "{color.accent.soft}" },
       "context-fg": { "value": "{color.accent.contrast}" },
       "context-border": { "value": "{color.accent.muted}" }
+    },
+    "chart": {
+      "series-1": { "value": "{color.accent.muted}" },
+      "series-2": { "value": "{primitive.color.accent.cobalt.300}" },
+      "series-3": { "value": "{color.text.primary}" },
+      "series-4": { "value": "{color.text.muted}" },
+      "axis": { "value": "{color.text.secondary}" },
+      "grid": { "value": "{color.border.default}" }
     }
   },
   "space": {

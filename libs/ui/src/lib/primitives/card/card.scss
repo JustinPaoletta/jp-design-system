@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+article {
+  padding: var(--jp-space-lg);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+header,
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+header {
+  margin-block-end: var(--jp-space-md);
+}
+footer {
+  margin-block-start: var(--jp-space-md);
+}
+header:empty,
+footer:empty {
+  display: none;
+}
+.body {
+  overflow-wrap: anywhere;
+}

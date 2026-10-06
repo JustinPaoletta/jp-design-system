@@ -1,0 +1,48 @@
+<fieldset [disabled]="isDisabled()" [attr.aria-describedby]="describedBy()">
+  <legend>{{label()}}</legend>
+  <div class="dates">
+    <div class="jp-input__field">
+      <label class="jp-input__label" [for]="resolvedId()+'-start'"
+        >{{startLabel()}}</label
+      ><input
+        class="jp-input__control"
+        type="date"
+        [id]="resolvedId()+'-start'"
+        [value]="value()[0]"
+        [attr.min]="min() || null"
+        [attr.max]="max() || null"
+        [readOnly]="readonly()"
+        [required]="required()"
+        [attr.aria-invalid]="error()?true:null"
+        [attr.aria-describedby]="describedBy()"
+        (input)="update(0,$event)"
+        (blur)="blur()"
+      />
+    </div>
+    <div class="jp-input__field">
+      <label class="jp-input__label" [for]="resolvedId()+'-end'"
+        >{{endLabel()}}</label
+      ><input
+        class="jp-input__control"
+        type="date"
+        [id]="resolvedId()+'-end'"
+        [value]="value()[1]"
+        [attr.min]="min() || null"
+        [attr.max]="max() || null"
+        [readOnly]="readonly()"
+        [required]="required()"
+        [attr.aria-invalid]="error()?true:null"
+        [attr.aria-describedby]="describedBy()"
+        (input)="update(1,$event)"
+        (blur)="blur()"
+      />
+    </div>
+  </div>
+  @if(error()){
+  <p class="jp-input__error" [id]="resolvedId()+'-error'" role="alert">
+    {{error()}}
+  </p>
+  } @else if(hint()){
+  <p class="jp-input__hint" [id]="resolvedId()+'-hint'">{{hint()}}</p>
+  }
+</fieldset>

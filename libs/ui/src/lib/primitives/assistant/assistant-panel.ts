@@ -12,6 +12,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 import { JpInlineAlert } from '../inline-alert/inline-alert';
 import { JpProgress } from '../progress/progress';
@@ -44,6 +45,7 @@ let nextAssistantPanelId = 0;
   },
 })
 export class JpAssistantPanel implements OnInit {
+  private readonly jpMessages = inject(JP_MESSAGES);
   private readonly assistantService = inject(JpAssistantService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -62,22 +64,20 @@ export class JpAssistantPanel implements OnInit {
   readonly messages = this.assistantService.messages;
   readonly isPending = this.assistantService.isPending;
 
-  readonly title = input('JP Assistant');
-  readonly closeLabel = input('Close assistant');
-  readonly clearContextLabel = input('Clear context');
-  readonly composerLabel = input('Message the assistant');
-  readonly sendLabel = input('Send');
-  readonly pendingLabel = input('Generating response');
-  readonly cancelLabel = input('Stop response');
-  readonly retryLabel = input('Retry');
-  readonly cancelledLabel = input('Response stopped');
+  readonly title = input(this.jpMessages.assistant.title);
+  readonly closeLabel = input(this.jpMessages.assistant.close);
+  readonly clearContextLabel = input(this.jpMessages.assistant.clearContext);
+  readonly composerLabel = input(this.jpMessages.assistant.composerLabel);
+  readonly sendLabel = input(this.jpMessages.assistant.send);
+  readonly pendingLabel = input(this.jpMessages.assistant.pending);
+  readonly cancelLabel = input(this.jpMessages.assistant.cancel);
+  readonly retryLabel = input(this.jpMessages.assistant.retry);
+  readonly cancelledLabel = input(this.jpMessages.assistant.cancelled);
   readonly responseCancel = output<number>();
   readonly responseRetry = output<{ previousId: number; responseId: number }>();
-  readonly emptyTitle = input('Ask about this surface');
-  readonly emptyDescription = input(
-    'Open the assistant from a context trigger, then send a question.',
-  );
-  readonly placeholder = input('Ask a question…');
+  readonly emptyTitle = input(this.jpMessages.assistant.emptyTitle);
+  readonly emptyDescription = input(this.jpMessages.assistant.emptyDescription);
+  readonly placeholder = input(this.jpMessages.assistant.placeholder);
 
   readonly messageSubmit = output<string>();
 

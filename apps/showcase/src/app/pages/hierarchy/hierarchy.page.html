@@ -1,0 +1,59 @@
+<div class="page">
+  <jp-page-header
+    title="Hierarchy and project structure"
+    description="Browse assets and inspect nested project work."
+  />
+  <div class="workspace">
+    <jp-card title="Asset browser">
+      <p>
+        Arrow keys move focus without selecting. Enter opens an asset; Space
+        selects it. Use the disclosure arrow to expand a folder.
+      </p>
+      <div class="actions">
+        <jp-button variant="secondary" (click)="folders.set([])"
+          >Collapse folders</jp-button
+        >
+      </div>
+      <jp-tree-view
+        id="asset-browser"
+        label="Design assets"
+        [nodes]="assets()"
+        [expandedKeys]="folders()"
+        (expandedKeysChange)="folders.set($event)"
+        [selectedKey]="selectedAsset()"
+        (selectedKeyChange)="selectedAsset.set($event)"
+        (activated)="opened.set('Opened ' + $event.label)"
+        (loadRequested)="load($event)"
+      />
+      <p class="selection">
+        Selected asset: <strong>{{ assetName() }}</strong>
+      </p>
+      <p class="hint">
+        Shared library simulates an unavailable request. Expand it, then retry
+        with Enter or the retry control.
+      </p>
+      <p role="status">{{ opened() }}</p>
+    </jp-card>
+    <jp-card title="Project breakdown">
+      <p>
+        Expand project groups using their buttons. Each checkbox selects one
+        row; selecting a parent does not select its children.
+      </p>
+      <jp-tree-table
+        id="project-breakdown"
+        caption="Project work"
+        nameHeader="Task"
+        [rows]="projects"
+        [columns]="columns"
+        selectable
+        [expandedKeys]="expandedProjects()"
+        (expandedKeysChange)="expandedProjects.set($event)"
+        [selectedKeys]="selectedProjects()"
+        (selectedKeysChange)="selectedProjects.set($event)"
+      />
+      <p class="selection" role="status">
+        {{ selectedProjects().length }} project rows selected
+      </p>
+    </jp-card>
+  </div>
+</div>

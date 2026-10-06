@@ -2,19 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import {
   type JpAssistantMessageRole,
   JP_ASSISTANT_MESSAGE_ROLES,
 } from '../shared/primitive-types';
 import { createStringUnionTransform } from '../shared/token-maps';
-
-const ROLE_LABELS: Record<JpAssistantMessageRole, string> = {
-  user: 'You',
-  assistant: 'Assistant',
-  system: 'System',
-};
 
 @Component({
   selector: 'jp-assistant-message',
@@ -29,6 +25,7 @@ const ROLE_LABELS: Record<JpAssistantMessageRole, string> = {
   },
 })
 export class JpAssistantMessage {
+  private readonly messages = inject(JP_MESSAGES);
   /**
    * Named `messageRole` (not `role`) so templates never set the HTML `role`
    * attribute to non-ARIA values like "system" / "assistant".
@@ -42,5 +39,7 @@ export class JpAssistantMessage {
 
   readonly content = input.required<string>();
 
-  readonly roleLabel = computed(() => ROLE_LABELS[this.messageRole()]);
+  readonly roleLabel = computed(
+    () => this.messages.assistant.roles[this.messageRole()],
+  );
 }

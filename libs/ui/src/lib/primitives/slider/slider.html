@@ -1,0 +1,44 @@
+<div class="heading">
+  <label [for]="resolvedId()">{{ label() }}</label
+  ><span class="value">{{ valueText()(displayedValue()) }}</span>
+</div>
+<div class="controls">
+  <input
+    class="slider"
+    type="range"
+    [id]="resolvedId()"
+    [attr.name]="name() || null"
+    [value]="displayedValue()"
+    [min]="lower()"
+    [max]="upper()"
+    [step]="safeStep()"
+    [disabled]="isDisabled() || readonly()"
+    [attr.aria-valuetext]="valueText()(displayedValue())"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="error() ? true : null"
+    (input)="change($event)"
+    (blur)="blur()"
+  />
+  @if (showNumberInput()) {
+  <input
+    class="number"
+    type="number"
+    [attr.aria-label]="label()"
+    [value]="displayedValue()"
+    [min]="lower()"
+    [max]="upper()"
+    [step]="safeStep()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonly()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="error() ? true : null"
+    (change)="change($event)"
+    (blur)="blur()"
+  />
+  }
+</div>
+@if (hint()) {
+<p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+} @if (error()) {
+<p class="error" [id]="resolvedId() + '-error'">{{ error() }}</p>
+}

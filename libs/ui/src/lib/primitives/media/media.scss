@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+figure {
+  margin: 0;
+}
+.jp-media__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+}
+img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+img[hidden] {
+  display: none;
+}
+.jp-media__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--jp-space-md);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  text-align: center;
+}
+figcaption {
+  margin-block-start: var(--jp-space-xs);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+  overflow-wrap: anywhere;
+}

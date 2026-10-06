@@ -1,0 +1,18 @@
+:host {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-2xs);
+}
+kbd {
+  padding: var(--jp-space-2xs) var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-surface-subtle);
+  color: var(--jp-color-text-secondary);
+  font-family: var(--jp-font-family-mono);
+  font-size: var(--jp-font-size-caption);
+}
+.separator {
+  color: var(--jp-color-text-muted);
+}

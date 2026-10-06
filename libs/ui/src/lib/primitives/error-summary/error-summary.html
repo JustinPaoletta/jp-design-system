@@ -1,0 +1,17 @@
+@if (errors().length) {
+<section #panel tabindex="-1" [attr.aria-labelledby]="titleId()">
+  <h2 [id]="titleId()">{{ title() }}</h2>
+  <ul>
+    @for (error of errors(); track $index) {
+    <li>
+      <a
+        jpLink
+        [attr.href]="'#' + error.controlId"
+        (click)="focusControl($event, error.controlId)"
+        >{{ error.message }}</a
+      >
+    </li>
+    }
+  </ul>
+</section>
+}

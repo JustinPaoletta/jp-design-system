@@ -1,0 +1,74 @@
+<div class="field" (focusout)="onFocusOut($event)">
+  <label [attr.for]="resolvedId()">{{ label() }}</label>
+  <div class="selected">
+    @for (option of selected(); track option.value) {
+    <jp-chip
+      [label]="option.label"
+      [disabled]="isDisabled() || !!option.disabled"
+      (removed)="remove(option)"
+    />
+    }
+  </div>
+  <input
+    #control
+    [id]="resolvedId()"
+    role="combobox"
+    type="text"
+    autocomplete="off"
+    [placeholder]="placeholder()"
+    [value]="query()"
+    [disabled]="isDisabled()"
+    [attr.aria-expanded]="isOpen() && !isDisabled()"
+    aria-haspopup="listbox"
+    aria-autocomplete="list"
+    [attr.aria-controls]="isOpen() && !isDisabled() ? resolvedId() + '-list' : null"
+    [attr.aria-activedescendant]="activeId()"
+    [attr.aria-required]="required() || null"
+    [attr.aria-invalid]="error() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    (focus)="open()"
+    (click)="open()"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+    (blur)="onBlur()"
+  />
+  @if (isOpen() && !isDisabled()) {
+  <div #popup class="popup">
+    @if (loading()) {
+    <p role="status">{{ loadingText() }}</p>
+    }@else if (!filteredOptions().length) {
+    <p role="status">{{ emptyText() }}</p>
+    }
+    <div
+      [id]="resolvedId() + '-list'"
+      role="listbox"
+      aria-multiselectable="true"
+      [attr.aria-busy]="loading()"
+      [attr.aria-label]="label()"
+    >
+      @if (!loading()) { @for (option of filteredOptions(); track option.value)
+      {
+      <div
+        class="option"
+        role="option"
+        tabindex="-1"
+        [id]="resolvedId() + '-option-' + $index"
+        [class.active]="activeIndex() === $index"
+        [attr.aria-selected]="value().includes(option.value)"
+        [attr.aria-disabled]="option.disabled || null"
+        (pointerdown)="$event.preventDefault()"
+        (click)="toggle(option)"
+        (keydown.enter)="toggle(option)"
+      >
+        <span>{{ option.label }}</span>@if (value().includes(option.value)) {
+        <jp-icon name="check" /> }
+      </div>
+      } }
+    </div>
+  </div>
+  } @if (hint()) {
+  <p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+  }@if (error()) {
+  <p class="error" role="alert" [id]="resolvedId() + '-error'">{{ error() }}</p>
+  }
+</div>

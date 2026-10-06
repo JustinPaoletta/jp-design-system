@@ -1,0 +1,33 @@
+<figure>
+  <div
+    class="jp-media__frame"
+    [style.aspect-ratio]="ratio()"
+    [attr.aria-busy]="phase() === 'loading'"
+  >
+    <!-- prettier-ignore -->
+    @for(imageSrc of [src()];track imageSrc){<img
+      [src]="imageSrc"
+      [alt]="alt()"
+      [attr.srcset]="srcset() || null"
+      [attr.sizes]="sizes() || null"
+      [attr.loading]="loading()"
+      decoding="async"
+      [style.object-fit]="fit()"
+      [hidden]="phase() === 'failed'"
+      (load)="onLoad(imageSrc)"
+      (error)="onError(imageSrc)"
+    />} @if (phase() !== 'loaded') {
+    <span
+      class="jp-media__placeholder"
+      [attr.role]="alt() && phase() === 'failed' ? 'img' : null"
+      [attr.aria-label]="alt() && phase() === 'failed' ? alt() : null"
+      [attr.aria-hidden]="alt() ? null : 'true'"
+    >
+      {{ phase() === 'failed' ? errorLabel() : loadingLabel() }}
+    </span>
+    }
+  </div>
+  @if (caption()) {
+  <figcaption>{{ caption() }}</figcaption>
+  }
+</figure>

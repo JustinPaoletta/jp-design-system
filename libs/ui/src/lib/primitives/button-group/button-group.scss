@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-xs);
+}
+:host(.vertical) {
+  flex-direction: column;
+  align-items: stretch;
+}

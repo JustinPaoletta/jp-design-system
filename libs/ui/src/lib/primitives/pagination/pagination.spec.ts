@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideJpMessages } from '../../i18n';
 import { JpPagination } from './pagination';
 
 describe('JpPagination', () => {
@@ -50,5 +51,36 @@ describe('JpPagination', () => {
     expect(fixture.componentInstance.currentPage()).toBe(1);
     expect(fixture.componentInstance.safeSize()).toBe(10);
     expect(fixture.componentInstance.safeTotal()).toBe(0);
+  });
+
+  it('renders the range and page summaries from JP_MESSAGES', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [JpPagination],
+      providers: [
+        provideJpMessages({
+          pagination: {
+            next: 'Nächste Seite',
+            range: ({ start, end, total }) =>
+              `Einträge ${start} bis ${end} von insgesamt ${total} Einträgen in dieser Ansicht`,
+            page: ({ page, pageCount }) => `Seite ${page} von ${pageCount}`,
+          },
+        }),
+      ],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(JpPagination);
+    fixture.componentRef.setInput('total', 42);
+    fixture.detectChanges();
+    const text = fixture.nativeElement.textContent as string;
+    expect(text).toContain(
+      'Einträge 1 bis 10 von insgesamt 42 Einträgen in dieser Ansicht',
+    );
+    expect(text).toContain('Seite 1 von 5');
+    expect(text).toContain('Nächste Seite');
+    expect(text).toContain('First page');
+    expect(text).not.toContain('1–10 of 42');
+    expect(
+      fixture.nativeElement.querySelector('nav')?.getAttribute('aria-label'),
+    ).toBe('Table pagination');
   });
 });

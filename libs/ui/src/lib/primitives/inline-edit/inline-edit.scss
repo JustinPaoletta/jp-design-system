@@ -1,0 +1,52 @@
+@use '../input/input';
+:host {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+button {
+  min-block-size: var(--jp-size-control-md);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-button-secondary-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-button-secondary-bg);
+  color: var(--jp-color-button-secondary-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+button:hover:not(:disabled) {
+  background: var(--jp-color-button-secondary-bg-hover);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:host {
+  display: block;
+}
+.display,
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm);
+}
+.display span {
+  overflow-wrap: anywhere;
+  min-inline-size: 0;
+}
+.actions {
+  margin-block-start: var(--jp-space-xs);
+}
+form {
+  display: grid;
+  gap: var(--jp-space-xs);
+}
+p {
+  margin: 0;
+}

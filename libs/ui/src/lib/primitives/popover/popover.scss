@@ -11,8 +11,8 @@
 
 :host ::ng-deep .jp-popover__content {
   position: absolute;
-  top: calc(100% + var(--jp-space-2xs));
-  left: 0;
+  inset-block-start: calc(100% + var(--jp-space-2xs));
+  inset-inline-start: 0;
   z-index: var(--jp-z-overlay-popover);
   box-sizing: border-box;
   min-width: 14rem;

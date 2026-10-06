@@ -111,6 +111,21 @@ describe('App', () => {
     );
   });
 
+  it.each([
+    ['/product-recipes', 'app-product-recipes-page'],
+    ['/component-expansion', 'app-component-expansion-page'],
+    ['/product-tools', 'app-product-tools-page'],
+  ])('loads the %s catalogue route lazily', async (url, selector) => {
+    const router = TestBed.inject(Router);
+    const fixture = TestBed.createComponent(App);
+    await router.navigateByUrl(url);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe(url);
+    expect(fixture.nativeElement.querySelector(selector)).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('jp-app-shell')).toBeTruthy();
+  });
+
   it('should redirect root to assistant', async () => {
     const router = TestBed.inject(Router);
     const fixture = TestBed.createComponent(App);

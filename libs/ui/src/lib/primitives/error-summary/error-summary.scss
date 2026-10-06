@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+section {
+  padding: var(--jp-space-md);
+  border: 1px solid var(--jp-color-state-error-border);
+  border-radius: var(--jp-radius-md);
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+  font-family: var(--jp-font-family-base);
+}
+section:focus {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+h2 {
+  font-size: var(--jp-font-size-body);
+  margin: 0;
+}
+ul {
+  margin-block: var(--jp-space-sm) 0;
+  padding-inline-start: var(--jp-space-lg);
+}
+li + li {
+  margin-block-start: var(--jp-space-xs);
+}

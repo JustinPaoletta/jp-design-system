@@ -1,0 +1,18 @@
+<ul>
+  @for (item of items(); track item.id) {
+  <li>
+    @if (itemTemplate(); as custom) {
+    <ng-container
+      [ngTemplateOutlet]="custom.template"
+      [ngTemplateOutletContext]="{ $implicit: item }"
+    />
+    } @else {
+    <div class="copy">
+      <strong>{{ item.title }}</strong>@if (item.description) {
+      <p>{{ item.description }}</p>
+      }
+    </div>
+    @if (item.meta) { <span class="meta">{{ item.meta }}</span> } }
+  </li>
+  }
+</ul>

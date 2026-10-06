@@ -1,0 +1,12 @@
+<figure>
+  <figcaption>
+    <span>{{ label() }}</span>@if (language()) {
+    <span class="language">{{ language() }}</span> }@if (copyable()) {
+    <jp-copy-button [text]="code()" /> }
+  </figcaption>
+  <pre
+    dir="ltr"
+    tabindex="0"
+    [attr.aria-label]="label()"
+  ><code>{{ code() }}</code></pre>
+</figure>

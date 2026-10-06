@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--jp-font-family-base);
+  color: var(--jp-color-text-primary);
+}
+figure {
+  margin: 0;
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-md);
+  overflow: hidden;
+  background: var(--jp-color-surface-sunken);
+}
+figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+  font-size: var(--jp-font-size-caption);
+}
+figcaption > span:first-child {
+  font-weight: var(--jp-font-weight-medium);
+}
+.language {
+  color: var(--jp-color-text-secondary);
+}
+jp-copy-button {
+  margin-inline-start: auto;
+}
+pre {
+  margin: 0;
+  padding: var(--jp-space-md);
+  overflow: auto;
+  max-block-size: 24rem;
+  font-family: var(--jp-font-family-mono);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+  tab-size: 2;
+}
+pre:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: -2px;
+}
+code {
+  font: inherit;
+}

@@ -1,0 +1,13 @@
+<header>
+  <div class="breadcrumbs"><ng-content select="[jpPageBreadcrumbs]" /></div>
+  <div class="row">
+    <div class="copy">
+      <jp-heading [as]="headingLevel()">{{ title() }}</jp-heading>@if
+      (description()) {
+      <p>{{ description() }}</p>
+      }
+      <div class="meta"><ng-content select="[jpPageMeta]" /></div>
+    </div>
+    <div class="actions"><ng-content select="[jpPageActions]" /></div>
+  </div>
+</header>

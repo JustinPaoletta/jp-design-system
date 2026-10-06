@@ -1,0 +1,49 @@
+<fieldset [disabled]="isDisabled()">
+  <legend>{{ label() }}</legend>
+  <p class="summary" role="status" aria-live="polite">
+    <bdi>{{ summaryLabel()({ completed: completed(), total: total() }) }}</bdi>
+  </p>
+  <ng-container
+    [ngTemplateOutlet]="tree"
+    [ngTemplateOutletContext]="{ $implicit: items() }"
+  />
+  @if (!items().length) {
+  <p class="description">{{ emptyText() }}</p>
+  }
+</fieldset>
+<ng-template #tree let-items>
+  <ul>
+    @for (item of items; track item.id) { @if (rowById().get(item.id); as row) {
+    <li>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="checked(row)"
+          [indeterminate]="mixed(row)"
+          [disabled]="isDisabled() || row.disabled"
+          (change)="toggle(row, $event)"
+          (blur)="blur()"
+        />
+        <span
+          class="box"
+          [class.selected]="checked(row) || mixed(row)"
+          aria-hidden="true"
+        >
+          @if (mixed(row)) { <jp-icon name="minus" /> } @else if (checked(row))
+          { <jp-icon name="check" /> }
+        </span>
+        <span
+          ><span class="name">{{ item.label }}</span>@if (item.description) {
+          <span class="description">{{ item.description }}</span> }</span
+        >
+      </label>
+      @if (item.children?.length) {
+      <ng-container
+        [ngTemplateOutlet]="tree"
+        [ngTemplateOutletContext]="{ $implicit: item.children }"
+      />
+      }
+    </li>
+    } }
+  </ul>
+</ng-template>

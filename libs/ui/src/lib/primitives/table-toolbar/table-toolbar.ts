@@ -2,9 +2,11 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 
 export interface JpTableFilter {
@@ -21,7 +23,8 @@ export interface JpTableFilter {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JpTableToolbar {
-  readonly label = input('Table controls');
+  private readonly messages = inject(JP_MESSAGES);
+  readonly label = input(this.messages.tableToolbar.label);
   readonly activeFilters = input<readonly JpTableFilter[]>([]);
   readonly selectedCount = input(0);
   readonly disabled = input(false, { transform: booleanAttribute });

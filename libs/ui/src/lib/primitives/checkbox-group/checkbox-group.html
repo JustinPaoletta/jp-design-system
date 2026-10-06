@@ -1,0 +1,26 @@
+<fieldset
+  [disabled]="isDisabled()"
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-invalid]="error() ? true : null"
+>
+  <legend>{{ label() }}</legend>
+  <div class="options">
+    @for (option of options(); track option.value) {
+    <label
+      ><input
+        type="checkbox"
+        [checked]="value().includes(option.value)"
+        [disabled]="isDisabled() || !!option.disabled"
+        [attr.value]="option.value"
+        (change)="toggle(option, $event)"
+        (blur)="onBlur()"
+      />{{ option.label }}</label
+    >
+    }
+  </div>
+  @if (hint()) {
+  <p class="hint" [id]="resolvedId() + '-hint'">{{ hint() }}</p>
+  }@if (error()) {
+  <p class="error" [id]="resolvedId() + '-error'" role="alert">{{ error() }}</p>
+  }
+</fieldset>

@@ -1,0 +1,23 @@
+<section
+  [style.border-color]="border()"
+  [style.background]="background()"
+  [attr.role]="announce() ? (tone() === 'error' ? 'alert' : 'status') : 'region'"
+  [attr.aria-label]="title()"
+>
+  <div class="copy">
+    <strong>{{ title() }}</strong>@if (message()) {
+    <p>{{ message() }}</p>
+    }<ng-content />
+  </div>
+  <div class="actions">
+    <ng-content select="[jpBannerActions]" />@if (dismissible()) {
+    <button
+      type="button"
+      [attr.aria-label]="dismissLabel()"
+      (click)="dismissed.emit()"
+    >
+      <jp-icon name="close" />
+    </button>
+    }
+  </div>
+</section>

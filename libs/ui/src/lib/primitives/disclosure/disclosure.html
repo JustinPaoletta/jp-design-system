@@ -1,0 +1,4 @@
+<details [open]="open()" [attr.name]="groupName()" (toggle)="onToggle($event)">
+  <summary>{{ title() }}<jp-icon name="chevron-down" /></summary>
+  <div class="content"><ng-content /></div>
+</details>

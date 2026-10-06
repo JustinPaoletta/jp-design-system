@@ -1,23 +1,70 @@
 # Product recipes
 
-Open Showcase `/product-recipes` for working application compositions. The API transport is deliberately simulated: each action fails once so failure recovery is repeatable, then retry succeeds. Replace `request()` with your application service and keep request state owned by the consumer.
+Showcase `/product-recipes` demonstrates application compositions.
+The simulated API makes each action fail once and then succeed on retry.
+This makes failure recovery repeatable.
+Replace `request()` with your application service.
+Keep request state in the application.
 
 ## Validated asynchronous save
 
-Use Angular reactive forms, bind `formControlName` to the JP controls implementing ControlValueAccessor, and supply `error` only after touch or submission. Required/native attributes are forwarded to the inner input; validation remains an application concern. `jp-radio-group` and `jp-combobox` implement ControlValueAccessor just like the existing fields. A loading button prevents duplicate submit, preserves its accessible name with `loadingLabel`, and retains the form values on failure. Render an inline alert with a Retry action; a successful retry clears the error.
+1. Use Angular reactive forms.
+2. Bind `formControlName` to JP controls that implement ControlValueAccessor.
+3. After touch or submission, supply the applicable `error`.
+4. On failure, render an inline alert with a Retry action.
+
+Required/native attributes pass to the inner input.
+The application controls validation.
+`jp-radio-group` and `jp-combobox` implement ControlValueAccessor, like the existing fields.
+A loading button prevents duplicate submission and keeps its accessible name through `loadingLabel`.
+It keeps form values on failure.
+A successful retry clears the error.
 
 ## Searchable paginated table
 
-Keep source rows, query, sort, page and selected keys in the consumer. `jp-table` emits sort and selection changes; it does not fetch or mutate application data. Provide a stable `rowKey`. Sorting/query changes reset the page. Selection includes off-page keys, allowing bulk actions across pages. `jp-pagination` uses one-based page numbers and total record count. The toolbar projects search, filter and bulk-action controls. Distinguish zero matches from failed requests; keep previous data visible during refresh failure.
+Keep source rows, query, sort, page and selected keys in the application.
+`jp-table` emits sort and selection changes.
+It does not fetch or change application data.
+Give a stable `rowKey`.
+When sort or query changes, reset the page.
+
+Selection includes keys from other pages, which permits bulk actions across pages.
+`jp-pagination` uses one-based page numbers and the total record count.
+The toolbar projects search, filter and bulk-action controls.
+Show separate states for zero matches and failed requests.
+During a failed refresh, keep previous data visible.
 
 ## Destructive confirmation
 
-Open a dialog from selection, disable competing actions during the request, and keep confirmation open if deletion fails. Remove only confirmed selected rows after success; reset selection and pagination then. The example permits a second attempt after its simulated failure.
+1. Open a dialog for the selected items.
+2. During the request, disable competing actions.
+3. If deletion fails, keep the confirmation open.
+4. After success, remove only the selected rows whose deletion succeeded.
+5. Reset selection and pagination.
+
+The example lets the user try again after its simulated failure.
 
 ## Assistant transport integration
 
-Call `beginResponse()` to obtain a request ID, `updateResponse(id, accumulatedText)` for streaming, then `completeResponse(id)` or `failResponse(id, readableError)`. Listen to panel `responseCancel` to abort your transport. `responseRetry` emits `{ previousId, responseId }`: restart transport using `event.responseId`. Updates to old/settled/cleared requests are ignored. Transport, persistence, authorization and content policy belong to the consuming application.
+1. Call `beginResponse()` to obtain a request ID.
+2. For streaming, call `updateResponse(id, accumulatedText)`.
+3. To finish, call `completeResponse(id)` or `failResponse(id, readableError)`.
+4. To abort the transport, listen to panel `responseCancel`.
+5. When `responseRetry` emits, restart the transport with `event.responseId`.
+
+`responseRetry` emits `{ previousId, responseId }`.
+The service ignores updates to old, settled or cleared requests.
+The application controls transport, saved state, authorization and content policy.
 
 ## Navigation and layout
 
-Tabs use manual activation: arrows/Home/End move focus; Enter/Space selects. Supply stable tab IDs for server rendering and one `ng-template jpTabPanel` per value. Breadcrumbs render the final item as current-page text. Keep semantic tokens and density attributes at the document root; a Light stage in Storybook is a preview mat, not a light component theme.
+Tabs use manual activation.
+Arrows/Home/End move focus; Enter/Space selects.
+For repeated instances or application focus links, supply explicit tab IDs.
+Supply one `ng-template jpTabPanel` for each value.
+SSR/hydration are outside the current support contract.
+Breadcrumbs render the final item as current-page text.
+
+Keep semantic tokens and density attributes at the document root.
+A Light stage in Storybook changes the preview background.
+The components keep the dark theme.

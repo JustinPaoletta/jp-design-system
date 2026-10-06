@@ -194,6 +194,33 @@ describe('generated artifacts', () => {
     expect(css).toContain('--jp-size-control-md');
   });
 
+  it('accent text passes normal-text contrast on solid and hover surfaces', () => {
+    const tokens = JSON.parse(
+      readFileSync(path.join(GENERATED_ROOT, 'tokens.json'), 'utf8'),
+    );
+    const luminance = (hex: string) => {
+      const channels = [1, 3, 5].map(
+        (index) => parseInt(hex.slice(index, index + 2), 16) / 255,
+      );
+      const linear = channels.map((channel) =>
+        channel <= 0.04045
+          ? channel / 12.92
+          : ((channel + 0.055) / 1.055) ** 2.4,
+      );
+      return linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+    };
+    for (const family of JP_ACCENT_FAMILIES) {
+      const accent = tokens.semantic.accent[family].color.accent;
+      for (const surface of [accent.solid, accent.strong]) {
+        const [dark, light] = [
+          luminance(accent.contrast),
+          luminance(surface),
+        ].sort((a, b) => a - b);
+        expect((light + 0.05) / (dark + 0.05)).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+
   it('tokens.json exposes resolved accent and density sections', () => {
     const json = JSON.parse(
       readFileSync(path.join(GENERATED_ROOT, 'tokens.json'), 'utf8'),

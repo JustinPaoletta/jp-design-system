@@ -1,0 +1,93 @@
+<div
+  class="tree"
+  role="tree"
+  [attr.aria-label]="label()"
+  [attr.aria-busy]="busy()"
+  [attr.aria-disabled]="disabled() || null"
+  [attr.tabindex]="visible().length ? -1 : 0"
+  (focusout)="onFocusOut($event)"
+>
+  <ng-container
+    [ngTemplateOutlet]="branchTemplate"
+    [ngTemplateOutletContext]="{ $implicit: nodes() }"
+  />
+</div>
+@if (state() !== 'ready' || !nodes().length) {
+<div class="root-state" role="status">
+  <span
+    >{{ state() === 'loading' ? messages.loading : state() === 'error' ?
+    messages.failed : messages.empty }}</span
+  >
+  @if (state() === 'error') {
+  <button type="button" [disabled]="disabled()" (click)="retryRequested.emit()">
+    {{ messages.retry }}
+  </button>
+  }
+</div>
+}
+<ng-template #branchTemplate let-nodes>
+  @for (node of nodes; track node.key) {
+  <div
+    class="item"
+    role="treeitem"
+    [id]="itemId(node.key)"
+    [attr.aria-labelledby]="itemId(node.key) + '-label'"
+    [attr.aria-describedby]="node.description || node.loadState === 'loading' || node.loadState === 'error' ? itemId(node.key) + '-description' : null"
+    [attr.aria-level]="entry(node.key).level"
+    [attr.aria-posinset]="entry(node.key).position"
+    [attr.aria-setsize]="entry(node.key).size"
+    [attr.aria-expanded]="branch(node) ? expanded(node.key) : null"
+    [attr.aria-selected]="selection() === 'single' && !unavailable(node) ? selected(node) : null"
+    [attr.aria-disabled]="unavailable(node) || null"
+    [attr.aria-busy]="node.loadState === 'loading' || null"
+    [attr.tabindex]="tabKey() === node.key ? 0 : -1"
+    (focus)="onFocus($event, node.key)"
+    (keydown)="onKey($event, node.key)"
+    (click)="clickItem($event, node)"
+  >
+    <div
+      class="row"
+      [class.selected]="selected(node)"
+      [class.disabled]="unavailable(node)"
+    >
+      @if (branch(node)) {
+      <span
+        class="disclosure"
+        aria-hidden="true"
+        [class.open]="expanded(node.key)"
+        (click)="clickDisclosure(node, $event)"
+        >›</span
+      >
+      } @else { <span class="disclosure" aria-hidden="true">·</span> }
+      <span class="label" [id]="itemId(node.key) + '-label'"
+        >{{ node.label }}</span
+      >
+    </div>
+    @if (node.description || node.loadState === 'loading' || node.loadState ===
+    'error') {
+    <div class="description" [id]="itemId(node.key) + '-description'">
+      {{ node.loadState === 'loading' ? messages.loading : node.loadState ===
+      'error' ? messages.failed : node.description }} @if (node.loadState ===
+      'error' && expanded(node.key)) {
+      <button
+        type="button"
+        tabindex="-1"
+        [disabled]="unavailable(node)"
+        [attr.aria-label]="messages.retry + ': ' + node.label"
+        (click)="retry(node, $event)"
+      >
+        {{ messages.retry }}
+      </button>
+      }
+    </div>
+    } @if (branch(node) && expanded(node.key) && node.children?.length) {
+    <div class="group" role="group">
+      <ng-container
+        [ngTemplateOutlet]="branchTemplate"
+        [ngTemplateOutletContext]="{ $implicit: node.children }"
+      />
+    </div>
+    }
+  </div>
+  }
+</ng-template>

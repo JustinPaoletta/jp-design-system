@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+div {
+  height: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-full);
+  overflow: hidden;
+  background: var(--jp-color-surface-emphasis);
+}
+span {
+  display: block;
+  height: 100%;
+  background: var(--jp-color-accent-solid);
+}
+@media (forced-colors: active) {
+  div {
+    border-color: CanvasText;
+  }
+  span {
+    background: Highlight;
+  }
+}

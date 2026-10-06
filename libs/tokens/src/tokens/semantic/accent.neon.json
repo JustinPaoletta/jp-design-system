@@ -7,6 +7,10 @@
       "strong": { "value": "{primitive.color.accent.neon.600}" },
       "contrast": { "value": "{primitive.color.neutral.1100}" },
       "focus": { "value": "{primitive.color.accent.neon.500}" }
+    },
+    "chart": {
+      "series-1": { "value": "{primitive.color.accent.neon.300}" },
+      "series-2": { "value": "{primitive.color.accent.cobalt.300}" }
     }
   }
 }

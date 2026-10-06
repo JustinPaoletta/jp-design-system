@@ -64,7 +64,7 @@
       } @if (message.responseStatus === 'error') {
       <jp-inline-alert
         tone="error"
-        [message]="message.error || 'Response failed'"
+        [message]="message.error || jpMessages.assistant.responseFailed"
         [actionLabel]="retryLabel()"
         (action)="retryResponse(message.id)"
       />

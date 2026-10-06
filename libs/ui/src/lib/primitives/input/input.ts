@@ -3,11 +3,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   forwardRef,
   input,
+  inject,
   signal,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { JP_MESSAGES } from '../../i18n';
 import {
   type JpControlSize,
   JP_CONTROL_SIZES,
@@ -35,6 +38,7 @@ let nextInputId = 0;
   ],
   host: {
     class: 'jp-input',
+    '[attr.id]': 'null',
     '[class.jp-input--sm]': 'size() === "sm"',
     '[class.jp-input--md]': 'size() === "md"',
     '[class.jp-input--lg]': 'size() === "lg"',
@@ -43,12 +47,20 @@ let nextInputId = 0;
   },
 })
 export class JpInput implements ControlValueAccessor {
+  private readonly messages = inject(JP_MESSAGES);
   private readonly generatedId = `jp-input-${++nextInputId}`;
   private readonly cvaDisabled = signal(false);
   private onChange: (value: string) => void = () => undefined;
   private onTouched: () => void = () => undefined;
 
   readonly value = signal('');
+  readonly passwordVisible = signal(false);
+  readonly clearable = input(false, { transform: booleanAttribute });
+  readonly revealPassword = input(false, { transform: booleanAttribute });
+  readonly clearLabel = input(this.messages.forms.clearSearch);
+  readonly showPasswordLabel = input(this.messages.forms.showPassword);
+  readonly hidePasswordLabel = input(this.messages.forms.hidePassword);
+  readonly ariaDescribedBy = input('');
 
   readonly ariaLabel = input('');
   readonly name = input('');
@@ -90,6 +102,7 @@ export class JpInput implements ControlValueAccessor {
     } else if (this.hint()) {
       ids.push(this.hintId());
     }
+    if (this.ariaDescribedBy()) ids.push(this.ariaDescribedBy());
     return ids.length > 0 ? ids.join(' ') : null;
   });
   readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
@@ -97,6 +110,32 @@ export class JpInput implements ControlValueAccessor {
     () => this.invalid() || this.error().length > 0,
   );
   readonly controlHeight = computed(() => controlSizeToCssVar(this.size()));
+  readonly resolvedType = computed(() =>
+    this.type() === 'password' &&
+    this.revealPassword() &&
+    this.passwordVisible()
+      ? 'text'
+      : this.type(),
+  );
+
+  constructor() {
+    effect(() => {
+      this.type();
+      this.passwordVisible.set(false);
+    });
+  }
+
+  clearSearch(control: HTMLInputElement): void {
+    if (this.isDisabled() || this.readonly()) return;
+    this.value.set('');
+    this.onChange('');
+    control.focus();
+  }
+
+  togglePassword(): void {
+    if (this.isDisabled()) return;
+    this.passwordVisible.update((visible) => !visible);
+  }
 
   writeValue(value: string | null): void {
     this.value.set(value ?? '');

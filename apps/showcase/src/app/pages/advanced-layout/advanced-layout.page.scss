@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+.page {
+  max-inline-size: 90rem;
+  margin-inline: auto;
+  padding: var(--jp-space-lg);
+  display: grid;
+  gap: var(--jp-space-lg);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.overview,
+.inventory {
+  padding: var(--jp-space-sm);
+}
+h2 {
+  margin-block: 0 var(--jp-space-md);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+}
+p {
+  font-size: var(--jp-font-size-body);
+  overflow-wrap: anywhere;
+  line-height: var(--jp-font-line-height-normal);
+}
+.overview jp-button {
+  margin-block-start: var(--jp-space-sm);
+}
+.detail {
+  max-inline-size: 40rem;
+  white-space: normal;
+}
+@media (max-width: 48rem) {
+  .page {
+    padding: var(--jp-space-md);
+  }
+}

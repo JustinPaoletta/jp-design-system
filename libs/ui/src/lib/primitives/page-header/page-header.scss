@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+header {
+  font-family: var(--jp-font-family-base);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--jp-space-md);
+}
+.copy {
+  flex: 1 1 var(--jp-size-column-min-sm);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+p {
+  margin-block: var(--jp-space-xs) 0;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body);
+}
+.actions,
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.meta {
+  margin-block-start: var(--jp-space-sm);
+}
+.breadcrumbs {
+  margin-block-end: var(--jp-space-sm);
+}
+.actions:empty,
+.meta:empty,
+.breadcrumbs:empty {
+  display: none;
+}

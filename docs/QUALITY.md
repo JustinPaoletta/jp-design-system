@@ -1,31 +1,94 @@
 # Quality verification
 
-Unit tests cover component behavior and Angular form integration. Storybook interaction tests cover primitive compositions. Showcase tests exercise full application flows outside Storybook.
+Use Nx through the workspace package manager. These checks cover component
+behavior, Angular forms, Storybook interactions and full Showcase flows.
+Confirmed totals live in [Verification](qa/VERIFICATION.md), and supported
+platforms/limits in [Support matrix](qa/SUPPORT_MATRIX.md).
 
-`quality.spec.ts` runs axe against real rendered routes for WCAG A/AA violations and stores visual baselines for both accents and densities. Chromium and WebKit run in CI. The visual job runs on macOS to match the reviewed Mac snapshots. Functional and axe checks run on Linux Chromium and WebKit. Baselines are platform-specific; macOS screenshots do not prove Linux visual parity.
-
-Run functional and axe checks in both browsers, excluding the macOS-only visual suite:
-
-```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
-```
-
-Run the four reviewed visual baselines on macOS Chromium:
+## Baseline checks
 
 ```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual"
+npm run format:check
+npm run lint
+npm run test
+npm run typecheck
+npm run build
+npm exec -- nx run packages:build
+npm exec -- nx run packages:smoke
+npm exec -- nx run packages:check-release
+node tools/docs/check-links.mjs
+node tools/docs/check-writing.mjs
+node --test tools/docs/check-writing.spec.mjs
 ```
 
-Use that same macOS Chromium command with `--update-snapshots` only to deliberately review and establish baselines, then commit the reviewed PNG files. CI never updates baselines automatically. Review accessible names, focus order, nested overlay dismissal, contrast, reduced motion, and mobile layout manually as well; automated checks do not replace assistive-technology testing.
+The Docs workflow runs the link and writing checks and the writing-check tests.
+The writing check covers selected [ASD-STE100 clarity rules](content/WRITING.md).
+It does not replace a person's examination of meaning or technical accuracy.
 
-Application production budgets cap the initial bundle and component stylesheet sizes. Distribution smoke checks validate built packages in an isolated application without workspace path aliases.
+UI/Showcase unit coverage gates are 90% for statements, branches, functions
+and lines. Tokens and the placeholder Storybook app must reach 100%.
+Production Showcase budgets are 500kB warning/1MB error for the initial bundle
+and 6kB warning/8kB error for a component stylesheet. These budgets do not
+measure an isolated consumer's tree-shaken library cost.
+
+## Storybook checks
+
+```sh
+npm exec -- nx run ui:test-storybook
+npm exec -- nx run ui:test-storybook-dev
+```
+
+Run these sequentially: both test runners use port 4500. The static target
+checks the production Storybook; the development target exercises live
+Webpack middleware and compiler/runtime isolation. Accessibility failures
+remain errors. Jest is bounded to two workers; runner-owned child processes
+are cleaned up on termination.
+
+Keep normal previews on port 4400. Development output is isolated per port,
+and the live runner checks its own compiler/runtime hash before and after
+testing. It also checks the default preview if one is present. See
+[the reload incident](qa/STORYBOOK_RELOAD_REGRESSION.md) and
+[contributor requirements](governance/CONTRIBUTING.md#keep-live-storybook-previews-isolated).
+
+## Browser and visual checks
+
+Run functional/axe checks in Chromium and WebKit, excluding all six macOS
+visual title prefixes:
+
+```sh
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+```
+
+Run the visual suite on macOS Chromium:
+
+```sh
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+```
+
+Use the visual command with `--update-snapshots` only when deliberately
+examining new baselines; narrow the grep to the new states. Commit examined
+PNG files. CI compares snapshots and never updates them automatically.
+Linux functional checks do not establish macOS pixel parity.
+
+Showcase axe scans use `wcag2a`, `wcag2aa`, `wcag21a` and `wcag21aa`:
+WCAG 2.1 A/AA, with no WCAG 2.2 conformance claim. Storybook uses axe's
+ordinary enabled rules. Open overlay, validation, selection and assistant
+states extend the closed-route scans.
+
+The seven larger features have 640px LTR, 320px LTR and 320px RTL reflow
+checks in both browsers. Four forced-colors interaction cases run in Chromium
+and intentionally skip WebKit. Axe runs after restoring default colors
+because of the forced-colors contrast calculation limitation. Native
+`details.name` grouping is asserted through repeated keyboard and click use.
+See [Acceptance automation](qa/ACCEPTANCE_AUTOMATION.md) for the focused
+command, assertions and limits.
+
+VoiceOver/NVDA sessions, real Windows high contrast and actual browser/text
+zoom remain manual. Physical touch and native picker dialogs are also
+unreviewed. Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility
 
-Storybook 10 loads its usual `test-runner.ts` through a process-wide Node loader, which Jest 30.5 rejects inside its test sandbox. The documented custom Jest configuration in `.storybook/test-runner-jest.config.mjs` retains the stock story transforms and browser environment, and replaces only the hook-loading setup. `test-runner.hooks.ts` keeps the existing desktop/mobile viewport selection; `runner-jest-setup.mjs` registers it with the runner's exported `setPreVisit` and `setupPage`. Interaction and accessibility assertions remain enabled. Revisit this adapter when the upstream loader integration changes. See [Storybook test runner configuration](https://storybook.js.org/docs/writing-tests/integrations/test-runner#configure).
+Storybook 10 loads its usual `test-runner.ts` through a process-wide Node loader, which Jest 30.5 rejects inside its test sandbox. The documented custom Jest configuration in `.storybook/test-runner-jest.config.mjs` keeps the stock story transforms and browser environment, and replaces only the hook-loading setup. `test-runner.hooks.ts` keeps the existing desktop/mobile viewport selection; `runner-jest-setup.mjs` registers it with the runner's exported `setPreVisit` and `setupPage`. Interaction and accessibility assertions remain enabled. Examine this adapter when the upstream loader integration changes. See [Storybook test runner configuration](https://storybook.js.org/docs/writing-tests/integrations/test-runner#configure).
 
-The local runner limits Jest to two workers, allows five minutes for the production build/server to become ready, fails early if that child exits, and cleans up its own Unix process group on termination.
-
-## Live development middleware
-
-`npx nx run ui:test-storybook-dev` runs the same interaction/accessibility suite against the live localhost Storybook development server. This exercises Webpack development middleware, which the static production Storybook check does not use. It retains the bounded workers/readiness timeout and cleans up its own processes. Run the static and live targets sequentially because they use the same port. CI runs both to validate the scoped security override when dependencies change.
+The runner limits Jest to two workers. It gives five minutes for the production build/server to become ready. If that child exits early, the run fails. On termination, the runner removes its own Unix process group.

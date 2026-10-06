@@ -2,31 +2,56 @@
   @if (label()) {
   <label class="jp-input__label" [attr.for]="resolvedId()">{{ label() }}</label>
   }
-  <input
-    class="jp-input__control"
-    [attr.id]="resolvedId()"
-    [attr.type]="type()"
-    [attr.placeholder]="placeholder() || null"
-    [attr.aria-invalid]="isInvalid() ? true : null"
-    [attr.aria-describedby]="describedBy()"
-    [attr.aria-label]="ariaLabel() || null"
-    [attr.name]="name() || null"
-    [attr.autocomplete]="autocomplete() || null"
-    [required]="required()"
-    [attr.minlength]="minLength()"
-    [attr.maxlength]="maxLength()"
-    [attr.min]="min()"
-    [attr.max]="max()"
-    [attr.step]="step()"
-    [attr.pattern]="pattern() || null"
-    [attr.inputmode]="inputMode() || null"
-    [disabled]="isDisabled()"
-    [readOnly]="readonly()"
-    [value]="value()"
-    [style.--jp-field-height]="controlHeight()"
-    (input)="onInput($event)"
-    (blur)="onBlur()"
-  />
+  <div class="jp-input__row">
+    <input
+      #control
+      class="jp-input__control"
+      [attr.id]="resolvedId()"
+      [attr.type]="resolvedType()"
+      [attr.placeholder]="placeholder() || null"
+      [attr.aria-invalid]="isInvalid() ? true : null"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.name]="name() || null"
+      [attr.autocomplete]="autocomplete() || null"
+      [required]="required()"
+      [attr.minlength]="minLength()"
+      [attr.maxlength]="maxLength()"
+      [attr.min]="min()"
+      [attr.max]="max()"
+      [attr.step]="step()"
+      [attr.pattern]="pattern() || null"
+      [attr.inputmode]="inputMode() || null"
+      [disabled]="isDisabled()"
+      [readOnly]="readonly()"
+      [value]="value()"
+      [style.--jp-field-height]="controlHeight()"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+    @if (type() === 'search' && clearable() && value() && !readonly()) {
+    <button
+      type="button"
+      class="jp-input__action"
+      [disabled]="isDisabled()"
+      [attr.aria-label]="clearLabel()"
+      (click)="clearSearch(control)"
+    >
+      {{ clearLabel() }}
+    </button>
+    } @if (type() === 'password' && revealPassword()) {
+    <button
+      type="button"
+      class="jp-input__action"
+      [disabled]="isDisabled()"
+      [attr.aria-controls]="resolvedId()"
+      [attr.aria-pressed]="passwordVisible()"
+      (click)="togglePassword()"
+    >
+      {{ passwordVisible() ? hidePasswordLabel() : showPasswordLabel() }}
+    </button>
+    }
+  </div>
   @if (error()) {
   <p class="jp-input__error" [attr.id]="errorId()" role="alert">
     {{ error() }}

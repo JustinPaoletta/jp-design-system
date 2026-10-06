@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+.page {
+  display: grid;
+  gap: var(--jp-space-lg);
+  padding: var(--jp-space-lg);
+  max-inline-size: 70rem;
+  margin-inline: auto;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-md);
+  margin-block-end: var(--jp-space-md);
+}
+p,
+label {
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
+}
+h2 {
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+}
+label {
+  display: block;
+  margin-block-end: var(--jp-space-xs);
+}
+input {
+  font: inherit;
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-field-bg);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-sm);
+  min-block-size: 44px;
+  padding-inline: var(--jp-space-sm);
+  max-inline-size: 100%;
+  box-sizing: border-box;
+}
+input:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+@media (max-width: 48rem) {
+  .page {
+    padding: var(--jp-space-md);
+  }
+}

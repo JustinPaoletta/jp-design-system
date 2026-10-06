@@ -51,9 +51,8 @@
 :host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: var(--jp-space-2xs);
-  bottom: var(--jp-space-2xs);
+  inset-inline-start: 0;
+  inset-block: var(--jp-space-2xs);
   width: var(--jp-space-2xs);
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-nav-item-indicator);

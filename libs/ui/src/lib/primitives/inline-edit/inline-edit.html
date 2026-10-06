@@ -1,0 +1,46 @@
+@if(editing()){
+<form
+  (submit)="$event.preventDefault();commit()"
+  (keydown)="keydown($event)"
+  novalidate
+>
+  <label class="jp-input__label" [for]="fieldId">{{label()}}</label
+  ><input
+    #field
+    class="jp-input__control"
+    [id]="fieldId"
+    [value]="draft()"
+    [readOnly]="pending()"
+    [required]="required()"
+    [attr.maxlength]="maxLength()"
+    [attr.aria-invalid]="error()?true:null"
+    [attr.aria-describedby]="error()?fieldId+'-error':null"
+    (input)="input($event)"
+  />
+  <div class="actions">
+    <button type="submit" [disabled]="pending()">
+      {{pending()?savingLabel():saveLabel()}}</button
+    ><button type="button" (click)="cancel()">{{cancelLabel()}}</button>
+  </div>
+  @if(error()){
+  <p [id]="fieldId+'-error'" class="jp-input__error" role="alert">
+    {{error()}}
+  </p>
+  }
+  <p role="status" aria-live="polite">{{pending()?savingLabel():''}}</p>
+</form>
+} @else {
+<div class="display">
+  <span>{{label()}}: <strong>{{value() || emptyLabel()}}</strong></span
+  ><button
+    #editButton
+    type="button"
+    [disabled]="disabled()"
+    [attr.aria-label]="editLabel()+': '+label()"
+    (click)="edit()"
+  >
+    {{editLabel()}}
+  </button>
+</div>
+}
+<span role="status" aria-live="polite">{{feedback()}}</span>

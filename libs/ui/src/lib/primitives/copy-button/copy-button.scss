@@ -1,0 +1,17 @@
+:host {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  max-inline-size: 100%;
+  font-family: var(--jp-font-family-base);
+}
+.feedback {
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-secondary);
+  line-height: var(--jp-font-line-height-normal);
+  overflow-wrap: anywhere;
+}
+.feedback:empty {
+  display: none;
+}

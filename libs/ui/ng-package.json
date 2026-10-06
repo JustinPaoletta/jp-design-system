@@ -3,5 +3,6 @@
   "dest": "../../dist/packages/ui",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["chart.js"]
 }

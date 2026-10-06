@@ -1,4 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
+import { JP_MESSAGES } from '../../i18n';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -45,9 +46,10 @@ export class JpTabs {
   private readonly panels = contentChildren(JpTabPanel);
   private readonly focusedValue = signal<string | null>(null);
 
+  private readonly messages = inject(JP_MESSAGES);
   /** Values must be unique; each tab should have a matching projected panel. */
   readonly tabs = input<readonly JpTab[]>([]);
-  readonly ariaLabel = input('Tabs');
+  readonly ariaLabel = input(this.messages.tabs.label);
   /** Supply a stable id when rendering the same tabs on server and client. */
   readonly id = input(this.generatedId);
   readonly selectedValue = model('');

@@ -1,0 +1,6 @@
+<span
+  [class.vertical]="orientation() === 'vertical'"
+  [attr.role]="decorative() ? null : 'separator'"
+  [attr.aria-orientation]="decorative() ? null : orientation()"
+  [attr.aria-hidden]="decorative() ? true : null"
+></span>

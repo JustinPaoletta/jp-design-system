@@ -7,6 +7,33 @@
   <nav jpAppShellSidebar aria-label="Primary">
     <jp-stack gap="2xs">
       <jp-app-shell-nav-item
+        href="/product-tools"
+        [active]="isActive('/product-tools')"
+        (click)="onNavClick($event, '/product-tools')"
+        >Product tools</jp-app-shell-nav-item
+      >
+      <jp-app-shell-nav-item
+        href="/component-expansion"
+        [active]="isActive('/component-expansion')"
+        (click)="onNavClick($event, '/component-expansion')"
+      >
+        <svg
+          jpAppShellNavIcon
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <rect x="1.5" y="1.5" width="5" height="5" rx="1" />
+          <rect x="9.5" y="1.5" width="5" height="5" rx="1" />
+          <rect x="1.5" y="9.5" width="5" height="5" rx="1" />
+          <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+        </svg>
+        Components
+      </jp-app-shell-nav-item>
+      <jp-app-shell-nav-item
         href="/product-recipes"
         [active]="isActive('/product-recipes')"
         (click)="onNavClick($event, '/product-recipes')"

@@ -3,9 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 
 /** Controlled, one-based pagination; fetch and slice data in the consumer. */
@@ -17,11 +19,12 @@ import { JpButton } from '../button/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JpPagination {
+  private readonly messages = inject(JP_MESSAGES);
   readonly page = input(1);
   readonly pageSize = input(10);
   readonly total = input(0);
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly label = input('Table pagination');
+  readonly label = input(this.messages.pagination.label);
   readonly pageChange = output<number>();
   readonly safeSize = computed(() =>
     Number.isFinite(this.pageSize())

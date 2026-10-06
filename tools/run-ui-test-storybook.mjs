@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { spawn } from 'node:child_process';
+import { assertStorybookRuntime } from './storybook-runtime-check.mjs';
 
 const DEVELOPMENT_SERVER = process.argv.includes('--development');
 const STORYBOOK_URL = process.env.STORYBOOK_URL || 'http://localhost:4500';
@@ -61,6 +62,22 @@ function stopProcess(child) {
 }
 
 async function main() {
+  // Protect an already-running local preview while the live test server builds.
+  const referenceUrl = 'http://localhost:4400';
+  let referencePreview = false;
+  if (DEVELOPMENT_SERVER && STORYBOOK_URL !== referenceUrl) {
+    try {
+      const response = await fetch(`${referenceUrl}/index.json`, {
+        signal: AbortSignal.timeout(1500),
+      });
+      referencePreview =
+        response.ok && Boolean((await response.json()).entries);
+    } catch {
+      // No local preview is running. The test server still gets its own check.
+    }
+    if (referencePreview) await assertStorybookRuntime(referenceUrl);
+  }
+
   const storybook = spawnCommand('npx', [
     'nx',
     'run',
@@ -83,6 +100,10 @@ async function main() {
 
   try {
     await waitForStorybook(STORYBOOK_URL, READY_TIMEOUT_MS, storybook);
+    if (DEVELOPMENT_SERVER) {
+      await assertStorybookRuntime(STORYBOOK_URL);
+      if (referencePreview) await assertStorybookRuntime(referenceUrl);
+    }
 
     testRunner = spawnCommand('npx', [
       'test-storybook',
@@ -96,6 +117,12 @@ async function main() {
     const testExitCode = await new Promise((resolve) => {
       testRunner.on('exit', (code) => resolve(code ?? 1));
     });
+
+    if (DEVELOPMENT_SERVER) {
+      await assertStorybookRuntime(STORYBOOK_URL);
+      if (referencePreview) await assertStorybookRuntime(referenceUrl);
+      console.log('Storybook compiler/runtime isolation checks passed.');
+    }
 
     stopProcess(storybook);
 

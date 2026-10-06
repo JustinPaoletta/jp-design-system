@@ -1,0 +1,148 @@
+<div class="page">
+  <jp-page-header
+    title="Component expansion"
+    description="Reusable foundations, identity, navigation, and form composition."
+    ><span jpPageMeta>Preview components</span
+    ><jp-button jpPageActions (click)="drawerOpen.set(true)"
+      >Open details</jp-button
+    ></jp-page-header
+  >
+  @if (bannerVisible()) {
+  <jp-banner
+    title="Preview library"
+    message="These components are ready for integration testing. Manual assistive-technology review remains pending."
+    dismissible
+    (dismissed)="bannerVisible.set(false)"
+  />
+  }
+  <div class="grid">
+    <jp-card title="Identity and measurements" headingLevel="h2"
+      ><div class="row">
+        <jp-avatar name="Ada Lovelace" /><jp-avatar
+          name="Grace Hopper"
+          src="/missing-avatar.png"
+        /><jp-avatar-group
+          label="Project reviewers"
+          [people]="people"
+          [max]="2"
+        /><jp-status-dot tone="success" label="Service online" />
+      </div>
+      <jp-divider decorative /><jp-description-list [items]="details" />
+      <div class="measurement">
+        <span>Storage used: 68 GB of 100 GB</span
+        ><jp-meter
+          label="Storage used"
+          [value]="68"
+          valueText="68 GB of 100 GB"
+        />
+      </div>
+      <div class="row">
+        <jp-spinner label="Refreshing reports" size="lg" /><span
+          >Refreshing reports</span
+        ><jp-icon name="check" label="Complete" size="lg" /></div
+    ></jp-card>
+    <jp-card title="Navigation and content" headingLevel="h2"
+      ><div class="row">
+        <a jpLink href="#preferences">Jump to preferences</a
+        ><jp-keyboard-hint [keys]="['Control', 'K']" />
+      </div>
+      <jp-accordion id="showcase-settings" label="Project settings"
+        ><jp-disclosure title="General settings"
+          ><p>Project name, owners, and environment.</p></jp-disclosure
+        ><jp-disclosure title="Advanced settings"
+          ><p>Timeouts, retries, and retention.</p></jp-disclosure
+        ></jp-accordion
+      ><jp-list [items]="services"
+        ><ng-template jpListItem let-item
+          ><div>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.description }}</p>
+          </div>
+          <span>{{ item.meta }}</span></ng-template
+        ></jp-list
+      ></jp-card
+    >
+  </div>
+  <jp-card title="Preferences form" headingLevel="h2"
+    ><form id="preferences" [formGroup]="form" (ngSubmit)="submit()">
+      <jp-error-summary [errors]="errors()" />
+      <jp-form-section
+        legend="Account details"
+        hint="Labels and descriptions stay attached to their controls."
+        ><jp-form-field
+          #emailField
+          controlId="expansion-email"
+          label="Email"
+          hint="Use your work address."
+          [error]="emailError()"
+          required
+          ><jp-input
+            id="expansion-email"
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            [ariaDescribedBy]="emailField.describedBy() || ''"
+            [invalid]="!!emailError()"
+            required /></jp-form-field
+        ><jp-password-field
+          id="expansion-password"
+          label="Password"
+          autocomplete="current-password"
+          formControlName="password"
+          [error]="submitted() && form.controls.password.invalid ? 'Enter a password.' : ''"
+          required /><jp-form-field
+          controlId="expansion-native"
+          label="Project key"
+          hint="A native control can also use the shared wrapper."
+          ><input
+            jpFieldControl
+            class="native-field"
+            type="text" /></jp-form-field
+      ></jp-form-section>
+      <jp-divider decorative />
+      <div class="grid">
+        <jp-checkbox-group
+          label="Notifications"
+          [options]="channels"
+          formControlName="channels"
+        /><jp-segmented-control
+          label="View"
+          [options]="views"
+          formControlName="view"
+        />
+      </div>
+      <jp-multi-select
+        id="expansion-reviewers"
+        label="Reviewers"
+        [options]="reviewers"
+        formControlName="reviewers"
+        hint="Search and select multiple reviewers."
+      /><jp-button type="submit">Save preferences</jp-button>@if (saved()) {
+      <jp-banner
+        title="Preferences saved"
+        message="The example keeps these settings in memory."
+        tone="success"
+        announce
+      />
+      }
+    </form></jp-card
+  >
+  <jp-card title="Search" headingLevel="h2"
+    ><jp-search-field
+      label="Search projects"
+      [formControl]="search"
+      placeholder="Search by name"
+    />
+    <p class="query">Query: {{ search.value || 'None' }}</p></jp-card
+  >
+  <jp-drawer
+    title="Project details"
+    [open]="drawerOpen()"
+    (openChange)="drawerOpen.set($event)"
+    ><jp-description-list [items]="details" /><jp-button
+      jpDrawerActions
+      (click)="drawerOpen.set(false)"
+      >Done</jp-button
+    ></jp-drawer
+  >
+</div>

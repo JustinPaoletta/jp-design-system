@@ -1,0 +1,38 @@
+<nav [attr.aria-label]="label()">
+  <ol>
+    @for (step of steps(); track step.id; let index = $index) {
+    <li
+      [class.current]="currentId() === step.id"
+      [class.error]="step.state === 'error'"
+    >
+      <span class="marker" aria-hidden="true"
+        >@if (step.state === 'complete') { <jp-icon name="check" /> } @else if
+        (step.state === 'error') { <jp-icon name="warning" /> } @else { {{ index
+        + 1 }} }</span
+      >
+      <div class="content">
+        @if (navigable()) {
+        <button
+          type="button"
+          [disabled]="step.disabled"
+          [attr.aria-current]="currentId() === step.id ? 'step' : null"
+          (click)="select(step)"
+        >
+          {{ step.label }}
+        </button>
+        } @else {
+        <span
+          class="label"
+          [attr.aria-current]="currentId() === step.id ? 'step' : null"
+          >{{ step.label }}</span
+        >
+        } @if (step.description) {
+        <p>{{ step.description }}</p>
+        } @if (step.state === 'complete') {
+        <span class="state">{{ completeLabel() }}</span> } @if (step.state ===
+        'error') { <span class="state">{{ errorLabel() }}</span> }
+      </div>
+    </li>
+    }
+  </ol>
+</nav>

@@ -1,0 +1,68 @@
+:host {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+button {
+  min-block-size: var(--jp-size-control-md);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-button-secondary-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-button-secondary-bg);
+  color: var(--jp-color-button-secondary-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+button:hover:not(:disabled) {
+  background: var(--jp-color-button-secondary-bg-hover);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:host {
+  display: block;
+  position: relative;
+}
+.region {
+  padding: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  margin-block-end: var(--jp-space-xs);
+  overflow-wrap: anywhere;
+}
+.region:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.point {
+  position: fixed;
+  inline-size: 0;
+  block-size: 0;
+  pointer-events: none;
+}
+.panel {
+  min-inline-size: 10rem;
+  padding: var(--jp-space-2xs);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-floating);
+  z-index: var(--jp-z-overlay-dropdown);
+}
+.panel[hidden] {
+  display: none !important;
+}
+.panel button {
+  display: block;
+  inline-size: 100%;
+  text-align: start;
+  border: 0;
+  background: transparent;
+}

@@ -1,9 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
 } from '@angular/core';
+import { JP_MESSAGES } from '../../i18n';
 import { type JpToastTone, JP_TOAST_TONES } from '../shared/primitive-types';
 import { createStringUnionTransform } from '../shared/token-maps';
 
@@ -23,6 +25,7 @@ import { createStringUnionTransform } from '../shared/token-maps';
   },
 })
 export class JpToast {
+  private readonly messages = inject(JP_MESSAGES);
   readonly message = input.required<string>();
   readonly tone = input<JpToastTone, unknown>('neutral', {
     transform: createStringUnionTransform(JP_TOAST_TONES, 'neutral'),

@@ -1,0 +1,111 @@
+:host {
+  display: block;
+  color: var(--jp-color-text-primary);
+  font-family: var(--jp-font-family-base);
+}
+.instructions,
+.description,
+.empty {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+}
+.instructions {
+  margin-block: 0 var(--jp-space-sm);
+}
+ol {
+  display: grid;
+  gap: var(--jp-space-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+  padding: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-raised);
+}
+li.picked {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.content {
+  flex: 1;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.label,
+.description {
+  display: block;
+}
+.label {
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-medium);
+}
+.actions {
+  display: flex;
+  gap: var(--jp-space-xs);
+  flex-wrap: wrap;
+}
+button {
+  font: inherit;
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-sm);
+  min-block-size: 44px;
+  padding-inline: var(--jp-space-sm);
+  cursor: pointer;
+}
+.handle {
+  min-inline-size: 44px;
+  flex-shrink: 0;
+  touch-action: none;
+  cursor: grab;
+}
+.picked .handle {
+  cursor: grabbing;
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+button:disabled,
+button[aria-disabled='true'] {
+  color: var(--jp-color-text-disabled);
+  cursor: not-allowed;
+}
+.cancel {
+  margin-block-start: var(--jp-space-sm);
+}
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 36rem) {
+  li {
+    flex-wrap: wrap;
+  }
+  .actions {
+    margin-inline-start: calc(44px + var(--jp-space-sm));
+  }
+}
+@media (forced-colors: active) {
+  li,
+  button {
+    border-color: CanvasText;
+  }
+  li.picked,
+  button:focus-visible {
+    outline-color: Highlight;
+  }
+}

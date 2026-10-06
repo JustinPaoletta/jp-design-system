@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  JpLink,
   JpBadge,
   type JpBadgeTone,
   JpBox,
@@ -22,6 +23,7 @@ import { injectDocumentTheme } from '../../shared/document-theme';
   selector: 'app-data-page',
   imports: [
     FormsModule,
+    JpLink,
     JpBox,
     JpStack,
     JpInline,

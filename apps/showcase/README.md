@@ -1,19 +1,29 @@
 # Showcase
 
-Interactive Angular host app that proves JP compositions work outside Storybook with real routing, tokens, forms, and application state. Storybook remains the primitive prop explorer. Theme readouts display `data-jp-accent` and `data-jp-density` from `<html>`.
+A lazy-routed Angular integration app demonstrating JP tokens, forms,
+application state and component compositions outside Storybook.
 
 ```sh
-npx nx run showcase:serve
+npm exec -- nx run showcase:serve
 ```
 
-Open http://localhost:4200 (`/` redirects to `/assistant`). Routes include `/product-recipes`, `/assistant`, `/overlays`, `/data`, `/controls`, `/app-shell`, and `/layout-dashboard`.
+Open http://localhost:4200 (`/` redirects to `/assistant`). Theme controls
+set `data-jp-accent` and `data-jp-density` on `<html>`.
 
-`/product-recipes` demonstrates validated forms, async save/retry, searchable paginated tables, bulk selection, destructive confirmation, and assistant response recovery. Its API is simulated locally; it does not connect to a backend or LLM service.
+| Routes                                                                             | Demonstrations                                                                                                   |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `/layout-dashboard`, `/app-shell`, `/controls`, `/data`, `/overlays`, `/assistant` | Core compositions, native overlays and assistant request lifecycle                                               |
+| `/product-recipes`                                                                 | Validated forms, async save/retry, search/sort/pagination, bulk selection and destructive recovery               |
+| `/component-expansion`, `/product-tools`, `/workflows`                             | Expanded forms/selection, wizard/checklist, numeric controls, commands, upload, native pickers and notifications |
+| `/advanced-layout`                                                                 | Resizable panes, media and advanced table controls                                                               |
+| `/hierarchy`, `/scheduling`, `/interaction-tools`, `/data-performance`             | Trees, scheduling, reorder/carousel, charts and virtualized/paginated tables                                     |
 
-Run Chromium and WebKit functional/accessibility checks:
+Responses and saves use local demonstrations. Application consumers own real
+transport, persistence, validation and authorization. All feature pages load
+lazily so the initial bundle remains within the configured production budget.
 
-```sh
-npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual"
-```
-
-See [Product recipes](../../docs/PRODUCT_RECIPES.md) and [Quality verification](../../docs/QUALITY.md) for integration contracts and macOS visual baseline commands.
+Use [Quality verification](../../docs/QUALITY.md) for the complete
+Chromium/WebKit functional suite and macOS visual commands. The full grep
+selection there keeps platform-specific screenshots out of Linux checks.
+Contracts are indexed in [Documentation](../../docs/README.md); integration
+wiring is in [Product recipes](../../docs/PRODUCT_RECIPES.md).

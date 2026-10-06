@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  align-self: stretch;
+}
+span {
+  display: block;
+  border-block-start: 1px solid var(--jp-color-border-default);
+}
+span.vertical {
+  height: 100%;
+  min-height: var(--jp-size-icon-sm);
+  border-block-start: 0;
+  border-inline-start: 1px solid var(--jp-color-border-default);
+}
+@media (forced-colors: active) {
+  span {
+    border-color: CanvasText;
+  }
+}

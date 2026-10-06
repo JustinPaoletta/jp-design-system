@@ -143,6 +143,8 @@ export const JP_BUTTON_TYPES = ['button', 'submit', 'reset'] as const;
 export type JpButtonType = (typeof JP_BUTTON_TYPES)[number];
 
 export const JP_INPUT_TYPES = [
+  'date',
+  'time',
   'text',
   'email',
   'password',

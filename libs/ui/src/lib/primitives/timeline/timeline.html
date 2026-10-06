@@ -1,0 +1,23 @@
+<section [attr.aria-label]="label()">
+  <ol>
+    @for (event of events(); track event.id) {
+    <li>
+      <div class="event">
+        <span class="title">{{ event.title }}</span>
+        @if (event.timeLabel) { @if (event.dateTime) {
+        <time [attr.datetime]="event.dateTime"
+          ><bdi>{{ event.timeLabel }}</bdi></time
+        >
+        } @else {
+        <span class="timestamp"><bdi>{{ event.timeLabel }}</bdi></span> } } @if
+        (event.description) {
+        <p>{{ event.description }}</p>
+        }
+      </div>
+    </li>
+    }
+  </ol>
+  @if (!events().length) {
+  <p class="empty">{{ emptyText() }}</p>
+  }
+</section>

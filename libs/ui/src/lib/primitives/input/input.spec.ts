@@ -6,7 +6,11 @@ import { JpInput } from './input';
 @Component({
   imports: [JpInput, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.Eager,
-  template: `<jp-input label="Email" [formControl]="control" />`,
+  template: `<jp-input
+    id="host-email"
+    label="Email"
+    [formControl]="control"
+  />`,
 })
 class InputHost {
   readonly control = new FormControl('hello', { nonNullable: true });
@@ -84,6 +88,11 @@ describe('JpInput', () => {
       'input',
     ) as HTMLInputElement;
     expect(input.value).toBe('hello');
+    expect(hostFixture.nativeElement.querySelector('jp-input').id).toBe('');
+    expect(hostFixture.nativeElement.querySelector('label').control).toBe(
+      input,
+    );
+    expect(input.id).toBe('host-email');
 
     hostFixture.componentInstance.control.setValue('world');
     hostFixture.detectChanges();

@@ -1,0 +1,29 @@
+:host {
+  display: inline-flex;
+}
+span {
+  display: inline-flex;
+}
+.ring {
+  box-sizing: border-box;
+  border: 2px solid var(--jp-color-border-strong);
+  border-block-start-color: var(--jp-color-text-primary);
+  border-radius: var(--jp-radius-full);
+  animation: jp-spin calc(var(--jp-motion-duration-slow) * 4) linear infinite;
+}
+@keyframes jp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .ring {
+    border-color: CanvasText;
+    border-block-start-color: Highlight;
+  }
+}

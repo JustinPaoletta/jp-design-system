@@ -1,0 +1,113 @@
+<div
+  class="frame"
+  role="region"
+  [attr.aria-label]="caption()"
+  tabindex="0"
+  (focusin)="onFocus($event)"
+  (focusout)="onFocusOut($event)"
+>
+  <table
+    [attr.aria-busy]="state() === 'loading'"
+    [attr.aria-describedby]="state() !== 'ready' ? id() + '-state' : null"
+  >
+    <caption>
+      {{ caption() }}
+    </caption>
+    <thead>
+      <tr>
+        @if (selectable()) {
+        <th scope="col">
+          <span class="sr-only"
+            >{{ messages.tableToolbar.selected(selectedKeys().length) }}</span
+          >
+        </th>
+        }
+        <th scope="col">{{ nameHeader() }}</th>
+        @for (column of columns(); track column.key) {
+        <th
+          scope="col"
+          [class.end]="column.align === 'end'"
+          [class.center]="column.align === 'center'"
+        >
+          {{ column.header }}
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (entry of index().entries; track entry.node.key) {
+      <tr
+        [id]="rowId(entry.node.key)"
+        [attr.data-tree-key]="entry.node.key"
+        [hidden]="!visibleKeys().has(entry.node.key)"
+        [class.selected]="selected(entry.node.key)"
+        [class.disabled]="unavailable(entry.node)"
+      >
+        @if (selectable()) {
+        <td>
+          <input
+            type="checkbox"
+            [checked]="selected(entry.node.key)"
+            [disabled]="unavailable(entry.node)"
+            [attr.aria-label]="messages.table.selectRow(entry.node.label)"
+            (change)="select(entry.node, $any($event.target).checked)"
+          />
+        </td>
+        }
+        <th scope="row">
+          <div
+            class="name"
+            [style.padding-inline-start]="(entry.level - 1) + 'rem'"
+          >
+            @if (branch(entry.node)) {
+            <button
+              type="button"
+              class="disclosure"
+              [disabled]="unavailable(entry.node)"
+              [attr.aria-label]="expanded(entry.node.key) ? messages.tree.collapse(entry.node.label) : messages.tree.expand(entry.node.label)"
+              [attr.aria-expanded]="expanded(entry.node.key)"
+              [attr.aria-controls]="controls(entry.node)"
+              (click)="toggle(entry.node)"
+            >
+              <span aria-hidden="true"
+                >{{ expanded(entry.node.key) ? '−' : '+' }}</span
+              >
+            </button>
+            } @else { <span class="spacer" aria-hidden="true"></span> }
+            <span
+              >@if (entry.ancestors.length) {
+              <span class="sr-only">{{ parentPath(entry) }} / </span> }{{
+              entry.node.label }}</span
+            >
+          </div>
+        </th>
+        @for (column of columns(); track column.key) {
+        <td
+          [class.end]="column.align === 'end'"
+          [class.center]="column.align === 'center'"
+        >
+          {{ display(entry.node.cells[column.key]) }}
+        </td>
+        }
+      </tr>
+      } @if (!rows().length) {
+      <tr>
+        <td [attr.colspan]="colCount()" class="empty">
+          {{ state() === 'loading' ? messages.tree.loading : state() === 'error'
+          ? messages.tree.failed : messages.tree.empty }}
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+@if (state() !== 'ready') {
+<div class="state" role="status" [id]="id() + '-state'">
+  {{ state() === 'loading' ? messages.tree.loading : messages.tree.failed }} @if
+  (state() === 'error') {
+  <button type="button" [disabled]="disabled()" (click)="retryRequested.emit()">
+    {{ messages.tree.retry }}
+  </button>
+  }
+</div>
+}

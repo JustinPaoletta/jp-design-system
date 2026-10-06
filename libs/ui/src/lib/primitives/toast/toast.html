@@ -3,7 +3,7 @@
   <button
     type="button"
     class="jp-toast__dismiss"
-    aria-label="Dismiss notification"
+    [attr.aria-label]="messages.toast.dismiss"
     (click)="dismiss()"
   >
     ×

@@ -1,0 +1,11 @@
+<span
+  [attr.role]="decorative() ? null : 'status'"
+  [attr.aria-hidden]="decorative() ? true : null"
+  ><span
+    class="ring"
+    [style.width]="'var(--jp-size-icon-' + size() + ')'"
+    [style.height]="'var(--jp-size-icon-' + size() + ')'"
+    aria-hidden="true"
+  ></span
+  >@if (!decorative()) { <span jpVisuallyHidden>{{ label() }}</span> }</span
+>

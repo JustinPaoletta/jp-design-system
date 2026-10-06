@@ -40,6 +40,20 @@ export default [
     },
   },
   {
+    files: ['**/link/link.ts'],
+    rules: {
+      // Keep native anchor semantics and Angular RouterLink on the same element.
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'jp',
+          style: 'camelCase',
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.spec.ts'],
     rules: {
       // Test hosts deliberately exercise imperative bindings with Eager detection.

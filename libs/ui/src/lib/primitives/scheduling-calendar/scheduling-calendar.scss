@@ -1,0 +1,252 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  container-type: inline-size;
+}
+.calendar {
+  color: var(--jp-color-foreground-primary);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+}
+.toolbar,
+.navigation,
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.toolbar {
+  justify-content: space-between;
+}
+.toggle {
+  display: flex;
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  overflow: hidden;
+}
+.toggle button {
+  border: 0;
+  padding: var(--jp-space-sm);
+  color: var(--jp-color-foreground-primary);
+  background: var(--jp-color-surface-sunken);
+  font: inherit;
+  cursor: pointer;
+  min-block-size: var(--jp-size-control-sm);
+}
+.toggle button[aria-pressed='true'] {
+  background: var(--jp-color-button-secondary-bg);
+  font-weight: var(--jp-font-weight-semibold);
+}
+button:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: -2px;
+}
+.period {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  padding-block: var(--jp-space-md);
+}
+.period span {
+  color: var(--jp-color-foreground-secondary);
+}
+.state {
+  padding: var(--jp-space-md);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+}
+.days {
+  display: grid;
+  grid-template-columns: var(--columns);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  max-block-size: 44rem;
+  overflow: auto;
+}
+.days:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: -2px;
+}
+.day {
+  min-inline-size: 0;
+  border-inline-end: 1px solid var(--jp-color-border-default);
+}
+.day:last-child {
+  border-inline-end: 0;
+}
+h3 {
+  box-sizing: border-box;
+  block-size: 4rem;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: var(--jp-space-sm);
+  font-size: var(--jp-font-size-body);
+  background: var(--jp-color-surface-sunken);
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  border-block-end: 1px solid var(--jp-color-border-default);
+}
+.today h3 {
+  box-shadow: inset 0 -2px var(--jp-color-focus-ring);
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.all-day {
+  box-sizing: border-box;
+  min-block-size: var(--all-day-size, 4rem);
+  padding: var(--jp-space-xs);
+  border-block-end: 1px solid var(--jp-color-border-default);
+}
+.all-day li + li {
+  margin-block-start: var(--jp-space-xs);
+}
+.appointment {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 2rem;
+  overflow: hidden;
+  padding: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-default);
+  border-inline-start: 3px solid var(--jp-color-focus-ring);
+  border-radius: var(--jp-radius-sm);
+  color: var(--jp-color-foreground-primary);
+  background: var(--jp-color-surface-raised);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.appointment strong,
+.appointment span {
+  flex-shrink: 0;
+  line-height: var(--jp-font-line-height-tight);
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.appointment span {
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-foreground-secondary);
+}
+.appointment--short span {
+  display: none;
+}
+.timeline {
+  position: relative;
+  block-size: calc(var(--minutes) * 0.05rem);
+}
+.hours span {
+  position: absolute;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 3rem;
+  border-block-start: 1px solid var(--jp-color-border-default);
+  color: var(--jp-color-foreground-secondary);
+  font-size: var(--jp-font-size-caption);
+  padding-inline: var(--jp-space-xs);
+  pointer-events: none;
+}
+.timed li {
+  box-sizing: border-box;
+  position: absolute;
+  padding-inline: var(--jp-space-xs);
+  min-block-size: 2rem;
+}
+.days.agenda {
+  grid-template-columns: 1fr;
+  max-block-size: none;
+}
+.agenda .day {
+  border-inline-end: 0;
+  border-block-end: 1px solid var(--jp-color-border-default);
+}
+.agenda h3 {
+  position: static;
+}
+.agenda .all-day {
+  min-block-size: 0;
+  border: 0;
+}
+.agenda .timeline {
+  block-size: auto;
+}
+.agenda .hours {
+  display: none;
+}
+.agenda .timed li {
+  position: static;
+  inline-size: auto !important;
+  block-size: auto !important;
+  padding-block: var(--jp-space-xs);
+}
+.agenda .appointment {
+  min-block-size: var(--jp-size-control-md);
+}
+.agenda .appointment strong,
+.agenda .appointment span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.agenda .appointment--short span {
+  display: block;
+}
+@container (max-width: 56rem) {
+  .days {
+    grid-template-columns: 1fr;
+    max-block-size: none;
+  }
+  .day {
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--jp-color-border-default);
+  }
+  h3 {
+    position: static;
+  }
+  .all-day {
+    min-block-size: 0;
+    border: 0;
+  }
+  .timeline {
+    block-size: auto;
+  }
+  .hours {
+    display: none;
+  }
+  .timed li {
+    position: static;
+    inline-size: auto !important;
+    block-size: auto !important;
+    padding-block: var(--jp-space-xs);
+  }
+  .appointment {
+    min-block-size: var(--jp-size-control-md);
+  }
+  .appointment strong,
+  .appointment span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .appointment--short span {
+    display: block;
+  }
+}
+@media (forced-colors: active) {
+  .appointment {
+    border-color: ButtonText;
+  }
+  .toggle button[aria-pressed='true'] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

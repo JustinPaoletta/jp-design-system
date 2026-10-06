@@ -1,171 +1,86 @@
-# JP Design System --- Design Principles
+# JP design principles
 
 ## Purpose
 
-The JP Design System exists to enforce precision, consistency, and
-clarity across all UI surfaces.\
-It is not a style experiment. It is an engineered system.
+JP gives applications clear, consistent interface components.
+These rules apply to design and code changes.
 
-This document defines the non-negotiable rules that guide every design
-and engineering decision.
+## 1. Precision Over Decoration
 
----
+Every visual element must help users read, understand or operate the interface.
+Decoration alone is not a reason to add an element.
 
-# 1. Precision Over Decoration
+## 2. Signal, Not Noise
 
-Every visual decision must serve clarity or function.
+Accent color identifies primary actions, focus, active navigation and selection.
+Large backgrounds and long text do not use accent color for decoration.
 
-We do not decorate for aesthetics alone. We do not introduce styling
-that does not improve usability. We do not chase trends.
+## 3. Consistency Over Customization
 
-If a visual element does not improve comprehension, hierarchy, or
-usability, it does not belong.
+Visual inputs use the documented token scales.
+Components do not accept arbitrary `class` or `style` inputs.
+Spacing, colors, type and motion use semantic tokens.
 
----
+## 4. Dark-First Clarity
 
-# 2. Signal, Not Noise
+JP uses a dark theme.
+Text and controls must meet the documented WCAG AA contrast target.
+Tone changes and borders separate surfaces.
+Heavy shadows are not a substitute for clear structure.
 
-Accent color is a signal --- not a background theme.
+## 5. Accessibility Is Default
 
-Accent is reserved for: - Primary actions - Focus states - Active
-navigation - Selection states
+Components must have keyboard operation, visible focus and readable contrast.
+Status must remain clear without color alone.
+Accessibility takes priority over decoration.
 
-Accent is never used for: - Large background fills - Long-form text -
-Decorative emphasis
+## 6. Motion Is Subtle and Purposeful
 
-The interface must remain calm. The accent must remain intentional.
+Motion must explain a change.
+It must be brief and respect reduced-motion preferences.
+Bounce, spring effects and decorative transitions are not permitted.
 
----
+## 7. Layout Discipline
 
-# 3. Consistency Over Customization
+Box, Stack, Inline, Grid and Surface supply shared layout rules.
+Applications use token spacing instead of unrelated margin values.
 
-Consistency builds trust.
+## 8. Typography Hierarchy Is Level-Based
 
-Components do not accept arbitrary styling overrides. Spacing, colors,
-typography, and motion must use tokens.
+`jp-text` is for body text, labels and inline emphasis.
+Its `as` tag and `size` are independent.
 
-Customization that breaks consistency is not flexibility --- it is
-entropy.
+`jp-heading` is for page and section titles.
+Its `h1`–`h6` level sets both the tag and visual size.
+It has no separate `size` input.
+Each level has its own heading token.
 
-The system is opinionated by design.
+Select the heading level from the document structure.
+Use `jp-text` for text that is not a heading.
 
----
+## 9. Semantic Meaning Is Stable
 
-# 4. Dark-First Clarity
+Success, warning, error and information remain distinct from brand accent.
+An accent change must not change those meanings.
 
-The system is built for dark environments first.
+## 10. Approachability Without Softness
 
-Contrast must meet WCAG AA minimum. Surface layering must be achieved
-through tone shifts and borders --- not heavy shadows.
+Product text is calm, direct and specific.
+Labels name the action or content.
+Decoration, jokes and aggressive language do not help the user.
 
-Dark UI must remain readable, not dramatic.
+## 11. Engineering-Grade Standards
 
----
+Strict types, semantic tokens, lint rules and tests are design requirements.
+Chromium/WebKit tests and macOS Chromium snapshots give automated evidence.
+[Quality](QUALITY.md) defines their scope and remaining manual inspection.
 
-# 5. Accessibility Is Default
+## 12. Evolution Without Chaos
 
-Accessibility is not an enhancement.
+Accent and density changes use documented token modes.
+New modes must have a clear requirement and evidence that existing behavior still works.
 
-Every component must: - Support keyboard interaction - Provide visible
-focus indicators - Meet contrast requirements - Avoid motion that causes
-discomfort
+## Final Standard
 
-If accessibility conflicts with aesthetics, accessibility wins.
-
----
-
-# 6. Motion Is Subtle and Purposeful
-
-Motion communicates change.
-
-Animation should: - Be brief - Be restrained - Clarify interaction
-
-No bounce. No spring physics. No exaggerated transitions.
-
-Motion should never draw attention to itself.
-
----
-
-# 7. Layout Discipline
-
-Spacing is controlled through primitives.
-
-All layout must use: - Box - Stack - Inline - Grid - Surface
-
-Ad-hoc margin usage is discouraged. Token scales are mandatory.
-
-The system enforces structural clarity.
-
----
-
-# 8. Typography Hierarchy Is Level-Based
-
-Body copy and headings serve different roles and use different primitives.
-
-- **`jp-text`** — body copy, labels, inline emphasis. Semantic tag (`as`) and
-  visual size (`size`) are independent.
-- **`jp-heading`** — page and section titles only. The `h1`–`h6` level sets
-  both semantic meaning and visual scale. There is no separate `size` prop.
-
-Each heading level maps to a dedicated token (`--jp-font-size-heading-h1` through
-`h6`). Do not override heading size outside the level system — pick the correct
-level or use `jp-text` for non-heading copy.
-
----
-
-# 9. Semantic Meaning Is Stable
-
-Accent color may evolve. Semantic meaning may not.
-
-Success, warning, error, and informational states must remain clear and
-consistent, regardless of brand accent changes.
-
-Brand identity can shift. Semantic meaning must remain stable.
-
----
-
-# 10. Approachability Without Softness
-
-The system reflects high competence without intimidation.
-
-It is: - Structured - Calm - Confident
-
-It is not: - Playful - Loud - Aggressive
-
-Professional does not mean cold. Approachable does not mean casual.
-
----
-
-# 11. Engineering-Grade Standards
-
-Code quality is part of design quality.
-
-The system enforces: - Strict typing - Token usage - Lint rules - Test
-coverage
-
-Reviewed macOS Chromium visual baselines now cover both accents and densities. Functional and axe checks also run in Chromium and WebKit. See [QUALITY.md](QUALITY.md) for commands, platform limits, and remaining manual review.
-
-A design system is infrastructure. Infrastructure must be reliable.
-
----
-
-# 12. Evolution Without Chaos
-
-The system is built to support brand evolution.
-
-Accent families are swappable. Density modes are structured. Tokens are
-layered.
-
-Evolution is intentional, not reactive.
-
----
-
-# Final Standard
-
-If a decision compromises: - Clarity - Consistency - Accessibility -
-Structural discipline
-
-It is rejected.
-
-The JP Design System is not built for visual experimentation. It is
-built for durable, professional software.
+A change must keep clarity, consistency, accessibility and layout rules.
+JP maintainers reject changes that weaken those requirements.

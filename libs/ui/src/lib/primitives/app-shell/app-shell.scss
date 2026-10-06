@@ -116,7 +116,7 @@
   min-height: 0;
   min-width: 0;
   background: var(--jp-color-shell-sidebar-bg);
-  border-right: 1px solid var(--jp-color-shell-border);
+  border-inline-end: 1px solid var(--jp-color-shell-border);
   transition: var(--jp-motion-transition-shell);
 }
 
@@ -136,13 +136,19 @@
   }
 }
 
-/* Chevron points toward the action: "<" to collapse, ">" to expand. */
+/* Chevron points toward the action: "<" to collapse, ">" to expand.
+   The glyph is built from physical borders; RTL mirrors it. CSS has no
+   logical translate, so the mirror uses the scale property. */
 .jp-app-shell__collapse-toggle-icon {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(135deg) translate(-1px, -1px);
   transition: transform var(--jp-motion-duration-shell)
     var(--jp-motion-easing-shell);
+}
+
+.jp-app-shell__collapse-toggle-icon:dir(rtl) {
+  scale: -1 1;
 }
 
 :host(.jp-app-shell--collapsed) .jp-app-shell__collapse-toggle-icon {
@@ -192,12 +198,19 @@
 
   .jp-app-shell__sidebar {
     position: fixed;
-    inset: 0 auto 0 0;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
     width: min(var(--jp-size-sidebar-expanded), 85vw);
     z-index: var(--jp-z-shell-drawer);
     transform: translateX(-100%);
-    border-right: 1px solid var(--jp-color-shell-border);
+    border-inline-end: 1px solid var(--jp-color-shell-border);
     box-shadow: var(--jp-elevation-overlay);
+  }
+
+  /* Off-canvas motion is physical; :dir flips the hidden side. */
+  .jp-app-shell__sidebar:dir(rtl) {
+    transform: translateX(100%);
   }
 
   :host(.jp-app-shell--mobile-nav-open) .jp-app-shell__sidebar {

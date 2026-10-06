@@ -4,6 +4,8 @@
 }
 
 .jp-table__frame {
+  container-type: inline-size;
+  container-name: jp-table-frame;
   box-sizing: border-box;
   width: 100%;
   overflow-x: auto;
@@ -35,6 +37,7 @@
 }
 
 .jp-table__header {
+  position: relative;
   box-sizing: border-box;
   padding: var(--jp-space-sm) var(--jp-space-md);
   background: var(--jp-color-table-header-bg);
@@ -136,4 +139,138 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+.jp-table__settings {
+  margin-block-end: var(--jp-space-sm);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body);
+  color: var(--jp-color-text-primary);
+}
+.jp-table__settings summary {
+  cursor: pointer;
+  inline-size: fit-content;
+  padding: var(--jp-space-xs);
+}
+.jp-table__settings summary:focus-visible,
+.jp-table__settings input:focus-visible,
+.jp-table__expand:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.jp-table__settings-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-md);
+  padding-block: var(--jp-space-sm);
+}
+.jp-table__column-setting {
+  display: grid;
+  gap: var(--jp-space-xs);
+}
+.jp-table__column-setting label {
+  display: grid;
+  gap: var(--jp-space-xs);
+  font-size: var(--jp-font-size-caption);
+}
+.jp-table__column-setting input {
+  inline-size: 7rem;
+  min-block-size: var(--jp-size-control-md);
+  box-sizing: border-box;
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-sm);
+  padding-inline: var(--jp-space-xs);
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
+  font: inherit;
+}
+.jp-table__root--resizable {
+  table-layout: fixed;
+}
+.jp-table__root--resizable .jp-table__cell {
+  overflow-wrap: anywhere;
+}
+.jp-table__root--resizable .jp-table__header {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.jp-table__root--advanced .jp-table__selection {
+  inline-size: 48px;
+  min-inline-size: 48px;
+  padding-inline: var(--jp-space-xs);
+}
+.jp-table__frame--sticky-header .jp-table__header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+}
+.jp-table__frame--sticky-first .jp-table__pin {
+  position: sticky;
+  inset-inline-start: var(--jp-table-leading-offset);
+  z-index: 1;
+}
+.jp-table__frame--sticky-first .jp-table__pin-control {
+  position: sticky;
+  z-index: 1;
+}
+.jp-table__frame--sticky-first
+  .jp-table__cell:is(.jp-table__pin, .jp-table__pin-control) {
+  background: inherit;
+}
+.jp-table__frame--sticky-header.jp-table__frame--sticky-first
+  .jp-table__header:is(.jp-table__pin, .jp-table__pin-control) {
+  z-index: 3;
+}
+.jp-table__resize {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block: 0;
+  inline-size: 12px;
+  cursor: col-resize;
+  touch-action: none;
+  border-inline-end: 2px solid var(--jp-color-border-strong);
+}
+.jp-table__expand {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: var(--jp-size-control-md);
+  min-block-size: var(--jp-size-control-md);
+  padding: 0;
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-surface-subtle);
+  color: var(--jp-color-text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+.jp-table__expand:disabled {
+  cursor: default;
+}
+.jp-table__detail-row {
+  background: var(--jp-color-surface-subtle);
+}
+@media (forced-colors: active) {
+  .jp-table__header,
+  .jp-table__cell {
+    border-color: CanvasText;
+  }
+  .jp-table__resize {
+    border-color: CanvasText;
+  }
+}
+:is(.jp-table__frame--sticky-header, .jp-table__frame--sticky-first)
+  .jp-table__root {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+@container jp-table-frame (max-width: 28rem) {
+  .jp-table__frame--sticky-first .jp-table__pin,
+  .jp-table__frame--sticky-first .jp-table__pin-control {
+    position: static;
+  }
+  .jp-table__frame--sticky-header.jp-table__frame--sticky-first
+    .jp-table__header:is(.jp-table__pin, .jp-table__pin-control) {
+    position: sticky;
+    inset-inline-start: auto !important;
+  }
 }

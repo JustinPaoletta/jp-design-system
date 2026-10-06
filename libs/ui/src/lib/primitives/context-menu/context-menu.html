@@ -1,0 +1,50 @@
+<div
+  #region
+  class="region"
+  role="group"
+  tabindex="0"
+  [attr.aria-label]="label()"
+  (contextmenu)="context($event)"
+  (keydown)="regionKeydown($event)"
+>
+  <ng-content />
+</div>
+<button
+  #trigger
+  type="button"
+  [disabled]="disabled() || !actions().length"
+  [attr.aria-label]="triggerLabel()+': '+label()"
+  aria-haspopup="menu"
+  [attr.aria-expanded]="open() && !disabled()"
+  [attr.aria-controls]="menuId"
+  (click)="show()"
+>
+  {{triggerLabel()}}
+</button>
+<span
+  #point
+  aria-hidden="true"
+  class="point"
+  [style.left.px]="x()"
+  [style.top.px]="y()"
+></span>
+<div
+  #panel
+  class="panel"
+  role="menu"
+  tabindex="-1"
+  [id]="menuId"
+  [attr.aria-label]="label()"
+  [hidden]="!open() || disabled()"
+  (keydown)="menuKeydown($event)"
+>
+  @for(action of actions();track action.id){<button
+    type="button"
+    role="menuitem"
+    tabindex="-1"
+    [disabled]="action.disabled"
+    (click)="choose(action)"
+  >
+    {{action.label}}</button
+  >}
+</div>
