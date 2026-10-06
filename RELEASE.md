@@ -75,17 +75,21 @@ The release pull request must be green before merge. Artifacts are the workspace
 
 Hosted CI jobs, matching [.github/workflows/ci.yml](.github/workflows/ci.yml):
 
-| Check | CI job | Command |
-| --- | --- | --- |
-| Format and lint | Lint | `npm run format:check` and `npm run lint` |
-| Unit tests | Test | `npm run test` |
-| Storybook | Test | `npm exec -- nx run ui:test-storybook` and `npm exec -- nx run ui:test-storybook-dev` |
-| Showcase end-to-end | Test | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
-| Typecheck and build | Build | `npm run typecheck` and `npm run build` |
-| macOS visual | Visual regression (macOS) | `npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual \\| component expansion visual \\| product tools visual \\| workflow visual \\| advanced layout visual \\| larger features visual"` |
-| Release safety | Build | `npm exec -- nx run packages:check-release` |
-| Consumer smoke | Package consumer | `npm exec -- nx run packages:smoke` |
-| Runtime audit | Runtime dependency audit | `npm audit --omit=dev --audit-level=moderate` |
+Required job checks are Format and lint (Lint), Unit tests and Storybook and Showcase end-to-end (Test), Typecheck and build and Release safety (Build), macOS visual (Visual regression (macOS)), Consumer smoke (Package consumer), and Runtime audit (Runtime dependency audit).
+
+Run the non-visual Showcase browser check with this command:
+
+```bash
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"
+```
+
+Run the examined macOS visual check with this command:
+
+```bash
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"
+```
+
+The other hosted commands are `npm run format:check`, `npm run lint`, `npm run test`, `npm exec -- nx run ui:test-storybook`, `npm exec -- nx run ui:test-storybook-dev`, `npm run typecheck`, `npm run build`, `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:smoke`, and `npm audit --omit=dev --audit-level=moderate`.
 
 Also examine the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the examined check described in [QUALITY.md](docs/QUALITY.md).
 
