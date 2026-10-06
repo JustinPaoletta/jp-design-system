@@ -5,18 +5,18 @@
     [attr.aria-busy]="phase() === 'loading'"
   >
     @for (imageSrc of [src()]; track imageSrc) {
-    <img
-      [src]="imageSrc"
-      [alt]="alt()"
-      [attr.srcset]="srcset() || null"
-      [attr.sizes]="sizes() || null"
-      [attr.loading]="loading()"
-      decoding="async"
-      [style.object-fit]="fit()"
-      [hidden]="phase() === 'failed'"
-      (load)="onLoad(imageSrc)"
-      (error)="onError(imageSrc)"
-    />
+      <img
+        [src]="imageSrc"
+        [alt]="alt()"
+        [attr.srcset]="srcset() || null"
+        [attr.sizes]="sizes() || null"
+        [attr.loading]="loading()"
+        decoding="async"
+        [style.object-fit]="fit()"
+        [hidden]="phase() === 'failed'"
+        (load)="onLoad(imageSrc)"
+        (error)="onError(imageSrc)"
+      />
     }
     @if (phase() !== 'loaded') {
     <span
