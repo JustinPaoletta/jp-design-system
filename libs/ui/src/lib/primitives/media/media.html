@@ -4,6 +4,7 @@
     [style.aspect-ratio]="ratio()"
     [attr.aria-busy]="phase() === 'loading'"
   >
+    <!-- prettier-ignore -->
     @for(imageSrc of [src()];track imageSrc){<img
       [src]="imageSrc"
       [alt]="alt()"
