@@ -7,6 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Update the locked Handlebars development dependency to 4.7.10. Record current audit results and remaining unpatched development-tool findings.
+
 - Add Firefox functional and accessibility CI, native overlay fallback tests, and installed tarball runtime checks across three browser engines.
 - Fix hidden fallback overlays when `showPopover()` is unavailable.
 - Give app shell instances separate sidebar IDs. Update control relationships and regression tests.

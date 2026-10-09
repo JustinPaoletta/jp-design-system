@@ -12,6 +12,7 @@ Use this procedure to finish the five tasks in the [task list](../../COMPONENT_E
 - Run an installed tarball consumer in Chromium, Firefox and WebKit.
 - Inspect the source and maturity evidence for all 113 public classes.
 - Inspect actual Chrome zoom at 200% and 400% on the four larger-feature screens.
+- Apply the available Handlebars patch and update development-tool audit records.
 - Prepare a dry-run proposal for `0.1.0-rc.1` without changing package versions.
 
 ### Package consumer
@@ -157,7 +158,7 @@ The release tool uses a UTC date for changelog headings.
 1. Approve or replace the proposed version.
 2. Confirm tarball distribution, or request a separate registry setup.
 3. Decide whether the optional Figma kit is required for this release.
-4. Examine the candidate notes in the [changelog](../../CHANGELOG.md).
+4. Examine the [candidate notes](../../CHANGELOG.md) and [security inspection](../SECURITY_REVIEW.md).
 5. Merge the engineering PR after its required checks pass.
 6. Follow [Release process](../../RELEASE.md) to create the release branch and release PR.
 7. Run the dry-run before writing version changes.

@@ -1,6 +1,6 @@
 # Security inspection
 
-The dependency audit date is October 4, 2026.
+The dependency audit date is October 8, 2026.
 It uses the current lockfile.
 The focused source inspection date is October 2, 2026, after the Angular 22.2.1 upgrade.
 That inspection included library/application code, build scripts, workflows and candidate source files.
@@ -9,6 +9,12 @@ This inspection is not a penetration test or proof that all vulnerabilities are 
 It did not include deployment, credentials, backend services or registry publication.
 
 ## Findings corrected
+
+- The lockfile now selects Handlebars 4.7.10 in place of 4.7.9.
+  This patch clears the [AST type-confusion advisory](https://github.com/advisories/GHSA-8r5x-fm3f-whwj) and [own-property bypass advisory](https://github.com/advisories/GHSA-p8wg-vrv2-v86f).
+  It also clears the [inline-embedding advisory](https://github.com/advisories/GHSA-xw65-4hp5-5hc7).
+  Handlebars belongs to development tooling, not the distributed UI.
+  Parent dependency ranges permit the patch; no new override is necessary.
 
 - Upgraded Style Dictionary from 4.4.0 to 5.5.5, including the [prototype-pollution fix](https://github.com/advisories/GHSA-vj5c-m527-mpff). Generated CSS/JSON is unchanged, verified by token drift checking.
 - Nx 23.2.1 pins vulnerable development dependencies. Scoped `nx` overrides select axios 1.20.0, brace-expansion 5.0.12, and smol-toml 1.9.0. These remain within their existing major versions. Recheck/remove the overrides when Nx incorporates the fixes; strict peer installation and Nx validation must continue to pass.
@@ -25,15 +31,20 @@ npm audit --json
 npm audit --omit=dev --json
 ```
 
-The current complete scan reports **8 high-severity development packages**. These eight findings propagate from **one advisory-bearing leaf package: braces 3.0.3**. There are no moderate or critical findings. The runtime-only scan reports **zero findings at every severity**. A clean runtime audit does not clear development-tool findings or prove application security.
+The complete scan reports **30 moderate and eight high development packages**.
+These 38 package findings come from two advisory-bearing leaf packages: `sprintf-js` and `braces`.
+There are no critical findings after the Handlebars patch.
+The runtime-only scan reports **zero findings at every severity**.
+A clean runtime audit does not clear development-tool findings or prove application security.
 
-| Remaining dependency  | Advisory / condition                                                                                                                                                                         | Boundary and follow-up                                                                                                                                                                                                                                             |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `braces` 3.0.3 (high) | [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm): deeply nested brace patterns can exhaust the stack; the current lockfile audit still reports the affected version. | Used by build/test glob tooling, not the shipped UI. Keep configuration/glob patterns developer-controlled. Clearing it now would make a fork necessary or replacing dependent tooling; wait for an upstream patch unless untrusted patterns become a requirement. |
+| Remaining dependency          | Advisory / condition                                                                                                                                                                         | Boundary and follow-up                                                                                                                                                                                                                                             |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `braces` 3.0.3 (high)         | [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm): deeply nested brace patterns can exhaust the stack; the current lockfile audit still reports the affected version. | Used by build/test glob tooling, not the shipped UI. Keep configuration/glob patterns developer-controlled. Clearing it now would make a fork necessary or replacing dependent tooling; wait for an upstream patch unless untrusted patterns become a requirement. |
+| `sprintf-js` 1.0.3 (moderate) | [GHSA-hp3w-g68c-fv3c](https://github.com/advisories/GHSA-hp3w-g68c-fv3c): uncontrolled format precision can stop an operation. No patched version is listed.                                 | Used by development argument parsing and test tooling. Keep format strings under developer control. Wait for an upstream patch or inspect a tooling replacement.                                                                                                   |
 
 The [UUID bounds-check advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq) and [middleware path-traversal advisory](https://github.com/advisories/GHSA-g84c-rxfj-3j2c) no longer appear in the resolved lockfile audit. The targeted overrides keep CJS/ESM UUID imports used by the inspected consumers and Storybook's middleware API on project Node 24.21.0. No global or unrelated major upgrades were forced.
 
-The full audit intentionally still exits nonzero for braces. Do not run `npm audit fix --force`: its proposed major changes/downgrades are not a verified remediation for this Angular/Nx stack. The CI runtime check blocks moderate-or-higher runtime advisories. CI also uploads the complete audit as an informational artifact so development findings stay visible; it does not establish a clean full scan.
+The full audit still exits nonzero for `braces` and `sprintf-js`. Do not run `npm audit fix --force`: its proposed major changes/downgrades are not a verified remediation for this Angular/Nx stack. The CI runtime check blocks moderate-or-higher runtime advisories. CI also uploads the complete audit as an informational artifact so development findings stay visible; it does not establish a clean full scan.
 
 ## Source inspection
 
