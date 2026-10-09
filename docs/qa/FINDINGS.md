@@ -1,6 +1,6 @@
 # Accessibility findings
 
-Recorded October 4, 2026. No screen reader or Windows high-contrast session
+Updated October 8, 2026. No screen reader or Windows high-contrast session
 was performed.
 
 ## Resolved: open combobox options failed WCAG 2.1 AA contrast
@@ -62,3 +62,23 @@ was performed.
   at least 4.5:1 for both accents and both button states.
 - Submission summaries and multi-select removal restore focus after Angular
   renders, avoiding focus races with newly created or removed elements.
+
+## Resolved: overlay fallback remained hidden without the native API
+
+- **Where:** `libs/ui/src/lib/primitives/shared/overlay-manager.ts`.
+- **Behavior:** The fallback added `popover="manual"` when `showPopover` was missing.
+  The browser's closed-popover rules then hid the panel despite its fixed coordinates.
+- **Fix:** Remove the attribute whenever native opening fails or is unavailable.
+  Cleanup restores the original attribute.
+- **Evidence:** Unit tests check position and attribute restoration.
+  `overlay-fallback.spec.ts` checks visible menus, dialog focus and dismissal in all three engines.
+  Both missing and throwing native methods are covered.
+
+## Resolved: multiple app shells shared a sidebar ID
+
+- **Where:** `libs/ui/src/lib/primitives/app-shell/app-shell.ts`.
+- **Behavior:** Two shells used `jp-app-shell-sidebar` for both sidebar IDs.
+  Their `aria-controls` relationships could identify the wrong sidebar.
+- **Fix:** Generate a different sidebar ID for each shell instance.
+- **Evidence:** The multi-instance unit test checks unique IDs and each shell's control relationships.
+  The Storybook assertion uses the generated ID.

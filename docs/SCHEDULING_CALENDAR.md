@@ -150,7 +150,7 @@ The application also calculates `today`.
 Unit tests cover dates, exclusive ends, lanes, short slots, zones and clock changes.
 They also cover rejected dates, translated errors, navigation, activation and retry.
 Storybook shows schedule, agenda, loading, empty, error and repeated-hour states.
-Chromium/WebKit tests cover navigation, activation, positions, RTL, zones, agenda and axe scans.
+Chromium/Firefox/WebKit tests cover navigation, activation, positions, RTL, zones, agenda and axe scans.
 Both accents and densities have test coverage.
 [Verification](qa/VERIFICATION.md) records results.
 

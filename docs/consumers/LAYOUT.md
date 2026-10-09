@@ -27,8 +27,11 @@ grows past the breakpoint while the drawer is open, the shell emits
 
 `sidebarCollapsed` and `mobileNavOpen` are inputs. The shell emits changes
 and does not store them. Bind both, as Showcase does in
-`apps/showcase/src/app/layout/shell-layout.ts`. One shell per document: the
-sidebar id is the fixed string `jp-app-shell-sidebar`.
+`apps/showcase/src/app/layout/shell-layout.ts`.
+
+Each shell has a different sidebar ID. Its controls refer to that ID.
+Do not store or depend on the generated ID value.
+Multiple mobile shells still need application inspection of focus and overlay behavior.
 
 The main region uses `min-width: 0` and `overflow: auto`, so wide content
 scrolls inside the shell instead of stretching the grid.

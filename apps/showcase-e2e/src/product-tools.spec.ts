@@ -72,6 +72,9 @@ test('product tools: numeric stepping and range keyboard/exact entry stay bounde
   await page.keyboard.press('Home');
   await expect(volume).toHaveValue('0');
   const exact = page.getByRole('spinbutton', { name: 'Volume' });
+  // Wait for the controlled numeric alternative to receive the range change.
+  // The native range value changes before Angular renders its sibling input.
+  await expect(exact).toHaveValue('0');
   await exact.fill('37');
   await exact.press('Tab');
   await expect(volume).toHaveValue('35');

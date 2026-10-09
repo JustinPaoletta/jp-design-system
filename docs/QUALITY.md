@@ -16,6 +16,7 @@ npm run build
 npm exec -- nx run packages:build
 npm exec -- nx run packages:smoke
 npm exec -- nx run packages:check-release
+npm exec -- nx run packages:check-readiness
 node tools/docs/check-links.mjs
 node tools/docs/check-writing.mjs
 node --test tools/docs/check-writing.spec.mjs
@@ -52,11 +53,11 @@ testing. It also checks the default preview if one is present. See
 
 ## Browser and visual checks
 
-Run functional/axe checks in Chromium and WebKit, excluding all six macOS
+Run functional/axe checks in Chromium, Firefox and WebKit, excluding all six macOS
 visual title prefixes:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
 ```
 
 Run the visual suite on macOS Chromium:
@@ -76,16 +77,18 @@ ordinary enabled rules. Open overlay, validation, selection and assistant
 states extend the closed-route scans.
 
 The seven larger features have 640px LTR, 320px LTR and 320px RTL reflow
-checks in both browsers. Four forced-colors interaction cases run in Chromium
-and intentionally skip WebKit. Axe runs after restoring default colors
+checks in all three engines. Four forced-colors interaction cases run in Chromium
+and intentionally skip Firefox and WebKit. Axe runs after restoring default colors
 because of the forced-colors contrast calculation limitation. Native
 `details.name` grouping is asserted through repeated keyboard and click use.
 See [Acceptance automation](qa/ACCEPTANCE_AUTOMATION.md) for the focused
 command, assertions and limits.
 
-VoiceOver/NVDA sessions, real Windows high contrast and actual browser/text
-zoom remain manual. Physical touch and native picker dialogs are also
-unreviewed. Follow the [manual checklist](../MANUAL_QA.md).
+Actual Chrome 200%/400% zoom was inspected for the seven larger features.
+See [readiness evidence and maintainer instructions](qa/READINESS.md).
+VoiceOver/NVDA, real Windows contrast themes, text-only zoom and other zoom combinations remain open.
+Physical touch and native picker dialogs are also unreviewed.
+Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility
 

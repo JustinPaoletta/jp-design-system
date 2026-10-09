@@ -89,6 +89,35 @@ describe('JpAppShell', () => {
     expect(component).toBeTruthy();
   });
 
+  it('keeps sidebar identities and control relationships separate across instances', () => {
+    const second = TestBed.createComponent(JpAppShell);
+    second.detectChanges();
+    // TestBed removes earlier fixture roots when it creates another fixture.
+    // Mount both roots to exercise ID lookup in one document.
+    document.body.append(fixture.nativeElement, second.nativeElement);
+    const firstSidebar = fixture.nativeElement.querySelector(
+      '.jp-app-shell__sidebar',
+    );
+    const secondSidebar = second.nativeElement.querySelector(
+      '.jp-app-shell__sidebar',
+    );
+    expect(firstSidebar.id).not.toBe(secondSidebar.id);
+    for (const instance of [fixture, second]) {
+      const sidebar = instance.nativeElement.querySelector(
+        '.jp-app-shell__sidebar',
+      );
+      for (const control of instance.nativeElement.querySelectorAll(
+        '[aria-controls]',
+      )) {
+        expect(control.getAttribute('aria-controls')).toBe(sidebar.id);
+        expect(document.getElementById(sidebar.id)).toBe(sidebar);
+      }
+    }
+    second.destroy();
+    fixture.nativeElement.remove();
+    second.nativeElement.remove();
+  });
+
   it('defaults sidebarCollapsed and mobileNavOpen to false', () => {
     expect(component.sidebarCollapsed()).toBe(false);
     expect(component.mobileNavOpen()).toBe(false);
@@ -261,11 +290,9 @@ describe('JpAppShell', () => {
     expect(sidebar.getAttribute('aria-label')).toBe('Primary');
     expect(toggle.getAttribute('aria-label')).toBe('Collapse sidebar');
     expect(toggle.getAttribute('aria-expanded')).toBe('true');
-    expect(toggle.getAttribute('aria-controls')).toBe('jp-app-shell-sidebar');
+    expect(toggle.getAttribute('aria-controls')).toBe(sidebar.id);
     expect(menuToggle.getAttribute('aria-expanded')).toBe('false');
-    expect(menuToggle.getAttribute('aria-controls')).toBe(
-      'jp-app-shell-sidebar',
-    );
+    expect(menuToggle.getAttribute('aria-controls')).toBe(sidebar.id);
   });
 
   it('uses custom sidebarLabel and open menu aria-label', () => {

@@ -152,9 +152,7 @@ export const Default: Story = {
     await expect(canvasElement.querySelector('h2')).toBeTruthy();
     // The disclosure state lives on the toggle button, not the landmark.
     await expect(toggle?.getAttribute('aria-expanded')).toBe('true');
-    await expect(toggle?.getAttribute('aria-controls')).toBe(
-      'jp-app-shell-sidebar',
-    );
+    await expect(toggle?.getAttribute('aria-controls')).toBe(sidebar?.id);
     await expect(activeNav?.getAttribute('aria-current')).toBe('page');
   },
 };

@@ -57,6 +57,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install consumer test browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
       - name: Dry-run release prepare
         env:
           RELEASE_VERSION: ${{ inputs.version }}
@@ -65,8 +68,13 @@ jobs:
       - name: Verify release preparation safety
         run: npm exec -- nx run packages:check-release
 
+      - name: Verify public API evidence
+        run: npm exec -- nx run packages:check-readiness
+
       - name: Build packages
         run: npx nx run packages:build
 
       - name: Consumer smoke
         run: npx nx run packages:smoke
+        env:
+          CONSUMER_BROWSERS: chromium,firefox,webkit

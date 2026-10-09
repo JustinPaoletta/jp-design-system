@@ -1,5 +1,6 @@
 # QA references
 
+- [Readiness and maintainer handoff](READINESS.md): new compatibility and package checks, API evidence, actual zoom and completion instructions
 - [Verification](VERIFICATION.md): confirmed test totals, build/package evidence
   and the visual matrix
 - [Support matrix](SUPPORT_MATRIX.md): accessibility target, browsers,

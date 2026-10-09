@@ -56,7 +56,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Test
         run: npm run test
@@ -67,8 +67,8 @@ jobs:
       - name: Live Storybook middleware interaction tests
         run: npx nx run ui:test-storybook-dev
 
-      - name: Showcase functional and accessibility checks (Chromium and WebKit)
-        run: npx nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+      - name: Showcase functional and accessibility checks (Chromium, Firefox and WebKit)
+        run: npx nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
 
       - name: Upload test failure artifacts
         if: failure()
@@ -103,6 +103,17 @@ jobs:
       - name: Release preparation safety checks
         run: npm exec -- nx run packages:check-release
 
+      - name: Public API evidence and maturity inventory
+        run: npm exec -- nx run packages:check-readiness
+
+      - name: Upload public API evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: api-readiness
+          path: dist/qa/api-readiness.json
+          if-no-files-found: ignore
+
       - name: Build
         run: npm run build
 
@@ -136,7 +147,18 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npx nx run packages:smoke
+        env:
+          CONSUMER_BROWSERS: chromium,firefox,webkit
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: consumer-evidence
+          path: |
+            dist/packages/consumer-smoke.json
+            dist/packages/consumer-runtime
+          if-no-files-found: ignore
 
   security:
     name: Runtime dependency audit

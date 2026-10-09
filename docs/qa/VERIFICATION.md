@@ -1,10 +1,42 @@
 # Verification evidence
 
-Recorded October 4, 2026 (America/New_York). This is the current consolidated
-record for the component expansion. Test totals describe these revisions;
-update this page when the suite or implementation changes.
+This page keeps dated evidence for the component expansion and readiness changes.
+Test totals apply to the stated revisions and selections.
+Later changes need their own checks.
 
-## Confirmed revisions
+## October 8 readiness evidence
+
+Local checks used Node 24.21.0 on macOS.
+The readiness change adds Firefox, native overlay fallback tests and installed consumer runtime flows.
+See [Readiness](READINESS.md) for scope and the maintainer's completion steps.
+
+| Check                        | Local result                                                                                                   |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| UI unit tests                | 461 tests / 98 suites; 98.11% statements, 91.18% branches, 95.61% functions, 98.89% lines                      |
+| Live Storybook               | All 319 checks / 97 suites passed; compiler/runtime isolation guards passed                                    |
+| Static Storybook             | All 319 checks / 97 suites passed                                                                              |
+| Runtime dependency audit     | No vulnerabilities in the runtime-only audit                                                                   |
+| Visual regression            | All 66 macOS Chromium comparisons passed without baseline changes                                              |
+| Functional and accessibility | 406 passed across Chromium/Firefox/WebKit; eight intentional forced-colors skips                               |
+| Overlay fallbacks            | All 18 missing/throwing native API cases passed; included in the functional total                              |
+| Installed consumer           | All 12 browser/accent/density combinations passed; Angular 22.2.1; no workspace aliases or symlinks            |
+| API evidence inventory       | 113 public classes; 36 stable, 76 preview, one deprecated; seven guard tests passed                            |
+| Release preparation          | Seven safety tests and the `0.1.0-rc.1` dry-run passed; release files were unchanged                           |
+| All project unit checks      | UI, Showcase, tokens and the placeholder Storybook application passed their coverage gates                     |
+| Build, lint and types        | All repository production builds, all project lint, token guards/drift and Angular type/template checks passed |
+| Documentation                | 55 maintained documents and 12 writing-helper tests passed; no broken local links                              |
+| Actual Chrome zoom           | Eight route/zoom inspections passed at 200%/400%; limited neon/default/LTR scope                               |
+
+The first combined browser run reached 401 passes before Firefox disk-space failures.
+The complete Firefox selection then passed alone: 134 passes and four intentional skips.
+Chromium and WebKit had no failed cases in the combined run.
+These results give 406 successful distinct functional cases across the three engines.
+
+Consumer runtime dependencies are isolated.
+Its build reuses the workspace compiler tools, whose versions are recorded in the report.
+Neither passing tests nor evidence-file presence approves an API promotion.
+
+## October 4 confirmed revisions
 
 - Feature implementation `88f69e22c934e3172a2375d72bd7d8ce8d03b282`:
   [successful CI](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37244858852).
@@ -16,7 +48,7 @@ The second revision adds tests and release safety checks; it does not change
 component behavior. This record is evidence for those commits, rather than a
 prediction that every later commit passes CI.
 
-## Results
+## October 4 results
 
 | Check                            | Confirmed result                                                                                                                 |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,7 +103,9 @@ The feature build's initial Showcase bundle was 349.30kB with all feature
 pages lazy-loaded. The full UI package entry is not the same measurement;
 there is no isolated one-component tree-shaking benchmark.
 
-Automation does not establish VoiceOver/NVDA usability, Windows high-contrast readability, actual browser zoom, physical touch or native picker-dialog behavior. Application approval, SSR/hydration support and maturity promotion also must have separate evidence.
+These October 4 automated runs did not establish VoiceOver/NVDA usability or Windows high-contrast readability.
+They also did not establish actual browser zoom, physical touch or native picker-dialog behavior.
+The October 8 actual Chrome zoom inspection has the limited scope described above. Application approval, SSR/hydration support and maturity promotion also must have separate evidence.
 These remain in [the task list](../../COMPONENT_EXPANSION_PLAN.md),
 [acceptance automation](ACCEPTANCE_AUTOMATION.md) and
 [manual QA](../../MANUAL_QA.md).
