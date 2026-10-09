@@ -17,6 +17,7 @@ The UI peer contract is Angular `^22.2.1` and RxJS `^7.8.0`. Keep Angular packag
 
 ```sh
 npm exec -- nx run packages:build
+npm exec -- playwright install chromium
 npm exec -- nx run packages:smoke
 ```
 
@@ -56,10 +57,14 @@ KEEP_CONSUMER_SMOKE=1 npm exec -- nx run packages:smoke
 The built consumer also runs in a browser.
 It exercises invalid forms, save failure/retry, pending controls, table sorting/selection and confirmation dialogs.
 Open and closed states run the WCAG 2.1 A/AA axe selection.
+
 The default local browser is Chromium.
+Install its Playwright binary before the smoke check.
+On Linux, add `--with-deps` to the browser installation command.
 CI and the release dry-run use Chromium, Firefox and WebKit across both accents and densities.
 
 ```sh
+npm exec -- playwright install chromium firefox webkit
 CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
 ```
 

@@ -38,6 +38,7 @@ All 12 combinations passed locally: three engines, two accents and two densities
 The application is a repository fixture. Actual product feedback remains necessary.
 
 ```sh
+npm exec -- playwright install chromium firefox webkit
 CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
 ```
 

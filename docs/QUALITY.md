@@ -5,6 +5,17 @@ behavior, Angular forms, Storybook interactions and full Showcase flows.
 Confirmed totals live in [Verification](qa/VERIFICATION.md), and supported
 platforms/limits in [Support matrix](qa/SUPPORT_MATRIX.md).
 
+## Browser setup
+
+After `npm ci`, install the Playwright browsers before consumer, Storybook or browser checks:
+
+```sh
+npm exec -- playwright install chromium firefox webkit
+```
+
+On Linux, add `--with-deps` to install the required system libraries.
+CI includes this option.
+
 ## Baseline checks
 
 ```sh
