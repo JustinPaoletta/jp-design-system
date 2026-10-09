@@ -1,6 +1,6 @@
 # Component Expansion Task List
 
-Updated: October 4, 2026. Remaining work: five promotion and integration items. The [documentation index](docs/README.md) links completed feature work. The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
+Updated: October 8, 2026. Remaining work: five promotion and integration items. The [documentation index](docs/README.md) links completed feature work. The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
 The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
 
@@ -8,17 +8,17 @@ The [changelog](CHANGELOG.md) records changes. Implemented components remain pre
 
 - [ ] Complete manual assistive-technology and forced-colors inspection of preview components
 - [ ] Examine component APIs with consuming-product screens and resolve feedback
-- [ ] Complete compatibility inspection beyond the automated Chromium/WebKit matrix
+- [ ] Complete compatibility inspection beyond the automated Chromium/Firefox/WebKit matrix
 - [ ] Promote individual APIs through the acceptance and maturity process
 - [ ] Coordinate release notes, versions, distribution, and the optional design kit
 
-Automation now covers Chromium/WebKit native details-name grouping, the seven
-larger features at 320/640 CSS pixels, Chromium forced-colors behavior, and
-release preparation safety. Consumer screen tests and isolated package
-compilation also run in CI. These are partial evidence for the five tasks;
-screen-reader sessions, actual Windows high contrast/zoom, product feedback,
-maturity approval and release decisions remain open. See
-[acceptance automation and remaining inspection](docs/qa/ACCEPTANCE_AUTOMATION.md).
+Automation covers functional and accessibility checks in Chromium, Firefox and WebKit.
+Installed tarballs have browser runtime checks for forms, retries, tables and dialogs.
+Each public class has a checked maturity and evidence entry.
+Actual Chrome 200%/400% zoom passed on the seven larger features.
+The five tasks still need screen-reader and Windows sessions, physical devices,
+real product feedback, individual maturity approval and release decisions.
+See the [completion instructions and evidence](docs/qa/READINESS.md).
 
 Every later component should include its token contract, states, keyboard/form
 behavior, localization, Storybook examples, consumer documentation, and relevant

@@ -9,13 +9,17 @@ contracts. The private Nx workspace produces local UI and token packages.
 Repository version: `0.0.0`. UI and distributed token package versions: `0.1.0`.
 No tagged release has been cut. The public class inventory is 36 stable,
 76 preview and one deprecated export; [maturity](docs/governance/MATURITY.md)
-records the contracts and limits. The accessibility target is WCAG 2.1 A/AA,
-with automated checks and manual assistive-technology inspection still open.
+records the contracts and limits.
+
+The accessibility target is WCAG 2.1 A/AA.
+Automated checks cover the documented routes and states.
+Manual assistive-technology inspection remains open.
 
 The [remaining task list](COMPONENT_EXPANSION_PLAN.md) contains five inspection,
 promotion and release items. Feature implementation and automated acceptance
 coverage are recorded in the [documentation index](docs/README.md) and
 [verification reference](docs/qa/VERIFICATION.md).
+The [maintainer handoff](docs/qa/READINESS.md) records completed readiness work and the remaining inspection and release steps.
 
 ## Getting started
 
@@ -45,7 +49,7 @@ Application consumers install the built tarballs and load token CSS. See
 | `libs/tokens`                          | Style Dictionary sources, generated semantic CSS/JSON and typed helpers |
 | `libs/ui`                              | Standalone Angular components, directives, services and Storybook       |
 | `apps/showcase`                        | Lazy-routed integration screens and product recipes                     |
-| `apps/showcase-e2e`                    | Chromium/WebKit functional, axe and macOS visual checks                 |
+| `apps/showcase-e2e`                    | Chromium/Firefox/WebKit functional and axe checks; macOS visual checks  |
 | `apps/storybook`, `apps/storybook-e2e` | Placeholder Angular app and scaffolded checks                           |
 | `tools`                                | Documentation, package, release and token validation tools              |
 

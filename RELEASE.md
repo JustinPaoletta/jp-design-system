@@ -38,6 +38,9 @@ Do not tag `1.0.0` until all of the following are true:
 3. Consumer smoke is green: `npm exec -- nx run packages:smoke` installs the workspace tarballs in an isolated Angular application and passes.
 4. The changelog is complete: `## [Unreleased]` describes the release, and `prepare.mjs` can move that section into `## [1.0.0] - YYYY-MM-DD`.
 
+The proposed first candidate is `0.1.0-rc.1`.
+The [maintainer handoff](docs/qa/READINESS.md#5-approve-and-prepare-the-first-release) records the remaining approval steps.
+
 The prepare script reminds the operator of these criteria. It does not judge the checklist or CI.
 
 ## Automation
@@ -82,7 +85,7 @@ The macOS visual job runs the examined visual check. The other browser checks ru
 Run the non-visual Showcase browser check with this command:
 
 ```bash
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=webkit --grep-invert="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"
 ```
 
 Run the examined macOS visual check with this command:
@@ -91,11 +94,23 @@ Run the examined macOS visual check with this command:
 npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual | component expansion visual | product tools visual | workflow visual | advanced layout visual | larger features visual"
 ```
 
-The other hosted commands are `npm run format:check`, `npm run lint`, `npm run test`, `npm exec -- nx run ui:test-storybook`, `npm exec -- nx run ui:test-storybook-dev`, `npm run typecheck`, `npm run build`, `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:smoke`, and `npm audit --omit=dev --audit-level=moderate`.
+The other hosted commands are `npm run format:check`, `npm run lint`, `npm run test`, `npm exec -- nx run ui:test-storybook`, `npm exec -- nx run ui:test-storybook-dev`, `npm run typecheck`, `npm run build`, `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:check-readiness`, `CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke`, and `npm audit --omit=dev --audit-level=moderate`.
 
 Also examine the full development dependency audit against [SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) and complete affected manual QA. The macOS visual command is the examined check described in [QUALITY.md](docs/QUALITY.md).
 
-`.github/workflows/release.yml` is `workflow_dispatch` only. It takes a `version` input and refuses to run except to demonstrate a dry-run on a `release/*` branch or manual dispatch. It checks out the repository, runs `npm ci`, runs `node tools/release/prepare.mjs --version <input> --dry-run`, then `npm exec -- nx run packages:check-release`, `npm exec -- nx run packages:build` and `npm exec -- nx run packages:smoke`. Permissions are `contents: read`.
+`.github/workflows/release.yml` is `workflow_dispatch` only.
+It accepts a `version` input for the dry-run.
+Permissions are `contents: read`.
+It installs dependencies and Chromium, Firefox and WebKit.
+It then runs these checks:
+
+```sh
+node tools/release/prepare.mjs --version <input> --dry-run
+npm exec -- nx run packages:check-release
+npm exec -- nx run packages:check-readiness
+npm exec -- nx run packages:build
+CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
+```
 
 It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.
 

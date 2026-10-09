@@ -54,7 +54,7 @@ describe('overlay coordination', () => {
     const cleanup = positionOverlay(panel, anchor);
     expect(panel.style.left).toBe(`${width - 158}px`);
     expect(panel.style.top).toBe(`${height - 134}px`);
-    expect(panel.getAttribute('popover')).toBe('manual');
+    expect(panel.hasAttribute('popover')).toBe(false);
     cleanup();
     anchor.remove();
     panel.remove();
@@ -115,6 +115,18 @@ describe('native overlay lifecycle and viewport placement', () => {
     expect(panel.style.left).toBe('3px');
     expect(panel.style.position).toBe('absolute');
     expect(panel.style.getPropertyPriority('position')).toBe('important');
+    remove();
+  });
+
+  it('removes the hiding attribute when the native API is unavailable and restores it on cleanup', () => {
+    const { panel, anchor, remove } = elements();
+    panel.setAttribute('popover', 'auto');
+    Object.defineProperty(panel, 'showPopover', { value: undefined });
+    const cleanup = positionOverlay(panel, anchor);
+    expect(panel.hasAttribute('popover')).toBe(false);
+    expect(panel.style.position).toBe('fixed');
+    cleanup();
+    expect(panel.getAttribute('popover')).toBe('auto');
     remove();
   });
 

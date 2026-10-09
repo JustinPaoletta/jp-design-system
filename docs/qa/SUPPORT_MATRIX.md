@@ -1,6 +1,6 @@
 # Accessibility support matrix
 
-Recorded October 4, 2026. This file defines the accessibility and browser verification target.
+Updated October 8, 2026. This file defines the accessibility and browser verification target.
 It describes what automation asserts. It does not record an assistive-technology inspection.
 
 ## Target level
@@ -30,21 +30,22 @@ Level A and AA** on the routes and states listed below.
 
 ## Automated browser matrix
 
-| Check               | macOS Chromium                                | macOS WebKit           | Linux Chromium (CI)     | Linux WebKit (CI)      |
-| ------------------- | --------------------------------------------- | ---------------------- | ----------------------- | ---------------------- |
-| Functional behavior | Supported                                     | Supported              | Supported               | Supported              |
-| axe WCAG 2.1 A/AA   | Supported                                     | Supported              | Supported               | Supported              |
-| Visual baselines    | Supported. Baselines are macOS Chromium PNGs. | Not a baseline browser | Not a baseline platform | Not a baseline browser |
+| Check                         | Chromium   | Firefox              | WebKit               |
+| ----------------------------- | ---------- | -------------------- | -------------------- |
+| macOS functional and axe      | Supported  | Supported            | Supported            |
+| Linux functional and axe (CI) | Supported  | Supported            | Supported            |
+| Installed tarball consumer    | Supported  | Supported            | Supported            |
+| Visual baselines              | macOS only | No baseline contract | No baseline contract |
 
-Firefox is configured in `apps/showcase-e2e/playwright.config.ts` and is not part
-of this supported matrix. CI installs Chromium and WebKit only.
+CI installs all three engines.
+See [readiness evidence](READINESS.md).
 
 macOS screenshots do not prove Linux visual parity. Functional and axe checks
 on Linux do not prove macOS pixel parity.
 
 ## Assistive technology
 
-| Reader    | Role                           | Status on October 4, 2026                                                                                                       |
+| Reader    | Role                           | Status on October 8, 2026                                                                                                       |
 | --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | VoiceOver | Intended macOS screen reader   | **Not examined.** No VoiceOver session was run.                                                                                 |
 | NVDA      | Intended Windows screen reader | **Not examined.** This environment is macOS. No NVDA session was run.                                                           |
@@ -56,12 +57,12 @@ Those tests must include names, reading order and announcement behavior.
 
 ## Reduced motion, zoom, and forced colors
 
-| Topic                  | Automated coverage                                                                                                                                                                                                       | Remaining inspection                                                                                                                                               |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes. | No claim that every animation has been manually examined.                                                                                                          |
-| 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                     | Actual browser zoom and text-only zoom remain manual and unreviewed.                                                                                               |
-| Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/WebKit. Tables may scroll inside their own regions.        | Physical touch and assistive technology at those widths remain unreviewed.                                                                                         |
-| Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                | Real Windows high contrast, user palettes, all preview components and forced-color contrast remain unreviewed. The four emulation cases skip WebKit intentionally. |
+| Topic                  | Automated coverage                                                                                                                                                                                                        | Remaining inspection                                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes.  | No claim that every animation has been manually examined.                                                                                                                      |
+| 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                      | Actual Chrome 200%/400% zoom passed on the four larger-feature screens. Other browser/component combinations and text-only zoom remain open.                                   |
+| Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/Firefox/WebKit. Tables may scroll inside their own regions. | Physical touch and assistive technology at those widths remain unreviewed.                                                                                                     |
+| Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                 | Real Windows high contrast, user palettes, all preview components and forced-color contrast remain unreviewed. The four emulation cases skip Firefox and WebKit intentionally. |
 
 Details, commands and the axe forced-colors limitation are in
 [ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md). Forced-colors interaction
@@ -108,7 +109,7 @@ Theme, density, viewport and open-state scope are recorded in
 [Verification](VERIFICATION.md). The [manual checklist](../../MANUAL_QA.md)
 covers the remaining human inspection.
 
-No forced-colors PNG baseline or actual-zoom baseline is claimed. WebKit and
+No forced-colors or actual-zoom PNG baseline is claimed. WebKit and
 Linux are functional/accessibility targets, not visual baseline targets.
 
 ## CI selection
@@ -119,9 +120,8 @@ The macOS visual job selects all six visual title prefixes:
 npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
 ```
 
-The Linux Chromium/WebKit functional job excludes those same prefixes and
-includes `acceptance-environments.spec.ts`. Firefox remains outside the
-supported matrix.
+The Linux Chromium/Firefox/WebKit functional job excludes those same prefixes.
+It includes `acceptance-environments.spec.ts` and `overlay-fallback.spec.ts`.
 
 ## Expansion and native-browser coverage
 
@@ -129,7 +129,7 @@ supported matrix.
 exclusive native disclosures, multi-selection, drawer focus, WCAG 2.1 A/AA axe
 checks, and mobile RTL layout. The disclosure test asserts the native
 `HTMLDetailsElement.name` property and repeated Enter/click/Space activation in
-Chromium and WebKit. Theme contrast checks use reduced motion so they measure
+Chromium, Firefox and WebKit. Theme contrast checks use reduced motion so they measure
 the settled theme.
 
 Workflow, product-tool, hierarchy, scheduling, interaction, analytics and

@@ -17,6 +17,7 @@ The UI peer contract is Angular `^22.2.1` and RxJS `^7.8.0`. Keep Angular packag
 
 ```sh
 npm exec -- nx run packages:build
+npm exec -- playwright install chromium
 npm exec -- nx run packages:smoke
 ```
 
@@ -36,6 +37,8 @@ Installation tries the npm cache first, then the official registry if necessary.
 Registry access installs application dependencies; it does not publish JP.
 
 The application compiles with strict Angular templates.
+It reuses the installed workspace build tools, whose versions appear in the report.
+Runtime packages come from the temporary application installation.
 It imports token types and both exported stylesheets.
 It compiles `ngModel`, reactive forms with `FormGroup`, controls, tables and projected tabs.
 It also compiles expansion, workflow, hierarchy, scheduling, interaction and data-performance APIs.
@@ -51,7 +54,21 @@ The temporary application is removed after success or failure; only artifacts cr
 KEEP_CONSUMER_SMOKE=1 npm exec -- nx run packages:smoke
 ```
 
-This is a package installation and compilation check. Interactive browser behavior and accessibility are covered by the component and application checks, not by this consumer build.
+The built consumer also runs in a browser.
+It exercises invalid forms, save failure/retry, pending controls, table sorting/selection and confirmation dialogs.
+Open and closed states run the WCAG 2.1 A/AA axe selection.
+
+The default local browser is Chromium.
+Install its Playwright binary before the smoke check.
+On Linux, add `--with-deps` to the browser installation command.
+CI and the release dry-run use Chromium, Firefox and WebKit across both accents and densities.
+
+```sh
+npm exec -- playwright install chromium firefox webkit
+CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
+```
+
+Read [Readiness](qa/READINESS.md#package-consumer) for the fixture, reports and remaining product inspection.
 
 ## Use in another Angular application
 
