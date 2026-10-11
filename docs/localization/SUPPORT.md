@@ -1,6 +1,6 @@
 # Runtime and browser support
 
-Verified against repository configuration on October 8, 2026. Built-in copy
+Compared with repository configuration on October 11, 2026. Built-in copy
 and translation providers are documented in [Message contract](CONTRACT.md).
 
 ## Versions and platforms
@@ -19,7 +19,7 @@ forced-colors, zoom and assistive-technology boundaries.
 ## Native dialog and popover
 
 `JpDialog`/`JpDrawer` use native `<dialog>.showModal()` after browser render.
-If it throws, the component sets the `open` attribute. Native `cancel` is
+If the method is missing or throws, the component sets the `open` attribute. Native `cancel` is
 prevented so the overlay stack decides which registered layer closes.
 
 Menus, popovers, tooltips and combobox use
@@ -62,9 +62,12 @@ inputs. Providers merge with the parent token when their injector is created;
 they do not watch later locale changes.
 
 Native date/time fields exchange ISO civil strings and use browser-local
-presentation. Timeline and scheduling use `Intl.DateTimeFormat` with their
-locale/time-zone inputs; scheduling uses a Gregorian date model. Charts use
-`Intl.NumberFormat` and their formatting options. Caller-owned table cells,
+presentation. The application supplies the timeline's formatted `timeLabel` and optional machine-readable `dateTime`.
+`JpTimeline` has no locale or time-zone input.
+Scheduling uses `Intl.DateTimeFormat` with its locale/time-zone inputs and a Gregorian date model.
+Charts use `Intl.NumberFormat` and their formatting options.
+
+Caller-owned table cells,
 messages, titles and labels remain application content. Message count
 functions use ordinary string interpolation by default; override them for
 plural rules or localized number formatting.

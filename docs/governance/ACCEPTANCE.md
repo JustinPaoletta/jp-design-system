@@ -3,7 +3,7 @@
 Use this checklist before a public component, directive, service or token change.
 The [API catalog](../consumers/COMPONENTS.md) gives supported behavior.
 [Maturity](MATURITY.md) gives support levels and known limits.
-The inventory date is October 4, 2026.
+Use the inventory date in [Maturity](MATURITY.md).
 
 ## Release-blocking
 

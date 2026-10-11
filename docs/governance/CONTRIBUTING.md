@@ -49,7 +49,7 @@ They reject a change that:
 
 An API without its necessary test or story starts as `experimental`.
 A higher maturity level must have evidence and a `MATURITY.md` change.
-There are no experimental exports in the October 4, 2026 inventory.
+The [maturity inventory](MATURITY.md) records the status of existing exports.
 
 ## Accept into the library
 
@@ -73,7 +73,7 @@ and remote requests. It can compose existing primitives for those requirements.
 
 Tables, pagination, toolbars and assistant state supply interface behavior.
 The application supplies rows, sorting, page requests and response transport.
-[Product recipes](../PRODUCT_RECIPES.md) show this division.
+[Product recipes](../consumers/RECIPES.md) show this division.
 
 ## Pull request checklist
 

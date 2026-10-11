@@ -7,7 +7,7 @@ It also runs the writing-check tests.
 
 ## Main protection
 
-Verified October 4, 2026 through the GitHub branch-protection API. `main`
+Inspected October 11, 2026 through the GitHub branch-protection API. `main`
 has these six necessary checks and strict up-to-date status checks:
 
 - `Lint`
@@ -21,8 +21,8 @@ There are no repository rulesets. Required PR inspections and conversation
 resolution are unset; admin enforcement is off. Force pushes and branch
 deletion are disabled. The status-check rule blocks ordinary merges with
 failing/pending checks or a branch behind `main`; admin enforcement is a
-separate setting. This record verifies the stored configuration, rather than
-claiming a deliberately failing merge experiment.
+separate setting. This record describes the stored configuration.
+No deliberately failing merge was attempted.
 
 ## Job scope
 

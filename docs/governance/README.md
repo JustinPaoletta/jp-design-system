@@ -1,7 +1,7 @@
 # Governance
 
 Policies for changing, rating, and supporting the JP Design System.
-Owner: JP maintainers. Inventory date: October 4, 2026.
+Owner: JP maintainers. [Maturity](MATURITY.md) gives the inventory date.
 
 | Document                               | Use it to                                                                            |
 | -------------------------------------- | ------------------------------------------------------------------------------------ |

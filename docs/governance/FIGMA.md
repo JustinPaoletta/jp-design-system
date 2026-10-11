@@ -37,7 +37,7 @@ Use these until a designer owner exists:
 | What is safe to depend on       | [MATURITY.md](./MATURITY.md)                                                                               |
 | Visual rules                    | [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md)                                                            |
 | Tokens, accent, density         | `libs/tokens/README.md`, `tokens.css`, `data-jp-accent`, `data-jp-density`                                 |
-| Product compositions            | [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md) and the composition stories                                    |
+| Product compositions            | [Recipes](../consumers/RECIPES.md) and the composition stories                                             |
 | Click-through checks            | [MANUAL_QA.md](../../MANUAL_QA.md)                                                                         |
 
 Accent values in code: `neon` (default) and `cobalt`. Density: `default` and

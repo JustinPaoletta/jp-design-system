@@ -228,7 +228,7 @@ confirmations can still layer over the panel.
 
 ## Validation
 
-- `npm run tokens:check` verifies generated artifacts are up to date.
+- `npm run tokens:check` detects drift in generated artifacts.
 - `npm run lint` includes:
   - no hardcoded colors outside `libs/tokens`
   - no direct primitive token usage in `apps/*` or `libs/ui/*`

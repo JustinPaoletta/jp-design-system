@@ -4,7 +4,7 @@ This page keeps dated evidence for the component expansion and readiness changes
 Test totals apply to the stated revisions and selections.
 Later changes need their own checks.
 
-## October 8 readiness evidence
+## October 8 local readiness evidence
 
 Local checks used Node 24.21.0 on macOS.
 The readiness change adds Firefox, native overlay fallback tests and installed consumer runtime flows.
@@ -36,6 +36,22 @@ These results give 406 successful distinct functional cases across the three eng
 Consumer runtime dependencies are isolated.
 Its build reuses the workspace compiler tools, whose versions are recorded in the report.
 Neither passing tests nor evidence-file presence approves an API promotion.
+
+## October 9 hosted readiness evidence
+
+Revision `b31915546a98f8ccd2cfeb85219b2030a1c995a5` passed
+[CI](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37880218175)
+and [documentation checks](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37880218165).
+The UTC completion date was October 9, 2026.
+
+The hosted functional selection passed 406 cases and skipped eight forced-colors cases intentionally.
+All 66 macOS Chromium visual comparisons passed.
+All 12 installed consumer combinations passed.
+Static and live Storybook each passed 319 checks in 97 suites.
+Lint, unit coverage, builds, type checks, API evidence and runtime audit also passed.
+
+These results apply to that revision.
+Later documentation or source changes need their own checks.
 
 ## October 4 confirmed revisions
 
@@ -108,5 +124,5 @@ These October 4 automated runs did not establish VoiceOver/NVDA usability or Win
 They also did not establish actual browser zoom, physical touch or native picker-dialog behavior.
 The October 8 actual Chrome zoom inspection has the limited scope described above. Application approval, SSR/hydration support and maturity promotion also must have separate evidence.
 These remain in [the task list](../../COMPONENT_EXPANSION_PLAN.md),
-[acceptance automation](ACCEPTANCE_AUTOMATION.md) and
+[maintainer handoff](READINESS.md) and
 [manual QA](../../MANUAL_QA.md).

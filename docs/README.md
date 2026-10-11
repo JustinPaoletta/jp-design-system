@@ -20,7 +20,7 @@ record its limits. Remaining delivery work belongs in the
 - [Scheduling calendar](SCHEDULING_CALENDAR.md): day, week and agenda views
 - [Reordering and carousel](INTERACTION_COMPONENTS.md)
 - [Charts and virtual tables](DATA_PERFORMANCE_COMPONENTS.md)
-- [Product recipes](PRODUCT_RECIPES.md) and [package distribution](DISTRIBUTION.md)
+- [Product recipes](consumers/RECIPES.md) and [package distribution](DISTRIBUTION.md)
 - [Token catalog](../libs/tokens/README.md)
 
 ## Contracts and maintenance
@@ -32,11 +32,9 @@ record its limits. Remaining delivery work belongs in the
   contribution, triage and optional design-kit policy
 - [Quality commands](QUALITY.md) and [QA index](qa/README.md)
 - [Verification evidence](qa/VERIFICATION.md), [manual inspection checklist](../MANUAL_QA.md)
-  and [remaining acceptance work](qa/ACCEPTANCE_AUTOMATION.md)
+  and [maintainer completion instructions](qa/READINESS.md)
 - [CI protection](CI_BRANCH_PROTECTION.md) and [security inspection](SECURITY_REVIEW.md)
 - [Changelog](../CHANGELOG.md) and [release procedure](../RELEASE.md)
 
-Implementation plans and replaced batch QA logs have been removed. Git history
-keeps those records; current contracts and evidence live in the references
-above. Update the relevant guide and task list when behavior or inspection status
-changes.
+Update the applicable guide and task list when behavior or inspection status changes.
+Keep dated evidence separate from supported behavior and remaining inspections.

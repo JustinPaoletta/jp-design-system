@@ -15,6 +15,7 @@ These are project technical terms, not additions to the ASD-STE100 dictionary.
 | Caption              | Visible text that names a table or describes a figure.                                                                 |
 | CI                   | Continuous integration. GitHub Actions runs repository checks after a change.                                          |
 | Component            | An Angular class that controls an interface element.                                                                   |
+| Compiler             | A tool that converts source code into executable code or declarations.                                                 |
 | Contract             | The documented behavior that JP agrees to support.                                                                     |
 | Consumer             | An application or developer that uses the JP packages.                                                                 |
 | CSS                  | Cascading Style Sheets. Rules that control the page's appearance and layout.                                           |
@@ -25,6 +26,7 @@ These are project technical terms, not additions to the ASD-STE100 dictionary.
 | DOM                  | Document Object Model. The browser's element tree for the page.                                                        |
 | Dry-run              | An operation that shows proposed changes without writing them.                                                         |
 | Focus                | The element that receives keyboard input.                                                                              |
+| Fixture              | A controlled application or dataset used by a test.                                                                    |
 | Forced colors        | A browser mode that uses a user's system color palette.                                                                |
 | Hydration            | Angular's connection of browser behavior to existing server-rendered HTML.                                             |
 | Inert                | An HTML state that removes a region from interaction and accessibility navigation.                                     |
@@ -39,6 +41,7 @@ These are project technical terms, not additions to the ASD-STE100 dictionary.
 | Peer dependency      | A package version range that the application must supply.                                                              |
 | Projection           | Application content placed in a component's template slot.                                                             |
 | Reflow               | A layout change that lets content fit the available width.                                                             |
+| Runtime              | The period when application code executes, including browser interaction.                                              |
 | Screen reader        | Assistive technology that presents interface information through speech or braille.                                    |
 | Schema               | The definition of data fields or table columns.                                                                        |
 | Semantic token       | A CSS variable named for a purpose, such as a field background.                                                        |
@@ -56,21 +59,20 @@ These are project technical terms, not additions to the ASD-STE100 dictionary.
 These verbs describe specific computer operations.
 They do not approve other meanings or parts of speech.
 
-| Verb      | Meaning in JP                                                   |
-| --------- | --------------------------------------------------------------- |
-| Bind      | Connect a template value or event to application state.         |
-| Build     | Compile source files into application or package output.        |
-| Configure | Set software options.                                           |
-| Emit      | Send an Angular output event.                                   |
-| Import    | Make a public module export available to another source file.   |
-| Inject    | Obtain a value from Angular dependency injection.               |
-| Mount     | Add a component or data row to the DOM.                         |
-| Project   | Place content in a component's projection slot.                 |
-| Render    | Produce page elements or displayed content from software state. |
-| Validate  | Compare data with the specified software rules.                 |
-
-| Name | Set an element's accessible name for assistive technology. |
-| Support | Supply documented software behavior under the stated compatibility conditions. |
+| Verb      | Meaning in JP                                                                  |
+| --------- | ------------------------------------------------------------------------------ |
+| Bind      | Connect a template value or event to application state.                        |
+| Build     | Compile source files into application or package output.                       |
+| Configure | Set software options.                                                          |
+| Emit      | Send an Angular output event.                                                  |
+| Import    | Make a public module export available to another source file.                  |
+| Inject    | Obtain a value from Angular dependency injection.                              |
+| Mount     | Add a component or data row to the DOM.                                        |
+| Project   | Place content in a component's projection slot.                                |
+| Render    | Produce page elements or displayed content from software state.                |
+| Validate  | Compare data with the specified software rules.                                |
+| Name      | Set an element's accessible name for assistive technology.                     |
+| Support   | Supply documented software behavior under the stated compatibility conditions. |
 
 Other computer verbs, such as install, load, save and scroll, follow the
 standard's computer-process rules. Generic verbs keep their dictionary meanings.

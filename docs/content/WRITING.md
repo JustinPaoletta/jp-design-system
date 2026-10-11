@@ -1,8 +1,8 @@
 # Documentation writing rules
 
 JP documentation uses ASD-STE100 Simplified Technical English, Issue 9.
-The [official standard](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
-contains the rules and dictionary. This page applies those rules to JP.
+Get the rules and dictionary through the [official download page](https://asd-ste100.org/STE_downloads.html).
+This page applies those rules to JP.
 
 ## Words and sentences
 
@@ -57,6 +57,16 @@ Quoted existing interface text stays exact in reference documentation.
 
 ## Inspection and checks
 
+Before removing a guide, find its references in documentation, source, build tools and navigation.
+Move useful content to the document that owns the topic.
+Update the references before removing the old file.
+Keep dated evidence, incident recovery steps and unfinished inspections.
+Keep package README sources that the build copies into distribution packages.
+
+Compare commands, API defaults, support claims and generated-file paths with their source.
+Separate supported behavior from test evidence and remaining manual work.
+Do not change runtime behavior to match an incorrect guide.
+
 1. Compare the text with the code and current test evidence.
 2. Examine word meanings, parts of speech and technical terms against Issue 9.
 3. Run `node tools/docs/check-writing.mjs`.
@@ -71,4 +81,7 @@ The check covers root product guides, `docs/` and application/package READMEs.
 Code samples, exact quoted labels and managed tool instructions keep their original text.
 It does not assess every dictionary use or establish full ASD-STE100 conformance.
 A person must examine meaning, grammar and technical accuracy.
+
+The local link check examines paths in `docs/` and README files.
+Examine heading links and links in other root guides separately.
 The standard remains the authority.

@@ -11,12 +11,14 @@ contract is Angular `^22.2.1` (`@angular/common`, `@angular/core`,
 `@angular/forms`) and RxJS `^7.8.0`. Keep every Angular package on the same
 version. Angular 21 is outside the contract.
 
-## Verified installation
+## Package installation check
 
 The isolated consumer is `tools/consumer-smoke.mjs`. From a checkout of the
 commit you intend to install, run:
 
 ```sh
+npm ci
+npm exec -- playwright install chromium
 npm exec -- nx run packages:smoke
 ```
 
@@ -36,8 +38,14 @@ does all of the following:
    in that application. If the cache is incomplete, it runs the same install
    without `--offline`. The registry lookup is for Angular, RxJS, and the
    other consumer dependencies. It does not publish JP.
-4. Builds the application with its own Angular application builder and
-   `strictTemplates`. There are no workspace path aliases or symlinks.
+4. Compiles the application with `strictTemplates` through the workspace's installed Angular build tools.
+5. Runs the built application in Chromium across both accents and densities.
+
+Runtime dependencies come from the temporary application's installation.
+There are no workspace path aliases or package symlinks.
+The compiler tools come from the workspace.
+Their versions appear in the report.
+See [Distribution](../DISTRIBUTION.md#build-and-validate) for the three-engine command and Linux setup.
 
 `dist/packages/consumer-smoke.json` records the result. A failed result is not
 a pass. To keep the temporary application:
@@ -61,7 +69,8 @@ The smoke application uses the workspace's installed dependency versions:
 - `rxjs`
 - `tslib`
 
-It also uses the Angular build tools needed to compile.
+Chart.js is installed through the UI package dependency.
+The check reuses the workspace's compiler tools; it does not install a separate compiler toolchain.
 
 ## Token CSS
 
@@ -78,7 +87,8 @@ Point the Angular `styles` option at that file, the way the smoke
 `tokens.css` already contains `:root` tokens, both accent families, and the
 compact overrides. The package guide treats
 `@jp-design-system/tokens/tokens.compact.css` as an optional second export.
-The smoke consumer imports both, and that is the verified stylesheet pair.
+The smoke consumer imports both stylesheets.
+This is the pair used by the package check.
 Include `tokens.css` even when the page uses compact density. The compact
 file does not replace the default stylesheet.
 

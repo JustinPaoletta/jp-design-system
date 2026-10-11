@@ -1,19 +1,21 @@
 # Readiness inspection and maintainer handoff
 
-Recorded October 8, 2026. This change extends the acceptance checks after PR #13.
+Engineering evidence was recorded October 8, 2026.
+Documentation was examined October 11, 2026.
+The [verification record](VERIFICATION.md#october-9-hosted-readiness-evidence) identifies the passing hosted revision.
 Use this procedure to finish the five tasks in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
 
 ## Completed engineering work
 
-- Add Firefox to the complete functional and WCAG 2.1 A/AA CI selection.
-- Check missing and failing native overlay APIs in all three browser engines.
-- Remove the hiding `popover` attribute when the native API is unavailable.
-- Give each app shell a different sidebar ID and correct control relationships.
-- Run an installed tarball consumer in Chromium, Firefox and WebKit.
-- Inspect the source and maturity evidence for all 113 public classes.
-- Inspect actual Chrome zoom at 200% and 400% on the four larger-feature screens.
-- Apply the available Handlebars patch and update development-tool audit records.
-- Prepare a dry-run proposal for `0.1.0-rc.1` without changing package versions.
+- CI includes Firefox in the complete functional and WCAG 2.1 A/AA selection.
+- All three engines passed missing and failing native overlay API cases.
+- The fallback removes the hiding `popover` attribute when the native API is unavailable.
+- Each app shell has a different sidebar ID and correct control relationships.
+- The installed tarball consumer passed Chromium, Firefox and WebKit runtime checks.
+- The inventory records source and maturity evidence for all 113 public classes.
+- Actual Chrome 200%/400% zoom passed on the four larger-feature screens.
+- Handlebars 4.7.10 removes the critical development-tool findings.
+- The `0.1.0-rc.1` dry-run proposal passed without changing package versions.
 
 ### Package consumer
 
@@ -24,7 +26,7 @@ Its runtime dependencies have exact workspace versions and no workspace aliases 
 It reuses the installed workspace build tools to limit disk use.
 The report records those tool versions.
 
-`tools/consumer-runtime.mjs` checks these flows:
+`tools/consumer-runtime.mjs` runs checks for these flows:
 
 - Invalid submission focuses the error summary and links back to the field.
 - Date-range validation rejects reversed dates.
@@ -58,7 +60,7 @@ Read `dist/qa/api-readiness.json` for each public class.
 The Build CI job uploads this report as `api-readiness`.
 The record includes its source, maturity, unit spec, host story and recorded preview gap.
 The check rejects missing entries, missing files, count drift and components without `OnPush`.
-Its seven tests check discovery, aliases, missing evidence and incorrect maturity records.
+Its seven tests cover discovery, aliases, missing evidence and incorrect maturity records.
 
 Evidence file presence does not establish behavior, full accessibility or promotion approval.
 Unit and browser runs supply separate behavior evidence.
@@ -93,7 +95,7 @@ These sessions do not cover text-only zoom, other browsers, all components or as
 
 ### 1. Complete screen-reader and Windows inspections
 
-1. Check out `codex/design-system-readiness`.
+1. Use the commit you will inspect.
 2. Run `npm ci` with the Node version in `.nvmrc`.
 3. Run `npm exec -- nx run showcase:serve`.
 4. Open http://localhost:4200.
@@ -104,7 +106,7 @@ These sessions do not cover text-only zoom, other browsers, all components or as
 9. Inspect text-only zoom and the remaining browser/component combinations at 200% and 400%.
 10. Record versions, commit, route, state and observed behavior with the manual inspection template.
 
-Check names, reading order, focus restoration and announcements.
+Examine names, reading order, focus restoration and announcements.
 Announcements must describe the correct state without unwanted repetition.
 Prioritize forms, trees, overlays, reorder, calendar, charts and paginated tables.
 Report failed behavior in [Findings](FINDINGS.md).
@@ -115,7 +117,7 @@ Keep a failed or unexamined item open until its blocking findings are resolved.
 1. Open `/workflows` on the actual browsers your product supports.
 2. Open the launch date, date-range and time controls through their native picker buttons.
 3. Select values, cancel a picker and submit invalid values.
-4. Confirm that values and focus remain correct.
+4. Make sure values and focus remain correct.
 5. On a touch device, inspect menus, drawers, sliders, range handles and split panes.
 6. Inspect reorder controls and carousel navigation without a mouse.
 7. Record any small-target or overlapping-control problem.
@@ -157,7 +159,7 @@ The dry-run passed without writing release files.
 The release tool uses a UTC date for changelog headings.
 
 1. Approve or replace the proposed version.
-2. Confirm tarball distribution, or request a separate registry setup.
+2. Select tarball distribution, or request a separate registry setup.
 3. Decide whether the optional Figma kit is required for this release.
 4. Examine the [candidate notes](../../CHANGELOG.md) and [security inspection](../SECURITY_REVIEW.md).
 5. Merge the engineering PR after its required checks pass.

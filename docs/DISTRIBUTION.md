@@ -106,14 +106,13 @@ Apply `data-jp-accent="cobalt"` or `data-jp-density="compact"` on the relevant a
 
 ## Versions
 
-UI and tokens release together. `libs/ui/package.json` and `libs/tokens/package.distribution.json` stay on the same version. The root `package.json` version is the repository version and may differ during `0.0.0` development. A release pull request sets the root package version, the root lockfile version, and both distribution package versions to the same `X.Y.Z`.
-
-`tools/release/prepare.mjs` plans that bump and moves `## [Unreleased]` in `CHANGELOG.md`. Dry-run does not write. The release workflow in `.github/workflows/release.yml` only dry-runs that script, then builds packages and runs consumer smoke. It does not tag, publish, or upload a GitHub Release. The process is documented in [RELEASE.md](../RELEASE.md).
-
-The first tagged release is not cut. Building tarballs from the current branch produces local packages at the versions already committed in the package metadata. It is not a tagged release.
+UI and tokens release together with the same version.
+Builds use the versions in `libs/ui/package.json` and `libs/tokens/package.distribution.json`.
+Building a local tarball does not create a tagged release.
+The [release procedure](../RELEASE.md#version-relationship) defines version preparation, approval, tagging and GitHub Release creation.
 
 ## Failed-release recovery
 
-Do not delete a tag that has been pushed. Mark a bad GitHub Release replaced in `CHANGELOG.md` and on the GitHub Release, and point consumers at the previous tag.
-
-Rollback is reinstalling the previous UI and tokens tarballs with `npm install` of those `.tgz` files. There is no registry unpublish flow, because these packages are not published to a registry.
+Install the previous UI and token tarballs together to restore the previous version.
+Follow the [release recovery procedure](../RELEASE.md#failed-release-recovery) for tags, changelog notes and GitHub Releases.
+Registry publication and unpublication are not configured.

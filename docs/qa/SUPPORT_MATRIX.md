@@ -1,6 +1,6 @@
 # Accessibility support matrix
 
-Updated October 8, 2026. This file defines the accessibility and browser verification target.
+Updated October 11, 2026. This file defines the accessibility and browser verification target.
 It describes what automation asserts. It does not record an assistive-technology inspection.
 
 ## Target level
@@ -57,18 +57,35 @@ Those tests must include names, reading order and announcement behavior.
 
 ## Reduced motion, zoom, and forced colors
 
-| Topic                  | Automated coverage                                                                                                                                                                                                        | Remaining inspection                                                                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes.  | No claim that every animation has been manually examined.                                                                                                                      |
-| 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                      | Actual Chrome 200%/400% zoom passed on the four larger-feature screens. Other browser/component combinations and text-only zoom remain open.                                   |
-| Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/Firefox/WebKit. Tables may scroll inside their own regions. | Physical touch and assistive technology at those widths remain unreviewed.                                                                                                     |
-| Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                 | Real Windows high contrast, user palettes, all preview components and forced-color contrast remain unreviewed. The four emulation cases skip Firefox and WebKit intentionally. |
+| Topic                  | Automated coverage                                                                                                                                                                                                        | Remaining inspection                                                                                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reduced motion         | `a11y-states.spec.ts` asserts shell/assistant transitions are removed. Browser tests render the expanded screens with reduced motion, and carousel unit/Storybook checks cover optional rotation and preference changes.  | No claim that every animation has been manually examined.                                                                                                                           |
+| 200%/400% browser zoom | Larger feature screens run at 640/320 CSS pixels, the layout space of a 1280px window at those zoom levels. Tests interact before checking document overflow and scan the 320px LTR states with axe.                      | Actual Chrome 200%/400% zoom passed on the four larger-feature screens. Other browser/component combinations and text-only zoom remain open.                                        |
+| Narrow viewport        | The expansion/workflow/product-tool suites cover mobile layouts. The seven larger features additionally run at 640px LTR, 320px LTR and 320px RTL in Chromium/Firefox/WebKit. Tables may scroll inside their own regions. | Physical touch and assistive technology at those widths have not been examined.                                                                                                     |
+| Forced colors          | Chromium emulation asserts tree/table selection/focus, reorder/carousel controls, scheduling modes/events, chart equivalent data and virtual-table selection. Source includes scoped forced-colors rules.                 | Real Windows high contrast, user palettes, all preview components and forced-color contrast have not been examined. The four emulation cases skip Firefox and WebKit intentionally. |
 
-Details, commands and the axe forced-colors limitation are in
-[ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md). Forced-colors interaction
-assertions run with the preference active; complete axe scans run after restoring
-normal colors. No axe rule is disabled or violation filtered. Emulation does not
-count as a Windows inspection.
+### Environment checks and limits
+
+`acceptance-environments.spec.ts` covers `/hierarchy`, `/scheduling`, `/interaction-tools` and `/data-performance`.
+The tests do an interaction before each document-overflow assertion.
+Native tables can scroll inside their frames.
+The 320px LTR states also run the WCAG 2.1 A/AA axe selection.
+See [Quality](../QUALITY.md#browser-and-visual-checks) for the focused command.
+
+The forced-colors cases use Chromium emulation, the default accent and default density.
+They include a runtime preference change that hides and restores the chart canvas.
+These cases do not cover every preview component or real Windows palettes.
+
+The initial axe 4.13 scan compared authored text colors with the forced background.
+This behavior matches [axe-core issue #3978](https://github.com/dequelabs/axe-core/issues/3978).
+Interaction assertions run with forced colors active.
+The complete axe scan runs after normal colors return.
+No axe rule is disabled, and no violation is filtered.
+These scans do not measure forced-color contrast.
+
+Windows palette and readability inspection remains manual.
+Viewport reflow does not exercise browser zoom, text-only zoom, magnification or screen-reader announcements.
+The [actual Chrome zoom record](READINESS.md#actual-zoom-inspection) has a separate, limited scope.
 
 ## Interaction states in axe
 
@@ -85,7 +102,7 @@ the existing Showcase routes:
 | Open popover       | `/overlays`                 | Filters                                           |
 | Combobox results   | `/product-recipes` Settings | Focus the Region combobox                         |
 | Validation error   | `/product-recipes` Settings | Save with an empty email                          |
-| Selected table row | `/product-recipes` Services | Check Select Payments API                         |
+| Selected table row | `/product-recipes` Services | Select the `Select Payments API` checkbox.        |
 | Active tab         | `/product-recipes`          | Settings selected, Services unselected            |
 | Assistant response | `/assistant`                | Send a question and wait for the structured reply |
 
@@ -97,8 +114,7 @@ Keyboard coverage added in that file, beyond `overlay-behavior.spec.ts`:
 - Assistant: Enter on Ask about deployment moves focus to the composer; Escape closes the panel and returns focus to the trigger.
 
 Dialog focus trap and opener restoration stay in `overlay-behavior.spec.ts`.
-That spec also covers menu-to-dialog handoff, nested Escape, popover clipping,
-and tooltip hover. This pass did not duplicate those tests.
+That spec also covers menu-to-dialog handoff, nested Escape, popover clipping and tooltip hover.
 
 ## Visual matrix
 
@@ -135,5 +151,5 @@ the settled theme.
 Workflow, product-tool, hierarchy, scheduling, interaction, analytics and
 advanced-layout specs extend the original route/state table above. The
 [verification reference](VERIFICATION.md) links the current evidence and limits.
-Native picker dialogs, physical touch, screen readers and SSR remain unverified;
+Native picker dialogs, physical touch, screen readers and SSR remain outside the recorded evidence;
 forced-colors emulation now has the limited coverage described above.

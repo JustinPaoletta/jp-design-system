@@ -43,7 +43,7 @@ was performed.
 - **Tool limitation:** axe's forced-colors contrast calculation mixed authored
   text-fill colors with forced background colors in the local run. The full
   axe scan runs after restoring normal colors; no rules or violations are
-  suppressed. See [ACCEPTANCE_AUTOMATION.md](ACCEPTANCE_AUTOMATION.md).
+  suppressed. See [the environment limits](SUPPORT_MATRIX.md#environment-checks-and-limits).
 - **Still open:** Windows high-contrast readability and platform inspection remain
   manual. Emulation does not establish that those checks passed.
 
@@ -70,7 +70,7 @@ was performed.
   The browser's closed-popover rules then hid the panel despite its fixed coordinates.
 - **Fix:** Remove the attribute whenever native opening fails or is unavailable.
   Cleanup restores the original attribute.
-- **Evidence:** Unit tests check position and attribute restoration.
+- **Evidence:** Unit tests include assertions for position and attribute restoration.
   `overlay-fallback.spec.ts` checks visible menus, dialog focus and dismissal in all three engines.
   Both missing and throwing native methods are covered.
 

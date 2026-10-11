@@ -92,13 +92,18 @@ checks in all three engines. Four forced-colors interaction cases run in Chromiu
 and intentionally skip Firefox and WebKit. Axe runs after restoring default colors
 because of the forced-colors contrast calculation limitation. Native
 `details.name` grouping is asserted through repeated keyboard and click use.
-See [Acceptance automation](qa/ACCEPTANCE_AUTOMATION.md) for the focused
-command, assertions and limits.
+Use this command for the focused environment and disclosure selection:
+
+```sh
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep="acceptance reflow|acceptance forced colors|native disclosure keyboard" --workers=1
+```
+
+The [support matrix](qa/SUPPORT_MATRIX.md#environment-checks-and-limits) gives the assertions and axe limitation.
 
 Actual Chrome 200%/400% zoom was inspected for the seven larger features.
 See [readiness evidence and maintainer instructions](qa/READINESS.md).
 VoiceOver/NVDA, real Windows contrast themes, text-only zoom and other zoom combinations remain open.
-Physical touch and native picker dialogs are also unreviewed.
+Physical touch and native picker dialogs have not been examined.
 Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility

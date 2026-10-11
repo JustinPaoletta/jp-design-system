@@ -7,12 +7,12 @@ Support level is in [Maturity](../governance/MATURITY.md).
 
 ## Dialog, popover, dropdown, tooltip
 
-| Need                                                              | Use                                                     | Leave it                            |
-| ----------------------------------------------------------------- | ------------------------------------------------------- | ----------------------------------- |
-| A decision that blocks the page, especially a destructive confirm | [`jp-dialog`](../PRIMITIVES.md#jp-dialog)               | A menu or a hint                    |
-| Extra content anchored to a control, still part of the page       | [`jp-popover`](../PRIMITIVES.md#jp-popover)             | A modal confirmation                |
-| A list of actions                                                 | [`jp-dropdown-menu`](../PRIMITIVES.md#jp-dropdown-menu) | A dialog with one button per action |
-| A short name for an icon control                                  | [`jp-tooltip`](../PRIMITIVES.md#jp-tooltip)             | Text the user must read to succeed  |
+| Need                                                                 | Use                                                     | Leave it                            |
+| -------------------------------------------------------------------- | ------------------------------------------------------- | ----------------------------------- |
+| A decision that blocks the page, especially destructive confirmation | [`jp-dialog`](../PRIMITIVES.md#jp-dialog)               | A menu or a hint                    |
+| Extra content anchored to a control, still part of the page          | [`jp-popover`](../PRIMITIVES.md#jp-popover)             | A modal confirmation                |
+| A list of actions                                                    | [`jp-dropdown-menu`](../PRIMITIVES.md#jp-dropdown-menu) | A dialog with one button per action |
+| A short name for an icon control                                     | [`jp-tooltip`](../PRIMITIVES.md#jp-tooltip)             | Text the user must read to succeed  |
 
 All four are controlled where they have `open`. Bind `open` and `openChange`
 (`[(open)]` works). Escape closes the topmost registered overlay first.

@@ -33,7 +33,6 @@ Related references:
 
 - [Design principles](../DESIGN_PRINCIPLES.md)
 - [Primitive API reference](../PRIMITIVES.md)
-- [Product recipes](../PRODUCT_RECIPES.md)
 - [Distribution](../DISTRIBUTION.md)
 - [Maturity](../governance/MATURITY.md)
 - [Compatibility and migration](../governance/COMPATIBILITY.md)
