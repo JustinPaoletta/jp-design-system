@@ -1,7 +1,7 @@
 <jp-box padding="lg" maxWidth="wide">
   <jp-stack gap="lg">
     <jp-stack gap="xs">
-      <jp-heading as="h1">Data Display</jp-heading>
+      <jp-heading as="h1">Player roster</jp-heading>
       <a jpLink href="/advanced-layout">Advanced layout and table controls</a>
       <a jpLink href="/data-performance"
         >Charts, hierarchy, scheduling and interaction tools</a
@@ -17,25 +17,25 @@
     </jp-stack>
 
     <jp-inline gap="sm" wrap="true">
-      <jp-badge tone="neutral">Neutral</jp-badge>
-      <jp-badge tone="accent">Accent</jp-badge>
-      <jp-badge tone="success">Success</jp-badge>
-      <jp-badge tone="warning">Warning</jp-badge>
-      <jp-badge tone="error">Error</jp-badge>
-      <jp-badge tone="info">Info</jp-badge>
+      <jp-badge tone="neutral">Reserve</jp-badge>
+      <jp-badge tone="accent">Starter</jp-badge>
+      <jp-badge tone="success">Available</jp-badge>
+      <jp-badge tone="warning">Day to day</jp-badge>
+      <jp-badge tone="error">Injured</jp-badge>
+      <jp-badge tone="info">Away game</jp-badge>
     </jp-inline>
 
     <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
       <jp-stack gap="md">
         <jp-inline align="center" gap="sm" justify="between" wrap="true">
-          <jp-heading as="h2">Deployments</jp-heading>
+          <jp-heading as="h2">Roster</jp-heading>
           <jp-switch [(ngModel)]="showEmpty" name="showEmpty">
             Show empty state
           </jp-switch>
         </jp-inline>
 
         <jp-table
-          caption="Recent deployments"
+          caption="Falcons roster"
           [columns]="columns"
           [rows]="visibleRows"
           [striped]="true"
@@ -44,8 +44,8 @@
             <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
           </ng-template>
           <jp-empty-state
-            title="No deployments"
-            description="Nothing matches the current filters."
+            title="No players on the roster"
+            description="No players match these filters."
           >
             <jp-button
               variant="secondary"
@@ -65,7 +65,7 @@
         description="Use outside tables for filtered lists or first-run screens."
       >
         <span jpEmptyStateIcon aria-hidden="true">◇</span>
-        <jp-button variant="primary" type="button">New item</jp-button>
+        <jp-button variant="primary" type="button">Add player</jp-button>
       </jp-empty-state>
     </jp-surface>
   </jp-stack>

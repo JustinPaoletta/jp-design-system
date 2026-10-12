@@ -16,8 +16,8 @@ test.describe('app shell', () => {
     await expect(shell).toBeVisible();
     await expect(sidebar).toBeVisible();
     await expect(main).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Overview');
-    await expect(activeNav).toContainText('App Shell');
+    await expect(page.locator('h1')).toContainText('Game day');
+    await expect(activeNav).toContainText('Falcons');
     expect(
       await activeNav
         .locator('.jp-app-shell-nav-item__root')

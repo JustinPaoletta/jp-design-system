@@ -7,14 +7,14 @@ const meta: Meta<JpReorder> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'story-priorities',
-    label: 'Release priorities',
+    label: 'Game priorities',
     items: [
       {
         id: 'audit',
-        label: 'Accessibility audit',
+        label: 'Inspect the field',
         description: 'Confirm keyboard and screen-reader behavior.',
       },
-      { id: 'docs', label: 'Write consumer documentation' },
+      { id: 'docs', label: 'Prepare the lineup' },
       { id: 'release', label: 'Prepare release notes' },
     ],
   },
@@ -28,25 +28,25 @@ export const KeyboardAndCancel: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     const handle = c.getByRole('button', {
-      name: 'Reorder: Accessibility audit',
+      name: 'Reorder: Inspect the field',
     });
     await userEvent.click(handle);
     await userEvent.keyboard('{End}');
     await expect(c.getByRole('status')).toHaveTextContent('3 of 3');
     await userEvent.keyboard('{Escape}');
     await expect(c.getAllByRole('listitem')[0]).toHaveTextContent(
-      'Accessibility audit',
+      'Inspect the field',
     );
     await userEvent.click(
-      c.getByRole('button', { name: 'Move down: Accessibility audit' }),
+      c.getByRole('button', { name: 'Move down: Inspect the field' }),
     );
     await expect(c.getAllByRole('listitem')[1]).toHaveTextContent(
-      'Accessibility audit',
+      'Inspect the field',
     );
     await userEvent.click(handle);
     await userEvent.keyboard('{Home}{Enter}');
     await expect(c.getAllByRole('listitem')[0]).toHaveTextContent(
-      'Accessibility audit',
+      'Inspect the field',
     );
     await expect(handle).toHaveFocus();
   },

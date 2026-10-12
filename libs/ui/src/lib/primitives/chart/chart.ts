@@ -226,6 +226,11 @@ export class JpChart {
                     beginAtZero: true,
                     ticks: {
                       color: color('axis'),
+                      precision:
+                        formatter.resolvedOptions().style === 'decimal' &&
+                        formatter.resolvedOptions().maximumFractionDigits === 0
+                          ? 0
+                          : undefined,
                       callback: (value) => formatter.format(Number(value)),
                     },
                     grid: { color: color('grid') },

@@ -85,9 +85,9 @@ import { JpTooltip } from './tooltip/tooltip';
         <jp-box padding="lg" maxWidth="wide">
           <jp-stack gap="lg">
             <jp-stack gap="xs">
-              <jp-heading as="h1">Feedback & Overlays</jp-heading>
+              <jp-heading as="h1">Club alerts</jp-heading>
               <jp-text tone="secondary">
-                Composition of tooltip, toast, dialog, popover, and dropdown.
+                Review club messages and player actions.
               </jp-text>
               <jp-inline gap="sm">
                 <jp-text as="small" tone="muted"
@@ -106,7 +106,7 @@ import { JpTooltip } from './tooltip/tooltip';
               elevation="none"
             >
               <jp-inline gap="sm" wrap="true">
-                <jp-tooltip content="Copy deployment ID" placement="top">
+                <jp-tooltip content="Copy game ID" placement="top">
                   <jp-button type="button" variant="secondary"
                     >Copy ID</jp-button
                   >
@@ -167,7 +167,7 @@ import { JpTooltip } from './tooltip/tooltip';
 
     <jp-dialog
       [open]="dialogOpen"
-      title="Delete deployment?"
+      title="Remove player?"
       (openChange)="dialogOpen = $event"
     >
       <jp-text>This cannot be undone.</jp-text>
@@ -205,7 +205,7 @@ class FeedbackOverlaysCompositionHost {
     document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
   showToast(): void {
-    this.toasts.show({ message: 'Deployment saved', tone: 'success' });
+    this.toasts.show({ message: 'Lineup saved', tone: 'success' });
   }
 }
 
@@ -228,7 +228,7 @@ type Story = StoryObj;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Feedback & Overlays',
+      'Club alerts',
     );
     const deleteButton = Array.from(
       canvasElement.querySelectorAll('button'),

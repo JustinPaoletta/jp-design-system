@@ -1,5 +1,26 @@
 # Verification evidence
 
+## October 12, 2026 baseball examples
+
+Storybook and Showcase use the [shared baseball copy](../content/BASEBALL_EXAMPLES.md).
+The game dashboard shows a 5–3 Falcons win, nine hits and no errors.
+Related examples use the same players, roles, positions and availability labels.
+The [design inspection](../../design-qa.md) records desktop and mobile Chrome captures.
+
+| Check                     | Result                                            |
+| ------------------------- | ------------------------------------------------- |
+| Source checks             | 463 UI tests and 58 Showcase tests pass.          |
+| Lint and Angular types    | UI, Showcase and browser-test source checks pass. |
+| Static and live Storybook | 320 stories in 97 suites pass in each run.        |
+| macOS Chromium visuals    | 84 inspected baseline comparisons pass.           |
+| Isolated package consumer | 18 browser, accent and density combinations pass. |
+
+The Showcase production build passes.
+Chart tests check whole-number decimal ticks and fractional percentage ticks.
+Live Storybook compiler/runtime isolation checks pass.
+Chromium passes 138 behavior and accessibility tests.
+Firefox and WebKit each pass 134 tests, with four intentional forced-colors skips in each engine.
+
 ## October 11, 2026 design refresh
 
 The default accent is now `gold`. Explicit `neon` and `cobalt` accents remain available.

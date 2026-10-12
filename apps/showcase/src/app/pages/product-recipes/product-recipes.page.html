@@ -1,7 +1,7 @@
 <jp-box padding="lg" maxWidth="wide">
   <jp-stack gap="lg">
     <jp-breadcrumbs [items]="breadcrumbs" />
-    <jp-heading as="h1">Product recipes</jp-heading>
+    <jp-heading as="h1">Club workflows</jp-heading>
     <jp-text tone="secondary"
       >Working examples of validation, save/retry, searchable records, and
       destructive confirmation. This demo uses a simulated API: the first
@@ -11,12 +11,12 @@
       [tabs]="tabs"
       [selectedValue]="tab()"
       (selectedValueChange)="tab.set($event)"
-      ariaLabel="Product examples"
+      ariaLabel="Falcons examples"
       id="recipe-tabs"
     >
       <ng-template jpTabPanel="services">
         <jp-stack gap="md">
-          <jp-heading as="h2">Services</jp-heading>
+          <jp-heading as="h2">Players</jp-heading>
           <jp-table-toolbar
             [activeFilters]="filters()"
             [selectedCount]="selected().length"
@@ -25,7 +25,7 @@
           >
             <jp-input
               jpTableSearch
-              label="Search services"
+              label="Search players"
               type="search"
               [ngModel]="search()"
               (ngModelChange)="setSearch($event)"
@@ -36,18 +36,18 @@
               [loading]="loading()"
               loadingLabel="Refreshing"
               (click)="refresh()"
-              >Refresh services</jp-button
+              >Refresh roster</jp-button
             >
             <jp-button
               jpTableBulkActions
               variant="destructive"
               (click)="deleteError.set(''); dialogOpen.set(true)"
-              >Delete selected</jp-button
+              >Remove player</jp-button
             >
           </jp-table-toolbar>
           @if (loading()) {
           <jp-progress
-            label="Refreshing services"
+            label="Refreshing roster"
           /><jp-skeleton /><jp-skeleton /> } @if (loadError()) {
           <jp-inline-alert
             tone="error"
@@ -58,7 +58,7 @@
           />
           }
           <jp-table
-            caption="Service inventory"
+            caption="League player roster"
             [columns]="columns"
             [rows]="visible()"
             [sort]="sort()"
@@ -66,7 +66,7 @@
             [selectable]="true"
             [selectedKeys]="selected()"
             (selectionChange)="selected.set($event)"
-            emptyTitle="No matching services"
+            emptyTitle="No matching players"
             emptyDescription="Clear your search or choose a different query."
           />
           <jp-pagination
@@ -81,9 +81,9 @@
         <jp-surface tone="raised" padding="md" border="subtle">
           <form [formGroup]="form" (ngSubmit)="save()">
             <jp-stack gap="md">
-              <jp-heading as="h2">Account settings</jp-heading>
+              <jp-heading as="h2">Club account</jp-heading>
               <jp-input
-                label="Notification email"
+                label="Coach email"
                 type="email"
                 name="notification-email"
                 autocomplete="email"
@@ -92,13 +92,13 @@
                 [error]="form.controls.email.touched && form.controls.email.invalid ? 'Enter a valid notification email.' : ''"
               />
               <jp-combobox
-                label="Region"
+                label="Position"
                 [options]="regions"
                 formControlName="region"
                 [required]="true"
               />
               <jp-radio-group
-                label="Support plan"
+                label="Membership"
                 [options]="plans"
                 formControlName="plan"
                 [required]="true"
@@ -132,11 +132,11 @@
   </jp-stack>
 </jp-box>
 <jp-dialog
-  title="Delete selected services?"
+  title="Remove selected players?"
   [open]="dialogOpen()"
   (openChange)="dialogOpen.set($event)"
 >
-  <jp-text>This removes the selected records from this demonstration.</jp-text>
+  <jp-text>This removes the selected players from the demo roster.</jp-text>
   @if (deleteError()) {
   <jp-inline-alert
     tone="error"
@@ -154,7 +154,7 @@
     <jp-button
       variant="destructive"
       [loading]="deleting()"
-      loadingLabel="Deleting services"
+      loadingLabel="Removing players"
       (click)="confirmDelete()"
       >Confirm deletion</jp-button
     >

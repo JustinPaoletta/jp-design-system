@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   signal,
 } from '@angular/core';
@@ -11,31 +12,31 @@ import { JpTreeView, type JpTreeNode, type JpTreeSelection } from './tree-view';
 const assets: readonly JpTreeNode[] = [
   {
     key: 'brand',
-    label: 'Brand assets',
+    label: 'Club documents',
     children: [
       {
         key: 'logos',
-        label: 'Logos',
+        label: 'Lineup sheets',
         children: [
-          { key: 'wordmark', label: 'Wordmark.svg' },
-          { key: 'symbol', label: 'Symbol.svg' },
+          { key: 'wordmark', label: 'Lineup.svg' },
+          { key: 'symbol', label: 'Field.svg' },
         ],
       },
-      { key: 'type', label: 'Typography.pdf' },
+      { key: 'type', label: 'Club-rules.pdf' },
     ],
   },
   {
     key: 'product',
-    label: 'Product assets',
-    children: [{ key: 'icons', label: 'Icons.svg' }],
+    label: 'Game documents',
+    children: [{ key: 'icons', label: 'Field-positions.svg' }],
   },
   {
     key: 'shared',
-    label: 'Shared library',
+    label: 'Training guides',
     hasChildren: true,
     loadState: 'idle',
   },
-  { key: 'archived', label: 'Archived assets', disabled: true },
+  { key: 'archived', label: 'Previous season', disabled: true },
 ];
 @Component({
   selector: 'jp-tree-story',
@@ -44,7 +45,7 @@ const assets: readonly JpTreeNode[] = [
   template: `
     <jp-tree-view
       id="story-assets"
-      label="Design assets"
+      label="Club documents"
       [nodes]="nodes()"
       [disabled]="disabled()"
       [selection]="selection()"
@@ -56,7 +57,7 @@ const assets: readonly JpTreeNode[] = [
       (loadRequested)="load($event)"
     />
     <p role="status">
-      Selected: {{ selected() || 'none' }}. Opened: {{ opened() || 'none' }}.
+      Selected: {{ selectedName() }}. Opened: {{ opened() || 'none' }}.
     </p>
   `,
 })
@@ -67,6 +68,18 @@ class TreeStory {
   readonly expanded = signal<string[]>(['brand']);
   readonly selected = signal<string | null>(null);
   readonly opened = signal('');
+  readonly selectedName = computed(() => {
+    const key = this.selected();
+    const find = (nodes: readonly JpTreeNode[]): string | null => {
+      for (const node of nodes) {
+        if (node.key === key) return node.label;
+        const label = find(node.children ?? []);
+        if (label) return label;
+      }
+      return null;
+    };
+    return find(this.nodes()) ?? 'No document selected';
+  });
   private attempts = 0;
   load(node: JpTreeNode): void {
     this.attempts += 1;
@@ -79,7 +92,7 @@ class TreeStory {
               children:
                 this.attempts === 1
                   ? undefined
-                  : [{ key: 'guidelines', label: 'Guidelines.pdf' }],
+                  : [{ key: 'guidelines', label: 'Practice-plan.pdf' }],
             }
           : value,
       ),
@@ -91,7 +104,7 @@ const meta: Meta<JpTreeView> = {
   component: JpTreeView,
   decorators: [moduleMetadata({ imports: [TreeStory] })],
   parameters: { layout: 'padded' },
-  args: { id: 'tree-states', label: 'Design assets', nodes: assets },
+  args: { id: 'tree-states', label: 'Club documents', nodes: assets },
 };
 export default meta;
 type Story = StoryObj<JpTreeView>;
@@ -99,19 +112,19 @@ export const AssetBrowser: Story = {
   render: () => ({ template: '<jp-tree-story />' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const brand = canvas.getByRole('treeitem', { name: 'Brand assets' });
+    const brand = canvas.getByRole('treeitem', { name: 'Club documents' });
     brand.focus();
     await userEvent.keyboard('{ArrowDown}');
-    const logos = canvas.getByRole('treeitem', { name: 'Logos' });
+    const logos = canvas.getByRole('treeitem', { name: 'Lineup sheets' });
     await expect(logos).toHaveFocus();
     await expect(logos).toHaveAttribute('aria-selected', 'false');
     await userEvent.keyboard('{ArrowRight}{ArrowRight} ');
-    const wordmark = canvas.getByRole('treeitem', { name: 'Wordmark.svg' });
+    const wordmark = canvas.getByRole('treeitem', { name: 'Lineup.svg' });
     await expect(wordmark).toHaveFocus();
     await expect(wordmark).toHaveAttribute('aria-selected', 'true');
     await userEvent.keyboard('{Enter}');
     await expect(canvas.getByRole('status')).toHaveTextContent(
-      'Opened: Wordmark.svg',
+      'Opened: Lineup.svg',
     );
   },
 };
@@ -119,15 +132,15 @@ export const LazyRetry: Story = {
   render: () => ({ template: '<jp-tree-story />' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const library = canvas.getByRole('treeitem', { name: 'Shared library' });
+    const library = canvas.getByRole('treeitem', { name: 'Training guides' });
     library.focus();
     await userEvent.keyboard('{ArrowRight}');
     await expect(
-      canvas.getByRole('button', { name: 'Retry: Shared library' }),
+      canvas.getByRole('button', { name: 'Retry: Training guides' }),
     ).toBeVisible();
     await userEvent.keyboard('{Enter}{ArrowRight}');
     await expect(
-      canvas.getByRole('treeitem', { name: 'Guidelines.pdf' }),
+      canvas.getByRole('treeitem', { name: 'Practice-plan.pdf' }),
     ).toHaveFocus();
   },
 };
@@ -144,11 +157,11 @@ export const RightToLeft: Story = {
   render: () => ({ template: '<div dir="rtl"><jp-tree-story /></div>' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const product = canvas.getByRole('treeitem', { name: 'Product assets' });
+    const product = canvas.getByRole('treeitem', { name: 'Game documents' });
     product.focus();
     await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
     await expect(
-      canvas.getByRole('treeitem', { name: 'Icons.svg' }),
+      canvas.getByRole('treeitem', { name: 'Field-positions.svg' }),
     ).toHaveFocus();
   },
 };

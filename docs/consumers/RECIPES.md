@@ -62,7 +62,7 @@ example uses `2`). `filtered` applies the query and the current
 
 ```html
 <jp-table-toolbar [activeFilters]="filters()" [selectedCount]="selected().length" (removeFilter)="setSearch('')" (clearFilters)="setSearch('')">
-  <jp-input jpTableSearch label="Search services" type="search" [ngModel]="search()" (ngModelChange)="setSearch($event)" />
+  <jp-input jpTableSearch label="Search players" type="search" [ngModel]="search()" (ngModelChange)="setSearch($event)" />
   <jp-button jpTableActions variant="secondary" [loading]="loading()" (click)="refresh()"> Refresh services </jp-button>
 </jp-table-toolbar>
 <jp-table caption="Service inventory" [columns]="columns" [rows]="visible()" [sort]="sort()" (sortChange)="setSort($event)" [selectable]="true" [selectedKeys]="selected()" (selectionChange)="selected.set($event)" emptyTitle="No matching services" emptyDescription="Clear your search or choose a different query." />

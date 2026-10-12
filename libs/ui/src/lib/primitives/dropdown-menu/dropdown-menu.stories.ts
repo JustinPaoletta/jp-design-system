@@ -16,13 +16,13 @@ import {
   template: `
     <jp-dropdown-menu [open]="open" (openChange)="open = $event">
       <jp-button jpDropdownTrigger type="button" variant="secondary">
-        Actions
+        Player actions
       </jp-button>
       <button type="button" jpDropdownMenuItem (itemSelect)="open = false">
-        Edit
+        Edit player
       </button>
       <button type="button" jpDropdownMenuItem (itemSelect)="open = false">
-        Delete
+        Remove player
       </button>
     </jp-dropdown-menu>
   `,
@@ -101,11 +101,11 @@ export const WithDisabledItem: Story = {
     template: `
       <jp-dropdown-menu [open]="true">
         <jp-button jpDropdownTrigger type="button" variant="secondary">
-          Actions
+          Player actions
         </jp-button>
-        <button type="button" jpDropdownMenuItem>Edit</button>
-        <button type="button" jpDropdownMenuItem disabled>Delete</button>
-        <button type="button" jpDropdownMenuItem>Duplicate</button>
+        <button type="button" jpDropdownMenuItem>Edit player</button>
+        <button type="button" jpDropdownMenuItem disabled>Remove player</button>
+        <button type="button" jpDropdownMenuItem>Duplicate player</button>
       </jp-dropdown-menu>
     `,
   }),

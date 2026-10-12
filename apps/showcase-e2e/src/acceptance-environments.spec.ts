@@ -29,41 +29,46 @@ async function expectDefaultColorSemantics(page: Page) {
 }
 
 async function expectOutline(locator: Locator) {
-  const outline = await locator.evaluate((element) => {
-    const style = getComputedStyle(element);
-    return { width: parseFloat(style.outlineWidth), style: style.outlineStyle };
-  });
-  expect(outline.width).toBeGreaterThanOrEqual(1);
-  expect(outline.style).not.toBe('none');
+  // Wait for keyboard focus styles after a controlled render.
+  await expect
+    .poll(async () =>
+      locator.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return (
+          parseFloat(style.outlineWidth) >= 1 && style.outlineStyle !== 'none'
+        );
+      }),
+    )
+    .toBe(true);
 }
 
 const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
   {
     hierarchy: async (page) => {
-      await page.getByRole('button', { name: 'Expand Design' }).click();
+      await page.getByRole('button', { name: 'Expand Batting drills' }).click();
       await expect(
-        page.getByRole('checkbox', { name: 'Select Landing page' }),
+        page.getByRole('checkbox', { name: 'Select Batting order' }),
       ).toBeVisible();
     },
     scheduling: async (page) => {
       // The schedule becomes an agenda at narrow widths; events stay operable.
-      const event = page.getByRole('button', { name: /Product planning,/ });
+      const event = page.getByRole('button', { name: /Lineup meeting,/ });
       await event.focus();
       await event.press('Enter');
       await expect(
         page.getByRole('complementary', { name: 'Appointment details' }),
-      ).toContainText('Product planning');
+      ).toContainText('Lineup meeting');
     },
     'interaction-tools': async (page) => {
       await page
-        .getByRole('button', { name: 'Move down: Accessibility audit' })
+        .getByRole('button', { name: 'Move down: Inspect the field' })
         .click();
       await page
         .locator('jp-carousel')
         .getByRole('button', { name: 'Next slide' })
         .click();
       await expect(
-        page.getByRole('textbox', { name: 'Workspace note' }),
+        page.getByRole('textbox', { name: 'Coach note' }),
       ).toBeVisible();
     },
     'data-performance': async (page) => {
@@ -137,7 +142,7 @@ test.describe('acceptance forced colors', () => {
     page,
   }) => {
     const item = page.getByRole('treeitem', {
-      name: 'Wordmark.svg',
+      name: 'Lineup.svg',
       exact: true,
     });
     await item.focus();
@@ -147,18 +152,18 @@ test.describe('acceptance forced colors', () => {
     await expectOutline(row);
     await expect(row).toHaveCSS('border-top-width', '1px');
     await page
-      .getByRole('checkbox', { name: 'Select Website launch', exact: true })
+      .getByRole('checkbox', { name: 'Select Season preparation', exact: true })
       .check();
     const selected = page.locator('jp-tree-table tr.selected');
     await expectOutline(selected);
     const disclosure = page.locator('#project-breakdown-row-design button');
-    await expect(disclosure).toHaveAccessibleName('Expand Design');
+    await expect(disclosure).toHaveAccessibleName('Expand Batting drills');
     await disclosure.focus();
     await disclosure.press('Enter');
-    await expect(disclosure).toHaveAccessibleName('Collapse Design');
+    await expect(disclosure).toHaveAccessibleName('Collapse Batting drills');
     await expectOutline(disclosure);
     await expect(
-      page.getByRole('checkbox', { name: 'Select Landing page' }),
+      page.getByRole('checkbox', { name: 'Select Batting order' }),
     ).toBeVisible();
     await expectDefaultColorSemantics(page);
   });
@@ -177,10 +182,10 @@ test.describe('acceptance forced colors', () => {
     await handle.press('Enter');
     await expect(
       page
-        .getByRole('list', { name: 'Release priorities' })
+        .getByRole('list', { name: 'Game priorities' })
         .getByRole('listitem')
         .nth(1),
-    ).toContainText('Accessibility audit');
+    ).toContainText('Inspect the field');
     await expect(handle).toBeFocused();
     const next = page
       .locator('jp-carousel')
@@ -189,7 +194,7 @@ test.describe('acceptance forced colors', () => {
     await next.press('Enter');
     await expectOutline(next);
     await expect(
-      page.getByRole('textbox', { name: 'Workspace note' }),
+      page.getByRole('textbox', { name: 'Coach note' }),
     ).toBeVisible();
     await expect(
       page.locator('jp-carousel .pickers button.current'),
@@ -205,13 +210,13 @@ test.describe('acceptance forced colors', () => {
     await agenda.click();
     await expect(agenda).toHaveAttribute('aria-pressed', 'true');
     await expectOutline(agenda);
-    const event = page.getByRole('button', { name: /Product planning,/ });
+    const event = page.getByRole('button', { name: /Lineup meeting,/ });
     await event.focus();
     await event.press('Enter');
     await expectOutline(event);
     await expect(
       page.getByRole('complementary', { name: 'Appointment details' }),
-    ).toContainText('Product planning');
+    ).toContainText('Lineup meeting');
     await expectDefaultColorSemantics(page);
   });
 
@@ -222,7 +227,7 @@ test.describe('acceptance forced colors', () => {
     const chart = page.locator('jp-chart');
     await expect(chart.locator('.plot')).toBeHidden();
     await expect(chart.locator('details')).toHaveAttribute('open', '');
-    const data = chart.getByRole('table', { name: 'Completed work by team' });
+    const data = chart.getByRole('table', { name: 'Team runs by month' });
     await expect(data).toBeVisible();
     await expect(data.getByRole('row')).toHaveCount(7);
     await chart
@@ -231,13 +236,13 @@ test.describe('acceptance forced colors', () => {
     await expect(chart.locator('dl')).toContainText('57');
     const table = page.locator('jp-virtual-table');
     await table
-      .getByRole('checkbox', { name: 'Select Service 00001', exact: true })
+      .getByRole('checkbox', { name: 'Select Player 00001', exact: true })
       .check();
     await expectOutline(table.locator('tr.selected'));
     await table.getByRole('button', { name: 'Paginated rows' }).click();
     await expect(
       table.getByRole('checkbox', {
-        name: 'Select Service 00001',
+        name: 'Select Player 00001',
         exact: true,
       }),
     ).toBeChecked();

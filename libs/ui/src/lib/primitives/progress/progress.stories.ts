@@ -12,7 +12,7 @@ type Story = StoryObj<JpProgress>;
 
 export const Upload: Story = {
   args: {
-    label: 'Uploading project',
+    label: 'Uploading lineup',
     value: 42,
     max: 100,
     valueText: '42 percent uploaded',
@@ -26,5 +26,5 @@ export const Upload: Story = {
   },
 };
 export const Indeterminate: Story = {
-  args: { label: 'Loading project', value: null },
+  args: { label: 'Loading club roster', value: null },
 };

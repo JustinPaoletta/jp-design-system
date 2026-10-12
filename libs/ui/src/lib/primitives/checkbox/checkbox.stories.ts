@@ -22,7 +22,7 @@ const meta: Meta<JpCheckbox> = {
     props: args,
     template: `
       <jp-checkbox [disabled]="disabled" [invalid]="invalid">
-        Subscribe to product updates
+        Get club messages
       </jp-checkbox>
     `,
   }),
@@ -54,7 +54,7 @@ export const Checked: Story = {
     props: { isOn: true },
     template: `
       <jp-checkbox [(ngModel)]="isOn">
-        Subscribe to product updates
+        Get club messages
       </jp-checkbox>
     `,
   }),
@@ -87,7 +87,7 @@ export const Disabled: Story = {
 
 export const Indeterminate: Story = {
   render: () => ({
-    template: `<jp-checkbox indeterminate>Select all rows (some selected)</jp-checkbox>`,
+    template: `<jp-checkbox indeterminate>Select all players (some selected)</jp-checkbox>`,
   }),
   play: async ({ canvasElement }) => {
     await expect(

@@ -9,12 +9,10 @@ test.beforeEach(async ({ page }) => {
 test('component expansion: native disclosure keyboard operation and exclusive grouping', async ({
   page,
 }) => {
-  const general = page
-    .locator('summary')
-    .filter({ hasText: 'General settings' });
+  const general = page.locator('summary').filter({ hasText: 'Club settings' });
   const advanced = page
     .locator('summary')
-    .filter({ hasText: 'Advanced settings' });
+    .filter({ hasText: 'Club preferences' });
   // Assert the native grouping contract in both supported browser engines.
   await expect(general.locator('..')).toHaveJSProperty(
     'name',
@@ -39,7 +37,7 @@ test('component expansion: native disclosure keyboard operation and exclusive gr
 test('component expansion: search clearing, password reveal, and form validation recovery', async ({
   page,
 }) => {
-  const search = page.getByRole('searchbox', { name: 'Search projects' });
+  const search = page.getByRole('searchbox', { name: 'Search clubs' });
   await search.fill('gateway');
   await page.getByRole('button', { name: 'Clear search' }).click();
   await expect(search).toHaveValue('');
@@ -62,7 +60,7 @@ test('component expansion: search clearing, password reveal, and form validation
   ).toBeFocused();
   await page
     .getByRole('textbox', { name: 'Email', exact: true })
-    .fill('ada@example.com');
+    .fill('alex@falcons.example');
   await page.getByRole('button', { name: 'Save preferences' }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Preferences saved' }),
@@ -73,23 +71,23 @@ test('component expansion: search clearing, password reveal, and form validation
 test('component expansion: multi-select preserves selections, supports keys, and handles disabled options', async ({
   page,
 }) => {
-  const query = page.getByRole('combobox', { name: 'Reviewers' });
+  const query = page.getByRole('combobox', { name: 'Players' });
   await query.focus();
-  await query.fill('grace');
+  await query.fill('Jordan');
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await expect(query).toHaveAttribute('aria-expanded', 'true');
   await page.keyboard.press('Escape');
   await expect(query).toHaveAttribute('aria-expanded', 'false');
   await query.click();
-  await query.fill('Unavailable');
+  await query.fill('Injured');
   await expect(
-    page.getByRole('option', { name: 'Unavailable reviewer' }),
+    page.getByRole('option', { name: 'Injured player' }),
   ).toHaveAttribute('aria-disabled', 'true');
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Remove Grace Hopper' }).click();
+  await page.getByRole('button', { name: 'Remove Jordan Davis' }).click();
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(1);
   await expect(query).toBeFocused();
 });
@@ -99,7 +97,7 @@ test('component expansion: drawer traps focus, dismisses, and returns to its ope
 }) => {
   const opener = page.getByRole('button', { name: 'Open details' });
   await opener.click();
-  const drawer = page.getByRole('dialog', { name: 'Project details' });
+  const drawer = page.getByRole('dialog', { name: 'Club details' });
   await expect(drawer).toBeVisible();
   await expect(
     drawer.getByRole('button', { name: 'Close panel' }),
@@ -130,7 +128,7 @@ test('component expansion: rendered and expanded states pass axe across accents 
     }
   }
   await page.getByRole('button', { name: 'Save preferences' }).click();
-  await page.getByRole('combobox', { name: 'Reviewers' }).focus();
+  await page.getByRole('combobox', { name: 'Players' }).focus();
   expect(
     (
       await new AxeBuilder({ page })
@@ -157,7 +155,7 @@ test('component expansion: mobile RTL layout fits the viewport', async ({
     document.documentElement.setAttribute('dir', 'rtl'),
   );
   await expect(
-    page.getByRole('heading', { name: 'Component expansion', exact: true }),
+    page.getByRole('heading', { name: 'Clubhouse components', exact: true }),
   ).toBeVisible();
   expect(
     await page.evaluate(
@@ -166,11 +164,11 @@ test('component expansion: mobile RTL layout fits the viewport', async ({
   ).toBe(true);
   await page.getByRole('button', { name: 'Open details' }).click();
   await expect(
-    page.getByRole('dialog', { name: 'Project details' }),
+    page.getByRole('dialog', { name: 'Club details' }),
   ).toBeVisible();
   expect(
     await page
-      .getByRole('dialog', { name: 'Project details' })
+      .getByRole('dialog', { name: 'Club details' })
       .evaluate((el) => el.getBoundingClientRect().left),
   ).toBeLessThan(5);
   await page.screenshot({

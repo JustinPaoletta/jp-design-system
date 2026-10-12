@@ -1,9 +1,9 @@
 <div class="page">
   <jp-page-header
-    title="Interaction tools"
-    description="Prioritize work and browse reference cards with explicit controls."
+    title="Game preparation"
+    description="Order game tasks and browse club reference cards."
   />
-  <jp-card title="Release priorities">
+  <jp-card title="Game priorities">
     <div class="toolbar">
       <jp-button variant="secondary" (click)="reset()"
         >Reset priorities</jp-button
@@ -12,33 +12,30 @@
     </div>
     <jp-reorder
       id="release-priorities"
-      label="Release priorities"
+      label="Game priorities"
       [items]="priorities"
       [order]="order()"
       (orderChange)="save($event)"
     />
   </jp-card>
-  <jp-card title="Workspace reference cards">
+  <jp-card title="Clubhouse reference cards">
     <p>
       Browse a short onboarding guide. Navigation keeps your place and does not
       rotate automatically.
     </p>
     <jp-carousel
       id="workspace-guide"
-      label="Workspace reference"
+      label="Clubhouse reference"
       [index]="slide()"
       (indexChange)="slide.set($event)"
     >
-      <ng-template jpCarouselSlide="team" label="Invite your team">
-        <h2>Invite your team</h2>
-        <p>
-          Give each workspace a clear owner and invite the people who will use
-          it.
-        </p>
+      <ng-template jpCarouselSlide="team" label="Invite club members">
+        <h2>Invite club members</h2>
+        <p>Invite players and coaches to the Falcons club.</p>
         <jp-button
           variant="secondary"
           (click)="action.set('Invitations opened')"
-          >Open invitations</jp-button
+          >Open club invitations</jp-button
         >
       </ng-template>
       <ng-template jpCarouselSlide="priorities" label="Set priorities">
@@ -47,7 +44,7 @@
           Choose a few concrete outcomes. Keep work ordered so everyone knows
           what comes next.
         </p>
-        <label for="workspace-note">Workspace note</label
+        <label for="workspace-note">Coach note</label
         ><input
           id="workspace-note"
           [value]="note()"
@@ -61,7 +58,7 @@
           together.
         </p>
         <jp-button variant="secondary" (click)="action.set('Review scheduled')"
-          >Schedule a review</jp-button
+          >Schedule practice</jp-button
         >
       </ng-template>
     </jp-carousel>

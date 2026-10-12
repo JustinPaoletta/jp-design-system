@@ -6,7 +6,7 @@ const meta: Meta<JpContextMenu> = {
   component: JpContextMenu,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Launch plan',
+    label: 'Game plan',
     actions: [
       { id: 'rename', label: 'Rename' },
       { id: 'duplicate', label: 'Duplicate' },
@@ -17,7 +17,7 @@ const meta: Meta<JpContextMenu> = {
   render: (args) => ({
     props: args,
     template:
-      '<jp-context-menu [label]="label" [actions]="actions" [disabled]="disabled"><p>Launch plan. Right-click or use Shift + F10.</p></jp-context-menu>',
+      '<jp-context-menu [label]="label" [actions]="actions" [disabled]="disabled"><p>Game plan. Right-click or use Shift + F10.</p></jp-context-menu>',
   }),
 };
 export default meta;
@@ -26,14 +26,14 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await userEvent.click(
-      c.getByRole('button', { name: 'More actions: Launch plan' }),
+      c.getByRole('button', { name: 'More actions: Game plan' }),
     );
     await expect(c.getByRole('menuitem', { name: 'Rename' })).toHaveFocus();
     await userEvent.keyboard('{ArrowDown}');
     await expect(c.getByRole('menuitem', { name: 'Duplicate' })).toHaveFocus();
     await userEvent.keyboard('{Escape}');
     await expect(
-      c.getByRole('button', { name: 'More actions: Launch plan' }),
+      c.getByRole('button', { name: 'More actions: Game plan' }),
     ).toHaveFocus();
   },
 };

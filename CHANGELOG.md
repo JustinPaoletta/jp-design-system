@@ -7,6 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Use consistent fictional baseball copy in Storybook and Showcase. Update player names, game statistics, forms, schedules and messages.
+
 - Use charcoal surfaces, smaller corners and low shadows across components.
 - Add the `gold` accent as the default. Keep explicit `neon` and `cobalt` accents available.
 - Remove the selected navigation line. Use a background change for selection.

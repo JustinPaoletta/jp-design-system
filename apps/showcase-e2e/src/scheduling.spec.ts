@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1800, height: 1100 });
   await page.goto('/scheduling');
   await expect(
-    page.getByRole('heading', { name: 'Scheduling calendar', exact: true }),
+    page.getByRole('heading', { name: 'Club events', exact: true }),
   ).toBeVisible();
 });
 test('scheduling: date navigation and native appointment keyboard activation', async ({
@@ -16,20 +16,20 @@ test('scheduling: date navigation and native appointment keyboard activation', a
   });
   await calendar.getByRole('button', { name: 'Day', exact: true }).click();
   await expect(calendar.locator('.day')).toHaveCount(1);
-  const planning = calendar.getByRole('button', { name: /Product planning,/ });
+  const planning = calendar.getByRole('button', { name: /Lineup meeting,/ });
   await planning.focus();
   await planning.press('Enter');
   await expect(
     page.getByRole('complementary', { name: 'Appointment details' }),
-  ).toContainText('Review the next release');
+  ).toContainText('Review the next game');
   await planning.press('Space');
   await expect(
-    page.getByRole('heading', { name: 'Product planning', exact: true }),
+    page.getByRole('heading', { name: 'Lineup meeting', exact: true }),
   ).toBeVisible();
   await calendar.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(planning).toHaveCount(0);
   await expect(
-    calendar.getByRole('button', { name: /Office hours,/ }),
+    calendar.getByRole('button', { name: /Meet the coaches,/ }),
   ).toBeVisible();
   await calendar.getByRole('button', { name: 'Previous', exact: true }).click();
   await expect(planning).toHaveCount(1);
@@ -37,7 +37,7 @@ test('scheduling: date navigation and native appointment keyboard activation', a
   await calendar.getByRole('button', { name: 'Week', exact: true }).click();
   await expect(calendar.locator('.day')).toHaveCount(7);
   await expect(
-    calendar.getByRole('button', { name: /Release window,/ }),
+    calendar.getByRole('button', { name: /Away series,/ }),
   ).toHaveCount(2);
 });
 test('scheduling: simultaneous appointments occupy separate lanes', async ({
@@ -69,17 +69,17 @@ test('scheduling: dense desktop week keeps readable appointment labels and conta
   await expect(frame).toHaveAttribute('role', 'region');
   await expect(frame).toHaveAttribute('tabindex', '0');
   await expect(
-    page.getByRole('button', { name: /Product planning,/ }),
+    page.getByRole('button', { name: /Lineup meeting,/ }),
   ).toHaveCount(1);
   const fit = await page
-    .locator('.timed button[aria-label^="Product planning,"] strong')
+    .locator('.timed button[aria-label^="Lineup meeting,"] strong')
     .evaluate((element) => ({
       width: element.clientWidth,
       content: element.scrollWidth,
     }));
   expect(
     await page
-      .locator('.timed button[aria-label^="Product planning,"]')
+      .locator('.timed button[aria-label^="Lineup meeting,"]')
       .evaluate((element) => element.clientWidth),
   ).toBeGreaterThanOrEqual(170);
   expect(fit.content).toBeLessThanOrEqual(fit.width + 1);
@@ -104,7 +104,7 @@ test('scheduling: short slots preserve a title line and restore times in agenda 
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
-  const event = page.getByRole('button', { name: /Engineering handoff,/ });
+  const event = page.getByRole('button', { name: /Pitching practice,/ });
   const title = event.locator('strong');
   const time = event.locator('span');
   await expect(event).toHaveClass(/appointment--short/);
@@ -162,16 +162,16 @@ test('scheduling: time-zone conversion and clock-change instances remain distinc
     .getByRole('combobox', { name: 'Time zone', exact: true })
     .selectOption('UTC');
   await expect(
-    page.getByRole('button', { name: /Product planning,.*1:00\sPM GMT/ }),
+    page.getByRole('button', { name: /Lineup meeting,.*1:00\sPM GMT/ }),
   ).toHaveCount(1);
   await page
     .getByRole('button', { name: 'Inspect clock change', exact: true })
     .click();
   const before = page.getByRole('button', {
-    name: /Before the clock change,.*GMT-4/,
+    name: /Early field check,.*GMT-4/,
   });
   const after = page.getByRole('button', {
-    name: /After the clock change,.*GMT-5/,
+    name: /Late field check,.*GMT-5/,
   });
   await expect(before).toHaveCount(1);
   await expect(after).toHaveCount(1);
@@ -194,7 +194,7 @@ test('scheduling: loading, retry and empty navigation recover without losing con
   await page.getByRole('button', { name: 'Show loading', exact: true }).click();
   await expect(calendar).toHaveAttribute('aria-busy', 'true');
   await expect(
-    calendar.getByRole('button', { name: /Product planning,/ }),
+    calendar.getByRole('button', { name: /Lineup meeting,/ }),
   ).toHaveCount(0);
   await page
     .getByRole('button', { name: 'Restore schedule', exact: true })
@@ -207,7 +207,7 @@ test('scheduling: loading, retry and empty navigation recover without losing con
   );
   await calendar.getByRole('button', { name: 'Retry', exact: true }).click();
   await expect(
-    calendar.getByRole('button', { name: /Product planning,/ }),
+    calendar.getByRole('button', { name: /Lineup meeting,/ }),
   ).toHaveCount(1);
   await calendar.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(calendar).toContainText('No appointments');
@@ -219,7 +219,7 @@ for (const dir of ['ltr', 'rtl'])
       document.documentElement.dir = dir;
     }, dir);
     const appointment = page.getByRole('button', {
-      name: /Engineering handoff,/,
+      name: /Pitching practice,/,
     });
     await expect(appointment).toBeVisible();
     const position = await appointment.evaluate(
@@ -233,7 +233,7 @@ for (const dir of ['ltr', 'rtl'])
     await appointment.click();
     await expect(
       page.getByRole('complementary', { name: 'Appointment details' }),
-    ).toContainText('API boundaries');
+    ).toContainText('starting pitcher');
   });
 for (const accent of ['neon', 'cobalt'])
   for (const density of ['default', 'compact'])
@@ -248,7 +248,7 @@ for (const accent of ['neon', 'cobalt'])
           { accent, density },
         );
         await page.getByRole('button', { name: 'Agenda', exact: true }).click();
-        await page.getByRole('button', { name: /Design review,/ }).click();
+        await page.getByRole('button', { name: /Batting practice,/ }).click();
         const result = await new AxeBuilder({ page })
           .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
           .analyze();

@@ -9,7 +9,7 @@ const meta: Meta<JpFormField> = {
   args: {
     controlId: 'example-field',
     label: 'Email',
-    hint: 'Use your work address',
+    hint: "Use the coach's email address",
   },
   decorators: [moduleMetadata({ imports: [JpFieldControl] })],
   render: (args) => ({

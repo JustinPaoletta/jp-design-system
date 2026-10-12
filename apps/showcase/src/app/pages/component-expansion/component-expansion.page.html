@@ -1,56 +1,56 @@
 <div class="page">
   <jp-page-header
-    title="Component expansion"
-    description="Reusable foundations, identity, navigation, and form composition."
-    ><span jpPageMeta>Preview components</span
+    title="Clubhouse components"
+    description="Meet the players, manage club preferences and browse the roster."
+    ><span jpPageMeta>Tryout components</span
     ><jp-button jpPageActions (click)="drawerOpen.set(true)"
       >Open details</jp-button
     ></jp-page-header
   >
   @if (bannerVisible()) {
   <jp-banner
-    title="Preview library"
-    message="These components are ready for integration testing. Manual assistive-technology review remains pending."
+    title="Falcons clubhouse"
+    message="Riverton Falcons is a fictional baseball club. All records shown here are sample data."
     dismissible
     (dismissed)="bannerVisible.set(false)"
   />
   }
   <div class="grid">
-    <jp-card title="Identity and measurements" headingLevel="h2"
+    <jp-card title="Players and ticket sales" headingLevel="h2"
       ><div class="row">
-        <jp-avatar name="Ada Lovelace" /><jp-avatar
-          name="Grace Hopper"
+        <jp-avatar name="Alex Morgan" /><jp-avatar
+          name="Jordan Davis"
           src="/missing-avatar.png"
         /><jp-avatar-group
-          label="Project reviewers"
+          label="Club reviewers"
           [people]="people"
           [max]="2"
-        /><jp-status-dot tone="success" label="Service online" />
+        /><jp-status-dot tone="success" label="Player online" />
       </div>
       <jp-divider decorative /><jp-description-list [items]="details" />
       <div class="measurement">
-        <span>Storage used: 68 GB of 100 GB</span
+        <span>Season ticket sales: 68 of 100 season tickets</span
         ><jp-meter
-          label="Storage used"
+          label="Season ticket sales"
           [value]="68"
-          valueText="68 GB of 100 GB"
+          valueText="68 of 100 season tickets"
         />
       </div>
       <div class="row">
-        <jp-spinner label="Refreshing reports" size="lg" /><span
-          >Refreshing reports</span
+        <jp-spinner label="Refreshing roster" size="lg" /><span
+          >Refreshing roster</span
         ><jp-icon name="check" label="Complete" size="lg" /></div
     ></jp-card>
-    <jp-card title="Navigation and content" headingLevel="h2"
+    <jp-card title="Club information" headingLevel="h2"
       ><div class="row">
         <a jpLink href="#preferences">Jump to preferences</a
         ><jp-keyboard-hint [keys]="['Control', 'K']" />
       </div>
-      <jp-accordion id="showcase-settings" label="Project settings"
-        ><jp-disclosure title="General settings"
-          ><p>Project name, owners, and environment.</p></jp-disclosure
-        ><jp-disclosure title="Advanced settings"
-          ><p>Timeouts, retries, and retention.</p></jp-disclosure
+      <jp-accordion id="showcase-settings" label="Club settings"
+        ><jp-disclosure title="Club settings"
+          ><p>Club name, coaches and squad.</p></jp-disclosure
+        ><jp-disclosure title="Club preferences"
+          ><p>Game alerts, score updates and roster records.</p></jp-disclosure
         ></jp-accordion
       ><jp-list [items]="services"
         ><ng-template jpListItem let-item
@@ -63,7 +63,7 @@
       ></jp-card
     >
   </div>
-  <jp-card title="Preferences form" headingLevel="h2"
+  <jp-card title="Club preferences" headingLevel="h2"
     ><form id="preferences" [formGroup]="form" (ngSubmit)="submit()">
       <jp-error-summary [errors]="errors()" />
       <jp-form-section
@@ -73,7 +73,7 @@
           #emailField
           controlId="expansion-email"
           label="Email"
-          hint="Use your work address."
+          hint="Use the coach's email address."
           [error]="emailError()"
           required
           ><jp-input
@@ -92,7 +92,7 @@
           [error]="submitted() && form.controls.password.invalid ? 'Enter a password.' : ''"
           required /><jp-form-field
           controlId="expansion-native"
-          label="Project key"
+          label="Club key"
           hint="A native control can also use the shared wrapper."
           ><input
             jpFieldControl
@@ -113,7 +113,7 @@
       </div>
       <jp-multi-select
         id="expansion-reviewers"
-        label="Reviewers"
+        label="Players"
         [options]="reviewers"
         formControlName="reviewers"
         hint="Search and select multiple reviewers."
@@ -129,14 +129,14 @@
   >
   <jp-card title="Search" headingLevel="h2"
     ><jp-search-field
-      label="Search projects"
+      label="Search clubs"
       [formControl]="search"
       placeholder="Search by name"
     />
     <p class="query">Query: {{ search.value || 'None' }}</p></jp-card
   >
   <jp-drawer
-    title="Project details"
+    title="Club details"
     [open]="drawerOpen()"
     (openChange)="drawerOpen.set($event)"
     ><jp-description-list [items]="details" /><jp-button

@@ -17,7 +17,7 @@ const meta: Meta<JpTooltip> = {
     },
   },
   args: {
-    content: 'Copy deployment ID',
+    content: 'Copy game ID',
     placement: 'top',
   },
   render: (args) => ({
@@ -44,7 +44,7 @@ export const TopInteractive: Story = {
     await userEvent.hover(host);
     await expect(host.classList.contains('jp-tooltip--open')).toBe(true);
     await expect(host.querySelector('[role="tooltip"]')?.textContent).toContain(
-      'Copy deployment ID',
+      'Copy game ID',
     );
   },
 };

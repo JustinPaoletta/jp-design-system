@@ -48,7 +48,7 @@ test.describe('showcase token theming', () => {
   test('uses default gold accent and default density when no data attributes are present', async ({
     page,
   }) => {
-    await expect(page.locator('h1')).toContainText('Assistant System');
+    await expect(page.locator('h1')).toContainText('Falcons assistant');
 
     await expect(page.locator('html')).not.toHaveAttribute(
       'data-jp-accent',

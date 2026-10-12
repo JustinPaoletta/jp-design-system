@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ProductRecipesPage } from './product-recipes.page';
 
-describe('Product recipe request recovery', () => {
+describe('Falcons recipe request recovery', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     TestBed.configureTestingModule({ imports: [ProductRecipesPage] });
@@ -37,7 +37,7 @@ describe('Product recipe request recovery', () => {
     page.refresh();
     page.refresh();
     jest.runOnlyPendingTimers();
-    expect(page.loadError()).toContain('Existing records');
+    expect(page.loadError()).toContain('Existing players');
     expect(page.records()).toEqual(records);
     page.refresh();
     jest.runOnlyPendingTimers();
@@ -65,15 +65,15 @@ describe('Product recipe request recovery', () => {
   it('resets paging on search/sort and calculates filtered pages', () => {
     const page = create().componentInstance;
     page.page.set(2);
-    page.setSearch('API');
+    page.setSearch('Alex');
     expect(page.page()).toBe(1);
     expect(page.visible()).toHaveLength(1);
     expect(page.filters()).toHaveLength(1);
     page.setSearch('');
     page.setSort({ key: 'name', direction: 'desc' });
-    expect(page.filtered()[0]['name']).toBe('Search index');
+    expect(page.filtered()[0]['name']).toBe('Taylor Reed');
     page.setSort({ key: 'name', direction: 'asc' });
-    expect(page.filtered()[0]['name']).toBe('Billing worker');
+    expect(page.filtered()[0]['name']).toBe('Alex Morgan');
     page.setSort(null);
     expect(page.filtered()).toEqual(page.records());
     expect(page.filters()).toEqual([]);

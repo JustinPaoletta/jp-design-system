@@ -74,9 +74,9 @@ const meta: Meta<JpInline> = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alpha Item</span>
-              <span class="jp-inline-story__item">Beta Item</span>
-              <span class="jp-inline-story__item">Gamma Item</span>
+              <span class="jp-inline-story__item">Alex Morgan</span>
+              <span class="jp-inline-story__item">Jordan Davis</span>
+              <span class="jp-inline-story__item">Maya Chen</span>
             </jp-inline>
           </div>
         </div>
@@ -191,9 +191,9 @@ export const WrapStress: Story = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alpha</span>
-              <span class="jp-inline-story__item">Beta</span>
-              <span class="jp-inline-story__item">Gamma</span>
+              <span class="jp-inline-story__item">Alex Morgan</span>
+              <span class="jp-inline-story__item">Jordan Davis</span>
+              <span class="jp-inline-story__item">Maya Chen</span>
               <span class="jp-inline-story__item">Delta</span>
               <span class="jp-inline-story__item">Epsilon</span>
               <span class="jp-inline-story__item">Zeta</span>
@@ -291,11 +291,11 @@ export const NoWrap: Story = {
             aria-label="Horizontally scrollable inline demo"
           >
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alpha Item</span>
-              <span class="jp-inline-story__item">Beta Item</span>
-              <span class="jp-inline-story__item">Gamma Item</span>
-              <span class="jp-inline-story__item">Delta Item</span>
-              <span class="jp-inline-story__item">Epsilon Item</span>
+              <span class="jp-inline-story__item">Alex Morgan</span>
+              <span class="jp-inline-story__item">Jordan Davis</span>
+              <span class="jp-inline-story__item">Maya Chen</span>
+              <span class="jp-inline-story__item">Casey Brooks</span>
+              <span class="jp-inline-story__item">Taylor Reed</span>
             </jp-inline>
           </div>
         </div>

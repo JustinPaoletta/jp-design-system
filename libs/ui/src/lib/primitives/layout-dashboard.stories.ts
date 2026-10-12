@@ -59,7 +59,7 @@ const meta: Meta = {
         <jp-stack gap="lg">
           <jp-stack gap="sm" class="jp-layout-dashboard-story__header">
             <jp-inline align="center" gap="sm">
-              <jp-heading as="h1">Layout Dashboard</jp-heading>
+              <jp-heading as="h1">Game overview</jp-heading>
               <span class="jp-layout-dashboard-story__accent-badge">
                 {{ documentAccent }}
               </span>
@@ -75,22 +75,22 @@ const meta: Meta = {
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Active sessions</jp-text>
+                <jp-text as="small" tone="muted">Runs scored</jp-text>
                 <jp-text size="body-lg">
-                  <span class="jp-layout-dashboard-story__accent-value">1,284</span>
+                  <span class="jp-layout-dashboard-story__accent-value">5</span>
                 </jp-text>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Error rate</jp-text>
-                <jp-text size="body-lg">0.14%</jp-text>
+                <jp-text as="small" tone="muted">Hits</jp-text>
+                <jp-text size="body-lg">9</jp-text>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Avg response</jp-text>
-                <jp-text size="body-lg">182ms</jp-text>
+                <jp-text as="small" tone="muted">Errors</jp-text>
+                <jp-text size="body-lg">0</jp-text>
               </jp-stack>
             </jp-surface>
           </jp-grid>
@@ -100,9 +100,9 @@ const meta: Meta = {
               <jp-stack gap="sm">
                 <jp-heading as="h2">Activity</jp-heading>
                 <jp-stack gap="xs">
-                  <jp-text tone="secondary">Design token sync completed</jp-text>
-                  <jp-text tone="secondary">Storybook interaction checks passing</jp-text>
-                  <jp-text tone="secondary">Showcase route composed with primitives</jp-text>
+                  <jp-text tone="secondary">Game report saved</jp-text>
+                  <jp-text tone="secondary">League lineup approved</jp-text>
+                  <jp-text tone="secondary">Riverton Falcons club dashboard</jp-text>
                 </jp-stack>
               </jp-stack>
             </jp-surface>
@@ -110,7 +110,7 @@ const meta: Meta = {
               <jp-stack gap="sm">
                 <jp-heading as="h2">Insights</jp-heading>
                 <jp-text tone="secondary">
-                  Component APIs are token-only and semantic-first.
+                  The Falcons scored five runs on nine hits with no errors.
                 </jp-text>
               </jp-stack>
             </jp-surface>
@@ -118,14 +118,14 @@ const meta: Meta = {
 
           <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
             <jp-stack gap="sm">
-              <jp-heading as="h2">Recent Events</jp-heading>
+              <jp-heading as="h2">Recent games</jp-heading>
               <jp-stack gap="xs">
                 <jp-inline justify="between">
-                  <jp-text>Grid min-column tokens added</jp-text>
+                  <jp-text>Starting lineup confirmed</jp-text>
                   <jp-text as="small" tone="muted">10m ago</jp-text>
                 </jp-inline>
                 <jp-inline justify="between">
-                  <jp-text>Legacy lib-ui marked deprecated</jp-text>
+                  <jp-text>Last season archived</jp-text>
                   <jp-text as="small" tone="muted">22m ago</jp-text>
                 </jp-inline>
                 <jp-inline justify="between">

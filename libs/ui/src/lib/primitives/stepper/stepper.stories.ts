@@ -5,14 +5,14 @@ const meta: Meta<JpStepper> = {
   component: JpStepper,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Project setup',
+    label: 'Club registration',
     currentId: 'details',
     steps: [
-      { id: 'intro', label: 'Workspace', state: 'complete' },
+      { id: 'intro', label: 'Clubhouse', state: 'complete' },
       {
         id: 'details',
         label: 'Details',
-        description: 'Name and notification email',
+        description: 'Club name and coach email',
       },
       { id: 'review', label: 'Review' },
     ],
@@ -25,7 +25,7 @@ export const Navigable: Story = { args: { navigable: true } };
 export const Error: Story = {
   args: {
     steps: [
-      { id: 'intro', label: 'Workspace', state: 'complete' },
+      { id: 'intro', label: 'Clubhouse', state: 'complete' },
       {
         id: 'details',
         label: 'Details',

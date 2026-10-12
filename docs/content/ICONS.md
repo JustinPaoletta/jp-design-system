@@ -24,7 +24,7 @@ library scale. Colors come from `currentColor` and semantic parent tokens.
   Add service
 </jp-button>
 
-<jp-icon-button ariaLabel="Search services">
+<jp-icon-button ariaLabel="Search players">
   <jp-icon name="search" />
 </jp-icon-button>
 ```

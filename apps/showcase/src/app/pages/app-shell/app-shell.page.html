@@ -1,40 +1,41 @@
 <div class="dashboard-topbar">
-  <span>Workspace / Overview</span
+  <span>Falcons / Game day</span
   ><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span>
 </div>
 <section class="dashboard" aria-labelledby="overview-title">
   <header class="dashboard-heading">
     <div>
-      <h1 id="overview-title">Overview</h1>
-      <p>Application performance at a glance.</p>
+      <h1 id="overview-title">Game day</h1>
+      <p>Riverton Falcons vs. Lakeview Bears.</p>
     </div>
-    <span class="dashboard-period">Today</span>
+    <span class="dashboard-period">Final · 9 innings</span>
   </header>
   <dl class="dashboard-metrics">
     <div>
-      <dt>Active sessions</dt>
-      <dd>1,284</dd>
+      <dt>Runs scored</dt>
+      <dd>5</dd>
     </div>
     <div>
-      <dt>Error rate</dt>
-      <dd>0.14%</dd>
+      <dt>Hits</dt>
+      <dd>9</dd>
     </div>
     <div>
-      <dt>Avg response</dt>
-      <dd>182 ms</dd>
+      <dt>Errors</dt>
+      <dd>0</dd>
     </div>
   </dl>
   <div class="dashboard-panels">
     <section class="dashboard-panel">
       <jp-chart
         id="overview-sessions"
-        label="Session activity"
-        description="Today"
+        label="Runs by inning"
+        description="Falcons 5 (solid), Bears 3 (dashed). Final score."
         type="line"
         [controlsCollapsed]="true"
         [labels]="sessionLabels"
         [series]="sessionSeries"
-        [activeIndex]="7"
+        [activeIndex]="8"
+        [formatOptions]="{ maximumFractionDigits: 0 }"
         style="--jp-chart-plot-height: 14rem"
       ></jp-chart>
     </section>
@@ -43,29 +44,29 @@
       <ol class="dashboard-activity">
         <li>
           <span class="dashboard-dot" aria-hidden="true"></span
-          ><time>18:24</time><span>Traffic pattern reviewed</span>
+          ><time>21:10</time><span>Final score recorded</span>
         </li>
         <li>
           <span class="dashboard-dot" aria-hidden="true"></span
-          ><time>18:18</time><span>Response check completed</span>
+          ><time>21:06</time><span>Maya Chen made the final out</span>
         </li>
         <li>
           <span class="dashboard-dot" aria-hidden="true"></span
-          ><time>18:12</time><span>Health check passed</span>
+          ><time>21:02</time><span>Casey Brooks scored a run</span>
         </li>
         <li>
           <span
             class="dashboard-dot dashboard-dot-neutral"
             aria-hidden="true"
           ></span
-          ><time>18:06</time><span>Session snapshot recorded</span>
+          ><time>20:58</time><span>Jordan Davis drove in a run</span>
         </li>
         <li>
           <span
             class="dashboard-dot dashboard-dot-warning"
             aria-hidden="true"
           ></span
-          ><time>18:00</time><span>Error summary updated</span>
+          ><time>20:54</time><span>Alex Morgan hit a single</span>
         </li>
       </ol>
     </section>
@@ -74,16 +75,14 @@
     <h2>Insights</h2>
     <div class="dashboard-insights">
       <div>
-        <h3>Session volume is steady.</h3>
-        <p>
-          Active sessions remain within a consistent range throughout today.
-        </p>
+        <h3>The Falcons win 5–3.</h3>
+        <p>The Falcons scored five runs on nine hits with no errors.</p>
       </div>
       <div>
-        <h3>Response times remain consistent.</h3>
-        <p>Average response times are stable with low error volume.</p>
+        <h3>Next game: October 12.</h3>
+        <p>The Falcons host the Bears at 18:30 at Riverton Field.</p>
       </div>
-      <small class="dashboard-updated">Updated 18:30<br />Oct 11, 2026</small>
+      <small class="dashboard-updated">Updated 21:10<br />Oct 11, 2026</small>
     </div>
   </section>
 </section>

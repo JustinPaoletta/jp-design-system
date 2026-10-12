@@ -6,11 +6,11 @@ const meta: Meta<JpOverflowChip> = {
   component: JpOverflowChip,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Other reviewers',
+    label: 'Other players',
     items: [
-      { id: 'ada', label: 'Ada Lovelace', href: '#reviewer-ada' },
-      { id: 'grace', label: 'Grace Hopper' },
-      { id: 'linus', label: 'Linus Torvalds' },
+      { id: 'ada', label: 'Alex Morgan', href: '#reviewer-ada' },
+      { id: 'grace', label: 'Jordan Davis' },
+      { id: 'linus', label: 'Maya Chen' },
     ],
   },
 };
@@ -22,11 +22,11 @@ export const Open: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     const button = c.getByRole('button', {
-      name: 'Show 3 more items: Other reviewers',
+      name: 'Show 3 more items: Other players',
     });
     await userEvent.click(button);
     await expect(button).toHaveAttribute('aria-expanded', 'true');
-    await expect(c.getByRole('link', { name: 'Ada Lovelace' })).toBeVisible();
+    await expect(c.getByRole('link', { name: 'Alex Morgan' })).toBeVisible();
     await userEvent.keyboard('{Escape}');
     await expect(button).toHaveAttribute('aria-expanded', 'false');
   },

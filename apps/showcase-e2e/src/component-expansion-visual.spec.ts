@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/component-expansion');
   await expect(
-    page.getByRole('heading', { name: 'Component expansion', exact: true }),
+    page.getByRole('heading', { name: 'Clubhouse components', exact: true }),
   ).toBeVisible();
 });
 
@@ -49,7 +49,7 @@ test('component expansion visual drawer desktop', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.getByRole('button', { name: 'Open details' }).click();
   await expect(
-    page.getByRole('dialog', { name: 'Project details' }),
+    page.getByRole('dialog', { name: 'Club details' }),
   ).toBeVisible();
   await expect(page).toHaveScreenshot('components-drawer-desktop.png', {
     animations: 'disabled',
@@ -64,7 +64,7 @@ test('component expansion visual drawer mobile rtl', async ({ page }) => {
   );
   await page.getByRole('button', { name: 'Open details' }).click();
   await expect(
-    page.getByRole('dialog', { name: 'Project details' }),
+    page.getByRole('dialog', { name: 'Club details' }),
   ).toBeVisible();
   await expect(page).toHaveScreenshot('components-drawer-mobile-rtl.png', {
     animations: 'disabled',

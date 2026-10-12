@@ -10,7 +10,7 @@ describe('DataPerformancePage', () => {
     f.componentInstance.sort.set({ key: 'requests', direction: 'desc' });
     expect(f.componentInstance.rows()[0].id).toBe('service-10000');
     f.componentInstance.sort.set({ key: 'name', direction: 'asc' });
-    expect(f.componentInstance.rows()[0].name).toBe('Service 00001');
+    expect(f.componentInstance.rows()[0].name).toBe('Player 00001');
     f.componentInstance.selected.set(['service-1']);
     expect(f.componentInstance.selected()).toEqual(['service-1']);
   });

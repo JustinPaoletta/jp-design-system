@@ -6,7 +6,7 @@ const meta: Meta<JpSearchField> = {
   title: 'Primitives/Controls/Search Field',
   component: JpSearchField,
   parameters: { layout: 'padded' },
-  args: { label: 'Search projects', placeholder: 'Search by name' },
+  args: { label: 'Search clubs', placeholder: 'Search by name' },
 };
 export default meta;
 type Story = StoryObj<JpSearchField>;

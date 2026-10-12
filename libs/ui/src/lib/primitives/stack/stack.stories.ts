@@ -57,9 +57,9 @@ const meta: Meta<JpStack> = {
         </div>
         <div class="jp-stack-story__viewport">
           <jp-stack [as]="asTag" [gap]="gap" [align]="align" [justify]="justify">
-            <div class="jp-stack-story__item">Item A</div>
-            <div class="jp-stack-story__item">Item B</div>
-            <div class="jp-stack-story__item">Item C</div>
+            <div class="jp-stack-story__item">Warm up</div>
+            <div class="jp-stack-story__item">Batting practice</div>
+            <div class="jp-stack-story__item">Pitching practice</div>
           </jp-stack>
         </div>
       </div>

@@ -16,7 +16,7 @@ import { JpPopover, JpPopoverContent, JpPopoverTrigger } from './popover';
         Filters
       </jp-button>
       <div jpPopoverContent>
-        <jp-text>Filter panel content</jp-text>
+        <jp-text>Choose a squad and player position.</jp-text>
       </div>
     </jp-popover>
   `,
@@ -67,7 +67,9 @@ export const PanelOpen: Story = {
     const trigger = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(trigger);
     const content = canvasElement.querySelector('[jppopovercontent]');
-    await expect(content?.textContent).toContain('Filter panel content');
+    await expect(content?.textContent).toContain(
+      'Choose a squad and player position.',
+    );
   },
 };
 
@@ -88,7 +90,7 @@ export const ViewportEdge: Story = {
 export const NestedPanels: Story = {
   render: () => ({
     props: { outer: false, inner: false },
-    template: `<jp-popover [open]="outer" (openChange)="outer = $event"><button type="button" jpPopoverTrigger>Open parent</button><div jpPopoverContent><p>Escape closes the child first.</p><jp-popover [open]="inner" (openChange)="inner = $event"><button type="button" jpPopoverTrigger>Open child</button><div jpPopoverContent>Child panel</div></jp-popover></div></jp-popover>`,
+    template: `<jp-popover [open]="outer" (openChange)="outer = $event"><button type="button" jpPopoverTrigger>Open roster</button><div jpPopoverContent><p>Escape closes the child first.</p><jp-popover [open]="inner" (openChange)="inner = $event"><button type="button" jpPopoverTrigger>Open player details</button><div jpPopoverContent>Alex Morgan starts at pitcher.</div></jp-popover></div></jp-popover>`,
   }),
   play: async ({ canvasElement }) => {
     const triggers = canvasElement.querySelectorAll('[jppopovertrigger]');

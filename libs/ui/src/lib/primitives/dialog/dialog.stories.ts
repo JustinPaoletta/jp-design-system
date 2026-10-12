@@ -31,7 +31,7 @@ import { JpDialog, JpDialogActions } from './dialog';
 })
 class DialogStoryHost {
   @Input() open = false;
-  @Input() title = 'Delete deployment?';
+  @Input() title = 'Remove player?';
 }
 
 const meta: Meta<DialogStoryHost> = {
@@ -50,7 +50,7 @@ const meta: Meta<DialogStoryHost> = {
   },
   args: {
     open: false,
-    title: 'Delete deployment?',
+    title: 'Remove player?',
   },
   decorators: [
     moduleMetadata({

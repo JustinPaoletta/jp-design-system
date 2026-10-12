@@ -30,12 +30,12 @@ for (const failure of ['missing', 'throws'] as const) {
       page,
     }) => {
       const opener = page.getByRole('button', {
-        name: 'Delete deployment',
+        name: 'Remove player',
         exact: true,
       });
       await opener.focus();
       await opener.press('Enter');
-      const dialog = page.getByRole('dialog', { name: 'Delete deployment?' });
+      const dialog = page.getByRole('dialog', { name: 'Remove player?' });
       await expect(dialog).toBeVisible();
       expect(
         await dialog.evaluate((element) => element.matches(':modal')),
@@ -96,7 +96,7 @@ for (const failure of ['missing', 'throws'] as const) {
       const panel = page.locator('[jppopovercontent]');
       await expect(panel).toBeVisible();
       await expect(panel).not.toHaveAttribute('popover');
-      await page.getByRole('heading', { name: 'Feedback & Overlays' }).click();
+      await page.getByRole('heading', { name: 'Club alerts' }).click();
       await expect(panel).toBeHidden();
       await opener.click();
       await expect(panel).toBeVisible();

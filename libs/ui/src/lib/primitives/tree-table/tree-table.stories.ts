@@ -6,43 +6,43 @@ import { JpTreeTable, type JpTreeTableRow } from './tree-table';
 const rows: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: 'Website launch',
-    cells: { owner: 'Product', hours: 72 },
+    label: 'Season preparation',
+    cells: { owner: 'Sam Rivera', hours: 72 },
     children: [
       {
         key: 'design',
-        label: 'Design',
-        cells: { owner: 'Avery', hours: 32 },
+        label: 'Batting drills',
+        cells: { owner: 'Casey Brooks', hours: 32 },
         children: [
           {
             key: 'landing',
-            label: 'Landing page',
-            cells: { owner: 'Avery', hours: 12 },
+            label: 'Batting order',
+            cells: { owner: 'Casey Brooks', hours: 12 },
           },
         ],
       },
       {
         key: 'engineering',
-        label: 'Engineering',
-        cells: { owner: 'Sam', hours: 40 },
+        label: 'Pitching drills',
+        cells: { owner: 'Sam Rivera', hours: 40 },
       },
     ],
   },
   {
     key: 'mobile',
-    label: 'Mobile refresh',
-    cells: { owner: 'Platform', hours: 48 },
+    label: 'Fielding drills',
+    cells: { owner: 'Sam Rivera', hours: 48 },
   },
   {
     key: 'archive',
-    label: 'Archived project',
-    cells: { owner: 'Platform', hours: 0 },
+    label: 'Previous season',
+    cells: { owner: 'Sam Rivera', hours: 0 },
     disabled: true,
   },
 ];
 const columns = [
-  { key: 'owner', header: 'Owner' },
-  { key: 'hours', header: 'Hours', align: 'end' as const },
+  { key: 'owner', header: 'Lead' },
+  { key: 'hours', header: 'Minutes', align: 'end' as const },
 ];
 @Component({
   selector: 'jp-tree-table-story',
@@ -51,8 +51,8 @@ const columns = [
   template: `
     <jp-tree-table
       id="story-projects"
-      caption="Project work"
-      nameHeader="Task"
+      caption="Practice plan"
+      nameHeader="Drill"
       [rows]="rows"
       [columns]="columns"
       selectable
@@ -61,7 +61,7 @@ const columns = [
       [selectedKeys]="selected()"
       (selectedKeysChange)="selected.set($event)"
     />
-    <p role="status">{{ selected().length }} project rows selected</p>
+    <p role="status">Selected drills: {{ selected().length }}</p>
   `,
 })
 class TreeTableStory {
@@ -77,8 +77,8 @@ const meta: Meta<JpTreeTable> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'tree-table-states',
-    caption: 'Project work',
-    nameHeader: 'Task',
+    caption: 'Practice plan',
+    nameHeader: 'Drill',
     rows,
     columns,
   },
@@ -90,30 +90,30 @@ export const ProjectBreakdown: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Website launch' }),
+      canvas.getByRole('button', { name: 'Expand Season preparation' }),
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Design' }),
+      canvas.getByRole('button', { name: 'Expand Batting drills' }),
     );
     await expect(
       canvas.getByRole('rowheader', {
-        name: 'Website launch / Design / Landing page',
+        name: 'Season preparation / Batting drills / Batting order',
       }),
     ).toBeVisible();
     await userEvent.click(
-      canvas.getByRole('checkbox', { name: 'Select Landing page' }),
+      canvas.getByRole('checkbox', { name: 'Select Batting order' }),
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Collapse Website launch' }),
+      canvas.getByRole('button', { name: 'Collapse Season preparation' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent(
-      '1 project rows selected',
+      'Selected drills: 1',
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Website launch' }),
+      canvas.getByRole('button', { name: 'Expand Season preparation' }),
     );
     await expect(
-      canvas.getByRole('checkbox', { name: 'Select Landing page' }),
+      canvas.getByRole('checkbox', { name: 'Select Batting order' }),
     ).toBeChecked();
   },
 };

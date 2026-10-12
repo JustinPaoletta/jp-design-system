@@ -49,7 +49,7 @@ const meta: Meta<NavItemStoryArgs> = {
     href: '/overview',
     active: false,
     disabled: false,
-    label: 'Overview',
+    label: 'Game day',
   },
   argTypes: {
     as: {
@@ -87,7 +87,7 @@ export const Active: Story = {
 
 export const FocusVisible: Story = {
   args: {
-    label: 'Settings',
+    label: 'Club settings',
     href: '/settings',
   },
   play: async ({ canvasElement }) => {
@@ -102,7 +102,7 @@ export const FocusVisible: Story = {
 export const AsButton: Story = {
   args: {
     as: 'button',
-    label: 'Activity',
+    label: 'Game log',
   },
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.jp-app-shell-nav-item__root');
@@ -114,7 +114,7 @@ export const Disabled: Story = {
   args: {
     as: 'button',
     disabled: true,
-    label: 'Demo as button',
+    label: 'Open roster',
   },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector(
@@ -132,7 +132,7 @@ export const Disabled: Story = {
 export const WithIcon: Story = {
   args: {
     active: true,
-    label: 'Overview',
+    label: 'Game day',
   },
   render: (args) => ({
     props: { ...args, asTag: args.as },
@@ -169,7 +169,7 @@ export const WithIcon: Story = {
 export const CollapsedRail: Story = {
   args: {
     active: true,
-    label: 'Overview',
+    label: 'Game day',
   },
   render: (args) => ({
     props: { ...args, asTag: args.as },
@@ -194,6 +194,6 @@ export const CollapsedRail: Story = {
   play: async ({ canvasElement }) => {
     // Label stays in the accessible tree even when visually collapsed.
     const label = canvasElement.querySelector('.jp-app-shell-nav-item__label');
-    await expect(label?.textContent?.trim()).toBe('Overview');
+    await expect(label?.textContent?.trim()).toBe('Game day');
   },
 };

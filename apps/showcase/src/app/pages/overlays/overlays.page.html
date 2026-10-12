@@ -1,7 +1,7 @@
 <jp-box padding="lg" maxWidth="wide">
   <jp-stack gap="lg">
     <jp-stack gap="xs">
-      <jp-heading as="h1">Feedback & Overlays</jp-heading>
+      <jp-heading as="h1">Club alerts</jp-heading>
       <jp-text tone="secondary"
         >Tooltip, toast, dialog, popover, and dropdown inside the app
         shell.</jp-text
@@ -16,7 +16,7 @@
       <jp-stack gap="md">
         <jp-heading as="h2">Tooltip</jp-heading>
         <jp-inline gap="sm" wrap="true">
-          <jp-tooltip content="Copy deployment ID" placement="top">
+          <jp-tooltip content="Copy game ID" placement="top">
             <jp-button variant="secondary" type="button">Copy ID</jp-button>
           </jp-tooltip>
           <jp-tooltip content="Opens documentation" placement="bottom">
@@ -70,7 +70,7 @@
             type="button"
             (click)="dialogOpen = true"
           >
-            Delete deployment
+            Remove player
           </jp-button>
 
           <jp-dropdown-menu [open]="menuOpen" (openChange)="menuOpen = $event">
@@ -99,9 +99,9 @@
             </jp-button>
             <div jpPopoverContent>
               <jp-stack gap="sm">
-                <jp-text weight="semibold">Environment filters</jp-text>
+                <jp-text weight="semibold">Squad filters</jp-text>
                 <jp-text tone="secondary"
-                  >Production, staging, and preview.</jp-text
+                  >Varsity, reserve and tryout squads.</jp-text
                 >
               </jp-stack>
             </div>
@@ -116,11 +116,11 @@
 
 <jp-dialog
   [open]="dialogOpen"
-  title="Delete deployment?"
+  title="Remove player?"
   (openChange)="dialogOpen = $event"
 >
   <jp-text
-    >This removes the selected deployment record. This cannot be
+    >This removes the selected player from the roster. This cannot be
     undone.</jp-text
   >
   <div jpDialogActions>

@@ -24,13 +24,13 @@ const meta: Meta<JpSchedulingCalendar> = {
       },
       {
         id: 'review',
-        title: 'Design review',
+        title: 'Batting practice',
         start: '2026-10-05T09:30:00Z',
         end: '2026-10-05T11:00:00Z',
       },
       {
         id: 'release',
-        title: 'Release window',
+        title: 'Away series',
         start: '2026-10-06',
         end: '2026-10-08',
         allDay: true,
@@ -61,7 +61,7 @@ export const Empty: Story = {
 };
 export const Loading: Story = { args: { loading: true } };
 export const Error: Story = {
-  args: { error: 'Appointments unavailable. Try again.' },
+  args: { error: 'Club events are unavailable. Try again.' },
 };
 export const ClockChange: Story = {
   args: {

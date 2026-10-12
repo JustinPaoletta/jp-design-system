@@ -131,27 +131,27 @@ export const Scale: Story = {
       <div class="jp-heading-story__scale">
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h1</div>
-          <jp-heading as="h1">The quick brown fox</jp-heading>
+          <jp-heading as="h1">Riverton Falcons game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h2</div>
-          <jp-heading as="h2">The quick brown fox</jp-heading>
+          <jp-heading as="h2">Riverton Falcons game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h3</div>
-          <jp-heading as="h3">The quick brown fox</jp-heading>
+          <jp-heading as="h3">Riverton Falcons game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h4</div>
-          <jp-heading as="h4">The quick brown fox</jp-heading>
+          <jp-heading as="h4">Riverton Falcons game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h5</div>
-          <jp-heading as="h5">The quick brown fox</jp-heading>
+          <jp-heading as="h5">Riverton Falcons game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h6</div>
-          <jp-heading as="h6">The quick brown fox</jp-heading>
+          <jp-heading as="h6">Riverton Falcons game day</jp-heading>
         </div>
       </div>
     `,
@@ -182,10 +182,10 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-heading-story__tones">
-        <jp-heading as="h3" tone="primary">Primary heading</jp-heading>
-        <jp-heading as="h3" tone="secondary">Secondary heading</jp-heading>
-        <jp-heading as="h3" tone="muted">Muted heading</jp-heading>
-        <jp-heading as="h3" tone="disabled">Disabled heading</jp-heading>
+        <jp-heading as="h3" tone="primary">Falcons game day</jp-heading>
+        <jp-heading as="h3" tone="secondary">Starting lineup</jp-heading>
+        <jp-heading as="h3" tone="muted">Game notes</jp-heading>
+        <jp-heading as="h3" tone="disabled">Previous season</jp-heading>
       </div>
     `,
   }),

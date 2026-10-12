@@ -31,7 +31,7 @@ type ChipStoryArgs = {
   `,
 })
 class ChipStoryHost {
-  readonly labels = signal(['Healthy', 'Staging', 'Preview']);
+  readonly labels = signal(['Available', 'Reserve', 'Tryout']);
 
   remove(label: string): void {
     this.labels.update((current) => current.filter((item) => item !== label));
@@ -62,7 +62,7 @@ const meta: Meta<ChipStoryArgs> = {
     },
   },
   args: {
-    label: 'Healthy',
+    label: 'Available',
     size: 'md',
     disabled: false,
   },
@@ -80,34 +80,34 @@ type Story = StoryObj<ChipStoryArgs>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
-    await expect(button?.getAttribute('aria-label')).toBe('Remove Healthy');
+    await expect(button?.getAttribute('aria-label')).toBe('Remove Available');
     await expect(button?.getAttribute('type')).toBe('button');
   },
 };
 
 export const Small: Story = {
-  args: { size: 'sm', label: 'Staging' },
+  args: { size: 'sm', label: 'Reserve' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-chip');
     await expect(host?.classList.contains('jp-chip--sm')).toBe(true);
     await expect(
       canvasElement.querySelector('button')?.getAttribute('aria-label'),
-    ).toBe('Remove Staging');
+    ).toBe('Remove Reserve');
   },
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, label: 'Preview' },
+  args: { disabled: true, label: 'Tryout' },
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
     await expect(button?.disabled).toBe(true);
-    await expect(button?.getAttribute('aria-label')).toBe('Remove Preview');
+    await expect(button?.getAttribute('aria-label')).toBe('Remove Tryout');
   },
 };
 
 export const LongLabel: Story = {
   args: {
-    label: 'Production region with a long filter label that truncates',
+    label: 'Starting pitcher for the Riverton Falcons varsity squad',
   },
 };
 
@@ -126,6 +126,6 @@ export const FilterGroup: Story = {
     await expect(canvasElement.querySelectorAll('jp-chip').length).toBe(2);
     await expect(
       canvasElement.querySelector('button')?.getAttribute('aria-label'),
-    ).toBe('Remove Staging');
+    ).toBe('Remove Reserve');
   },
 };

@@ -56,7 +56,7 @@ describe('InteractionToolsPage', () => {
     ]);
     expect(
       fixture.nativeElement.querySelector('jp-reorder li').textContent,
-    ).toContain('Accessibility audit');
+    ).toContain('Inspect the field');
     expect(localStorage.getItem('jp-demo-priorities-v1')).toBeNull();
   });
   it.each([JSON.stringify({ order: ['docs'] }), JSON.stringify(['docs', 3])])(
@@ -73,7 +73,7 @@ describe('InteractionToolsPage', () => {
       ]);
       expect(
         fixture.nativeElement.querySelector('jp-reorder li').textContent,
-      ).toContain('Accessibility audit');
+      ).toContain('Inspect the field');
     },
   );
   it('uses the current session if storage cannot be read, without preventing reordering', () => {
@@ -97,7 +97,7 @@ describe('InteractionToolsPage', () => {
       'feedback',
     ]);
     expect(root.querySelectorAll('jp-reorder li')[1].textContent).toContain(
-      'Accessibility audit',
+      'Inspect the field',
     );
   });
   it('commits click reordering and resets through page controls even if saving is denied', () => {
@@ -133,7 +133,7 @@ describe('InteractionToolsPage', () => {
       'feedback',
     ]);
     expect(root.querySelector('jp-reorder li')?.textContent).toContain(
-      'Accessibility audit',
+      'Inspect the field',
     );
   });
   it('connects carousel navigation, card actions, and note editing to consumer state', () => {
@@ -149,7 +149,7 @@ describe('InteractionToolsPage', () => {
       if (!element) throw new Error('Expected card control: ' + name);
       return element;
     };
-    button('Open invitations').click();
+    button('Open club invitations').click();
     fixture.detectChanges();
     expect(root.querySelector('jp-carousel + p')?.textContent).toContain(
       'Invitations opened',
@@ -168,7 +168,7 @@ describe('InteractionToolsPage', () => {
     button('Next slide').click();
     fixture.detectChanges();
     expect(fixture.componentInstance.slide()).toBe(2);
-    button('Schedule a review').click();
+    button('Schedule practice').click();
     fixture.detectChanges();
     expect(root.querySelector('jp-carousel + p')?.textContent).toContain(
       'Review scheduled',

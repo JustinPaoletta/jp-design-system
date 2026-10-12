@@ -98,12 +98,12 @@ const meta: Meta<AppShellStoryArgs> = {
         <main jpAppShellMain>
           <jp-box padding="lg" maxWidth="wide">
             <jp-stack gap="md">
-              <jp-heading as="h2">Main content</jp-heading>
+              <jp-heading as="h2">Game day</jp-heading>
               <jp-text tone="secondary">
                 Shell layout with sidebar collapse and mobile drawer.
               </jp-text>
               <jp-surface tone="raised" padding="md">
-                <jp-text>Projected main region using existing layout primitives.</jp-text>
+                <jp-text>The Falcons won 5–3 against the Bears. View the roster and next game.</jp-text>
               </jp-surface>
             </jp-stack>
           </jp-box>

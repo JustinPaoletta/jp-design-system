@@ -7,7 +7,7 @@ const meta: Meta<JpCheckboxGroup> = {
   component: JpCheckboxGroup,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Notifications',
+    label: 'Club messages',
     options: [
       { value: 'email', label: 'Email' },
       { value: 'sms', label: 'SMS' },

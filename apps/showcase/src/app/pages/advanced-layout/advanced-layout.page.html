@@ -1,11 +1,11 @@
 <div class="page">
   <jp-page-header
-    title="Advanced layout and data"
-    description="Adjustable workspaces, saved table preferences, and resilient images."
+    title="Club roster workspace"
+    description="Review player profiles and save your roster table preferences."
   >
-    <a jpPageActions jpLink routerLink="/workflows">Everyday workflows</a>
+    <a jpPageActions jpLink routerLink="/workflows">Club operations</a>
   </jp-page-header>
-  <jp-card title="Service workspace">
+  <jp-card title="Player workspace">
     <div class="actions">
       <jp-button variant="secondary" (click)="reset()"
         >Reset preferences</jp-button
@@ -25,8 +25,8 @@
     <jp-split-pane
       #workspace
       id="service-workspace"
-      primaryLabel="Service overview"
-      secondaryLabel="Service inventory"
+      primaryLabel="Player profile"
+      secondaryLabel="League player roster"
       [size]="size()"
       (sizeChange)="resize($event)"
       [collapsed]="collapsed()"
@@ -35,11 +35,11 @@
       [max]="70"
     >
       <div jpSplitPrimary class="overview">
-        <h2>Service overview</h2>
+        <h2>Player profile</h2>
         <jp-media
           [src]="mediaSource()"
-          alt="Diagram of the service architecture"
-          caption="An original illustration for the service workspace."
+          alt="Diagram of the practice stations"
+          caption="An original illustration for the practice plan."
         />
         <jp-button
           variant="secondary"
@@ -48,15 +48,15 @@
           'Restore image' }}</jp-button
         >
         <p>
-          16 services across two regions. Expand a row to inspect its owner and
-          review its deployment.
+          Review 16 player records. Expand a row to inspect the coach and latest
+          game notes.
         </p>
       </div>
       <div jpSplitSecondary class="inventory">
-        <h2>Service inventory</h2>
+        <h2>League player roster</h2>
         <jp-table
           id="service-inventory"
-          caption="Services"
+          caption="Players"
           [columns]="columns"
           [rows]="rows"
           rowKey="id"
@@ -84,7 +84,7 @@
               <jp-button
                 variant="secondary"
                 (click)="detailAction.set('Reviewed ' + row.name)"
-                >Review deployment</jp-button
+                >Review game</jp-button
               >
             </div>
           </ng-template>

@@ -20,40 +20,40 @@ import {
 export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
   {
     key: 'brand',
-    label: 'Brand assets',
+    label: 'Club documents',
     children: [
       {
         key: 'logos',
-        label: 'Logos',
+        label: 'Lineup sheets',
         children: [
           {
             key: 'wordmark',
-            label: 'Wordmark.svg',
-            description: 'Primary wordmark, vector file',
+            label: 'Lineup.svg',
+            description: 'Starting lineup, vector file',
           },
-          { key: 'symbol', label: 'Symbol.svg' },
+          { key: 'symbol', label: 'Field.svg' },
         ],
       },
-      { key: 'typography', label: 'Typography.pdf' },
+      { key: 'typography', label: 'Club-rules.pdf' },
     ],
   },
   {
     key: 'product',
-    label: 'Product assets',
+    label: 'Game documents',
     children: [
-      { key: 'icons', label: 'Icons.svg' },
-      { key: 'illustrations', label: 'Illustrations.svg' },
+      { key: 'icons', label: 'Field-positions.svg' },
+      { key: 'illustrations', label: 'Field-diagram.svg' },
     ],
   },
   {
     key: 'shared',
-    label: 'Shared library',
+    label: 'Training guides',
     hasChildren: true,
     loadState: 'idle',
   },
   {
     key: 'archived',
-    label: 'Archived assets',
+    label: 'Previous season',
     disabled: true,
     description: 'Access is restricted',
   },
@@ -62,55 +62,55 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
 export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: 'Website launch',
-    cells: { owner: 'Product', status: 'In progress', hours: 72 },
+    label: 'Season preparation',
+    cells: { owner: 'Sam Rivera', status: 'In training', hours: 72 },
     children: [
       {
         key: 'design',
-        label: 'Design',
-        cells: { owner: 'Avery', status: 'In review', hours: 32 },
+        label: 'Batting drills',
+        cells: { owner: 'Casey Brooks', status: 'Coach review', hours: 32 },
         children: [
           {
             key: 'landing',
-            label: 'Landing page',
-            cells: { owner: 'Avery', status: 'Done', hours: 12 },
+            label: 'Batting order',
+            cells: { owner: 'Casey Brooks', status: 'Done', hours: 12 },
           },
           {
             key: 'checkout',
             label: 'Checkout',
-            cells: { owner: 'Morgan', status: 'In review', hours: 20 },
+            cells: { owner: 'Alex Morgan', status: 'Coach review', hours: 20 },
           },
         ],
       },
       {
         key: 'engineering',
-        label: 'Engineering',
-        cells: { owner: 'Sam', status: 'In progress', hours: 40 },
+        label: 'Pitching drills',
+        cells: { owner: 'Sam Rivera', status: 'In training', hours: 40 },
       },
     ],
   },
   {
     key: 'mobile',
-    label: 'Mobile refresh',
-    cells: { owner: 'Platform', status: 'Planned', hours: 48 },
+    label: 'Fielding drills',
+    cells: { owner: 'Sam Rivera', status: 'Planned', hours: 48 },
     children: [
       {
         key: 'navigation',
         label: 'Navigation',
-        cells: { owner: 'Jordan', status: 'Planned', hours: 24 },
+        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
       },
       {
         key: 'settings',
         label: 'Settings',
-        cells: { owner: 'Jordan', status: 'Planned', hours: 24 },
+        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
       },
     ],
   },
   {
     key: 'legacy',
-    label: 'Legacy migration',
+    label: 'Last season review',
     disabled: true,
-    cells: { owner: 'Platform', status: 'Archived', hours: 0 },
+    cells: { owner: 'Sam Rivera', status: 'Archived', hours: 0 },
   },
 ];
 
@@ -138,13 +138,13 @@ export class HierarchyPage {
       }
       return null;
     };
-    return find(this.assets()) ?? 'No asset selected';
+    return find(this.assets()) ?? 'No club document selected';
   });
   readonly projects = HIERARCHY_PROJECTS;
   readonly columns: readonly JpTreeTableColumn[] = [
-    { key: 'owner', header: 'Owner' },
+    { key: 'owner', header: 'Lead' },
     { key: 'status', header: 'Status' },
-    { key: 'hours', header: 'Hours', align: 'end' },
+    { key: 'hours', header: 'Minutes', align: 'end' },
   ];
   readonly expandedProjects = signal<string[]>(['website']);
   readonly selectedProjects = signal<string[]>([]);
@@ -165,8 +165,8 @@ export class HierarchyPage {
         this.updateShared({
           loadState: 'loaded',
           children: [
-            { key: 'shared-colors', label: 'Color guidelines.pdf' },
-            { key: 'shared-spacing', label: 'Spacing guidelines.pdf' },
+            { key: 'shared-colors', label: 'Uniform-guide.pdf' },
+            { key: 'shared-spacing', label: 'Field-guide.pdf' },
           ],
         });
     }, 300);

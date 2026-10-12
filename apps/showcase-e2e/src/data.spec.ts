@@ -10,10 +10,10 @@ test.describe('data display', () => {
     const badge = page.locator('jp-table jp-badge').first();
 
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Data Display');
+    await expect(page.locator('h1')).toContainText('Player roster');
     await expect(table).toBeVisible();
-    await expect(page.locator('caption')).toContainText('Recent deployments');
+    await expect(page.locator('caption')).toContainText('Falcons roster');
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText('Healthy');
+    await expect(badge).toContainText('Available');
   });
 });

@@ -6,10 +6,10 @@ const meta: Meta<JpFormSection> = {
   title: 'Primitives/Controls/Form Section',
   component: JpFormSection,
   parameters: { layout: 'padded' },
-  args: { legend: 'Delivery settings', hint: 'Choose destinations' },
+  args: { legend: 'Practice settings', hint: 'Choose positions' },
   render: (args) => ({
     props: args,
-    template: `<jp-form-section [legend]="legend" [hint]="hint" [disabled]="disabled"><label><input type="checkbox" /> Email notifications</label></jp-form-section>`,
+    template: `<jp-form-section [legend]="legend" [hint]="hint" [disabled]="disabled"><label><input type="checkbox" /> Email game alerts</label></jp-form-section>`,
   }),
 };
 export default meta;

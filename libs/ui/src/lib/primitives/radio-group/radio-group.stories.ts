@@ -9,12 +9,12 @@ const meta: Meta<JpRadioGroup> = {
   decorators: [moduleMetadata({ imports: [FormsModule] })],
   parameters: { layout: 'padded' },
   args: {
-    label: 'Workspace role',
-    hint: 'Choose access for this member.',
+    label: 'Club role',
+    hint: 'Choose access for this club member.',
     options: [
-      { value: 'viewer', label: 'Viewer' },
-      { value: 'editor', label: 'Editor' },
-      { value: 'admin', label: 'Admin', disabled: true },
+      { value: 'viewer', label: 'Fan' },
+      { value: 'editor', label: 'Scorekeeper' },
+      { value: 'admin', label: 'Coach', disabled: true },
     ],
     disabled: false,
     error: '',
@@ -29,7 +29,7 @@ type Story = StoryObj<JpRadioGroup>;
 export const Default: Story = {};
 export const Disabled: Story = { args: { disabled: true } };
 export const Invalid: Story = {
-  args: { error: 'Select a role before saving.' },
+  args: { error: 'Select a club role before saving.' },
 };
 export const KeyboardSelection: Story = {
   play: async ({ canvasElement }) => {

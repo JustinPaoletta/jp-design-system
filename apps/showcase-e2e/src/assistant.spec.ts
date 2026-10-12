@@ -9,13 +9,13 @@ test.describe('assistant system', () => {
 
     const shell = page.locator('jp-app-shell');
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Assistant System');
+    await expect(page.locator('h1')).toContainText('Falcons assistant');
 
-    await page.getByRole('button', { name: 'Ask about deployment' }).click();
-    const panel = page.getByRole('complementary', { name: 'JP Assistant' });
+    await page.getByRole('button', { name: 'Ask about the game' }).click();
+    const panel = page.getByRole('complementary', { name: 'Falcons coach' });
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('Deployment dep-1042');
-    await expect(panel).toContainText('Production rollout');
+    await expect(panel).toContainText('Game FAL-1042');
+    await expect(panel).toContainText('Falcons 5, Bears 3. Final score.');
 
     await panel.locator('textarea').focus();
     await page.keyboard.press('Escape');
@@ -28,10 +28,12 @@ test.describe('assistant system', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/assistant');
 
-    await page.getByRole('button', { name: 'Seed tone demo' }).click();
-    const panel = page.getByRole('complementary', { name: 'JP Assistant' });
+    await page.getByRole('button', { name: 'Load game summary' }).click();
+    const panel = page.getByRole('complementary', { name: 'Falcons coach' });
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('Tone refinement demo');
-    await expect(panel).toContainText('calm sunken surface');
+    await expect(panel).toContainText('The Falcons won 5–3');
+    await expect(panel).toContainText(
+      'Alex Morgan and Jordan Davis drove in runs',
+    );
   });
 });

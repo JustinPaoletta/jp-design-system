@@ -61,7 +61,7 @@ const meta: Meta<JpText> = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            Text primitive sample with enough length to show truncation clearly.
+            The Riverton Falcons host the Lakeview Bears at 18:30 at Riverton Field.
           </jp-text>
         </div>
       </div>
@@ -170,10 +170,10 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-text-story__tones">
-        <jp-text tone="primary">Primary — highest contrast body text.</jp-text>
-        <jp-text tone="secondary">Secondary — supporting body text.</jp-text>
-        <jp-text tone="muted">Muted — de-emphasized metadata.</jp-text>
-        <jp-text tone="disabled">Disabled — inactive text.</jp-text>
+        <jp-text tone="primary">The Falcons won 5–3.</jp-text>
+        <jp-text tone="secondary">Alex Morgan starts at pitcher.</jp-text>
+        <jp-text tone="muted">Final score, October 11.</jp-text>
+        <jp-text tone="disabled">Last season is archived.</jp-text>
       </div>
     `,
   }),
@@ -226,7 +226,7 @@ export const Truncated: Story = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            This sentence is deliberately long so that it overflows the narrow container and demonstrates single-line truncation.
+            The Riverton Falcons host the Lakeview Bears at Riverton Field. First pitch is at 18:30, and the starting lineup is confirmed.
           </jp-text>
         </div>
       </div>

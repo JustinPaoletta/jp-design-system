@@ -6,7 +6,7 @@ const meta: Meta<JpSlider> = {
   component: JpSlider,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Volume',
+    label: 'Practice repetitions',
     min: 0,
     max: 100,
     step: 5,
@@ -18,15 +18,17 @@ type Story = StoryObj<JpSlider>;
 export const Default: Story = {};
 export const Disabled: Story = { args: { disabled: true } };
 export const Readonly: Story = { args: { readonly: true } };
-export const Invalid: Story = { args: { error: 'Check the volume' } };
+export const Invalid: Story = { args: { error: 'Check practice repetitions' } };
 export const ExactValue: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    const number = c.getByRole('spinbutton', { name: 'Volume' });
+    const number = c.getByRole('spinbutton', { name: 'Practice repetitions' });
     await userEvent.clear(number);
     await userEvent.type(number, '37');
     await userEvent.tab();
-    await expect(c.getByRole('slider', { name: 'Volume' })).toHaveValue('35');
+    await expect(
+      c.getByRole('slider', { name: 'Practice repetitions' }),
+    ).toHaveValue('35');
     await expect(number).toHaveValue(35);
   },
 };

@@ -3,7 +3,7 @@ import { JpButtonGroup } from './button-group';
 const meta: Meta<JpButtonGroup> = {
   title: 'Primitives/Controls/Button Group',
   component: JpButtonGroup,
-  args: { label: 'Document actions', orientation: 'horizontal' },
+  args: { label: 'Lineup actions', orientation: 'horizontal' },
   parameters: { layout: 'padded' },
   render: (args) => ({
     props: args,

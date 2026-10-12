@@ -47,36 +47,36 @@ export class DataPage {
   showEmpty = false;
 
   readonly columns: JpTableColumn[] = [
-    { key: 'name', header: 'Service' },
-    { key: 'env', header: 'Environment' },
+    { key: 'name', header: 'Player' },
+    { key: 'env', header: 'Squad' },
     { key: 'status', header: 'Status' },
-    { key: 'region', header: 'Region', align: 'end' },
+    { key: 'region', header: 'Position', align: 'end' },
   ];
 
   readonly rows = [
     {
-      name: 'api-gateway',
-      env: 'production',
-      status: 'Healthy',
-      region: 'us-east-1',
+      name: 'Alex Morgan',
+      env: 'Varsity',
+      status: 'Available',
+      region: 'Pitcher',
     },
     {
-      name: 'worker',
-      env: 'production',
-      status: 'Degraded',
-      region: 'eu-west-1',
+      name: 'Jordan Davis',
+      env: 'Varsity',
+      status: 'Day to day',
+      region: 'Catcher',
     },
     {
-      name: 'ingest',
-      env: 'staging',
-      status: 'Healthy',
-      region: 'us-west-2',
+      name: 'Maya Chen',
+      env: 'Reserve',
+      status: 'Available',
+      region: 'Shortstop',
     },
     {
-      name: 'notifications',
-      env: 'staging',
-      status: 'Failed',
-      region: 'ap-south-1',
+      name: 'Taylor Reed',
+      env: 'Reserve',
+      status: 'Injured',
+      region: 'Right field',
     },
   ];
 
@@ -89,11 +89,11 @@ export class DataPage {
 
   statusTone(status: string): JpBadgeTone {
     switch (status) {
-      case 'Healthy':
+      case 'Available':
         return 'success';
-      case 'Degraded':
+      case 'Day to day':
         return 'warning';
-      case 'Failed':
+      case 'Injured':
         return 'error';
       default:
         return 'neutral';

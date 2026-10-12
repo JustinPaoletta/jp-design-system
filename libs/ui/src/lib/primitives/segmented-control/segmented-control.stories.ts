@@ -7,7 +7,7 @@ const meta: Meta<JpSegmentedControl> = {
   component: JpSegmentedControl,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Time period',
+    label: 'Game schedule period',
     options: [
       { value: 'day', label: 'Day' },
       { value: 'week', label: 'Week' },

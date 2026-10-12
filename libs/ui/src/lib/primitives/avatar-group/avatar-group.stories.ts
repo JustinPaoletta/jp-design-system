@@ -7,11 +7,11 @@ const meta: Meta<JpAvatarGroup> = {
   component: JpAvatarGroup,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Reviewers',
+    label: 'Players',
     people: [
-      { id: 'a', name: 'Ada Lovelace' },
-      { id: 'g', name: 'Grace Hopper' },
-      { id: 'l', name: 'Linus Torvalds' },
+      { id: 'a', name: 'Alex Morgan' },
+      { id: 'g', name: 'Jordan Davis' },
+      { id: 'l', name: 'Maya Chen' },
     ],
     max: 2,
   },

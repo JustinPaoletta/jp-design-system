@@ -17,7 +17,7 @@
         </jp-icon-button>
       </jp-inline>
       <jp-text tone="secondary"
-        >Token-driven buttons and form controls inside the app shell.</jp-text
+        >Update coach contact details and the starting lineup.</jp-text
       >
       <jp-inline gap="sm">
         <jp-text as="small" tone="muted">accent: {{ accent() }}</jp-text>
@@ -31,25 +31,25 @@
           <jp-input
             label="Email"
             type="email"
-            placeholder="you@example.com"
-            hint="Used for account notifications."
+            placeholder="coach@falcons.example"
+            hint="Used for Falcons club messages."
             [(ngModel)]="email"
             name="email"
           />
           <jp-textarea
-            label="Notes"
+            label="Coach notes"
             rows="3"
             [(ngModel)]="notes"
             name="notes"
           />
           <jp-select
-            label="Role"
+            label="Club role"
             [options]="roleOptions"
             [(ngModel)]="role"
             name="role"
           />
           <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
-            Subscribe to product updates
+            Get club messages
           </jp-checkbox>
           <jp-switch [(ngModel)]="compact" name="compact">
             Compact density

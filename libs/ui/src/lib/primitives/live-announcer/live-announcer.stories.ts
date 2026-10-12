@@ -6,12 +6,12 @@ import { JpAnnouncer, JpLiveAnnouncer } from './live-announcer';
   selector: 'jp-announcer-demo',
   imports: [JpLiveAnnouncer],
   template:
-    '<jp-live-announcer /><button type="button" (click)="announce()">Announce save</button>',
+    '<jp-live-announcer /><button type="button" (click)="announce()">Announce lineup save</button>',
 })
 class AnnouncerDemo {
   private readonly announcer = inject(JpAnnouncer);
   announce() {
-    this.announcer.announce('Changes saved');
+    this.announcer.announce('Lineup saved');
   }
 }
 const meta: Meta = {
@@ -24,9 +24,11 @@ type Story = StoryObj;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    await userEvent.click(c.getByRole('button', { name: 'Announce save' }));
+    await userEvent.click(
+      c.getByRole('button', { name: 'Announce lineup save' }),
+    );
     await waitFor(() =>
-      expect(c.getByRole('status')).toHaveTextContent('Changes saved'),
+      expect(c.getByRole('status')).toHaveTextContent('Lineup saved'),
     );
   },
 };

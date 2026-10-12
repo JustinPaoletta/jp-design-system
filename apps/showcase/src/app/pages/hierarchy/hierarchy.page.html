@@ -1,13 +1,13 @@
 <div class="page">
   <jp-page-header
-    title="Hierarchy and project structure"
-    description="Browse assets and inspect nested project work."
+    title="Club training plan"
+    description="Browse club documents and review the practice plan."
   />
   <div class="workspace">
-    <jp-card title="Asset browser">
+    <jp-card title="Club documents">
       <p>
-        Arrow keys move focus without selecting. Enter opens an asset; Space
-        selects it. Use the disclosure arrow to expand a folder.
+        Arrow keys move focus without selecting. Enter opens a club document;
+        Space selects it. Use the disclosure arrow to expand a folder.
       </p>
       <div class="actions">
         <jp-button variant="secondary" (click)="folders.set([])"
@@ -16,7 +16,7 @@
       </div>
       <jp-tree-view
         id="asset-browser"
-        label="Design assets"
+        label="Club documents"
         [nodes]="assets()"
         [expandedKeys]="folders()"
         (expandedKeysChange)="folders.set($event)"
@@ -26,23 +26,23 @@
         (loadRequested)="load($event)"
       />
       <p class="selection">
-        Selected asset: <strong>{{ assetName() }}</strong>
+        Selected document: <strong>{{ assetName() }}</strong>
       </p>
       <p class="hint">
-        Shared library simulates an unavailable request. Expand it, then retry
+        Training guides simulates an unavailable request. Expand it, then retry
         with Enter or the retry control.
       </p>
       <p role="status">{{ opened() }}</p>
     </jp-card>
-    <jp-card title="Project breakdown">
+    <jp-card title="Practice groups">
       <p>
-        Expand project groups using their buttons. Each checkbox selects one
+        Expand practice groups using their buttons. Each checkbox selects one
         row; selecting a parent does not select its children.
       </p>
       <jp-tree-table
         id="project-breakdown"
-        caption="Project work"
-        nameHeader="Task"
+        caption="Practice plan"
+        nameHeader="Drill"
         [rows]="projects"
         [columns]="columns"
         selectable
@@ -52,7 +52,7 @@
         (selectedKeysChange)="selectedProjects.set($event)"
       />
       <p class="selection" role="status">
-        {{ selectedProjects().length }} project rows selected
+        Selected drills: {{ selectedProjects().length }}
       </p>
     </jp-card>
   </div>

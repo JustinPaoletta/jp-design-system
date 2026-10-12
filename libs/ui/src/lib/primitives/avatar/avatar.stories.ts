@@ -6,7 +6,7 @@ const meta: Meta<JpAvatar> = {
   title: 'Primitives/Identity/Avatar',
   component: JpAvatar,
   parameters: { layout: 'padded' },
-  args: { name: 'Ada Lovelace' },
+  args: { name: 'Alex Morgan' },
 };
 export default meta;
 type Story = StoryObj<JpAvatar>;

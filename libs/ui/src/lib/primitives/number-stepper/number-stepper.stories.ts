@@ -6,11 +6,11 @@ const meta: Meta<JpNumberStepper> = {
   component: JpNumberStepper,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Seats',
+    label: 'Players',
     min: 1,
     max: 5,
     step: 1,
-    hint: 'Between one and five seats',
+    hint: 'Choose one to five players for this drill.',
   },
 };
 export default meta;
@@ -19,16 +19,16 @@ export const Default: Story = {};
 export const Disabled: Story = { args: { disabled: true } };
 export const Readonly: Story = { args: { readonly: true } };
 export const Invalid: Story = {
-  args: { error: 'Choose an available seat count' },
+  args: { error: 'Choose an available player count' },
 };
 export const Increment: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    await userEvent.click(c.getByRole('button', { name: 'Increase Seats' }));
-    await expect(c.getByRole('spinbutton', { name: 'Seats' })).toHaveValue(1);
-    await userEvent.click(c.getByRole('button', { name: 'Increase Seats' }));
-    await expect(c.getByRole('spinbutton', { name: 'Seats' })).toHaveValue(2);
-    await userEvent.click(c.getByRole('button', { name: 'Decrease Seats' }));
-    await expect(c.getByRole('spinbutton', { name: 'Seats' })).toHaveValue(1);
+    await userEvent.click(c.getByRole('button', { name: 'Increase Players' }));
+    await expect(c.getByRole('spinbutton', { name: 'Players' })).toHaveValue(1);
+    await userEvent.click(c.getByRole('button', { name: 'Increase Players' }));
+    await expect(c.getByRole('spinbutton', { name: 'Players' })).toHaveValue(2);
+    await userEvent.click(c.getByRole('button', { name: 'Decrease Players' }));
+    await expect(c.getByRole('spinbutton', { name: 'Players' })).toHaveValue(1);
   },
 };

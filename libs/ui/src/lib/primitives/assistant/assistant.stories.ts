@@ -24,16 +24,21 @@ import { JpAssistantService } from './assistant.service';
           jpAssistantTrigger
           [jpAssistantContext]="deploymentContext"
         >
-          Ask about deployment
+          Ask about the game
         </jp-button>
         <jp-button type="button" variant="ghost" (click)="seed()">
-          Seed conversation
+          Load game summary
         </jp-button>
         <jp-button type="button" variant="ghost" (click)="openEmpty()">
           Open empty
         </jp-button>
       </jp-inline>
-      <jp-assistant-panel (messageSubmit)="onSubmit($event)" />
+      <jp-assistant-panel
+        title="Falcons coach"
+        emptyTitle="Ask about the lineup"
+        emptyDescription="Ask about players, the final score or the next game."
+        (messageSubmit)="onSubmit($event)"
+      />
     </jp-stack>
   `,
 })
@@ -41,10 +46,10 @@ class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
   readonly deploymentContext = {
-    label: 'Deployment dep-1042',
-    description: 'Production rollout',
-    entityType: 'deployment',
-    entityId: 'dep-1042',
+    label: 'Game FAL-1042',
+    description: 'Falcons 5, Bears 3. Final score.',
+    entityType: 'game',
+    entityId: 'FAL-1042',
   };
 
   seed(): void {
@@ -52,15 +57,15 @@ class AssistantStoryHost {
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
-      content: 'Context loaded for dep-1042',
+      content: 'Game FAL-1042 loaded',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content: 'I can summarize status, risks, and next steps.',
+      content: 'I can summarize the score, key plays and next game.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'What changed in this rollout?',
+      content: 'Who scored in the ninth inning?',
     });
   }
 
@@ -71,7 +76,7 @@ class AssistantStoryHost {
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Noted: “${content}”. Here is a calm, structured reply.`,
+      content: `Noted: “${content}”. Sample game result: Falcons 5, Bears 3.`,
     });
   }
 }
@@ -92,6 +97,9 @@ class AssistantStoryHost {
         >
       </jp-inline>
       <jp-assistant-panel
+        title="Falcons coach"
+        emptyTitle="Ask about the lineup"
+        emptyDescription="Ask about players, the final score or the next game."
         (messageSubmit)="respond()"
         (responseRetry)="retry($event.responseId)"
       />
@@ -106,7 +114,7 @@ class AssistantAsyncStoryHost {
     this.assistant.open({ context: null, clearMessages: true });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Summarize this deployment.',
+      content: 'Summarize this game.',
     });
     this.respond();
   }
@@ -116,7 +124,7 @@ class AssistantAsyncStoryHost {
   stream(): void {
     this.assistant.updateResponse(
       this.responseId,
-      'The deployment is healthy. Checking the final stage…',
+      'The Falcons lead 5–3. Checking the final inning…',
     );
   }
   fail(): void {
@@ -128,7 +136,7 @@ class AssistantAsyncStoryHost {
   complete(): void {
     this.assistant.completeResponse(
       this.responseId,
-      'All stages completed successfully.',
+      'All game checks are complete.',
     );
   }
   retry(id: number): void {
@@ -174,9 +182,9 @@ export const MessageRoles: Story = {
         class="jp-assistant-panel__message-list"
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
-        <jp-assistant-message messageRole="system" content="Context loaded for dep-1042" />
+        <jp-assistant-message messageRole="system" content="Game FAL-1042 loaded" />
         <jp-assistant-message messageRole="assistant" content="Assistant reply stays calm and neutral." />
-        <jp-assistant-message messageRole="user" content="User question about this deployment." />
+        <jp-assistant-message messageRole="user" content="Who scored in the ninth inning?" />
       </div>
     `,
   }),
@@ -192,7 +200,7 @@ export const EmptyState: Story = {
       (button) => button.textContent?.trim() === 'Open empty',
     );
     await userEvent.click(openEmpty as HTMLButtonElement);
-    await expect(canvasElement.textContent).toContain('Ask about this surface');
+    await expect(canvasElement.textContent).toContain('Ask about the lineup');
   },
 };
 
@@ -203,11 +211,11 @@ export const Conversation: Story = {
   }),
   play: async ({ canvasElement }) => {
     const seed = Array.from(canvasElement.querySelectorAll('button')).find(
-      (button) => button.textContent?.trim() === 'Seed conversation',
+      (button) => button.textContent?.trim() === 'Load game summary',
     );
     await userEvent.click(seed as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain(
-      'I can summarize status, risks, and next steps.',
+      'I can summarize the score, key plays and next game.',
     );
     await expect(
       canvasElement.querySelectorAll('jp-assistant-message').length,
@@ -225,11 +233,11 @@ export const ContextTrigger: Story = {
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
-      (button) => button.textContent?.trim() === 'Ask about deployment',
+      (button) => button.textContent?.trim() === 'Ask about the game',
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
-    await expect(canvasElement.textContent).toContain('Deployment dep-1042');
+    await expect(canvasElement.textContent).toContain('Game FAL-1042');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
@@ -256,7 +264,7 @@ export const ComposerInteraction: Story = {
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
-      (button) => button.textContent?.trim() === 'Ask about deployment',
+      (button) => button.textContent?.trim() === 'Ask about the game',
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
@@ -265,7 +273,7 @@ export const ComposerInteraction: Story = {
     ) as HTMLTextAreaElement;
     await waitFor(() => expect(composer).toBeTruthy());
 
-    await userEvent.type(composer, 'What is the deployment status?');
+    await userEvent.type(composer, 'What is the game score?');
     const send = canvasElement.querySelector(
       '.jp-assistant-panel__composer-actions button',
     ) as HTMLButtonElement;
@@ -273,7 +281,7 @@ export const ComposerInteraction: Story = {
 
     await userEvent.keyboard('{Enter}');
     await expect(canvasElement.textContent).toContain(
-      'What is the deployment status?',
+      'What is the game score?',
     );
     await expect(canvasElement.textContent).toContain('Noted:');
   },
@@ -292,7 +300,7 @@ export const PendingAndStreaming: Story = {
     ).toBeTruthy();
     await userEvent.click(button('Stream chunk'));
     await expect(canvasElement.textContent).toContain(
-      'Checking the final stage',
+      'Checking the final inning',
     );
     await userEvent.click(button('Stop response'));
     await expect(canvasElement.textContent).toContain('Response stopped');
@@ -318,7 +326,7 @@ export const FailedAndRetry: Story = {
     ).toBeTruthy();
     await userEvent.click(button('Complete response'));
     await expect(canvasElement.textContent).toContain(
-      'All stages completed successfully.',
+      'All game checks are complete.',
     );
   },
 };

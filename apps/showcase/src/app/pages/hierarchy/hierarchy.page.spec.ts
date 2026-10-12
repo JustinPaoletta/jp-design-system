@@ -8,14 +8,14 @@ describe('HierarchyPage', () => {
       fixture.nativeElement
         .querySelector('[role=tree]')
         .getAttribute('aria-label'),
-    ).toBe('Design assets');
+    ).toBe('Club documents');
     expect(
       fixture.nativeElement.querySelector('caption').textContent.trim(),
-    ).toBe('Project work');
+    ).toBe('Practice plan');
     fixture.componentInstance.selectedAsset.set('wordmark');
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain(
-      'Selected asset: Wordmark.svg',
+      'Selected document: Lineup.svg',
     );
   });
   it('keeps lazy loading and its retry in the consumer', () => {

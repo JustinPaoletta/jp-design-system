@@ -10,11 +10,16 @@ const meta: Meta<JpList> = {
     items: [
       {
         id: 'a',
-        title: 'API gateway',
-        description: 'Production',
-        meta: 'Healthy',
+        title: 'Alex Morgan',
+        description: 'Varsity',
+        meta: 'Available',
       },
-      { id: 'b', title: 'Worker', description: 'Staging', meta: 'Paused' },
+      {
+        id: 'b',
+        title: 'Jordan Davis',
+        description: 'Varsity',
+        meta: 'Day to day',
+      },
     ],
   },
 };

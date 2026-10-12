@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/advanced-layout');
   await expect(
     page.getByRole('heading', {
-      name: 'Advanced layout and data',
+      name: 'Club roster workspace',
       exact: true,
     }),
   ).toBeVisible();
@@ -19,12 +19,12 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   page,
 }) => {
   await page.getByText('Columns', { selector: 'summary' }).click();
-  await page.getByRole('checkbox', { name: 'Owner', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Coach', exact: true }).uncheck();
   await expect(
-    page.getByRole('columnheader', { name: 'Owner', exact: true }),
+    page.getByRole('columnheader', { name: 'Coach', exact: true }),
   ).toHaveCount(0);
   const width = page.getByRole('spinbutton', {
-    name: 'Width in pixels: Service',
+    name: 'Width in pixels: Player',
   });
   await width.fill('330');
   await width.press('Tab');
@@ -33,17 +33,17 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   await page.getByText('Columns', { selector: 'summary' }).click();
   await expect(width).toHaveValue('330');
   await expect(
-    page.getByRole('checkbox', { name: 'Owner', exact: true }),
+    page.getByRole('checkbox', { name: 'Coach', exact: true }),
   ).not.toBeChecked();
-  await page.getByRole('checkbox', { name: 'Region', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Position', exact: true }).uncheck();
   await page.getByRole('checkbox', { name: 'Status', exact: true }).uncheck();
   await expect(
-    page.getByRole('checkbox', { name: 'Service', exact: true }),
+    page.getByRole('checkbox', { name: 'Player', exact: true }),
   ).toBeDisabled();
   await page.getByRole('button', { name: 'Reset preferences' }).click();
   await expect(width).toHaveValue('220');
   await expect(
-    page.getByRole('checkbox', { name: 'Owner', exact: true }),
+    page.getByRole('checkbox', { name: 'Coach', exact: true }),
   ).toBeChecked();
   await page.evaluate(() =>
     localStorage.setItem(
@@ -55,7 +55,7 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   await page.getByText('Columns', { selector: 'summary' }).click();
   await expect(width).toHaveValue('480');
   await expect(
-    page.getByRole('columnheader', { name: 'Service', exact: true }),
+    page.getByRole('columnheader', { name: 'Player', exact: true }),
   ).toBeVisible();
 });
 test('advanced layout: row details and selection stay independent', async ({
@@ -67,23 +67,21 @@ test('advanced layout: row details and selection stay independent', async ({
   await expand.click();
   await expect(expand).toHaveAttribute('aria-expanded', 'true');
   const row = page.locator('.jp-table__detail-row');
-  await expect(row).toContainText('managed by Product in us-east-1');
-  await row.getByRole('button', { name: 'Review deployment' }).click();
-  await expect(page.getByRole('status')).toContainText(
-    'Reviewed API gateway 1',
-  );
+  await expect(row).toContainText('managed by Sam Rivera in Pitcher');
+  await row.getByRole('button', { name: 'Review game' }).click();
+  await expect(page.getByRole('status')).toContainText('Reviewed Alex Morgan');
   await page
-    .getByRole('checkbox', { name: 'Select API gateway 1', exact: true })
+    .getByRole('checkbox', { name: 'Select Alex Morgan', exact: true })
     .check();
   await expect(
-    page.getByRole('checkbox', { name: 'Select API gateway 1', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Alex Morgan', exact: true }),
   ).toBeChecked();
   await page
-    .getByRole('button', { name: 'Hide details: API gateway 1', exact: true })
+    .getByRole('button', { name: 'Hide details: Alex Morgan', exact: true })
     .click();
   await expect(row).toHaveCount(0);
   await expect(
-    page.getByRole('checkbox', { name: 'Select API gateway 1', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Alex Morgan', exact: true }),
   ).toBeChecked();
 });
 for (const dir of ['ltr', 'rtl'])
@@ -91,9 +89,9 @@ for (const dir of ['ltr', 'rtl'])
     'advanced layout: pointer resizing and sticky regions ' + dir,
     async ({ page }) => {
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      const frame = page.getByRole('region', { name: 'Services', exact: true });
+      const frame = page.getByRole('region', { name: 'Players', exact: true });
       const header = page.getByRole('columnheader', {
-        name: 'Service',
+        name: 'Player',
         exact: true,
       });
       const cell = page
@@ -125,7 +123,7 @@ for (const dir of ['ltr', 'rtl'])
       await page.mouse.up();
       await page.getByText('Columns', { selector: 'summary' }).click();
       await expect(
-        page.getByRole('spinbutton', { name: 'Width in pixels: Service' }),
+        page.getByRole('spinbutton', { name: 'Width in pixels: Player' }),
       ).toHaveValue('280');
     },
   );
@@ -135,7 +133,7 @@ for (const dir of ['ltr', 'rtl'])
     async ({ page }) => {
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
       const separator = page.getByRole('separator', {
-        name: 'Service overview',
+        name: 'Player profile',
       });
       await separator.focus();
       await separator.press(dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight');
@@ -145,7 +143,7 @@ for (const dir of ['ltr', 'rtl'])
       await separator.press('Enter');
       await expect(separator).toHaveAttribute('aria-valuenow', '0');
       await expect(
-        page.getByRole('heading', { name: 'Service overview', exact: true }),
+        page.getByRole('heading', { name: 'Player profile', exact: true }),
       ).toHaveCount(0);
       await separator.press('Enter');
       await expect(separator).toHaveAttribute('aria-valuenow', '70');
@@ -170,16 +168,16 @@ for (const dir of ['ltr', 'rtl'])
 test('advanced layout: mobile stacking restores both panes and focuses hidden separator safely', async ({
   page,
 }) => {
-  const separator = page.getByRole('separator', { name: 'Service overview' });
+  const separator = page.getByRole('separator', { name: 'Player profile' });
   await separator.focus();
   await separator.press('Enter');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(separator).toHaveCount(0);
   await expect(
-    page.getByRole('heading', { name: 'Service overview', exact: true }),
+    page.getByRole('heading', { name: 'Player profile', exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: 'Service inventory', exact: true }),
+    page.getByRole('heading', { name: 'League player roster', exact: true }),
   ).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -188,7 +186,7 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
   await expect(page.locator('#service-workspace-primary')).toBeFocused();
   for (const dir of ['ltr', 'rtl']) {
     await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-    const frame = page.getByRole('region', { name: 'Services', exact: true });
+    const frame = page.getByRole('region', { name: 'Players', exact: true });
     await frame.evaluate((el) => {
       el.scrollTop = 0;
       el.scrollLeft = 0;
@@ -209,7 +207,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
   page,
 }) => {
   await expect(
-    page.getByRole('img', { name: 'Diagram of the service architecture' }),
+    page.getByRole('img', { name: 'Diagram of the practice stations' }),
   ).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
     'aria-busy',
@@ -217,7 +215,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
   );
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
-    page.getByRole('img', { name: 'Diagram of the service architecture' }),
+    page.getByRole('img', { name: 'Diagram of the practice stations' }),
   ).toHaveText('Image unavailable');
   await page.getByRole('button', { name: 'Restore image' }).click();
   await expect(page.locator('jp-media img')).toBeVisible();
@@ -241,7 +239,7 @@ for (const accent of ['neon', 'cobalt'])
         await page.getByText('Columns', { selector: 'summary' }).click();
         await page
           .getByRole('button', {
-            name: 'Show details: API gateway 1',
+            name: 'Show details: Alex Morgan',
             exact: true,
           })
           .click();

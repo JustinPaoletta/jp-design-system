@@ -9,8 +9,8 @@ const meta: Meta<JpMedia> = {
   parameters: { layout: 'padded' },
   args: {
     src: illustration,
-    alt: 'Circle illustration',
-    caption: 'An original geometric illustration',
+    alt: 'Practice target diagram',
+    caption: 'Falcons practice target diagram',
     loading: 'eager',
   },
   render: (args) => ({
@@ -25,7 +25,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await expect(
-      c.getByRole('img', { name: 'Circle illustration' }),
+      c.getByRole('img', { name: 'Practice target diagram' }),
     ).toBeVisible();
     await waitFor(() =>
       expect(canvasElement.querySelector('[aria-busy]')).toHaveAttribute(
@@ -41,7 +41,7 @@ export const BrokenImage: Story = {
     const c = within(canvasElement);
     await waitFor(() =>
       expect(
-        c.getByRole('img', { name: 'Circle illustration' }),
+        c.getByRole('img', { name: 'Practice target diagram' }),
       ).toHaveTextContent('Image unavailable'),
     );
   },

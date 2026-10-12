@@ -77,3 +77,22 @@ This design inspection does not complete those tasks.
 ## Final result
 
 passed
+
+## October 12 baseball copy inspection
+
+Storybook and Showcase now use the Riverton Falcons baseball setting.
+The [copy guide](docs/content/BASEBALL_EXAMPLES.md) defines the shared players, roles, availability labels and game results.
+Component names remain in the Storybook navigation.
+
+Chrome captures use a 1440 × 1000 desktop viewport and a 390 × 844 mobile viewport, both at device pixel ratio 1.
+Local inspection images are in `dist/qa/baseball-copy/`.
+These generated images are not tracked in Git.
+
+- `jp-baseball-game.png` shows the Falcons winning 5–3, with nine hits and no errors.
+- The inning chart uses whole-number run labels and a dashed line for the Bears.
+- `jp-baseball-roster.png` shows the shared players, positions and availability labels.
+- `jp-baseball-lineup.png` shows the coach contact address, club role and message preference.
+- `jp-baseball-mobile.png` shows the game dashboard without horizontal page overflow.
+
+The 84 visual baselines were inspected and updated for the new copy.
+The charcoal surfaces, restrained accents and navigation treatment remain consistent with the October 11 reference inspection.

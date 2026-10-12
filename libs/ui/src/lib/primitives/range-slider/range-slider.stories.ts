@@ -6,7 +6,7 @@ const meta: Meta<JpRangeSlider> = {
   component: JpRangeSlider,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Price range',
+    label: 'Practice minutes',
     min: 0,
     max: 100,
     step: 5,

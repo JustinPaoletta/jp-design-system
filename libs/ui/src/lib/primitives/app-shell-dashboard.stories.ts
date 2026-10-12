@@ -43,21 +43,23 @@ const meta: Meta<AppShellDashboardArgs> = {
     return {
       props: {
         sessionLabels: [
-          '00:00',
-          '03:00',
-          '06:00',
-          '09:00',
-          '12:00',
-          '15:00',
-          '18:00',
-          '18:30',
+          '1st',
+          '2nd',
+          '3rd',
+          '4th',
+          '5th',
+          '6th',
+          '7th',
+          '8th',
+          '9th',
         ],
         sessionSeries: [
           {
             id: 'sessions',
-            label: 'Active sessions',
-            values: [580, 760, 940, 1030, 1280, 1080, 1240, 1284],
+            label: 'Falcons',
+            values: [0, 0, 1, 1, 3, 3, 4, 4, 5],
           },
+          { id: 'bears', label: 'Bears', values: [0, 1, 1, 1, 2, 2, 2, 3, 3] },
         ],
         sidebarCollapsed,
         mobileNavOpen,
@@ -113,8 +115,8 @@ const meta: Meta<AppShellDashboardArgs> = {
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
         <nav jpAppShellSidebar aria-label="Primary">
-          <span class="dashboard-brand">App Shell</span>
-          <span class="dashboard-workspace">WORKSPACE</span>
+          <span class="dashboard-brand">Falcons</span>
+          <span class="dashboard-workspace">FALCONS</span>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
               href="#overview"
@@ -153,21 +155,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </nav>
 
         <main jpAppShellMain>
-<div class="dashboard-topbar"><span>Workspace / Overview</span><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span></div>
+<div class="dashboard-topbar"><span>Falcons / Game day</span><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span></div>
 <section class="dashboard" aria-labelledby="overview-title">
-  <header class="dashboard-heading"><div><h1 id="overview-title">Overview</h1><p>Application performance at a glance.</p></div><span class="dashboard-period">Today</span></header>
-  <dl class="dashboard-metrics"><div><dt>Active sessions</dt><dd>1,284</dd></div><div><dt>Error rate</dt><dd>0.14%</dd></div><div><dt>Avg response</dt><dd>182 ms</dd></div></dl>
+  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Riverton Falcons vs. Lakeview Bears.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
+  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>5</dd></div><div><dt>Hits</dt><dd>9</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
   <div class="dashboard-panels">
-    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Session activity" description="Today" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="7" style="--jp-chart-plot-height:14rem"></jp-chart></section>
+    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Falcons 5 (solid), Bears 3 (dashed). Final score." type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:14rem"></jp-chart></section>
     <section class="dashboard-panel"><h2>Activity</h2><ol class="dashboard-activity">
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>18:24</time><span>Traffic pattern reviewed</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>18:18</time><span>Response check completed</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>18:12</time><span>Health check passed</span></li>
-      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time>18:06</time><span>Session snapshot recorded</span></li>
-      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time>18:00</time><span>Error summary updated</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:10</time><span>Final score recorded</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:06</time><span>Maya Chen made the final out</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:02</time><span>Casey Brooks scored a run</span></li>
+      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time>20:58</time><span>Jordan Davis drove in a run</span></li>
+      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time>20:54</time><span>Alex Morgan hit a single</span></li>
     </ol></section>
   </div>
-  <section class="dashboard-panel"><h2>Insights</h2><div class="dashboard-insights"><div><h3>Session volume is steady.</h3><p>Active sessions remain within a consistent range throughout today.</p></div><div><h3>Response times remain consistent.</h3><p>Average response times are stable with low error volume.</p></div><small class="dashboard-updated">Updated 18:30<br>Oct 11, 2026</small></div></section>
+  <section class="dashboard-panel"><h2>Insights</h2><div class="dashboard-insights"><div><h3>The Falcons win 5–3.</h3><p>The Falcons scored five runs on nine hits with no errors.</p></div><div><h3>Next game: October 12.</h3><p>The Falcons host the Bears at 18:30 at Riverton Field.</p></div><small class="dashboard-updated">Updated 21:10<br>Oct 11, 2026</small></div></section>
 </section>
         </main>
       </jp-app-shell>

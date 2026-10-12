@@ -8,8 +8,8 @@ const meta: Meta<JpDescriptionList> = {
   parameters: { layout: 'padded' },
   args: {
     items: [
-      { term: 'Owner', description: 'Ada Lovelace' },
-      { term: 'Region', description: 'us-east-1' },
+      { term: 'Coach', description: 'Alex Morgan' },
+      { term: 'Position', description: 'Pitcher' },
       { term: 'Retries', description: 0 },
     ],
   },

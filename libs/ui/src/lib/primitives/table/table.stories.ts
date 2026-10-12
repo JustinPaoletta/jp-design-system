@@ -24,15 +24,15 @@ type TableArgs = {
 };
 
 const columns = [
-  { key: 'name', header: 'Service' },
+  { key: 'name', header: 'Player' },
   { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Region', align: 'end' as const },
+  { key: 'region', header: 'Position', align: 'end' as const },
 ];
 
 const rows = [
-  { name: 'api-gateway', status: 'Healthy', region: 'us-east-1' },
-  { name: 'worker', status: 'Degraded', region: 'eu-west-1' },
-  { name: 'ingest', status: 'Healthy', region: 'us-west-2' },
+  { name: 'Alex Morgan', status: 'Available', region: 'Pitcher' },
+  { name: 'Jordan Davis', status: 'Day to day', region: 'Catcher' },
+  { name: 'Maya Chen', status: 'Available', region: 'Shortstop' },
 ];
 
 const meta: Meta<TableArgs> = {
@@ -47,7 +47,7 @@ const meta: Meta<TableArgs> = {
     layout: 'padded',
   },
   args: {
-    caption: 'Recent deployments',
+    caption: 'Falcons roster',
     striped: true,
     empty: false,
   },
@@ -57,10 +57,10 @@ const meta: Meta<TableArgs> = {
       columns,
       rows: args.empty ? [] : rows,
       statusTone(value: string) {
-        if (value === 'Healthy') {
+        if (value === 'Available') {
           return 'success';
         }
-        if (value === 'Degraded') {
+        if (value === 'Day to day') {
           return 'warning';
         }
         return 'neutral';
@@ -77,8 +77,8 @@ const meta: Meta<TableArgs> = {
           <jp-badge [tone]="statusTone(value)">{{ value }}</jp-badge>
         </ng-template>
         <jp-empty-state
-          title="No deployments"
-          description="Nothing matches the current filters."
+          title="No players on the roster"
+          description="No players match these filters."
         >
           <jp-button variant="secondary">Clear filters</jp-button>
         </jp-empty-state>
@@ -93,7 +93,7 @@ type Story = StoryObj<TableArgs>;
 export const Populated: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Recent deployments',
+      'Falcons roster',
     );
     await expect(canvasElement.querySelectorAll('tbody tr').length).toBe(3);
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
@@ -117,51 +117,51 @@ export const Empty: Story = {
     await expect(canvasElement.querySelector('tbody')).toBeNull();
     await expect(
       canvasElement.querySelector('.jp-empty-state__title')?.textContent,
-    ).toContain('No deployments');
+    ).toContain('No players on the roster');
   },
 };
 
 const wideColumns = [
-  { key: 'name', header: 'Service' },
-  { key: 'env', header: 'Environment' },
+  { key: 'name', header: 'Player' },
+  { key: 'env', header: 'Squad' },
   { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Region' },
-  { key: 'owner', header: 'Owner' },
-  { key: 'lastDeploy', header: 'Last deploy' },
-  { key: 'requests', header: 'Requests / min', align: 'end' as const },
-  { key: 'latency', header: 'p95 latency (ms)', align: 'end' as const },
+  { key: 'region', header: 'Position' },
+  { key: 'owner', header: 'Coach' },
+  { key: 'lastDeploy', header: 'Last game' },
+  { key: 'requests', header: 'At bats', align: 'end' as const },
+  { key: 'latency', header: 'Hits', align: 'end' as const },
 ];
 
 const wideRows = [
   {
-    name: 'api-gateway',
-    env: 'production',
-    status: 'Healthy',
-    region: 'us-east-1',
-    owner: 'platform',
+    name: 'Alex Morgan',
+    env: 'Varsity',
+    status: 'Available',
+    region: 'Pitcher',
+    owner: 'Sam Rivera',
     lastDeploy: '2m ago',
-    requests: 12480,
-    latency: 84,
+    requests: 120,
+    latency: 38,
   },
   {
-    name: 'worker',
-    env: 'production',
-    status: 'Degraded',
-    region: 'eu-west-1',
-    owner: 'payments',
+    name: 'Jordan Davis',
+    env: 'Varsity',
+    status: 'Day to day',
+    region: 'Catcher',
+    owner: 'Sam Rivera',
     lastDeploy: '1h ago',
-    requests: 3120,
-    latency: 212,
+    requests: 100,
+    latency: 27,
   },
   {
-    name: 'ingest',
-    env: 'staging',
-    status: 'Healthy',
-    region: 'us-west-2',
-    owner: 'data',
+    name: 'Maya Chen',
+    env: 'Reserve',
+    status: 'Available',
+    region: 'Shortstop',
+    owner: 'Sam Rivera',
     lastDeploy: '3d ago',
-    requests: 640,
-    latency: 57,
+    requests: 85,
+    latency: 26,
   },
 ];
 
@@ -171,10 +171,10 @@ export const Scrollable: Story = {
       columns: wideColumns,
       rows: wideRows,
       statusTone(value: string) {
-        if (value === 'Healthy') {
+        if (value === 'Available') {
           return 'success';
         }
-        if (value === 'Degraded') {
+        if (value === 'Day to day') {
           return 'warning';
         }
         return 'neutral';
@@ -183,7 +183,7 @@ export const Scrollable: Story = {
     template: `
       <div style="max-width: 32rem;">
         <jp-table
-          caption="Service health (scroll horizontally)"
+          caption="Player statistics (scroll horizontally)"
           [columns]="columns"
           [rows]="rows"
           [striped]="true"
@@ -225,7 +225,7 @@ export const Scrollable: Story = {
     >
       <jp-input
         jpTableSearch
-        label="Search services"
+        label="Search players"
         type="search"
         [ngModel]="search()"
         (ngModelChange)="setSearch($event)"
@@ -238,7 +238,7 @@ export const Scrollable: Story = {
       >
     </jp-table-toolbar>
     <jp-table
-      caption="Service inventory"
+      caption="League player roster"
       [columns]="columns"
       [rows]="visible()"
       rowKey="name"
@@ -247,8 +247,8 @@ export const Scrollable: Story = {
       (sortChange)="setSort($event)"
       [selectedKeys]="selected()"
       (selectionChange)="selected.set($event)"
-      emptyTitle="No matching services"
-      emptyDescription="Clear the search to show all services."
+      emptyTitle="No matching players"
+      emptyDescription="Clear the search to show all players."
     />
     <jp-pagination
       [page]="page()"
@@ -260,9 +260,9 @@ export const Scrollable: Story = {
 })
 class TableToolkitExample {
   readonly columns = [
-    { key: 'name', header: 'Service', sortable: true },
+    { key: 'name', header: 'Player', sortable: true },
     { key: 'status', header: 'Status' },
-    { key: 'region', header: 'Region' },
+    { key: 'region', header: 'Position' },
   ];
   readonly search = signal('');
   readonly sort = signal<JpTableSort | null>(null);
@@ -298,21 +298,21 @@ export const ControlledToolkit: Story = {
   render: () => ({ template: '<jp-table-toolkit-example />' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('button', { name: /^Service$/ }));
+    await userEvent.click(canvas.getByRole('button', { name: /^Player$/ }));
     await expect(canvasElement.querySelector('th[aria-sort]')).toHaveAttribute(
       'aria-sort',
       'ascending',
     );
     await userEvent.click(
-      canvas.getByRole('checkbox', { name: 'Select api-gateway' }),
+      canvas.getByRole('checkbox', { name: 'Select Alex Morgan' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent('1 selected');
     await userEvent.click(canvas.getByRole('button', { name: /^Next$/ }));
     await expect(canvasElement.querySelector('tbody')).toHaveTextContent(
-      'worker',
+      'Maya Chen',
     );
     await userEvent.type(
-      canvas.getByRole('searchbox', { name: 'Search services' }),
+      canvas.getByRole('searchbox', { name: 'Search players' }),
       'missing',
     );
     await expect(canvasElement.querySelector('tbody')).toBeNull();
@@ -329,7 +329,7 @@ export const ControlledToolkit: Story = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<jp-table
     id="advanced-table-story"
-    caption="Advanced services"
+    caption="Falcons roster details"
     [columns]="columns"
     [rows]="rows"
     columnChooser
@@ -345,24 +345,24 @@ export const ControlledToolkit: Story = {
     (expandedKeysChange)="expanded.set($event)"
   >
     <ng-template jpTableRowDetail let-row
-      ><p>Owner: {{ row.owner }}</p>
+      ><p>Coach: {{ row.owner }}</p>
       <button type="button">Review {{ row.name }}</button></ng-template
     >
   </jp-table>`,
 })
 class AdvancedTableExample {
   readonly columns = [
-    { key: 'name', header: 'Service', width: 240 },
-    { key: 'owner', header: 'Owner', width: 220 },
-    { key: 'region', header: 'Region', width: 220 },
+    { key: 'name', header: 'Player', width: 240 },
+    { key: 'owner', header: 'Coach', width: 220 },
+    { key: 'region', header: 'Position', width: 220 },
   ];
   readonly rows = [
-    { id: 'api', name: 'API gateway', owner: 'Platform', region: 'us-east-1' },
+    { id: 'api', name: 'Alex Morgan', owner: 'Sam Rivera', region: 'Pitcher' },
     {
       id: 'jobs',
-      name: 'Background jobs',
-      owner: 'Product',
-      region: 'eu-west-1',
+      name: 'Jordan Davis',
+      owner: 'Sam Rivera',
+      region: 'Catcher',
     },
   ];
   readonly visible = signal(['name', 'owner', 'region']);
@@ -375,24 +375,24 @@ export const AdvancedControls: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await userEvent.click(c.getByText('Columns', { selector: 'summary' }));
-    await userEvent.click(c.getByRole('checkbox', { name: 'Owner' }));
-    await expect(c.queryByRole('columnheader', { name: 'Owner' })).toBeNull();
+    await userEvent.click(c.getByRole('checkbox', { name: 'Coach' }));
+    await expect(c.queryByRole('columnheader', { name: 'Coach' })).toBeNull();
     const width = c.getByRole('spinbutton', {
-      name: 'Width in pixels: Service',
+      name: 'Width in pixels: Player',
     });
     await userEvent.clear(width);
     await userEvent.type(width, '320');
     await userEvent.tab();
     await expect(width).toHaveValue(320);
-    const expand = c.getByRole('button', { name: 'Show details: API gateway' });
+    const expand = c.getByRole('button', { name: 'Show details: Alex Morgan' });
     await userEvent.click(expand);
     await expect(expand).toHaveAttribute('aria-expanded', 'true');
     await expect(
-      c.getByRole('button', { name: 'Review API gateway' }),
+      c.getByRole('button', { name: 'Review Alex Morgan' }),
     ).toBeVisible();
     await userEvent.click(expand);
     await expect(
-      c.queryByRole('button', { name: 'Review API gateway' }),
+      c.queryByRole('button', { name: 'Review Alex Morgan' }),
     ).toBeNull();
   },
 };

@@ -47,6 +47,8 @@ Chart.js canvas contents must have an accessible alternative, as described in it
   come from existing accent/neutral primitives. The first two series swap across
   gold/neon/cobalt so they remain distinct. Theme and density attributes inherited
   from ancestors are observed to redraw with current resolved CSS values.
+- Decimal formatting with `maximumFractionDigits: 0` uses whole-number axis ticks.
+  Other number formats keep automatic tick precision.
 - Set `controlsCollapsed` to `true` to put legend and inspection controls inside "View chart data".
   The default is `false`. Forced-colors mode opens the data disclosure.
 - Set `--jp-chart-plot-height` to change the plot height. The default is `20rem`.

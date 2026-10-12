@@ -60,12 +60,12 @@ const meta: Meta<BoxStoryArgs> = {
 
       <div class="jp-box-story__frame">
         <div class="jp-box-story__hint">
-          Structural wrapper — padding and max-width only, no fill or border. Dashed outline marks jp-box bounds; solid inner block is slotted content.
+          Clubhouse content sits inside the dashed layout boundary.
         </div>
         <div class="jp-box-story__viewport">
           <jp-box [as]="asTag" [padding]="padding" [paddingX]="paddingXValue" [paddingY]="paddingYValue" [maxWidth]="maxWidth">
             <div class="jp-box-story__content" data-testid="box-content">
-              Box content
+              Falcons clubhouse
             </div>
           </jp-box>
         </div>
