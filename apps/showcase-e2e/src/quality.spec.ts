@@ -23,7 +23,7 @@ for (const route of [
   });
 }
 
-for (const accent of ['neon', 'cobalt']) {
+for (const accent of ['gold', 'neon', 'cobalt']) {
   for (const density of ['default', 'compact']) {
     test(`recipes visual ${accent} ${density}`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 });

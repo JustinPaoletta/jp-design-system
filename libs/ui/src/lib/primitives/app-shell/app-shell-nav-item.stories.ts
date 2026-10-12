@@ -13,9 +13,6 @@ type NavItemStoryArgs = {
 const meta: Meta<NavItemStoryArgs> = {
   title: 'Primitives/Layout/App Shell Nav Item',
   component: JpAppShellNavItem,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     a11y: { test: 'error' },
   },

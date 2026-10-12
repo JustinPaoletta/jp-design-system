@@ -33,7 +33,7 @@ npm exec -- nx run showcase:serve
 Use Storybook at http://localhost:4400 for isolated states and Showcase at
 http://localhost:4200 for application flows. Record the tested commit,
 OS/browser/reader versions, accent, density, direction and viewport/zoom.
-Repeat applicable checks in neon/cobalt, default/compact and LTR/RTL. Use
+Repeat applicable checks in gold/neon/cobalt, default/compact and LTR/RTL. Use
 real browser zoom rather than shrinking the viewport alone.
 
 ## Shared checks

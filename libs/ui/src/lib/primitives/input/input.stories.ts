@@ -6,9 +6,6 @@ import { JpInput } from './input';
 const meta: Meta<JpInput> = {
   title: 'Primitives/Controls/Input',
   component: JpInput,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

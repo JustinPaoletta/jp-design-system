@@ -19,6 +19,7 @@ jest.mock('chart.js', () => ({
   CategoryScale: {},
   LinearScale: {},
   Tooltip: {},
+  Filler: {},
 }));
 const series = [
   { id: 'one', label: 'One', values: [10, null] },
@@ -53,6 +54,22 @@ describe('JpChart', () => {
     expect(f.nativeElement.textContent).toContain('No value');
     f.destroy();
     expect(mockDestroy).toHaveBeenCalled();
+  });
+  it('keeps compact inspection controls in the native data disclosure', async () => {
+    const f = await setup();
+    f.componentRef.setInput('controlsCollapsed', true);
+    f.componentRef.setInput('type', 'line');
+    f.detectChanges();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    f.detectChanges();
+    await f.whenStable();
+    const details = f.nativeElement.querySelector('details');
+    expect(details.querySelector('select')).toBeTruthy();
+    expect(details.querySelector('.legend')).toBeTruthy();
+    expect(details.querySelector('table')).toBeTruthy();
+    expect(details.open).toBe(false);
+    expect(mockCreate.mock.calls.at(-1)?.[1].options.animation).toBe(false);
+    expect(mockCreate.mock.calls.at(-1)?.[1].data.datasets[0].fill).toBe(true);
   });
   it('renders controlled legend visibility and can restore all series', async () => {
     const f = await setup();

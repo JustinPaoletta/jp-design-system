@@ -23,9 +23,6 @@ type ButtonStoryArgs = {
 const meta: Meta<ButtonStoryArgs> = {
   title: 'Primitives/Controls/Button',
   component: JpButton,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

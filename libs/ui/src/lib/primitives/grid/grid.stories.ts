@@ -12,9 +12,6 @@ import { JpGrid } from './grid';
 const meta: Meta<JpGrid> = {
   title: 'Primitives/Layout/Grid',
   component: JpGrid,
-  globals: {
-    accent: 'neon',
-  },
   render: (args) => ({
     props: { ...args, asTag: args.as },
     template: `

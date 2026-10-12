@@ -1,5 +1,21 @@
 # Verification evidence
 
+## October 11, 2026 design refresh
+
+The default accent is now `gold`. Explicit `neon` and `cobalt` accents remain available.
+The [design inspection](../../design-qa.md) records the reference comparison and local browser checks.
+
+| Check                               | Result                                                   |
+| ----------------------------------- | -------------------------------------------------------- |
+| Static and live Storybook           | 320 stories in 97 suites pass in each run.               |
+| Chromium behavior and accessibility | 138 tests pass.                                          |
+| Firefox behavior and accessibility  | 134 tests pass; four forced-colors checks are skipped.   |
+| WebKit behavior and accessibility   | 134 tests pass; four forced-colors checks are skipped.   |
+| macOS Chromium visual checks        | 84 baselines cover all three accents and both densities. |
+| Isolated package consumer           | 18 browser, accent and density combinations pass.        |
+
+Earlier dated records below retain their original counts and theme scope.
+
 This page keeps dated evidence for the component expansion and readiness changes.
 Test totals apply to the stated revisions and selections.
 Later changes need their own checks.

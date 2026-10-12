@@ -1,13 +1,13 @@
 export const JP_ACCENT_ATTRIBUTE = 'data-jp-accent';
 export const JP_DENSITY_ATTRIBUTE = 'data-jp-density';
 
-export const JP_ACCENT_FAMILIES = ['neon', 'cobalt'] as const;
+export const JP_ACCENT_FAMILIES = ['gold', 'neon', 'cobalt'] as const;
 export type JpAccentFamily = (typeof JP_ACCENT_FAMILIES)[number];
 
 export const JP_DENSITY_MODES = ['default', 'compact'] as const;
 export type JpDensityMode = (typeof JP_DENSITY_MODES)[number];
 
-export const JP_DEFAULT_ACCENT: JpAccentFamily = 'neon';
+export const JP_DEFAULT_ACCENT: JpAccentFamily = 'gold';
 export const JP_DEFAULT_DENSITY: JpDensityMode = 'default';
 
 export const JP_GENERATED_TOKEN_FILES = [
@@ -17,8 +17,8 @@ export const JP_GENERATED_TOKEN_FILES = [
 ] as const;
 
 export function getAccentSelector(accent: JpAccentFamily): string {
-  if (accent === 'neon') {
-    return ':root, [data-jp-accent="neon"]';
+  if (accent === JP_DEFAULT_ACCENT) {
+    return `:root, [data-jp-accent="${accent}"]`;
   }
 
   return `[data-jp-accent="${accent}"]`;

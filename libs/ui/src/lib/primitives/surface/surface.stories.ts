@@ -28,9 +28,6 @@ function shadowMatBackgroundForTone(tone: JpSurfaceTone): string {
 const meta: Meta<JpSurface> = {
   title: 'Primitives/Layout/Surface',
   component: JpSurface,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

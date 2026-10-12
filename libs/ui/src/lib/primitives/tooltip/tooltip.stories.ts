@@ -7,9 +7,6 @@ import { JpTooltip } from './tooltip';
 const meta: Meta<JpTooltip> = {
   title: 'Primitives/Feedback/Tooltip',
   component: JpTooltip,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'centered',
   },

@@ -48,7 +48,7 @@ export async function checkConsumerRuntime(directory, diagnostics) {
     for (const name of selected) {
       const browser = await engines[name].launch();
       try {
-        for (const accent of ['neon', 'cobalt'])
+        for (const accent of ['gold', 'neon', 'cobalt'])
           for (const density of ['default', 'compact']) {
             const context = await browser.newContext({
               viewport: { width: 1280, height: 900 },

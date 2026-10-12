@@ -20,7 +20,10 @@
   text-align: start;
   text-decoration: none;
   cursor: pointer;
-  transition: var(--jp-motion-transition-base);
+  transition:
+    background-color var(--jp-motion-duration-fast)
+      var(--jp-motion-easing-standard),
+    color var(--jp-motion-duration-fast) var(--jp-motion-easing-standard);
   box-sizing: border-box;
   position: relative;
 }
@@ -46,16 +49,6 @@
 :host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root {
   background: var(--jp-color-nav-item-bg-active);
   color: var(--jp-color-nav-item-text-active);
-}
-
-:host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root::before {
-  content: '';
-  position: absolute;
-  inset-inline-start: 0;
-  inset-block: var(--jp-space-2xs);
-  width: var(--jp-space-2xs);
-  border-radius: var(--jp-radius-full);
-  background: var(--jp-color-nav-item-indicator);
 }
 
 .jp-app-shell-nav-item__icon {
@@ -102,11 +95,6 @@
   :host-context(.jp-app-shell--collapsed)
     .jp-app-shell-nav-item__icon:not(:empty) {
     display: inline-flex;
-  }
-
-  :host-context(.jp-app-shell--collapsed).jp-app-shell-nav-item--active
-    .jp-app-shell-nav-item__root::before {
-    display: none;
   }
 }
 

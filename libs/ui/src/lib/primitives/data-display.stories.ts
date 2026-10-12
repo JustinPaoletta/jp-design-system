@@ -54,9 +54,6 @@ const rows = [
 const meta: Meta<DataDisplayArgs> = {
   title: 'Compositions/Data Display',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [
@@ -95,7 +92,7 @@ const meta: Meta<DataDisplayArgs> = {
         columns,
         rows,
         documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
         documentDensity:
           document.documentElement.getAttribute('data-jp-density') ?? 'default',
         statusTone(status: string) {

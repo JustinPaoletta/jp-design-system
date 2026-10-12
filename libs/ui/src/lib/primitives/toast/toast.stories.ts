@@ -33,9 +33,6 @@ class ToastStoryHost {
 const meta: Meta = {
   title: 'Primitives/Feedback/Toast',
   component: JpToast,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

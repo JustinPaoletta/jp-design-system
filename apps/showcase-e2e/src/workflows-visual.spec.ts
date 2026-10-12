@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
     page.getByRole('heading', { name: 'Everyday workflows', exact: true }),
   ).toBeVisible();
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact'])
     test(
       'workflow visual desktop ' + accent + ' ' + density,

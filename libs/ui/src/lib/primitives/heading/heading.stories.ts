@@ -10,9 +10,6 @@ import { JpHeading } from './heading';
 const meta: Meta<JpHeading> = {
   title: 'Primitives/Typography/Heading',
   component: JpHeading,
-  globals: {
-    accent: 'neon',
-  },
   render: (args) => ({
     props: {
       ...args,

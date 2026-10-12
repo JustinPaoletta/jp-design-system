@@ -114,10 +114,11 @@ const preview: Preview = {
   globalTypes: {
     accent: {
       name: 'Accent',
-      defaultValue: 'neon',
+      defaultValue: 'gold',
       toolbar: {
         icon: 'paintbrush',
         items: [
+          { value: 'gold', title: 'Gold' },
           { value: 'neon', title: 'Neon' },
           { value: 'cobalt', title: 'Cobalt' },
         ],
@@ -136,6 +137,7 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
+    accent: 'gold',
     backgrounds: { value: 'dark' },
   },
   decorators: [
@@ -164,7 +166,7 @@ const preview: Preview = {
 
       root.setAttribute(
         'data-jp-accent',
-        accent === 'cobalt' ? 'cobalt' : 'neon',
+        accent === 'cobalt' || accent === 'neon' ? accent : 'gold',
       );
       root.style.colorScheme = 'dark';
 

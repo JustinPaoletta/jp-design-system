@@ -28,9 +28,6 @@ class PopoverStoryHost {
 const meta: Meta<PopoverStoryHost> = {
   title: 'Primitives/Feedback/Popover',
   component: JpPopover,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'centered',
   },

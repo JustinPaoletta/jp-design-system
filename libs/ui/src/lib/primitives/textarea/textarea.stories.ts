@@ -6,9 +6,6 @@ import { JpTextarea } from './textarea';
 const meta: Meta<JpTextarea> = {
   title: 'Primitives/Controls/Textarea',
   component: JpTextarea,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

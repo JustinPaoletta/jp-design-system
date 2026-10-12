@@ -11,9 +11,6 @@ import { JpStack } from './stack';
 const meta: Meta<JpStack> = {
   title: 'Primitives/Layout/Stack',
   component: JpStack,
-  globals: {
-    accent: 'neon',
-  },
   render: (args) => ({
     props: { ...args, asTag: args.as },
     template: `

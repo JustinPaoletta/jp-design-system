@@ -200,7 +200,7 @@ class FeedbackOverlaysCompositionHost {
   menuOpen = false;
 
   readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
+    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
   readonly documentDensity =
     document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
@@ -212,9 +212,6 @@ class FeedbackOverlaysCompositionHost {
 const meta: Meta = {
   title: 'Compositions/Feedback Overlays',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [FeedbackOverlaysCompositionHost],

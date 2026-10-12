@@ -20,9 +20,6 @@ type BoxStoryArgs = {
 const meta: Meta<BoxStoryArgs> = {
   title: 'Primitives/Layout/Box',
   component: JpBox,
-  globals: {
-    accent: 'neon',
-  },
   render: (args) => ({
     props: {
       ...args,

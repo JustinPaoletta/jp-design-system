@@ -197,7 +197,7 @@ finally { await run.stop(); }
   run(process.execPath, [
     '--input-type=module',
     '-e',
-    'import { JP_DEFAULT_ACCENT } from "@jp-design-system/tokens"; if (JP_DEFAULT_ACCENT !== "neon") throw new Error("Token ESM import failed")',
+    'import { JP_DEFAULT_ACCENT } from "@jp-design-system/tokens"; if (JP_DEFAULT_ACCENT !== "gold") throw new Error("Token ESM import failed")',
   ]);
   report.runtime = await checkConsumerRuntime(
     path.join(temporary, 'dist/consumer/browser'),

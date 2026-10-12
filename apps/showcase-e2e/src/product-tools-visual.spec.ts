@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
     page.getByRole('heading', { name: 'Product tools', exact: true }),
   ).toBeVisible();
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact']) {
     test(`product tools visual desktop ${accent} ${density}`, async ({
       page,

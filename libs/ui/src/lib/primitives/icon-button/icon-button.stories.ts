@@ -6,9 +6,6 @@ import { JpIconButton } from './icon-button';
 const meta: Meta<JpIconButton> = {
   title: 'Primitives/Controls/Icon Button',
   component: JpIconButton,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'centered',
   },

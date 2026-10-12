@@ -139,9 +139,6 @@ class AssistantAsyncStoryHost {
 const meta: Meta<JpAssistantPanel> = {
   title: 'Primitives/Assistant/Panel',
   component: JpAssistantPanel,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'fullscreen',
     a11y: { test: 'error' },

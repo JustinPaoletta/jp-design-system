@@ -37,9 +37,6 @@ class DialogStoryHost {
 const meta: Meta<DialogStoryHost> = {
   title: 'Primitives/Feedback/Dialog',
   component: JpDialog,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

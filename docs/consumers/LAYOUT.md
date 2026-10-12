@@ -69,11 +69,12 @@ assistant service is `providedIn: 'root'`. Place one `jp-assistant-panel`.
 ## Themes
 
 The system is dark-first. `tokens.css` sets semantic colors on `:root`.
-Accent families are `neon` (the default, including when the attribute is
-absent) and `cobalt` (`data-jp-accent="cobalt"`). Accent colors primary
-actions, focus, active navigation, and selection. It is not a page
-background. Semantic success, warning, error, and info stay independent of
-the accent.
+Accent families are `gold` (the default, including when the attribute is
+absent), `neon` and `cobalt` (`data-jp-accent="cobalt"`). Accent colors primary
+actions, focus and selection.
+
+Active navigation uses a background change. The accent is not a page background.
+Semantic success, warning, error, and info stay independent of the accent.
 
 There is no light component theme. The Storybook light stage is a mat behind
 the story page. Docs in Storybook stay on a dark stage.

@@ -34,9 +34,6 @@ class DropdownStoryHost {
 const meta: Meta<DropdownStoryHost> = {
   title: 'Primitives/Feedback/Dropdown Menu',
   component: JpDropdownMenu,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'centered',
   },

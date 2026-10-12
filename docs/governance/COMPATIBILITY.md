@@ -50,14 +50,14 @@ a break. Adding a new export is not a break.
 ### Tokens
 
 The styling contract is the semantic custom properties documented in
-`libs/tokens/README.md`, switched with `data-jp-accent` (`neon` | `cobalt`) and
+`libs/tokens/README.md`, switched with `data-jp-accent` (`gold` | `neon` | `cobalt`) and
 `data-jp-density` (`default` | `compact`).
 
 Breaking:
 
 - Remove or rename a documented semantic custom property.
 - Change `data-jp-accent` or `data-jp-density` accepted values, or the default
-  accent (`neon`) or density (`default`).
+  accent (`gold`) or density (`default`).
 - Change the meaning of a semantic group: success, warning, error, and info
   must stay distinct from accent (principle 9). Heading levels must keep
   one token per `h1`–`h6`.

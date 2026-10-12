@@ -125,7 +125,7 @@ class AssistantCompositionHost {
   mobileNavOpen = false;
 
   readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
+    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
   readonly documentDensity =
     document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
@@ -153,9 +153,6 @@ class AssistantCompositionHost {
 const meta: Meta<JpAppShell> = {
   title: 'Compositions/Assistant System',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [AssistantCompositionHost],
@@ -194,7 +191,6 @@ export const Default: Story = {
  */
 export const Compact: Story = {
   globals: {
-    accent: 'neon',
     density: 'compact',
   },
 };

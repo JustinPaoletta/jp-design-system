@@ -140,6 +140,11 @@ describe('token source contracts', () => {
       .sort();
 
     expect(cobaltKeys).toEqual(neonKeys);
+    expect(
+      flattenTokenValues(readJson('semantic/accent.gold.json'))
+        .map((entry) => entry.path)
+        .sort(),
+    ).toEqual(neonKeys);
   });
 
   it('compact density overrides only spacing and control sizes', () => {
@@ -252,7 +257,8 @@ describe('generated artifacts', () => {
 
 describe('token metadata API', () => {
   it('returns expected selectors for accent and density', () => {
-    expect(getAccentSelector('neon')).toContain(':root');
+    expect(getAccentSelector('gold')).toContain(':root');
+    expect(getAccentSelector('neon')).toBe('[data-jp-accent="neon"]');
     expect(getAccentSelector('cobalt')).toBe('[data-jp-accent="cobalt"]');
     expect(getDensitySelector('default')).toBe(':root');
     expect(getDensitySelector('compact')).toBe('[data-jp-density="compact"]');

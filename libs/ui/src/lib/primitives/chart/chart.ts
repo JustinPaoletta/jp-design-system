@@ -14,6 +14,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import type { Chart, ChartConfiguration } from 'chart.js';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
@@ -25,7 +26,7 @@ export interface JpChartSeries {
 /** Optional Chart.js bar/line integration, with equivalent native data controls. */
 @Component({
   selector: 'jp-chart',
-  imports: [JpButton],
+  imports: [JpButton, NgTemplateOutlet],
   templateUrl: './chart.html',
   styleUrl: './chart.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +39,7 @@ export class JpChart {
   readonly id = input.required<string>();
   readonly label = input.required<string>();
   readonly description = input('');
+  readonly controlsCollapsed = input(false, { transform: booleanAttribute });
   readonly type = input<'bar' | 'line'>('bar');
   readonly labels = input<readonly string[]>([]);
   readonly series = input<readonly JpChartSeries[]>([]);
@@ -164,6 +166,7 @@ export class JpChart {
               engine.CategoryScale,
               engine.LinearScale,
               engine.Tooltip,
+              engine.Filler,
             );
             const style =
               this.host.nativeElement.ownerDocument.defaultView?.getComputedStyle(
@@ -179,17 +182,22 @@ export class JpChart {
                 labels,
                 datasets: series.map((s) => {
                   const i = allSeries.findIndex((v) => v.id === s.id);
+                  const seriesColor = color('series-' + (i + 1));
                   return {
                     label: s.label,
                     data: [...s.values],
-                    backgroundColor: color('series-' + (i + 1)),
+                    backgroundColor:
+                      type === 'line' && /^#[\da-f]{6}$/i.test(seriesColor)
+                        ? seriesColor + '18'
+                        : seriesColor,
+                    fill: type === 'line',
                     borderColor: color('series-' + (i + 1)),
                     borderWidth: 2,
                     borderDash: i ? [i * 3, 3] : [],
                     pointStyle: (
                       ['circle', 'rect', 'triangle', 'rectRot'] as const
                     )[i],
-                    pointRadius: 4,
+                    pointRadius: type === 'line' ? 2 : 4,
                     tension: 0,
                   };
                 }),

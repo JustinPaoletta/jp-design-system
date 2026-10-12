@@ -7,9 +7,6 @@ import { JpSwitch } from './switch';
 const meta: Meta<JpSwitch> = {
   title: 'Primitives/Controls/Switch',
   component: JpSwitch,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

@@ -11,9 +11,6 @@ import { JpInline } from './inline';
 const meta: Meta<JpInline> = {
   title: 'Primitives/Layout/Inline',
   component: JpInline,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

@@ -61,7 +61,7 @@ Open and closed states run the WCAG 2.1 A/AA axe selection.
 The default local browser is Chromium.
 Install its Playwright binary before the smoke check.
 On Linux, add `--with-deps` to the browser installation command.
-CI and the release dry-run use Chromium, Firefox and WebKit across both accents and densities.
+CI and the release dry-run use Chromium, Firefox and WebKit across all three accents and both densities.
 
 ```sh
 npm exec -- playwright install chromium firefox webkit

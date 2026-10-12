@@ -45,8 +45,11 @@ Chart.js canvas contents must have an accessible alternative, as described in it
   swatches, distinct line dashes/point shapes, and semantic series colors.
 - Semantic tokens `color.chart.series-1` through `series-4`, `axis`, and `grid`
   come from existing accent/neutral primitives. The first two series swap across
-  neon/cobalt so they remain distinct. Theme and density attributes inherited
+  gold/neon/cobalt so they remain distinct. Theme and density attributes inherited
   from ancestors are observed to redraw with current resolved CSS values.
+- Set `controlsCollapsed` to `true` to put legend and inspection controls inside "View chart data".
+  The default is `false`. Forced-colors mode opens the data disclosure.
+- Set `--jp-chart-plot-height` to change the plot height. The default is `20rem`.
 - Built-in copy is supplied through `provideJpMessages({ chart: … })`.
 
 Not included: stacked/pie/time/scatter charts, arbitrary Chart.js configuration,

@@ -32,9 +32,6 @@ type ControlsFormArgs = {
 const meta: Meta<ControlsFormArgs> = {
   title: 'Compositions/Controls Form',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [
@@ -75,7 +72,7 @@ const meta: Meta<ControlsFormArgs> = {
         sidebarCollapsed,
         mobileNavOpen,
         documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
         documentDensity:
           document.documentElement.getAttribute('data-jp-density') ?? 'default',
         roleOptions: [

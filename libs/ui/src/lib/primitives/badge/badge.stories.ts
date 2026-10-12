@@ -17,9 +17,6 @@ type BadgeStoryArgs = {
 const meta: Meta<BadgeStoryArgs> = {
   title: 'Primitives/Data Display/Badge',
   component: JpBadge,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

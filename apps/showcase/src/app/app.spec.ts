@@ -202,7 +202,7 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent()).toBe('neon');
+    expect(fixture.componentInstance.accent()).toBe('gold');
     expect(fixture.componentInstance.density()).toBe('default');
   });
 
@@ -303,7 +303,7 @@ describe('Showcase dashboard pages', () => {
 
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
-    expect(fixture.componentInstance.accent()).toBe('neon');
+    expect(fixture.componentInstance.accent()).toBe('gold');
 
     document.documentElement.setAttribute('data-jp-accent', 'cobalt');
     document.documentElement.setAttribute('data-jp-density', 'compact');

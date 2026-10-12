@@ -218,6 +218,7 @@ confirmations can still layer over the panel.
 `tokens.css` includes:
 
 - `:root` variables
+- `data-jp-accent="gold"` (default)
 - `data-jp-accent="neon"`
 - `data-jp-accent="cobalt"`
 - compact overrides under `data-jp-density="compact"` (also emitted separately)

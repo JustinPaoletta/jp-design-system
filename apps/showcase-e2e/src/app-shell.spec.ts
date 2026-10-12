@@ -16,8 +16,13 @@ test.describe('app shell', () => {
     await expect(shell).toBeVisible();
     await expect(sidebar).toBeVisible();
     await expect(main).toBeVisible();
-    await expect(page.locator('h1')).toContainText('App Shell Dashboard');
+    await expect(page.locator('h1')).toContainText('Overview');
     await expect(activeNav).toContainText('App Shell');
+    expect(
+      await activeNav
+        .locator('.jp-app-shell-nav-item__root')
+        .evaluate((element) => getComputedStyle(element, '::before').content),
+    ).toBe('none');
     await expect(collapseToggle).toHaveAttribute('aria-expanded', 'true');
 
     await collapseToggle.click();

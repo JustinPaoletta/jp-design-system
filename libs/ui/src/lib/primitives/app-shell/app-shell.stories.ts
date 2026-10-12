@@ -18,9 +18,6 @@ type AppShellStoryArgs = {
 const meta: Meta<AppShellStoryArgs> = {
   title: 'Primitives/Layout/App Shell',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     a11y: { test: 'error' },
   },

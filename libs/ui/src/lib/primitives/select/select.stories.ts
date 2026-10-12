@@ -6,9 +6,6 @@ import { JpSelect } from './select';
 const meta: Meta<JpSelect> = {
   title: 'Primitives/Controls/Select',
   component: JpSelect,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

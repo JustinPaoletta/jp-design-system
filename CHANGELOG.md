@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Use charcoal surfaces, smaller corners and low shadows across components.
+- Add the `gold` accent as the default. Keep explicit `neon` and `cobalt` accents available.
+- Remove the selected navigation line. Use a background change for selection.
+- Update the Overview dashboard examples. Add optional chart controls inside the native data disclosure. Keep chart animation disabled.
+
 - Update the locked Handlebars development dependency to 4.7.10. Record current audit results and remaining unpatched development-tool findings.
 
 - Add Firefox functional and accessibility CI, native overlay fallback tests, and installed tarball runtime checks across three browser engines.

@@ -41,9 +41,6 @@ class ChipStoryHost {
 const meta: Meta<ChipStoryArgs> = {
   title: 'Primitives/Controls/Chip',
   component: JpChip,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

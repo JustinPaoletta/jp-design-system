@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
     'false',
   );
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact'])
     test(
       'advanced layout visual desktop ' + accent + ' ' + density,

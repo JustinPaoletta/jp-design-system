@@ -7,9 +7,6 @@ import { JpCheckbox } from './checkbox';
 const meta: Meta<JpCheckbox> = {
   title: 'Primitives/Controls/Checkbox',
   component: JpCheckbox,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },

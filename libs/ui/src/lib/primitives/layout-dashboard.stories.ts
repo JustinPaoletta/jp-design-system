@@ -140,7 +140,7 @@ const meta: Meta = {
     `,
     props: {
       documentAccent:
-        document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+        document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
       documentDensity:
         document.documentElement.getAttribute('data-jp-density') ?? 'default',
     },

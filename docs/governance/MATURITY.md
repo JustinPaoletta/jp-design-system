@@ -213,8 +213,8 @@ and `libs/tokens/src/lib/token-build-script.spec.ts`.
 
 | Entry                  | Maturity | What consumers get                                                                                                                                                                                                                                                                                   | Limitation                                                                                |
 | ---------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `.`                    | stable   | `JP_ACCENT_ATTRIBUTE`, `JP_DENSITY_ATTRIBUTE`, `JP_ACCENT_FAMILIES`, `JpAccentFamily`, `JP_DENSITY_MODES`, `JpDensityMode`, `JP_DEFAULT_ACCENT` (`neon`), `JP_DEFAULT_DENSITY` (`default`), `JP_GENERATED_TOKEN_FILES`, `getAccentSelector`, `getDensitySelector`, `isAccentFamily`, `isDensityMode` | Helpers do not touch the DOM and do not inject CSS.                                       |
-| `./tokens.css`         | stable   | `:root` semantic variables, `data-jp-accent="neon"`, `data-jp-accent="cobalt"`, and compact overrides                                                                                                                                                                                                | Dark-first. No light component theme. The Storybook light stage is a mat behind the page. |
+| `.`                    | stable   | `JP_ACCENT_ATTRIBUTE`, `JP_DENSITY_ATTRIBUTE`, `JP_ACCENT_FAMILIES`, `JpAccentFamily`, `JP_DENSITY_MODES`, `JpDensityMode`, `JP_DEFAULT_ACCENT` (`gold`), `JP_DEFAULT_DENSITY` (`default`), `JP_GENERATED_TOKEN_FILES`, `getAccentSelector`, `getDensitySelector`, `isAccentFamily`, `isDensityMode` | Helpers do not touch the DOM and do not inject CSS.                                       |
+| `./tokens.css`         | stable   | `:root` semantic variables, `data-jp-accent="gold"`, `data-jp-accent="neon"`, `data-jp-accent="cobalt"`, and compact overrides                                                                                                                                                                       | Dark-first. No light component theme. The Storybook light stage is a mat behind the page. |
 | `./tokens.compact.css` | stable   | Compact overrides alone                                                                                                                                                                                                                                                                              | Does not replace `tokens.css`.                                                            |
 | `./tokens.json`        | stable   | Resolved token document, including primitive palettes and semantic aliases                                                                                                                                                                                                                           | Renaming a JSON key is a break. UI code must keep using semantic CSS variables.           |
 
@@ -223,7 +223,7 @@ table, overlay, tooltip, toast, assistant, typography, z-index) are part of the
 `stable` CSS entry. Empty state has no dedicated color tokens; it reuses surface
 and foreground tokens.
 
-Accent families: `neon` (default), `cobalt`. Density: `default`, `compact`
+Accent families: `gold` (default), `neon`, `cobalt`. Density: `default`, `compact`
 under `data-jp-density="compact"`.
 
 ---

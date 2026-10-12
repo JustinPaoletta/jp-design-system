@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   ).toBeVisible();
 });
 
-for (const accent of ['neon', 'cobalt']) {
+for (const accent of ['gold', 'neon', 'cobalt']) {
   for (const density of ['default', 'compact']) {
     test(`component expansion visual desktop ${accent} ${density}`, async ({
       page,

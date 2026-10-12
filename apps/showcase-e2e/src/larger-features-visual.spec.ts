@@ -15,7 +15,7 @@ async function ready(page: import('@playwright/test').Page, route: string) {
     );
 }
 for (const route of routes) {
-  for (const accent of ['neon', 'cobalt'])
+  for (const accent of ['gold', 'neon', 'cobalt'])
     for (const density of ['default', 'compact'])
       test(
         'larger features visual desktop ' +

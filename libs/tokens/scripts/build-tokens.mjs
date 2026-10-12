@@ -15,6 +15,7 @@ const TOKENS_ROOT = path.resolve(REPO_ROOT, TOKEN_SOURCE_ROOT);
 const DEFAULT_OUTPUT = path.join(REPO_ROOT, 'libs/tokens/src/generated');
 const CSS_PARTIALS = {
   base: 'base.css',
+  accentGold: 'accent-gold.css',
   accentNeon: 'accent-neon.css',
   accentCobalt: 'accent-cobalt.css',
   compact: 'compact.css',
@@ -176,6 +177,7 @@ async function loadTokenSources() {
   }
 
   const semanticBase = await readJson('semantic/base.json');
+  const accentGold = await readJson('semantic/accent.gold.json');
   const accentNeon = await readJson('semantic/accent.neon.json');
   const accentCobalt = await readJson('semantic/accent.cobalt.json');
   const densityDefault = await readJson('modes/density.default.json');
@@ -184,6 +186,7 @@ async function loadTokenSources() {
   return {
     primitives,
     semanticBase,
+    accentGold,
     accentNeon,
     accentCobalt,
     densityDefault,
@@ -195,6 +198,7 @@ function buildResolvedJson(sources) {
   const {
     primitives,
     semanticBase,
+    accentGold,
     accentNeon,
     accentCobalt,
     densityDefault,
@@ -205,13 +209,14 @@ function buildResolvedJson(sources) {
     meta: {
       accentAttribute: 'data-jp-accent',
       densityAttribute: 'data-jp-density',
-      defaultAccent: 'neon',
+      defaultAccent: 'gold',
       defaultDensity: 'default',
     },
     primitive: unwrapTokenTree(primitives.primitive, primitives),
     semantic: {
       base: unwrapTokenTree(semanticBase, deepMerge(primitives, semanticBase)),
       accent: {
+        gold: unwrapTokenTree(accentGold, deepMerge(primitives, accentGold)),
         neon: unwrapTokenTree(accentNeon, deepMerge(primitives, accentNeon)),
         cobalt: unwrapTokenTree(
           accentCobalt,
@@ -267,12 +272,21 @@ export async function buildTokens({
   try {
     // Validate every source before passing it to Style Dictionary or merging it.
     const sources = await loadTokenSources();
-    const variants = ['base', 'accentNeon', 'accentCobalt', 'compact'];
+    const variants = [
+      'base',
+      'accentGold',
+      'accentNeon',
+      'accentCobalt',
+      'compact',
+    ];
     for (const variant of variants) {
       await runStyleDictionaryVariant(variant, tempDir);
     }
 
     const baseCss = await readPartial(path.join(tempDir, CSS_PARTIALS.base));
+    const accentGoldCss = await readPartial(
+      path.join(tempDir, CSS_PARTIALS.accentGold),
+    );
     const accentNeonCss = await readPartial(
       path.join(tempDir, CSS_PARTIALS.accentNeon),
     );
@@ -296,7 +310,7 @@ export async function buildTokens({
     // compact rule is appended last so it wins over `:root` (equal specificity)
     // when the density attribute is present. tokens.compact.css is still emitted
     // as a standalone partial for consumers that only want the overrides.
-    const combinedCss = `${header}\n\n${baseCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n\n${compactCss}\n`;
+    const combinedCss = `${header}\n\n${baseCss}\n\n${accentGoldCss}\n\n${accentNeonCss}\n\n${accentCobaltCss}\n\n${compactCss}\n`;
     const compactOutput = `${header}\n\n${compactCss}\n`;
 
     const resolvedJson = buildResolvedJson(sources);

@@ -119,7 +119,7 @@ That spec also covers menu-to-dialog handoff, nested Escape, popover clipping an
 ## Visual matrix
 
 macOS Chromium only. Motion is reduced and animations are disabled while
-capturing. The existing suite has 66 baselines covering recipes, expansion,
+capturing. The existing suite has 84 baselines covering recipes, expansion,
 product tools, workflows, advanced layout, and the seven larger features.
 Theme, density, viewport and open-state scope are recorded in
 [Verification](VERIFICATION.md). The [manual checklist](../../MANUAL_QA.md)

@@ -11,9 +11,6 @@ import { JpText } from './text';
 const meta: Meta<JpText> = {
   title: 'Primitives/Typography/Text',
   component: JpText,
-  globals: {
-    accent: 'neon',
-  },
   render: (args) => ({
     props: {
       ...args,
