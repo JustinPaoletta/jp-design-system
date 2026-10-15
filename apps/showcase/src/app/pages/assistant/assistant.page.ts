@@ -46,22 +46,22 @@ export class AssistantPage implements OnDestroy {
   readonly density = this.theme.density;
 
   readonly deploymentContext: JpAssistantContext = {
-    label: 'Deployment dep-1042',
-    description: 'Production rollout',
-    entityType: 'deployment',
-    entityId: 'dep-1042',
+    label: 'Game FAL-1042',
+    description: 'Falcons 5, Bears 3. Final score.',
+    entityType: 'game',
+    entityId: 'FAL-1042',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Service payments-api',
-    description: 'Status: Degraded',
+    label: 'Player Alex Morgan',
+    description: 'Status: Day to day',
     entityType: 'service',
     entityId: 'payments-api',
   };
 
   readonly filterContext: JpAssistantContext = {
-    label: 'Environment filters',
-    description: 'Production + staging',
+    label: 'Squad filters',
+    description: 'Varsity + reserve',
     entityType: 'filters',
   };
 
@@ -77,16 +77,16 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'Tone refinement demo — system meta stays muted.',
+      content: 'The Falcons won 5–3 against the Lakeview Bears.',
     });
     this.assistant.addMessage({
       role: 'assistant',
       content:
-        'Assistant replies use a calm sunken surface. Accent is reserved for send and context.',
+        'The Falcons won 5–3. Alex Morgan and Jordan Davis drove in runs.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'How should assistant chrome use accent?',
+      content: 'Who is pitching in the next game?',
     });
   }
 

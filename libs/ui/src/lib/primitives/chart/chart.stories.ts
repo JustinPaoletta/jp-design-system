@@ -7,11 +7,11 @@ const meta: Meta<JpChart> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'story-chart',
-    label: 'Completed work',
+    label: 'Runs by month',
     labels: ['April', 'May', 'June'],
     series: [
-      { id: 'product', label: 'Product', values: [32, 44, 38] },
-      { id: 'platform', label: 'Platform', values: [25, 28, 40] },
+      { id: 'product', label: 'Falcons', values: [32, 44, 38] },
+      { id: 'platform', label: 'Bears', values: [25, 28, 40] },
     ],
   },
 };
@@ -22,7 +22,7 @@ export const Line: Story = { args: { type: 'line' } };
 export const Empty: Story = { args: { labels: [], series: [] } };
 export const Loading: Story = { args: { loading: true } };
 export const Error: Story = {
-  args: { error: 'Analytics are temporarily unavailable.' },
+  args: { error: 'Player statistics are temporarily unavailable. Try again.' },
 };
 export const AccessibleData: Story = {
   play: async ({ canvasElement }) => {
@@ -33,8 +33,8 @@ export const AccessibleData: Story = {
         'true',
       ),
     );
-    await userEvent.click(c.getByRole('button', { name: 'Product' }));
-    await expect(c.getByRole('button', { name: 'Product' })).toHaveAttribute(
+    await userEvent.click(c.getByRole('button', { name: 'Falcons' }));
+    await expect(c.getByRole('button', { name: 'Falcons' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
@@ -42,13 +42,11 @@ export const AccessibleData: Story = {
       c.getByRole('combobox', { name: 'Inspect category' }),
       '2',
     );
-    await expect(c.getByText('Platform · June')).toBeVisible();
+    await expect(c.getByText('Bears · June')).toBeVisible();
     await userEvent.click(
       c.getByText('View chart data', { selector: 'summary' }),
     );
-    await expect(
-      c.getByRole('table', { name: 'Completed work' }),
-    ).toBeVisible();
+    await expect(c.getByRole('table', { name: 'Runs by month' })).toBeVisible();
     await expect(c.getByRole('cell', { name: '38' })).toBeVisible();
   },
 };

@@ -6,7 +6,7 @@ const meta: Meta<JpTimePicker> = {
   component: JpTimePicker,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Time Picker',
+    label: 'First pitch',
     hint: 'Uses your browser’s locale and native picker',
     min: '09:00',
     max: '17:00',
@@ -18,7 +18,7 @@ type Story = StoryObj<JpTimePicker>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(
-      within(canvasElement).getByLabelText('Time Picker'),
+      within(canvasElement).getByLabelText('First pitch'),
     ).toHaveAttribute('type', 'time');
   },
 };

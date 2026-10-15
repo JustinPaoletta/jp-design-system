@@ -6,9 +6,6 @@ import { JpTextarea } from './textarea';
 const meta: Meta<JpTextarea> = {
   title: 'Primitives/Controls/Textarea',
   component: JpTextarea,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },
@@ -23,8 +20,8 @@ const meta: Meta<JpTextarea> = {
     rows: { control: 'number' },
   },
   args: {
-    label: 'Notes',
-    hint: 'Optional context for reviewers.',
+    label: 'Coach notes',
+    hint: 'Add notes for the coaches.',
     error: '',
     rows: 4,
     size: 'md',
@@ -65,7 +62,7 @@ export const Default: Story = {
 export const Invalid: Story = {
   args: {
     invalid: true,
-    error: 'Notes are required.',
+    error: 'Add notes for the coaches.',
     hint: '',
   },
   play: async ({ canvasElement }) => {

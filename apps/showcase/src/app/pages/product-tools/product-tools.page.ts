@@ -78,17 +78,17 @@ export class ProductToolsPage {
   readonly checklist = [
     {
       id: 'quality',
-      label: 'Quality checks',
+      label: 'Game preparation',
       children: [
-        { id: 'tests', label: 'Run tests' },
-        { id: 'accessibility', label: 'Review accessibility' },
-        { id: 'approval', label: 'External approval', disabled: true },
+        { id: 'tests', label: 'Check the lineup' },
+        { id: 'accessibility', label: 'Check the equipment' },
+        { id: 'approval', label: 'League approval', disabled: true },
       ],
     },
     {
       id: 'notes',
-      label: 'Write release notes',
-      description: 'Describe changes for consumers.',
+      label: 'Write the game report',
+      description: 'Record the score and key plays.',
     },
   ];
   steps(): readonly JpStep[] {
@@ -102,7 +102,7 @@ export class ProductToolsPage {
             : this.submitted() && (this.email.invalid || this.seats.invalid)
               ? 'error'
               : 'upcoming',
-        description: 'Notification email and seat count',
+        description: 'Coach email and player count',
       },
       {
         id: 'review',
@@ -115,10 +115,10 @@ export class ProductToolsPage {
   readonly events = [
     {
       id: 'created',
-      title: 'Project created',
+      title: 'Club registered',
       timeLabel: '4 October, 10:00 UTC',
       dateTime: '2026-10-04T10:00:00Z',
-      description: 'Ada created the workspace.',
+      description: 'Alex registered the Falcons club.',
     },
     {
       id: 'reviewed',
@@ -126,15 +126,15 @@ export class ProductToolsPage {
       timeLabel: '4 October, 11:30 UTC',
       dateTime: '2026-10-04T11:30:00Z',
     },
-    { id: 'deployment', title: 'Deployment started', timeLabel: 'Just now' },
+    { id: 'deployment', title: 'Game started', timeLabel: 'Just now' },
   ];
   readonly overflow = [
-    { id: 'ada', label: 'Ada Lovelace', href: '#reviewer-ada' },
-    { id: 'grace', label: 'Grace Hopper' },
-    { id: 'linus', label: 'Linus Torvalds' },
+    { id: 'ada', label: 'Alex Morgan', href: '#reviewer-ada' },
+    { id: 'grace', label: 'Jordan Davis' },
+    { id: 'linus', label: 'Maya Chen' },
   ];
   readonly example =
-    '<jp-number-stepper label="Seats" [min]="1" [max]="10" [formControl]="seats" />';
+    '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />';
   errors() {
     if (!this.submitted()) return [];
     return [
@@ -150,7 +150,7 @@ export class ProductToolsPage {
         ? [
             {
               controlId: 'wizard-seats',
-              message: 'Choose between one and ten seats.',
+              message: 'Choose between one and ten players.',
             },
           ]
         : []),

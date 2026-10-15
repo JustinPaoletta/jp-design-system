@@ -28,12 +28,8 @@ function getToken(pathValue: string): string {
 }
 
 const DEFAULT_ACCENT_SOLID = getToken(
-  'semantic.accent.neon.color.accent.solid',
+  'semantic.accent.gold.color.accent.solid',
 );
-const COBALT_ACCENT_SOLID = getToken(
-  'semantic.accent.cobalt.color.accent.solid',
-);
-
 async function getCssVar(page: Page, variable: string) {
   return page.evaluate((name) => {
     const value = getComputedStyle(document.documentElement)
@@ -49,10 +45,10 @@ test.describe('showcase token theming', () => {
     await page.goto('/');
   });
 
-  test('uses default neon accent and default density when no data attributes are present', async ({
+  test('uses default gold accent and default density when no data attributes are present', async ({
     page,
   }) => {
-    await expect(page.locator('h1')).toContainText('Assistant System');
+    await expect(page.locator('h1')).toContainText('Falcons assistant');
 
     await expect(page.locator('html')).not.toHaveAttribute(
       'data-jp-accent',
@@ -72,17 +68,20 @@ test.describe('showcase token theming', () => {
   test('switches accent tokens when data-jp-accent changes', async ({
     page,
   }) => {
-    await page.evaluate(() => {
-      document.documentElement.setAttribute('data-jp-accent', 'cobalt');
-    });
-
-    await expect(page.locator('html')).toHaveAttribute(
-      'data-jp-accent',
-      'cobalt',
-    );
-    expect(await getCssVar(page, '--jp-color-accent-solid')).toBe(
-      COBALT_ACCENT_SOLID,
-    );
+    for (const accent of ['gold', 'neon', 'cobalt']) {
+      await page.evaluate(
+        (accent) =>
+          document.documentElement.setAttribute('data-jp-accent', accent),
+        accent,
+      );
+      await expect(page.locator('html')).toHaveAttribute(
+        'data-jp-accent',
+        accent,
+      );
+      expect(await getCssVar(page, '--jp-color-accent-solid')).toBe(
+        getToken(`semantic.accent.${accent}.color.accent.solid`),
+      );
+    }
 
     await page.evaluate(() => {
       document.documentElement.removeAttribute('data-jp-accent');

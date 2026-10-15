@@ -7,7 +7,7 @@ const meta: Meta<JpSkipLink> = {
   parameters: { layout: 'padded' },
   render: () => ({
     template:
-      '<jp-skip-link target="story-content" /><p>Press Tab to reveal the skip link.</p><main id="story-content"><h1>Main content</h1><a href="#story-content">Content link</a></main>',
+      '<jp-skip-link target="story-content" /><p>Press Tab to reveal the skip link.</p><main id="story-content"><h1>Game day</h1><a href="#story-content">View starting lineup</a></main>',
   }),
 };
 export default meta;

@@ -6,9 +6,6 @@ import { JpSelect } from './select';
 const meta: Meta<JpSelect> = {
   title: 'Primitives/Controls/Select',
   component: JpSelect,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },
@@ -21,16 +18,16 @@ const meta: Meta<JpSelect> = {
     invalid: { control: 'boolean' },
   },
   args: {
-    label: 'Role',
-    hint: 'Controls workspace permissions.',
+    label: 'Club role',
+    hint: 'Controls access to club records.',
     error: '',
     size: 'md',
     disabled: false,
     invalid: false,
     options: [
-      { value: 'admin', label: 'Admin' },
-      { value: 'editor', label: 'Editor' },
-      { value: 'viewer', label: 'Viewer' },
+      { value: 'admin', label: 'Coach' },
+      { value: 'editor', label: 'Scorekeeper' },
+      { value: 'viewer', label: 'Fan' },
     ],
   },
   render: (args) => ({
@@ -63,7 +60,7 @@ export const Default: Story = {
 export const Invalid: Story = {
   args: {
     invalid: true,
-    error: 'Select a role.',
+    error: 'Select a club role.',
     hint: '',
   },
   play: async ({ canvasElement }) => {

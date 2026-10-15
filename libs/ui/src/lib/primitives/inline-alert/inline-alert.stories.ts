@@ -11,17 +11,17 @@ export default meta;
 type Story = StoryObj<JpInlineAlert>;
 export const Information: Story = {
   args: {
-    title: 'Scheduled maintenance',
-    message: 'Deployments resume after maintenance.',
+    title: 'Field maintenance',
+    message: 'Games resume after field maintenance.',
     tone: 'info',
   },
 };
 export const Saved: Story = {
-  args: { message: 'Your changes were saved.', tone: 'success' },
+  args: { message: 'The lineup was saved.', tone: 'success' },
 };
 export const Warning: Story = {
   args: {
-    title: 'Unsaved changes',
+    title: 'Unsaved lineup',
     message: 'Save before leaving this page.',
     tone: 'warning',
   },
@@ -40,7 +40,7 @@ export const FailedWithRetry: Story = {
       @if (failed) {
         <jp-inline-alert tone="error" title="Could not save changes" message="Your draft is still available." actionLabel="Retry" (action)="retry()" />
       } @else {
-        <jp-inline-alert tone="success" message="Your changes were saved." />
+        <jp-inline-alert tone="success" message="The lineup was saved." />
       }
     `,
     };
@@ -48,8 +48,6 @@ export const FailedWithRetry: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(button);
-    await expect(canvasElement.textContent).toContain(
-      'Your changes were saved.',
-    );
+    await expect(canvasElement.textContent).toContain('The lineup was saved.');
   },
 };

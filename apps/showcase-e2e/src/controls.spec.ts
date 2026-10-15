@@ -14,7 +14,7 @@ test.describe('controls', () => {
     await expect(primaryButton).toBeVisible();
     await expect(primaryButton).toContainText('Save');
 
-    await emailInput.fill('demo@jp.dev');
-    await expect(emailInput).toHaveValue('demo@jp.dev');
+    await emailInput.fill('coach@falcons.example');
+    await expect(emailInput).toHaveValue('coach@falcons.example');
   });
 });

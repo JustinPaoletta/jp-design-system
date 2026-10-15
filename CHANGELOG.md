@@ -7,6 +7,21 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Use consistent fictional baseball copy in Storybook and Showcase. Update player names, game statistics, forms, schedules and messages.
+
+- Use charcoal surfaces, smaller corners and low shadows across components.
+- Add the `gold` accent as the default. Keep explicit `neon` and `cobalt` accents available.
+- Remove the selected navigation line. Use a background change for selection.
+- Update the Overview dashboard examples. Add optional chart controls inside the native data disclosure. Keep chart animation disabled.
+
+- Update the locked Handlebars development dependency to 4.7.10. Record current audit results and remaining unpatched development-tool findings.
+
+- Add Firefox functional and accessibility CI, native overlay fallback tests, and installed tarball runtime checks across three browser engines.
+- Fix hidden fallback overlays when `showPopover()` is unavailable.
+- Give app shell instances separate sidebar IDs. Update control relationships and regression tests.
+- Check all public class maturity and evidence records. Add direct visually hidden directive coverage.
+- Record actual Chrome 200%/400% zoom inspection and explicit maintainer completion instructions. Keep API maturity and release versions unchanged.
+
 - Automate larger-feature 320/640 CSS-pixel reflow, Chromium forced-colors
   interactions and repeated native disclosure grouping. Document remaining
   screen-reader, Windows, product-feedback and maturity/release inspections.

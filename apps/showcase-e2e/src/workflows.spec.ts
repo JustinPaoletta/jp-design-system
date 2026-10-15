@@ -12,7 +12,7 @@ test('workflows: commands filter metadata, skip disabled options, run, and resto
   const search = page.getByRole('combobox', { name: 'Search commands' });
   await expect(search).toBeFocused();
   await expect(
-    page.getByRole('option', { name: 'Archive project' }),
+    page.getByRole('option', { name: 'Archive club' }),
   ).toBeDisabled();
   await search.fill('dashboard');
   await expect(
@@ -36,8 +36,8 @@ test('workflows: commands filter metadata, skip disabled options, run, and resto
   ).toBeVisible();
   await search.press('Escape');
   await expect(opener).toBeFocused();
-  await page.getByRole('button', { name: 'Edit: Project name' }).click();
-  const name = page.getByRole('textbox', { name: 'Project name' });
+  await page.getByRole('button', { name: 'Edit: Club name' }).click();
+  const name = page.getByRole('textbox', { name: 'Club name' });
   await name.press('Control+k');
   await expect(search).toHaveCount(0);
   await name.press('Escape');
@@ -45,7 +45,7 @@ test('workflows: commands filter metadata, skip disabled options, run, and resto
 test('workflows: context actions support pointer, keyboard and visible alternatives', async ({
   page,
 }) => {
-  const region = page.getByRole('group', { name: 'Launch plan', exact: true });
+  const region = page.getByRole('group', { name: 'Game plan', exact: true });
   await region.click({ button: 'right' });
   const rename = page.getByRole('menuitem', { name: 'Rename' });
   await expect(rename).toBeFocused();
@@ -60,7 +60,7 @@ test('workflows: context actions support pointer, keyboard and visible alternati
     page.getByRole('status').filter({ hasText: 'Last action: rename' }),
   ).toBeVisible();
   await expect(region).toBeFocused();
-  await page.getByRole('button', { name: 'More actions: Launch plan' }).click();
+  await page.getByRole('button', { name: 'More actions: Game plan' }).click();
   await expect(rename).toBeFocused();
   await page.getByRole('button', { name: 'Open commands' }).click();
   await expect(
@@ -76,14 +76,12 @@ test('workflows: split actions and toggle use native keyboard controls', async (
   await expect(favorite).toHaveAttribute('aria-pressed', 'true');
   await favorite.press('Enter');
   await expect(favorite).toHaveAttribute('aria-pressed', 'false');
-  await page
-    .getByRole('button', { name: 'Create project', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'Create club', exact: true }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Last action: create' }),
   ).toBeVisible();
   const alternatives = page.getByRole('button', {
-    name: 'More actions: Create project',
+    name: 'More actions: Create club',
   });
   await alternatives.click();
   await page.getByRole('menuitem', { name: 'Rename' }).press('ArrowDown');
@@ -96,9 +94,9 @@ test('workflows: split actions and toggle use native keyboard controls', async (
 test('workflows: inline saves preserve failed drafts, retry and abort without committing', async ({
   page,
 }) => {
-  const edit = page.getByRole('button', { name: 'Edit: Project name' });
+  const edit = page.getByRole('button', { name: 'Edit: Club name' });
   await edit.click();
-  const input = page.getByRole('textbox', { name: 'Project name' });
+  const input = page.getByRole('textbox', { name: 'Club name' });
   await expect(input).toBeFocused();
   await input.fill('Updated plan');
   await input.press('Enter');
@@ -127,10 +125,10 @@ test('workflows: inline saves preserve failed drafts, retry and abort without co
 test('workflows: native date/time form validates ordered local values and focuses errors', async ({
   page,
 }) => {
-  await page.getByLabel('Launch date', { exact: true }).fill('2026-09-30');
+  await page.getByLabel('Game date', { exact: true }).fill('2026-09-30');
   await page.getByLabel('Start date', { exact: true }).fill('2026-10-15');
   await page.getByLabel('End date', { exact: true }).fill('2026-10-10');
-  await page.getByLabel('Start time', { exact: true }).fill('09:10');
+  await page.getByLabel('First pitch', { exact: true }).fill('09:10');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   const summary = page.getByRole('region', { name: 'There is a problem' });
   await expect(summary).toBeFocused();
@@ -141,10 +139,10 @@ test('workflows: native date/time form validates ordered local values and focuse
     })
     .click();
   await expect(page.getByLabel('Start date', { exact: true })).toBeFocused();
-  await page.getByLabel('Launch date', { exact: true }).fill('2026-10-10');
+  await page.getByLabel('Game date', { exact: true }).fill('2026-10-10');
   await page.getByLabel('Start date', { exact: true }).fill('2026-10-10');
   await page.getByLabel('End date', { exact: true }).fill('2026-10-15');
-  await page.getByLabel('Start time', { exact: true }).fill('09:15');
+  await page.getByLabel('First pitch', { exact: true }).fill('09:15');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Schedule saved.' }),
@@ -153,7 +151,7 @@ test('workflows: native date/time form validates ordered local values and focuse
 test('workflows: file constraints, progress, cancellation, retry and removal remain consumer-controlled', async ({
   page,
 }) => {
-  const field = page.getByLabel('Attachments', { exact: true });
+  const field = page.getByLabel('Lineup files', { exact: true });
   await field.setInputFiles([
     { name: 'notes.txt', mimeType: 'text/plain', buffer: Buffer.from('notes') },
     {
@@ -174,7 +172,7 @@ test('workflows: file constraints, progress, cancellation, retry and removal rem
   ).toBeVisible();
   await page.getByRole('button', { name: 'Start demo upload' }).click();
   await expect(
-    page.getByRole('progressbar', { name: 'Attachments: notes.txt' }),
+    page.getByRole('progressbar', { name: 'Lineup files: notes.txt' }),
   ).toHaveAttribute('aria-valuenow', '40');
   await page.getByRole('button', { name: 'Cancel upload: notes.txt' }).click();
   await expect(
@@ -183,7 +181,7 @@ test('workflows: file constraints, progress, cancellation, retry and removal rem
   await page.getByRole('button', { name: 'Fail demo upload' }).click();
   await page.getByRole('button', { name: 'Retry upload: notes.txt' }).click();
   await expect(
-    page.getByRole('progressbar', { name: 'Attachments: notes.txt' }),
+    page.getByRole('progressbar', { name: 'Lineup files: notes.txt' }),
   ).toHaveAttribute('aria-valuenow', '25');
   await page.getByRole('button', { name: 'Complete demo upload' }).click();
   await expect(page.locator('jp-file-upload')).toContainText('Uploaded');
@@ -196,31 +194,31 @@ test('workflows: inbox filters unread, recovers focus on dismissal, and retains 
   page,
 }) => {
   const inbox = page.getByRole('region', {
-    name: 'Project notifications',
+    name: 'Club messages',
     exact: true,
   });
   await inbox.getByRole('button', { name: 'Unread 2', exact: true }).click();
-  await expect(inbox).not.toContainText('Workspace invitation accepted');
+  await expect(inbox).not.toContainText('Club invitation accepted');
   await inbox
-    .getByRole('button', { name: 'Mark as read: Review requested' })
+    .getByRole('button', { name: 'Mark as read: Lineup review requested' })
     .press('Enter');
   await expect(
-    inbox.getByRole('button', { name: 'Mark as read: Release notes ready' }),
+    inbox.getByRole('button', { name: 'Mark as read: Game report ready' }),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Review requested');
+  await expect(inbox).not.toContainText('Lineup review requested');
   await inbox
     .getByRole('button', { name: 'Mark all as read', exact: true })
     .click();
   await expect(inbox.getByRole('status')).toHaveText('No unread notifications');
   await inbox.getByRole('button', { name: 'All', exact: true }).click();
-  await expect(inbox).toContainText('Workspace invitation accepted');
+  await expect(inbox).toContainText('Club invitation accepted');
   await inbox
-    .getByRole('button', { name: 'Dismiss: Release notes ready' })
+    .getByRole('button', { name: 'Dismiss: Game report ready' })
     .click();
   await expect(
     page.locator('[aria-label="Notification updates"]'),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Release notes ready');
+  await expect(inbox).not.toContainText('Game report ready');
 });
 test('workflows: skip link moves native focus and mobile RTL reflows without overflow', async ({
   page,
@@ -264,7 +262,7 @@ for (const accent of ['neon', 'cobalt'])
       ).toEqual([]);
       await page.keyboard.press('Escape');
       await page
-        .getByRole('button', { name: 'More actions: Launch plan' })
+        .getByRole('button', { name: 'More actions: Game plan' })
         .click();
       expect(
         (

@@ -218,6 +218,7 @@ confirmations can still layer over the panel.
 `tokens.css` includes:
 
 - `:root` variables
+- `data-jp-accent="gold"` (default)
 - `data-jp-accent="neon"`
 - `data-jp-accent="cobalt"`
 - compact overrides under `data-jp-density="compact"` (also emitted separately)
@@ -228,7 +229,7 @@ confirmations can still layer over the panel.
 
 ## Validation
 
-- `npm run tokens:check` verifies generated artifacts are up to date.
+- `npm run tokens:check` detects drift in generated artifacts.
 - `npm run lint` includes:
   - no hardcoded colors outside `libs/tokens`
   - no direct primitive token usage in `apps/*` or `libs/ui/*`

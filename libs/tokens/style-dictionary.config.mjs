@@ -28,6 +28,19 @@ const variants = {
       outputReferences: true,
     },
   },
+  accentGold: {
+    source: [
+      `${TOKEN_ROOT}/primitives/**/*.json`,
+      `${TOKEN_ROOT}/semantic/accent.gold.json`,
+    ],
+    transformGroup: 'css',
+    destination: 'accent-gold.css',
+    format: 'css/variables',
+    options: {
+      selector: ':root, [data-jp-accent="gold"]',
+    },
+    filter: fromFile('/semantic/accent.gold.json'),
+  },
   accentNeon: {
     source: [
       `${TOKEN_ROOT}/primitives/**/*.json`,
@@ -37,7 +50,7 @@ const variants = {
     destination: 'accent-neon.css',
     format: 'css/variables',
     options: {
-      selector: ':root, [data-jp-accent="neon"]',
+      selector: '[data-jp-accent="neon"]',
     },
     filter: fromFile('/semantic/accent.neon.json'),
   },

@@ -14,10 +14,10 @@ describe('SchedulingPage', () => {
     const event = f.nativeElement.querySelector(
       '.timed button',
     ) as HTMLButtonElement;
-    expect(event.textContent).toContain('Product planning');
+    expect(event.textContent).toContain('Lineup meeting');
     event.click();
     f.detectChanges();
-    expect(f.componentInstance.detail()).toContain('next release');
+    expect(f.componentInstance.detail()).toContain('next game');
     button(f.nativeElement, 'Close details').click();
     f.detectChanges();
     expect(f.componentInstance.selected()).toBeNull();
@@ -30,9 +30,9 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.view()).toBe('day');
     expect(f.componentInstance.date()).toBe('2026-11-01');
     expect(f.componentInstance.zone()).toBe('America/New_York');
-    expect(f.nativeElement.textContent).toContain('Before the clock change');
+    expect(f.nativeElement.textContent).toContain('Early field check');
     const secondHour = f.nativeElement.querySelector(
-      '.timed button[aria-label^="After the clock change,"]',
+      '.timed button[aria-label^="Late field check,"]',
     ) as HTMLButtonElement;
     secondHour.click();
     f.detectChanges();
@@ -50,7 +50,7 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.date()).toBe('2026-10-05');
     expect(f.componentInstance.view()).toBe('week');
     expect(f.componentInstance.selected()).toBeNull();
-    expect(f.nativeElement.textContent).toContain('Product planning');
+    expect(f.nativeElement.textContent).toContain('Lineup meeting');
   });
   it('wires timezone conversion and loading/restoration through consumer controls', () => {
     const f = TestBed.createComponent(SchedulingPage);
@@ -61,7 +61,7 @@ describe('SchedulingPage', () => {
     f.detectChanges();
     expect(f.componentInstance.zone()).toBe('UTC');
     const appointment = f.nativeElement.querySelector(
-      '.timed button[aria-label^="Product planning,"]',
+      '.timed button[aria-label^="Lineup meeting,"]',
     ) as HTMLButtonElement;
     expect(appointment.getAttribute('aria-label')).toMatch(/1:00\sPM GMT/);
     button(f.nativeElement, 'Show loading').click();
@@ -90,7 +90,7 @@ describe('SchedulingPage', () => {
     button(calendar, 'Next').click();
     f.detectChanges();
     expect(f.componentInstance.date()).toBe('2026-10-06');
-    expect(calendar.textContent).toContain('Office hours');
+    expect(calendar.textContent).toContain('Meet the coaches');
     button(calendar, 'Previous').click();
     f.detectChanges();
     expect(f.componentInstance.date()).toBe('2026-10-05');

@@ -13,49 +13,49 @@ test('product tools: wizard validates, focuses recovery, and preserves values on
   await summary
     .getByRole('link', { name: 'Enter a valid email address.' })
     .click();
-  const email = page.getByRole('textbox', { name: 'Notification email' });
+  const email = page.getByRole('textbox', { name: 'Coach email' });
   await expect(email).toBeFocused();
-  await email.fill('ada@example.com');
-  const seats = page.getByRole('spinbutton', { name: 'Seats' });
+  await email.fill('alex@falcons.example');
+  const seats = page.getByRole('spinbutton', { name: 'Players' });
   await seats.fill('11');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(summary).toBeFocused();
   await summary
-    .getByRole('link', { name: 'Choose between one and ten seats.' })
+    .getByRole('link', { name: 'Choose between one and ten players.' })
     .click();
   await expect(seats).toBeFocused();
   await seats.fill('3');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Review project', exact: true }),
+    page.getByRole('heading', { name: 'Review club', exact: true }),
   ).toBeFocused();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
-  await expect(email).toHaveValue('ada@example.com');
+  await expect(email).toHaveValue('alex@falcons.example');
   await expect(seats).toHaveValue('3');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
-  await page.getByRole('button', { name: 'Save project', exact: true }).click();
+  await page.getByRole('button', { name: 'Save club', exact: true }).click();
   await expect(
-    page.getByRole('status').filter({ hasText: 'Project saved.' }),
+    page.getByRole('status').filter({ hasText: 'Club saved.' }),
   ).toBeVisible();
 });
 test('product tools: nested checklist exposes mixed completion and keeps disabled tasks unchanged', async ({
   page,
 }) => {
-  const parent = page.getByRole('checkbox', { name: 'Quality checks' });
+  const parent = page.getByRole('checkbox', { name: 'Game preparation' });
   expect(
     await parent.evaluate((el: HTMLInputElement) => el.indeterminate),
   ).toBe(true);
   await parent.press('Space');
   await expect(
-    page.getByRole('checkbox', { name: 'Review accessibility' }),
+    page.getByRole('checkbox', { name: 'Check the equipment' }),
   ).toBeChecked();
   await expect(
-    page.getByRole('checkbox', { name: 'External approval' }),
+    page.getByRole('checkbox', { name: 'League approval' }),
   ).toBeDisabled();
   await expect(
     page.getByRole('status').filter({ hasText: '2 of 4 completed' }),
   ).toBeVisible();
-  await page.getByRole('checkbox', { name: 'Run tests' }).uncheck();
+  await page.getByRole('checkbox', { name: 'Check the lineup' }).uncheck();
   await expect(
     page.getByRole('status').filter({ hasText: '1 of 4 completed' }),
   ).toBeVisible();
@@ -63,7 +63,7 @@ test('product tools: nested checklist exposes mixed completion and keeps disable
 test('product tools: numeric stepping and range keyboard/exact entry stay bounded', async ({
   page,
 }) => {
-  const volume = page.getByRole('slider', { name: 'Volume' });
+  const volume = page.getByRole('slider', { name: 'Practice repetitions' });
   await volume.focus();
   await page.keyboard.press('ArrowRight');
   await expect(volume).toHaveValue('45');
@@ -71,7 +71,10 @@ test('product tools: numeric stepping and range keyboard/exact entry stay bounde
   await expect(volume).toHaveValue('100');
   await page.keyboard.press('Home');
   await expect(volume).toHaveValue('0');
-  const exact = page.getByRole('spinbutton', { name: 'Volume' });
+  const exact = page.getByRole('spinbutton', { name: 'Practice repetitions' });
+  // Wait for the controlled numeric alternative to receive the range change.
+  // The native range value changes before Angular renders its sibling input.
+  await expect(exact).toHaveValue('0');
   await exact.fill('37');
   await exact.press('Tab');
   await expect(volume).toHaveValue('35');
@@ -88,13 +91,13 @@ test('product tools: numeric stepping and range keyboard/exact entry stay bounde
     'min',
     '25',
   );
-  const seats = page.getByRole('spinbutton', { name: 'Seats' });
+  const seats = page.getByRole('spinbutton', { name: 'Players' });
   await seats.fill('10');
   await expect(
-    page.getByRole('button', { name: 'Increase Seats' }),
+    page.getByRole('button', { name: 'Increase Players' }),
   ).toBeDisabled();
   await seats.fill('');
-  await page.getByRole('button', { name: 'Increase Seats' }).click();
+  await page.getByRole('button', { name: 'Increase Players' }).click();
   await expect(seats).toHaveValue('1');
 });
 test('product tools: overflow content is reachable by keyboard and restores focus on escape', async ({
@@ -102,14 +105,14 @@ test('product tools: overflow content is reachable by keyboard and restores focu
   browserName,
 }) => {
   const opener = page.getByRole('button', {
-    name: 'Show 3 more items: Other reviewers',
+    name: 'Show 3 more items: Other players',
   });
   await opener.focus();
   await page.keyboard.press('Space');
   await expect(opener).toHaveAttribute('aria-expanded', 'true');
   // WebKit follows macOS link navigation: Option+Tab includes links.
   await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
-  await expect(page.getByRole('link', { name: 'Ada Lovelace' })).toBeFocused();
+  await expect(page.getByRole('link', { name: 'Alex Morgan' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
   await expect(opener).toBeFocused();
@@ -140,10 +143,10 @@ test('product tools: code copy announces denial then recovery against a controll
   );
   await expect(page.locator('html')).toHaveAttribute(
     'data-copied-text',
-    '<jp-number-stepper label="Seats" [min]="1" [max]="10" [formControl]="seats" />',
+    '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />',
   );
   await expect(page.locator('jp-code-block code')).toHaveText(
-    '<jp-number-stepper label="Seats" [min]="1" [max]="10" [formControl]="seats" />',
+    '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />',
   );
 });
 test('product tools: default, overflow, and invalid states pass WCAG AA across themes', async ({
@@ -167,7 +170,7 @@ test('product tools: default, overflow, and invalid states pass WCAG AA across t
       ).toEqual([]);
     }
   await page
-    .getByRole('button', { name: 'Show 3 more items: Other reviewers' })
+    .getByRole('button', { name: 'Show 3 more items: Other players' })
     .click();
   expect(
     (
@@ -194,7 +197,7 @@ test('product tools: mobile RTL reflows without page-level overflow', async ({
     document.documentElement.setAttribute('dir', 'rtl'),
   );
   await expect(
-    page.getByRole('heading', { name: 'Product tools', exact: true }),
+    page.getByRole('heading', { name: 'Game day tools', exact: true }),
   ).toBeVisible();
   expect(
     await page.evaluate(
@@ -202,14 +205,12 @@ test('product tools: mobile RTL reflows without page-level overflow', async ({
     ),
   ).toBe(true);
   await page
-    .getByRole('button', { name: 'Show 3 more items: Other reviewers' })
+    .getByRole('button', { name: 'Show 3 more items: Other players' })
     .click();
   expect(
-    await page
-      .getByRole('region', { name: 'Other reviewers' })
-      .evaluate((el) => {
-        const r = el.getBoundingClientRect();
-        return r.left >= 0 && r.right <= window.innerWidth;
-      }),
+    await page.getByRole('region', { name: 'Other players' }).evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return r.left >= 0 && r.right <= window.innerWidth;
+    }),
   ).toBe(true);
 });

@@ -80,7 +80,7 @@ export class WorkflowsPage {
     viewChild<ElementRef<HTMLElement>>('notificationRegion');
   readonly commandOpen = signal(false);
   readonly action = signal('No action selected');
-  readonly projectName = signal('Launch plan');
+  readonly projectName = signal('Riverton Falcons');
   failNextSave = true;
   readonly favorite = new FormControl(false);
   readonly launch = new FormControl('2026-10-10', { nonNullable: true });
@@ -103,19 +103,19 @@ export class WorkflowsPage {
     },
     {
       id: 'settings',
-      label: 'Project settings',
-      description: 'Manage this workspace',
+      label: 'Club settings',
+      description: 'Manage the club',
       section: 'Navigate',
     },
     {
       id: 'duplicate',
-      label: 'Duplicate project',
+      label: 'Duplicate club',
       section: 'Actions',
       shortcut: ['Mod', 'Shift', 'D'],
     },
     {
       id: 'archive',
-      label: 'Archive project',
+      label: 'Archive club',
       section: 'Actions',
       disabled: true,
     },
@@ -130,8 +130,8 @@ export class WorkflowsPage {
   readonly notifications = signal<readonly JpNotification[]>([
     {
       id: 'review',
-      title: 'Review requested',
-      description: 'Ada requested feedback on the launch plan.',
+      title: 'Lineup review requested',
+      description: 'Alex requested a review of the game plan.',
       group: 'Today',
       unread: true,
       timeLabel: '10:00 UTC',
@@ -139,14 +139,14 @@ export class WorkflowsPage {
     },
     {
       id: 'release',
-      title: 'Release notes ready',
+      title: 'Game report ready',
       group: 'Today',
       unread: true,
       href: '#workflow-main',
     },
     {
       id: 'invite',
-      title: 'Workspace invitation accepted',
+      title: 'Club invitation accepted',
       group: 'Earlier',
       unread: false,
       timeLabel: 'Yesterday',
@@ -210,7 +210,7 @@ export class WorkflowsPage {
         progress: status === 'uploading' ? 40 : 100,
         error:
           status === 'error'
-            ? 'Connection interrupted. Retry this file.'
+            ? 'The lineup upload stopped. Retry this file.'
             : undefined,
       })),
     );
@@ -244,7 +244,7 @@ export class WorkflowsPage {
         ? [
             {
               controlId: 'launch-date',
-              message: 'Choose a launch date in October 2026.',
+              message: 'Choose a game date in October 2026.',
             },
           ]
         : []),

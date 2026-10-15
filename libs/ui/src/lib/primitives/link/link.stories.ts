@@ -8,7 +8,7 @@ const meta: Meta<JpLink> = {
   parameters: { layout: 'padded' },
   args: {},
   render: () => ({
-    template: '<a jpLink href="#example">Read documentation</a>',
+    template: '<a jpLink href="#example">Read club rules</a>',
   }),
 };
 export default meta;

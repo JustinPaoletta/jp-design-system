@@ -15,7 +15,7 @@ const meta: Meta<JpTableToolbar> = {
   },
   render: (args) => ({
     props: args,
-    template: `<jp-table-toolbar [activeFilters]="activeFilters" [selectedCount]="selectedCount"><jp-input jpTableSearch label="Search deployments" type="search" /><jp-button jpTableActions>Create deployment</jp-button><jp-button jpTableBulkActions variant="secondary">Archive selected</jp-button></jp-table-toolbar>`,
+    template: `<jp-table-toolbar [activeFilters]="activeFilters" [selectedCount]="selectedCount"><jp-input jpTableSearch label="Search players" type="search" /><jp-button jpTableActions>Add player</jp-button><jp-button jpTableBulkActions variant="secondary">Archive selected</jp-button></jp-table-toolbar>`,
   }),
 };
 export default meta;

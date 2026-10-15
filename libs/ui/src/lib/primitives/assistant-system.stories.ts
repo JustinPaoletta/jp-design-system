@@ -66,10 +66,10 @@ import { JpText } from './text/text';
         <jp-box padding="lg" maxWidth="wide">
           <jp-stack gap="lg">
             <jp-stack gap="xs">
-              <jp-heading as="h1">Assistant System</jp-heading>
+              <jp-heading as="h1">Falcons assistant</jp-heading>
               <jp-text tone="secondary">
-                Context triggers open the branded assistant panel with calm
-                message tones.
+                Ask the coach open the branded assistant panel with calm Ask
+                about the Falcons game or roster.
               </jp-text>
               <jp-inline gap="sm">
                 <jp-text as="small" tone="muted"
@@ -88,7 +88,7 @@ import { JpText } from './text/text';
               elevation="none"
             >
               <jp-stack gap="md">
-                <jp-heading as="h2">Context triggers</jp-heading>
+                <jp-heading as="h2">Ask the coach</jp-heading>
                 <jp-inline gap="sm" wrap="true">
                   <jp-button
                     type="button"
@@ -96,7 +96,7 @@ import { JpText } from './text/text';
                     jpAssistantTrigger
                     [jpAssistantContext]="deploymentContext"
                   >
-                    Ask about deployment
+                    Ask about the game
                   </jp-button>
                   <jp-button
                     type="button"
@@ -105,7 +105,7 @@ import { JpText } from './text/text';
                     [jpAssistantContext]="filterContext"
                     [jpAssistantClearMessages]="true"
                   >
-                    Ask about filters
+                    Ask about the roster
                   </jp-button>
                 </jp-inline>
               </jp-stack>
@@ -115,7 +115,12 @@ import { JpText } from './text/text';
       </main>
     </jp-app-shell>
 
-    <jp-assistant-panel (messageSubmit)="onSubmit($event)" />
+    <jp-assistant-panel
+      title="Falcons coach"
+      emptyTitle="Ask about the lineup"
+      emptyDescription="Ask about players, the final score or the next game."
+      (messageSubmit)="onSubmit($event)"
+    />
   `,
 })
 class AssistantCompositionHost {
@@ -125,27 +130,27 @@ class AssistantCompositionHost {
   mobileNavOpen = false;
 
   readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
+    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
   readonly documentDensity =
     document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
   readonly deploymentContext = {
-    label: 'Deployment dep-1042',
-    description: 'Production rollout',
-    entityType: 'deployment',
-    entityId: 'dep-1042',
+    label: 'Game FAL-1042',
+    description: 'Falcons 5, Bears 3. Final score.',
+    entityType: 'game',
+    entityId: 'FAL-1042',
   };
 
   readonly filterContext = {
-    label: 'Environment filters',
-    description: 'Production + staging',
+    label: 'Squad filters',
+    description: 'Varsity + reserve',
     entityType: 'filters',
   };
 
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Here is a structured answer for “${content}”.`,
+      content: `Sample game summary for “${content}”: Falcons 5, Bears 3.`,
     });
   }
 }
@@ -153,9 +158,6 @@ class AssistantCompositionHost {
 const meta: Meta<JpAppShell> = {
   title: 'Compositions/Assistant System',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [AssistantCompositionHost],
@@ -172,15 +174,15 @@ type Story = StoryObj<JpAppShell>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Assistant System',
+      'Falcons assistant',
     );
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
-      (button) => button.textContent?.trim() === 'Ask about deployment',
+      (button) => button.textContent?.trim() === 'Ask about the game',
     );
     await expect(trigger).toBeTruthy();
     if (trigger) {
       await userEvent.click(trigger);
-      await expect(canvasElement.textContent).toContain('Deployment dep-1042');
+      await expect(canvasElement.textContent).toContain('Game FAL-1042');
       await expect(
         canvasElement.querySelector('[role="complementary"]'),
       ).toBeTruthy();
@@ -194,7 +196,6 @@ export const Default: Story = {
  */
 export const Compact: Story = {
   globals: {
-    accent: 'neon',
     density: 'compact',
   },
 };

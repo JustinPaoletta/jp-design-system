@@ -5,14 +5,14 @@ const meta: Meta<JpTimeline> = {
   component: JpTimeline,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Project activity',
+    label: 'Club activity',
     events: [
       {
         id: 'created',
-        title: 'Project created',
+        title: 'Club registered',
         timeLabel: '4 October, 10:00 UTC',
         dateTime: '2026-10-04T10:00:00Z',
-        description: 'Ada created the workspace.',
+        description: 'Alex registered the Falcons club.',
       },
       {
         id: 'review',
@@ -20,7 +20,7 @@ const meta: Meta<JpTimeline> = {
         timeLabel: '4 October, 11:30 UTC',
         dateTime: '2026-10-04T11:30:00Z',
       },
-      { id: 'deploy', title: 'Deployment started', timeLabel: 'Just now' },
+      { id: 'deploy', title: 'Game started', timeLabel: 'Just now' },
     ],
   },
 };

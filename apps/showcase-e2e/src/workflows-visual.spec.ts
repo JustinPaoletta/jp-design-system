@@ -3,10 +3,10 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/workflows');
   await expect(
-    page.getByRole('heading', { name: 'Everyday workflows', exact: true }),
+    page.getByRole('heading', { name: 'Club operations', exact: true }),
   ).toBeVisible();
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact'])
     test(
       'workflow visual desktop ' + accent + ' ' + density,
@@ -46,7 +46,7 @@ test('workflow visual commands', async ({ page }) => {
 });
 test('workflow visual context menu', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });
-  await page.getByRole('button', { name: 'More actions: Launch plan' }).click();
+  await page.getByRole('button', { name: 'More actions: Game plan' }).click();
   await expect(page.getByRole('menuitem', { name: 'Rename' })).toBeFocused();
   await expect(page).toHaveScreenshot('workflow-context.png', {
     animations: 'disabled',
@@ -55,10 +55,8 @@ test('workflow visual context menu', async ({ page }) => {
 });
 test('workflow visual failed inline save', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });
-  await page.getByRole('button', { name: 'Edit: Project name' }).click();
-  await page
-    .getByRole('textbox', { name: 'Project name' })
-    .fill('Updated plan');
+  await page.getByRole('button', { name: 'Edit: Club name' }).click();
+  await page.getByRole('textbox', { name: 'Club name' }).fill('Updated plan');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(
     page.getByRole('alert').filter({ hasText: 'Could not save' }),
@@ -71,7 +69,7 @@ test('workflow visual failed inline save', async ({ page }) => {
 });
 test('workflow visual failed upload', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1600 });
-  await page.getByLabel('Attachments', { exact: true }).setInputFiles({
+  await page.getByLabel('Lineup files', { exact: true }).setInputFiles({
     name: 'notes.txt',
     mimeType: 'text/plain',
     buffer: Buffer.from('notes'),

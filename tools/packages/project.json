@@ -3,6 +3,13 @@
   "projectType": "library",
   "root": "tools/packages",
   "targets": {
+    "check-readiness": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "command": "node --test tools/qa/check-api-readiness.spec.mjs && node tools/qa/check-api-readiness.mjs"
+      }
+    },
     "check-release": {
       "executor": "nx:run-commands",
       "cache": true,

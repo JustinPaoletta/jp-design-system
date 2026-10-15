@@ -1,6 +1,7 @@
 // Storybook's manager esbuild does not resolve Nx workspace path aliases.
 // eslint-disable-next-line @nx/enforce-module-boundaries -- Consume the canonical public generated token artifact in tooling config.
 import tokens from '../../tokens/src/generated/tokens.json';
+import { create } from 'storybook/theming';
 import { createElement, Fragment, memo, useCallback } from 'react';
 import { CircleIcon, GridIcon, PhotoIcon } from '@storybook/icons';
 import { Select, ToggleButton } from 'storybook/internal/components';
@@ -87,4 +88,25 @@ addons.register(ADDON_ID, () => {
     match: ({ viewMode, tabId }) => viewMode === 'story' && !tabId,
     render: () => createElement(StageTool),
   });
+});
+
+addons.setConfig({
+  theme: create({
+    base: 'dark',
+    brandTitle: 'JP Design System',
+    colorPrimary: tokens.semantic.accent.gold.color.accent.solid,
+    colorSecondary: tokens.semantic.accent.gold.color.accent.muted,
+    appBg: tokens.semantic.base.color.surface.canvas,
+    appContentBg: tokens.semantic.base.color.surface.sunken,
+    appBorderColor: tokens.semantic.base.color.border.default,
+    appBorderRadius: 6,
+    textColor: tokens.semantic.base.color.text.primary,
+    textMutedColor: tokens.semantic.base.color.text.muted,
+    barBg: tokens.semantic.base.color.surface.sunken,
+    barTextColor: tokens.semantic.base.color.text.secondary,
+    inputBg: tokens.semantic.base.color.surface.sunken,
+    inputBorder: tokens.semantic.base.color.border.default,
+    inputTextColor: tokens.semantic.base.color.text.primary,
+    inputBorderRadius: 4,
+  }),
 });

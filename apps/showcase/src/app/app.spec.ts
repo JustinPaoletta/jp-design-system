@@ -107,7 +107,7 @@ describe('App', () => {
     expect(router.url).toBe('/layout-dashboard');
     expect(compiled.querySelector('app-layout-dashboard-page')).toBeTruthy();
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Layout Dashboard',
+      'Game overview',
     );
   });
 
@@ -202,7 +202,7 @@ describe('Showcase dashboard pages', () => {
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.accent()).toBe('neon');
+    expect(fixture.componentInstance.accent()).toBe('gold');
     expect(fixture.componentInstance.density()).toBe('default');
   });
 
@@ -303,7 +303,7 @@ describe('Showcase dashboard pages', () => {
 
     const fixture = TestBed.createComponent(LayoutDashboardPage);
     fixture.detectChanges();
-    expect(fixture.componentInstance.accent()).toBe('neon');
+    expect(fixture.componentInstance.accent()).toBe('gold');
 
     document.documentElement.setAttribute('data-jp-accent', 'cobalt');
     document.documentElement.setAttribute('data-jp-density', 'compact');
@@ -324,7 +324,7 @@ describe('Showcase dashboard pages', () => {
     fixture.detectChanges();
 
     assistant.open({
-      context: { label: 'Deployment dep-1042' },
+      context: { label: 'Game FAL-1042' },
     });
     assistant.addMessage({ role: 'user', content: 'hello' });
     expect(assistant.isOpen()).toBe(true);
@@ -351,9 +351,9 @@ describe('Showcase dashboard pages', () => {
     page.showEmpty = true;
     fixture.detectChanges();
     expect(page.visibleRows.length).toBe(0);
-    expect(page.statusTone('Healthy')).toBe('success');
-    expect(page.statusTone('Degraded')).toBe('warning');
-    expect(page.statusTone('Failed')).toBe('error');
+    expect(page.statusTone('Available')).toBe('success');
+    expect(page.statusTone('Day to day')).toBe('warning');
+    expect(page.statusTone('Injured')).toBe('error');
     expect(page.statusTone('Unknown')).toBe('neutral');
   });
 
@@ -368,13 +368,13 @@ describe('Showcase dashboard pages', () => {
     const page = fixture.componentInstance;
     expect(page.dialogOpen).toBe(false);
     page.onMenuEdit();
-    expect(page.lastAction).toBe('Edit selected');
+    expect(page.lastAction).toBe('Edit player');
     page.onMenuDelete();
     expect(page.dialogOpen).toBe(true);
-    expect(page.lastAction).toBe('Delete selected');
+    expect(page.lastAction).toBe('Remove player');
     page.confirmDelete();
     expect(page.dialogOpen).toBe(false);
-    expect(page.lastAction).toBe('Deleted deployment');
+    expect(page.lastAction).toBe('Player removed');
   });
 
   it('seeds tone demo and records assistant replies', async () => {

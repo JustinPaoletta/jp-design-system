@@ -62,6 +62,9 @@ export function positionOverlay(
     // fallback rather than aborting setup and leaking the owner's registration.
     panel.removeAttribute('popover');
   }
+  // The popover attribute hides a closed panel even when the native API is
+  // unavailable. Remove it for the fixed-position fallback as well.
+  if (!nativeOpen) panel.removeAttribute('popover');
   panel.style.position = 'fixed';
   panel.style.margin = '0';
   panel.style.inset = 'auto';

@@ -81,7 +81,7 @@ Min/max use the same format.
 Step defaults to one day and starts from min or 1970-01-01.
 It accepts a positive number or `'any'`.
 
-Invalid dates, leap days, reversed bounds, missing required values and step mismatches have explicit errors:
+Invalid civil dates, reversed bounds, missing required values and step mismatches have explicit errors:
 `date`, `dateBounds`, `minDate`, `maxDate`, `required`, `dateStep` and `stepDate`.
 
 `JpDateRangePicker` must have a group label.
@@ -95,7 +95,10 @@ Min/max apply to both endpoints.
 An optional range is empty only when both endpoints are empty.
 Equal dates are allowed.
 
-Time values are empty strings or `HH:mm[:ss[.sss]]`, from 00:00 to 23:59.
+Time values are empty strings or `HH:mm[:ss[.sss]]`.
+Hours range from 00 to 23; minutes and seconds range from 00 to 59.
+Optional fractional seconds contain one to three digits.
+
 Min/max are local wall times.
 Overnight intervals produce `timeBounds`; the application must model those intervals separately.
 Step uses seconds, defaults to 60 and starts from min or midnight.

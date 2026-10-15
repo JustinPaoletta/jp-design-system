@@ -1,80 +1,88 @@
-<jp-box padding="lg" maxWidth="wide">
-  <jp-stack gap="lg">
-    <jp-stack gap="xs">
-      <jp-heading as="h1">App Shell Dashboard</jp-heading>
-      <jp-text tone="secondary"
-        >Dashboard content inside the persistent app shell.</jp-text
-      >
-      <jp-inline gap="sm">
-        <jp-text as="small" tone="muted">accent: {{ accent() }}</jp-text>
-        <jp-text as="small" tone="muted">density: {{ density() }}</jp-text>
-      </jp-inline>
-    </jp-stack>
-
-    <jp-grid mode="auto-fit" minColumn="sm" gap="md">
-      <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
-        <jp-stack gap="xs">
-          <jp-text as="small" tone="muted">Active sessions</jp-text>
-          <jp-heading as="h3">1,284</jp-heading>
-        </jp-stack>
-      </jp-surface>
-      <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
-        <jp-stack gap="xs">
-          <jp-text as="small" tone="muted">Error rate</jp-text>
-          <jp-heading as="h3">0.14%</jp-heading>
-        </jp-stack>
-      </jp-surface>
-      <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
-        <jp-stack gap="xs">
-          <jp-text as="small" tone="muted">Avg response</jp-text>
-          <jp-heading as="h3">182ms</jp-heading>
-        </jp-stack>
-      </jp-surface>
-    </jp-grid>
-
-    <jp-grid [columns]="2" gap="md">
-      <jp-surface tone="raised" padding="md">
-        <jp-stack gap="sm">
-          <jp-heading as="h3">Activity</jp-heading>
-          <jp-stack gap="xs">
-            <jp-text tone="secondary">App shell tokens applied</jp-text>
-            <jp-text tone="secondary"
-              >Sidebar collapse and mobile drawer ready</jp-text
-            >
-            <jp-text tone="secondary"
-              >Nav item active state uses accent signal</jp-text
-            >
-          </jp-stack>
-        </jp-stack>
-      </jp-surface>
-      <jp-surface tone="raised" padding="md">
-        <jp-stack gap="sm">
-          <jp-heading as="h3">Insights</jp-heading>
-          <jp-text tone="secondary">
-            Shell chrome is token-driven and reusable across dashboard pages.
-          </jp-text>
-        </jp-stack>
-      </jp-surface>
-    </jp-grid>
-
-    <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
-      <jp-stack gap="sm">
-        <jp-heading as="h3">Recent Events</jp-heading>
-        <jp-stack gap="xs">
-          <jp-inline justify="between">
-            <jp-text>jp-app-shell-nav-item added</jp-text>
-            <jp-text as="small" tone="muted">just now</jp-text>
-          </jp-inline>
-          <jp-inline justify="between">
-            <jp-text>Mobile drawer focus trap enabled</jp-text>
-            <jp-text as="small" tone="muted">just now</jp-text>
-          </jp-inline>
-          <jp-inline justify="between">
-            <jp-text>Layout composition preserved</jp-text>
-            <jp-text as="small" tone="muted">earlier</jp-text>
-          </jp-inline>
-        </jp-stack>
-      </jp-stack>
-    </jp-surface>
-  </jp-stack>
-</jp-box>
+<div class="dashboard-topbar">
+  <span>Falcons / Game day</span
+  ><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span>
+</div>
+<section class="dashboard" aria-labelledby="overview-title">
+  <header class="dashboard-heading">
+    <div>
+      <h1 id="overview-title">Game day</h1>
+      <p>Riverton Falcons vs. Lakeview Bears.</p>
+    </div>
+    <span class="dashboard-period">Final · 9 innings</span>
+  </header>
+  <dl class="dashboard-metrics">
+    <div>
+      <dt>Runs scored</dt>
+      <dd>5</dd>
+    </div>
+    <div>
+      <dt>Hits</dt>
+      <dd>9</dd>
+    </div>
+    <div>
+      <dt>Errors</dt>
+      <dd>0</dd>
+    </div>
+  </dl>
+  <div class="dashboard-panels">
+    <section class="dashboard-panel">
+      <jp-chart
+        id="overview-sessions"
+        label="Runs by inning"
+        description="Falcons 5 (solid), Bears 3 (dashed). Final score."
+        type="line"
+        [controlsCollapsed]="true"
+        [labels]="sessionLabels"
+        [series]="sessionSeries"
+        [activeIndex]="8"
+        [formatOptions]="{ maximumFractionDigits: 0 }"
+        style="--jp-chart-plot-height: 14rem"
+      ></jp-chart>
+    </section>
+    <section class="dashboard-panel">
+      <h2>Activity</h2>
+      <ol class="dashboard-activity">
+        <li>
+          <span class="dashboard-dot" aria-hidden="true"></span
+          ><time>21:10</time><span>Final score recorded</span>
+        </li>
+        <li>
+          <span class="dashboard-dot" aria-hidden="true"></span
+          ><time>21:06</time><span>Maya Chen made the final out</span>
+        </li>
+        <li>
+          <span class="dashboard-dot" aria-hidden="true"></span
+          ><time>21:02</time><span>Casey Brooks scored a run</span>
+        </li>
+        <li>
+          <span
+            class="dashboard-dot dashboard-dot-neutral"
+            aria-hidden="true"
+          ></span
+          ><time>20:58</time><span>Jordan Davis drove in a run</span>
+        </li>
+        <li>
+          <span
+            class="dashboard-dot dashboard-dot-warning"
+            aria-hidden="true"
+          ></span
+          ><time>20:54</time><span>Alex Morgan hit a single</span>
+        </li>
+      </ol>
+    </section>
+  </div>
+  <section class="dashboard-panel">
+    <h2>Insights</h2>
+    <div class="dashboard-insights">
+      <div>
+        <h3>The Falcons win 5–3.</h3>
+        <p>The Falcons scored five runs on nine hits with no errors.</p>
+      </div>
+      <div>
+        <h3>Next game: October 12.</h3>
+        <p>The Falcons host the Bears at 18:30 at Riverton Field.</p>
+      </div>
+      <small class="dashboard-updated">Updated 21:10<br />Oct 11, 2026</small>
+    </div>
+  </section>
+</section>

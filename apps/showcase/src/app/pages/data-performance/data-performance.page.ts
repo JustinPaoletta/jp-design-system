@@ -39,15 +39,15 @@ export class DataPerformancePage {
   readonly type = signal<'bar' | 'line'>('bar');
   readonly labels = ['April', 'May', 'June', 'July', 'August', 'September'];
   readonly series: JpChartSeries[] = [
-    { id: 'product', label: 'Product', values: [32, 44, 38, 58, 61, 72] },
-    { id: 'platform', label: 'Platform', values: [25, 28, 40, 42, 50, 57] },
+    { id: 'product', label: 'Falcons', values: [32, 44, 38, 58, 61, 72] },
+    { id: 'platform', label: 'Bears', values: [25, 28, 40, 42, 50, 57] },
   ];
   readonly columns: JpSortableTableColumn[] = [
-    { key: 'name', header: 'Service', sortable: true, width: 260 },
-    { key: 'region', header: 'Region', width: 180 },
+    { key: 'name', header: 'Player', sortable: true, width: 260 },
+    { key: 'region', header: 'Position', width: 180 },
     {
       key: 'requests',
-      header: 'Requests',
+      header: 'At bats',
       sortable: true,
       align: 'end',
       width: 180,
@@ -55,9 +55,9 @@ export class DataPerformancePage {
   ];
   readonly inventory = Array.from({ length: 10000 }, (_, i) => ({
     id: 'service-' + (i + 1),
-    name: 'Service ' + String(i + 1).padStart(5, '0'),
-    region: i % 2 ? 'eu-west-1' : 'us-east-1',
-    requests: (i + 1) * 17,
+    name: 'Player ' + String(i + 1).padStart(5, '0'),
+    region: i % 2 ? 'Catcher' : 'Pitcher',
+    requests: i + 1,
   }));
   readonly sort = signal<JpTableSort | null>(null);
   readonly selected = signal<JpTableRowKey[]>([]);

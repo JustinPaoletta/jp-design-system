@@ -5,7 +5,7 @@ test.describe('native overlay behavior', () => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/overlays');
     await expect(
-      page.getByRole('heading', { name: 'Feedback & Overlays' }),
+      page.getByRole('heading', { name: 'Club alerts' }),
     ).toBeVisible();
   });
 
@@ -13,11 +13,11 @@ test.describe('native overlay behavior', () => {
     page,
   }) => {
     const opener = page.getByRole('button', {
-      name: 'Delete deployment',
+      name: 'Remove player',
       exact: true,
     });
     await opener.click();
-    const dialog = page.getByRole('dialog', { name: 'Delete deployment?' });
+    const dialog = page.getByRole('dialog', { name: 'Remove player?' });
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveJSProperty('open', true);
     expect(await dialog.evaluate((element) => element.matches(':modal'))).toBe(
@@ -57,7 +57,7 @@ test.describe('native overlay behavior', () => {
     ).toBeFocused();
     await page.getByRole('menuitem', { name: 'Delete…', exact: true }).click();
     await expect(menu).toBeHidden();
-    const dialog = page.getByRole('dialog', { name: 'Delete deployment?' });
+    const dialog = page.getByRole('dialog', { name: 'Remove player?' });
     await expect(dialog).toBeVisible();
     expect(await dialog.evaluate((element) => element.matches(':modal'))).toBe(
       true,
@@ -154,7 +154,7 @@ test.describe('native overlay behavior', () => {
       element.setAttribute('aria-describedby', 'existing-description'),
     );
     await trigger.hover();
-    const tooltip = page.getByRole('tooltip', { name: 'Copy deployment ID' });
+    const tooltip = page.getByRole('tooltip', { name: 'Copy game ID' });
     await expect(tooltip).toBeVisible();
     expect(
       await tooltip.evaluate((element) => element.matches(':popover-open')),

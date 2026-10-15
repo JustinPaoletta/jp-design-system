@@ -24,39 +24,36 @@ type DataDisplayArgs = {
 };
 
 const columns = [
-  { key: 'name', header: 'Service' },
-  { key: 'env', header: 'Environment' },
+  { key: 'name', header: 'Player' },
+  { key: 'env', header: 'Squad' },
   { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Region', align: 'end' as const },
+  { key: 'region', header: 'Position', align: 'end' as const },
 ];
 
 const rows = [
   {
-    name: 'api-gateway',
-    env: 'production',
-    status: 'Healthy',
-    region: 'us-east-1',
+    name: 'Alex Morgan',
+    env: 'Varsity',
+    status: 'Available',
+    region: 'Pitcher',
   },
   {
-    name: 'worker',
-    env: 'production',
-    status: 'Degraded',
-    region: 'eu-west-1',
+    name: 'Jordan Davis',
+    env: 'Varsity',
+    status: 'Day to day',
+    region: 'Catcher',
   },
   {
-    name: 'ingest',
-    env: 'staging',
-    status: 'Healthy',
-    region: 'us-west-2',
+    name: 'Maya Chen',
+    env: 'Reserve',
+    status: 'Available',
+    region: 'Shortstop',
   },
 ];
 
 const meta: Meta<DataDisplayArgs> = {
   title: 'Compositions/Data Display',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [
@@ -95,14 +92,14 @@ const meta: Meta<DataDisplayArgs> = {
         columns,
         rows,
         documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
         documentDensity:
           document.documentElement.getAttribute('data-jp-density') ?? 'default',
         statusTone(status: string) {
-          if (status === 'Healthy') {
+          if (status === 'Available') {
             return 'success';
           }
-          if (status === 'Degraded') {
+          if (status === 'Day to day') {
             return 'warning';
           }
           return 'neutral';
@@ -158,9 +155,9 @@ const meta: Meta<DataDisplayArgs> = {
           <jp-box padding="lg" maxWidth="wide">
             <jp-stack gap="lg">
               <jp-stack gap="xs">
-                <jp-heading as="h1">Data Display</jp-heading>
+                <jp-heading as="h1">Player roster</jp-heading>
                 <jp-text tone="secondary">
-                  Table, badge, and empty-state composition.
+                  Review player positions and availability.
                 </jp-text>
                 <jp-inline gap="sm">
                   <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
@@ -169,16 +166,16 @@ const meta: Meta<DataDisplayArgs> = {
               </jp-stack>
 
               <jp-inline gap="sm" wrap="true">
-                <jp-badge tone="success">Healthy</jp-badge>
-                <jp-badge tone="warning">Degraded</jp-badge>
-                <jp-badge tone="error">Failed</jp-badge>
-                <jp-badge tone="accent">Accent</jp-badge>
+                <jp-badge tone="success">Available</jp-badge>
+                <jp-badge tone="warning">Day to day</jp-badge>
+                <jp-badge tone="error">Injured</jp-badge>
+                <jp-badge tone="accent">Starter</jp-badge>
               </jp-inline>
 
               <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
                 <jp-stack gap="md">
                   <jp-inline align="center" gap="sm" justify="between" wrap="true">
-                    <jp-heading as="h2">Deployments</jp-heading>
+                    <jp-heading as="h2">Roster</jp-heading>
                     <jp-switch
                       [ngModel]="showEmpty()"
                       (ngModelChange)="onShowEmptyChange($event)"
@@ -189,7 +186,7 @@ const meta: Meta<DataDisplayArgs> = {
                   </jp-inline>
 
                   <jp-table
-                    caption="Recent deployments"
+                    caption="Falcons roster"
                     [columns]="columns"
                     [rows]="showEmpty() ? [] : rows"
                     [striped]="true"
@@ -198,8 +195,8 @@ const meta: Meta<DataDisplayArgs> = {
                       <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
                     </ng-template>
                     <jp-empty-state
-                      title="No deployments"
-                      description="Nothing matches the current filters."
+                      title="No players on the roster"
+                      description="No players match these filters."
                     >
                       <jp-button
                         variant="secondary"
@@ -228,10 +225,10 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('jp-app-shell')).toBeTruthy();
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Data Display',
+      'Player roster',
     );
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Recent deployments',
+      'Falcons roster',
     );
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 

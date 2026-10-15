@@ -1,20 +1,23 @@
 # Manual QA checklist
 
-Updated October 4, 2026. Automated results are in
+Updated October 8, 2026. Automated results are in
 [Verification](docs/qa/VERIFICATION.md), with supported platforms and limits in
 [Support matrix](docs/qa/SUPPORT_MATRIX.md). This checklist records remaining
 human inspection; it does not establish those sessions have passed.
 
+The [maintainer handoff](docs/qa/READINESS.md#instructions-for-the-maintainer) gives the completion steps.
+It also records actual Chrome zoom and completed engineering checks.
+
 ## Outstanding inspection
 
-| Inspection                                         | Status                                              |
-| -------------------------------------------------- | --------------------------------------------------- |
-| VoiceOver on macOS                                 | Not examined                                        |
-| NVDA on Windows                                    | Not examined                                        |
-| Windows high contrast with real user palettes      | Not examined                                        |
-| Actual 200%/400% browser zoom and text-only zoom   | Not examined                                        |
-| Physical touch and native date/time picker dialogs | Not examined                                        |
-| JAWS                                               | Out of scope unless a consumer requirement names it |
+| Inspection                                         | Status                                                                                |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| VoiceOver on macOS                                 | Not examined                                                                          |
+| NVDA on Windows                                    | Not examined                                                                          |
+| Windows high contrast with real user palettes      | Not examined                                                                          |
+| Actual 200%/400% browser zoom and text-only zoom   | Chrome larger-feature scope passed; other combinations and text-only zoom remain open |
+| Physical touch and native date/time picker dialogs | Not examined                                                                          |
+| JAWS                                               | Out of scope unless a consumer requirement names it                                   |
 
 Chromium forced-colors emulation and 320/640 CSS-pixel reflow are automated
 for the seven larger features. They are partial evidence, not completion of
@@ -30,7 +33,7 @@ npm exec -- nx run showcase:serve
 Use Storybook at http://localhost:4400 for isolated states and Showcase at
 http://localhost:4200 for application flows. Record the tested commit,
 OS/browser/reader versions, accent, density, direction and viewport/zoom.
-Repeat applicable checks in neon/cobalt, default/compact and LTR/RTL. Use
+Repeat applicable checks in gold/neon/cobalt, default/compact and LTR/RTL. Use
 real browser zoom rather than shrinking the viewport alone.
 
 ## Shared checks

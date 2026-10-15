@@ -15,8 +15,8 @@ runtime reported `dc4e357038b14c3ad2be`. Disabling browser caching did not chang
 that mismatch.
 
 `libs/ui/.storybook/main.ts` now places development output in a port-specific
-subdirectory. `tools/storybook-runtime-check.mjs` verifies that an HMR stream's
-compiler hash matches the runtime served by that same server. The live test
+subdirectory. `tools/storybook-runtime-check.mjs` compares an HMR stream's
+compiler hash with the runtime served by that same server. A mismatch fails the check. The live test
 runner checks its own server and, when present, the default preview before and
 after the suite. Production output is unaffected.
 

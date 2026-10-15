@@ -16,15 +16,15 @@ const meta: Meta<JpEmptyState> = {
     layout: 'padded',
   },
   args: {
-    title: 'No deployments',
-    description: 'Create a deployment to see it listed here.',
+    title: 'No players on the roster',
+    description: 'Add a player to see them on the roster.',
   },
   render: (args) => ({
     props: args,
     template: `
       <jp-empty-state [title]="title" [description]="description">
         <span jpEmptyStateIcon aria-hidden="true">◇</span>
-        <jp-button variant="primary">New deployment</jp-button>
+        <jp-button variant="primary">Add player</jp-button>
       </jp-empty-state>
     `,
   }),
@@ -39,7 +39,7 @@ export const Default: Story = {
     await expect(host?.getAttribute('role')).toBe('status');
     await expect(
       canvasElement.querySelector('.jp-empty-state__title')?.textContent,
-    ).toContain('No deployments');
+    ).toContain('No players on the roster');
   },
 };
 

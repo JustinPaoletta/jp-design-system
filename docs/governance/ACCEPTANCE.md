@@ -3,7 +3,7 @@
 Use this checklist before a public component, directive, service or token change.
 The [API catalog](../consumers/COMPONENTS.md) gives supported behavior.
 [Maturity](MATURITY.md) gives support levels and known limits.
-The inventory date is October 4, 2026.
+Use the inventory date in [Maturity](MATURITY.md).
 
 ## Release-blocking
 
@@ -23,11 +23,14 @@ Every public component change must keep these requirements:
 
 Responsive layouts, new text and existing accessibility behavior are blocking
 when the change affects them. Required CI includes the documented macOS
-snapshots and Chromium/WebKit checks. [Quality](../QUALITY.md) gives the commands.
+snapshots and Chromium/Firefox/WebKit checks. [Quality](../QUALITY.md) gives the commands.
 RTL behavior is blocking where an API already documents it.
 
-Manual screen-reader, real Windows high-contrast and actual zoom sessions remain open.
+Manual screen-reader and real Windows high-contrast sessions remain open.
+Actual Chrome zoom has [limited recorded evidence](../qa/READINESS.md#actual-zoom-inspection).
+Other zoom combinations remain open.
 They are not general merge gates in the current policy.
+
 A missing session is not a pass. JAWS is outside scope unless an application
 requirement names it. SSR and hydration are outside the current support rules.
 

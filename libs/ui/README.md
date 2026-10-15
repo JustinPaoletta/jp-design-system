@@ -34,6 +34,7 @@ when changing that infrastructure.
 ## Distribution and verification
 
 ```sh
+npm exec -- playwright install chromium
 npm exec -- nx run packages:build
 npm exec -- nx run packages:smoke
 ```

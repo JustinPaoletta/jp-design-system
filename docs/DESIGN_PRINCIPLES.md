@@ -72,7 +72,7 @@ Decoration, jokes and aggressive language do not help the user.
 ## 11. Engineering-Grade Standards
 
 Strict types, semantic tokens, lint rules and tests are design requirements.
-Chromium/WebKit tests and macOS Chromium snapshots give automated evidence.
+Chromium/Firefox/WebKit tests and macOS Chromium snapshots give automated evidence.
 [Quality](QUALITY.md) defines their scope and remaining manual inspection.
 
 ## 12. Evolution Without Chaos

@@ -3,10 +3,10 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/product-tools');
   await expect(
-    page.getByRole('heading', { name: 'Product tools', exact: true }),
+    page.getByRole('heading', { name: 'Game day tools', exact: true }),
   ).toBeVisible();
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact']) {
     test(`product tools visual desktop ${accent} ${density}`, async ({
       page,
@@ -54,10 +54,10 @@ test('product tools visual open overflow', async ({ page }) => {
   // capture of a scrolled page resizes the viewport while positioning the panel.
   await page.setViewportSize({ width: 1280, height: 1400 });
   await page
-    .getByRole('button', { name: 'Show 3 more items: Other reviewers' })
+    .getByRole('button', { name: 'Show 3 more items: Other players' })
     .click();
   await expect(
-    page.getByRole('region', { name: 'Other reviewers' }),
+    page.getByRole('region', { name: 'Other players' }),
   ).toBeVisible();
   await expect(page).toHaveScreenshot('product-tools-overflow.png', {
     fullPage: true,

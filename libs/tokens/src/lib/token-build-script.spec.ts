@@ -84,7 +84,7 @@ describe('build-tokens script', () => {
       ).resolves.toContain('[data-jp-density="compact"]');
       await expect(
         fs.readFile(path.join(outputDir, 'tokens.json'), 'utf8'),
-      ).resolves.toContain('"defaultAccent": "neon"');
+      ).resolves.toContain('"defaultAccent": "gold"');
     } finally {
       await fs.rm(path.dirname(tokensRoot), { recursive: true, force: true });
       await fs.rm(outputDir, { recursive: true, force: true });

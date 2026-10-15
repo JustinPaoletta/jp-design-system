@@ -1,10 +1,96 @@
 # Verification evidence
 
-Recorded October 4, 2026 (America/New_York). This is the current consolidated
-record for the component expansion. Test totals describe these revisions;
-update this page when the suite or implementation changes.
+## October 12, 2026 baseball examples
 
-## Confirmed revisions
+Storybook and Showcase use the [shared baseball copy](../content/BASEBALL_EXAMPLES.md).
+The game dashboard shows a 5–3 Falcons win, nine hits and no errors.
+Related examples use the same players, roles, positions and availability labels.
+The [design inspection](../../design-qa.md) records desktop and mobile Chrome captures.
+
+| Check                     | Result                                            |
+| ------------------------- | ------------------------------------------------- |
+| Source checks             | 463 UI tests and 58 Showcase tests pass.          |
+| Lint and Angular types    | UI, Showcase and browser-test source checks pass. |
+| Static and live Storybook | 320 stories in 97 suites pass in each run.        |
+| macOS Chromium visuals    | 84 inspected baseline comparisons pass.           |
+| Isolated package consumer | 18 browser, accent and density combinations pass. |
+
+The Showcase production build passes.
+Chart tests check whole-number decimal ticks and fractional percentage ticks.
+Live Storybook compiler/runtime isolation checks pass.
+Chromium passes 138 behavior and accessibility tests.
+Firefox and WebKit each pass 134 tests, with four intentional forced-colors skips in each engine.
+
+## October 11, 2026 design refresh
+
+The default accent is now `gold`. Explicit `neon` and `cobalt` accents remain available.
+The [design inspection](../../design-qa.md) records the reference comparison and local browser checks.
+
+| Check                               | Result                                                   |
+| ----------------------------------- | -------------------------------------------------------- |
+| Static and live Storybook           | 320 stories in 97 suites pass in each run.               |
+| Chromium behavior and accessibility | 138 tests pass.                                          |
+| Firefox behavior and accessibility  | 134 tests pass; four forced-colors checks are skipped.   |
+| WebKit behavior and accessibility   | 134 tests pass; four forced-colors checks are skipped.   |
+| macOS Chromium visual checks        | 84 baselines cover all three accents and both densities. |
+| Isolated package consumer           | 18 browser, accent and density combinations pass.        |
+
+Earlier dated records below retain their original counts and theme scope.
+
+This page keeps dated evidence for the component expansion and readiness changes.
+Test totals apply to the stated revisions and selections.
+Later changes need their own checks.
+
+## October 8 local readiness evidence
+
+Local checks used Node 24.21.0 on macOS.
+The readiness change adds Firefox, native overlay fallback tests and installed consumer runtime flows.
+See [Readiness](READINESS.md) for scope and the maintainer's completion steps.
+
+| Check                        | Local result                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| UI unit tests                | 461 tests / 98 suites; 98.11% statements, 91.18% branches, 95.61% functions, 98.89% lines                          |
+| Live Storybook               | All 319 checks / 97 suites passed; compiler/runtime isolation guards passed                                        |
+| Static Storybook             | All 319 checks / 97 suites passed                                                                                  |
+| Development dependency audit | Handlebars 4.7.10 clears critical findings; 38 package findings remain from two unpatched development dependencies |
+| Runtime dependency audit     | No vulnerabilities in the runtime-only audit                                                                       |
+| Visual regression            | All 66 macOS Chromium comparisons passed without baseline changes                                                  |
+| Functional and accessibility | 406 passed across Chromium/Firefox/WebKit; eight intentional forced-colors skips                                   |
+| Overlay fallbacks            | All 18 missing/throwing native API cases passed; included in the functional total                                  |
+| Installed consumer           | All 12 browser/accent/density combinations passed; Angular 22.2.1; no workspace aliases or symlinks                |
+| API evidence inventory       | 113 public classes; 36 stable, 76 preview, one deprecated; seven guard tests passed                                |
+| Release preparation          | Seven safety tests and the `0.1.0-rc.1` dry-run passed; release files were unchanged                               |
+| All project unit checks      | UI, Showcase, tokens and the placeholder Storybook application passed their coverage gates                         |
+| Build, lint and types        | All repository production builds, all project lint, token guards/drift and Angular type/template checks passed     |
+| Documentation                | 55 maintained documents and 12 writing-helper tests passed; no broken local links                                  |
+| Actual Chrome zoom           | Eight route/zoom inspections passed at 200%/400%; limited neon/default/LTR scope                                   |
+
+The first combined browser run reached 401 passes before Firefox disk-space failures.
+The complete Firefox selection then passed alone: 134 passes and four intentional skips.
+Chromium and WebKit had no failed cases in the combined run.
+These results give 406 successful distinct functional cases across the three engines.
+
+Consumer runtime dependencies are isolated.
+Its build reuses the workspace compiler tools, whose versions are recorded in the report.
+Neither passing tests nor evidence-file presence approves an API promotion.
+
+## October 9 hosted readiness evidence
+
+Revision `b31915546a98f8ccd2cfeb85219b2030a1c995a5` passed
+[CI](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37880218175)
+and [documentation checks](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37880218165).
+The UTC completion date was October 9, 2026.
+
+The hosted functional selection passed 406 cases and skipped eight forced-colors cases intentionally.
+All 66 macOS Chromium visual comparisons passed.
+All 12 installed consumer combinations passed.
+Static and live Storybook each passed 319 checks in 97 suites.
+Lint, unit coverage, builds, type checks, API evidence and runtime audit also passed.
+
+These results apply to that revision.
+Later documentation or source changes need their own checks.
+
+## October 4 confirmed revisions
 
 - Feature implementation `88f69e22c934e3172a2375d72bd7d8ce8d03b282`:
   [successful CI](https://github.com/JustinPaoletta/jp-design-system/actions/runs/37244858852).
@@ -16,7 +102,7 @@ The second revision adds tests and release safety checks; it does not change
 component behavior. This record is evidence for those commits, rather than a
 prediction that every later commit passes CI.
 
-## Results
+## October 4 results
 
 | Check                            | Confirmed result                                                                                                                 |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,7 +157,9 @@ The feature build's initial Showcase bundle was 349.30kB with all feature
 pages lazy-loaded. The full UI package entry is not the same measurement;
 there is no isolated one-component tree-shaking benchmark.
 
-Automation does not establish VoiceOver/NVDA usability, Windows high-contrast readability, actual browser zoom, physical touch or native picker-dialog behavior. Application approval, SSR/hydration support and maturity promotion also must have separate evidence.
+These October 4 automated runs did not establish VoiceOver/NVDA usability or Windows high-contrast readability.
+They also did not establish actual browser zoom, physical touch or native picker-dialog behavior.
+The October 8 actual Chrome zoom inspection has the limited scope described above. Application approval, SSR/hydration support and maturity promotion also must have separate evidence.
 These remain in [the task list](../../COMPONENT_EXPANSION_PLAN.md),
-[acceptance automation](ACCEPTANCE_AUTOMATION.md) and
+[maintainer handoff](READINESS.md) and
 [manual QA](../../MANUAL_QA.md).

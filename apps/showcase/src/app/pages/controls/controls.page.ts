@@ -49,9 +49,9 @@ export class ControlsPage {
   compact = false;
 
   readonly roleOptions = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'viewer', label: 'Viewer' },
+    { value: 'admin', label: 'Coach' },
+    { value: 'editor', label: 'Scorekeeper' },
+    { value: 'viewer', label: 'Fan' },
   ];
 
   readonly accent = this.theme.accent;

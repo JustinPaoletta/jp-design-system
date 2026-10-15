@@ -7,8 +7,8 @@ const meta: Meta<JpBanner> = {
   component: JpBanner,
   parameters: { layout: 'padded' },
   args: {
-    title: 'Scheduled maintenance',
-    message: 'Service will restart at 20:00 UTC.',
+    title: 'Field maintenance',
+    message: 'The game starts at 20:00 UTC.',
     dismissible: true,
   },
 };
@@ -17,8 +17,8 @@ type Story = StoryObj<JpBanner>;
 export const Default: Story = {};
 export const Error: Story = {
   args: {
-    title: 'Connection interrupted',
+    title: 'Score feed interrupted',
     tone: 'error',
-    message: 'Your changes have been kept. Try again.',
+    message: 'Your lineup has been kept. Try again.',
   },
 };

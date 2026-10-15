@@ -114,33 +114,38 @@ export class ComponentExpansionPage {
     { value: 'push', label: 'Push', disabled: true },
   ];
   readonly reviewers = [
-    { value: 'ada', label: 'Ada Lovelace' },
-    { value: 'grace', label: 'Grace Hopper' },
-    { value: 'linus', label: 'Linus Torvalds' },
-    { value: 'unavailable', label: 'Unavailable reviewer', disabled: true },
+    { value: 'ada', label: 'Alex Morgan' },
+    { value: 'grace', label: 'Jordan Davis' },
+    { value: 'linus', label: 'Maya Chen' },
+    { value: 'unavailable', label: 'Injured player', disabled: true },
   ];
   readonly views = [
     { value: 'active', label: 'Active' },
     { value: 'archived', label: 'Archived' },
   ];
   readonly people = [
-    { id: 'ada', name: 'Ada Lovelace' },
-    { id: 'grace', name: 'Grace Hopper' },
-    { id: 'linus', name: 'Linus Torvalds' },
+    { id: 'ada', name: 'Alex Morgan' },
+    { id: 'grace', name: 'Jordan Davis' },
+    { id: 'linus', name: 'Maya Chen' },
   ];
   readonly details = [
-    { term: 'Environment', description: 'Production' },
-    { term: 'Region', description: 'us-east-1' },
+    { term: 'Squad', description: 'Varsity' },
+    { term: 'Position', description: 'Pitcher' },
     { term: 'Retries', description: 0 },
   ];
   readonly services = [
     {
       id: 'gateway',
-      title: 'API gateway',
-      description: 'Production',
-      meta: 'Healthy',
+      title: 'Alex Morgan',
+      description: 'Varsity',
+      meta: 'Available',
     },
-    { id: 'worker', title: 'Worker', description: 'Staging', meta: 'Paused' },
+    {
+      id: 'worker',
+      title: 'Jordan Davis',
+      description: 'Varsity',
+      meta: 'Day to day',
+    },
   ];
   emailError(): string {
     return this.submitted() && this.form.controls.email.invalid

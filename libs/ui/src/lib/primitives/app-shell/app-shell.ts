@@ -17,6 +17,7 @@ import { JP_MESSAGES } from '../../i18n';
 import { getFocusableElements } from '../shared/focus-trap';
 
 const SHELL_MOBILE_MEDIA = '(max-width: 48rem)';
+let nextShellId = 0;
 
 @Component({
   selector: 'jp-app-shell',
@@ -43,7 +44,7 @@ export class JpAppShell implements OnInit {
   private lastMobileNavOpen = false;
   private mobileMediaQuery: MediaQueryList | null = null;
 
-  readonly sidebarId = 'jp-app-shell-sidebar';
+  readonly sidebarId = `jp-app-shell-sidebar-${++nextShellId}`;
   readonly isMobileViewport = signal(false);
 
   readonly sidebarCollapsed = input(false, { transform: booleanAttribute });

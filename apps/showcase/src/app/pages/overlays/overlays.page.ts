@@ -60,10 +60,10 @@ export class OverlaysPage {
 
   showToast(tone: 'neutral' | 'success' | 'warning' | 'error' | 'info'): void {
     const messages = {
-      neutral: 'Background sync queued',
-      success: 'Deployment saved',
-      warning: 'Quota nearing limit',
-      error: 'Deploy failed',
+      neutral: 'Roster update queued',
+      success: 'Lineup saved',
+      warning: 'Roster nearly full',
+      error: 'Lineup unavailable',
       info: 'New version available',
     } as const;
     this.toasts.show({ message: messages[tone], tone });
@@ -71,16 +71,16 @@ export class OverlaysPage {
 
   confirmDelete(): void {
     this.dialogOpen = false;
-    this.lastAction = 'Deleted deployment';
-    this.toasts.show({ message: 'Deployment deleted', tone: 'success' });
+    this.lastAction = 'Player removed';
+    this.toasts.show({ message: 'Player removed', tone: 'success' });
   }
 
   onMenuEdit(): void {
-    this.lastAction = 'Edit selected';
+    this.lastAction = 'Edit player';
   }
 
   onMenuDelete(): void {
-    this.lastAction = 'Delete selected';
+    this.lastAction = 'Remove player';
     this.dialogOpen = true;
   }
 }

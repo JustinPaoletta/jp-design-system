@@ -32,9 +32,6 @@ type ControlsFormArgs = {
 const meta: Meta<ControlsFormArgs> = {
   title: 'Compositions/Controls Form',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   decorators: [
     moduleMetadata({
       imports: [
@@ -75,13 +72,13 @@ const meta: Meta<ControlsFormArgs> = {
         sidebarCollapsed,
         mobileNavOpen,
         documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'neon',
+          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
         documentDensity:
           document.documentElement.getAttribute('data-jp-density') ?? 'default',
         roleOptions: [
-          { value: 'admin', label: 'Admin' },
-          { value: 'editor', label: 'Editor' },
-          { value: 'viewer', label: 'Viewer' },
+          { value: 'admin', label: 'Coach' },
+          { value: 'editor', label: 'Scorekeeper' },
+          { value: 'viewer', label: 'Fan' },
         ],
         onSidebarCollapsedChange(next: boolean) {
           sidebarCollapsed.set(next);
@@ -121,7 +118,7 @@ const meta: Meta<ControlsFormArgs> = {
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
-              Profile
+              Player profile
             </jp-app-shell-nav-item>
           </jp-stack>
         </nav>
@@ -131,7 +128,7 @@ const meta: Meta<ControlsFormArgs> = {
             <jp-stack gap="lg">
               <jp-stack gap="xs">
                 <jp-inline align="center" gap="sm" justify="between">
-                  <jp-heading as="h1">Controls Form</jp-heading>
+                  <jp-heading as="h1">Lineup form</jp-heading>
                   <jp-icon-button ariaLabel="More actions">
                     <svg viewBox="0 0 16 16" width="100%" height="100%" aria-hidden="true">
                       <circle cx="8" cy="3" r="1.5" fill="currentColor" />
@@ -141,7 +138,7 @@ const meta: Meta<ControlsFormArgs> = {
                   </jp-icon-button>
                 </jp-inline>
                 <jp-text tone="secondary">
-                  Control composition inside the app shell.
+                  Update the lineup and coach contact details.
                 </jp-text>
                 <jp-inline gap="sm">
                   <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
@@ -155,25 +152,25 @@ const meta: Meta<ControlsFormArgs> = {
                     <jp-input
                       label="Email"
                       type="email"
-                      placeholder="you@example.com"
-                      hint="Used for account notifications."
+                      placeholder="coach@falcons.example"
+                      hint="Used for Falcons club messages."
                       [(ngModel)]="email"
                       name="email"
                     />
                     <jp-textarea
-                      label="Notes"
+                      label="Coach notes"
                       rows="3"
                       [(ngModel)]="notes"
                       name="notes"
                     />
                     <jp-select
-                      label="Role"
+                      label="Club role"
                       [options]="roleOptions"
                       [(ngModel)]="role"
                       name="role"
                     />
                     <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
-                      Subscribe to product updates
+                      Get club messages
                     </jp-checkbox>
                     <jp-switch [(ngModel)]="compact" name="compact">
                       Compact density
@@ -211,8 +208,8 @@ export const Default: Story = {
     await expect(email).toBeTruthy();
     if (email) {
       await userEvent.clear(email);
-      await userEvent.type(email, 'demo@jp.dev');
-      await expect(email.value).toBe('demo@jp.dev');
+      await userEvent.type(email, 'coach@falcons.example');
+      await expect(email.value).toBe('coach@falcons.example');
     }
   },
 };

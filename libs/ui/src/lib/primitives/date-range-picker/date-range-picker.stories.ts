@@ -6,7 +6,7 @@ const meta: Meta<JpDateRangePicker> = {
   component: JpDateRangePicker,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Event dates',
+    label: 'Series dates',
     min: '2026-10-01',
     max: '2026-10-31',
     hint: 'Local calendar dates; start must be on or before end.',
@@ -17,7 +17,7 @@ type Story = StoryObj<JpDateRangePicker>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    await expect(c.getByRole('group', { name: 'Event dates' })).toBeVisible();
+    await expect(c.getByRole('group', { name: 'Series dates' })).toBeVisible();
     await expect(c.getByLabelText('Start date')).toHaveAttribute(
       'type',
       'date',

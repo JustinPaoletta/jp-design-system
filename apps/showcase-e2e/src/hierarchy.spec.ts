@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/hierarchy');
   await expect(
     page.getByRole('heading', {
-      name: 'Hierarchy and project structure',
+      name: 'Club training plan',
       exact: true,
     }),
   ).toBeVisible();
@@ -16,19 +16,22 @@ for (const dir of ['ltr', 'rtl']) {
     'hierarchy: tree keyboard navigation and explicit selection ' + dir,
     async ({ page }) => {
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      const tree = page.getByRole('tree', { name: 'Design assets' });
+      const tree = page.getByRole('tree', { name: 'Club documents' });
       const brand = tree.getByRole('treeitem', {
-        name: 'Brand assets',
+        name: 'Club documents',
         exact: true,
       });
       await brand.focus();
       await brand.press('ArrowDown');
-      const logos = tree.getByRole('treeitem', { name: 'Logos', exact: true });
+      const logos = tree.getByRole('treeitem', {
+        name: 'Lineup sheets',
+        exact: true,
+      });
       await expect(logos).toBeFocused();
       await expect(logos).toHaveAttribute('aria-selected', 'false');
       await logos.press(dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight');
       const wordmark = tree.getByRole('treeitem', {
-        name: 'Wordmark.svg',
+        name: 'Lineup.svg',
         exact: true,
       });
       await expect(wordmark).toBeFocused();
@@ -37,10 +40,10 @@ for (const dir of ['ltr', 'rtl']) {
       await wordmark.press('Enter');
       await expect(
         page.getByRole('status').filter({ hasText: 'Opened' }),
-      ).toContainText('Opened Wordmark.svg');
+      ).toContainText('Opened Lineup.svg');
       await wordmark.press('End');
       const archived = tree.getByRole('treeitem', {
-        name: 'Archived assets',
+        name: 'Previous season',
         exact: true,
       });
       await expect(archived).toBeFocused();
@@ -48,9 +51,9 @@ for (const dir of ['ltr', 'rtl']) {
       await expect(wordmark).toHaveAttribute('aria-selected', 'true');
       await archived.press('Home');
       await expect(brand).toBeFocused();
-      await brand.press('p');
+      await brand.press('g');
       await expect(
-        tree.getByRole('treeitem', { name: 'Product assets', exact: true }),
+        tree.getByRole('treeitem', { name: 'Game documents', exact: true }),
       ).toBeFocused();
     },
   );
@@ -59,76 +62,76 @@ test('hierarchy: lazy branch loading, error and keyboard retry', async ({
   page,
 }) => {
   const library = page.getByRole('treeitem', {
-    name: 'Shared library',
+    name: 'Training guides',
     exact: true,
   });
   await library.focus();
   await library.press('ArrowRight');
   await expect(library).toHaveAttribute('aria-busy', 'true');
   await expect(
-    page.getByRole('button', { name: 'Retry: Shared library' }),
+    page.getByRole('button', { name: 'Retry: Training guides' }),
   ).toBeVisible();
   await library.press('Enter');
   await expect(
-    page.getByRole('treeitem', { name: 'Color guidelines.pdf', exact: true }),
+    page.getByRole('treeitem', { name: 'Uniform-guide.pdf', exact: true }),
   ).toBeVisible();
   await library.press('ArrowRight');
   await expect(
-    page.getByRole('treeitem', { name: 'Color guidelines.pdf', exact: true }),
+    page.getByRole('treeitem', { name: 'Uniform-guide.pdf', exact: true }),
   ).toBeFocused();
 });
 test('hierarchy: consumer collapse restores a focused descendant to its ancestor', async ({
   page,
 }) => {
-  await page
-    .getByRole('treeitem', { name: 'Wordmark.svg', exact: true })
-    .focus();
+  await page.getByRole('treeitem', { name: 'Lineup.svg', exact: true }).focus();
   await page
     .getByRole('button', { name: 'Collapse folders' })
     .evaluate((button: HTMLButtonElement) => button.click());
   await expect(
-    page.getByRole('treeitem', { name: 'Brand assets', exact: true }),
+    page.getByRole('treeitem', { name: 'Club documents', exact: true }),
   ).toBeFocused();
   await expect(
-    page.getByRole('treeitem', { name: 'Wordmark.svg', exact: true }),
+    page.getByRole('treeitem', { name: 'Lineup.svg', exact: true }),
   ).toHaveCount(0);
 });
 test('hierarchy: collapsing a project returns hidden checkbox focus to the disclosure', async ({
   page,
 }) => {
-  await page.getByRole('button', { name: 'Expand Design' }).click();
-  await page.getByRole('checkbox', { name: 'Select Landing page' }).focus();
+  await page.getByRole('button', { name: 'Expand Batting drills' }).click();
+  await page.getByRole('checkbox', { name: 'Select Batting order' }).focus();
   const parent = page.locator('#project-breakdown-row-website button');
   await parent.evaluate((button: HTMLButtonElement) => button.click());
   await expect(parent).toBeFocused();
   await expect(
-    page.getByRole('checkbox', { name: 'Select Landing page' }),
+    page.getByRole('checkbox', { name: 'Select Batting order' }),
   ).toBeHidden();
 });
 test('hierarchy: native table disclosure buttons preserve independent hidden selection', async ({
   page,
 }) => {
-  const table = page.getByRole('table', { name: 'Project work' });
+  const table = page.getByRole('table', { name: 'Practice plan' });
   await expect(page.getByRole('treegrid')).toHaveCount(0);
-  const design = table.getByRole('button', { name: 'Expand Design' });
+  const design = table.getByRole('button', { name: 'Expand Batting drills' });
   await design.focus();
   await design.press('Enter');
-  const landing = table.getByRole('checkbox', { name: 'Select Landing page' });
+  const landing = table.getByRole('checkbox', {
+    name: 'Select Batting order',
+  });
   await landing.check();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Design', exact: true }),
+    table.getByRole('checkbox', { name: 'Select Batting drills', exact: true }),
   ).not.toBeChecked();
   const website = page.locator('#project-breakdown-row-website button');
   await website.focus();
   await website.press('Space');
   await expect(landing).toBeHidden();
   await expect(
-    page.getByRole('status').filter({ hasText: 'project rows selected' }),
-  ).toHaveText('1 project rows selected');
+    page.getByRole('status').filter({ hasText: 'Selected drills:' }),
+  ).toHaveText('Selected drills: 1');
   await website.press('Enter');
   await expect(landing).toBeChecked();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Legacy migration' }),
+    table.getByRole('checkbox', { name: 'Select Last season review' }),
   ).toBeDisabled();
 });
 for (const dir of ['ltr', 'rtl']) {
@@ -137,7 +140,7 @@ for (const dir of ['ltr', 'rtl']) {
     async ({ page }) => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      await page.getByRole('button', { name: 'Expand Design' }).click();
+      await page.getByRole('button', { name: 'Expand Batting drills' }).click();
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - innerWidth,
       );

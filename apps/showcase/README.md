@@ -23,7 +23,7 @@ transport, persistence, validation and authorization. All feature pages load
 lazily so the initial bundle remains within the configured production budget.
 
 Use [Quality verification](../../docs/QUALITY.md) for the complete
-Chromium/WebKit functional suite and macOS visual commands. The full grep
+Chromium/Firefox/WebKit functional suite and macOS visual commands. The full grep
 selection there keeps platform-specific screenshots out of Linux checks.
 Contracts are indexed in [Documentation](../../docs/README.md); integration
-wiring is in [Product recipes](../../docs/PRODUCT_RECIPES.md).
+wiring is in [Product recipes](../../docs/consumers/RECIPES.md).

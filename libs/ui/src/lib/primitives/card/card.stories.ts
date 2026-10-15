@@ -6,10 +6,10 @@ const meta: Meta<JpCard> = {
   title: 'Primitives/Layout/Card',
   component: JpCard,
   parameters: { layout: 'padded' },
-  args: { title: 'Project overview' },
+  args: { title: 'Club overview' },
   render: (args) => ({
     props: args,
-    template: `<jp-card [title]="title"><p>A structured panel with an independent heading and actions.</p><button jpCardActions type="button">Edit project</button></jp-card>`,
+    template: `<jp-card [title]="title"><p>The Falcons won 5–3 against the Bears. Review the starting lineup for the next game.</p><button jpCardActions type="button">Edit lineup</button></jp-card>`,
   }),
 };
 export default meta;

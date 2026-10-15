@@ -18,9 +18,6 @@ type AppShellStoryArgs = {
 const meta: Meta<AppShellStoryArgs> = {
   title: 'Primitives/Layout/App Shell',
   component: JpAppShell,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     a11y: { test: 'error' },
   },
@@ -101,12 +98,12 @@ const meta: Meta<AppShellStoryArgs> = {
         <main jpAppShellMain>
           <jp-box padding="lg" maxWidth="wide">
             <jp-stack gap="md">
-              <jp-heading as="h2">Main content</jp-heading>
+              <jp-heading as="h2">Game day</jp-heading>
               <jp-text tone="secondary">
                 Shell layout with sidebar collapse and mobile drawer.
               </jp-text>
               <jp-surface tone="raised" padding="md">
-                <jp-text>Projected main region using existing layout primitives.</jp-text>
+                <jp-text>The Falcons won 5–3 against the Bears. View the roster and next game.</jp-text>
               </jp-surface>
             </jp-stack>
           </jp-box>
@@ -152,9 +149,7 @@ export const Default: Story = {
     await expect(canvasElement.querySelector('h2')).toBeTruthy();
     // The disclosure state lives on the toggle button, not the landmark.
     await expect(toggle?.getAttribute('aria-expanded')).toBe('true');
-    await expect(toggle?.getAttribute('aria-controls')).toBe(
-      'jp-app-shell-sidebar',
-    );
+    await expect(toggle?.getAttribute('aria-controls')).toBe(sidebar?.id);
     await expect(activeNav?.getAttribute('aria-current')).toBe('page');
   },
 };

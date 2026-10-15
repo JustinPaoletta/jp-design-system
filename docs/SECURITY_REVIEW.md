@@ -1,7 +1,7 @@
 # Security inspection
 
-The dependency audit date is October 4, 2026.
-It uses the current lockfile.
+The dependency audit date is October 11, 2026.
+It used the lockfile at revision `b31915546a98f8ccd2cfeb85219b2030a1c995a5`.
 The focused source inspection date is October 2, 2026, after the Angular 22.2.1 upgrade.
 That inspection included library/application code, build scripts, workflows and candidate source files.
 
@@ -10,11 +10,32 @@ It did not include deployment, credentials, backend services or registry publica
 
 ## Findings corrected
 
-- Upgraded Style Dictionary from 4.4.0 to 5.5.5, including the [prototype-pollution fix](https://github.com/advisories/GHSA-vj5c-m527-mpff). Generated CSS/JSON is unchanged, verified by token drift checking.
-- Nx 23.2.1 pins vulnerable development dependencies. Scoped `nx` overrides select axios 1.20.0, brace-expansion 5.0.12, and smol-toml 1.9.0. These remain within their existing major versions. Recheck/remove the overrides when Nx incorporates the fixes; strict peer installation and Nx validation must continue to pass.
-- Validated targeted major overrides: UUID 11.1.1 under the Storybook runner, Istanbul process-info, and Jest JUnit reporting; webpack-dev-middleware 7.4.5 under the Storybook Webpack builder. The inspected UUID v1/v4 APIs are compatible. The current static and live suites each pass 319 interaction/accessibility checks; [verification](qa/VERIFICATION.md) records the revision. CI runs both suites. These overrides deliberately exceed parent ranges and must be reassessed with upstream updates.
-- Token JSON parsing rejects `__proto__`, `constructor`, and `prototype` keys before build output is generated. Custom reference resolution only reads own properties. Regression fixtures verify rejection without generated artifacts. Local token inputs and build environment overrides are trusted developer configuration, not an arbitrary upload interface.
-- CI restricts the GitHub token to `contents: read`, pins official actions to examined commit SHAs, and runs a runtime dependency audit. Example environment templates remain committable, while local `.env` files are ignored.
+- The lockfile now selects Handlebars 4.7.10 in place of 4.7.9.
+  This patch clears the [AST type-confusion advisory](https://github.com/advisories/GHSA-8r5x-fm3f-whwj) and [own-property bypass advisory](https://github.com/advisories/GHSA-p8wg-vrv2-v86f).
+  It also clears the [inline-embedding advisory](https://github.com/advisories/GHSA-xw65-4hp5-5hc7).
+  Handlebars belongs to development tooling, not the distributed UI.
+  Parent dependency ranges permit the patch; no new override is necessary.
+
+- Style Dictionary changed from 4.4.0 to 5.5.5, including the [prototype-pollution fix](https://github.com/advisories/GHSA-vj5c-m527-mpff).
+  Token drift checks showed unchanged generated CSS/JSON.
+- Scoped `nx` overrides select axios 1.20.0, brace-expansion 5.0.12 and smol-toml 1.9.0 for Nx 23.2.1.
+  These versions stay within their existing major versions.
+  When Nx includes the fixes, examine and remove unnecessary overrides.
+  Strict peer installation and Nx checks must continue to pass.
+- Targeted major overrides select UUID 11.1.1 under the Storybook runner, Istanbul process-info and Jest JUnit reporting.
+  The Storybook Webpack builder uses webpack-dev-middleware 7.4.5.
+  The inspected UUID v1/v4 APIs are compatible.
+  Static and live Storybook each passed 319 checks at the [recorded revision](qa/VERIFICATION.md#october-9-hosted-readiness-evidence).
+  These overrides exceed parent ranges.
+  After upstream updates, examine their compatibility again.
+- Token JSON parsing rejects `__proto__`, `constructor` and `prototype` keys before generating build output.
+  Custom reference resolution reads only own properties.
+  Regression fixtures show rejection without generated artifacts.
+  Local token inputs and build environment overrides are trusted developer configuration.
+  They are not an upload interface.
+- CI restricts the GitHub token to `contents: read` and pins official actions to inspected commit SHAs.
+  It runs a runtime dependency audit.
+  Example environment templates can be committed; local `.env` files are ignored.
 
 ## Dependency results
 
@@ -25,15 +46,26 @@ npm audit --json
 npm audit --omit=dev --json
 ```
 
-The current complete scan reports **8 high-severity development packages**. These eight findings propagate from **one advisory-bearing leaf package: braces 3.0.3**. There are no moderate or critical findings. The runtime-only scan reports **zero findings at every severity**. A clean runtime audit does not clear development-tool findings or prove application security.
+The October 11 scan reports **30 moderate and eight high development packages**, unchanged from October 8.
+These 38 package findings come from two advisory-bearing leaf packages: `sprintf-js` and `braces`.
+There are no critical findings after the Handlebars patch.
+The runtime-only scan reports **zero findings at every severity**.
+A clean runtime audit does not clear development-tool findings or prove application security.
 
-| Remaining dependency  | Advisory / condition                                                                                                                                                                         | Boundary and follow-up                                                                                                                                                                                                                                             |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `braces` 3.0.3 (high) | [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm): deeply nested brace patterns can exhaust the stack; the current lockfile audit still reports the affected version. | Used by build/test glob tooling, not the shipped UI. Keep configuration/glob patterns developer-controlled. Clearing it now would make a fork necessary or replacing dependent tooling; wait for an upstream patch unless untrusted patterns become a requirement. |
+| Remaining dependency          | Advisory / condition                                                                                                                                                        | Boundary and follow-up                                                                                                                                                           |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `braces` 3.0.3 (high)         | [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm): deeply nested brace patterns can exhaust the stack. The October 11 audit reports this dependency. | Build/test glob tooling uses this dependency. Keep patterns under developer control. npm lists no patched leaf version. A fork or tooling replacement needs separate inspection. |
+| `sprintf-js` 1.0.3 (moderate) | [GHSA-hp3w-g68c-fv3c](https://github.com/advisories/GHSA-hp3w-g68c-fv3c): uncontrolled format precision can stop an operation. No patched version is listed.                | Used by development argument parsing and test tooling. Keep format strings under developer control. Wait for an upstream patch or inspect a tooling replacement.                 |
 
-The [UUID bounds-check advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq) and [middleware path-traversal advisory](https://github.com/advisories/GHSA-g84c-rxfj-3j2c) no longer appear in the resolved lockfile audit. The targeted overrides keep CJS/ESM UUID imports used by the inspected consumers and Storybook's middleware API on project Node 24.21.0. No global or unrelated major upgrades were forced.
+The [UUID bounds-check advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq) and [middleware path-traversal advisory](https://github.com/advisories/GHSA-g84c-rxfj-3j2c) do not appear in this audit.
+The targeted overrides preserve the inspected CJS/ESM UUID imports and Storybook middleware API on Node 24.21.0.
 
-The full audit intentionally still exits nonzero for braces. Do not run `npm audit fix --force`: its proposed major changes/downgrades are not a verified remediation for this Angular/Nx stack. The CI runtime check blocks moderate-or-higher runtime advisories. CI also uploads the complete audit as an informational artifact so development findings stay visible; it does not establish a clean full scan.
+The full audit exits nonzero for `braces` and `sprintf-js`.
+Do not run `npm audit fix --force`.
+Its proposed major changes and downgrades have no successful compatibility evidence for this Angular/Nx stack.
+The CI runtime check blocks moderate-or-higher runtime advisories.
+CI uploads the complete audit as an informational artifact.
+Development findings remain open.
 
 ## Source inspection
 

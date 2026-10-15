@@ -5,12 +5,12 @@ const meta: Meta<JpNotificationList> = {
   component: JpNotificationList,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Project notifications',
+    label: 'Club messages',
     items: [
       {
         id: 'one',
-        title: 'Review requested',
-        description: 'Ada requested your feedback.',
+        title: 'Lineup review requested',
+        description: 'Alex requested a lineup review.',
         group: 'Today',
         unread: true,
         timeLabel: '10:00 UTC',

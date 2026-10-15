@@ -140,6 +140,6 @@ inspection remain necessary for approval as stable APIs.
 
 Unit tests cover hierarchy, keys, keyboard focus, selection, RTL and lazy branches.
 Storybook examples cover navigation, retry, expansion and hidden selection.
-`hierarchy.spec.ts` covers the Showcase page in Chromium and WebKit.
+`hierarchy.spec.ts` covers the Showcase page in Chromium, Firefox and WebKit.
 It includes native Enter/Space use, narrow RTL layout and axe scans.
 [Verification](qa/VERIFICATION.md) records the results and limits.

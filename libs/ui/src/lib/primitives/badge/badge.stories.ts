@@ -17,9 +17,6 @@ type BadgeStoryArgs = {
 const meta: Meta<BadgeStoryArgs> = {
   title: 'Primitives/Data Display/Badge',
   component: JpBadge,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },
@@ -39,7 +36,7 @@ const meta: Meta<BadgeStoryArgs> = {
   args: {
     tone: 'neutral',
     size: 'md',
-    label: 'Badge',
+    label: 'Rostered',
   },
   render: (args) => ({
     props: args,
@@ -53,7 +50,7 @@ export default meta;
 type Story = StoryObj<BadgeStoryArgs>;
 
 export const Neutral: Story = {
-  args: { tone: 'neutral', label: 'Neutral' },
+  args: { tone: 'neutral', label: 'Reserve' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--neutral')).toBe(true);
@@ -61,7 +58,7 @@ export const Neutral: Story = {
 };
 
 export const Accent: Story = {
-  args: { tone: 'accent', label: 'Accent' },
+  args: { tone: 'accent', label: 'Starter' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--accent')).toBe(true);
@@ -69,23 +66,23 @@ export const Accent: Story = {
 };
 
 export const Success: Story = {
-  args: { tone: 'success', label: 'Success' },
+  args: { tone: 'success', label: 'Available' },
 };
 
 export const Warning: Story = {
-  args: { tone: 'warning', label: 'Warning' },
+  args: { tone: 'warning', label: 'Day to day' },
 };
 
 export const Error: Story = {
-  args: { tone: 'error', label: 'Error' },
+  args: { tone: 'error', label: 'Injured' },
 };
 
 export const Info: Story = {
-  args: { tone: 'info', label: 'Info' },
+  args: { tone: 'info', label: 'Away game' },
 };
 
 export const Small: Story = {
-  args: { tone: 'accent', size: 'sm', label: 'Small' },
+  args: { tone: 'accent', size: 'sm', label: 'Starter' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--sm')).toBe(true);
@@ -96,12 +93,12 @@ export const AllTones: Story = {
   render: () => ({
     template: `
       <div style="display: flex; flex-wrap: wrap; gap: var(--jp-space-sm);">
-        <jp-badge tone="neutral">Neutral</jp-badge>
-        <jp-badge tone="accent">Accent</jp-badge>
-        <jp-badge tone="success">Success</jp-badge>
-        <jp-badge tone="warning">Warning</jp-badge>
-        <jp-badge tone="error">Error</jp-badge>
-        <jp-badge tone="info">Info</jp-badge>
+        <jp-badge tone="neutral">Reserve</jp-badge>
+        <jp-badge tone="accent">Starter</jp-badge>
+        <jp-badge tone="success">Available</jp-badge>
+        <jp-badge tone="warning">Day to day</jp-badge>
+        <jp-badge tone="error">Injured</jp-badge>
+        <jp-badge tone="info">Away game</jp-badge>
       </div>
     `,
   }),
@@ -111,7 +108,7 @@ export const Sizes: Story = {
   render: () => ({
     template: `
       <div style="display: flex; align-items: center; gap: var(--jp-space-sm);">
-        <jp-badge tone="accent" size="sm">Small</jp-badge>
+        <jp-badge tone="accent" size="sm">Starter</jp-badge>
         <jp-badge tone="accent" size="md">Medium</jp-badge>
       </div>
     `,

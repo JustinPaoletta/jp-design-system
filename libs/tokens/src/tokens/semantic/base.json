@@ -2,9 +2,9 @@
   "color": {
     "surface": {
       "canvas": { "value": "{primitive.color.neutral.1100}" },
-      "sunken": { "value": "{primitive.color.neutral.1000}" },
-      "subtle": { "value": "{primitive.color.neutral.950}" },
-      "raised": { "value": "{primitive.color.neutral.900}" },
+      "sunken": { "value": "{primitive.color.neutral.1100}" },
+      "subtle": { "value": "{primitive.color.neutral.1000}" },
+      "raised": { "value": "{primitive.color.neutral.950}" },
       "emphasis": { "value": "{primitive.color.neutral.800}" }
     },
     "text": {
@@ -26,16 +26,16 @@
       "interactive": { "value": "{color.accent.solid}" }
     },
     "accent": {
-      "soft": { "value": "{primitive.color.accent.neon.200}" },
-      "muted": { "value": "{primitive.color.accent.neon.300}" },
-      "solid": { "value": "{primitive.color.accent.neon.500}" },
-      "strong": { "value": "{primitive.color.accent.neon.600}" },
+      "soft": { "value": "{primitive.color.accent.gold.200}" },
+      "muted": { "value": "{primitive.color.accent.gold.300}" },
+      "solid": { "value": "{primitive.color.accent.gold.500}" },
+      "strong": { "value": "{primitive.color.accent.gold.600}" },
       "contrast": { "value": "{primitive.color.neutral.1100}" },
-      "focus": { "value": "{primitive.color.accent.neon.500}" }
+      "focus": { "value": "{primitive.color.accent.gold.500}" }
     },
     "shell": {
       "sidebar-bg": { "value": "{color.surface.sunken}" },
-      "border": { "value": "{color.border.default}" },
+      "border": { "value": "{color.border.subtle}" },
       "scrim": { "value": "rgba(7, 11, 19, 0.72)" }
     },
     "nav-item": {
@@ -43,7 +43,7 @@
       "text-active": { "value": "{color.text.primary}" },
       "indicator": { "value": "{color.accent.muted}" },
       "bg-hover": { "value": "{color.surface.subtle}" },
-      "bg-active": { "value": "{color.surface.raised}" }
+      "bg-active": { "value": "{primitive.color.neutral.950}" }
     },
     "state": {
       "success": {
@@ -111,16 +111,16 @@
     "badge": {
       "neutral-bg": { "value": "{color.surface.emphasis}" },
       "neutral-fg": { "value": "{color.text.secondary}" },
-      "accent-bg": { "value": "{color.accent.soft}" },
-      "accent-fg": { "value": "{color.accent.contrast}" },
-      "success-bg": { "value": "{color.state.success.soft}" },
-      "success-fg": { "value": "{color.state.success.strong}" },
-      "warning-bg": { "value": "{color.state.warning.soft}" },
-      "warning-fg": { "value": "{color.state.warning.strong}" },
-      "error-bg": { "value": "{color.state.error.soft}" },
-      "error-fg": { "value": "{color.state.error.strong}" },
-      "info-bg": { "value": "{color.state.info.soft}" },
-      "info-fg": { "value": "{color.state.info.strong}" }
+      "accent-bg": { "value": "{color.surface.emphasis}" },
+      "accent-fg": { "value": "{color.accent.muted}" },
+      "success-bg": { "value": "{color.surface.subtle}" },
+      "success-fg": { "value": "{color.state.success.border}" },
+      "warning-bg": { "value": "{color.surface.subtle}" },
+      "warning-fg": { "value": "{color.state.warning.border}" },
+      "error-bg": { "value": "{color.surface.subtle}" },
+      "error-fg": { "value": "{color.state.error.border}" },
+      "info-bg": { "value": "{color.surface.subtle}" },
+      "info-fg": { "value": "{color.state.info.border}" }
     },
     "table": {
       "header-bg": { "value": "{color.surface.subtle}" },
@@ -163,9 +163,9 @@
       "assistant-bg": { "value": "{color.surface.sunken}" },
       "assistant-fg": { "value": "{color.text.primary}" },
       "system-fg": { "value": "{color.text.muted}" },
-      "context-bg": { "value": "{color.accent.soft}" },
-      "context-fg": { "value": "{color.accent.contrast}" },
-      "context-border": { "value": "{color.accent.muted}" }
+      "context-bg": { "value": "{color.surface.subtle}" },
+      "context-fg": { "value": "{color.accent.soft}" },
+      "context-border": { "value": "{color.border.default}" }
     },
     "chart": {
       "series-1": { "value": "{color.accent.muted}" },

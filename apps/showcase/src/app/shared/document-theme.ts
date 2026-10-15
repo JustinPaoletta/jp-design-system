@@ -1,7 +1,7 @@
 import { DestroyRef, inject, signal, type Signal } from '@angular/core';
 
 function readAccent(): string {
-  return document.documentElement.getAttribute('data-jp-accent') ?? 'neon';
+  return document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
 }
 
 function readDensity(): string {

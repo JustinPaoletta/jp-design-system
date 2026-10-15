@@ -75,21 +75,21 @@ export class ProductRecipesPage {
   private readonly timers = new Set<ReturnType<typeof setTimeout>>();
   readonly tab = signal('services');
   readonly tabs = [
-    { value: 'services', label: 'Services' },
+    { value: 'services', label: 'Players' },
     { value: 'settings', label: 'Settings' },
   ];
   readonly breadcrumbs = [
     { label: 'Dashboard', href: '/layout-dashboard' },
-    { label: 'Product recipes' },
+    { label: 'Club workflows' },
   ];
   readonly regions = [
-    { value: 'us', label: 'United States' },
-    { value: 'eu', label: 'Europe' },
-    { value: 'ap', label: 'Asia Pacific' },
+    { value: 'us', label: 'Pitcher' },
+    { value: 'eu', label: 'Catcher' },
+    { value: 'ap', label: 'Shortstop' },
   ];
   readonly plans = [
-    { value: 'standard', label: 'Standard' },
-    { value: 'priority', label: 'Priority' },
+    { value: 'standard', label: 'Club member' },
+    { value: 'priority', label: 'Season pass' },
   ];
   readonly form = new FormGroup({
     email: new FormControl('', {
@@ -119,15 +119,15 @@ export class ProductRecipesPage {
   readonly selected = signal<readonly JpTableRowKey[]>([]);
   readonly sort = signal<JpTableSort | null>(null);
   readonly columns = [
-    { key: 'name', header: 'Service', sortable: true },
+    { key: 'name', header: 'Player', sortable: true },
     { key: 'status', header: 'Status', sortable: true },
   ];
   readonly records = signal<Record<string, JpTableCellValue>[]>([
-    { id: 'payments', name: 'Payments API', status: 'Healthy' },
-    { id: 'search', name: 'Search index', status: 'Degraded' },
-    { id: 'billing', name: 'Billing worker', status: 'Healthy' },
-    { id: 'events', name: 'Event stream', status: 'Healthy' },
-    { id: 'media', name: 'Media service', status: 'Degraded' },
+    { id: 'payments', name: 'Alex Morgan', status: 'Available' },
+    { id: 'search', name: 'Jordan Davis', status: 'Day to day' },
+    { id: 'billing', name: 'Maya Chen', status: 'Available' },
+    { id: 'events', name: 'Casey Brooks', status: 'Available' },
+    { id: 'media', name: 'Taylor Reed', status: 'Injured' },
   ]);
   readonly filtered = computed(() => {
     const query = this.search().trim().toLowerCase();
@@ -203,7 +203,7 @@ export class ProductRecipesPage {
       this.loading.set(false);
       this.loadError.set(
         failed
-          ? 'Services could not be refreshed. Existing records remain available.'
+          ? 'The roster could not be refreshed. Existing players remain available.'
           : '',
       );
     });
@@ -216,7 +216,7 @@ export class ProductRecipesPage {
       this.deleting.set(false);
       if (failed) {
         this.deleteError.set(
-          'The selected services could not be deleted. Try again.',
+          'The selected players could not be removed. Try again.',
         );
         return;
       }

@@ -7,10 +7,10 @@ const meta: Meta<JpBreadcrumbs> = {
   component: JpBreadcrumbs,
   parameters: { layout: 'padded' },
   args: {
-    ariaLabel: 'Project hierarchy',
+    ariaLabel: 'Club structure',
     items: [
-      { label: 'Projects', href: '#projects' },
-      { label: 'Design system', href: '#design-system' },
+      { label: 'Clubs', href: '#projects' },
+      { label: 'Riverton Falcons', href: '#design-system' },
       { label: 'Settings' },
     ],
   },
@@ -22,7 +22,7 @@ export const ProjectSettings: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
-      canvas.getByRole('navigation', { name: 'Project hierarchy' }),
+      canvas.getByRole('navigation', { name: 'Club structure' }),
     ).toBeVisible();
     await expect(canvas.getAllByRole('link')).toHaveLength(2);
     await expect(canvas.getByText('Settings')).toHaveAttribute(
@@ -34,10 +34,10 @@ export const ProjectSettings: Story = {
 export const LongHierarchy: Story = {
   args: {
     items: [
-      { label: 'Organization', href: '#organization' },
-      { label: 'Workspace', href: '#workspace' },
-      { label: 'Projects', href: '#projects' },
-      { label: 'Design system', href: '#design-system' },
+      { label: 'League', href: '#organization' },
+      { label: 'Clubhouse', href: '#workspace' },
+      { label: 'Clubs', href: '#projects' },
+      { label: 'Riverton Falcons', href: '#design-system' },
       { label: 'Component accessibility settings' },
     ],
   },

@@ -1,10 +1,10 @@
 <jp-skip-link target="workflow-main" /><jp-live-announcer />
 <div class="page" id="workflow-main" tabindex="-1">
   <jp-page-header
-    title="Everyday workflows"
-    description="Commands, scheduling, uploads, notifications, and editing."
+    title="Club operations"
+    description="Manage the game plan, series dates, lineup files and club messages."
     ><a jpPageActions jpLink routerLink="/product-tools"
-      >Product tools</a
+      >Game day tools</a
     ></jp-page-header
   >
   <div class="grid">
@@ -12,30 +12,30 @@
       ><div class="stack">
         <jp-button (click)="commandOpen.set(true)">Open commands</jp-button>
         <p>Use Control or Command + K outside a text field.</p>
-        <jp-button-group label="Project actions"
+        <jp-button-group label="Club actions"
           ><jp-toggle-button
             label="Favorite"
             [formControl]="favorite" /><jp-split-button
-            label="Create project"
+            label="Create club"
             [actions]="menuActions"
             (primary)="record('create')"
             (actionSelected)="record($event)"
         /></jp-button-group>
         <jp-context-menu
-          label="Launch plan"
+          label="Game plan"
           [actions]="menuActions"
           (actionSelected)="record($event)"
           ><p>
-            Launch plan — right-click here, or use Shift + F10.
+            Game plan — right-click here, or use Shift + F10.
           </p></jp-context-menu
         >
         <p role="status">Last action: {{action()}}</p>
       </div></jp-card
     >
-    <jp-card title="Project name"
+    <jp-card title="Club name"
       ><div class="stack">
         <jp-inline-edit
-          label="Project name"
+          label="Club name"
           [value]="projectName()"
           (valueChange)="projectName.set($event)"
           [save]="saveName"
@@ -52,7 +52,7 @@
         <jp-error-summary [errors]="errors()" />
         <jp-date-picker
           id="launch-date"
-          label="Launch date"
+          label="Game date"
           [formControl]="launch"
           min="2026-10-01"
           max="2026-10-31"
@@ -61,7 +61,7 @@
         />
         <jp-date-range-picker
           id="event-dates"
-          label="Event dates"
+          label="Series dates"
           [formControl]="dates"
           min="2026-10-01"
           max="2026-10-31"
@@ -70,7 +70,7 @@
         />
         <jp-time-picker
           id="event-time"
-          label="Start time"
+          label="First pitch"
           [formControl]="time"
           min="09:00"
           max="17:00"
@@ -85,7 +85,7 @@
     >
     <jp-card title="Files"
       ><jp-file-upload
-        label="Attachments"
+        label="Lineup files"
         accept=".txt,.md"
         [maxBytes]="1024"
         [maxFiles]="3"
@@ -115,7 +115,7 @@
     <jp-card title="Inbox"
       ><div #notificationRegion tabindex="-1" aria-label="Notification updates">
         <jp-notification-list
-          label="Project notifications"
+          label="Club messages"
           [items]="notifications()"
           (readChange)="changeRead($event)"
           (dismissRequested)="dismiss($event)"

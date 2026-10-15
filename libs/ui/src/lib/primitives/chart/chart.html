@@ -13,24 +13,9 @@
   <p role="alert">{{ messages.invalid }}</p>
   } @else if (!labels().length || !series().length) {
   <p>{{ messages.empty }}</p>
-  } @else {
-  <div class="legend" role="group" [attr.aria-label]="messages.series">
-    @for (item of series(); track item.id; let i = $index) {
-    <button
-      type="button"
-      [attr.aria-pressed]="!hiddenSeries().includes(item.id)"
-      (click)="toggle(item.id)"
-    >
-      <span
-        class="swatch"
-        aria-hidden="true"
-        [style.background]="'var(--jp-color-chart-series-' + (i + 1) + ')'"
-        >{{ i + 1 }}</span
-      >{{ item.label }}
-    </button>
-    }
-  </div>
-  @if (visible().length) {
+  } @else { @if (!controlsCollapsed()) {
+  <ng-container [ngTemplateOutlet]="legendControls" />
+  } @if (visible().length) {
   <div class="plot" [attr.data-rendered]="rendered()">
     <canvas
       #canvas
@@ -43,27 +28,15 @@
   <p>{{ messages.empty }}</p>
   } @if (engineError()) {
   <p role="status">{{ messages.failed }}</p>
+  } @if (!controlsCollapsed()) {
+  <ng-container [ngTemplateOutlet]="inspectionControls" />
   }
-  <label class="inspect"
-    >{{ messages.category }}<select
-      [value]="index()"
-      (change)="inspect($event)"
-    >
-      @for (category of labels(); track $index; let i = $index) {
-      <option [value]="i">{{ category }}</option>
-      }
-    </select></label
-  >
-  <dl aria-live="polite">
-    @for (item of visible(); track item.id) {
-    <div>
-      <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
-      <dd>{{ format(item.values[index()]) }}</dd>
-    </div>
-    }
-  </dl>
   <details [open]="forcedColors()">
     <summary>{{ messages.data }}</summary>
+    @if (controlsCollapsed()) {
+    <ng-container [ngTemplateOutlet]="legendControls" />
+    <ng-container [ngTemplateOutlet]="inspectionControls" />
+    }
     <div
       class="data"
       tabindex="0"
@@ -97,3 +70,41 @@
   </details>
   }
 </figure>
+<ng-template #legendControls>
+  <div class="legend" role="group" [attr.aria-label]="messages.series">
+    @for (item of series(); track item.id; let i = $index) {
+    <button
+      type="button"
+      [attr.aria-pressed]="!hiddenSeries().includes(item.id)"
+      (click)="toggle(item.id)"
+    >
+      <span
+        class="swatch"
+        aria-hidden="true"
+        [style.background]="'var(--jp-color-chart-series-' + (i + 1) + ')'"
+        >{{ i + 1 }}</span
+      >{{ item.label }}
+    </button>
+    }
+  </div>
+</ng-template>
+<ng-template #inspectionControls>
+  <label class="inspect"
+    >{{ messages.category }}<select
+      [value]="index()"
+      (change)="inspect($event)"
+    >
+      @for (category of labels(); track $index; let i = $index) {
+      <option [value]="i" [selected]="i === index()">{{ category }}</option>
+      }
+    </select></label
+  >
+  <dl aria-live="polite">
+    @for (item of visible(); track item.id) {
+    <div>
+      <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
+      <dd>{{ format(item.values[index()]) }}</dd>
+    </div>
+    }
+  </dl>
+</ng-template>

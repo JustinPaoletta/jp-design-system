@@ -45,26 +45,32 @@ export class AdvancedLayoutPage {
   readonly columns: JpSortableTableColumn[] = [
     {
       key: 'name',
-      header: 'Service',
+      header: 'Player',
       width: 220,
       minWidth: 140,
       maxWidth: 480,
     },
-    { key: 'owner', header: 'Owner', width: 190 },
-    { key: 'region', header: 'Region', width: 240 },
+    { key: 'owner', header: 'Coach', width: 190 },
+    { key: 'region', header: 'Position', width: 240 },
     { key: 'status', header: 'Status', width: 190 },
   ];
   readonly rows = Array.from({ length: 16 }, (_, index) => ({
     id: 'service-' + index,
     name:
-      ['API gateway', 'Background jobs', 'Search index', 'Asset service'][
-        index % 4
-      ] +
-      ' ' +
-      (index + 1),
-    owner: index % 2 ? 'Platform' : 'Product',
-    region: index % 2 ? 'eu-west-1' : 'us-east-1',
-    status: index % 3 ? 'Healthy' : 'Review needed',
+      [
+        'Alex Morgan',
+        'Jordan Davis',
+        'Maya Chen',
+        'Casey Brooks',
+        'Taylor Reed',
+      ][index] ?? 'League player ' + String(index + 1).padStart(3, '0'),
+    owner: 'Sam Rivera',
+    region: ['Pitcher', 'Catcher', 'Shortstop', 'Center field', 'Right field'][
+      index % 5
+    ],
+    status:
+      ['Available', 'Day to day', 'Available', 'Available', 'Injured'][index] ??
+      (index % 3 ? 'Available' : 'Medical review'),
   }));
   readonly preferences = signal(
     normalizeJpTablePreferences(null, this.columns),

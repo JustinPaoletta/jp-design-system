@@ -1,4 +1,191 @@
-:host {
+.dashboard {
+  padding: 24px;
+  max-width: 1100px;
+  margin-inline: auto;
+  color: var(--jp-color-text-primary);
+}
+.dashboard-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--jp-color-border-subtle);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.dashboard-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.dashboard-heading h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+.dashboard p {
+  margin: 0;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body);
+}
+.dashboard-period {
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-raised);
+  padding: 8px 14px;
+  color: var(--jp-color-text-secondary);
+  font: inherit;
+}
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 20px 0;
+  margin: 0 0 16px;
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-raised);
+}
+.dashboard-metrics div {
+  padding-inline: 24px;
+}
+.dashboard-metrics div + div {
+  border-inline-start: 1px solid var(--jp-color-border-default);
+}
+.dashboard-metrics dt {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.dashboard-metrics dd {
+  margin: 4px 0 0;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.dashboard-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.dashboard-panel {
+  padding: 18px;
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-raised);
+  min-width: 0;
+}
+.dashboard-panel h2 {
+  font-size: var(--jp-font-size-body);
+  margin: 0 0 18px;
+}
+.dashboard-activity {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 24px;
+}
+.dashboard-activity li {
+  display: grid;
+  grid-template-columns: 8px 42px 1fr;
+  align-items: start;
+  gap: 12px;
+  font-size: var(--jp-font-size-caption);
+}
+.dashboard-activity time {
+  color: var(--jp-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.dashboard-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--jp-color-state-success-border);
+  margin-top: 6px;
+}
+.dashboard-dot-neutral {
+  background: var(--jp-color-text-secondary);
+}
+.dashboard-dot-warning {
+  background: var(--jp-color-accent-solid);
+}
+.dashboard-insights {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 24px;
+  align-items: center;
+}
+.dashboard-insights h3 {
+  margin: 0 0 6px;
+  font-size: var(--jp-font-size-caption);
+  font-weight: 500;
+}
+.dashboard-insights p,
+.dashboard-updated {
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-muted);
+}
+.dashboard-insights > div + div {
+  border-inline-start: 1px solid var(--jp-color-border-default);
+  padding-inline-start: 24px;
+}
+.dashboard-brand {
   display: block;
-  min-height: 100vh;
+  padding: 8px 8px 28px;
+  font-weight: 600;
+  font-size: var(--jp-font-size-body);
+}
+.dashboard-workspace {
+  display: block;
+  padding: 0 8px 12px;
+  font-size: 11px;
+  color: var(--jp-color-text-muted);
+  letter-spacing: 0.04em;
+}
+.dashboard-avatar {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--jp-color-surface-emphasis);
+  font-size: 11px;
+}
+.dashboard-period:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+@media (width > 48rem) {
+  .jp-app-shell--collapsed .dashboard-brand,
+  .jp-app-shell--collapsed .dashboard-workspace {
+    display: none;
+  }
+}
+@media (width <= 48rem) {
+  .dashboard {
+    padding: 16px;
+  }
+  .dashboard-panels {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-insights {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-insights > div + div {
+    border: 0;
+    padding: 0;
+  }
+  .dashboard-metrics div {
+    padding-inline: 12px;
+  }
+  .dashboard-metrics dd {
+    font-size: 24px;
+  }
+  .dashboard-topbar {
+    padding-inline: 16px;
+  }
 }

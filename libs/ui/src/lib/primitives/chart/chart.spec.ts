@@ -19,6 +19,7 @@ jest.mock('chart.js', () => ({
   CategoryScale: {},
   LinearScale: {},
   Tooltip: {},
+  Filler: {},
 }));
 const series = [
   { id: 'one', label: 'One', values: [10, null] },
@@ -45,6 +46,7 @@ describe('JpChart', () => {
     const f = await setup();
     const config = mockCreate.mock.calls.at(-1)?.[1];
     expect(config.options.animation).toBe(false);
+    expect(config.options.scales.y.ticks.precision).toBeUndefined();
     expect(config.data.datasets).toHaveLength(2);
     expect(
       f.nativeElement.querySelector('canvas').getAttribute('aria-label'),
@@ -53,6 +55,41 @@ describe('JpChart', () => {
     expect(f.nativeElement.textContent).toContain('No value');
     f.destroy();
     expect(mockDestroy).toHaveBeenCalled();
+  });
+  it('keeps compact inspection controls in the native data disclosure', async () => {
+    const f = await setup();
+    f.componentRef.setInput('controlsCollapsed', true);
+    f.componentRef.setInput('formatOptions', { maximumFractionDigits: 0 });
+    f.componentRef.setInput('type', 'line');
+    f.detectChanges();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    f.detectChanges();
+    await f.whenStable();
+    const details = f.nativeElement.querySelector('details');
+    expect(details.querySelector('select')).toBeTruthy();
+    expect(details.querySelector('.legend')).toBeTruthy();
+    expect(details.querySelector('table')).toBeTruthy();
+    expect(details.open).toBe(false);
+    expect(
+      mockCreate.mock.calls.at(-1)?.[1].options.scales.y.ticks.precision,
+    ).toBe(0);
+    expect(mockCreate.mock.calls.at(-1)?.[1].options.animation).toBe(false);
+    expect(mockCreate.mock.calls.at(-1)?.[1].data.datasets[0].fill).toBe(true);
+  });
+  it('keeps fractional axis ticks available for percentage formatting', async () => {
+    const f = await setup();
+    f.componentRef.setInput('formatOptions', {
+      style: 'percent',
+      maximumFractionDigits: 0,
+    });
+    f.detectChanges();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    f.detectChanges();
+    await f.whenStable();
+    expect(
+      mockCreate.mock.calls.at(-1)?.[1].options.scales.y.ticks.precision,
+    ).toBeUndefined();
+    expect(f.componentInstance.format(0.12)).toBe('12%');
   });
   it('renders controlled legend visibility and can restore all series', async () => {
     const f = await setup();

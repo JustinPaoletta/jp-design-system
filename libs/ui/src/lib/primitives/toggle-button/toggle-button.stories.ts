@@ -4,7 +4,7 @@ import { JpToggleButton } from './toggle-button';
 const meta: Meta<JpToggleButton> = {
   title: 'Primitives/Controls/Toggle Button',
   component: JpToggleButton,
-  args: { label: 'Favorite' },
+  args: { label: 'Favorite player' },
   parameters: { layout: 'padded' },
 };
 export default meta;
@@ -12,7 +12,7 @@ type Story = StoryObj<JpToggleButton>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole('button', {
-      name: 'Favorite',
+      name: 'Favorite player',
     });
     await expect(button).toHaveAttribute('aria-pressed', 'false');
     await userEvent.click(button);

@@ -144,7 +144,7 @@ Additional default copy is configurable through `provideJpMessages`:
 - Storybook includes defaults and relevant disabled/error/loading variants.
 - Showcase exercises compositions outside Storybook. Its component expansion
   route is lazy-loaded; the recipes page is also lazy-loaded to keep the initial bundle within its existing budget.
-- Browser regressions cover Chromium/WebKit keyboard flows, validation recovery,
+- Browser regressions cover Chromium/Firefox/WebKit keyboard flows, validation recovery,
   drawer focus, multi-selection, rendered/open-state axe checks, and mobile RTL.
 - Eight macOS Chromium visual baselines cover accents/densities, mobile LTR/RTL,
   and desktop/mobile drawer layouts.
@@ -235,7 +235,7 @@ Use `valueText` and application-formatted timeline labels for numbers and dates 
 <jp-code-block label="Install" language="Shell" code="npm install @jp-design-system/ui" />
 ```
 
-Chromium and WebKit tests exercise wizard recovery, native slider keys, range boundaries, nested completion and overflow focus. They include WCAG 2.1 A/AA checks for closed, open and error states. Clipboard denial/retry uses a controlled boundary in browser
+Chromium, Firefox and WebKit tests exercise wizard recovery, native slider keys, range boundaries, nested completion and overflow focus. They include WCAG 2.1 A/AA checks for closed, open and error states. Clipboard denial/retry uses a controlled boundary in browser
 tests; manual permission behavior remains browser-owned. Manual screen-reader
 and physical touch-device inspection remain pending.
 

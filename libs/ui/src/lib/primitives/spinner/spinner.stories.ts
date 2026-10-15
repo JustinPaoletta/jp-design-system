@@ -6,7 +6,7 @@ const meta: Meta<JpSpinner> = {
   title: 'Primitives/Feedback/Spinner',
   component: JpSpinner,
   parameters: { layout: 'padded' },
-  args: { label: 'Refreshing reports', size: 'lg' },
+  args: { label: 'Refreshing roster', size: 'lg' },
 };
 export default meta;
 type Story = StoryObj<JpSpinner>;

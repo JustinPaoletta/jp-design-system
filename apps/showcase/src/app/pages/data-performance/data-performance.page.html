@@ -1,14 +1,14 @@
 <div class="page">
   <jp-page-header
-    title="Charts and large datasets"
-    description="Service analytics with equivalent data access and a bounded 10,000-row table."
+    title="League player statistics"
+    description="Player analytics with equivalent data access and a bounded 10,000-row table."
     ><a jpPageActions jpLink routerLink="/hierarchy">Hierarchy</a
     ><a jpPageActions jpLink routerLink="/scheduling">Scheduling</a
     ><a jpPageActions jpLink routerLink="/interaction-tools"
-      >Interaction tools</a
+      >Game preparation</a
     ></jp-page-header
   >
-  <jp-card title="Delivery trends"
+  <jp-card title="Season runs"
     ><div class="actions">
       <jp-button
         variant="secondary"
@@ -19,13 +19,13 @@
     </div>
     <jp-chart
       id="delivery-chart"
-      label="Completed work by team"
-      description="Monthly delivery counts from April through September. Series controls and the data table provide the same information as the plot."
+      label="Team runs by month"
+      description="Compare Falcons and Bears runs from April through September. Open the data table to inspect exact values."
       [labels]="labels"
       [series]="series"
       [type]="type()"
   /></jp-card>
-  <jp-card title="Service inventory"
+  <jp-card title="League player roster"
     ><p>
       10,000 fixed-height rows. Scroll to browse or switch to paginated rows for
       complete table navigation. Sorting and selection are controlled by this
@@ -44,7 +44,7 @@
       />
     </details>
     <jp-virtual-table
-      label="Large service inventory"
+      label="League player roster"
       [columns]="columns"
       [rows]="rows()"
       [overscan]="overscan()"
@@ -54,6 +54,6 @@
       [sort]="sort()"
       (sortChange)="sort.set($event)"
     />
-    <p role="status">{{ selected().length }} services selected</p></jp-card
+    <p role="status">{{ selected().length }} players selected</p></jp-card
   >
 </div>

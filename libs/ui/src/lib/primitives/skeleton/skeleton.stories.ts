@@ -11,7 +11,7 @@ type Story = StoryObj<JpSkeleton>;
 export const LoadingCard: Story = {
   render: () => ({
     template: `
-      <section aria-label="Loading project" aria-busy="true" style="display:grid;gap:var(--jp-space-sm);max-width:var(--jp-size-column-min-md)">
+      <section aria-label="Loading club roster" aria-busy="true" style="display:grid;gap:var(--jp-space-sm);max-width:var(--jp-size-column-min-md)">
         <jp-skeleton shape="rectangle" style="height:var(--jp-size-control-xl)" />
         <jp-skeleton />
         <jp-skeleton style="width:70%" />

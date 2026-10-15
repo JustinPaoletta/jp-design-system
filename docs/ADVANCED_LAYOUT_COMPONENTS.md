@@ -110,9 +110,11 @@ Each row has a labeled native button with expansion state and an open-panel rela
 
 The table remains a [native table with independent controls](https://www.w3.org/WAI/ARIA/apg/patterns/table/).
 It does not implement spreadsheet cell navigation, hierarchical/tree-grid
-semantics, row virtualization or drag-and-drop. Those are distinct task-list
-items. Expansion and selection are independent; consumers own sort, filters,
-paging and asynchronous detail data.
+semantics, row virtualization or drag-and-drop.
+Use [hierarchy components](HIERARCHY_COMPONENTS.md) for trees and [virtual tables](DATA_PERFORMANCE_COMPONENTS.md#fixed-height-virtual-table) for large flat datasets.
+[Reordering](INTERACTION_COMPONENTS.md#reordering) operates on a separate vertical list.
+Expansion and selection are independent.
+Consumers own sort, filters, paging and asynchronous detail data.
 
 ```html
 <jp-table id="inventory" caption="Services" [columns]="columns" [rows]="rows" columnChooser resizable stickyHeader stickyFirstColumn maxHeight="24rem" [(visibleColumnKeys)]="visibleColumns" [(columnWidths)]="widths" [(expandedKeys)]="expandedRows" rowKey="id">

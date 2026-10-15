@@ -37,10 +37,10 @@ Use these until a designer owner exists:
 | What is safe to depend on       | [MATURITY.md](./MATURITY.md)                                                                               |
 | Visual rules                    | [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md)                                                            |
 | Tokens, accent, density         | `libs/tokens/README.md`, `tokens.css`, `data-jp-accent`, `data-jp-density`                                 |
-| Product compositions            | [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md) and the composition stories                                    |
+| Product compositions            | [Recipes](../consumers/RECIPES.md) and the composition stories                                             |
 | Click-through checks            | [MANUAL_QA.md](../../MANUAL_QA.md)                                                                         |
 
-Accent values in code: `neon` (default) and `cobalt`. Density: `default` and
+Accent values in code: `gold` (default), `neon` and `cobalt`. Density: `default` and
 `compact`. The theme is dark-first. The Storybook light stage is a mat behind
 the page, not a light component theme.
 
@@ -56,7 +56,7 @@ assigned, the kit has to match the implementation that already exists:
 - Variables for semantic tokens only: color, space, type, radius, elevation,
   motion, and z-index. Primitive palettes stay source data, matching the lint
   rule that `libs/ui` does not use them directly.
-- Modes for accent (`neon`, `cobalt`) and density (`default`, `compact`). No
+- Modes for accent (`gold`, `neon`, `cobalt`) and density (`default`, `compact`). No
   light mode until code has one.
 - Component names that match selectors (`jp-button`, `jp-dialog`, `jp-app-shell`).
 - Properties that match public inputs and documented defaults.

@@ -60,9 +60,12 @@ sort phrase keys append localized copy to the column button name.
 ## Locale, dates and time zones
 
 Applications select locale/time zone. Native pickers keep ISO civil-string
-values while the browser owns their display. Timeline and scheduling format
-with `Intl.DateTimeFormat`; scheduling keeps Gregorian civil dates. Chart
-numbers use `Intl.NumberFormat`. Configure the relevant API inputs or
+values while the browser owns their display.
+The application formats timeline labels.
+Scheduling uses `Intl.DateTimeFormat` and keeps Gregorian civil dates.
+Charts use `Intl.NumberFormat`.
+
+Configure the relevant API inputs or
 formatting callbacks, and format other application content in the app. See
 [workflow](../WORKFLOW_COMPONENTS.md), [scheduling](../SCHEDULING_CALENDAR.md)
 and [data-performance](../DATA_PERFORMANCE_COMPONENTS.md) contracts.

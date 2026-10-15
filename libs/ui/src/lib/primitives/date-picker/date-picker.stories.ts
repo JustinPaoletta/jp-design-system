@@ -6,7 +6,7 @@ const meta: Meta<JpDatePicker> = {
   component: JpDatePicker,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Date Picker',
+    label: 'Game date',
     hint: 'Uses your browser’s locale and native picker',
     min: '2026-10-01',
     max: '2026-10-31',
@@ -17,7 +17,7 @@ type Story = StoryObj<JpDatePicker>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(
-      within(canvasElement).getByLabelText('Date Picker'),
+      within(canvasElement).getByLabelText('Game date'),
     ).toHaveAttribute('type', 'date');
   },
 };

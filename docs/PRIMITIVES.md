@@ -141,10 +141,10 @@ Class `JpAppShell`. Story:
 Project navigation with `[jpAppShellSidebar]` and page content with
 `[jpAppShellMain]`. The shell does not store the two booleans. Bind them.
 
-Breakpoint behavior and the fixed sidebar id `jp-app-shell-sidebar` are in
+Breakpoint behavior and generated sidebar IDs are in
 [Layout](consumers/LAYOUT.md). `Open navigation`, `Close navigation`,
 `Expand sidebar`, and `Collapse sidebar` come from `JP_MESSAGES.appShell`.
-One shell per document.
+The controls in each shell refer to its own sidebar ID.
 
 ### jp-app-shell-nav-item
 

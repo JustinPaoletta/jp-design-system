@@ -2,8 +2,7 @@
 
 Showcase route `/product-recipes` is the working composition for forms,
 search, selection, and destructive confirmation. `/assistant` is the
-assistant surface. The narrative for both is
-[PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md). Serve the app with
+assistant surface. Serve the app with
 `npm exec -- nx run showcase:serve` (http://localhost:4200). The page sources are
 [`product-recipes.page.ts`](../../apps/showcase/src/app/pages/product-recipes/product-recipes.page.ts)
 and
@@ -63,7 +62,7 @@ example uses `2`). `filtered` applies the query and the current
 
 ```html
 <jp-table-toolbar [activeFilters]="filters()" [selectedCount]="selected().length" (removeFilter)="setSearch('')" (clearFilters)="setSearch('')">
-  <jp-input jpTableSearch label="Search services" type="search" [ngModel]="search()" (ngModelChange)="setSearch($event)" />
+  <jp-input jpTableSearch label="Search players" type="search" [ngModel]="search()" (ngModelChange)="setSearch($event)" />
   <jp-button jpTableActions variant="secondary" [loading]="loading()" (click)="refresh()"> Refresh services </jp-button>
 </jp-table-toolbar>
 <jp-table caption="Service inventory" [columns]="columns" [rows]="visible()" [sort]="sort()" (sortChange)="setSort($event)" [selectable]="true" [selectedKeys]="selected()" (selectionChange)="selected.set($event)" emptyTitle="No matching services" emptyDescription="Clear your search or choose a different query." />
@@ -117,8 +116,7 @@ Showcase `/assistant` opens the panel with `jpAssistantTrigger` and
 `jpAssistantContext`. `onMessageSubmit` stores the question and appends a
 finished assistant message with `addMessage`. That page does not stream.
 
-Streaming uses `JpAssistantService` and the panel outputs. The same methods
-are what [PRODUCT_RECIPES.md](../PRODUCT_RECIPES.md) specifies, and Storybook
+Streaming uses `JpAssistantService` and the panel outputs. Storybook
 [`Primitives/Assistant/Panel`](../../libs/ui/src/lib/primitives/assistant/assistant.stories.ts)
 drives them from `beginResponse`, `updateResponse`, `completeResponse`, and
 `failResponse`.
@@ -158,3 +156,15 @@ The panel appends the user message before `messageSubmit`. `beginResponse` then 
 Abort the matching transport there. `responseRetry` emits `{ previousId, responseId }` after `retryResponse` has replaced the old message with a new pending id. Pass `responseId` to the next send. Do not call `beginResponse` again for that retry.
 
 The application owns the transport, authorization, persistence, and content policy. `this.transport.send` is that application client, not a JP export.
+
+## Navigation and layout
+
+Tabs use manual activation.
+Arrow keys, Home and End move focus; Enter or Space selects.
+Supply explicit tab IDs for repeated instances or application focus links.
+Supply one `ng-template jpTabPanel` for each value.
+SSR and hydration are outside the support contract.
+
+Use [Composition](COMPOSITION.md#navigation) for shell navigation and breadcrumb structure.
+Use [Layout](LAYOUT.md) for table overflow, accent and density.
+The Storybook Light stage changes the preview background; components keep the dark theme.

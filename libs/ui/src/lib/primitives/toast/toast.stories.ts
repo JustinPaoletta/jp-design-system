@@ -22,7 +22,7 @@ import { JpToastService } from './toast.service';
 class ToastStoryHost {
   private readonly toasts = inject(JpToastService);
 
-  @Input() message = 'Deployment saved';
+  @Input() message = 'Lineup saved';
   @Input() tone: (typeof JP_TOAST_TONES)[number] = 'success';
 
   show(): void {
@@ -33,9 +33,6 @@ class ToastStoryHost {
 const meta: Meta = {
   title: 'Primitives/Feedback/Toast',
   component: JpToast,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },
@@ -69,7 +66,7 @@ export const Warning: Story = {
 
 export const Error: Story = {
   render: () => ({
-    template: `<jp-toast message="Deploy failed" tone="error" />`,
+    template: `<jp-toast message="Lineup unavailable" tone="error" />`,
   }),
 };
 
@@ -84,7 +81,7 @@ export const ViaService: Story = {
     },
   },
   args: {
-    message: 'Deployment saved',
+    message: 'Lineup saved',
     tone: 'success',
   },
   render: (args) => ({
@@ -95,7 +92,7 @@ export const ViaService: Story = {
 
 export const ViaServiceInteractive: Story = {
   args: {
-    message: 'Deployment saved',
+    message: 'Lineup saved',
     tone: 'success',
   },
   render: (args) => ({
@@ -105,6 +102,6 @@ export const ViaServiceInteractive: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(button);
-    await expect(canvasElement.textContent).toContain('Deployment saved');
+    await expect(canvasElement.textContent).toContain('Lineup saved');
   },
 };

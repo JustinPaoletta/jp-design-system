@@ -13,14 +13,14 @@ async function expectWcag21Aa(page: Page) {
 async function openOverlays(page: Page) {
   await page.goto('/overlays');
   await expect(
-    page.getByRole('heading', { name: 'Feedback & Overlays' }),
+    page.getByRole('heading', { name: 'Club alerts' }),
   ).toBeVisible();
 }
 
 async function openRecipes(page: Page) {
   await page.goto('/product-recipes');
   await expect(
-    page.getByRole('heading', { name: 'Product recipes' }),
+    page.getByRole('heading', { name: 'Club workflows' }),
   ).toBeVisible();
 }
 
@@ -32,10 +32,10 @@ test.describe('a11y state coverage', () => {
   test('open dialog meets WCAG AA', async ({ page }) => {
     await openOverlays(page);
     await page
-      .getByRole('button', { name: 'Delete deployment', exact: true })
+      .getByRole('button', { name: 'Remove player', exact: true })
       .click();
     await expect(
-      page.getByRole('dialog', { name: 'Delete deployment?' }),
+      page.getByRole('dialog', { name: 'Remove player?' }),
     ).toBeVisible();
     await expectWcag21Aa(page);
   });
@@ -53,17 +53,17 @@ test.describe('a11y state coverage', () => {
   test('open popover meets WCAG AA', async ({ page }) => {
     await openOverlays(page);
     await page.getByRole('button', { name: 'Filters', exact: true }).click();
-    await expect(page.getByText('Environment filters')).toBeVisible();
+    await expect(page.getByText('Squad filters')).toBeVisible();
     await expectWcag21Aa(page);
   });
 
   test('combobox results meet WCAG AA', async ({ page }) => {
     await openRecipes(page);
     await page.getByRole('tab', { name: 'Settings', exact: true }).click();
-    const region = page.getByRole('combobox', { name: 'Region' });
+    const region = page.getByRole('combobox', { name: 'Position' });
     await region.focus();
     await expect(region).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.getByRole('option', { name: 'Europe' })).toBeVisible();
+    await expect(page.getByRole('option', { name: 'Catcher' })).toBeVisible();
     await expectWcag21Aa(page);
   });
 
@@ -73,7 +73,7 @@ test.describe('a11y state coverage', () => {
     await page
       .getByRole('button', { name: 'Save settings', exact: true })
       .click();
-    const email = page.getByLabel('Notification email');
+    const email = page.getByLabel('Coach email');
     await expect(email).toHaveAttribute('aria-invalid', 'true');
     await expect(
       page.getByRole('alert').filter({
@@ -85,8 +85,8 @@ test.describe('a11y state coverage', () => {
 
   test('selected table row meets WCAG AA', async ({ page }) => {
     await openRecipes(page);
-    await page.getByRole('checkbox', { name: 'Select Payments API' }).check();
-    await expect(page.getByRole('row', { name: /Payments API/ })).toHaveClass(
+    await page.getByRole('checkbox', { name: 'Select Alex Morgan' }).check();
+    await expect(page.getByRole('row', { name: /Alex Morgan/ })).toHaveClass(
       /jp-table__row--selected/,
     );
     await expectWcag21Aa(page);
@@ -94,14 +94,14 @@ test.describe('a11y state coverage', () => {
 
   test('active tab meets WCAG AA', async ({ page }) => {
     await openRecipes(page);
-    const services = page.getByRole('tab', { name: 'Services', exact: true });
+    const services = page.getByRole('tab', { name: 'Players', exact: true });
     const settings = page.getByRole('tab', { name: 'Settings', exact: true });
     await expect(services).toHaveAttribute('aria-selected', 'true');
     await settings.click();
     await expect(settings).toHaveAttribute('aria-selected', 'true');
     await expect(services).toHaveAttribute('aria-selected', 'false');
     await expect(
-      page.getByRole('heading', { name: 'Account settings' }),
+      page.getByRole('heading', { name: 'Club account' }),
     ).toBeVisible();
     await expectWcag21Aa(page);
   });
@@ -109,15 +109,15 @@ test.describe('a11y state coverage', () => {
   test('assistant response meets WCAG AA', async ({ page }) => {
     await page.goto('/assistant');
     await expect(
-      page.getByRole('heading', { name: 'Assistant System' }),
+      page.getByRole('heading', { name: 'Falcons assistant' }),
     ).toBeVisible();
-    await page.getByRole('button', { name: 'Ask about deployment' }).click();
-    const panel = page.getByRole('complementary', { name: 'JP Assistant' });
+    await page.getByRole('button', { name: 'Ask about the game' }).click();
+    const panel = page.getByRole('complementary', { name: 'Falcons coach' });
     const composer = page.getByRole('textbox', {
       name: 'Message the assistant',
     });
     await expect(composer).toBeFocused();
-    await composer.fill('What is the deployment status?');
+    await composer.fill('What is the game score?');
     await composer.press('Enter');
     await expect(panel).toContainText(
       'Status looks healthy with one degraded dependency.',
@@ -145,10 +145,10 @@ test.describe('a11y state coverage', () => {
     const trigger = page.getByRole('button', { name: 'Filters', exact: true });
     await trigger.focus();
     await page.keyboard.press('Enter');
-    await expect(page.getByText('Environment filters')).toBeVisible();
+    await expect(page.getByText('Squad filters')).toBeVisible();
     await expect(trigger).toBeFocused();
     await page.keyboard.press('Escape');
-    await expect(page.getByText('Environment filters')).toBeHidden();
+    await expect(page.getByText('Squad filters')).toBeHidden();
     await expect(trigger).toBeFocused();
   });
 
@@ -157,7 +157,7 @@ test.describe('a11y state coverage', () => {
   }) => {
     await openRecipes(page);
     await page.getByRole('tab', { name: 'Settings', exact: true }).click();
-    const region = page.getByRole('combobox', { name: 'Region' });
+    const region = page.getByRole('combobox', { name: 'Position' });
     await region.focus();
     await expect(region).toHaveAttribute('aria-expanded', 'true');
     await page.keyboard.press('ArrowDown');
@@ -172,7 +172,7 @@ test.describe('a11y state coverage', () => {
   }) => {
     await page.goto('/assistant');
     const trigger = page.getByRole('button', {
-      name: 'Ask about deployment',
+      name: 'Ask about the game',
     });
     await trigger.focus();
     await page.keyboard.press('Enter');

@@ -34,23 +34,23 @@ export class InteractionToolsPage {
   readonly priorities: JpReorderItem[] = [
     {
       id: 'audit',
-      label: 'Accessibility audit',
-      description: 'Review keyboard and assistive-technology journeys.',
+      label: 'Inspect the field',
+      description: 'Check the field before first pitch.',
     },
     {
       id: 'docs',
-      label: 'Consumer documentation',
-      description: 'Show the contracts in a working application.',
+      label: 'Prepare the lineup',
+      description: "Confirm each player's position and batting order.",
     },
     {
       id: 'release',
-      label: 'Release preparation',
-      description: 'Review compatibility and migration notes.',
+      label: 'Check the equipment',
+      description: 'Check bats, helmets and gloves.',
     },
     {
       id: 'feedback',
-      label: 'Collect product feedback',
-      description: 'Validate these patterns with real workflows.',
+      label: 'Meet the coaches',
+      description: 'Review the game plan with the coaches.',
     },
   ];
   readonly order = signal<readonly string[]>(

@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
     'false',
   );
 });
-for (const accent of ['neon', 'cobalt'])
+for (const accent of ['gold', 'neon', 'cobalt'])
   for (const density of ['default', 'compact'])
     test(
       'advanced layout visual desktop ' + accent + ' ' + density,
@@ -41,7 +41,7 @@ test('advanced layout visual preferences and detail', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1300 });
   await page.getByText('Columns', { selector: 'summary' }).click();
   await page
-    .getByRole('button', { name: 'Show details: API gateway 1', exact: true })
+    .getByRole('button', { name: 'Show details: Alex Morgan', exact: true })
     .click();
   await expect(page).toHaveScreenshot('advanced-controls-detail.png', {
     fullPage: true,
@@ -53,7 +53,7 @@ test('advanced layout visual image fallback', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
-    page.getByRole('img', { name: 'Diagram of the service architecture' }),
+    page.getByRole('img', { name: 'Diagram of the practice stations' }),
   ).toHaveText('Image unavailable');
   await expect(page).toHaveScreenshot('advanced-image-error.png', {
     fullPage: true,

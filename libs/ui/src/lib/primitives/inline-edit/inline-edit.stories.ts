@@ -9,10 +9,10 @@ import { JpInlineEdit } from './inline-edit';
     '<jp-inline-edit [label]="label()" [value]="value()" (valueChange)="value.set($event)" [save]="persist" [disabled]="disabled()" required />',
 })
 class InlineEditDemo {
-  readonly label = input('Project name');
+  readonly label = input('Club name');
   readonly disabled = input(false);
   readonly fail = input(false);
-  readonly value = signal('Launch plan');
+  readonly value = signal('Riverton Falcons');
   readonly persist = async () => {
     if (this.fail()) throw new Error('Denied');
   };
@@ -27,7 +27,7 @@ const meta: Meta<JpInlineEdit> = {
   component: JpInlineEdit,
   decorators: [moduleMetadata({ imports: [InlineEditDemo] })],
   parameters: { layout: 'padded' },
-  args: { label: 'Project name', disabled: false },
+  args: { label: 'Club name', disabled: false },
   render: (args) => render(args),
 };
 export default meta;
@@ -35,32 +35,26 @@ type Story = StoryObj<JpInlineEdit>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    await userEvent.click(
-      c.getByRole('button', { name: 'Edit: Project name' }),
-    );
-    const input = c.getByRole('textbox', { name: 'Project name' });
+    await userEvent.click(c.getByRole('button', { name: 'Edit: Club name' }));
+    const input = c.getByRole('textbox', { name: 'Club name' });
     await expect(input).toHaveFocus();
     await userEvent.clear(input);
-    await userEvent.type(input, 'Updated plan');
+    await userEvent.type(input, 'Riverton Falcons Varsity');
     await userEvent.click(c.getByRole('button', { name: /^Save$/ }));
     await expect(
-      c.getByRole('button', { name: 'Edit: Project name' }),
+      c.getByRole('button', { name: 'Edit: Club name' }),
     ).toHaveFocus();
-    await expect(canvasElement).toHaveTextContent('Updated plan');
+    await expect(canvasElement).toHaveTextContent('Riverton Falcons Varsity');
   },
 };
 export const Failed: Story = {
   render: (args) => render(args, true),
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    await userEvent.click(
-      c.getByRole('button', { name: 'Edit: Project name' }),
-    );
+    await userEvent.click(c.getByRole('button', { name: 'Edit: Club name' }));
     await userEvent.click(c.getByRole('button', { name: /^Save$/ }));
     await expect(c.getByRole('alert')).toHaveTextContent('Could not save');
-    await expect(
-      c.getByRole('textbox', { name: 'Project name' }),
-    ).toHaveFocus();
+    await expect(c.getByRole('textbox', { name: 'Club name' })).toHaveFocus();
   },
 };
 export const Disabled: Story = { args: { disabled: true } };

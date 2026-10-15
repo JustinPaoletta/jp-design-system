@@ -8,7 +8,7 @@ const meta: Meta<JpSplitButton> = {
     label: 'Create',
     actions: [
       { id: 'template', label: 'From template' },
-      { id: 'archive', label: 'Archived template', disabled: true },
+      { id: 'archive', label: 'Previous lineup', disabled: true },
     ],
   },
   parameters: { layout: 'padded' },

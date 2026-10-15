@@ -1,17 +1,17 @@
 # Runtime and browser support
 
-Verified against repository configuration on October 4, 2026. Built-in copy
+Compared with repository configuration on October 11, 2026. Built-in copy
 and translation providers are documented in [Message contract](CONTRACT.md).
 
 ## Versions and platforms
 
-| Area               | Contract and tested version                                                                                                                                      |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Angular            | UI peers on `^22.2.1`; workspace and isolated consumer smoke use 22.2.1. The peer range permits later 22.x versions, which are not all independently tested.     |
-| RxJS               | UI peers on `^7.8.0`; workspace dependency is `~7.8.0`.                                                                                                          |
-| Node/npm           | Development uses Node 24.21.0 from `.nvmrc` and npm 11. Root engines accept Node `^24.15.0` and npm `>=11 <12`.                                                  |
-| Browsers           | Chromium/WebKit functional and axe checks on macOS locally and Linux CI; macOS Chromium visual baselines. Firefox is configured but outside the verified matrix. |
-| Direction/language | Set `dir` and `lang` on an ancestor. Logical CSS follows direction; individual keyboard/placement behavior is defined by each API.                               |
+| Area               | Contract and tested version                                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Angular            | UI peers on `^22.2.1`; workspace and isolated consumer smoke use 22.2.1. The peer range permits later 22.x versions, which are not all independently tested.        |
+| RxJS               | UI peers on `^7.8.0`; workspace dependency is `~7.8.0`.                                                                                                             |
+| Node/npm           | Development uses Node 24.21.0 from `.nvmrc` and npm 11. Root engines accept Node `^24.15.0` and npm `>=11 <12`.                                                     |
+| Browsers           | Chromium/Firefox/WebKit functional and axe checks on macOS locally and Linux CI; macOS Chromium visual baselines. Firefox is part of the functional and axe matrix. |
+| Direction/language | Set `dir` and `lang` on an ancestor. Logical CSS follows direction; individual keyboard/placement behavior is defined by each API.                                  |
 
 The [QA support matrix](../qa/SUPPORT_MATRIX.md) records accessibility,
 forced-colors, zoom and assistive-technology boundaries.
@@ -19,7 +19,7 @@ forced-colors, zoom and assistive-technology boundaries.
 ## Native dialog and popover
 
 `JpDialog`/`JpDrawer` use native `<dialog>.showModal()` after browser render.
-If it throws, the component sets the `open` attribute. Native `cancel` is
+If the method is missing or throws, the component sets the `open` attribute. Native `cancel` is
 prevented so the overlay stack decides which registered layer closes.
 
 Menus, popovers, tooltips and combobox use
@@ -33,7 +33,7 @@ inertness. See individual APIs before relying on those differences.
 Native date/time picker appearance, keyboard conventions and popup UI belong
 to the browser/OS. Automated tests cover control values and validation;
 manual native-picker inspection remains open. Repeated `details.name` grouping
-is tested in the declared Chromium/WebKit matrix.
+is tested in the declared Chromium/Firefox/WebKit matrix.
 
 ## SSR and hydration
 
@@ -62,9 +62,12 @@ inputs. Providers merge with the parent token when their injector is created;
 they do not watch later locale changes.
 
 Native date/time fields exchange ISO civil strings and use browser-local
-presentation. Timeline and scheduling use `Intl.DateTimeFormat` with their
-locale/time-zone inputs; scheduling uses a Gregorian date model. Charts use
-`Intl.NumberFormat` and their formatting options. Caller-owned table cells,
+presentation. The application supplies the timeline's formatted `timeLabel` and optional machine-readable `dateTime`.
+`JpTimeline` has no locale or time-zone input.
+Scheduling uses `Intl.DateTimeFormat` with its locale/time-zone inputs and a Gregorian date model.
+Charts use `Intl.NumberFormat` and their formatting options.
+
+Caller-owned table cells,
 messages, titles and labels remain application content. Message count
 functions use ordinary string interpolation by default; override them for
 plural rules or localized number formatting.

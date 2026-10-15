@@ -9,13 +9,18 @@ const meta: Meta<JpCommandPalette> = {
     commands: [
       {
         id: 'overview',
-        label: 'Overview',
+        label: 'Game day',
         section: 'Navigate',
         keywords: ['home'],
         shortcut: ['Mod', 'Shift', 'O'],
       },
-      { id: 'duplicate', label: 'Duplicate', section: 'Actions' },
-      { id: 'archive', label: 'Archive', section: 'Actions', disabled: true },
+      { id: 'duplicate', label: 'Duplicate lineup', section: 'Actions' },
+      {
+        id: 'archive',
+        label: 'Archive lineup',
+        section: 'Actions',
+        disabled: true,
+      },
     ],
     open: false,
     shortcutEnabled: true,
@@ -35,7 +40,9 @@ export const Default: Story = {
     const search = c.getByRole('combobox', { name: 'Search commands' });
     await expect(search).toHaveFocus();
     await userEvent.type(search, 'duplicate');
-    await expect(c.getByRole('option', { name: 'Duplicate' })).toBeVisible();
+    await expect(
+      c.getByRole('option', { name: 'Duplicate lineup' }),
+    ).toBeVisible();
     await userEvent.keyboard('{Enter}');
     await expect(c.getByRole('status')).toHaveTextContent('duplicate');
     await expect(

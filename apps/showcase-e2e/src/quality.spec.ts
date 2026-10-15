@@ -23,7 +23,7 @@ for (const route of [
   });
 }
 
-for (const accent of ['neon', 'cobalt']) {
+for (const accent of ['gold', 'neon', 'cobalt']) {
   for (const density of ['default', 'compact']) {
     test(`recipes visual ${accent} ${density}`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 });
@@ -76,9 +76,9 @@ test('recipes visual neon default mobile shell', async ({ page }) => {
 test('recipes visual neon default open dialog', async ({ page }) => {
   await prepareNeonDefault(page, '/overlays', { width: 1280, height: 900 });
   await page
-    .getByRole('button', { name: 'Delete deployment', exact: true })
+    .getByRole('button', { name: 'Remove player', exact: true })
     .click();
-  const dialog = page.getByRole('dialog', { name: 'Delete deployment?' });
+  const dialog = page.getByRole('dialog', { name: 'Remove player?' });
   await expect(dialog).toBeVisible();
   await dialog.evaluate(() => {
     if (document.activeElement instanceof HTMLElement) {
@@ -93,9 +93,11 @@ test('recipes visual neon default open dialog', async ({ page }) => {
 
 test('recipes visual neon default assistant response', async ({ page }) => {
   await prepareNeonDefault(page, '/assistant', { width: 1280, height: 900 });
-  await page.getByRole('button', { name: 'Seed tone demo' }).click();
-  const panel = page.getByRole('complementary', { name: 'JP Assistant' });
-  await expect(panel).toContainText('calm sunken surface');
+  await page.getByRole('button', { name: 'Load game summary' }).click();
+  const panel = page.getByRole('complementary', { name: 'Falcons coach' });
+  await expect(panel).toContainText(
+    'Alex Morgan and Jordan Davis drove in runs',
+  );
   await panel.locator('textarea').evaluate((element) => {
     if (element instanceof HTMLElement) element.blur();
   });

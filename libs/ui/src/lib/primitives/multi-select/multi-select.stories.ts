@@ -7,10 +7,10 @@ const meta: Meta<JpMultiSelect> = {
   component: JpMultiSelect,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Reviewers',
+    label: 'Players',
     options: [
-      { value: 'ada', label: 'Ada Lovelace' },
-      { value: 'grace', label: 'Grace Hopper' },
+      { value: 'ada', label: 'Alex Morgan' },
+      { value: 'grace', label: 'Jordan Davis' },
       { value: 'blocked', label: 'Unavailable', disabled: true },
     ],
   },

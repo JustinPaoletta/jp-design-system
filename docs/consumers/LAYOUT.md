@@ -27,8 +27,11 @@ grows past the breakpoint while the drawer is open, the shell emits
 
 `sidebarCollapsed` and `mobileNavOpen` are inputs. The shell emits changes
 and does not store them. Bind both, as Showcase does in
-`apps/showcase/src/app/layout/shell-layout.ts`. One shell per document: the
-sidebar id is the fixed string `jp-app-shell-sidebar`.
+`apps/showcase/src/app/layout/shell-layout.ts`.
+
+Each shell has a different sidebar ID. Its controls refer to that ID.
+Do not store or depend on the generated ID value.
+Multiple mobile shells still need application inspection of focus and overlay behavior.
 
 The main region uses `min-width: 0` and `overflow: auto`, so wide content
 scrolls inside the shell instead of stretching the grid.
@@ -66,11 +69,12 @@ assistant service is `providedIn: 'root'`. Place one `jp-assistant-panel`.
 ## Themes
 
 The system is dark-first. `tokens.css` sets semantic colors on `:root`.
-Accent families are `neon` (the default, including when the attribute is
-absent) and `cobalt` (`data-jp-accent="cobalt"`). Accent colors primary
-actions, focus, active navigation, and selection. It is not a page
-background. Semantic success, warning, error, and info stay independent of
-the accent.
+Accent families are `gold` (the default, including when the attribute is
+absent), `neon` and `cobalt` (`data-jp-accent="cobalt"`). Accent colors primary
+actions, focus and selection.
+
+Active navigation uses a background change. The accent is not a page background.
+Semantic success, warning, error, and info stay independent of the accent.
 
 There is no light component theme. The Storybook light stage is a mat behind
 the story page. Docs in Storybook stay on a dark stage.

@@ -6,9 +6,9 @@ const meta: Meta<JpCodeBlock> = {
   component: JpCodeBlock,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Install the packages',
-    language: 'Shell',
-    code: 'npm install @jp-design-system/ui @jp-design-system/tokens',
+    label: 'Starting lineup',
+    language: 'TypeScript',
+    code: "const lineup = ['Alex Morgan', 'Jordan Davis', 'Maya Chen'];",
   },
 };
 export default meta;
@@ -19,11 +19,11 @@ export const LiteralMarkup: Story = {
   args: {
     label: 'HTML example',
     language: 'HTML',
-    code: '<jp-button>Save changes</jp-button>',
+    code: '<jp-button>Save lineup</jp-button>',
   },
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('code')).toHaveTextContent(
-      '<jp-button>Save changes</jp-button>',
+      '<jp-button>Save lineup</jp-button>',
     );
     await expect(canvasElement.querySelector('pre jp-button')).toBeNull();
   },

@@ -4,7 +4,7 @@ const meta: Meta<JpCopyButton> = {
   title: 'Primitives/Controls/Copy Button',
   component: JpCopyButton,
   parameters: { layout: 'padded' },
-  args: { text: 'npm install @jp-design-system/ui' },
+  args: { text: 'Falcons 5, Bears 3', label: 'Copy score' },
 };
 export default meta;
 type Story = StoryObj<JpCopyButton>;

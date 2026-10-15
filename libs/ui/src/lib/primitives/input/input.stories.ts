@@ -6,9 +6,6 @@ import { JpInput } from './input';
 const meta: Meta<JpInput> = {
   title: 'Primitives/Controls/Input',
   component: JpInput,
-  globals: {
-    accent: 'neon',
-  },
   parameters: {
     layout: 'padded',
   },
@@ -27,14 +24,14 @@ const meta: Meta<JpInput> = {
   },
   args: {
     label: 'Email',
-    hint: 'We will never share your email.',
+    hint: 'We use this address for club messages.',
     error: '',
     type: 'email',
     size: 'md',
     disabled: false,
     readonly: false,
     invalid: false,
-    placeholder: 'you@example.com',
+    placeholder: 'coach@falcons.example',
   },
   render: (args) => ({
     props: args,
@@ -103,9 +100,9 @@ export const Sizes: Story = {
     props: args,
     template: `
       <div style="display:flex; flex-direction:column; gap:1rem;">
-        <jp-input label="Small" size="sm" placeholder="Small" [hint]="''" />
-        <jp-input label="Medium" size="md" placeholder="Medium" [hint]="''" />
-        <jp-input label="Large" size="lg" placeholder="Large" [hint]="''" />
+        <jp-input label="Coach email (small)" size="sm" placeholder="coach@falcons.example" [hint]="''" />
+        <jp-input label="Coach email (medium)" size="md" placeholder="coach@falcons.example" [hint]="''" />
+        <jp-input label="Coach email (large)" size="lg" placeholder="coach@falcons.example" [hint]="''" />
       </div>
     `,
   }),

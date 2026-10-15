@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { JpFileUpload } from './file-upload';
-const file = new File(['Example'], 'release-notes.txt', { type: 'text/plain' });
+const file = new File(
+  ['Falcons lineup: Alex Morgan, Jordan Davis, Maya Chen.'],
+  'lineup.txt',
+  { type: 'text/plain' },
+);
 const meta: Meta<JpFileUpload> = {
   title: 'Primitives/Controls/File Upload',
   component: JpFileUpload,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Attachments',
+    label: 'Lineup files',
     accept: '.txt,.md',
     hint: 'Up to three text files, 1 KB each.',
     maxFiles: 3,
@@ -26,7 +30,7 @@ export const Uploading: Story = {
 export const Failed: Story = {
   args: {
     items: [
-      { id: 'one', file, status: 'error', error: 'Connection interrupted' },
+      { id: 'one', file, status: 'error', error: 'Score feed interrupted' },
     ],
   },
 };

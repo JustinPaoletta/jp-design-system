@@ -6,13 +6,13 @@ const meta: Meta<JpCarousel> = {
   component: JpCarousel,
   decorators: [moduleMetadata({ imports: [JpCarouselSlide] })],
   parameters: { layout: 'padded' },
-  args: { id: 'story-guide', label: 'Getting started' },
+  args: { id: 'story-guide', label: 'Join the Falcons' },
   render: (args) => ({
     props: args,
     template: `<jp-carousel [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
-    <ng-template jpCarouselSlide="access" label="Invite your team"><h2>Invite your team</h2><p>Start with a small workspace and clear ownership.</p><button type="button">Open invitations</button></ng-template>
-    <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Choose the first three outcomes for your team.</p><input aria-label="Workspace note" /></ng-template>
-    <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>Use a regular review to keep work moving.</p></ng-template>
+    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Falcons club.</p><button type="button">Open club invitations</button></ng-template>
+    <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Check the lineup, inspect the field and prepare the equipment.</p><input aria-label="Coach note" /></ng-template>
+    <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>Review the final score and prepare for the next game.</p></ng-template>
   </jp-carousel>`,
   }),
 };
@@ -26,17 +26,17 @@ export const Keyboard: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await expect(
-      c.getByRole('heading', { name: 'Invite your team' }),
+      c.getByRole('heading', { name: 'Invite club members' }),
     ).toBeVisible();
     await expect(
-      c.queryByRole('button', { name: 'Open invitations', hidden: false }),
+      c.queryByRole('button', { name: 'Open club invitations', hidden: false }),
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next slide' }));
     await expect(
       c.getByRole('heading', { name: 'Set priorities' }),
     ).toBeVisible();
     await expect(
-      c.queryByRole('button', { name: 'Open invitations' }),
+      c.queryByRole('button', { name: 'Open club invitations' }),
     ).toBeNull();
     const viewport = canvasElement.querySelector<HTMLElement>('.viewport');
     viewport?.focus();
@@ -46,7 +46,7 @@ export const Keyboard: Story = {
     ).toBeVisible();
     await userEvent.keyboard('{Home}');
     await expect(
-      c.getByRole('heading', { name: 'Invite your team' }),
+      c.getByRole('heading', { name: 'Invite club members' }),
     ).toBeVisible();
   },
 };
