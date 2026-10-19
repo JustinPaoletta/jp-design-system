@@ -15,15 +15,15 @@
     <p>{{ message() }}</p>
     }<ng-content />
   </div>
-  <div class="actions">
-    <ng-content select="[jpBannerActions]" />@if (dismissible()) {
-    <button
-      type="button"
-      [attr.aria-label]="dismissLabel()"
-      (click)="dismissed.emit()"
-    >
-      <jp-icon name="close" size="sm" />
-    </button>
-    }
-  </div>
+  @if (dismissible()) {
+  <button
+    class="dismiss"
+    type="button"
+    [attr.aria-label]="dismissLabel()"
+    (click)="dismissed.emit()"
+  >
+    <jp-icon name="close" size="sm" />
+  </button>
+  }
+  <div class="actions"><ng-content select="[jpBannerActions]" /></div>
 </section>

@@ -48,8 +48,8 @@
           'Restore image' }}</jp-button
         >
         <p>
-          Review 16 player records. Expand a row to inspect the coach and latest
-          game notes.
+          Review 16 player records. Expand a row to see the coach and game
+          notes.
         </p>
       </div>
       <div jpSplitSecondary class="inventory">
@@ -78,8 +78,8 @@
           <ng-template jpTableRowDetail let-row>
             <div class="detail">
               <p>
-                <strong>{{ row.name }}</strong> is managed by {{ row.owner }} in
-                {{ row.region }}.
+                <strong>{{ row.name }}</strong> plays {{ row.region?.toString()
+                | lowercase }}. Coach: {{ row.owner }}.
               </p>
               <jp-button
                 variant="secondary"

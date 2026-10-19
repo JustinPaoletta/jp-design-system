@@ -1,30 +1,24 @@
-<jp-box padding="lg" maxWidth="wide">
-  <jp-stack gap="lg">
-    <jp-stack gap="xs">
-      <jp-heading as="h1">Club alerts</jp-heading>
-      <jp-text tone="secondary"
-        >Tooltip, toast, dialog, popover, and dropdown inside the app
-        shell.</jp-text
-      >
-    </jp-stack>
-
-    <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+<div class="example-page">
+  <header class="example-page__header">
+    <jp-heading as="h1">Club alerts</jp-heading>
+    <p>Review club messages, game details and player actions.</p>
+  </header>
+  <div class="example-page__cards">
+    <jp-card title="Game reference">
       <jp-stack gap="md">
-        <jp-heading as="h2">Tooltip</jp-heading>
         <jp-inline gap="sm" wrap="true">
           <jp-tooltip content="Copy game ID" placement="top">
-            <jp-button variant="secondary" type="button">Copy ID</jp-button>
+            <jp-copy-button text="FAL-1042" label="Copy ID" />
           </jp-tooltip>
-          <jp-tooltip content="Opens documentation" placement="bottom">
-            <jp-button variant="ghost" type="button">Docs</jp-button>
-          </jp-tooltip>
+          <span class="example-page__status"
+            >Game FAL-1042 · Falcons 5, Bears 3</span
+          >
         </jp-inline>
       </jp-stack>
-    </jp-surface>
+    </jp-card>
 
-    <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+    <jp-card title="Club messages">
       <jp-stack gap="md">
-        <jp-heading as="h2">Toast</jp-heading>
         <jp-inline gap="sm" wrap="true">
           <jp-button
             variant="secondary"
@@ -55,14 +49,13 @@
           >
         </jp-inline>
       </jp-stack>
-    </jp-surface>
+    </jp-card>
 
-    <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+    <jp-card title="Player actions">
       <jp-stack gap="md">
-        <jp-heading as="h2">Dialog & menu</jp-heading>
         <jp-inline gap="sm" wrap="true" align="center">
           <jp-button
-            variant="destructive"
+            variant="secondary"
             type="button"
             (click)="dialogOpen = true"
           >
@@ -104,21 +97,22 @@
           </jp-popover>
         </jp-inline>
 
-        <jp-text tone="muted">Last action: {{ lastAction }}</jp-text>
+        <p class="example-page__status" role="status">
+          Last action: {{ lastAction }}
+        </p>
       </jp-stack>
-    </jp-surface>
-  </jp-stack>
-</jp-box>
+    </jp-card>
+  </div>
+</div>
 
 <jp-dialog
   [open]="dialogOpen"
   title="Remove player?"
   (openChange)="dialogOpen = $event"
 >
-  <jp-text
-    >This removes the selected player from the roster. This cannot be
-    undone.</jp-text
-  >
+  <p>
+    This removes the selected player from the roster. This cannot be undone.
+  </p>
   <div jpDialogActions>
     <jp-button variant="secondary" type="button" (click)="dialogOpen = false">
       Cancel

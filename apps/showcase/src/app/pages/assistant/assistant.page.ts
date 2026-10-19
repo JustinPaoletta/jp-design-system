@@ -8,24 +8,18 @@ import {
   JpAssistantPanel,
   JpAssistantService,
   JpAssistantTrigger,
-  JpBox,
   JpButton,
   JpHeading,
   JpInline,
-  JpStack,
-  JpSurface,
-  JpText,
+  JpCard,
   type JpAssistantContext,
 } from '@jp-design-system/ui';
 
 @Component({
   selector: 'app-assistant-page',
   imports: [
-    JpBox,
-    JpStack,
     JpInline,
-    JpSurface,
-    JpText,
+    JpCard,
     JpHeading,
     JpButton,
     JpAssistantPanel,
@@ -49,9 +43,9 @@ export class AssistantPage implements OnDestroy {
 
   readonly tableRowContext: JpAssistantContext = {
     label: 'Player Alex Morgan',
-    description: 'Status: Day to day',
-    entityType: 'service',
-    entityId: 'payments-api',
+    description: 'Pitcher · Varsity · Available',
+    entityType: 'player',
+    entityId: 'alex-morgan',
   };
 
   readonly filterContext: JpAssistantContext = {
@@ -89,7 +83,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Structured reply for “${content}”. Status looks healthy with one degraded dependency.`,
+      content: `Sample game summary for “${content}”: Falcons 5, Bears 3.`,
     });
   }
 }

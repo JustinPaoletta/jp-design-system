@@ -1,28 +1,40 @@
 :host {
   display: block;
+  min-inline-size: 0;
   container-type: inline-size;
 }
 dl {
   display: grid;
-  gap: var(--jp-space-md);
   margin: 0;
   font-family: var(--jp-font-family-base);
+  line-height: var(--jp-font-line-height-normal);
 }
 dl > div {
   display: grid;
-  grid-template-columns: minmax(6rem, 10rem) minmax(0, 1fr);
+  grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
   column-gap: var(--jp-space-lg);
   row-gap: var(--jp-space-xs);
+  padding-block: var(--jp-space-sm);
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+}
+dl > div:first-child {
+  padding-block-start: 0;
+}
+dl > div:last-child {
+  padding-block-end: 0;
+  border-block-end: 0;
 }
 dt {
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+  overflow-wrap: anywhere;
 }
 dd {
   margin: 0;
   color: var(--jp-color-text-primary);
   overflow-wrap: anywhere;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
 }
 @container (max-width: 28rem) {
   dl > div {

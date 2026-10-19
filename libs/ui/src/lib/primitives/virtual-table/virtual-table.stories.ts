@@ -1,4 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import {
+  componentWrapperDecorator,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpVirtualTable } from './virtual-table';
 const rows = Array.from({ length: 10000 }, (_, i) => ({
@@ -9,6 +13,12 @@ const rows = Array.from({ length: 10000 }, (_, i) => ({
 const meta: Meta<JpVirtualTable> = {
   title: 'Primitives/Data Display/Virtual Table',
   component: JpVirtualTable,
+  decorators: [
+    componentWrapperDecorator(
+      (story) =>
+        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">League player roster</h2>${story}</section>`,
+    ),
+  ],
   parameters: { layout: 'padded' },
   args: {
     label: 'League player roster',
@@ -58,5 +68,41 @@ export const BrowsePages: Story = {
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(c.getByRole('cell', { name: 'Player 51' })).toBeVisible();
+  },
+};
+
+export const Narrow: Story = {
+  args: { selectable: true, selectedKeys: [0] },
+  decorators: [
+    componentWrapperDecorator(
+      (story) =>
+        `<div style="inline-size:20rem;max-inline-size:100%">${story}</div>`,
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector('.frame') as HTMLElement;
+    const row = frame.querySelector('tr[data-row-index]') as HTMLElement;
+    const header = frame.querySelector('thead') as HTMLTableSectionElement;
+    const selection = row.querySelector('td.selection') as HTMLTableCellElement;
+    const checkbox = selection.querySelector(
+      '.jp-checkbox__box',
+    ) as HTMLElement;
+    await expect(frame.scrollWidth).toBeLessThanOrEqual(
+      Math.max(frame.clientWidth, 304) + 1,
+    );
+    await expect(row.getBoundingClientRect().height).toBe(48);
+    await expect(header.getBoundingClientRect().height).toBe(40);
+    await expect(checkbox.getBoundingClientRect().left).toBeGreaterThanOrEqual(
+      selection.getBoundingClientRect().left,
+    );
+    await expect(checkbox.getBoundingClientRect().right).toBeLessThanOrEqual(
+      selection.getBoundingClientRect().right,
+    );
+    await expect(within(row).getByRole('checkbox')).toBeChecked();
+    frame.scrollTop = frame.scrollHeight;
+    frame.dispatchEvent(new Event('scroll'));
+    await expect(
+      await within(canvasElement).findByRole('cell', { name: 'Player 10000' }),
+    ).toBeVisible();
   },
 };

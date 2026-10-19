@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Apply the approved Card direction to 20 components and two compositions. Align title sizes, descriptions, selection states and actions.
+- Add a narrow stepper layout. Keep selected and focused tabs visible after selection and container resize, including RTL layouts.
+- Correct narrow code-block headers and virtual-table selection spacing. Add narrow-layout and state examples.
+- Use working copy and notification actions. Keep assistant responses consistent with the baseball examples.
+
 - Apply the approved Card direction to form and roster examples. Add local save feedback and an availability filter.
 - Add optional `JpTable.framed` for tables inside panels. Keep its default frame and native table semantics.
 

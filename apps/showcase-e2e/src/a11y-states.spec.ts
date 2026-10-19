@@ -120,7 +120,7 @@ test.describe('a11y state coverage', () => {
     await composer.fill('What is the game score?');
     await composer.press('Enter');
     await expect(panel).toContainText(
-      'Status looks healthy with one degraded dependency.',
+      'Sample game summary for “What is the game score?”: Falcons 5, Bears 3.',
     );
     await expectWcag21Aa(page);
   });

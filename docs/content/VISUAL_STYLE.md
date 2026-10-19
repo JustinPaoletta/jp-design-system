@@ -28,7 +28,10 @@ Card titles use 16px, independent of their heading level.
 The user approved the Card reference on October 19, 2026.
 Use `JpCard` for composed panels when its slots fit the content.
 Keep its 24px inset, 14px body text and separated action footer.
-Inspect each adapted component group in Chrome before extending the style further.
+
+Use the approved direction across related components. Inspect each changed group in Chrome.
+Coordinate independent groups in parallel when their files do not overlap.
+Do not require another design approval for each use of the same direction.
 
 Routine button labels use 14px and 500 weight. Primary buttons use 600 weight.
 Use a 1.5 line height for descriptions and body text.

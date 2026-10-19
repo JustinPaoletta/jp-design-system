@@ -12,6 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { JP_MESSAGES } from '../../i18n';
+import { JpIcon } from '../icon/icon';
 import {
   indexJpTree,
   jpTreeHasChildren,
@@ -24,7 +25,7 @@ export type JpTreeSelection = 'single' | 'none';
 
 @Component({
   selector: 'jp-tree-view',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, JpIcon],
   templateUrl: './tree-view.html',
   styleUrl: './tree-view.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

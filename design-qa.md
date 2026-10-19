@@ -3,7 +3,7 @@
 ## Card reference review
 
 The user approved `Primitives/Layout/Card` as the visual reference on October 19, 2026.
-Further changes apply its typography, spacing, surfaces and actions to one component group at a time.
+Further changes apply its typography, spacing, surfaces and actions across related components.
 The changes remain in the draft pull request.
 
 The Card places the title before its header status.
@@ -14,6 +14,39 @@ Other stories show saved feedback, plain content and a long title.
 Chrome captures are in `dist/qa/card-refinement/`.
 The review includes desktop, phone, keyboard focus and saved states.
 This approval covers the Card direction. Passing checks do not approve later component changes.
+
+## Component-wide Card adaptation
+
+The next inspection covers 20 components and two compositions.
+The changes apply the approved Card direction across navigation, selection, content, data and feedback.
+They retain the charcoal surfaces, semantic tokens and baseball examples.
+
+- Dialogs, drawers, popovers, banners, toasts and empty states use consistent title and description sizes.
+- Notifications use one Card with separate message groups and working read and dismissal actions.
+- Tabs, segmented controls, checklists and tree rows have consistent selection and focus states.
+- Narrow steppers show a vertical sequence. Long breadcrumb labels wrap.
+- Description lists, timelines and player lists have bounded Card examples.
+- Form sections, page headers and code blocks have clear labels, descriptions and actions.
+- Virtual tables retain fixed row heights. Narrow tables use column-based minimum widths.
+- Alert and assistant compositions use Card slots and working actions.
+
+Chrome inspection found three additional defects.
+The code-block header crowded its Copy action at 320px.
+The virtual table gave its selection checkbox too little space.
+Tabs could leave the selected or focused item outside the visible row.
+The changes correct these defects and add regression checks for tab visibility and table geometry.
+
+The baseline inspection also found clipped profile text in the compact roster workspace.
+The profile now wraps within its pane. Expanded player details use clear baseball copy.
+
+Chrome comparison captures are in `dist/qa/system-polish/`.
+The gallery contains 22 numbered views, with original, updated desktop and 320px captures.
+Desktop captures use a 1000px viewport.
+The gallery and captures remain outside Git.
+The [verification record](docs/qa/VERIFICATION.md) records automated results separately.
+
+This inspection does not cover every state in all 97 component groups.
+Remaining suggestions and manual acceptance tasks stay in the [task list](COMPONENT_EXPANSION_PLAN.md).
 
 ## Form and roster adaptation
 

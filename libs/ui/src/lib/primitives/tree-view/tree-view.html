@@ -55,10 +55,13 @@
       <span
         class="disclosure"
         aria-hidden="true"
-        [class.open]="expanded(node.key)"
         (click)="clickDisclosure(node, $event)"
-        >›</span
       >
+        <jp-icon
+          [name]="expanded(node.key) ? 'chevron-down' : 'chevron-right'"
+          size="sm"
+        />
+      </span>
       } @else { <span class="disclosure" aria-hidden="true"></span> }
       <svg class="node-icon" viewBox="0 0 16 16" aria-hidden="true">
         @if (branch(node)) {
@@ -67,28 +70,33 @@
         <path d="M3.5 1.5h6l3 3v10h-9Z M9.5 1.5v3h3" />
         }
       </svg>
-      <span class="label" [id]="itemId(node.key) + '-label'"
-        >{{ node.label }}</span
-      >
+      <div class="content">
+        <span class="label" [id]="itemId(node.key) + '-label'"
+          >{{ node.label }}</span
+        >
+        @if (node.description || node.loadState === 'loading' || node.loadState
+        === 'error') {
+        <div class="description" [id]="itemId(node.key) + '-description'">
+          <span
+            >{{ node.loadState === 'loading' ? messages.loading : node.loadState
+            === 'error' ? messages.failed : node.description }}</span
+          >
+          @if (node.loadState === 'error' && expanded(node.key)) {
+          <button
+            type="button"
+            tabindex="-1"
+            [disabled]="unavailable(node)"
+            [attr.aria-label]="messages.retry + ': ' + node.label"
+            (click)="retry(node, $event)"
+          >
+            {{ messages.retry }}
+          </button>
+          }
+        </div>
+        }
+      </div>
     </div>
-    @if (node.description || node.loadState === 'loading' || node.loadState ===
-    'error') {
-    <div class="description" [id]="itemId(node.key) + '-description'">
-      {{ node.loadState === 'loading' ? messages.loading : node.loadState ===
-      'error' ? messages.failed : node.description }} @if (node.loadState ===
-      'error' && expanded(node.key)) {
-      <button
-        type="button"
-        tabindex="-1"
-        [disabled]="unavailable(node)"
-        [attr.aria-label]="messages.retry + ': ' + node.label"
-        (click)="retry(node, $event)"
-      >
-        {{ messages.retry }}
-      </button>
-      }
-    </div>
-    } @if (branch(node) && expanded(node.key) && node.children?.length) {
+    @if (branch(node) && expanded(node.key) && node.children?.length) {
     <div class="group" role="group">
       <ng-container
         [ngTemplateOutlet]="branchTemplate"

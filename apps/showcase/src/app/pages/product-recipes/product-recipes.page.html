@@ -136,7 +136,7 @@
   [open]="dialogOpen()"
   (openChange)="dialogOpen.set($event)"
 >
-  <jp-text>This removes the selected players from the demo roster.</jp-text>
+  <p>This removes the selected players from the demo roster.</p>
   @if (deleteError()) {
   <jp-inline-alert
     tone="error"

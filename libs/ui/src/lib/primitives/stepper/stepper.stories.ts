@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { componentWrapperDecorator } from '@storybook/angular';
 import { JpStepper } from './stepper';
 const meta: Meta<JpStepper> = {
   title: 'Primitives/Navigation/Stepper',
@@ -38,4 +39,11 @@ export const Error: Story = {
 };
 export const Mobile: Story = {
   globals: { viewport: { value: 'mobile1', isRotated: false } },
+};
+export const NarrowPanel: Story = {
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-inline-size: 20rem">${story}</div>`,
+    ),
+  ],
 };

@@ -155,4 +155,69 @@ describe('JpTabs', () => {
     expect(buttons().every((tab) => tab.tabIndex === -1)).toBe(true);
     expect(panels().every((panel) => panel.hidden)).toBe(true);
   });
+
+  function scrollableList(direction: 'ltr' | 'rtl' = 'ltr', width = 100) {
+    const list = fixture.nativeElement.querySelector(
+      '[role="tablist"]',
+    ) as HTMLElement;
+    let availableWidth = width;
+    Object.defineProperty(list, 'clientWidth', { get: () => availableWidth });
+    jest
+      .spyOn(list, 'getBoundingClientRect')
+      .mockImplementation(() => new DOMRect(0, 0, availableWidth, 40));
+    buttons().forEach((button, index) => {
+      const position = direction === 'rtl' ? -100 * index : 100 * index;
+      jest
+        .spyOn(button, 'getBoundingClientRect')
+        .mockImplementation(
+          () => new DOMRect(position - list.scrollLeft, 0, 100, 40),
+        );
+    });
+    return {
+      list,
+      resize: (nextWidth: number) => {
+        availableWidth = nextWidth;
+      },
+    };
+  }
+
+  it.each(['ltr', 'rtl'] as const)(
+    'reveals a programmatically selected tab without moving focus in %s layouts',
+    (direction) => {
+      const { list } = scrollableList(direction);
+      const active = document.activeElement;
+      fixture.componentInstance.selected.set('security');
+      fixture.detectChanges();
+      expect(list.scrollLeft).toBe(direction === 'rtl' ? -200 : 200);
+      expect(document.activeElement).toBe(active);
+      expect(panels()[2].hidden).toBe(false);
+    },
+  );
+
+  it('keeps the focused tab visible after resizing without activating it and disconnects its observer', () => {
+    const original = globalThis.ResizeObserver;
+    let resized: ResizeObserverCallback | undefined;
+    const observe = jest.fn();
+    const disconnect = jest.fn();
+    globalThis.ResizeObserver = jest.fn((callback: ResizeObserverCallback) => {
+      resized = callback;
+      return { observe, disconnect, unobserve: jest.fn() };
+    }) as unknown as typeof ResizeObserver;
+    try {
+      const { list, resize } = scrollableList('ltr', 200);
+      key(0, 'End');
+      expect(list.scrollLeft).toBe(100);
+      expect(fixture.componentInstance.selected()).toBe('profile');
+      expect(panels()[0].hidden).toBe(false);
+      expect(observe).toHaveBeenCalledWith(list);
+      resize(100);
+      resized?.([], {} as ResizeObserver);
+      expect(list.scrollLeft).toBe(200);
+      expect(document.activeElement).toBe(buttons()[2]);
+      fixture.destroy();
+      expect(disconnect).toHaveBeenCalled();
+    } finally {
+      globalThis.ResizeObserver = original;
+    }
+  });
 });

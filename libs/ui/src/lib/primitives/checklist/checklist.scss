@@ -1,5 +1,6 @@
 :host {
   display: block;
+  min-inline-size: 0;
   font-family: var(--jp-font-family-base);
   color: var(--jp-color-text-primary);
 }
@@ -11,7 +12,7 @@ fieldset {
 }
 legend {
   font-size: var(--jp-font-size-body);
-  font-weight: var(--jp-font-weight-medium);
+  font-weight: var(--jp-font-weight-semibold);
 }
 .summary,
 .description {
@@ -25,13 +26,15 @@ legend {
 ul {
   list-style: none;
   display: grid;
-  gap: var(--jp-space-sm);
+  gap: var(--jp-space-2xs);
   padding: 0;
   margin: 0;
 }
 ul ul {
-  padding-inline-start: var(--jp-space-lg);
-  margin-block-start: var(--jp-space-sm);
+  padding-inline-start: calc(
+    var(--jp-size-selection-control, var(--jp-size-icon-md)) +
+      var(--jp-space-sm)
+  );
 }
 label {
   position: relative;
@@ -40,6 +43,13 @@ label {
   gap: var(--jp-space-sm);
   cursor: pointer;
   min-inline-size: 0;
+  min-block-size: var(--jp-size-control-md);
+  box-sizing: border-box;
+  padding: var(--jp-space-xs);
+  border-radius: var(--jp-radius-md);
+}
+label:hover:not(:has(input:disabled)) {
+  background: var(--jp-color-surface-raised);
 }
 label > span {
   min-inline-size: 0;
@@ -50,13 +60,17 @@ label > span {
   display: block;
 }
 .name {
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
+}
+.description {
+  margin-block-start: var(--jp-space-2xs);
 }
 input {
   margin: 0;
   position: absolute;
-  inset-inline-start: 0;
-  inset-block-start: 0;
+  inset-inline-start: var(--jp-space-xs);
+  inset-block-start: var(--jp-space-xs);
   opacity: 0;
   cursor: inherit;
   inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
@@ -101,14 +115,11 @@ label:has(input:disabled) {
 }
 
 .parent .name {
-  font-weight: var(--jp-font-weight-semibold);
+  font-weight: var(--jp-font-weight-medium);
 }
 label:has(input:disabled) {
   opacity: 0.6;
 }
-label {
-  min-block-size: var(--jp-size-control-sm);
-}
 .box {
-  margin-block-start: 2px;
+  margin-block-start: 1px;
 }

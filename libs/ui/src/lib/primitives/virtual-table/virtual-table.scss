@@ -2,14 +2,21 @@
   display: block;
   min-inline-size: 0;
   color: var(--jp-color-text-primary);
-  font: var(--jp-font-size-body) / var(--jp-font-line-height-normal)
+  font: var(--jp-font-size-body-sm) / var(--jp-font-line-height-normal)
     var(--jp-font-family-base);
 }
 .modes {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--jp-space-sm);
-  margin-block-end: var(--jp-space-sm);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  gap: var(--jp-space-2xs);
+  padding: var(--jp-space-2xs);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-sunken);
+  margin-block-end: var(--jp-space-md);
 }
 .frame {
   overflow: auto;
@@ -23,7 +30,7 @@ table {
   border-spacing: 0;
   table-layout: fixed;
   inline-size: 100%;
-  min-inline-size: 36rem;
+  min-inline-size: calc(var(--data-columns) * 8rem + var(--selection-width));
 }
 th {
   box-sizing: border-box;
@@ -31,10 +38,11 @@ th {
   inset-block-start: 0;
   z-index: 1;
   block-size: 40px;
-  padding: 0 var(--jp-space-sm);
+  padding: 0 var(--jp-space-md);
   background: var(--jp-color-table-header-bg);
   color: var(--jp-color-table-header-fg);
   font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
   text-align: start;
   border-block-end: 1px solid var(--jp-color-table-row-border);
   white-space: nowrap;
@@ -42,6 +50,10 @@ th {
   text-overflow: ellipsis;
 }
 th button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jp-space-xs);
+  min-block-size: var(--jp-size-control-sm);
   padding: 0;
   border: 0;
   background: transparent;
@@ -58,7 +70,7 @@ td > span {
   display: block;
   block-size: calc(var(--row-height) - 1px);
   line-height: calc(var(--row-height) - 1px);
-  padding-inline: var(--jp-space-sm);
+  padding-inline: var(--jp-space-md);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -69,6 +81,7 @@ td > span {
 .selection > span {
   display: grid;
   align-items: center;
+  padding-inline: var(--jp-space-sm);
 }
 .spacer td {
   border: 0;
@@ -78,6 +91,7 @@ tr.selected {
   background: var(--jp-color-table-row-bg-hover);
 }
 .range {
+  margin-block: var(--jp-space-md) 0;
   font-size: var(--jp-font-size-caption);
   color: var(--jp-color-text-secondary);
 }
@@ -108,21 +122,38 @@ th button:focus-visible {
 }
 
 .modes button {
-  min-block-size: var(--jp-size-control-md);
-  padding: var(--jp-space-xs) var(--jp-space-sm);
-  border: 1px solid var(--jp-color-border-strong);
-  border-radius: var(--jp-radius-sm);
-  background: var(--jp-color-surface-subtle);
-  color: inherit;
+  min-block-size: var(--jp-size-control-sm);
+  min-inline-size: 0;
+  padding: var(--jp-space-2xs) var(--jp-space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--jp-radius-md);
+  background: transparent;
+  color: var(--jp-color-text-secondary);
   font: inherit;
+  font-weight: var(--jp-font-weight-medium);
   cursor: pointer;
 }
+.modes button:hover {
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-subtle);
+}
 .modes button[aria-pressed='true'] {
-  border-color: var(--jp-color-accent-muted);
+  border-color: var(--jp-color-border-strong);
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
 }
 .modes button:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
+}
+.empty {
+  margin: 0;
+  padding: var(--jp-space-lg);
+  color: var(--jp-color-text-secondary);
+}
+jp-pagination {
+  display: block;
+  margin-block-start: var(--jp-space-md);
 }
 
 .state {
@@ -138,4 +169,17 @@ th button:focus-visible {
   border-radius: var(--jp-radius-lg);
   background: var(--jp-color-table-row-bg);
   color: var(--jp-color-text-secondary);
+}
+
+.state p {
+  margin: 0;
+  text-align: center;
+}
+
+@media (forced-colors: active) {
+  .modes button[aria-pressed='true'] {
+    border-color: Highlight;
+    outline: 1px solid Highlight;
+    outline-offset: -2px;
+  }
 }

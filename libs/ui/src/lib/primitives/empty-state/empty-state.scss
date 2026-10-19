@@ -36,7 +36,7 @@
 .jp-empty-state__title {
   margin: 0;
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-title);
+  font-size: var(--jp-font-size-heading-h4);
   font-weight: var(--jp-font-weight-semibold);
   line-height: var(--jp-font-line-height-tight);
   color: var(--jp-color-foreground-primary);
@@ -45,7 +45,7 @@
 .jp-empty-state__description {
   margin: 0;
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-regular);
   line-height: var(--jp-font-line-height-normal);
   color: var(--jp-color-foreground-secondary);

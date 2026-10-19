@@ -1,6 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { JP_MESSAGES } from '../../i18n';
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -13,6 +14,7 @@ import {
   signal,
   TemplateRef,
   viewChildren,
+  viewChild,
 } from '@angular/core';
 
 export type JpTab = {
@@ -43,6 +45,7 @@ export class JpTabs {
   private readonly generatedId = `jp-tabs-${++nextTabsId}`;
   private readonly buttons =
     viewChildren<ElementRef<HTMLButtonElement>>('tabButton');
+  private readonly list = viewChild<ElementRef<HTMLElement>>('tabList');
   private readonly panels = contentChildren(JpTabPanel);
   private readonly focusedValue = signal<string | null>(null);
 
@@ -68,6 +71,31 @@ export class JpTabs {
         (tab) => tab.value === this.focusedValue() && !tab.disabled,
       )?.value ?? this.activeValue(),
   );
+
+  constructor() {
+    afterRenderEffect((cleanup) => {
+      const list = this.list()?.nativeElement;
+      const value = this.rovingValue();
+      const index = this.tabs().findIndex((tab) => tab.value === value);
+      const button = this.buttons()[index]?.nativeElement;
+      if (!list || !button) return;
+      const reveal = () => {
+        const frame = list.getBoundingClientRect();
+        const tab = button.getBoundingClientRect();
+        const left = frame.left + list.clientLeft;
+        const right = left + list.clientWidth;
+        if (tab.left < left) list.scrollLeft += tab.left - left;
+        else if (tab.right > right) list.scrollLeft += tab.right - right;
+      };
+      reveal();
+      const win = list.ownerDocument.defaultView;
+      if (!win?.ResizeObserver) return;
+      const observer = new win.ResizeObserver(reveal);
+      observer.observe(list);
+      observer.observe(button);
+      cleanup(() => observer.disconnect());
+    });
+  }
 
   tabId(index: number): string {
     return `${this.id()}-tab-${index}`;

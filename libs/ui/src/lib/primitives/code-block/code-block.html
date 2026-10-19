@@ -1,8 +1,10 @@
 <figure>
   <figcaption>
-    <span>{{ label() }}</span>@if (language()) {
-    <span class="language">{{ language() }}</span> }@if (copyable()) {
-    <jp-copy-button [text]="code()" /> }
+    <div class="caption">
+      <span class="label">{{ label() }}</span>@if (language()) {
+      <span class="language">{{ language() }}</span> }
+    </div>
+    @if (copyable()) { <jp-copy-button [text]="code()" /> }
   </figcaption>
   <pre
     dir="ltr"

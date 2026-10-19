@@ -48,19 +48,19 @@ type Story = StoryObj;
 
 export const Neutral: Story = {
   render: () => ({
-    template: `<jp-toast message="Neutral notification" tone="neutral" />`,
+    template: `<jp-toast message="The Falcons roster is up to date." tone="neutral" />`,
   }),
 };
 
 export const Success: Story = {
   render: () => ({
-    template: `<jp-toast message="Saved successfully" tone="success" />`,
+    template: `<jp-toast message="Falcons lineup saved." tone="success" />`,
   }),
 };
 
 export const Warning: Story = {
   render: () => ({
-    template: `<jp-toast message="Check configuration" tone="warning" />`,
+    template: `<jp-toast message="Choose a starting pitcher before saving." tone="warning" />`,
   }),
 };
 

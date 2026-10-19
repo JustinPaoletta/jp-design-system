@@ -1,9 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import {
+  componentWrapperDecorator,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular';
 import { expect } from 'storybook/test';
 import { JpCodeBlock } from './code-block';
 const meta: Meta<JpCodeBlock> = {
   title: 'Primitives/Content/Code Block',
   component: JpCodeBlock,
+  decorators: [
+    componentWrapperDecorator(
+      (story) =>
+        `<div style="max-inline-size:48rem;margin:var(--jp-space-lg) auto">${story}</div>`,
+    ),
+  ],
   parameters: { layout: 'padded' },
   args: {
     label: 'Starting lineup',

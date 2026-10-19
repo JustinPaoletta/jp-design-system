@@ -5,7 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   JpButton,
@@ -26,6 +26,7 @@ import {
 @Component({
   selector: 'app-advanced-layout-page',
   imports: [
+    LowerCasePipe,
     RouterLink,
     JpButton,
     JpCard,

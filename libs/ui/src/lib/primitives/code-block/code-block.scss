@@ -6,8 +6,8 @@
 }
 figure {
   margin: 0;
-  border: 1px solid var(--jp-color-border-subtle);
-  border-radius: var(--jp-radius-md);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
   overflow: hidden;
   background: var(--jp-color-surface-sunken);
 }
@@ -16,14 +16,25 @@ figcaption {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--jp-space-sm);
-  padding: var(--jp-space-sm) var(--jp-space-md);
+  padding: var(--jp-space-md) var(--jp-space-lg);
   border-block-end: 1px solid var(--jp-color-border-subtle);
   font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+  background: var(--jp-color-surface-subtle);
 }
-figcaption > span:first-child {
-  font-weight: var(--jp-font-weight-medium);
+.caption {
+  flex: 1 1 8rem;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.label {
+  display: block;
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
 }
 .language {
+  display: block;
+  margin-block-start: var(--jp-space-2xs);
   color: var(--jp-color-text-secondary);
 }
 jp-copy-button {
@@ -31,7 +42,7 @@ jp-copy-button {
 }
 pre {
   margin: 0;
-  padding: var(--jp-space-md);
+  padding: var(--jp-space-lg);
   overflow: auto;
   max-block-size: 24rem;
   font-family: var(--jp-font-family-mono);

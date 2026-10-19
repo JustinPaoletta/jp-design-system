@@ -10,7 +10,7 @@ The [changelog](CHANGELOG.md) records changes. Implemented components remain pre
 
 The user approved the [Card reference](design-qa.md#card-reference-review) on October 19, 2026.
 
-- [ ] Apply the approved Card direction to other components, one group at a time. Inspect each group before continuing.
+- [ ] Inspect the remaining component states against the approved Card direction. Fix each observed mismatch.
 
 ## Remaining visual audit suggestions
 
@@ -21,7 +21,6 @@ The [design inspection](design-qa.md) records the completed changes.
 - [ ] Add photo examples for avatars and media. Check image crops, loading and failure states.
 - [ ] Let users inspect all members of an avatar group when the group shows an overflow count.
 - [ ] Collapse middle breadcrumbs when a path exceeds the available width. Keep every destination accessible.
-- [ ] Add a narrow stepper layout that emphasizes the current step and retains access to the full sequence.
 
 ## Promotion and integration follow-up
 

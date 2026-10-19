@@ -1,5 +1,37 @@
 # Verification evidence
 
+## October 19, 2026 component-wide Card adaptation
+
+The [design inspection](../../design-qa.md#component-wide-card-adaptation) covers 20 components and two compositions.
+Chrome captures show 22 views at 1000px and 320px widths.
+The captures have no horizontal page overflow.
+Code blocks and wider tables retain their internal scroll regions.
+
+| Check                              | Result                                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| UI unit tests                      | All 482 tests in 98 suites pass with coverage gates.                                                   |
+| Showcase unit tests                | All 57 tests in 13 suites pass with coverage gates.                                                    |
+| Live Storybook                     | All 351 stories in 97 suites pass. Runtime isolation checks pass.                                      |
+| Browser behavior and accessibility | 418 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| Source checks                      | UI, Showcase and browser-test lint pass. Angular type checks pass.                                     |
+| macOS Chromium visuals             | All 84 comparisons pass after inspection of 67 changed baselines.                                      |
+
+The new regressions check tab visibility after selection and resize, including RTL calculations and observer cleanup.
+Tree checks retain independent description and retry behavior.
+Narrow table checks cover selection bounds, fixed geometry and access to the last row.
+Notifications demonstrate read, unread, dismissal and mark-all actions.
+
+After the tab and table corrections, 81 affected browser checks pass across all three engines.
+Actual Chrome checks confirm RTL tab visibility without document scrolling.
+The narrow table keeps its selected checkbox inside the cell and retains its 48px row height.
+
+The final profile and assistant corrections pass 39 browser checks across the same engines.
+The Showcase production build passes without component style-budget warnings.
+Documentation writing checks, their 12 tests, local links, formatting and token guards pass.
+
+These checks do not replace screen-reader, Windows or physical-device inspection.
+The dated evidence below retains its original scope.
+
 ## October 19, 2026 form and roster adaptation
 
 The form and roster use the approved Card direction.

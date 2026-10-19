@@ -1,5 +1,6 @@
 :host {
   display: block;
+  min-inline-size: 0;
 }
 .jp-breadcrumbs__list {
   display: flex;
@@ -18,13 +19,21 @@
   display: inline-flex;
   align-items: center;
   gap: var(--jp-space-sm);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.jp-breadcrumbs__item > :not(.jp-breadcrumbs__separator) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
 }
 .jp-breadcrumbs__link {
   color: inherit;
+  text-decoration: none;
   text-underline-offset: var(--jp-space-2xs);
 }
 .jp-breadcrumbs__link:hover {
   color: var(--jp-color-text-primary);
+  text-decoration: underline;
 }
 .jp-breadcrumbs__link:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
@@ -35,5 +44,6 @@
   font-weight: var(--jp-font-weight-medium);
 }
 .jp-breadcrumbs__separator {
+  flex-shrink: 0;
   color: var(--jp-color-text-muted);
 }

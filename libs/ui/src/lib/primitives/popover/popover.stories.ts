@@ -3,20 +3,19 @@ import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
 import { Component, Input } from '@angular/core';
 import { JpButton } from '../button/button';
-import { JpText } from '../text/text';
 import { JpPopover, JpPopoverContent, JpPopoverTrigger } from './popover';
 
 @Component({
   selector: 'jp-popover-story-host',
   standalone: true,
-  imports: [JpPopover, JpPopoverTrigger, JpPopoverContent, JpButton, JpText],
+  imports: [JpPopover, JpPopoverTrigger, JpPopoverContent, JpButton],
   template: `
     <jp-popover [open]="open" (openChange)="open = $event">
       <jp-button jpPopoverTrigger type="button" variant="secondary">
         Filters
       </jp-button>
       <div jpPopoverContent aria-label="Roster filters">
-        <jp-text>Choose a squad and player position.</jp-text>
+        <p>Choose a squad and player position.</p>
       </div>
     </jp-popover>
   `,
@@ -46,7 +45,6 @@ const meta: Meta<PopoverStoryHost> = {
         JpPopoverTrigger,
         JpPopoverContent,
         JpButton,
-        JpText,
         PopoverStoryHost,
       ],
     }),

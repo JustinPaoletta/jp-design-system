@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  JpBox,
   JpButton,
   JpDialog,
   JpDialogActions,
@@ -13,7 +12,8 @@ import {
   JpPopoverContent,
   JpPopoverTrigger,
   JpStack,
-  JpSurface,
+  JpCard,
+  JpCopyButton,
   JpText,
   JpToastOutlet,
   JpToastService,
@@ -23,10 +23,10 @@ import {
 @Component({
   selector: 'app-overlays-page',
   imports: [
-    JpBox,
     JpStack,
     JpInline,
-    JpSurface,
+    JpCard,
+    JpCopyButton,
     JpText,
     JpHeading,
     JpButton,

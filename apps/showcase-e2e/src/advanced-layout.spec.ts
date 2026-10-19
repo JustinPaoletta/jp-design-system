@@ -67,7 +67,7 @@ test('advanced layout: row details and selection stay independent', async ({
   await expand.click();
   await expect(expand).toHaveAttribute('aria-expanded', 'true');
   const row = page.locator('.jp-table__detail-row');
-  await expect(row).toContainText('managed by Sam Rivera in Pitcher');
+  await expect(row).toContainText('plays pitcher. Coach: Sam Rivera.');
   await row.getByRole('button', { name: 'Review game' }).click();
   await expect(page.getByRole('status')).toContainText('Reviewed Alex Morgan');
   await page
