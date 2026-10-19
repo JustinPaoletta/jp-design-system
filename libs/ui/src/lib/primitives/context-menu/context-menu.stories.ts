@@ -35,6 +35,10 @@ export const Default: Story = {
     await expect(
       c.getByRole('button', { name: 'More actions: Game plan' }),
     ).toHaveFocus();
+    await userEvent.click(
+      c.getByRole('button', { name: 'More actions: Game plan' }),
+    );
+    await expect(c.getByRole('menu')).toBeVisible();
   },
 };
 export const Disabled: Story = { args: { disabled: true } };

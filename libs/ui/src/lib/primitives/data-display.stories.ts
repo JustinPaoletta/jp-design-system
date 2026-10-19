@@ -27,7 +27,7 @@ const columns = [
   { key: 'name', header: 'Player' },
   { key: 'env', header: 'Squad' },
   { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Position', align: 'end' as const },
+  { key: 'region', header: 'Position' },
 ];
 
 const rows = [
@@ -172,24 +172,19 @@ const meta: Meta<DataDisplayArgs> = {
                 <jp-badge tone="accent">Starter</jp-badge>
               </jp-inline>
 
-              <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
+              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
                 <jp-stack gap="md">
                   <jp-inline align="center" gap="sm" justify="between" wrap="true">
                     <jp-heading as="h2">Roster</jp-heading>
-                    <jp-switch
-                      [ngModel]="showEmpty()"
-                      (ngModelChange)="onShowEmptyChange($event)"
-                      name="showEmpty"
-                    >
-                      Show empty state
-                    </jp-switch>
+                    <jp-text size="caption" tone="secondary">{{ showEmpty() ? 0 : rows.length }} players</jp-text>
+                    <jp-button>Add player</jp-button>
                   </jp-inline>
 
                   <jp-table
                     caption="Falcons roster"
                     [columns]="columns"
                     [rows]="showEmpty() ? [] : rows"
-                    [striped]="true"
+                    [striped]="false"
                   >
                     <ng-template jpTableCell="status" let-value>
                       <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
@@ -209,6 +204,14 @@ const meta: Meta<DataDisplayArgs> = {
                   </jp-table>
                 </jp-stack>
               </jp-surface>
+              <aside aria-label="Story controls">                    <jp-switch
+                      [ngModel]="showEmpty()"
+                      (ngModelChange)="onShowEmptyChange($event)"
+                      name="showEmpty"
+                    >
+                      Show empty state
+                    </jp-switch>
+              </aside>
             </jp-stack>
           </jp-box>
         </main>

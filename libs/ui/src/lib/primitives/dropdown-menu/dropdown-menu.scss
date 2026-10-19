@@ -18,7 +18,7 @@
   min-width: 10rem;
   padding: var(--jp-space-2xs);
   border: 1px solid var(--jp-color-overlay-panel-border);
-  border-radius: var(--jp-radius-md);
+  border-radius: var(--jp-radius-lg);
   background: var(--jp-color-overlay-panel-bg);
   color: var(--jp-color-overlay-panel-fg);
   box-shadow: var(--jp-elevation-floating);
@@ -62,4 +62,17 @@
 :host ::ng-deep .jp-dropdown-menu__item[aria-disabled='true'] {
   color: var(--jp-color-text-disabled);
   cursor: not-allowed;
+}
+
+:host ::ng-deep .jp-dropdown-menu__item {
+  min-height: var(--jp-size-control-md);
+  font-size: var(--jp-font-size-body-sm);
+}
+:host ::ng-deep .jp-dropdown-menu__item--destructive {
+  color: var(--jp-color-state-error-border);
+}
+:host ::ng-deep [role='separator'] {
+  height: 1px;
+  margin: var(--jp-space-2xs) var(--jp-space-xs);
+  background: var(--jp-color-border-default);
 }

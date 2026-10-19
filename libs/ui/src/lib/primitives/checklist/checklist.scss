@@ -59,8 +59,8 @@ input {
   inset-block-start: 0;
   opacity: 0;
   cursor: inherit;
-  inline-size: var(--jp-size-control-md);
-  block-size: var(--jp-size-control-md);
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
 }
 .box {
   display: inline-flex;
@@ -68,8 +68,8 @@ input {
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  inline-size: var(--jp-size-control-md);
-  block-size: var(--jp-size-control-md);
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
   border: 1px solid var(--jp-color-selection-checkbox-border);
   border-radius: var(--jp-radius-sm);
   background: var(--jp-color-selection-checkbox-bg);
@@ -98,4 +98,17 @@ label:has(input:disabled) {
     background: Highlight;
     color: HighlightText;
   }
+}
+
+.parent .name {
+  font-weight: var(--jp-font-weight-semibold);
+}
+label:has(input:disabled) {
+  opacity: 0.6;
+}
+label {
+  min-block-size: var(--jp-size-control-sm);
+}
+.box {
+  margin-block-start: 2px;
 }

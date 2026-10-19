@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent, within, waitFor } from 'storybook/test';
 import { JpSchedulingCalendar } from './scheduling-calendar';
 const meta: Meta<JpSchedulingCalendar> = {
   title: 'Primitives/Data Display/Scheduling Calendar',
@@ -18,7 +18,7 @@ const meta: Meta<JpSchedulingCalendar> = {
     events: [
       {
         id: 'planning',
-        title: 'Planning',
+        title: 'Lineup meeting',
         start: '2026-10-05T09:00:00Z',
         end: '2026-10-05T10:30:00Z',
       },
@@ -71,13 +71,13 @@ export const ClockChange: Story = {
     events: [
       {
         id: 'first',
-        title: 'First 1:15',
+        title: 'Early field check',
         start: '2026-11-01T01:15:00-04:00',
         end: '2026-11-01T01:45:00-04:00',
       },
       {
         id: 'second',
-        title: 'Second 1:15',
+        title: 'Late field check',
         start: '2026-11-01T01:15:00-05:00',
         end: '2026-11-01T01:45:00-05:00',
       },
@@ -89,10 +89,12 @@ export const Navigation: Story = {
     const c = within(canvasElement);
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(
-      c.queryByRole('button', { name: /Planning,/ }),
+      c.queryByRole('button', { name: /Lineup meeting,/ }),
     ).not.toBeInTheDocument();
     await userEvent.click(c.getByRole('button', { name: 'Today' }));
-    await expect(c.getByRole('button', { name: /Planning,/ })).toBeVisible();
+    await expect(
+      c.getByRole('button', { name: /Lineup meeting,/ }),
+    ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Day' }));
     await expect(c.getByRole('button', { name: 'Day' })).toHaveAttribute(
       'aria-pressed',
@@ -104,5 +106,131 @@ export const Navigation: Story = {
       'aria-pressed',
       'true',
     );
+  },
+};
+
+export const BusyAllDay: Story = {
+  args: {
+    view: 'day',
+    events: [
+      ...Array.from({ length: 11 }, (_, index) => ({
+        id: 'squad-' + index,
+        title: 'Squad ' + (index + 1) + ' tournament',
+        start: '2026-10-05',
+        end: '2026-10-06',
+        allDay: true,
+      })),
+      {
+        id: 'practice',
+        title:
+          'Batting practice with the Falcons reserves before the regional tournament',
+        start: '2026-10-05T09:00:00Z',
+        end: '2026-10-05T09:45:00Z',
+      },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const allDay = canvasElement.querySelector('.day .all-day') as HTMLElement;
+    const frame = canvasElement.querySelector('.days') as HTMLElement;
+    const timed = canvas.getByRole('button', { name: /Batting practice.*,/ });
+    const slot = timed.parentElement;
+    if (!slot)
+      throw new globalThis.Error('The timed appointment must have a slot.');
+    const schedule = getComputedStyle(slot).position === 'absolute';
+    if (schedule)
+      await expect(allDay.clientHeight).toBeLessThan(frame.clientHeight / 2);
+    const last = canvas.getByRole('button', { name: /Squad 11 tournament,/ });
+    last.focus();
+    if (schedule)
+      await waitFor(() => expect(allDay.scrollTop).toBeGreaterThan(0));
+    await expect(last).toHaveFocus();
+    timed.focus();
+    await expect(timed).toHaveFocus();
+    const bounds = timed.getBoundingClientRect();
+    const band = allDay.getBoundingClientRect();
+    await expect(bounds.top).toBeGreaterThanOrEqual(band.bottom);
+    await expect(bounds.bottom).toBeLessThanOrEqual(
+      frame.getBoundingClientRect().bottom,
+    );
+    const title = timed.querySelector('strong') as HTMLElement;
+    await userEvent.click(canvas.getByRole('button', { name: 'Agenda' }));
+    await waitFor(() =>
+      expect(getComputedStyle(title).webkitLineClamp).toBe('none'),
+    );
+    await expect(title.scrollHeight).toBeLessThanOrEqual(
+      title.clientHeight + 1,
+    );
+    await userEvent.click(canvas.getByRole('button', { name: 'Schedule' }));
+    const host = canvasElement.querySelector(
+      'jp-scheduling-calendar',
+    ) as HTMLElement;
+    host.style.width = '390px';
+    await waitFor(() => expect(getComputedStyle(slot).position).toBe('static'));
+    await expect(getComputedStyle(title).webkitLineClamp).toBe('none');
+    await expect(title.scrollHeight).toBeLessThanOrEqual(
+      title.clientHeight + 1,
+    );
+    host.style.width = '';
+    await userEvent.click(canvas.getByRole('button', { name: 'Agenda' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Schedule' }));
+  },
+};
+
+export const CrowdedWeek: Story = {
+  args: {
+    events: [
+      ...(meta.args?.events ?? []),
+      {
+        id: 'pitching',
+        title: 'Pitching practice with the Falcons reserves',
+        start: '2026-10-05T10:00:00Z',
+        end: '2026-10-05T10:45:00Z',
+      },
+    ],
+  },
+  render: (args) => ({
+    props: args,
+    template:
+      '<jp-scheduling-calendar style="width:1100px;max-width:100%" [label]="label" [date]="date" [today]="today" [events]="events" [view]="view" [layout]="layout" [timeZone]="timeZone" [locale]="locale" />',
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const host = canvasElement.querySelector(
+      'jp-scheduling-calendar',
+    ) as HTMLElement;
+    const frame = canvasElement.querySelector('.days') as HTMLElement;
+    const appointment = canvas.getByRole('button', { name: /Lineup meeting,/ });
+    const title = appointment.querySelector('strong') as HTMLElement;
+    const time = appointment.querySelector('span') as HTMLElement;
+    const days = Array.from(canvasElement.querySelectorAll('.day'));
+    if (host.clientWidth > 896) {
+      await expect(days).toHaveLength(7);
+      await expect(
+        Math.max(...days.map((day) => day.clientWidth)) -
+          Math.min(...days.map((day) => day.clientWidth)),
+      ).toBeLessThanOrEqual(1);
+      await expect(frame.scrollWidth).toBeLessThanOrEqual(
+        frame.clientWidth + 1,
+      );
+      await expect(getComputedStyle(title).whiteSpace).toBe('nowrap');
+      await expect(getComputedStyle(title).textOverflow).toBe('ellipsis');
+      await expect(title.clientHeight).toBeLessThanOrEqual(
+        parseFloat(getComputedStyle(title).lineHeight) + 1,
+      );
+      await expect(getComputedStyle(time).display).toBe('none');
+      await expect(appointment.getAttribute('title')).toMatch(
+        /Lineup meeting.*9:00.*10:30/,
+      );
+    }
+    await userEvent.click(canvas.getByRole('button', { name: 'Agenda' }));
+    await expect(getComputedStyle(title).whiteSpace).toBe('normal');
+    await expect(getComputedStyle(time).display).not.toBe('none');
+    host.dir = 'rtl';
+    const isolatedTime = time.querySelector('bdi') as HTMLElement;
+    await expect(getComputedStyle(isolatedTime).direction).toBe('ltr');
+    await expect(getComputedStyle(isolatedTime).unicodeBidi).toBe('isolate');
+    host.dir = '';
+    await userEvent.click(canvas.getByRole('button', { name: 'Schedule' }));
   },
 };

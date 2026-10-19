@@ -1,5 +1,6 @@
 <div
   class="tree"
+  [class.tree--empty]="!nodes().length"
   role="tree"
   [attr.aria-label]="label()"
   [attr.aria-busy]="busy()"
@@ -58,7 +59,14 @@
         (click)="clickDisclosure(node, $event)"
         >›</span
       >
-      } @else { <span class="disclosure" aria-hidden="true">·</span> }
+      } @else { <span class="disclosure" aria-hidden="true"></span> }
+      <svg class="node-icon" viewBox="0 0 16 16" aria-hidden="true">
+        @if (branch(node)) {
+        <path d="M1.5 4.5V3h5l1.5 2h6.5v8h-13Z" />
+        } @else {
+        <path d="M3.5 1.5h6l3 3v10h-9Z M9.5 1.5v3h3" />
+        }
+      </svg>
       <span class="label" [id]="itemId(node.key) + '-label'"
         >{{ node.label }}</span
       >

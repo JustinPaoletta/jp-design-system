@@ -144,6 +144,19 @@ export const LazyRetry: Story = {
     ).toHaveFocus();
   },
 };
+export const LazyError: Story = {
+  args: {
+    nodes: [
+      {
+        key: 'training',
+        label: 'Training guides',
+        hasChildren: true,
+        loadState: 'error',
+      },
+    ],
+    expandedKeys: ['training'],
+  },
+};
 export const ActivationOnly: Story = {
   render: () => ({ template: '<jp-tree-story selection="none" />' }),
 };

@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { JpFileUpload } from './file-upload';
 const file = new File(
@@ -7,6 +8,11 @@ const file = new File(
 );
 const meta: Meta<JpFileUpload> = {
   title: 'Primitives/Controls/File Upload',
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 36rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpFileUpload,
   parameters: { layout: 'padded' },
   args: {

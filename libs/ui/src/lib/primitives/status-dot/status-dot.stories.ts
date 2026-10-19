@@ -11,3 +11,11 @@ const meta: Meta<JpStatusDot> = {
 export default meta;
 type Story = StoryObj<JpStatusDot>;
 export const Default: Story = {};
+
+export const StatusLabels: Story = {
+  render: () => ({
+    template: `<div style="display:flex;flex-wrap:wrap;gap:var(--jp-space-lg);font:var(--jp-font-size-body-sm)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-secondary)">
+    <span><jp-status-dot tone="success" /> Available</span><span><jp-status-dot tone="warning" /> Away</span><span><jp-status-dot tone="error" /> Busy</span><span><jp-status-dot tone="neutral" /> Offline</span>
+  </div>`,
+  }),
+};

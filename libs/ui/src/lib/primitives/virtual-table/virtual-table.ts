@@ -274,7 +274,13 @@ export class JpVirtualTable {
     return this.text(row[this.columns()[0]?.key]);
   }
   rangeLabel(): string {
-    const { start, end, total } = this.range();
+    const { start, end, total } = jpVirtualRange(
+      this.rows().length,
+      this.scrollTop(),
+      this.safeHeight(),
+      this.safeRowHeight(),
+      0,
+    );
     return this.messages.virtualTable.range({
       start: total ? start + 1 : 0,
       end,

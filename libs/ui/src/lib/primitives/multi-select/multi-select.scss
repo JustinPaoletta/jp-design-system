@@ -87,3 +87,38 @@ p {
     outline-color: Highlight;
   }
 }
+
+.field {
+  gap: var(--jp-space-xs);
+}
+.input-wrap {
+  position: relative;
+}
+input {
+  padding-inline-end: calc(var(--jp-size-icon-md) + 2 * var(--jp-space-sm));
+}
+input::placeholder {
+  color: var(--jp-color-field-placeholder);
+}
+input[aria-invalid='true'] {
+  border-color: var(--jp-color-field-border-invalid);
+}
+.chevron {
+  position: absolute;
+  inset-inline-end: var(--jp-space-sm);
+  inset-block-start: calc(
+    (var(--jp-size-control-md) - var(--jp-size-icon-md)) / 2
+  );
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+  color: var(--jp-color-text-secondary);
+  pointer-events: none;
+}
+.option {
+  min-block-size: var(--jp-size-control-md);
+  box-sizing: border-box;
+  font-size: var(--jp-font-size-body);
+}
+.option[aria-selected='true'] {
+  font-weight: var(--jp-font-weight-semibold);
+}

@@ -11,6 +11,11 @@ figure {
   gap: var(--jp-space-md);
 }
 figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm);
   font-weight: var(--jp-font-weight-semibold);
 }
 p {
@@ -31,21 +36,24 @@ dl {
   display: inline-flex;
   align-items: center;
   gap: var(--jp-space-xs);
-  min-block-size: var(--jp-size-control-md);
-  border: 1px solid var(--jp-color-border-strong);
+  min-block-size: var(--jp-size-control-sm);
+  border: 1px solid transparent;
   border-radius: var(--jp-radius-sm);
   padding: var(--jp-space-xs) var(--jp-space-sm);
-  background: var(--jp-color-surface-subtle);
+  background: transparent;
   color: inherit;
   font: inherit;
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-regular);
   cursor: pointer;
 }
 .legend button[aria-pressed='false'] {
   text-decoration: line-through;
 }
 .swatch {
-  min-inline-size: 1.5rem;
-  block-size: 1.5rem;
+  min-inline-size: 1.125rem;
+  block-size: 1.125rem;
+  border-radius: var(--jp-radius-full);
   display: grid;
   place-items: center;
   border: 1px solid var(--jp-color-surface-canvas);
@@ -55,7 +63,9 @@ dl {
 .inspect {
   display: grid;
   gap: var(--jp-space-xs);
+  flex: 1 1 12rem;
   max-inline-size: 24rem;
+  font-size: var(--jp-font-size-caption);
 }
 select {
   box-sizing: border-box;
@@ -72,9 +82,7 @@ dl {
 }
 dl div {
   padding: var(--jp-space-xs) var(--jp-space-sm);
-  background: var(--jp-color-surface-subtle);
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-sm);
+  border-inline-start: 1px solid var(--jp-color-border-default);
 }
 dt {
   font-size: var(--jp-font-size-caption);
@@ -125,4 +133,36 @@ summary:focus-visible,
     color: CanvasText;
     border-color: CanvasText;
   }
+}
+
+.legend button:hover {
+  background: var(--jp-color-surface-raised);
+}
+.inspection {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--jp-space-lg);
+  padding: var(--jp-space-md);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+}
+.inspection dt {
+  color: var(--jp-color-text-secondary);
+}
+.inspection dd {
+  font-variant-numeric: tabular-nums;
+}
+.state {
+  box-sizing: border-box;
+  min-block-size: var(--jp-chart-plot-height, 20rem);
+  padding: var(--jp-space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--jp-space-md);
+  background: var(--jp-color-surface-subtle);
+  border-radius: var(--jp-radius-md);
+  color: var(--jp-color-text-secondary);
 }

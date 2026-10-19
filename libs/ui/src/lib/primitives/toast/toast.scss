@@ -9,9 +9,9 @@
   align-items: flex-start;
   gap: var(--jp-space-sm);
   box-sizing: border-box;
-  padding: var(--jp-space-sm) var(--jp-space-md);
+  padding: var(--jp-space-md);
   border: 1px solid var(--jp-color-toast-border);
-  border-left-width: 3px;
+  border-inline-start-width: 3px;
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-toast-bg);
   color: var(--jp-color-toast-fg);
@@ -20,23 +20,23 @@
 }
 
 :host(.jp-toast--neutral) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-neutral-accent);
+  border-inline-start-color: var(--jp-color-toast-neutral-accent);
 }
 
 :host(.jp-toast--success) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-success-accent);
+  border-inline-start-color: var(--jp-color-toast-success-accent);
 }
 
 :host(.jp-toast--warning) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-warning-accent);
+  border-inline-start-color: var(--jp-color-toast-warning-accent);
 }
 
 :host(.jp-toast--error) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-error-accent);
+  border-inline-start-color: var(--jp-color-toast-error-accent);
 }
 
 :host(.jp-toast--info) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-info-accent);
+  border-inline-start-color: var(--jp-color-toast-info-accent);
 }
 
 .jp-toast__message {
@@ -73,4 +73,20 @@
 .jp-toast__dismiss:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
+}
+
+.jp-toast__icon {
+  flex-shrink: 0;
+}
+:host(.jp-toast--success) .jp-toast__icon {
+  color: var(--jp-color-toast-success-accent);
+}
+:host(.jp-toast--warning) .jp-toast__icon {
+  color: var(--jp-color-toast-warning-accent);
+}
+:host(.jp-toast--error) .jp-toast__icon {
+  color: var(--jp-color-toast-error-accent);
+}
+:host(.jp-toast--info) .jp-toast__icon {
+  color: var(--jp-color-toast-info-accent);
 }

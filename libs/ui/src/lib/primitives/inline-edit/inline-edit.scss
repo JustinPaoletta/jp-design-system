@@ -1,7 +1,10 @@
 @use '../input/input';
 :host {
-  display: inline-flex;
-  max-inline-size: 100%;
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 28rem;
+  box-sizing: border-box;
 }
 button {
   min-block-size: var(--jp-size-control-md);
@@ -26,9 +29,6 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-:host {
-  display: block;
-}
 .display,
 .actions {
   display: flex;
@@ -44,9 +44,23 @@ button:disabled {
   margin-block-start: var(--jp-space-xs);
 }
 form {
+  min-inline-size: 0;
+  grid-template-columns: minmax(0, 1fr);
   display: grid;
   gap: var(--jp-space-xs);
 }
 p {
   margin: 0;
+}
+
+span[role='status'] {
+  display: inline-block;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  margin-block-start: var(--jp-space-xs);
+}
+.actions button[type='submit'] {
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+  font-weight: var(--jp-font-weight-semibold);
 }

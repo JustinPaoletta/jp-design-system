@@ -6,7 +6,11 @@ section {
   border: 1px solid var(--jp-color-state-error-border);
   border-radius: var(--jp-radius-md);
   color: var(--jp-color-text-primary);
-  background: var(--jp-color-surface-subtle);
+  background: color-mix(
+    in srgb,
+    var(--jp-color-state-error-border) 8%,
+    var(--jp-color-surface-subtle)
+  );
   font-family: var(--jp-font-family-base);
 }
 section:focus {
@@ -23,4 +27,14 @@ ul {
 }
 li + li {
   margin-block-start: var(--jp-space-xs);
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+h2 jp-icon {
+  color: var(--jp-color-state-error-border);
+  flex-shrink: 0;
 }

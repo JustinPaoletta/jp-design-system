@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import { Component, input, signal } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
@@ -25,7 +26,12 @@ const render = (args: Record<string, unknown>, fail = false) => ({
 const meta: Meta<JpInlineEdit> = {
   title: 'Primitives/Controls/Inline Edit',
   component: JpInlineEdit,
-  decorators: [moduleMetadata({ imports: [InlineEditDemo] })],
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 28rem; width: 100%;">${story}</div>`,
+    ),
+    moduleMetadata({ imports: [InlineEditDemo] }),
+  ],
   parameters: { layout: 'padded' },
   args: { label: 'Club name', disabled: false },
   render: (args) => render(args),

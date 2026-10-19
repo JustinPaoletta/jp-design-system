@@ -38,7 +38,22 @@ import { JpAssistantService } from './assistant.service';
         emptyTitle="Ask about the lineup"
         emptyDescription="Ask about players, the final score or the next game."
         (messageSubmit)="onSubmit($event)"
-      />
+        ><jp-stack jpAssistantSuggestions gap="sm"
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Summarize the final score')"
+            >Summarize the final score</jp-button
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Who is in the starting lineup?')"
+            >Review the starting lineup</jp-button
+          ><jp-button
+            variant="secondary"
+            (click)="ask('When is the next game?')"
+            >Find the next game</jp-button
+          ></jp-stack
+        ></jp-assistant-panel
+      >
     </jp-stack>
   `,
 })
@@ -71,6 +86,11 @@ class AssistantStoryHost {
 
   openEmpty(): void {
     this.assistant.open({ context: null, clearMessages: true });
+  }
+
+  ask(content: string): void {
+    this.assistant.addMessage({ role: 'user', content });
+    this.onSubmit(content);
   }
 
   onSubmit(content: string): void {
@@ -307,6 +327,8 @@ export const PendingAndStreaming: Story = {
     await expect(
       canvasElement.querySelector('[role="progressbar"]'),
     ).toBeNull();
+    await userEvent.click(button('Start response'));
+    await userEvent.click(button('Stream chunk'));
   },
 };
 
@@ -328,5 +350,7 @@ export const FailedAndRetry: Story = {
     await expect(canvasElement.textContent).toContain(
       'All game checks are complete.',
     );
+    await userEvent.click(button('Start response'));
+    await userEvent.click(button('Fail response'));
   },
 };

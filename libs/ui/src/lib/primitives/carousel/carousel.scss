@@ -5,8 +5,8 @@
 }
 section {
   border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-  background: var(--jp-color-surface-raised);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-subtle);
   overflow: clip;
 }
 .controls,
@@ -28,7 +28,7 @@ section {
 }
 .viewport {
   padding: var(--jp-space-lg);
-  min-block-size: 12rem;
+  min-block-size: 14rem;
   box-sizing: border-box;
   touch-action: pan-y;
 }
@@ -45,14 +45,15 @@ button {
   background: var(--jp-color-surface-subtle);
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-sm);
-  min-block-size: 44px;
-  min-inline-size: 44px;
+  min-block-size: var(--jp-size-control-sm);
+  min-inline-size: var(--jp-size-control-sm);
   padding-inline: var(--jp-space-sm);
   cursor: pointer;
 }
 button.current {
-  border-color: var(--jp-color-focus-ring);
-  box-shadow: inset 0 0 0 1px var(--jp-color-focus-ring);
+  background: var(--jp-color-accent-solid);
+  color: var(--jp-color-accent-contrast);
+  border-color: var(--jp-color-accent-solid);
 }
 button:disabled {
   color: var(--jp-color-text-disabled);
@@ -84,4 +85,9 @@ button:focus-visible,
   .viewport:focus-visible {
     outline-color: Highlight;
   }
+}
+
+.pickers {
+  padding: 0;
+  gap: var(--jp-space-2xs);
 }

@@ -13,9 +13,9 @@
   color: var(--jp-color-badge-neutral-fg);
   font-family: var(--jp-font-family-base);
   font-size: var(--jp-font-size-caption);
-  font-weight: var(--jp-font-weight-semibold);
+  font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-tight);
-  letter-spacing: var(--jp-font-letter-spacing-wide);
+  letter-spacing: var(--jp-font-letter-spacing-normal);
 }
 
 :host(.jp-chip--sm) {
@@ -56,7 +56,7 @@
 
 .jp-chip__remove:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 .jp-chip__remove:disabled {
@@ -65,12 +65,25 @@
 
 .jp-chip__icon {
   display: block;
-  width: var(--jp-size-icon-lg);
-  height: var(--jp-size-icon-lg);
+  width: var(--jp-size-icon-sm);
+  height: var(--jp-size-icon-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .jp-chip__remove {
     transition: none;
   }
+}
+
+:host {
+  min-block-size: var(--jp-size-control-sm);
+  padding-block: 0;
+  gap: var(--jp-space-xs);
+}
+:host(.jp-chip--disabled) {
+  opacity: 0.6;
+}
+.jp-chip__remove {
+  inline-size: 24px;
+  block-size: 24px;
 }

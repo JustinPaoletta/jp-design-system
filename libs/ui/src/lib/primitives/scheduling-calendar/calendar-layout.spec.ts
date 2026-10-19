@@ -1,6 +1,7 @@
 import {
   addJpCalendarDays,
   buildJpCalendarLayout,
+  buildJpCalendarGrid,
   isJpCalendarDate,
   type JpCalendarEvent,
 } from './calendar-layout';
@@ -245,5 +246,145 @@ describe('calendar dates and appointment placement', () => {
     ]);
     expect(result.invalidEvents).toBe(8);
     expect(result.days[0].timed).toHaveLength(1);
+  });
+});
+
+describe('shared calendar time grid', () => {
+  it('aligns ordinary days and places overlap lanes inside equal day tracks', () => {
+    const calendar = layout(
+      [
+        appointment('a', '2026-10-05T09:00:00Z', '2026-10-05T11:00:00Z'),
+        appointment('b', '2026-10-05T09:30:00Z', '2026-10-05T10:00:00Z'),
+        appointment('c', '2026-10-06T09:00:00Z', '2026-10-06T10:00:00Z'),
+        appointment('night', '2026-10-08T23:30:00Z', '2026-10-09T01:00:00Z'),
+      ],
+      '2026-10-05',
+      'UTC',
+      'week',
+    );
+    const grid = buildJpCalendarGrid(calendar, 'UTC', 'en-US');
+    expect(grid.hours).toHaveLength(24);
+    expect(grid.days[0].timed[0].displayStart).toBe(540);
+    expect(grid.days[1].timed[0].displayStart).toBe(540);
+    expect(grid.days[0].timed.map((entry) => entry.lanes)).toEqual([2, 2]);
+    expect(grid.initialMinute).toBe(480);
+    expect(grid.days[0].timed[0].compactTimeLabel).not.toContain('Oct');
+  });
+  it('aligns local times across a fall clock change and labels both repeated hours with offsets', () => {
+    const calendar = layout(
+      [
+        appointment(
+          'first',
+          '2026-11-01T01:15:00-04:00',
+          '2026-11-01T01:45:00-04:00',
+        ),
+        appointment(
+          'second',
+          '2026-11-01T01:15:00-05:00',
+          '2026-11-01T01:45:00-05:00',
+        ),
+        appointment(
+          'saturday',
+          '2026-10-31T09:00:00-04:00',
+          '2026-10-31T10:00:00-04:00',
+        ),
+        appointment(
+          'sunday',
+          '2026-11-01T09:00:00-05:00',
+          '2026-11-01T10:00:00-05:00',
+        ),
+      ],
+      '2026-11-01',
+      'America/New_York',
+      'week',
+    );
+    const grid = buildJpCalendarGrid(calendar, 'America/New_York', 'en-US');
+    expect(grid.duration).toBe(1500);
+    expect(grid.hours.find((hour) => hour.minute === 60)?.label).toContain(
+      'GMT-4',
+    );
+    expect(grid.hours.find((hour) => hour.minute === 120)?.label).toContain(
+      'GMT-5',
+    );
+    const saturday = grid.days[5].timed[0];
+    const sunday = grid.days[6].timed;
+    expect(sunday.map((entry) => entry.displayStart)).toEqual([75, 135, 600]);
+    expect(saturday.displayStart).toBe(sunday[2].displayStart);
+    expect(sunday[0].compactTimeLabel).toContain('GMT-4');
+    expect(sunday[1].compactTimeLabel).toContain('GMT-5');
+  });
+  it('keeps spring times aligned without introducing elapsed-hour drift', () => {
+    const calendar = layout(
+      [
+        appointment(
+          'saturday',
+          '2026-03-07T09:00:00-05:00',
+          '2026-03-07T10:00:00-05:00',
+        ),
+        appointment(
+          'sunday',
+          '2026-03-08T09:00:00-04:00',
+          '2026-03-08T10:00:00-04:00',
+        ),
+      ],
+      '2026-03-08',
+      'America/New_York',
+      'week',
+    );
+    const grid = buildJpCalendarGrid(calendar, 'America/New_York', 'en-US');
+    expect(grid.duration).toBe(1440);
+    expect(grid.days[5].timed[0].displayStart).toBe(540);
+    expect(grid.days[6].timed[0].displayStart).toBe(540);
+  });
+  it('places the first instant of a midnight clock jump at its actual local time', () => {
+    const calendar = layout(
+      [
+        appointment(
+          'first',
+          '2026-09-06T01:00:00-03:00',
+          '2026-09-06T02:00:00-03:00',
+        ),
+        appointment(
+          'later',
+          '2026-09-06T01:00:01-03:00',
+          '2026-09-06T02:00:01-03:00',
+        ),
+      ],
+      '2026-09-06',
+      'America/Santiago',
+    );
+    const grid = buildJpCalendarGrid(calendar, 'America/Santiago', 'en-US');
+    expect(grid.days[0].timed[0].displayStart).toBe(60);
+    expect(grid.days[0].timed[0].displayEnd).toBe(120);
+    expect(grid.days[0].timed[1].displayStart).toBeCloseTo(60 + 1 / 60);
+  });
+  it('preserves half-hour clock changes and validates empty inputs without throwing', () => {
+    const calendar = layout(
+      [
+        appointment(
+          'first',
+          '2026-04-05T01:45:00+11:00',
+          '2026-04-05T01:55:00+11:00',
+        ),
+        appointment(
+          'second',
+          '2026-04-05T01:45:00+10:30',
+          '2026-04-05T01:55:00+10:30',
+        ),
+      ],
+      '2026-04-05',
+      'Australia/Lord_Howe',
+    );
+    const grid = buildJpCalendarGrid(calendar, 'Australia/Lord_Howe', 'en-US');
+    expect(grid.duration).toBe(1470);
+    expect(grid.days[0].timed.map((entry) => entry.displayStart)).toEqual([
+      105, 135,
+    ]);
+    expect(grid.hours.some((hour) => hour.label.includes('GMT+10:30'))).toBe(
+      true,
+    );
+    expect(buildJpCalendarGrid(layout([], 'bad'), 'bad', 'bad').days).toEqual(
+      [],
+    );
   });
 });

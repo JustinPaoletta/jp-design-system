@@ -128,7 +128,7 @@ export const Disabled: Story = {
   },
 };
 
-/** Active item with a projected leading icon and the accent indicator bar. */
+/** Active item with a projected leading icon and the selected surface fill. */
 export const WithIcon: Story = {
   args: {
     active: true,

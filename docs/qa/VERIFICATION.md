@@ -1,5 +1,32 @@
 # Verification evidence
 
+## October 19, 2026 visual audit changes
+
+The [design inspection](../../design-qa.md) records the visual changes and Chrome captures.
+The [visual style guide](../content/VISUAL_STYLE.md) defines shared sizes, surfaces and screenshot states.
+Local checks use Node 24.21.0 on macOS.
+
+| Check                              | Result                                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| UI unit tests                      | 474 tests in 98 suites pass. Statement coverage is 98.08%.                                            |
+| Showcase unit tests                | 58 tests in 11 suites pass. Statement coverage is 98.85%.                                             |
+| Token unit tests                   | 17 tests in two suites pass with full coverage.                                                       |
+| Source checks                      | UI, Showcase, tokens and browser-test lint pass. Angular type checks pass.                            |
+| Static and live Storybook          | Each run passes 335 stories in 97 suites. Live runtime isolation checks pass.                         |
+| Browser behavior and accessibility | 406 tests pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| macOS Chromium visuals             | 84 inspected baseline comparisons pass.                                                               |
+| Installed package consumer         | All 18 browser, accent and density combinations pass.                                                 |
+| Generated tokens                   | Source and generated artifacts match. Color and token guards pass.                                    |
+
+The Showcase production build passes without component style-budget warnings.
+Calendar regressions cover overlapping appointments, bounded all-day content, full mobile titles and clock changes.
+After the final calendar changes, 36 related browser checks pass across all three engines.
+The isolated package consumer uses Angular 22.2.1 and real local tarballs.
+Its source has no workspace aliases or package symlinks.
+
+The checks do not approve API maturity or a release.
+Screen-reader, Windows and physical-device inspections remain in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
+
 ## October 12, 2026 baseball examples
 
 Storybook and Showcase use the [shared baseball copy](../content/BASEBALL_EXAMPLES.md).

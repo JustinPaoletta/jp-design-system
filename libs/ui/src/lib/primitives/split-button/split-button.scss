@@ -36,3 +36,20 @@ div[role='group'] {
 .primary:hover:not(:disabled) {
   background: var(--jp-color-button-primary-bg-hover);
 }
+
+div[role='group'] {
+  gap: 0;
+}
+button {
+  font-weight: var(--jp-font-weight-semibold);
+}
+.primary:has(+ jp-dropdown-menu) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+button[jpDropdownTrigger] {
+  min-inline-size: var(--jp-size-control-md);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-inline-start: 0;
+}

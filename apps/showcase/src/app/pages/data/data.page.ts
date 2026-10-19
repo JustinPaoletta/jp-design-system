@@ -50,7 +50,7 @@ export class DataPage {
     { key: 'name', header: 'Player' },
     { key: 'env', header: 'Squad' },
     { key: 'status', header: 'Status' },
-    { key: 'region', header: 'Position', align: 'end' },
+    { key: 'region', header: 'Position' },
   ];
 
   readonly rows = [

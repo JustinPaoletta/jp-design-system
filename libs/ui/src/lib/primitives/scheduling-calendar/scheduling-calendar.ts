@@ -1,4 +1,7 @@
 import {
+  afterRenderEffect,
+  ElementRef,
+  viewChild,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -13,6 +16,7 @@ import { JpButton } from '../button/button';
 import {
   addJpCalendarDays,
   buildJpCalendarLayout,
+  buildJpCalendarGrid,
   isJpCalendarDate,
   type JpCalendarEvent,
 } from './calendar-layout';
@@ -70,21 +74,52 @@ export class JpSchedulingCalendar {
         ]),
       ).size,
   );
-  readonly allDaySize = computed(
-    () =>
-      Math.max(1, ...this.calendar().days.map((day) => day.allDay.length)) * 4,
+  readonly allDaySize = computed(() =>
+    Math.min(
+      12,
+      Math.max(0, ...this.calendar().days.map((day) => day.allDay.length)) * 4,
+    ),
   );
-  /** Preserve a readable appointment width instead of compressing overlap labels. */
-  readonly columns = computed(() =>
-    this.view() === 'day'
-      ? 'minmax(0, 1fr)'
-      : this.calendar()
-          .days.map(
-            (day) =>
-              `minmax(${Math.max(1, ...day.timed.map((item) => item.lanes)) * 12}rem, 1fr)`,
-          )
-          .join(' '),
+  readonly grid = computed(() =>
+    buildJpCalendarGrid(this.calendar(), this.timeZone(), this.locale()),
   );
+  readonly columns = computed(
+    () => '5.5rem repeat(' + this.calendar().days.length + ', minmax(0, 1fr))',
+  );
+  private readonly viewport = viewChild<ElementRef<HTMLElement>>('viewport');
+  private positionedFrame: HTMLElement | undefined;
+  private positionedKey = '';
+  constructor() {
+    afterRenderEffect(() => {
+      const frame = this.viewport()?.nativeElement;
+      const key = [
+        this.date(),
+        this.view(),
+        this.layout(),
+        this.timeZone(),
+      ].join('|');
+      const minute = this.grid().initialMinute;
+      if (
+        !frame ||
+        (this.positionedFrame === frame && this.positionedKey === key)
+      )
+        return;
+      this.positionedFrame = frame;
+      this.positionedKey = key;
+      const win = frame.ownerDocument.defaultView;
+      if (
+        this.layout() === 'schedule' &&
+        win &&
+        frame.scrollHeight > frame.clientHeight
+      ) {
+        const rem =
+          parseFloat(
+            win.getComputedStyle(frame.ownerDocument.documentElement).fontSize,
+          ) || 16;
+        frame.scrollTop = (minute / 15) * rem;
+      }
+    });
+  }
   readonly todayValid = computed(() => isJpCalendarDate(this.today()));
   navigate(direction: number): void {
     if (this.calendar().invalid) return;

@@ -10,7 +10,7 @@ const meta: Meta<JpAccordion> = {
   decorators: [moduleMetadata({ imports: [JpDisclosure] })],
   render: (args) => ({
     props: args,
-    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="General">Club name and owner.</jp-disclosure><jp-disclosure title="Advanced">Retries and timeouts.</jp-disclosure></jp-accordion>`,
+    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="Club details" [open]="true">Riverton Falcons. Coach: Sam Rivera.</jp-disclosure><jp-disclosure title="Game preparation" [open]="multiple">Confirm the starting lineup and check equipment before first pitch.</jp-disclosure></jp-accordion>`,
   }),
 };
 export default meta;

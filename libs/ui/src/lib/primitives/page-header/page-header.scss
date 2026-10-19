@@ -29,6 +29,8 @@ p {
   gap: var(--jp-space-sm);
 }
 .meta {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
   margin-block-start: var(--jp-space-sm);
 }
 .breadcrumbs {

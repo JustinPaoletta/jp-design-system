@@ -45,3 +45,27 @@ button:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: -2px;
 }
+
+.search-field {
+  position: relative;
+}
+.search-field jp-icon {
+  position: absolute;
+  inset-inline-start: var(--jp-space-sm);
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  color: var(--jp-color-text-secondary);
+  pointer-events: none;
+}
+.search-field input {
+  padding-inline-start: calc(var(--jp-size-icon-md) + 2 * var(--jp-space-sm));
+}
+button {
+  min-block-size: var(--jp-size-control-md);
+}
+button.active {
+  background: var(--jp-color-nav-item-bg-active);
+}
+:host ::ng-deep .jp-dialog__panel {
+  width: min(35rem, calc(100vw - 2 * var(--jp-space-md)));
+}

@@ -1,8 +1,21 @@
 # Component Expansion Task List
 
-Updated: October 8, 2026. Remaining work: five promotion and integration items. The [documentation index](docs/README.md) links completed feature work. The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
+Updated: October 19, 2026. Remaining work includes the visual details below and five promotion and integration items.
+The [documentation index](docs/README.md) links completed feature work.
+The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
 The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
+
+## Remaining visual audit suggestions
+
+The October 2026 audit supplied these additional suggestions.
+The [design inspection](design-qa.md) records the completed changes.
+
+- [ ] Add restrained syntax colors to code blocks. Keep plain text and copy behavior available.
+- [ ] Add photo examples for avatars and media. Check image crops, loading and failure states.
+- [ ] Let users inspect all members of an avatar group when the group shows an overflow count.
+- [ ] Collapse middle breadcrumbs when a path exceeds the available width. Keep every destination accessible.
+- [ ] Add a narrow stepper layout that emphasizes the current step and retains access to the full sequence.
 
 ## Promotion and integration follow-up
 

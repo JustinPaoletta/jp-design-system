@@ -188,11 +188,12 @@ export class JpChart {
                     data: [...s.values],
                     backgroundColor:
                       type === 'line' && /^#[\da-f]{6}$/i.test(seriesColor)
-                        ? seriesColor + '18'
+                        ? seriesColor + '0c'
                         : seriesColor,
                     fill: type === 'line',
                     borderColor: color('series-' + (i + 1)),
-                    borderWidth: 2,
+                    borderWidth: type === 'line' ? 2 : 0,
+                    borderRadius: type === 'bar' ? 4 : 0,
                     borderDash: i ? [i * 3, 3] : [],
                     pointStyle: (
                       ['circle', 'rect', 'triangle', 'rectRot'] as const
@@ -220,12 +221,13 @@ export class JpChart {
                 scales: {
                   x: {
                     ticks: { color: color('axis') },
-                    grid: { color: color('grid') },
+                    grid: { display: false },
                   },
                   y: {
                     beginAtZero: true,
                     ticks: {
                       color: color('axis'),
+                      maxTicksLimit: 6,
                       precision:
                         formatter.resolvedOptions().style === 'decimal' &&
                         formatter.resolvedOptions().maximumFractionDigits === 0

@@ -88,7 +88,7 @@ test('product tools: numeric stepping and range keyboard/exact entry stay bounde
   await to.press('Tab');
   await expect(to).toHaveValue('25');
   await expect(page.getByRole('slider', { name: 'To' })).toHaveAttribute(
-    'min',
+    'aria-valuemin',
     '25',
   );
   const seats = page.getByRole('spinbutton', { name: 'Players' });

@@ -24,7 +24,7 @@
 
 :host(.jp-button--sm) .jp-button__root {
   padding-inline: var(--jp-space-sm);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
 }
 
 :host(.jp-button--lg) .jp-button__root {
@@ -75,7 +75,7 @@
   outline-offset: 2px;
 }
 
-.jp-button__root:disabled {
+.jp-button__root:disabled:not([aria-busy='true']) {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -112,4 +112,8 @@
   .jp-button__spinner {
     animation: none;
   }
+}
+
+.jp-button__root[aria-busy='true'] {
+  cursor: progress;
 }

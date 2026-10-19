@@ -24,8 +24,12 @@ img[hidden] {
 .jp-media__placeholder {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-xs);
+  box-sizing: border-box;
   padding: var(--jp-space-md);
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-caption);

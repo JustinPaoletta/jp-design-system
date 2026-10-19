@@ -26,7 +26,20 @@
   @for(item of items();track item.id){
   <li>
     <div class="file">
-      <bdi>{{item.file.name}}</bdi><span class="status">{{status(item)}}</span>
+      <svg
+        class="file-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        aria-hidden="true"
+      >
+        <path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6" />
+      </svg>
+      <div class="file-info">
+        <bdi>{{item.file.name}}</bdi
+        ><span class="status">{{status(item)}}</span>
+      </div>
     </div>
     @if(item.status==='uploading'){<jp-progress
       [label]="label()+': '+item.file.name"

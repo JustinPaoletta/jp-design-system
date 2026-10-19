@@ -37,6 +37,18 @@ describe('JpHeading', () => {
     expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h6)');
   });
 
+  it('changes visual size without changing the document heading level', () => {
+    fixture.componentRef.setInput('as', 'h2');
+    fixture.componentRef.setInput('size', 'h4');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('h2')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('h4')).toBeNull();
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h4)');
+    fixture.componentRef.setInput('size', null);
+    fixture.detectChanges();
+    expect(component.rootFontSize()).toBe('var(--jp-font-size-heading-h2)');
+  });
+
   it('falls back to default for invalid tone', () => {
     fixture.componentRef.setInput('tone', 'bad' as never);
     fixture.detectChanges();

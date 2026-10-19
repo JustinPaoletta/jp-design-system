@@ -8,7 +8,7 @@
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-md);
   padding: var(--jp-space-xs);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm, 0.875rem);
 }
 .item {
   outline: none;
@@ -16,7 +16,8 @@
 .row {
   display: flex;
   align-items: center;
-  min-block-size: var(--jp-size-control-xl);
+  box-sizing: border-box;
+  min-block-size: var(--jp-size-control-md);
   gap: var(--jp-space-xs);
   padding: var(--jp-space-xs);
   border-radius: var(--jp-radius-sm);
@@ -27,7 +28,6 @@
 }
 .row.selected {
   background: var(--jp-color-surface-raised);
-  box-shadow: inset 0 0 0 1px var(--jp-color-border-strong);
   font-weight: var(--jp-font-weight-medium);
 }
 .item:focus-visible > .row,
@@ -76,7 +76,7 @@ button:focus-visible {
   gap: var(--jp-space-sm);
   padding: var(--jp-space-md);
   color: var(--jp-color-text-secondary);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm, 0.875rem);
 }
 button {
   font: inherit;
@@ -97,4 +97,32 @@ button:disabled {
   .item:focus-visible > .row {
     outline-color: Highlight;
   }
+}
+
+.tree--empty {
+  border: 0;
+  padding: 0;
+}
+.tree--empty:focus-visible {
+  outline: 0;
+}
+.tree--empty:focus-visible + .root-state {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.root-state {
+  box-sizing: border-box;
+  min-block-size: 7rem;
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+}
+.node-icon {
+  flex: 0 0 1rem;
+  inline-size: 1rem;
+  block-size: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  color: var(--jp-color-text-secondary);
 }

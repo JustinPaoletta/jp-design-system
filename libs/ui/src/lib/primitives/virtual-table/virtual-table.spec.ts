@@ -19,6 +19,26 @@ function setup() {
   return f;
 }
 describe('JpVirtualTable', () => {
+  it('reports the visible viewport range without counting the render buffer', () => {
+    const f = setup();
+    expect(f.componentInstance.range().end).toBe(19);
+    expect(f.componentInstance.rangeLabel()).toBe('1–7 of 10000 rows');
+    f.componentInstance.scrollTop.set(48000);
+    f.detectChanges();
+    expect(f.componentInstance.rangeLabel()).toBe('1001–1007 of 10000 rows');
+  });
+  it('bounds the paginated fallback and keeps its header available during scrolling', () => {
+    const f = setup();
+    f.componentRef.setInput('virtual', false);
+    f.detectChanges();
+    const frame = f.nativeElement.querySelector(
+      'jp-table .jp-table__frame',
+    ) as HTMLElement;
+    expect(frame.style.getPropertyValue('max-block-size')).toBe('360px');
+    expect(frame.classList.contains('jp-table__frame--sticky-header')).toBe(
+      true,
+    );
+  });
   it('preserves scroll and page when the already-active mode is chosen', () => {
     const f = setup();
     const frame = f.nativeElement.querySelector('.frame');

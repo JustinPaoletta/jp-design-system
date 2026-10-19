@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpCommandPalette } from './command-palette';
+import { moduleMetadata } from '@storybook/angular';
+import { JpButton } from '../button/button';
 const meta: Meta<JpCommandPalette> = {
   title: 'Primitives/Navigation/Command Palette',
   component: JpCommandPalette,
+  decorators: [moduleMetadata({ imports: [JpButton] })],
   parameters: { layout: 'padded' },
   args: {
     commands: [
@@ -28,7 +31,7 @@ const meta: Meta<JpCommandPalette> = {
   render: (args) => ({
     props: { ...args, selected: '' },
     template:
-      '<button type="button" (click)="open=true">Open commands</button><jp-command-palette [open]="open" (openChange)="open=$event" [commands]="commands" [shortcutEnabled]="shortcutEnabled" (commandSelected)="selected=$event" /><p role="status">{{selected}}</p>',
+      '<jp-button variant="secondary" (click)="open=true">Open commands</jp-button><jp-command-palette [open]="open" (openChange)="open=$event" [commands]="commands" [shortcutEnabled]="shortcutEnabled" (commandSelected)="selected=$event" /><p role="status">{{selected}}</p>',
   }),
 };
 export default meta;
@@ -48,6 +51,8 @@ export const Default: Story = {
     await expect(
       c.getByRole('button', { name: 'Open commands' }),
     ).toHaveFocus();
+    await userEvent.click(c.getByRole('button', { name: 'Open commands' }));
+    await expect(c.getByRole('option', { name: /Game day/ })).toBeVisible();
   },
 };
 export const Empty: Story = { args: { commands: [], open: true } };

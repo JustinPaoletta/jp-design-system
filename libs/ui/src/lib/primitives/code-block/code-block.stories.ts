@@ -8,7 +8,13 @@ const meta: Meta<JpCodeBlock> = {
   args: {
     label: 'Starting lineup',
     language: 'TypeScript',
-    code: "const lineup = ['Alex Morgan', 'Jordan Davis', 'Maya Chen'];",
+    code: `const lineup = [
+  { player: 'Alex Morgan', position: 'Pitcher' },
+  { player: 'Jordan Davis', position: 'Catcher' },
+  { player: 'Maya Chen', position: 'Shortstop' },
+];
+
+const starters = lineup.map(({ player }) => player);`,
   },
 };
 export default meta;

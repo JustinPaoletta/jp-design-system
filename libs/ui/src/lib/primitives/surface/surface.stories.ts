@@ -233,7 +233,7 @@ export const ElevationLadder: Story = {
           grid-template-columns: repeat(auto-fit, minmax(calc(var(--jp-space-3xl) * 4), 1fr));
           padding: var(--jp-space-2xl);
           border-radius: var(--jp-radius-lg);
-          background: var(--jp-color-surface-emphasis);
+          background: var(--jp-color-surface-canvas);
           overflow: visible;
         }
 
@@ -248,32 +248,32 @@ export const ElevationLadder: Story = {
       <div class="jp-surface-story__shell">
         <div class="jp-surface-story__frame">
           <div class="jp-surface-story__hint">
-            All elevation steps on a fixed raised panel — none, raised, floating, and overlay.
+            Compare surface roles on the application canvas. Use shadows for floating content.
           </div>
           <div class="jp-surface-story__stage">
             <div class="jp-surface-story__mat">
               <div>
                 <div class="jp-surface-story__label">none</div>
-                <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="none">
-                  Elevation none
+                <jp-surface tone="subtle" padding="lg" radius="lg" border="subtle" elevation="none">
+                  Card — game report
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">raised</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="raised">
-                  Elevation raised
+                  Raised panel — team details
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">floating</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="floating">
-                  Elevation floating
+                  Floating panel — player actions
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">overlay</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="overlay">
-                  Elevation overlay
+                  Overlay — confirm lineup
                 </jp-surface>
               </div>
             </div>

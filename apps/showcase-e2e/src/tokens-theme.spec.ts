@@ -108,7 +108,7 @@ test.describe('showcase token theming', () => {
       'compact',
     );
     expect(await getCssVar(page, '--jp-space-md')).toBe('0.75rem');
-    expect(await getCssVar(page, '--jp-size-control-md')).toBe('1.25rem');
+    expect(await getCssVar(page, '--jp-size-control-md')).toBe('2rem');
 
     await page.evaluate(() => {
       document.documentElement.removeAttribute('data-jp-density');
@@ -119,6 +119,6 @@ test.describe('showcase token theming', () => {
       /.+/,
     );
     expect(await getCssVar(page, '--jp-space-md')).toBe('1rem');
-    expect(await getCssVar(page, '--jp-size-control-md')).toBe('1.5rem');
+    expect(await getCssVar(page, '--jp-size-control-md')).toBe('2.5rem');
   });
 });

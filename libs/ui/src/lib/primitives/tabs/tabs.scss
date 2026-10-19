@@ -42,3 +42,14 @@
 .jp-tabs__panel[hidden] {
   display: none;
 }
+
+.jp-tabs__tab {
+  border-start-start-radius: var(--jp-radius-md);
+  border-start-end-radius: var(--jp-radius-md);
+}
+.jp-tabs__tab[aria-selected='true'] {
+  background: var(--jp-color-surface-raised);
+}
+.jp-tabs__tab:focus-visible {
+  outline-offset: -4px;
+}

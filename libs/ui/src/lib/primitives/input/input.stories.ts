@@ -1,3 +1,6 @@
+import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
 import { JP_CONTROL_SIZES, JP_INPUT_TYPES } from '../shared/primitive-types';
@@ -5,6 +8,12 @@ import { JpInput } from './input';
 
 const meta: Meta<JpInput> = {
   title: 'Primitives/Controls/Input',
+  decorators: [
+    moduleMetadata({ imports: [FormsModule] }),
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 32rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpInput,
   parameters: {
     layout: 'padded',
@@ -85,6 +94,10 @@ export const Disabled: Story = {
 };
 
 export const Readonly: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<jp-input [label]="label" [hint]="hint" [readonly]="true" [ngModel]="'coach@falcons.example'" />`,
+  }),
   args: {
     readonly: true,
     hint: 'This value cannot be edited.',

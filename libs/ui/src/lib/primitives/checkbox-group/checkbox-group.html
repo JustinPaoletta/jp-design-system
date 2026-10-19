@@ -14,7 +14,13 @@
         [attr.value]="option.value"
         (change)="toggle(option, $event)"
         (blur)="onBlur()"
-      />{{ option.label }}</label
+      /><span class="box" aria-hidden="true"
+        ><svg viewBox="0 0 16 16">
+          <path
+            fill="currentColor"
+            d="M6.1 12.2 1.7 7.8l1.5-1.5 2.9 2.9 6.7-6.7 1.5 1.5z"
+          /></svg></span
+      ><span>{{ option.label }}</span></label
     >
     }
   </div>

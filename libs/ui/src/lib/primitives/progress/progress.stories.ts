@@ -11,6 +11,10 @@ export default meta;
 type Story = StoryObj<JpProgress>;
 
 export const Upload: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<div style="max-width:32rem;font:var(--jp-font-size-body)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-primary)"><div style="display:flex;justify-content:space-between;gap:var(--jp-space-md);margin-bottom:var(--jp-space-xs)"><span>Uploading lineup.csv</span><span>{{ value }}%</span></div><jp-progress [label]="label" [value]="value" [max]="max" [valueText]="valueText" /></div>`,
+  }),
   args: {
     label: 'Uploading lineup',
     value: 42,

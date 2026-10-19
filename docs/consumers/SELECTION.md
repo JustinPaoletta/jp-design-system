@@ -93,8 +93,7 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
   state and replaces the hint in `aria-describedby`.
 - Passing a `label` attribute to `jp-checkbox` or `jp-switch`. The caption is
   projected content.
-- Setting `jp-heading` size independently of `as`. Pick the heading level, or
-  use `jp-text` for other copy.
+- Selecting a heading level for its appearance. Use `as` for the document outline and `size` for a different visual size.
 - Painting large surfaces with the accent. Accent is for primary actions,
   focus, active navigation, and selection.
 - Importing `Ui` / `<lib-ui>`. That export is deprecated. See

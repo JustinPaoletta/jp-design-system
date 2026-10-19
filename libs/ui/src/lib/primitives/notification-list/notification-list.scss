@@ -46,16 +46,19 @@ ul {
   padding: 0;
   margin: var(--jp-space-sm) 0;
   display: grid;
-  gap: var(--jp-space-sm);
+  gap: 0;
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
+  overflow: hidden;
 }
 li {
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-  padding: var(--jp-space-sm);
+  border: 0;
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+  padding: var(--jp-space-md);
   overflow-wrap: anywhere;
 }
 .unread {
-  border-inline-start: 3px solid var(--jp-color-accent-solid);
+  background: var(--jp-color-surface-raised);
 }
 h3 {
   font-size: var(--jp-font-size-body);
@@ -75,4 +78,59 @@ button[aria-pressed='true'] {
 }
 p {
   margin-block: var(--jp-space-xs);
+}
+
+li:last-child {
+  border-block-end: 0;
+}
+.title {
+  gap: var(--jp-space-sm);
+}
+.title > time,
+.title > .time {
+  margin-inline-start: auto;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jp-space-2xs);
+}
+.unread .status::before {
+  content: '';
+  inline-size: var(--jp-space-xs);
+  block-size: var(--jp-space-xs);
+  border-radius: 50%;
+  background: var(--jp-color-accent-solid);
+}
+.actions button {
+  min-block-size: var(--jp-size-control-sm);
+  border-color: transparent;
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  padding-inline: var(--jp-space-xs);
+}
+.actions button:hover {
+  color: var(--jp-color-text-primary);
+}
+.state-panel {
+  padding: var(--jp-space-lg);
+  margin-block: var(--jp-space-md);
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-subtle);
+}
+.loading-lines {
+  display: grid;
+  gap: var(--jp-space-sm);
+  margin-block-start: var(--jp-space-md);
+}
+.loading-lines span {
+  display: block;
+  height: var(--jp-space-sm);
+  max-width: 24rem;
+  background: var(--jp-color-surface-raised);
+  border-radius: var(--jp-radius-sm);
+}
+.loading-lines span:nth-child(2) {
+  max-width: 18rem;
 }

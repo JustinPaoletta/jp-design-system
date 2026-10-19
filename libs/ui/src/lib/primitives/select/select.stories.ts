@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect } from 'storybook/test';
 import { JP_CONTROL_SIZES } from '../shared/primitive-types';
@@ -5,6 +6,11 @@ import { JpSelect } from './select';
 
 const meta: Meta<JpSelect> = {
   title: 'Primitives/Controls/Select',
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 24rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpSelect,
   parameters: {
     layout: 'padded',

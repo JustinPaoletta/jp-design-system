@@ -15,14 +15,20 @@
 </div>
 <div [attr.aria-busy]="loading()">
   @if (loading()) {
-  <p role="status">{{ messages.virtualTable.loading }}</p>
+  <p class="state" [style.min-block-size.px]="safeHeight()" role="status">
+    {{ messages.virtualTable.loading }}
+  </p>
   } @else if (error()) {
-  <p role="alert">{{ error() }}</p>
-  <jp-button variant="secondary" (click)="retry.emit()"
-    >{{ messages.virtualTable.retry }}</jp-button
-  >
+  <div class="state" [style.min-block-size.px]="safeHeight()" role="alert">
+    <p>{{ error() }}</p>
+    <jp-button variant="secondary" (click)="retry.emit()"
+      >{{ messages.virtualTable.retry }}</jp-button
+    >
+  </div>
   } @else if (invalid()) {
-  <p role="alert">{{ messages.virtualTable.invalid }}</p>
+  <p class="state" [style.min-block-size.px]="safeHeight()" role="alert">
+    {{ messages.virtualTable.invalid }}
+  </p>
   } @else if (virtual()) {
   <div
     #frame
@@ -53,6 +59,7 @@
             [attr.aria-colindex]="i + 1 + (selectable() ? 1 : 0)"
             [attr.aria-sort]="ariaSort(column)"
             [style.width.px]="column.width || null"
+            [style.text-align]="column.align || 'start'"
           >
             @if (column.sortable) {
             <button type="button" (click)="requestSort(column)">
@@ -123,6 +130,8 @@
   } @else {
   <jp-table
     [caption]="label()"
+    [stickyHeader]="true"
+    [maxHeight]="safeHeight() + 'px'"
     [columns]="columns()"
     [rows]="pagedRows()"
     [rowKey]="rowKey()"

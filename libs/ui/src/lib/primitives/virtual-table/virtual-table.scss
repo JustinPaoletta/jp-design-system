@@ -124,3 +124,18 @@ th button:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
 }
+
+.state {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-md);
+  margin: 0;
+  padding: var(--jp-space-lg);
+  border: 1px solid var(--jp-color-table-row-border);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-table-row-bg);
+  color: var(--jp-color-text-secondary);
+}

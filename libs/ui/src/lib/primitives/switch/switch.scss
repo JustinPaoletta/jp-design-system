@@ -26,8 +26,8 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  width: calc(var(--jp-size-control-lg) + var(--jp-space-xs));
-  height: var(--jp-size-control-sm);
+  width: calc(var(--jp-size-selection-control) * 2 + var(--jp-space-2xs));
+  height: calc(var(--jp-size-selection-mark) + 2 * var(--jp-space-2xs));
   padding: var(--jp-space-2xs);
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-selection-track);
@@ -36,8 +36,8 @@
 
 .jp-switch__thumb {
   display: block;
-  width: var(--jp-size-icon-md);
-  height: var(--jp-size-icon-md);
+  width: var(--jp-size-selection-mark);
+  height: var(--jp-size-selection-mark);
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-selection-thumb);
   transform: translateX(0);
@@ -48,12 +48,8 @@
   background: var(--jp-color-selection-track-checked);
 }
 
-:host(.jp-switch--checked) .jp-switch__thumb {
-  transform: translateX(
-    calc(
-      var(--jp-size-control-lg) - var(--jp-size-icon-md) - var(--jp-space-2xs)
-    )
-  );
+:host(.jp-switch--checked) .jp-switch__track {
+  justify-content: flex-end;
 }
 
 .jp-switch__control:focus-visible .jp-switch__track {

@@ -93,3 +93,19 @@ input {
   clip-path: inset(50%);
   overflow: hidden;
 }
+
+.options {
+  inline-size: fit-content;
+  max-inline-size: 100%;
+}
+.options label {
+  justify-content: center;
+  min-block-size: var(--jp-size-control-sm);
+  box-sizing: border-box;
+  font-weight: var(--jp-font-weight-medium);
+}
+.options label.selected {
+  background: var(--jp-color-surface-emphasis);
+  border-color: var(--jp-color-accent-solid);
+  color: var(--jp-color-text-primary);
+}

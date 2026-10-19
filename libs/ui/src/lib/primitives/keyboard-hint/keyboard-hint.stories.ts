@@ -11,3 +11,5 @@ const meta: Meta<JpKeyboardHint> = {
 export default meta;
 type Story = StoryObj<JpKeyboardHint>;
 export const Default: Story = {};
+
+export const Mac: Story = { args: { keys: ['Command', 'K'] } };

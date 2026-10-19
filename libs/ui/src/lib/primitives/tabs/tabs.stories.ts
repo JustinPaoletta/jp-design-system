@@ -1,11 +1,12 @@
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpTabPanel, JpTabs } from './tabs';
+import { JpInput } from '../input/input';
 
 const meta: Meta<JpTabs> = {
   title: 'Primitives/Navigation/Tabs',
   component: JpTabs,
-  decorators: [moduleMetadata({ imports: [JpTabPanel] })],
+  decorators: [moduleMetadata({ imports: [JpTabPanel, JpInput] })],
   parameters: { layout: 'padded' },
   args: {
     ariaLabel: 'Club account',
@@ -22,7 +23,7 @@ const meta: Meta<JpTabs> = {
       <jp-tabs [tabs]="tabs" [ariaLabel]="ariaLabel" [(selectedValue)]="selectedValue">
         <ng-template jpTabPanel="profile">
           <p>Player profile information</p>
-          <label>Display name <input value="Justin" /></label>
+          <jp-input label="Player name" placeholder="Alex Morgan" />
         </ng-template>
         <ng-template jpTabPanel="billing"><p>Club dues information</p></ng-template>
         <ng-template jpTabPanel="security"><p>Club access and sign-in</p></ng-template>

@@ -18,6 +18,10 @@ let nextRangeId = 0;
   templateUrl: './range-slider.html',
   styleUrl: './range-slider.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.disabled]': 'isDisabled()',
+    '[class.readonly]': 'readonly()',
+  },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -66,6 +70,12 @@ export class JpRangeSlider implements ControlValueAccessor {
     const last = normalize(this.value()?.[1] ?? this.safeMax());
     return [Math.min(first, last), Math.max(first, last)];
   });
+  readonly positions = computed(() =>
+    this.displayedValue().map(
+      (value) =>
+        ((value - this.safeMin()) / (this.safeMax() - this.safeMin())) * 100,
+    ),
+  );
   readonly describedBy = computed(
     () =>
       [

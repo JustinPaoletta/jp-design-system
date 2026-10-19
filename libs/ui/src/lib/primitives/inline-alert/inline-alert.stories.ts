@@ -26,7 +26,7 @@ export const Warning: Story = {
     tone: 'warning',
   },
 };
-export const FailedWithRetry: Story = {
+export const RetryInteraction: Story = {
   render: () => {
     const state = {
       failed: true,
@@ -49,5 +49,14 @@ export const FailedWithRetry: Story = {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(button);
     await expect(canvasElement.textContent).toContain('The lineup was saved.');
+  },
+};
+
+export const FailedWithRetry: Story = {
+  args: {
+    tone: 'error',
+    title: 'Could not save changes',
+    message: 'Your draft is still available.',
+    actionLabel: 'Retry',
   },
 };

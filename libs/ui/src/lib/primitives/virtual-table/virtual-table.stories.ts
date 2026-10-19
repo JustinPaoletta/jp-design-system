@@ -21,8 +21,26 @@ const meta: Meta<JpVirtualTable> = {
 };
 export default meta;
 type Story = StoryObj<JpVirtualTable>;
-export const Default: Story = {};
-export const Paginated: Story = { args: { virtual: false } };
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    await expect(
+      within(canvasElement).getByText('1–7 of 10000 rows'),
+    ).toBeVisible();
+  },
+};
+export const Paginated: Story = {
+  args: { virtual: false },
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector(
+      '.jp-table__frame',
+    ) as HTMLElement;
+    await expect(frame.getBoundingClientRect().height).toBeLessThanOrEqual(360);
+    await expect(frame.scrollHeight).toBeGreaterThan(frame.clientHeight);
+    await expect(
+      within(canvasElement).getByRole('button', { name: 'Next' }),
+    ).toBeVisible();
+  },
+};
 export const Empty: Story = { args: { rows: [] } };
 export const Loading: Story = { args: { loading: true } };
 export const Error: Story = {

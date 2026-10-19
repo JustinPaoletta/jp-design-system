@@ -20,8 +20,11 @@
       (keydown)="onKey($event, item)"
       (pointerdown)="pointerStart($event, item)"
     >
-      <span aria-hidden="true">{{ index + 1 }}</span>
+      <svg aria-hidden="true" viewBox="0 0 16 16">
+        <path d="M5 3h.01M11 3h.01M5 8h.01M11 8h.01M5 13h.01M11 13h.01" />
+      </svg>
     </button>
+    <span class="ordinal" aria-hidden="true">{{ index + 1 }}</span>
     <div class="content">
       @if (content(); as custom) {
       <ng-container
@@ -42,7 +45,9 @@
         [attr.aria-label]="messages.moveUp + ': ' + item.label"
         (click)="move(item, -1, 'up')"
       >
-        {{ messages.moveUp }}
+        <svg aria-hidden="true" viewBox="0 0 16 16">
+          <path d="m3.5 10 4.5-4 4.5 4" />
+        </svg>
       </button>
       <button
         type="button"
@@ -53,7 +58,9 @@
         [attr.aria-label]="messages.moveDown + ': ' + item.label"
         (click)="move(item, 1, 'down')"
       >
-        {{ messages.moveDown }}
+        <svg aria-hidden="true" viewBox="0 0 16 16">
+          <path d="m3.5 6 4.5 4 4.5-4" />
+        </svg>
       </button>
     </div>
   </li>

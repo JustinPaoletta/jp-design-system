@@ -345,9 +345,11 @@ describe('JpAssistantPanel + trigger', () => {
         bubbles: true,
       }),
     );
-    panel.onDraftInput({
-      target: { value: 'typed' },
-    } as unknown as Event);
+    const composer = fixture.nativeElement.querySelector(
+      'textarea',
+    ) as HTMLTextAreaElement;
+    composer.value = 'typed';
+    composer.dispatchEvent(new Event('input', { bubbles: true }));
     expect(panel.draft()).toBe('typed');
 
     panel.onComposerKeydown(

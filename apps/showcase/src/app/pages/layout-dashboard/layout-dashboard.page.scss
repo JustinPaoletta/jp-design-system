@@ -3,3 +3,12 @@
   min-height: 100vh;
   padding: var(--jp-space-xl) 0;
 }
+
+.metric {
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-display);
+  font-weight: var(--jp-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--jp-font-line-height-tight);
+  color: var(--jp-color-text-primary);
+}

@@ -221,6 +221,8 @@ export const Mobile: Story = {
       ).toBeTruthy(),
     );
     await expect(menuToggle.getAttribute('aria-expanded')).toBe('true');
+    await userEvent.keyboard('{Escape}');
+    await expect(menuToggle.getAttribute('aria-expanded')).toBe('false');
   },
 };
 
@@ -257,5 +259,7 @@ export const MobileDrawerOpen: Story = {
         canvasElement.querySelector('.jp-app-shell--mobile-nav-open'),
       ).toBeNull(),
     );
+    await userEvent.click(menuToggle);
+    await expect(main.hasAttribute('inert')).toBe(true);
   },
 };

@@ -10,7 +10,7 @@ const meta: Meta<JpTableToolbar> = {
     moduleMetadata({ imports: [JpInput, JpButton, JpTableToolbar] }),
   ],
   args: {
-    activeFilters: [{ key: 'status', label: 'Status: healthy' }],
+    activeFilters: [{ key: 'status', label: 'Availability: Available' }],
     selectedCount: 2,
   },
   render: (args) => ({

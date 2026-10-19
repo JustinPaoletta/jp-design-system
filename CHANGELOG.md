@@ -7,6 +7,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Increase control, icon and text sizes. Separate card, raised-panel and overlay surfaces.
+- Align table headers and cells. Use one calendar time gutter with equal day columns and preserved clock-change ordering.
+- Refine field groups, selection controls, assistant composition, menu rows, feedback and notification layout.
+- Add optional `jp-heading` visual `size` without changing its semantic `as` level.
+- Use themed actions in composed examples. Keep open, failed, streaming and mobile stories in their named states.
+
 - Use consistent fictional baseball copy in Storybook and Showcase. Update player names, game statistics, forms, schedules and messages.
 
 - Use charcoal surfaces, smaller corners and low shadows across components.

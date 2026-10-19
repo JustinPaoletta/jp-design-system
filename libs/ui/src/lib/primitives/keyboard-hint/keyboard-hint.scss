@@ -5,6 +5,11 @@
   gap: var(--jp-space-2xs);
 }
 kbd {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 24px;
+  line-height: 1.2;
   padding: var(--jp-space-2xs) var(--jp-space-xs);
   border: 1px solid var(--jp-color-border-strong);
   border-radius: var(--jp-radius-sm);

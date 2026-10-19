@@ -1,23 +1,38 @@
 :host {
   display: block;
 }
-div {
+[role='meter'] {
   height: var(--jp-space-xs);
   border: 1px solid var(--jp-color-border-strong);
   border-radius: var(--jp-radius-full);
   overflow: hidden;
   background: var(--jp-color-surface-emphasis);
 }
-span {
+[role='meter'] > span {
   display: block;
   height: 100%;
   background: var(--jp-color-accent-solid);
 }
 @media (forced-colors: active) {
-  div {
+  [role='meter'] {
     border-color: CanvasText;
   }
-  span {
+  [role='meter'] > span {
     background: Highlight;
   }
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm);
+  margin-block-end: var(--jp-space-sm);
+  color: var(--jp-color-text-primary);
+  font: var(--jp-font-size-body-sm, 0.875rem) /
+    var(--jp-font-line-height-normal) var(--jp-font-family-base);
+}
+.value {
+  color: var(--jp-color-text-secondary);
+  font-variant-numeric: tabular-nums;
 }

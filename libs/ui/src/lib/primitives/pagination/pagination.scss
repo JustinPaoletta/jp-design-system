@@ -20,3 +20,20 @@
   font-size: var(--jp-font-size-caption);
   line-height: var(--jp-font-line-height-normal);
 }
+
+.jp-pagination__controls {
+  justify-content: center;
+}
+.jp-pagination__controls > .jp-pagination__summary {
+  padding-inline: var(--jp-space-sm);
+  text-align: center;
+}
+@media (max-width: 40rem) {
+  .jp-pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .jp-pagination > .jp-pagination__summary {
+    text-align: center;
+  }
+}

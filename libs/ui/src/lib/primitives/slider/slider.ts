@@ -14,7 +14,11 @@ import { snapNumber } from '../shared/number-utils';
   templateUrl: './slider.html',
   styleUrl: './slider.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[attr.id]': 'null' },
+  host: {
+    '[attr.id]': 'null',
+    '[class.disabled]': 'isDisabled()',
+    '[class.readonly]': 'readonly()',
+  },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -41,6 +45,11 @@ export class JpSlider extends NumericControl {
       this.upper(),
       this.safeStep(),
     ),
+  );
+  readonly position = computed(
+    () =>
+      ((this.displayedValue() - this.lower()) / (this.upper() - this.lower())) *
+      100,
   );
   change(event: Event): void {
     const control = event.target as HTMLInputElement;

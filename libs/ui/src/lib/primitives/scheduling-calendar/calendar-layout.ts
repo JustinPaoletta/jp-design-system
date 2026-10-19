@@ -82,14 +82,14 @@ function dayStart(date: string, formatter: Intl.DateTimeFormat): number {
 }
 
 /** Collision groups share equal-width lanes; adjacent (exclusive-end) events reuse a lane. */
-function assignLanes(events: JpCalendarPlacement[]): JpCalendarPlacement[] {
+function assignLanes<T extends JpCalendarPlacement>(events: T[]): T[] {
   events.sort(
     (a, b) =>
       a.start - b.start ||
       b.end - a.end ||
       a.event.id.localeCompare(b.event.id),
   );
-  let group: JpCalendarPlacement[] = [];
+  let group: T[] = [];
   let ends: number[] = [];
   let groupEnd = -1;
   const flush = () => {
@@ -252,4 +252,261 @@ export function buildJpCalendarLayout(options: {
   } catch {
     return empty;
   }
+}
+
+/** Share wall-clock tracks across a week, including a separate track for a repeated hour. */
+export function buildJpCalendarGrid(
+  calendar: JpCalendarLayout,
+  timeZone: string,
+  locale: string,
+) {
+  if (calendar.invalid || !calendar.days.length)
+    return { days: [], hours: [], duration: 1440, initialMinute: 480 };
+  const civil = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    calendar: 'gregory',
+    numberingSystem: 'latn',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const wall = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    calendar: 'gregory',
+    numberingSystem: 'latn',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  });
+  const wallParts = (epoch: number) => {
+    const parts = wall.formatToParts(epoch);
+    const value = (key: string) =>
+      Number(parts.find((part) => part.type === key)?.value);
+    return {
+      year: value('year'),
+      month: value('month'),
+      date: value('day'),
+      minute: value('hour') * 60 + value('minute'),
+    };
+  };
+  const offsetAt = (epoch: number) => {
+    const parts = wallParts(epoch);
+    return (
+      (Date.UTC(parts.year, parts.month - 1, parts.date, 0, parts.minute) -
+        Math.floor(epoch / minute) * minute) /
+      minute
+    );
+  };
+  const clock = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+  const wholeHourClock = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    hour: 'numeric',
+  });
+  const offsetClock = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'shortOffset',
+  });
+  const compactRange = (start: number, end: number) => {
+    const parts = (epoch: number) =>
+      (wallParts(epoch).minute % 60 ? clock : wholeHourClock).formatToParts(
+        epoch,
+      );
+    const first = parts(start),
+      last = parts(end);
+    const firstPeriod = first.find((part) => part.type === 'dayPeriod')?.value;
+    const lastPeriod = last.find((part) => part.type === 'dayPeriod')?.value;
+    const startLabel = first
+      .filter(
+        (part) =>
+          !(
+            firstPeriod &&
+            firstPeriod === lastPeriod &&
+            part.type === 'dayPeriod'
+          ),
+      )
+      .map((part) => part.value)
+      .join('')
+      .trim();
+    return startLabel + '–' + last.map((part) => part.value).join('');
+  };
+  const axisClock = new Intl.DateTimeFormat(locale, {
+    timeZone: 'UTC',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+  const offsetName = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    timeZoneName: 'shortOffset',
+  });
+  const zoneName = (epoch: number) =>
+    offsetName.formatToParts(epoch).find((part) => part.type === 'timeZoneName')
+      ?.value ?? '';
+  const intervals = calendar.days.map((item) => ({
+    day: item,
+    start: dayStart(item.date, civil),
+  }));
+  const folds: {
+    start: number;
+    end: number;
+    transition: number;
+    date: string;
+    before: string;
+    after: string;
+  }[] = [];
+  for (const { day: item, start } of intervals) {
+    const end = start + item.duration * minute;
+    let previous = start;
+    let previousOffset = offsetAt(previous);
+    for (
+      let sample = Math.min(start + 60 * minute, end);
+      sample < end;
+      sample = Math.min(sample + 60 * minute, end)
+    ) {
+      const offset = offsetAt(sample);
+      if (offset < previousOffset) {
+        let lo = previous;
+        let hi = sample;
+        while (hi - lo > minute) {
+          const mid = Math.floor((lo + hi) / (2 * minute)) * minute;
+          if (offsetAt(mid) === previousOffset) lo = mid;
+          else hi = mid;
+        }
+        const startMinute = wallParts(hi).minute;
+        folds.push({
+          start: startMinute,
+          end: startMinute + previousOffset - offset,
+          transition: hi,
+          date: item.date,
+          before: zoneName(hi - minute),
+          after: zoneName(hi),
+        });
+      }
+      previous = sample;
+      previousOffset = offset;
+    }
+  }
+  folds.sort((a, b) => a.start - b.start);
+  const duration =
+    1440 + folds.reduce((sum, fold) => sum + fold.end - fold.start, 0);
+  const normalPosition = (value: number) =>
+    value +
+    folds.reduce(
+      (sum, fold) => sum + (value >= fold.end ? fold.end - fold.start : 0),
+      0,
+    );
+  const axisLabel = (value: number) =>
+    axisClock.format(Date.UTC(2026, 0, 1, 0, value));
+  const ticks = new Set(Array.from({ length: 24 }, (_, index) => index * 60));
+  folds.forEach((fold) => {
+    ticks.add(fold.start);
+    ticks.add(fold.end);
+  });
+  const hours = [...ticks]
+    .filter((value) => value < 1440)
+    .map((value) => {
+      const fold = folds.find(
+        (candidate) => value >= candidate.start && value < candidate.end,
+      );
+      return {
+        minute: normalPosition(value),
+        label: axisLabel(value) + (fold ? ' ' + fold.before : ''),
+      };
+    });
+  for (const fold of folds) {
+    for (let value = fold.start; value < fold.end; value += 60) {
+      hours.push({
+        minute:
+          normalPosition(fold.start) +
+          fold.end -
+          fold.start +
+          value -
+          fold.start,
+        label: axisLabel(value) + ' ' + fold.after,
+      });
+    }
+  }
+  hours.sort((a, b) => a.minute - b.minute);
+  const days = intervals.map(({ day: item, start }) => {
+    const end = start + item.duration * minute;
+    const position = (epoch: number) => {
+      epoch = Math.max(start, epoch);
+      if (epoch >= end) return duration;
+      const value = wallParts(epoch).minute + (epoch % minute) / minute;
+      return (
+        normalPosition(value) +
+        folds.reduce(
+          (sum, fold) =>
+            sum +
+            (fold.date === item.date &&
+            epoch >= fold.transition &&
+            value >= fold.start &&
+            value < fold.end
+              ? fold.end - fold.start
+              : 0),
+          0,
+        )
+      );
+    };
+    return {
+      ...item,
+      duration,
+      timed: assignLanes(
+        item.timed.map((entry) => {
+          const displayStart = Math.min(
+            position(start + entry.start * minute),
+            duration - 40,
+          );
+          const displayEnd = Math.min(
+            duration,
+            Math.max(position(start + entry.end * minute), displayStart + 40),
+          );
+          const eventStart = Date.parse(entry.event.start),
+            eventEnd = Date.parse(entry.event.end);
+          const labelFormatter =
+            offsetAt(eventStart) !== offsetAt(eventEnd) ||
+            folds.some(
+              (fold) =>
+                fold.date === item.date &&
+                ((wallParts(eventStart).minute >= fold.start &&
+                  wallParts(eventStart).minute < fold.end) ||
+                  (wallParts(eventEnd).minute >= fold.start &&
+                    wallParts(eventEnd).minute < fold.end)),
+            )
+              ? offsetClock
+              : clock;
+          return {
+            ...entry,
+            displayStart,
+            displayEnd,
+            compactTimeLabel:
+              labelFormatter === clock
+                ? compactRange(eventStart, eventEnd)
+                : labelFormatter.format(eventStart) +
+                  ' – ' +
+                  labelFormatter.format(eventEnd),
+          };
+        }),
+      ),
+    };
+  });
+  const first = Math.min(
+    ...(days
+      .find((item) => item.timed.length)
+      ?.timed.map((entry) => entry.displayStart) ?? []),
+  );
+  return {
+    days,
+    hours,
+    duration,
+    initialMinute: Number.isFinite(first) ? Math.max(0, first - 60) : 480,
+  };
 }

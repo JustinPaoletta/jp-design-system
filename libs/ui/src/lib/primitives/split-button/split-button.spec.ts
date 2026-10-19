@@ -1,6 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { JpSplitButton } from './split-button';
 describe('JpSplitButton', () => {
+  it('shows only the primary action when no alternatives exist', () => {
+    const f = TestBed.createComponent(JpSplitButton);
+    f.componentRef.setInput('label', 'Create lineup');
+    f.detectChanges();
+    expect(f.nativeElement.querySelectorAll('button')).toHaveLength(1);
+    expect(f.nativeElement.querySelector('button').textContent).toContain(
+      'Create lineup',
+    );
+    expect(f.nativeElement.querySelector('jp-dropdown-menu')).toBeNull();
+  });
   it('separates primary action from menu selection and blocks disabled actions', () => {
     const f = TestBed.createComponent(JpSplitButton);
     f.componentRef.setInput('label', 'Create');

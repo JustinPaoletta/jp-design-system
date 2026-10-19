@@ -101,10 +101,19 @@
   color: var(--jp-color-text-secondary);
 }
 
-:host ::ng-deep .jp-dialog__actions {
+:host ::ng-deep .jp-dialog__actions,
+:host ::ng-deep [jpDialogActions] {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: var(--jp-space-sm);
   margin-top: var(--jp-space-lg);
+}
+
+.jp-dialog__header {
+  align-items: center;
+}
+.jp-dialog__panel--bottom {
+  border-start-start-radius: var(--jp-radius-xl);
+  border-start-end-radius: var(--jp-radius-xl);
 }

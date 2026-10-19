@@ -1,21 +1,25 @@
 <figure [attr.aria-busy]="loading()">
-  <figcaption>{{ label() }}</figcaption>
+  <figcaption>
+    <span>{{ label() }}</span>@if (!controlsCollapsed() && !loading() &&
+    !error() && !invalid() && labels().length && series().length) {
+    <ng-container [ngTemplateOutlet]="legendControls" /> }
+  </figcaption>
   @if (description()) {
   <p [id]="id() + '-description'">{{ description() }}</p>
   } @if (loading()) {
-  <p role="status">{{ messages.loading }}</p>
+  <p class="state" role="status">{{ messages.loading }}</p>
   } @else if (error()) {
-  <p role="alert">{{ error() }}</p>
-  <jp-button variant="secondary" (click)="retry.emit()"
-    >{{ messages.retry }}</jp-button
-  >
+  <div class="state" role="alert">
+    <p>{{ error() }}</p>
+    <jp-button variant="secondary" (click)="retry.emit()"
+      >{{ messages.retry }}</jp-button
+    >
+  </div>
   } @else if (invalid()) {
-  <p role="alert">{{ messages.invalid }}</p>
+  <p class="state" role="alert">{{ messages.invalid }}</p>
   } @else if (!labels().length || !series().length) {
-  <p>{{ messages.empty }}</p>
-  } @else { @if (!controlsCollapsed()) {
-  <ng-container [ngTemplateOutlet]="legendControls" />
-  } @if (visible().length) {
+  <p class="state">{{ messages.empty }}</p>
+  } @else { @if (visible().length) {
   <div class="plot" [attr.data-rendered]="rendered()">
     <canvas
       #canvas
@@ -25,7 +29,7 @@
     ></canvas>
   </div>
   } @else {
-  <p>{{ messages.empty }}</p>
+  <p class="state">{{ messages.empty }}</p>
   } @if (engineError()) {
   <p role="status">{{ messages.failed }}</p>
   } @if (!controlsCollapsed()) {
@@ -89,22 +93,24 @@
   </div>
 </ng-template>
 <ng-template #inspectionControls>
-  <label class="inspect"
-    >{{ messages.category }}<select
-      [value]="index()"
-      (change)="inspect($event)"
+  <div class="inspection">
+    <label class="inspect"
+      >{{ messages.category }}<select
+        [value]="index()"
+        (change)="inspect($event)"
+      >
+        @for (category of labels(); track $index; let i = $index) {
+        <option [value]="i" [selected]="i === index()">{{ category }}</option>
+        }
+      </select></label
     >
-      @for (category of labels(); track $index; let i = $index) {
-      <option [value]="i" [selected]="i === index()">{{ category }}</option>
+    <dl aria-live="polite">
+      @for (item of visible(); track item.id) {
+      <div>
+        <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
+        <dd>{{ format(item.values[index()]) }}</dd>
+      </div>
       }
-    </select></label
-  >
-  <dl aria-live="polite">
-    @for (item of visible(); track item.id) {
-    <div>
-      <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
-      <dd>{{ format(item.values[index()]) }}</dd>
-    </div>
-    }
-  </dl>
+    </dl>
+  </div>
 </ng-template>

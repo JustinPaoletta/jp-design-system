@@ -12,10 +12,10 @@ const meta: Meta<JpReorder> = {
       {
         id: 'audit',
         label: 'Inspect the field',
-        description: 'Confirm keyboard and screen-reader behavior.',
+        description: 'Check the bases and clear the playing area.',
       },
       { id: 'docs', label: 'Prepare the lineup' },
-      { id: 'release', label: 'Prepare release notes' },
+      { id: 'release', label: 'Write the game report' },
     ],
   },
 };

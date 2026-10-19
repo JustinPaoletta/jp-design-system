@@ -39,19 +39,11 @@ const meta: Meta = {
           text-transform: uppercase;
         }
 
-        .jp-layout-dashboard-story__accent-rule {
-          width: 100%;
-          height: var(--jp-space-2xs);
-          border-radius: var(--jp-radius-full);
-          background: linear-gradient(
-            90deg,
-            var(--jp-color-accent-strong) 0%,
-            var(--jp-color-accent-muted) 100%
-          );
-        }
-
-        .jp-layout-dashboard-story__accent-value {
-          color: var(--jp-color-accent-muted);
+        .jp-layout-dashboard-story__metric {
+          font-size: var(--jp-font-size-display);
+          font-weight: var(--jp-font-weight-semibold);
+          font-variant-numeric: tabular-nums;
+          line-height: var(--jp-font-line-height-tight);
         }
       </style>
 
@@ -64,39 +56,37 @@ const meta: Meta = {
                 {{ documentAccent }}
               </span>
             </jp-inline>
-            <jp-text tone="secondary">Layout-only composition with primitives.</jp-text>
+            <jp-text tone="secondary">Riverton Falcons 5–3 Lakeview Bears · October 11, 2026</jp-text>
             <jp-inline gap="sm">
               <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
               <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
             </jp-inline>
-            <div class="jp-layout-dashboard-story__accent-rule" aria-hidden="true"></div>
+
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Runs scored</jp-text>
-                <jp-text size="body-lg">
-                  <span class="jp-layout-dashboard-story__accent-value">5</span>
-                </jp-text>
+                <span class="jp-layout-dashboard-story__metric">5</span>
               </jp-stack>
             </jp-surface>
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Hits</jp-text>
-                <jp-text size="body-lg">9</jp-text>
+                <span class="jp-layout-dashboard-story__metric">9</span>
               </jp-stack>
             </jp-surface>
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" tone="muted">Errors</jp-text>
-                <jp-text size="body-lg">0</jp-text>
+                <span class="jp-layout-dashboard-story__metric">0</span>
               </jp-stack>
             </jp-surface>
           </jp-grid>
 
-          <jp-grid columns="2" gap="md">
-            <jp-surface tone="raised" padding="md">
+          <jp-grid mode="auto-fit" minColumn="sm" gap="md">
+            <jp-surface tone="raised" padding="lg">
               <jp-stack gap="sm">
                 <jp-heading as="h2">Activity</jp-heading>
                 <jp-stack gap="xs">
@@ -106,7 +96,7 @@ const meta: Meta = {
                 </jp-stack>
               </jp-stack>
             </jp-surface>
-            <jp-surface tone="raised" padding="md">
+            <jp-surface tone="raised" padding="lg">
               <jp-stack gap="sm">
                 <jp-heading as="h2">Insights</jp-heading>
                 <jp-text tone="secondary">
@@ -116,7 +106,7 @@ const meta: Meta = {
             </jp-surface>
           </jp-grid>
 
-          <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
+          <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
             <jp-stack gap="sm">
               <jp-heading as="h2">Recent games</jp-heading>
               <jp-stack gap="xs">
@@ -129,7 +119,7 @@ const meta: Meta = {
                   <jp-text as="small" tone="muted">22m ago</jp-text>
                 </jp-inline>
                 <jp-inline justify="between">
-                  <jp-text>CI updated with Playwright dashboard check</jp-text>
+                  <jp-text>Next game scheduled at Riverton Field</jp-text>
                   <jp-text as="small" tone="muted">38m ago</jp-text>
                 </jp-inline>
               </jp-stack>

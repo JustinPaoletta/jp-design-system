@@ -1,17 +1,21 @@
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
+import { JpButton } from '../button/button';
+import { JpInput } from '../input/input';
 import { JpCarousel, JpCarouselSlide } from './carousel';
 const meta: Meta<JpCarousel> = {
   title: 'Primitives/Content/Carousel',
   component: JpCarousel,
-  decorators: [moduleMetadata({ imports: [JpCarouselSlide] })],
+  decorators: [
+    moduleMetadata({ imports: [JpCarouselSlide, JpButton, JpInput] }),
+  ],
   parameters: { layout: 'padded' },
   args: { id: 'story-guide', label: 'Join the Falcons' },
   render: (args) => ({
     props: args,
-    template: `<jp-carousel [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
-    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Falcons club.</p><button type="button">Open club invitations</button></ng-template>
-    <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Check the lineup, inspect the field and prepare the equipment.</p><input aria-label="Coach note" /></ng-template>
+    template: `<jp-carousel style="max-width:40rem" [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
+    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Falcons club.</p><jp-button>Open club invitations</jp-button></ng-template>
+    <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Check the lineup, inspect the field and prepare the equipment.</p><jp-input label="Coach note" /></ng-template>
     <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>Review the final score and prepare for the next game.</p></ng-template>
   </jp-carousel>`,
   }),

@@ -49,8 +49,8 @@ const meta: Meta<JpHeading> = {
           Page and section titles. as sets h1–h6; each level maps to its own token scale (h1 largest → h6 smallest).
         </div>
         <div class="jp-heading-story__sample">
-          <jp-heading [as]="asTag" [tone]="tone" [weight]="weight">
-            Heading Primitive
+          <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
+            Falcons clubhouse
           </jp-heading>
         </div>
       </div>
@@ -193,4 +193,8 @@ export const Tones: Story = {
     const headings = canvasElement.querySelectorAll('h3.jp-heading__root');
     await expect(headings.length).toBe(4);
   },
+};
+
+export const SemanticLevel: Story = {
+  args: { as: 'h2', size: 'h4' },
 };

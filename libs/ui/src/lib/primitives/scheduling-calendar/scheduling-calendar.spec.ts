@@ -32,6 +32,27 @@ function button(root: HTMLElement, text: string) {
   ) as HTMLButtonElement;
 }
 describe('JpSchedulingCalendar', () => {
+  it('caps the shared all-day band while retaining every appointment control', () => {
+    const f = create();
+    f.componentRef.setInput('events', [
+      events[0],
+      ...Array.from({ length: 11 }, (_, index) => ({
+        id: 'all-' + index,
+        title: 'Away series ' + index,
+        start: '2026-10-05',
+        end: '2026-10-06',
+        allDay: true,
+      })),
+    ]);
+    f.detectChanges();
+    expect(f.componentInstance.allDaySize()).toBe(12);
+    expect(
+      f.nativeElement.querySelectorAll('.day .all-day button'),
+    ).toHaveLength(11);
+    expect(
+      f.nativeElement.querySelector('.timed button').getAttribute('aria-label'),
+    ).toContain('Review');
+  });
   it('renders chronological native activation buttons, all-day segments and unique event counts', () => {
     const f = create();
     const activated = jest.fn();
@@ -39,7 +60,9 @@ describe('JpSchedulingCalendar', () => {
     expect(f.nativeElement.querySelectorAll('.day')).toHaveLength(7);
     expect(f.nativeElement.querySelectorAll('.all-day button')).toHaveLength(2);
     expect(f.componentInstance.eventCount()).toBe(2);
-    expect(f.componentInstance.columns()).toContain('minmax(12rem, 1fr)');
+    expect(f.componentInstance.columns()).toBe(
+      '5.5rem repeat(7, minmax(0, 1fr))',
+    );
     const review = f.nativeElement.querySelector(
       '.timed button',
     ) as HTMLButtonElement;
@@ -62,7 +85,7 @@ describe('JpSchedulingCalendar', () => {
     button(f.nativeElement, 'Day').click();
     f.detectChanges();
     expect(f.nativeElement.querySelectorAll('.day')).toHaveLength(1);
-    expect(component.columns()).toBe('minmax(0, 1fr)');
+    expect(component.columns()).toBe('5.5rem repeat(1, minmax(0, 1fr))');
     button(f.nativeElement, 'Previous').click();
     f.detectChanges();
     expect(component.date()).toBe('2026-10-04');
@@ -147,7 +170,7 @@ describe('JpSchedulingCalendar', () => {
     expect(f.nativeElement.textContent).toContain('Keine Termine');
     expect(f.nativeElement.textContent).toContain('1 ungültig');
     expect(f.componentInstance.rangeLabel()).toContain('Okt');
-    expect(f.componentInstance.allDaySize()).toBe(4);
+    expect(f.componentInstance.allDaySize()).toBe(0);
     f.componentRef.setInput('date', 'not-a-date');
     f.detectChanges();
     expect(f.componentInstance.rangeLabel()).toBe('not-a-date');

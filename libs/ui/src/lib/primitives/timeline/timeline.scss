@@ -53,3 +53,12 @@ p {
     border-color: CanvasText;
   }
 }
+
+time,
+.timestamp {
+  color: var(--jp-color-text-muted);
+}
+.event p {
+  margin-block-start: var(--jp-space-xs);
+  font-size: var(--jp-font-size-body-sm, 0.875rem);
+}

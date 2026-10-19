@@ -9,30 +9,45 @@
     />
     }
   </div>
-  <input
-    #control
-    [id]="resolvedId()"
-    role="combobox"
-    type="text"
-    autocomplete="off"
-    [placeholder]="placeholder()"
-    [value]="query()"
-    [disabled]="isDisabled()"
-    [attr.aria-expanded]="isOpen() && !isDisabled()"
-    aria-haspopup="listbox"
-    aria-autocomplete="list"
-    [attr.aria-controls]="isOpen() && !isDisabled() ? resolvedId() + '-list' : null"
-    [attr.aria-activedescendant]="activeId()"
-    [attr.aria-required]="required() || null"
-    [attr.aria-invalid]="error() ? true : null"
-    [attr.aria-describedby]="describedBy()"
-    (focus)="open()"
-    (click)="open()"
-    (input)="onInput($event)"
-    (keydown)="onKeydown($event)"
-    (blur)="onBlur()"
-  />
-  @if (isOpen() && !isDisabled()) {
+  <div class="input-wrap">
+    <input
+      #control
+      [id]="resolvedId()"
+      role="combobox"
+      type="text"
+      autocomplete="off"
+      [placeholder]="placeholder()"
+      [value]="query()"
+      [disabled]="isDisabled()"
+      [attr.aria-busy]="loading()"
+      [attr.aria-expanded]="isOpen() && !isDisabled()"
+      aria-haspopup="listbox"
+      aria-autocomplete="list"
+      [attr.aria-controls]="isOpen() && !isDisabled() ? resolvedId() + '-list' : null"
+      [attr.aria-activedescendant]="activeId()"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="error() ? true : null"
+      [attr.aria-describedby]="describedBy()"
+      (focus)="open()"
+      (click)="open()"
+      (input)="onInput($event)"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlur()"
+    />
+    <svg
+      class="chevron"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </div>
+  @if (loading() && !isOpen()) {
+  <p class="hint" role="status">{{ loadingText() }}</p>
+  } @if (isOpen() && !isDisabled()) {
   <div #popup class="popup">
     @if (loading()) {
     <p role="status">{{ loadingText() }}</p>

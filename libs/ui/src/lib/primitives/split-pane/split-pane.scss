@@ -20,6 +20,7 @@
   flex: 1 1 0;
 }
 .jp-split-pane__separator {
+  position: relative;
   flex: 0 0 var(--jp-space-lg);
   display: grid;
   place-items: center;
@@ -27,7 +28,7 @@
   touch-action: none;
 }
 .jp-split-pane__separator span {
-  inline-size: 3px;
+  inline-size: 1px;
   block-size: 100%;
   min-block-size: var(--jp-size-control-md);
   background: var(--jp-color-border-strong);
@@ -44,7 +45,7 @@
 }
 :host(.jp-split-pane--vertical) .jp-split-pane__separator span {
   inline-size: 100%;
-  block-size: 3px;
+  block-size: 1px;
   min-block-size: 0;
 }
 :host(.jp-split-pane--mobile) {
@@ -63,5 +64,27 @@
 @media (forced-colors: active) {
   .jp-split-pane__separator span {
     background: CanvasText;
+  }
+}
+
+.jp-split-pane__separator::after {
+  content: '';
+  position: absolute;
+  inline-size: 4px;
+  block-size: 2rem;
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-text-secondary);
+}
+.jp-split-pane__separator:hover::after,
+.jp-split-pane__separator:focus-visible::after {
+  background: var(--jp-color-accent-solid);
+}
+:host(.jp-split-pane--vertical) .jp-split-pane__separator::after {
+  inline-size: 2rem;
+  block-size: 4px;
+}
+@media (forced-colors: active) {
+  .jp-split-pane__separator::after {
+    background: ButtonText;
   }
 }

@@ -41,3 +41,12 @@ fieldset {
 fieldset:disabled {
   opacity: 0.5;
 }
+
+legend {
+  font-size: var(--jp-font-size-body-lg);
+  font-weight: var(--jp-font-weight-semibold);
+}
+.controls {
+  margin-block-start: var(--jp-space-md);
+  gap: var(--jp-space-md);
+}

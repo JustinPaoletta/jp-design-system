@@ -1,9 +1,22 @@
+import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpSlider } from './slider';
 const meta: Meta<JpSlider> = {
   title: 'Primitives/Controls/Slider',
+  decorators: [
+    moduleMetadata({ imports: [FormsModule] }),
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 32rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpSlider,
+  render: (args) => ({
+    props: args,
+    template: `<jp-slider [label]="label" [min]="min" [max]="max" [step]="step" [hint]="hint" [error]="error" [disabled]="disabled" [readonly]="readonly" [ngModel]="40" />`,
+  }),
   parameters: { layout: 'padded' },
   args: {
     label: 'Practice repetitions',

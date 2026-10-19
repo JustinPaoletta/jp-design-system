@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { JpErrorSummary } from './error-summary';
+import { moduleMetadata } from '@storybook/angular';
+import { JpInput } from '../input/input';
 
 const meta: Meta<JpErrorSummary> = {
   title: 'Primitives/Feedback/Error Summary',
   component: JpErrorSummary,
+  decorators: [moduleMetadata({ imports: [JpInput] })],
   parameters: { layout: 'padded' },
   args: {
     errors: [
@@ -13,7 +16,7 @@ const meta: Meta<JpErrorSummary> = {
   },
   render: (args) => ({
     props: args,
-    template: `<jp-error-summary [errors]="errors" /><label for="story-email">Email</label><input id="story-email" type="email" aria-invalid="true" />`,
+    template: `<div style="display:grid;gap:var(--jp-space-lg);max-width:32rem"><jp-error-summary [errors]="errors" /><jp-input id="story-email" label="Coach email" type="email" [invalid]="true" error="Enter a valid email address" /></div>`,
   }),
 };
 export default meta;

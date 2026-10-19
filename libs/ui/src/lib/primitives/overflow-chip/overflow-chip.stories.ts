@@ -29,5 +29,7 @@ export const Open: Story = {
     await expect(c.getByRole('link', { name: 'Alex Morgan' })).toBeVisible();
     await userEvent.keyboard('{Escape}');
     await expect(button).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(button);
+    await expect(c.getByRole('link', { name: 'Alex Morgan' })).toBeVisible();
   },
 };

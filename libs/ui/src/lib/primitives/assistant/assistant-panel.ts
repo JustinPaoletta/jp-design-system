@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   afterRenderEffect,
   ChangeDetectionStrategy,
@@ -28,6 +29,7 @@ let nextAssistantPanelId = 0;
 @Component({
   selector: 'jp-assistant-panel',
   imports: [
+    JpIcon,
     JpAssistantMessage,
     JpButton,
     JpEmptyState,
@@ -144,7 +146,9 @@ export class JpAssistantPanel implements OnInit {
   }
 
   onDraftInput(event: Event): void {
-    this.draft.set((event.target as HTMLTextAreaElement).value);
+    const composer = event.target as HTMLTextAreaElement;
+    this.draft.set(composer.value);
+    this.resizeComposer(composer);
   }
 
   onComposerKeydown(event: KeyboardEvent): void {
@@ -172,7 +176,13 @@ export class JpAssistantPanel implements OnInit {
     const composer = this.composerRef()?.nativeElement;
     if (composer) {
       composer.value = '';
+      this.resizeComposer(composer);
     }
+  }
+
+  private resizeComposer(composer: HTMLTextAreaElement): void {
+    composer.style.height = 'auto';
+    composer.style.height = `${composer.scrollHeight}px`;
   }
 
   onScrimClick(): void {

@@ -11,15 +11,15 @@ semantic tokens and follow the containing accent/density settings.
 
 ## Foundations and navigation
 
-| Export / selector                         | Contract                                                                                                                                                                                                        |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `JpIcon` / `jp-icon`                      | Required `name: JpIconName`; `size: sm/md/lg` defaults to `lg` (16px default-density content size); `label` defaults to empty/decorative. Original outline glyphs on a 16-unit grid; chevron-right follows RTL. |
-| `JpLink` / `a[jpLink]`                    | A component on a native anchor. Keep `href`, `target`, `rel`, `download`, and Angular `RouterLink` on that same anchor; content is projected.                                                                   |
-| `JpDivider` / `jp-divider`                | `orientation: horizontal/vertical` defaults to horizontal. `decorative` defaults to false; semantic separators expose orientation.                                                                              |
-| `JpDisclosure` / `jp-disclosure`          | Required `title`; two-way `[(open)]` defaults to false. Uses native details/summary and Enter/Space activation. Optional `name` sets native exclusive grouping.                                                 |
-| `JpAccordion` / `jp-accordion`            | Required `label`; project disclosures. `multiple` defaults to false; `id` optionally supplies a stable group name. Exclusive grouping uses native details names.                                                |
-| `JpKeyboardHint` / `jp-keyboard-hint`     | Required readonly `keys` array rendered with native `kbd` elements. Presentation only; applications own shortcuts.                                                                                              |
-| `JpVisuallyHidden` / `[jpVisuallyHidden]` | Hides content visually while retaining it in the accessibility tree. Do not apply to interactive controls that must be visibly focusable.                                                                       |
+| Export / selector                         | Contract                                                                                                                                                                                                              |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `JpIcon` / `jp-icon`                      | Required `name: JpIconName`. `size: sm/md/lg` uses 16px/20px/24px in both densities and defaults to `lg`. An empty `label` makes the icon decorative. The SVG viewBox uses a 16-unit grid. Chevron-right follows RTL. |
+| `JpLink` / `a[jpLink]`                    | A component on a native anchor. Keep `href`, `target`, `rel`, `download`, and Angular `RouterLink` on that same anchor; content is projected.                                                                         |
+| `JpDivider` / `jp-divider`                | `orientation: horizontal/vertical` defaults to horizontal. `decorative` defaults to false; semantic separators expose orientation.                                                                                    |
+| `JpDisclosure` / `jp-disclosure`          | Required `title`; two-way `[(open)]` defaults to false. Uses native details/summary and Enter/Space activation. Optional `name` sets native exclusive grouping.                                                       |
+| `JpAccordion` / `jp-accordion`            | Required `label`; project disclosures. `multiple` defaults to false; `id` optionally supplies a stable group name. Exclusive grouping uses native details names.                                                      |
+| `JpKeyboardHint` / `jp-keyboard-hint`     | Required readonly `keys` array rendered with native `kbd` elements. Presentation only; applications own shortcuts.                                                                                                    |
+| `JpVisuallyHidden` / `[jpVisuallyHidden]` | Hides content visually while retaining it in the accessibility tree. Do not apply to interactive controls that must be visibly focusable.                                                                             |
 
 Icon names: `check`, `close`, `search`, `chevron-down`, `chevron-right`, `plus`,
 `minus`, `info`, `warning`, `user`, `copy`, and `external-link`. Glyphs are authored

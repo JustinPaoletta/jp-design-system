@@ -5,13 +5,13 @@
 .jp-select__field {
   display: flex;
   flex-direction: column;
-  gap: var(--jp-space-2xs);
+  gap: var(--jp-space-xs);
 }
 
 .jp-select__label {
   color: var(--jp-color-field-label);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
 }
@@ -46,7 +46,7 @@
 }
 
 :host(.jp-select--sm) .jp-select__control {
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
   padding-inline: var(--jp-space-xs);
 }
 

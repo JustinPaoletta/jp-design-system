@@ -6,7 +6,7 @@ article {
   padding: var(--jp-space-lg);
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-lg);
-  background: var(--jp-color-surface-raised);
+  background: var(--jp-color-surface-subtle);
   color: var(--jp-color-text-primary);
   font-family: var(--jp-font-family-base);
 }
@@ -28,5 +28,7 @@ footer:empty {
   display: none;
 }
 .body {
+  font-size: var(--jp-font-size-body);
+  line-height: var(--jp-font-line-height-normal);
   overflow-wrap: anywhere;
 }

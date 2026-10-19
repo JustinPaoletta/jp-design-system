@@ -33,3 +33,23 @@ p {
 :host(.jp-inline-alert--error) {
   border-inline-start-color: var(--jp-color-state-error-border);
 }
+
+.jp-inline-alert__icon {
+  flex-shrink: 0;
+}
+.jp-inline-alert__copy {
+  display: grid;
+  gap: var(--jp-space-2xs);
+}
+:host(.jp-inline-alert--info) .jp-inline-alert__icon {
+  color: var(--jp-color-state-info-border);
+}
+:host(.jp-inline-alert--success) .jp-inline-alert__icon {
+  color: var(--jp-color-state-success-border);
+}
+:host(.jp-inline-alert--warning) .jp-inline-alert__icon {
+  color: var(--jp-color-state-warning-border);
+}
+:host(.jp-inline-alert--error) .jp-inline-alert__icon {
+  color: var(--jp-color-state-error-border);
+}

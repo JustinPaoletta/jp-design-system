@@ -1,8 +1,14 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, within } from 'storybook/test';
 import { JpDateRangePicker } from './date-range-picker';
 const meta: Meta<JpDateRangePicker> = {
   title: 'Primitives/Controls/Date Range Picker',
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 32rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpDateRangePicker,
   parameters: { layout: 'padded' },
   args: {

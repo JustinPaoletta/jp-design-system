@@ -5,19 +5,24 @@ div {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--jp-space-2xs);
+  gap: 0;
 }
 .overflow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--jp-size-control-md);
-  min-height: var(--jp-size-control-md);
+  min-width: var(--jp-size-avatar-md);
+  min-height: var(--jp-size-avatar-md);
   padding-inline: var(--jp-space-2xs);
   box-sizing: border-box;
-  border: 1px solid var(--jp-color-border-default);
+  border: 2px solid var(--jp-color-surface-canvas);
   border-radius: var(--jp-radius-full);
   color: var(--jp-color-text-secondary);
   background: var(--jp-color-surface-subtle);
   font-size: var(--jp-font-size-caption);
+}
+
+jp-avatar + jp-avatar,
+.overflow {
+  margin-inline-start: calc(-1 * var(--jp-space-xs));
 }

@@ -83,6 +83,7 @@
   <p class="state">{{ messages.empty }}</p>
   }
   <div
+    #viewport
     class="days"
     role="region"
     tabindex="0"
@@ -91,7 +92,17 @@
     [style.--columns]="columns()"
     [style.--all-day-size]="allDaySize() + 'rem'"
   >
-    @for (day of calendar().days; track day.date) {
+    <div class="time-gutter" aria-hidden="true">
+      <div class="gutter-heading"></div>
+      <div class="all-day">@if (allDaySize()) { {{ messages.allDay }} }</div>
+      <div class="timeline" [style.--minutes]="grid().duration">
+        <div class="hours">
+          @for (hour of grid().hours; track hour.minute) {
+          <span [style.top.rem]="hour.minute / 15">{{ hour.label }}</span> }
+        </div>
+      </div>
+    </div>
+    @for (day of grid().days; track day.date) {
     <section
       class="day"
       [attr.aria-label]="day.label"
@@ -114,14 +125,14 @@
       </ul>
       <div class="timeline" [style.--minutes]="day.duration">
         <div class="hours" aria-hidden="true">
-          @for (hour of day.hours; track hour.minute) {
-          <span [style.top.rem]="hour.minute / 20">{{ hour.label }}</span> }
+          @for (hour of grid().hours; track hour.minute) {
+          <span [style.top.rem]="hour.minute / 15"></span> }
         </div>
         <ul class="timed">
           @for (item of day.timed; track item.event.id) {
           <li
-            [style.top.rem]="item.displayStart / 20"
-            [style.height.rem]="(item.displayEnd - item.displayStart) / 20"
+            [style.top.rem]="item.displayStart / 15"
+            [style.height.rem]="(item.displayEnd - item.displayStart) / 15"
             [style.inset-inline-start.%]="item.lane * 100 / item.lanes"
             [style.width.%]="100 / item.lanes"
           >
@@ -134,7 +145,7 @@
               (click)="eventActivated.emit(item.event)"
             >
               <strong>{{ item.event.title }}</strong
-              ><span>{{ item.timeLabel }}</span>
+              ><span><bdi>{{ item.compactTimeLabel }}</bdi></span>
             </button>
           </li>
           }

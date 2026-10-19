@@ -7,7 +7,7 @@ section {
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--jp-space-md);
-  padding: var(--jp-space-md) var(--jp-space-lg);
+  padding: var(--jp-space-md);
   border: 1px solid;
   border-radius: var(--jp-radius-md);
   color: var(--jp-color-text-primary);
@@ -43,4 +43,9 @@ button {
 button:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
+}
+
+.severity {
+  flex-shrink: 0;
+  margin-block-start: var(--jp-space-2xs);
 }

@@ -1,9 +1,22 @@
+import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, within } from 'storybook/test';
 import { JpDatePicker } from './date-picker';
 const meta: Meta<JpDatePicker> = {
   title: 'Primitives/Controls/Date Picker',
+  decorators: [
+    moduleMetadata({ imports: [FormsModule] }),
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 14rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpDatePicker,
+  render: (args) => ({
+    props: args,
+    template: `<jp-date-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'2026-10-12'" />`,
+  }),
   parameters: { layout: 'padded' },
   args: {
     label: 'Game date',

@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   afterRenderEffect,
   booleanAttribute,
@@ -32,7 +33,7 @@ export class JpDialogActions {}
 
 @Component({
   selector: 'jp-dialog',
-  imports: [JpFocusTrap],
+  imports: [JpIcon, JpFocusTrap],
   templateUrl: './dialog.html',
   styleUrl: './dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

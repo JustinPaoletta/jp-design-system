@@ -45,15 +45,15 @@ Bounce, spring effects and decorative transitions are not permitted.
 Box, Stack, Inline, Grid and Surface supply shared layout rules.
 Applications use token spacing instead of unrelated margin values.
 
-## 8. Typography Hierarchy Is Level-Based
+## 8. Typography follows the document structure
 
 `jp-text` is for body text, labels and inline emphasis.
 Its `as` tag and `size` are independent.
 
 `jp-heading` is for page and section titles.
-Its `h1`–`h6` level sets both the tag and visual size.
-It has no separate `size` input.
-Each level has its own heading token.
+Its `as` input sets the semantic `h1`–`h6` level.
+Each level has its own default heading token.
+The optional `size` input can select a different heading token without changing the tag.
 
 Select the heading level from the document structure.
 Use `jp-text` for text that is not a heading.

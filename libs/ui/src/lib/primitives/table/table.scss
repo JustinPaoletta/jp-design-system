@@ -52,6 +52,19 @@
   white-space: nowrap;
 }
 
+.jp-table__cell {
+  box-sizing: border-box;
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  color: var(--jp-color-table-cell-fg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-regular);
+  line-height: var(--jp-font-line-height-normal);
+  text-align: start;
+  border-bottom: 1px solid var(--jp-color-table-row-border);
+  vertical-align: middle;
+}
+
 .jp-table__header--center,
 .jp-table__cell--center {
   text-align: center;
@@ -60,19 +73,6 @@
 .jp-table__header--end,
 .jp-table__cell--end {
   text-align: end;
-}
-
-.jp-table__cell {
-  box-sizing: border-box;
-  padding: var(--jp-space-sm) var(--jp-space-md);
-  color: var(--jp-color-table-cell-fg);
-  font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
-  font-weight: var(--jp-font-weight-regular);
-  line-height: var(--jp-font-line-height-normal);
-  text-align: start;
-  border-bottom: 1px solid var(--jp-color-table-row-border);
-  vertical-align: middle;
 }
 
 .jp-table__row:last-child .jp-table__cell {

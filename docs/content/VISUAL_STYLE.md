@@ -6,11 +6,40 @@ The system uses charcoal surfaces and a warm gold accent.
 ## Surfaces and controls
 
 - Use semantic surface and border tokens.
-- Use small corners for cards, controls and badges.
+- Use 8px corners for controls, 12px for cards and 16px for larger overlays.
 - Keep circular avatars and status dots.
-- Use low shadows for raised surfaces.
+- Use flat surfaces for cards. Reserve stronger shadows for floating panels.
 - Keep headings clear and body text readable.
 - Keep status colors separate from the accent.
+
+## Size and hierarchy
+
+Default controls use 32px, 40px and 48px heights for `sm`, `md` and `lg`.
+Compact controls use 28px, 32px and 40px heights.
+Icons use 16px, 20px and 24px sizes in both densities.
+Selection boxes use 20px. Their marks use 16px.
+Do not use a button height to size a checkbox or switch.
+
+Body text uses 16px. Dense interface text uses `--jp-font-size-body-sm` at 14px.
+Captions use 13px. Heading sizes start at 32px, 24px, 20px and 16px.
+Use 600 weight for headings and 500 weight for labels.
+
+Use `jp-heading` `as` for the document outline.
+Use its optional `size` input when a different visual size is necessary.
+
+| Surface token | Purpose          | Default color |
+| ------------- | ---------------- | ------------- |
+| `canvas`      | Page background  | `#0b1117`     |
+| `subtle`      | Card background  | `#131c24`     |
+| `raised`      | Raised panel     | `#1a2631`     |
+| `overlay`     | Floating overlay | `#223240`     |
+
+## Examples
+
+Use JP controls for actions and fields in component examples.
+A projected HTML button does not receive JP button styles automatically.
+Keep Save as the main action. Put destructive actions in a separate section.
+Use the [baseball examples](BASEBALL_EXAMPLES.md) for consistent names and product text.
 
 ## Selection and focus
 
@@ -45,3 +74,22 @@ Check desktop, collapsed sidebar and mobile layouts.
 Check controls, tables, overlays and status text.
 Inspect changed visual baselines before accepting them.
 Run the interaction and accessibility checks after a visual change.
+
+## Screenshot states
+
+Set the browser viewport before taking a mobile screenshot.
+Use 390px width for the phone examples and 1440px for desktop examples.
+A story name does not change the viewport of a direct iframe URL.
+
+Wait for the story interaction checks to finish.
+Then inspect the final visible state before saving the screenshot.
+An open-overlay example must show its overlay.
+Failure and streaming examples must retain those states after their checks.
+Keep separate examples for recovery actions that change the visible state.
+
+Inspect page overflow, focus, labels and console errors with each changed layout.
+Keep screenshot files outside Git unless they are reviewed regression baselines.
+
+For a component with a scroll frame, check its scroll position before and after a full-page capture.
+If Chromium resets the frame, increase viewport height to the measured page height before capture.
+Check that the component retains its initial scroll position.

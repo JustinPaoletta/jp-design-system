@@ -28,5 +28,8 @@ export class JpBanner {
   readonly border = computed(
     () => `var(--jp-color-state-${this.tone()}-border)`,
   );
-  readonly background = computed(() => 'var(--jp-color-surface-subtle)');
+  readonly background = computed(
+    () =>
+      `color-mix(in srgb, var(--jp-color-state-${this.tone()}-border) 8%, var(--jp-color-surface-subtle))`,
+  );
 }

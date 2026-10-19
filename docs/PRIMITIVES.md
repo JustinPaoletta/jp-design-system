@@ -165,9 +165,8 @@ See [Navigation](consumers/COMPOSITION.md#navigation).
 
 ## Typography
 
-`jp-text` separates tag (`as`) and visual `size`. `jp-heading` uses `as`
-for both the heading level and the size token. There is no heading `size`
-input.
+`jp-text` and `jp-heading` separate the tag (`as`) from the visual `size`.
+Without a `size` value, `jp-heading` uses the size token for its heading level.
 
 ### jp-text
 
@@ -193,13 +192,14 @@ bounded container.
 Class `JpHeading`. Story:
 [Primitives/Typography/Heading](../libs/ui/src/lib/primitives/heading/heading.stories.ts).
 
-| Input    | Type                                        | Default    |
-| -------- | ------------------------------------------- | ---------- |
-| `as`     | `h1` through `h6`                           | `h2`       |
-| `tone`   | `primary`, `secondary`, `muted`, `disabled` | `primary`  |
-| `weight` | `regular`, `medium`, `semibold`, `bold`     | `semibold` |
+| Input    | Type                                        | Default            |
+| -------- | ------------------------------------------- | ------------------ |
+| `as`     | `h1` through `h6`                           | `h2`               |
+| `size`   | `h1` through `h6`, or `null`                | `null` (uses `as`) |
+| `tone`   | `primary`, `secondary`, `muted`, `disabled` | `primary`          |
+| `weight` | `regular`, `medium`, `semibold`, `bold`     | `semibold`         |
 
-Sizes are `--jp-font-size-heading-h1` (1.5rem) down to
+Sizes are `--jp-font-size-heading-h1` (2rem) down to
 `--jp-font-size-heading-h6` (0.8125rem).
 
 ## Controls

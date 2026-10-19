@@ -15,7 +15,7 @@
   <ul>
     @for (item of items; track item.id) { @if (rowById().get(item.id); as row) {
     <li>
-      <label>
+      <label [class.parent]="item.children?.length">
         <input
           type="checkbox"
           [checked]="checked(row)"
@@ -29,8 +29,8 @@
           [class.selected]="checked(row) || mixed(row)"
           aria-hidden="true"
         >
-          @if (mixed(row)) { <jp-icon name="minus" /> } @else if (checked(row))
-          { <jp-icon name="check" /> }
+          @if (mixed(row)) { <jp-icon name="minus" size="sm" /> } @else if
+          (checked(row)) { <jp-icon name="check" size="sm" /> }
         </span>
         <span
           ><span class="name">{{ item.label }}</span>@if (item.description) {

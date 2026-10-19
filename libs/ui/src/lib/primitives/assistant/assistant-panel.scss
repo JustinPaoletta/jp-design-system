@@ -161,16 +161,18 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: var(--jp-space-sm) var(--jp-space-md);
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-  background: var(--jp-color-surface-raised);
+  padding: var(--jp-space-xs);
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
   color: var(--jp-color-text-primary);
   font: inherit;
   font-size: var(--jp-font-size-body);
   line-height: var(--jp-font-line-height-normal);
-  resize: vertical;
-  min-height: calc(var(--jp-size-control-md) * 2);
+  resize: none;
+  min-height: var(--jp-size-control-md);
+  max-height: 10rem;
+  overflow-y: auto;
 }
 
 .jp-assistant-panel__composer-input:focus-visible {
@@ -210,4 +212,24 @@
   padding: var(--jp-space-md);
   font-size: var(--jp-font-size-caption);
   color: var(--jp-color-text-secondary);
+}
+
+.jp-assistant-panel__composer-field {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--jp-space-xs);
+  padding: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-strong);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-raised);
+}
+.jp-assistant-panel__composer-input {
+  flex: 1;
+  min-width: 0;
+}
+.jp-assistant-panel__composer-actions {
+  flex-shrink: 0;
+}
+.jp-assistant-panel__context {
+  margin-block-end: 0;
 }

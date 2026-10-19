@@ -2,22 +2,25 @@
   <label class="jp-input__label" [for]="prefix+'-search'"
     >{{searchLabel()}}</label
   >
-  <input
-    #search
-    class="jp-input__control"
-    [id]="prefix+'-search'"
-    type="search"
-    role="combobox"
-    aria-autocomplete="list"
-    aria-haspopup="listbox"
-    [attr.aria-expanded]="open()"
-    [attr.aria-controls]="prefix+'-list'"
-    [attr.aria-activedescendant]="activeId()"
-    [value]="query()"
-    (input)="searchInput($event)"
-    (keydown)="keydown($event)"
-    autocomplete="off"
-  />
+  <div class="search-field">
+    <jp-icon name="search" size="md" />
+    <input
+      #search
+      class="jp-input__control"
+      [id]="prefix+'-search'"
+      type="search"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="prefix+'-list'"
+      [attr.aria-activedescendant]="activeId()"
+      [value]="query()"
+      (input)="searchInput($event)"
+      (keydown)="keydown($event)"
+      autocomplete="off"
+    />
+  </div>
   <div
     class="results"
     role="listbox"

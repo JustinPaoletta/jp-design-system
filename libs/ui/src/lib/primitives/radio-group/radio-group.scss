@@ -48,3 +48,41 @@ input:focus-visible {
 .jp-radio-group__error {
   color: var(--jp-color-field-error);
 }
+
+input {
+  appearance: none;
+  box-sizing: border-box;
+  flex: none;
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  border: 1px solid var(--jp-color-selection-checkbox-border);
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-selection-checkbox-bg);
+  display: grid;
+  place-content: center;
+}
+input::before {
+  content: '';
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: inherit;
+  background: transparent;
+}
+input:checked {
+  border-color: var(--jp-color-accent-solid);
+}
+input:checked::before {
+  background: var(--jp-color-accent-solid);
+}
+.jp-radio-group__option {
+  gap: var(--jp-space-sm);
+  min-block-size: var(--jp-size-control-sm);
+}
+@media (forced-colors: active) {
+  input {
+    appearance: auto;
+  }
+  input::before {
+    display: none;
+  }
+}

@@ -13,10 +13,13 @@ Names: `check`, `close`, `search`, `chevron-down`, `chevron-right`, `plus`,
 [the icon API](../COMPONENT_EXPANSION.md) and
 [original source](../../libs/ui/src/lib/primitives/icon/icon.ts).
 
-Sizes are semantic tokens: `sm`, `md`, `lg`, default `lg`. Default-density
-sizes are 8px, 12px and 16px respectively. Keep control-interior icons within
-the control's sizing rules. Do not add arbitrary raw dimensions to bypass the
-library scale. Colors come from `currentColor` and semantic parent tokens.
+Sizes use semantic tokens: `sm`, `md` and `lg`. The default is `lg`.
+The sizes are 16px, 20px and 24px in both densities.
+The SVG viewBox remains a 16-unit grid.
+
+Keep icons inside the control's size limits.
+Use the size tokens instead of custom dimensions.
+Colors come from `currentColor` and semantic parent tokens.
 
 ```html
 <jp-button>

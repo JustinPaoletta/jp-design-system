@@ -146,9 +146,9 @@ const meta: Meta<ControlsFormArgs> = {
                 </jp-inline>
               </jp-stack>
 
-              <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
-                <form>
-                  <jp-stack gap="md">
+              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
+                <form (submit)="$event.preventDefault()">
+                  <jp-stack gap="lg">
                     <jp-input
                       label="Email"
                       type="email"
@@ -179,10 +179,17 @@ const meta: Meta<ControlsFormArgs> = {
                       <jp-button variant="primary" type="submit">Save</jp-button>
                       <jp-button variant="secondary" type="button">Cancel</jp-button>
                       <jp-button variant="ghost" type="button">Reset</jp-button>
-                      <jp-button variant="destructive" type="button">Delete</jp-button>
+
                     </jp-inline>
                   </jp-stack>
                 </form>
+              </jp-surface>
+              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
+                <jp-stack gap="sm">
+                  <jp-heading as="h2" size="h3">Delete lineup</jp-heading>
+                  <jp-text tone="secondary">Delete the saved lineup for this game. Player profiles stay in the club roster.</jp-text>
+                  <jp-button variant="destructive" type="button">Delete lineup</jp-button>
+                </jp-stack>
               </jp-surface>
             </jp-stack>
           </jp-box>

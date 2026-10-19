@@ -19,4 +19,6 @@ export default meta;
 type Story = StoryObj<JpCheckboxGroup>;
 export const Default: Story = {};
 export const Disabled: Story = { args: { disabled: true } };
-export const Invalid: Story = { args: { error: 'This field needs attention' } };
+export const Invalid: Story = {
+  args: { error: 'Select at least one way to receive club messages.' },
+};

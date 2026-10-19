@@ -9,6 +9,8 @@ import {
   input,
   output,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { JpCheckbox } from '../checkbox/checkbox';
 import { JP_MESSAGES } from '../../i18n';
 import {
   indexJpTree,
@@ -30,6 +32,7 @@ export interface JpTreeTableColumn {
 /** A native hierarchical data table, with ordinary buttons/checkboxes and Tab order. */
 @Component({
   selector: 'jp-tree-table',
+  imports: [FormsModule, JpCheckbox],
   templateUrl: './tree-table.html',
   styleUrl: './tree-table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

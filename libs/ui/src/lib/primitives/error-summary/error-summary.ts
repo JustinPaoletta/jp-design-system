@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,7 +18,7 @@ export interface JpFieldError {
 let nextSummaryId = 0;
 @Component({
   selector: 'jp-error-summary',
-  imports: [JpLink],
+  imports: [JpIcon, JpLink],
   templateUrl: './error-summary.html',
   styleUrl: './error-summary.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

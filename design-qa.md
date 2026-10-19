@@ -1,5 +1,40 @@
 # Design inspection
 
+## October 19 visual audit changes
+
+The supplied `design-system-visual-audit.pdf` examines 320 captures across 97 component groups.
+This change applies its shared sizing, hierarchy, composition and data-layout recommendations.
+The dark surfaces, gold accent and baseball copy remain.
+
+| Area                    | Change                                                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Controls                | Default controls use 40px height. Icons use 16px, 20px or 24px. Fields and selection controls have clearer boundaries.   |
+| Hierarchy               | Page titles, card titles and metrics use distinct sizes. Cards, raised panels and overlays use separate surface colors.  |
+| Forms                   | Examples use JP buttons and fields. Related controls share spacing. Destructive actions have a separate section.         |
+| Navigation and feedback | Menus, notifications and assistant panels use clearer rows and actions. Selected navigation has no vertical accent line. |
+| Data                    | Table alignment is consistent. The calendar has equal day columns, a shared time gutter and bounded all-day content.     |
+| States                  | Open, failed and streaming stories retain their named states. New examples show populated fields and busy schedules.     |
+
+Chrome inspection uses 1440 × 1000 desktop and 390 × 844 mobile viewports.
+Local captures and their gallery are in `dist/qa/visual-audit/`.
+These inspection images are generated files and remain outside Git.
+Reviewed regression baselines remain in the browser test directories.
+
+The independent inspection found mobile inline-editor overflow, narrow reorder labels and duplicate meter text.
+It also found calendar issues with long all-day lists, short-event titles and a midnight clock change.
+The changes include corrections for these findings and calendar regression tests.
+
+Chromium full-page capture reset the calendar scroll frame in the automated images.
+The capture procedure now measures page height and checks that the frame retains its initial position.
+The live calendar keeps its initial activity position.
+
+The [visual style guide](docs/content/VISUAL_STYLE.md) records the shared sizes, surfaces, motion limits and screenshot procedure.
+The [verification record](docs/qa/VERIFICATION.md) records the current automated results.
+Lower-priority audit suggestions remain in the [task list](COMPONENT_EXPANSION_PLAN.md).
+Screen-reader, Windows and physical-device acceptance remain separate tasks.
+
+## October 11 reference inspection
+
 Date: October 11, 2026, local time.
 
 ## References and captures

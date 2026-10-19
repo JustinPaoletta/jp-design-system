@@ -82,7 +82,9 @@ Overlap detection includes that visible size.
 Short slots at the day end stay inside the day.
 For slots under one elapsed hour, schedule view shows the title without secondary time text.
 The accessible name and tooltip keep exact timestamps.
-Agenda and mobile rows show the full time range.
+
+Agenda and mobile rows show a compact time range.
+The period header identifies the time zone. Repeated-hour events also show their UTC offsets.
 
 Slot positions help users read the schedule.
 They do not permit edits or drag movement.
@@ -113,14 +115,19 @@ At container widths up to 56rem, appointments use chronological agenda rows.
 Titles do not truncate, and the timeline does not use horizontal scroll.
 The Agenda control gives this view at any width.
 
-Week columns have at least 12rem for each concurrent lane.
-Three overlapping events use a 36rem column.
-If the week is wider than its frame, scroll stays inside the frame.
+Week view uses seven equal day columns and one shared time gutter.
+Overlapping events share the width of their day.
+Long titles can wrap inside the available slot.
+The native tooltip and accessible name retain the full title and time range.
 Native focus scrolling reveals appointment buttons.
 Day view fills the available width.
 
 Schedule view limits the scroll frame height but keeps all appointments in the DOM.
 Day headings stay fixed during scroll.
+The all-day strip has a maximum height and scrolls when its content exceeds that height.
+The first render reveals timed activity on the first day that has timed appointments.
+
+Ordinary days share wall-clock positions. Repeated hours have separate positions and offset labels.
 Logical inline positions follow RTL.
 
 ### States
