@@ -26,20 +26,20 @@ const meta: Meta<JpList> = {
     items: [
       {
         id: 'a',
-        title: 'Alex Morgan',
-        description: 'Pitcher · Varsity',
+        title: 'Jack Flaherty',
+        description: 'Pitcher · Active roster',
         meta: 'Available',
       },
       {
         id: 'b',
-        title: 'Jordan Davis',
-        description: 'Catcher · Varsity',
+        title: 'Freddie Freeman',
+        description: 'First base · Active roster',
         meta: 'Day to day',
       },
       {
         id: 'c',
-        title: 'Maya Chen',
-        description: 'Shortstop · Reserve',
+        title: 'Tommy Edman',
+        description: 'Shortstop · Active roster',
         meta: 'Available',
       },
     ],

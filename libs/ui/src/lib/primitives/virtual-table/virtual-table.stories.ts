@@ -5,10 +5,38 @@ import {
 } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpVirtualTable } from './virtual-table';
+const roster = [
+  ['Shohei Ohtani', 'Designated hitter'],
+  ['Mookie Betts', 'Right field'],
+  ['Freddie Freeman', 'First base'],
+  ['Teoscar Hernández', 'Left field'],
+  ['Tommy Edman', 'Shortstop'],
+  ['Will Smith', 'Catcher'],
+  ['Max Muncy', 'Third base'],
+  ['Gavin Lux', 'Second base'],
+  ['Kiké Hernández', 'Center field'],
+  ['Andy Pages', 'Outfield'],
+  ['Chris Taylor', 'Outfield'],
+  ['Miguel Rojas', 'Shortstop'],
+  ['Austin Barnes', 'Catcher'],
+  ['Jack Flaherty', 'Pitcher'],
+  ['Yoshinobu Yamamoto', 'Pitcher'],
+  ['Walker Buehler', 'Pitcher'],
+  ['Blake Treinen', 'Pitcher'],
+  ['Alex Vesia', 'Pitcher'],
+  ['Brusdar Graterol', 'Pitcher'],
+  ['Michael Kopech', 'Pitcher'],
+  ['Ryan Brasier', 'Pitcher'],
+  ['Anthony Banda', 'Pitcher'],
+  ['Daniel Hudson', 'Pitcher'],
+  ['Landon Knack', 'Pitcher'],
+  ['Ben Casparius', 'Pitcher'],
+  ['Brent Honeywell', 'Pitcher'],
+] as const;
 const rows = Array.from({ length: 10000 }, (_, i) => ({
   id: i,
-  name: 'Player ' + (i + 1),
-  region: i % 2 ? 'Catcher' : 'Pitcher',
+  name: roster[i % roster.length][0] + ' · ' + (i + 1),
+  region: roster[i % roster.length][1],
 }));
 const meta: Meta<JpVirtualTable> = {
   title: 'Primitives/Data Display/Virtual Table',
@@ -67,7 +95,9 @@ export const BrowsePages: Story = {
       c.getByRole('table', { name: 'League player roster' }),
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
-    await expect(c.getByRole('cell', { name: 'Player 51' })).toBeVisible();
+    await expect(
+      c.getByRole('cell', { name: 'Ben Casparius · 51' }),
+    ).toBeVisible();
   },
 };
 
@@ -102,7 +132,9 @@ export const Narrow: Story = {
     frame.scrollTop = frame.scrollHeight;
     frame.dispatchEvent(new Event('scroll'));
     await expect(
-      await within(canvasElement).findByRole('cell', { name: 'Player 10000' }),
+      await within(canvasElement).findByRole('cell', {
+        name: 'Walker Buehler · 10000',
+      }),
     ).toBeVisible();
   },
 };

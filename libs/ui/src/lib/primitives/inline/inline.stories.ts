@@ -74,9 +74,9 @@ const meta: Meta<JpInline> = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alex Morgan</span>
-              <span class="jp-inline-story__item">Jordan Davis</span>
-              <span class="jp-inline-story__item">Maya Chen</span>
+              <span class="jp-inline-story__item">Jack Flaherty</span>
+              <span class="jp-inline-story__item">Freddie Freeman</span>
+              <span class="jp-inline-story__item">Tommy Edman</span>
             </jp-inline>
           </div>
         </div>
@@ -191,9 +191,9 @@ export const WrapStress: Story = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alex Morgan</span>
-              <span class="jp-inline-story__item">Jordan Davis</span>
-              <span class="jp-inline-story__item">Maya Chen</span>
+              <span class="jp-inline-story__item">Jack Flaherty</span>
+              <span class="jp-inline-story__item">Freddie Freeman</span>
+              <span class="jp-inline-story__item">Tommy Edman</span>
               <span class="jp-inline-story__item">Delta</span>
               <span class="jp-inline-story__item">Epsilon</span>
               <span class="jp-inline-story__item">Zeta</span>
@@ -291,11 +291,11 @@ export const NoWrap: Story = {
             aria-label="Horizontally scrollable inline demo"
           >
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Alex Morgan</span>
-              <span class="jp-inline-story__item">Jordan Davis</span>
-              <span class="jp-inline-story__item">Maya Chen</span>
-              <span class="jp-inline-story__item">Casey Brooks</span>
-              <span class="jp-inline-story__item">Taylor Reed</span>
+              <span class="jp-inline-story__item">Jack Flaherty</span>
+              <span class="jp-inline-story__item">Freddie Freeman</span>
+              <span class="jp-inline-story__item">Tommy Edman</span>
+              <span class="jp-inline-story__item">Mookie Betts</span>
+              <span class="jp-inline-story__item">Clayton Kershaw</span>
             </jp-inline>
           </div>
         </div>

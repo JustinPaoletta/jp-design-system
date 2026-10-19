@@ -19,8 +19,8 @@ const meta: Meta<JpMultiSelect> = {
   args: {
     label: 'Players',
     options: [
-      { value: 'ada', label: 'Alex Morgan' },
-      { value: 'grace', label: 'Jordan Davis' },
+      { value: 'ada', label: 'Jack Flaherty' },
+      { value: 'grace', label: 'Freddie Freeman' },
       { value: 'blocked', label: 'Unavailable', disabled: true },
     ],
   },

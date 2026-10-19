@@ -123,15 +123,15 @@ const meta: Meta<JpSurface> = {
                 <div class="jp-surface-story__sample">
                   <div class="jp-surface-story__label">none (reference)</div>
                   <jp-surface [as]="asTag" [tone]="tone" [padding]="padding" [radius]="radius" border="subtle" elevation="none">
-                    <div class="jp-surface-story__eyebrow">Falcons clubhouse</div>
+                    <div class="jp-surface-story__eyebrow">Dodgers clubhouse</div>
                     <div>No elevation</div>
                   </jp-surface>
                 </div>
                 <div class="jp-surface-story__sample">
                   <div class="jp-surface-story__label">{{ elevation }} (control)</div>
                   <jp-surface [as]="asTag" [tone]="tone" [padding]="padding" [radius]="radius" [border]="border" [elevation]="elevation">
-                    <div class="jp-surface-story__eyebrow">Falcons clubhouse</div>
-                    <div>Falcons clubhouse</div>
+                    <div class="jp-surface-story__eyebrow">Dodgers clubhouse</div>
+                    <div>Dodgers clubhouse</div>
                   </jp-surface>
                 </div>
               </div>

@@ -6,7 +6,7 @@ const meta: Meta<JpStatusDot> = {
   title: 'Primitives/Identity/Status Dot',
   component: JpStatusDot,
   parameters: { layout: 'padded' },
-  args: { tone: 'success', label: 'Sam Rivera is online' },
+  args: { tone: 'success', label: 'Dave Roberts, Dodgers manager' },
 };
 export default meta;
 type Story = StoryObj<JpStatusDot>;

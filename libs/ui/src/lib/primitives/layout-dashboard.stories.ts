@@ -65,7 +65,7 @@ const meta: Meta = {
             <jp-inline align="center" gap="sm">
               <jp-heading as="h1">Game overview</jp-heading>
             </jp-inline>
-            <jp-text tone="secondary">Riverton Falcons 5–3 Lakeview Bears · October 11, 2026</jp-text>
+            <jp-text tone="secondary">Los Angeles Dodgers 7, New York Yankees 6 · October 30, 2024</jp-text>
 
           </jp-stack>
 
@@ -73,13 +73,13 @@ const meta: Meta = {
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" size="caption" tone="muted">Runs scored</jp-text>
-                <span class="jp-layout-dashboard-story__metric">5</span>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
                 <jp-text as="small" size="caption" tone="muted">Hits</jp-text>
-                <span class="jp-layout-dashboard-story__metric">9</span>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
@@ -95,19 +95,19 @@ const meta: Meta = {
               <ul class="jp-layout-dashboard-story__events">
                 <li>Game report saved</li>
                 <li>League lineup approved</li>
-                <li>Falcons roster updated</li>
+                <li>Dodgers roster updated</li>
               </ul>
             </jp-card>
             <jp-card title="Insights">
-              <p>The Falcons scored five runs on nine hits with no errors.</p>
+              <p>The Dodgers scored seven runs on seven hits with no errors.</p>
             </jp-card>
           </jp-grid>
 
           <jp-card title="Recent club activity">
             <ul class="jp-layout-dashboard-story__events">
-              <li><span>Starting lineup confirmed</span><time datetime="2026-10-11T21:00:00Z">21:00 UTC</time></li>
-              <li><span>Last season archived</span><time datetime="2026-10-11T20:48:00Z">20:48 UTC</time></li>
-              <li><span>Next game scheduled at Riverton Field</span><time datetime="2026-10-11T20:32:00Z">20:32 UTC</time></li>
+              <li><span>Jack Flaherty starts</span><time datetime="2024-10-30T20:08:00-04:00">8:08 p.m.</time></li>
+              <li><span>Freddie Freeman drives in two runs</span><time datetime="2024-10-30">5th inning</time></li>
+              <li><span>Final at Yankee Stadium</span><time datetime="2024-10-30T23:50:00-04:00">11:50 p.m.</time></li>
             </ul>
           </jp-card>
         </jp-stack>

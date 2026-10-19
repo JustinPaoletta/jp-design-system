@@ -21,15 +21,15 @@ test('chart renders real pixels, legend controls, category inspection and equiva
       return painted;
     }),
   ).toBeGreaterThan(1000);
-  await page.getByRole('button', { name: 'Falcons' }).click();
-  await expect(page.getByRole('button', { name: 'Falcons' })).toHaveAttribute(
+  await page.getByRole('button', { name: 'Dodgers' }).click();
+  await expect(page.getByRole('button', { name: 'Dodgers' })).toHaveAttribute(
     'aria-pressed',
     'false',
   );
   await page
     .getByRole('combobox', { name: 'Inspect category' })
     .selectOption('5');
-  await expect(page.locator('jp-chart dl')).toContainText('57');
+  await expect(page.locator('jp-chart dl')).toContainText('126');
   await page.getByText('View chart data', { selector: 'summary' }).click();
   await expect(
     page.getByRole('table', { name: 'Team runs by month' }),
@@ -54,7 +54,7 @@ test('10,000-row table bounds DOM, reaches final rows and retains cross-window s
     '10001',
   );
   await table
-    .getByRole('checkbox', { name: 'Select Player 00001', exact: true })
+    .getByRole('checkbox', { name: 'Select Shohei Ohtani 00001', exact: true })
     .check();
   const geometry = await table
     .locator('tr[data-row-index]')
@@ -65,17 +65,20 @@ test('10,000-row table bounds DOM, reaches final rows and retains cross-window s
     e.scrollTop = e.scrollHeight;
   });
   await expect(
-    table.getByRole('cell', { name: 'Player 10000', exact: true }),
+    table.getByRole('cell', { name: 'Walker Buehler 10000', exact: true }),
   ).toBeVisible();
   await table
-    .getByRole('checkbox', { name: 'Select Player 10000', exact: true })
+    .getByRole('checkbox', { name: 'Select Walker Buehler 10000', exact: true })
     .check();
   await expect(page.getByRole('status')).toContainText('2 players selected');
   await frame.evaluate((e) => {
     e.scrollTop = 0;
   });
   await expect(
-    table.getByRole('checkbox', { name: 'Select Player 00001', exact: true }),
+    table.getByRole('checkbox', {
+      name: 'Select Shohei Ohtani 00001',
+      exact: true,
+    }),
   ).toBeChecked();
 });
 test('paginated alternative exposes every row and controlled sorting', async ({
@@ -86,13 +89,13 @@ test('paginated alternative exposes every row and controlled sorting', async ({
   await expect(table.locator('jp-table tbody tr')).toHaveCount(50);
   await table.getByRole('button', { name: 'Last page', exact: true }).click();
   await expect(
-    table.getByRole('cell', { name: 'Player 10000', exact: true }),
+    table.getByRole('cell', { name: 'Walker Buehler 10000', exact: true }),
   ).toBeVisible();
-  await table.getByRole('button', { name: 'At bats', exact: false }).click();
-  await table.getByRole('button', { name: 'At bats', exact: false }).click();
+  await table.getByRole('button', { name: 'Row', exact: true }).click();
+  await table.getByRole('button', { name: 'Row', exact: true }).click();
   await table.getByRole('button', { name: 'First page', exact: true }).click();
   await expect(table.locator('jp-table tbody tr').first()).toContainText(
-    'Player 10000',
+    'Walker Buehler 10000',
   );
 });
 test('zero overscan covers the full viewport across sticky-header and partial-row boundaries', async ({
@@ -171,10 +174,10 @@ test('choosing an active table mode preserves its scrolled window and native pag
     .getByRole('button', { name: 'Paginated rows', exact: true })
     .click();
   await expect(
-    table.getByRole('cell', { name: 'Player 10000', exact: true }),
+    table.getByRole('cell', { name: 'Walker Buehler 10000', exact: true }),
   ).toBeVisible();
   await expect(table.locator('jp-table tbody tr').first()).toContainText(
-    'Player 09951',
+    'Brusdar Graterol 09951',
   );
 });
 test('consumer sorting recovers focused checkbox before its row is recycled', async ({
@@ -183,11 +186,11 @@ test('consumer sorting recovers focused checkbox before its row is recycled', as
   const table = page.locator('jp-virtual-table');
   const frame = table.locator('.frame');
   const checkbox = table.getByRole('checkbox', {
-    name: 'Select Player 00001',
+    name: 'Select Shohei Ohtani 00001',
     exact: true,
   });
   const requests = table.getByRole('columnheader', {
-    name: 'At bats',
+    name: 'Row',
     exact: false,
   });
   await requests
@@ -293,5 +296,5 @@ test('mobile RTL analytics remain readable and scroll without page overflow', as
   });
   await expect(
     page.locator('jp-virtual-table tr[data-row-index]').last(),
-  ).toContainText('Player 10000');
+  ).toContainText('Walker Buehler 10000');
 });

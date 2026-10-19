@@ -54,17 +54,17 @@
           id="launch-date"
           label="Game date"
           [formControl]="launch"
-          min="2026-10-01"
-          max="2026-10-31"
+          min="2024-10-01"
+          max="2024-10-31"
           required
-          [error]="submitted() && launch.invalid?'Choose a date in October 2026.':''"
+          [error]="submitted() && launch.invalid?'Choose a date in October 2024.':''"
         />
         <jp-date-range-picker
           id="event-dates"
           label="Series dates"
           [formControl]="dates"
-          min="2026-10-01"
-          max="2026-10-31"
+          min="2024-10-01"
+          max="2024-10-31"
           required
           [error]="submitted() && dates.invalid?'Start must be on or before end.':''"
         />
@@ -73,9 +73,9 @@
           label="First pitch"
           [formControl]="time"
           min="09:00"
-          max="17:00"
+          max="21:00"
           [step]="900"
-          hint="Local time, in 15-minute steps. Your product chooses the time zone."
+          hint="15-minute steps. World Series Game 5 began at 8:08 p.m."
           [error]="submitted() && time.invalid?'Choose a valid time.':''"
         />
         <jp-button type="submit">Save schedule</jp-button>@if(scheduleSaved()){

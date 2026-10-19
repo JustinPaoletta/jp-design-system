@@ -21,7 +21,7 @@ test('scheduling: date navigation and native appointment keyboard activation', a
   await planning.press('Enter');
   await expect(
     page.getByRole('complementary', { name: 'Appointment details' }),
-  ).toContainText('Review the next game');
+  ).toContainText('Dave Roberts managed the 2024 Dodgers');
   await planning.press('Space');
   await expect(
     page.getByRole('heading', { name: 'Lineup meeting', exact: true }),
@@ -303,7 +303,7 @@ for (const dir of ['ltr', 'rtl'])
     await appointment.click();
     await expect(
       page.getByRole('complementary', { name: 'Appointment details' }),
-    ).toContainText('starting pitcher');
+    ).toContainText('Jack Flaherty started');
   });
 for (const accent of ['neon', 'cobalt'])
   for (const density of ['default', 'compact'])

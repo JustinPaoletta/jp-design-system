@@ -22,12 +22,12 @@ const meta: Meta<JpPageHeader> = {
   args: {
     title: 'Player roster',
     headingLevel: 'h1',
-    description: 'Manage the Falcons varsity and reserve players.',
+    description: 'Manage the 2024 Dodgers roster.',
   },
   render: (args) => ({
     props: { ...args, saved: false },
     template: `<jp-page-header [title]="title" [description]="description" [headingLevel]="headingLevel">
-      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2026 season · 5 players' }}</span>
+      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2024 season · World Series' }}</span>
       <jp-button jpPageActions [disabled]="saved" (click)="saved = true">{{ saved ? 'Roster saved' : 'Save roster' }}</jp-button>
     </jp-page-header>`,
   }),
@@ -51,6 +51,6 @@ export const LongContent: Story = {
   args: {
     title: 'Postseason player availability',
     description:
-      'Review the Riverton Falcons varsity and reserve squads before the next game at Riverton Field.',
+      'Review the 2024 Dodgers roster before World Series Game 5 at Yankee Stadium.',
   },
 };

@@ -30,7 +30,7 @@ import {
 })
 export class ControlsPage {
   readonly defaults = {
-    email: 'coach@falcons.example',
+    email: 'manager@dodgers.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -38,7 +38,7 @@ export class ControlsPage {
   saved: typeof this.defaults | null = { ...this.defaults };
   feedback = '';
 
-  email = 'coach@falcons.example';
+  email = 'manager@dodgers.example';
   notes = '';
   role = 'editor';
   subscribe = true;
@@ -67,7 +67,7 @@ export class ControlsPage {
   }
 
   readonly roleOptions = [
-    { value: 'admin', label: 'Coach' },
+    { value: 'admin', label: 'Manager' },
     { value: 'editor', label: 'Scorekeeper' },
     { value: 'viewer', label: 'Fan' },
   ];

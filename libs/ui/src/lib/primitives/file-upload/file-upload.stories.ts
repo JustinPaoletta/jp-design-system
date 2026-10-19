@@ -20,7 +20,7 @@ import {
 } from './file-upload';
 
 const file = new File(
-  ['Falcons lineup: Alex Morgan, Jordan Davis, Maya Chen.'],
+  ['Dodgers lineup: Jack Flaherty, Freddie Freeman, Tommy Edman.'],
   'lineup.txt',
   { type: 'text/plain' },
 );
@@ -191,7 +191,7 @@ export const QueueRecovery: Story = {
       },
       {
         id: 'failed',
-        file: new File(['Falcons 5, Bears 3.'], 'score.txt', {
+        file: new File(['Dodgers 7, Yankees 6.'], 'score.txt', {
           type: 'text/plain',
         }),
         status: 'error',

@@ -13,8 +13,8 @@ const meta: Meta<JpDateRangePicker> = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Series dates',
-    min: '2026-10-01',
-    max: '2026-10-31',
+    min: '2024-10-01',
+    max: '2024-10-31',
     hint: 'Local calendar dates; start must be on or before end.',
   },
 };

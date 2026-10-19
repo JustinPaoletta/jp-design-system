@@ -49,7 +49,7 @@ const meta: Meta<ControlsFormArgs> = {
   args: {
     sidebarCollapsed: false,
     mobileNavOpen: false,
-    email: 'coach@falcons.example',
+    email: 'manager@dodgers.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -92,7 +92,7 @@ const meta: Meta<ControlsFormArgs> = {
           feedback.set('Saved lineup removed from this preview.');
         },
         roleOptions: [
-          { value: 'admin', label: 'Coach' },
+          { value: 'admin', label: 'Manager' },
           { value: 'editor', label: 'Scorekeeper' },
           { value: 'viewer', label: 'Fan' },
         ],
@@ -228,7 +228,7 @@ const meta: Meta<ControlsFormArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Riverton Falcons</span>
+        <span jpAppShellBrand>Los Angeles Dodgers</span>
       <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -262,7 +262,7 @@ const meta: Meta<ControlsFormArgs> = {
 <div class="lineup-editor">
   <header class="lineup-editor__header">
     <jp-heading as="h1">Lineup form</jp-heading>
-    <p>Update the lineup and coach contact details.</p>
+    <p>Update the lineup and manager contact details.</p>
   </header>
 
   <form
@@ -270,15 +270,15 @@ const meta: Meta<ControlsFormArgs> = {
     (ngSubmit)="save(lineupForm)"
     [attr.data-jp-density]="compact ? 'compact' : null"
   >
-    <jp-card title="Coach contact">
+    <jp-card title="Manager contact">
     <div class="lineup-editor__fields">
       <p>The contact for this game's lineup.</p>
       <div class="lineup-editor__contact">
         <jp-input
           label="Email"
           type="email"
-          placeholder="coach@falcons.example"
-          hint="Used for Falcons club messages."
+          placeholder="manager@dodgers.example"
+          hint="Used for Dodgers club messages."
           [(ngModel)]="email"
           name="email"
         />
@@ -290,7 +290,7 @@ const meta: Meta<ControlsFormArgs> = {
         />
       </div>
       <jp-textarea
-        label="Coach notes"
+        label="Manager notes"
         placeholder="Add lineup changes or reminders for the coaching staff."
         rows="3"
         [(ngModel)]="notes"
@@ -300,7 +300,7 @@ const meta: Meta<ControlsFormArgs> = {
         <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
           Get club messages
         </jp-checkbox>
-        <p>Game changes and lineup updates from the Falcons.</p>
+        <p>Game changes and lineup updates from the Dodgers.</p>
       </div>
     </div>
     <div jpCardActions class="lineup-editor__footer">
@@ -358,8 +358,8 @@ export const Default: Story = {
     await expect(email).toBeTruthy();
     if (email) {
       await userEvent.clear(email);
-      await userEvent.type(email, 'coach@falcons.example');
-      await expect(email.value).toBe('coach@falcons.example');
+      await userEvent.type(email, 'manager@dodgers.example');
+      await expect(email.value).toBe('manager@dodgers.example');
       email.blur();
       await expect(email).not.toHaveFocus();
     }

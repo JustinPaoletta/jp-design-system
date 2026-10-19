@@ -31,7 +31,7 @@ const meta: Meta<JpSelect> = {
     disabled: false,
     invalid: false,
     options: [
-      { value: 'admin', label: 'Coach' },
+      { value: 'admin', label: 'Manager' },
       { value: 'editor', label: 'Scorekeeper' },
       { value: 'viewer', label: 'Fan' },
     ],

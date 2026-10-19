@@ -31,28 +31,29 @@ export class SchedulingPage {
       title: 'Lineup meeting',
       start: '2026-10-05T09:00:00-04:00',
       end: '2026-10-05T10:30:00-04:00',
-      description: 'Review the next game and assign player positions.',
+      description:
+        'Dave Roberts managed the 2024 Dodgers. This row overlaps other appointments.',
     },
     {
       id: 'review',
       title: 'Batting practice',
       start: '2026-10-05T09:30:00-04:00',
       end: '2026-10-05T11:00:00-04:00',
-      description: 'Practice batting and fielding before the game.',
+      description: 'Freddie Freeman was day to day on October 7, 2024.',
     },
     {
       id: 'handoff',
       title: 'Pitching practice',
       start: '2026-10-05T10:00:00-04:00',
       end: '2026-10-05T10:45:00-04:00',
-      description: 'Confirm the lineup and starting pitcher.',
+      description: 'Jack Flaherty started World Series Game 5.',
     },
     {
       id: 'office',
       title: 'Meet the coaches',
       start: '2026-10-06T13:00:00-04:00',
       end: '2026-10-06T14:00:00-04:00',
-      description: 'Ask the coaches about training and the next game.',
+      description: 'The Dodgers coaching staff reported to Dave Roberts.',
     },
     {
       id: 'release',
@@ -60,7 +61,8 @@ export class SchedulingPage {
       allDay: true,
       start: '2026-10-07',
       end: '2026-10-09',
-      description: 'Two all-day dates; the ending date is exclusive.',
+      description:
+        'Two all-day dates; the ending date is exclusive. World Series Game 5 was October 30, 2024.',
     },
     {
       id: 'overnight',

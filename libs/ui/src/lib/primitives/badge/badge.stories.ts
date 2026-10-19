@@ -50,7 +50,7 @@ export default meta;
 type Story = StoryObj<BadgeStoryArgs>;
 
 export const Neutral: Story = {
-  args: { tone: 'neutral', label: 'Reserve' },
+  args: { tone: 'neutral', label: 'Bench' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-badge');
     await expect(host?.classList.contains('jp-badge--neutral')).toBe(true);
@@ -93,7 +93,7 @@ export const AllTones: Story = {
   render: () => ({
     template: `
       <div style="display: flex; flex-wrap: wrap; gap: var(--jp-space-sm);">
-        <jp-badge tone="neutral">Reserve</jp-badge>
+        <jp-badge tone="neutral">Bench</jp-badge>
         <jp-badge tone="accent">Starter</jp-badge>
         <jp-badge tone="success">Available</jp-badge>
         <jp-badge tone="warning">Day to day</jp-badge>

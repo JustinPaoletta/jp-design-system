@@ -15,12 +15,12 @@ const meta: Meta<JpTimePicker> = {
   component: JpTimePicker,
   render: (args) => ({
     props: args,
-    template: `<jp-time-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'18:30'" />`,
+    template: `<jp-time-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'20:00'" />`,
   }),
   parameters: { layout: 'padded' },
   args: {
     label: 'First pitch',
-    hint: 'Uses your browser’s locale and native picker',
+    hint: '15-minute steps. Game 5 began at 8:08 p.m.',
     min: '09:00',
     max: '22:00',
     step: 900,

@@ -20,7 +20,7 @@ const meta: Meta<JpCombobox> = {
     options: [
       { value: 'viewer', label: 'Fan' },
       { value: 'editor', label: 'Scorekeeper' },
-      { value: 'admin', label: 'Coach', disabled: true },
+      { value: 'admin', label: 'Manager', disabled: true },
     ],
     disabled: false,
     error: '',

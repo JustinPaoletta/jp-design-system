@@ -90,7 +90,7 @@ import { JpTooltip } from './tooltip/tooltip';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
-      <span jpAppShellBrand>Riverton Falcons</span>
+      <span jpAppShellBrand>Los Angeles Dodgers</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -123,13 +123,13 @@ import { JpTooltip } from './tooltip/tooltip';
               <p>Review club messages and player actions.</p>
             </header>
 
-            <jp-card title="Game FAL-1042">
+            <jp-card title="World Series Game 5">
               <p>
-                Falcons 5, Bears 3. Review the final lineup and club messages.
+                Dodgers 7, Yankees 6. Review the final lineup and club messages.
               </p>
               <jp-inline jpCardActions gap="sm" wrap="true">
                 <jp-tooltip content="Copy game ID" placement="top">
-                  <jp-copy-button text="FAL-1042" label="Copy ID" />
+                  <jp-copy-button text="775296" label="Copy ID" />
                 </jp-tooltip>
                 <jp-button
                   type="button"
@@ -153,7 +153,10 @@ import { JpTooltip } from './tooltip/tooltip';
                     >Filters</jp-button
                   >
                   <div jpPopoverContent>
-                    <p>The roster includes varsity and reserve squads.</p>
+                    <p>
+                      The roster includes the active roster and the injured
+                      list.
+                    </p>
                   </div>
                 </jp-popover>
                 <jp-dropdown-menu

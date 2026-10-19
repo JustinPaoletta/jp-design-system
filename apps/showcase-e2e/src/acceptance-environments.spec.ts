@@ -68,7 +68,7 @@ const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
         .getByRole('button', { name: 'Next slide' })
         .click();
       await expect(
-        page.getByRole('textbox', { name: 'Coach note' }),
+        page.getByRole('textbox', { name: 'Manager note' }),
       ).toBeVisible();
     },
     'data-performance': async (page) => {
@@ -194,7 +194,7 @@ test.describe('acceptance forced colors', () => {
     await next.press('Enter');
     await expectOutline(next);
     await expect(
-      page.getByRole('textbox', { name: 'Coach note' }),
+      page.getByRole('textbox', { name: 'Manager note' }),
     ).toBeVisible();
     await expect(
       page.locator('jp-carousel .pickers button.current'),
@@ -233,16 +233,19 @@ test.describe('acceptance forced colors', () => {
     await chart
       .getByRole('combobox', { name: 'Inspect category' })
       .selectOption('5');
-    await expect(chart.locator('dl')).toContainText('57');
+    await expect(chart.locator('dl')).toContainText('162');
     const table = page.locator('jp-virtual-table');
     await table
-      .getByRole('checkbox', { name: 'Select Player 00001', exact: true })
+      .getByRole('checkbox', {
+        name: 'Select Shohei Ohtani 00001',
+        exact: true,
+      })
       .check();
     await expectOutline(table.locator('tr.selected'));
     await table.getByRole('button', { name: 'Paginated rows' }).click();
     await expect(
       table.getByRole('checkbox', {
-        name: 'Select Player 00001',
+        name: 'Select Shohei Ohtani 00001',
         exact: true,
       }),
     ).toBeChecked();

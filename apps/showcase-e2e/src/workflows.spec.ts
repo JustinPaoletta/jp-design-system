@@ -125,9 +125,9 @@ test('workflows: inline saves preserve failed drafts, retry and abort without co
 test('workflows: native date/time form validates ordered local values and focuses errors', async ({
   page,
 }) => {
-  await page.getByLabel('Game date', { exact: true }).fill('2026-09-30');
-  await page.getByLabel('Start date', { exact: true }).fill('2026-10-15');
-  await page.getByLabel('End date', { exact: true }).fill('2026-10-10');
+  await page.getByLabel('Game date', { exact: true }).fill('2024-09-30');
+  await page.getByLabel('Start date', { exact: true }).fill('2024-10-30');
+  await page.getByLabel('End date', { exact: true }).fill('2024-10-25');
   await page.getByLabel('First pitch', { exact: true }).fill('09:10');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   const summary = page.getByRole('region', { name: 'There is a problem' });
@@ -135,13 +135,13 @@ test('workflows: native date/time form validates ordered local values and focuse
   await expect(summary.getByRole('link')).toHaveCount(3);
   await summary
     .getByRole('link', {
-      name: 'Choose an ordered date range in October 2026.',
+      name: 'Choose an ordered date range in October 2024.',
     })
     .click();
   await expect(page.getByLabel('Start date', { exact: true })).toBeFocused();
-  await page.getByLabel('Game date', { exact: true }).fill('2026-10-10');
-  await page.getByLabel('Start date', { exact: true }).fill('2026-10-10');
-  await page.getByLabel('End date', { exact: true }).fill('2026-10-15');
+  await page.getByLabel('Game date', { exact: true }).fill('2024-10-30');
+  await page.getByLabel('Start date', { exact: true }).fill('2024-10-25');
+  await page.getByLabel('End date', { exact: true }).fill('2024-10-30');
   await page.getByLabel('First pitch', { exact: true }).fill('09:15');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   await expect(
@@ -200,12 +200,12 @@ test('workflows: inbox filters unread, recovers focus on dismissal, and retains 
   await inbox.getByRole('button', { name: 'Unread 2', exact: true }).click();
   await expect(inbox).not.toContainText('Club invitation accepted');
   await inbox
-    .getByRole('button', { name: 'Mark as read: Lineup review requested' })
+    .getByRole('button', { name: 'Mark as read: Jack Flaherty starts Game 5' })
     .press('Enter');
   await expect(
     inbox.getByRole('button', { name: 'Mark as read: Game report ready' }),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Lineup review requested');
+  await expect(inbox).not.toContainText('Jack Flaherty starts Game 5');
   await inbox
     .getByRole('button', { name: 'Mark all as read', exact: true })
     .click();

@@ -35,22 +35,22 @@ export class AssistantPage implements OnDestroy {
   lastReply = 'None yet';
 
   readonly deploymentContext: JpAssistantContext = {
-    label: 'Game FAL-1042',
-    description: 'Falcons 5, Bears 3. Final score.',
+    label: 'World Series Game 5',
+    description: 'Dodgers 7, Yankees 6. Final score.',
     entityType: 'game',
-    entityId: 'FAL-1042',
+    entityId: '775296',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Player Alex Morgan',
-    description: 'Pitcher · Varsity · Available',
+    label: 'Player Jack Flaherty',
+    description: 'Pitcher · Active roster · Started Game 5',
     entityType: 'player',
-    entityId: 'alex-morgan',
+    entityId: 'jack-flaherty',
   };
 
   readonly filterContext: JpAssistantContext = {
     label: 'Squad filters',
-    description: 'Varsity + reserve',
+    description: 'Active roster and injured list',
     entityType: 'filters',
   };
 
@@ -66,16 +66,16 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'The Falcons won 5–3 against the Lakeview Bears.',
+      content: 'The Dodgers won 7–6 against the New York Yankees.',
     });
     this.assistant.addMessage({
       role: 'assistant',
       content:
-        'The Falcons won 5–3. Alex Morgan and Jordan Davis drove in runs.',
+        'The Dodgers won 7–6. Freddie Freeman and Mookie Betts drove in runs.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who is pitching in the next game?',
+      content: 'Who started Game 5?',
     });
   }
 
@@ -83,7 +83,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Falcons 5, Bears 3.`,
+      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
     });
   }
 }

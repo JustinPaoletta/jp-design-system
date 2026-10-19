@@ -15,14 +15,14 @@ const meta: Meta<JpDatePicker> = {
   component: JpDatePicker,
   render: (args) => ({
     props: args,
-    template: `<jp-date-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'2026-10-12'" />`,
+    template: `<jp-date-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'2024-10-30'" />`,
   }),
   parameters: { layout: 'padded' },
   args: {
     label: 'Game date',
     hint: 'Uses your browser’s locale and native picker',
-    min: '2026-10-01',
-    max: '2026-10-31',
+    min: '2024-10-01',
+    max: '2024-10-31',
   },
 };
 export default meta;

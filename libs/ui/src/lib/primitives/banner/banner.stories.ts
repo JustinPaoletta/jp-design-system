@@ -11,8 +11,8 @@ const meta: Meta<JpBanner> = {
   parameters: { layout: 'padded' },
   decorators: [moduleMetadata({ imports: [JpButton] })],
   args: {
-    title: 'Field maintenance',
-    message: 'The game starts at 20:00 UTC.',
+    title: 'Yankee Stadium',
+    message: 'World Series Game 5 started at 8:08 p.m. Eastern Time.',
     dismissible: true,
     tone: 'info',
     announce: false,
@@ -31,11 +31,11 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Dismiss banner' }),
     );
     await expect(
-      canvas.queryByRole('region', { name: 'Field maintenance' }),
+      canvas.queryByRole('region', { name: 'Yankee Stadium' }),
     ).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Show banner' }));
     await expect(
-      canvas.getByRole('region', { name: 'Field maintenance' }),
+      canvas.getByRole('region', { name: 'Yankee Stadium' }),
     ).toBeVisible();
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
@@ -44,6 +44,7 @@ export const Error: Story = {
   args: {
     title: 'Score feed interrupted',
     tone: 'error',
-    message: 'Your lineup has been kept. Try again.',
+    message:
+      'The Game 5 feed stopped. The final score is Dodgers 7, Yankees 6. Try again.',
   },
 };

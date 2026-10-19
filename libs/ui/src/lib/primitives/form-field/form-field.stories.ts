@@ -10,7 +10,7 @@ const meta: Meta<JpFormField> = {
   args: {
     controlId: 'example-field',
     label: 'Email',
-    hint: "Use the coach's email address",
+    hint: 'Use the manager email address',
   },
   decorators: [
     componentWrapperDecorator(
@@ -20,7 +20,7 @@ const meta: Meta<JpFormField> = {
   ],
   render: (args) => ({
     props: args,
-    template: `<jp-form-field #field [controlId]="controlId" [label]="label" [hint]="hint" [error]="error"><jp-input [id]="controlId" type="email" placeholder="coach@falcons.example" [invalid]="!!error" [ariaDescribedBy]="field.describedBy() || ''" /></jp-form-field>`,
+    template: `<jp-form-field #field [controlId]="controlId" [label]="label" [hint]="hint" [error]="error"><jp-input [id]="controlId" type="email" placeholder="manager@dodgers.example" [invalid]="!!error" [ariaDescribedBy]="field.describedBy() || ''" /></jp-form-field>`,
   }),
 };
 export default meta;

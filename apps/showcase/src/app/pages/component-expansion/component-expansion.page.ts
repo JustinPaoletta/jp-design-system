@@ -112,9 +112,9 @@ export class ComponentExpansionPage {
     { value: 'push', label: 'Push', disabled: true },
   ];
   readonly reviewers = [
-    { value: 'ada', label: 'Alex Morgan' },
-    { value: 'grace', label: 'Jordan Davis' },
-    { value: 'linus', label: 'Maya Chen' },
+    { value: 'ada', label: 'Jack Flaherty' },
+    { value: 'grace', label: 'Freddie Freeman' },
+    { value: 'linus', label: 'Tommy Edman' },
     { value: 'unavailable', label: 'Injured player', disabled: true },
   ];
   readonly views = [
@@ -122,26 +122,26 @@ export class ComponentExpansionPage {
     { value: 'archived', label: 'Archived' },
   ];
   readonly people = [
-    { id: 'ada', name: 'Alex Morgan' },
-    { id: 'grace', name: 'Jordan Davis' },
-    { id: 'linus', name: 'Maya Chen' },
+    { id: 'ada', name: 'Jack Flaherty' },
+    { id: 'grace', name: 'Freddie Freeman' },
+    { id: 'linus', name: 'Tommy Edman' },
   ];
   readonly details = [
-    { term: 'Squad', description: 'Varsity' },
+    { term: 'Squad', description: 'Active roster' },
     { term: 'Position', description: 'Pitcher' },
     { term: 'Retries', description: 0 },
   ];
   readonly services = [
     {
       id: 'gateway',
-      title: 'Alex Morgan',
-      description: 'Varsity',
+      title: 'Jack Flaherty',
+      description: 'Active roster',
       meta: 'Available',
     },
     {
       id: 'worker',
-      title: 'Jordan Davis',
-      description: 'Varsity',
+      title: 'Freddie Freeman',
+      description: 'Active roster',
       meta: 'Day to day',
     },
   ];

@@ -19,9 +19,9 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   page,
 }) => {
   await page.getByText('Columns', { selector: 'summary' }).click();
-  await page.getByRole('checkbox', { name: 'Coach', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Manager', exact: true }).uncheck();
   await expect(
-    page.getByRole('columnheader', { name: 'Coach', exact: true }),
+    page.getByRole('columnheader', { name: 'Manager', exact: true }),
   ).toHaveCount(0);
   const width = page.getByRole('spinbutton', {
     name: 'Width in pixels: Player',
@@ -33,7 +33,7 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   await page.getByText('Columns', { selector: 'summary' }).click();
   await expect(width).toHaveValue('330');
   await expect(
-    page.getByRole('checkbox', { name: 'Coach', exact: true }),
+    page.getByRole('checkbox', { name: 'Manager', exact: true }),
   ).not.toBeChecked();
   await page.getByRole('checkbox', { name: 'Position', exact: true }).uncheck();
   await page.getByRole('checkbox', { name: 'Status', exact: true }).uncheck();
@@ -43,7 +43,7 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   await page.getByRole('button', { name: 'Reset preferences' }).click();
   await expect(width).toHaveValue('220');
   await expect(
-    page.getByRole('checkbox', { name: 'Coach', exact: true }),
+    page.getByRole('checkbox', { name: 'Manager', exact: true }),
   ).toBeChecked();
   await page.evaluate(() =>
     localStorage.setItem(
@@ -67,21 +67,23 @@ test('advanced layout: row details and selection stay independent', async ({
   await expand.click();
   await expect(expand).toHaveAttribute('aria-expanded', 'true');
   const row = page.locator('.jp-table__detail-row');
-  await expect(row).toContainText('plays pitcher. Coach: Sam Rivera.');
+  await expect(row).toContainText('plays pitcher. Manager: Dave Roberts.');
   await row.getByRole('button', { name: 'Review game' }).click();
-  await expect(page.getByRole('status')).toContainText('Reviewed Alex Morgan');
+  await expect(page.getByRole('status')).toContainText(
+    'Reviewed Jack Flaherty',
+  );
   await page
-    .getByRole('checkbox', { name: 'Select Alex Morgan', exact: true })
+    .getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true })
     .check();
   await expect(
-    page.getByRole('checkbox', { name: 'Select Alex Morgan', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
   ).toBeChecked();
   await page
-    .getByRole('button', { name: 'Hide details: Alex Morgan', exact: true })
+    .getByRole('button', { name: 'Hide details: Jack Flaherty', exact: true })
     .click();
   await expect(row).toHaveCount(0);
   await expect(
-    page.getByRole('checkbox', { name: 'Select Alex Morgan', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
   ).toBeChecked();
 });
 for (const dir of ['ltr', 'rtl'])
@@ -239,7 +241,7 @@ for (const accent of ['neon', 'cobalt'])
         await page.getByText('Columns', { selector: 'summary' }).click();
         await page
           .getByRole('button', {
-            name: 'Show details: Alex Morgan',
+            name: 'Show details: Jack Flaherty',
             exact: true,
           })
           .click();

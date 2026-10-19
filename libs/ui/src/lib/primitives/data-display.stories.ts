@@ -28,28 +28,28 @@ const columns = [
 
 const rows = [
   {
-    name: 'Alex Morgan',
-    env: 'Varsity',
+    name: 'Jack Flaherty',
+    env: 'Active roster',
     status: 'Available',
     region: 'Pitcher',
   },
   {
-    name: 'Jordan Davis',
-    env: 'Varsity',
+    name: 'Freddie Freeman',
+    env: 'Active roster',
     status: 'Day to day',
-    region: 'Catcher',
+    region: 'First base',
   },
   {
-    name: 'Maya Chen',
-    env: 'Reserve',
+    name: 'Tommy Edman',
+    env: 'Active roster',
     status: 'Available',
     region: 'Shortstop',
   },
   {
-    name: 'Taylor Reed',
-    env: 'Reserve',
+    name: 'Clayton Kershaw',
+    env: 'Injured list',
     status: 'Injured',
-    region: 'Right field',
+    region: 'Pitcher',
   },
 ];
 
@@ -194,7 +194,7 @@ const meta: Meta<DataDisplayArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Riverton Falcons</span>
+        <span jpAppShellBrand>Los Angeles Dodgers</span>
       <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -230,12 +230,12 @@ const meta: Meta<DataDisplayArgs> = {
   <header class="roster-page__header">
     <jp-heading as="h1">Player roster</jp-heading>
   </header>
-  <jp-card title="2026 season">
+  <jp-card title="2024 season">
     <span jpCardHeader class="roster-page__count">{{ visibleRows().length }} players</span>
     <p>Review player positions and availability.</p>
     <jp-table
       class="roster-page__table"
-      caption="Falcons roster"
+      caption="Dodgers roster"
       [captionHidden]="true"
       [framed]="false"
       [columns]="columns"
@@ -255,7 +255,7 @@ const meta: Meta<DataDisplayArgs> = {
     </jp-table>
     <div jpCardActions class="roster-page__actions">
       <jp-button [disabled]="showEmpty()" (click)="availableOnly.set(!availableOnly())">{{ availableOnly() ? 'Show all players' : 'Show available' }}</jp-button>
-      <span role="status">{{ availableOnly() ? 'Available players only' : 'Varsity and reserve' }}</span>
+      <span role="status">{{ availableOnly() ? 'Available players only' : 'Active roster and injured list' }}</span>
     </div>
   </jp-card>
   <details class="preview-settings">
@@ -282,7 +282,7 @@ export const Default: Story = {
       'Player roster',
     );
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Falcons roster',
+      'Dodgers roster',
     );
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 
@@ -291,7 +291,7 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Show available' }),
     );
     await expect(
-      canvas.queryByRole('cell', { name: /Jordan Davis/ }),
+      canvas.queryByRole('cell', { name: /Freddie Freeman/ }),
     ).toBeNull();
     await expect(canvas.getByRole('status')).toHaveTextContent(
       'Available players only',
@@ -300,7 +300,7 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Show all players' }),
     );
     await expect(
-      canvas.getByRole('table', { name: 'Falcons roster' }),
+      canvas.getByRole('table', { name: 'Dodgers roster' }),
     ).toBeVisible();
     const settings = canvas.getByText('Preview settings');
     await userEvent.click(settings);
@@ -309,7 +309,7 @@ export const Default: Story = {
     await expect(canvas.getByText('No players on the roster')).toBeVisible();
     await userEvent.click(toggle);
     await expect(
-      canvas.getByRole('cell', { name: /Alex Morgan/ }),
+      canvas.getByRole('cell', { name: /Jack Flaherty/ }),
     ).toBeVisible();
     await userEvent.click(settings);
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();

@@ -245,7 +245,7 @@ describe('JpAssistantPanel + trigger', () => {
     fixture.detectChanges();
     const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
       .componentInstance as JpAssistantPanel;
-    panel.draft.set('Who scored in the ninth inning?');
+    panel.draft.set('Who drove in the go-ahead run?');
     const compositionEnter = new KeyboardEvent('keydown', {
       key: 'Enter',
       isComposing: true,
@@ -254,11 +254,11 @@ describe('JpAssistantPanel + trigger', () => {
     panel.onComposerKeydown(compositionEnter);
     expect(compositionEnter.defaultPrevented).toBe(false);
     expect(service.messages()).toHaveLength(0);
-    expect(panel.draft()).toBe('Who scored in the ninth inning?');
+    expect(panel.draft()).toBe('Who drove in the go-ahead run?');
 
     panel.onComposerKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
     expect(service.messages()[0]?.content).toBe(
-      'Who scored in the ninth inning?',
+      'Who drove in the go-ahead run?',
     );
     expect(panel.draft()).toBe('');
   });

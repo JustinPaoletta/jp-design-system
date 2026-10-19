@@ -37,7 +37,7 @@ The inspection found and corrected these related issues:
 - Surface and Text examples fit their narrow containers.
 
 The four suggestions from the supplied visual audit are implemented.
-The examples retain fictional baseball names and locally stored photos.
+The examples use 2024 Dodgers and Yankees records and locally stored photos.
 The [photo credits](apps/showcase/public/example-photos/README.md) identify the sources and licenses.
 
 Captures are in `dist/qa/system-polish/final-pass/`.
@@ -235,8 +235,8 @@ passed
 
 ## October 12 baseball copy inspection
 
-Storybook and Showcase now use the Riverton Falcons baseball setting.
-The [copy guide](docs/content/BASEBALL_EXAMPLES.md) defines the shared players, roles, availability labels and game results.
+This inspection used the Riverton Falcons baseball setting.
+The copy guide at that time defined the shared players, roles, availability labels and game results.
 Component names remain in the Storybook navigation.
 
 Chrome captures use a 1440 × 1000 desktop viewport and a 390 × 844 mobile viewport, both at device pixel ratio 1.
@@ -251,3 +251,4 @@ These generated images are not tracked in Git.
 
 The 84 visual baselines were inspected and updated for the new copy.
 The charcoal surfaces, restrained accents and navigation treatment remain consistent with the October 11 reference inspection.
+Later examples use the 2024 Dodgers and Yankees records in the [copy guide](docs/content/BASEBALL_EXAMPLES.md).

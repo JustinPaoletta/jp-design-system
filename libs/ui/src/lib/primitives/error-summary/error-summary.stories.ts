@@ -16,7 +16,7 @@ const meta: Meta<JpErrorSummary> = {
   },
   render: (args) => ({
     props: args,
-    template: `<div style="display:grid;gap:var(--jp-space-lg);max-width:32rem"><jp-error-summary [errors]="errors" /><jp-input id="story-email" label="Coach email" type="email" [invalid]="true" error="Enter a valid email address" /></div>`,
+    template: `<div style="display:grid;gap:var(--jp-space-lg);max-width:32rem"><jp-error-summary [errors]="errors" /><jp-input id="story-email" label="Manager email" type="email" [invalid]="true" error="Enter a valid email address" /></div>`,
   }),
 };
 export default meta;

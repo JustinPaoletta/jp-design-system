@@ -63,46 +63,46 @@ export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
   {
     key: 'website',
     label: 'Season preparation',
-    cells: { owner: 'Sam Rivera', status: 'In training', hours: 72 },
+    cells: { owner: 'Dave Roberts', status: 'In training', hours: 72 },
     children: [
       {
         key: 'design',
         label: 'Batting drills',
-        cells: { owner: 'Casey Brooks', status: 'Coach review', hours: 32 },
+        cells: { owner: 'Mookie Betts', status: 'Active', hours: 32 },
         children: [
           {
             key: 'landing',
             label: 'Batting order',
-            cells: { owner: 'Casey Brooks', status: 'Done', hours: 12 },
+            cells: { owner: 'Mookie Betts', status: 'Done', hours: 12 },
           },
           {
             key: 'checkout',
             label: 'Base running',
-            cells: { owner: 'Alex Morgan', status: 'Coach review', hours: 20 },
+            cells: { owner: 'Jack Flaherty', status: 'Active', hours: 20 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitching drills',
-        cells: { owner: 'Sam Rivera', status: 'In training', hours: 40 },
+        cells: { owner: 'Dave Roberts', status: 'In training', hours: 40 },
       },
     ],
   },
   {
     key: 'mobile',
     label: 'Fielding drills',
-    cells: { owner: 'Sam Rivera', status: 'Planned', hours: 48 },
+    cells: { owner: 'Dave Roberts', status: 'Planned', hours: 48 },
     children: [
       {
         key: 'navigation',
         label: 'Outfield routes',
-        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
+        cells: { owner: 'Freddie Freeman', status: 'Planned', hours: 24 },
       },
       {
         key: 'settings',
         label: 'Infield throws',
-        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
+        cells: { owner: 'Freddie Freeman', status: 'Planned', hours: 24 },
       },
     ],
   },
@@ -110,7 +110,7 @@ export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
     key: 'legacy',
     label: 'Last season review',
     disabled: true,
-    cells: { owner: 'Sam Rivera', status: 'Archived', hours: 0 },
+    cells: { owner: 'Dave Roberts', status: 'Archived', hours: 0 },
   },
 ];
 

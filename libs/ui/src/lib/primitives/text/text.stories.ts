@@ -63,7 +63,7 @@ const meta: Meta<JpText> = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Riverton Falcons host the Lakeview Bears at 18:30 at Riverton Field.
+            The Los Angeles Dodgers play the New York Yankees at 8:08 p.m. at Yankee Stadium.
           </jp-text>
         </div>
       </div>
@@ -172,9 +172,9 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-text-story__tones">
-        <jp-text tone="primary">The Falcons won 5–3.</jp-text>
-        <jp-text tone="secondary">Alex Morgan starts at pitcher.</jp-text>
-        <jp-text tone="muted">Final score, October 11.</jp-text>
+        <jp-text tone="primary">The Dodgers won 7–6.</jp-text>
+        <jp-text tone="secondary">Jack Flaherty starts at pitcher.</jp-text>
+        <jp-text tone="muted">Final score, October 30.</jp-text>
         <jp-text tone="disabled">Last season is archived.</jp-text>
       </div>
     `,
@@ -230,7 +230,7 @@ export const Truncated: Story = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Riverton Falcons host the Lakeview Bears at Riverton Field. First pitch is at 18:30, and the starting lineup is confirmed.
+            The Los Angeles Dodgers play the New York Yankees at Yankee Stadium. First pitch is at 8:08 p.m., and Jack Flaherty starts.
           </jp-text>
         </div>
       </div>

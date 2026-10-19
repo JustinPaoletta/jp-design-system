@@ -7,36 +7,36 @@ const rows: readonly JpTreeTableRow[] = [
   {
     key: 'website',
     label: 'Season preparation',
-    cells: { owner: 'Sam Rivera', hours: 72 },
+    cells: { owner: 'Dave Roberts', hours: 72 },
     children: [
       {
         key: 'design',
         label: 'Batting drills',
-        cells: { owner: 'Casey Brooks', hours: 32 },
+        cells: { owner: 'Mookie Betts', hours: 32 },
         children: [
           {
             key: 'landing',
             label: 'Batting order',
-            cells: { owner: 'Casey Brooks', hours: 12 },
+            cells: { owner: 'Mookie Betts', hours: 12 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitching drills',
-        cells: { owner: 'Sam Rivera', hours: 40 },
+        cells: { owner: 'Dave Roberts', hours: 40 },
       },
     ],
   },
   {
     key: 'mobile',
     label: 'Fielding drills',
-    cells: { owner: 'Sam Rivera', hours: 48 },
+    cells: { owner: 'Dave Roberts', hours: 48 },
   },
   {
     key: 'archive',
     label: 'Previous season',
-    cells: { owner: 'Sam Rivera', hours: 0 },
+    cells: { owner: 'Dave Roberts', hours: 0 },
     disabled: true,
   },
 ];

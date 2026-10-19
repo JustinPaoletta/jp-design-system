@@ -11,8 +11,8 @@ const meta: Meta<JpMedia> = {
   parameters: { layout: 'padded' },
   args: {
     src: illustration,
-    alt: 'Riverton Field diamond diagram',
-    caption: 'Riverton Field · Falcons home diamond',
+    alt: 'Empty baseball field on a clear day',
+    caption: 'Sample field photo. Dodger Stadium is the Dodgers home field.',
     loading: 'eager',
     fit: 'cover',
   },
@@ -28,7 +28,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     const image = c.getByRole('img', {
-      name: 'Riverton Field diamond diagram',
+      name: 'Empty baseball field on a clear day',
     });
     await waitFor(() => expect(image).toHaveClass('loaded'));
     await expect(image).toBeVisible();
@@ -45,7 +45,7 @@ export const BrokenImage: Story = {
     const c = within(canvasElement);
     await waitFor(() =>
       expect(
-        c.getByRole('img', { name: 'Riverton Field diamond diagram' }),
+        c.getByRole('img', { name: 'Empty baseball field on a clear day' }),
       ).toHaveTextContent('Image unavailable'),
     );
   },
@@ -58,7 +58,7 @@ export const Portrait: Story = {
   args: {
     aspectRatio: 3 / 4,
     fit: 'cover',
-    caption: 'Portrait crop of the Riverton Field diagram',
+    caption: 'Portrait crop of the field photo',
   },
 };
 export const Transparent: Story = {
@@ -72,8 +72,8 @@ export const Transparent: Story = {
 export const Photo: Story = {
   args: {
     src: '/example-photos/baseball-field.jpg',
-    alt: 'Baseball field with a diamond and spectator stands',
-    caption: 'Falcons field notes · Photo example',
+    alt: 'Empty baseball field on a clear day',
+    caption: 'Empty baseball field · Photo example',
   },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
@@ -89,7 +89,7 @@ export const PhotoPortraitCrop: Story = {
   args: {
     ...Photo.args,
     aspectRatio: 3 / 4,
-    caption: 'Falcons field notes · Portrait crop',
+    caption: 'Empty baseball field · Portrait crop',
   },
 };
 export const PhotoContain: Story = {
@@ -97,7 +97,7 @@ export const PhotoContain: Story = {
     ...Photo.args,
     aspectRatio: 1,
     fit: 'contain',
-    caption: 'Falcons field notes · Full photo in a square frame',
+    caption: 'Empty baseball field · Full photo in a square frame',
   },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
@@ -111,7 +111,7 @@ export const PhotoRecovery: Story = {
   render: () => ({
     props: { source: 'data:image/png;base64,broken' },
     template: `<div style="display:grid;gap:var(--jp-space-md);max-width:480px">
-      <jp-media [src]="source" alt="Baseball field with a diamond and spectator stands" caption="Falcons field notes · Retry the photo" loading="eager" />
+      <jp-media [src]="source" alt="Empty baseball field on a clear day" caption="Empty baseball field · Retry the photo" loading="eager" />
       <jp-button variant="secondary" (click)="source='/example-photos/baseball-field.jpg'">Reload photo</jp-button>
     </div>`,
   }),
@@ -120,7 +120,7 @@ export const PhotoRecovery: Story = {
     await waitFor(() =>
       expect(
         canvas.getByRole('img', {
-          name: 'Baseball field with a diamond and spectator stands',
+          name: 'Empty baseball field on a clear day',
         }),
       ).toHaveTextContent('Image unavailable'),
     );

@@ -56,10 +56,14 @@ const meta: Meta<AppShellDashboardArgs> = {
         sessionSeries: [
           {
             id: 'sessions',
-            label: 'Falcons',
-            values: [0, 0, 1, 1, 3, 3, 4, 4, 5],
+            label: 'Dodgers',
+            values: [0, 0, 0, 0, 5, 5, 5, 7, 7],
           },
-          { id: 'bears', label: 'Bears', values: [0, 1, 1, 1, 2, 2, 2, 3, 3] },
+          {
+            id: 'bears',
+            label: 'Yankees',
+            values: [3, 4, 5, 5, 5, 6, 6, 6, 6],
+          },
         ],
         sidebarCollapsed,
         mobileNavOpen,
@@ -110,7 +114,7 @@ const meta: Meta<AppShellDashboardArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Riverton Falcons</span>
+        <span jpAppShellBrand>Los Angeles Dodgers</span>
         <nav jpAppShellSidebar aria-label="Primary">
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -150,21 +154,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </nav>
 
         <main jpAppShellMain>
-<div class="dashboard-topbar"><span>Falcons / Game day</span><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span></div>
+<div class="dashboard-topbar"><span>Dodgers / Game day</span><span class="dashboard-avatar" aria-label="Freddie Freeman">FF</span></div>
 <section class="dashboard" aria-labelledby="overview-title">
-  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Riverton Falcons vs. Lakeview Bears.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
-  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>5</dd></div><div><dt>Hits</dt><dd>9</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
+  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Los Angeles Dodgers vs. New York Yankees.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
+  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>7</dd></div><div><dt>Hits</dt><dd>7</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
   <div class="dashboard-panels">
-    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Falcons 5 (solid) · Bears 3 (dashed)" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
+    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Dodgers 7 (solid) · Yankees 6 (dashed)" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
     <section class="dashboard-panel"><h2>Activity</h2><ol class="dashboard-activity">
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:10</time><span>Final score recorded</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:06</time><span>Maya Chen made the final out</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:02</time><span>Casey Brooks scored a run</span></li>
-      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time>20:58</time><span>Jordan Davis drove in a run</span></li>
-      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time>20:54</time><span>Alex Morgan hit a single</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Mookie Betts scores Tommy Edman</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Gavin Lux scores Kiké Hernández</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">6th</time><span>Giancarlo Stanton scores Juan Soto</span></li>
+      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Teoscar Hernández scores two runs</span></li>
+      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Freddie Freeman scores two runs</span></li>
     </ol></section>
   </div>
-  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Falcons win 5–3.</h3><p>The Falcons scored five runs on nine hits with no errors.</p></div><div><h3>Next game: October 12.</h3><p>The Falcons host the Bears at 18:30 at Riverton Field.</p></div><small class="dashboard-updated">Updated 21:10<br>Oct 11, 2026</small></div></section>
+  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Dodgers win 7–6.</h3><p>The Dodgers scored seven runs on seven hits with no errors.</p></div><div><h3>World Series: 4 games to 1.</h3><p>Game 5 was the last game. First pitch was 8:08 p.m. at Yankee Stadium.</p></div><small class="dashboard-updated">Final<br>Oct 30, 2024</small></div></section>
 </section>
         </main>
       </jp-app-shell>

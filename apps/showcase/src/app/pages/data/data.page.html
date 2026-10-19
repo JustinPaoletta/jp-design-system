@@ -2,14 +2,14 @@
   <header class="roster-page__header">
     <jp-heading as="h1">Player roster</jp-heading>
   </header>
-  <jp-card title="2026 season">
+  <jp-card title="2024 season">
     <span jpCardHeader class="roster-page__count"
       >{{ visibleRows.length }} players</span
     >
     <p>Review player positions and availability.</p>
     <jp-table
       class="roster-page__table"
-      caption="Falcons roster"
+      caption="Dodgers roster"
       [captionHidden]="true"
       [framed]="false"
       [columns]="columns"
@@ -42,8 +42,8 @@
         >{{ availableOnly ? 'Show all players' : 'Show available' }}</jp-button
       >
       <span role="status"
-        >{{ availableOnly ? 'Available players only' : 'Varsity and reserve'
-        }}</span
+        >{{ availableOnly ? 'Available players only' : 'Active roster and
+        injured list' }}</span
       >
     </div>
   </jp-card>

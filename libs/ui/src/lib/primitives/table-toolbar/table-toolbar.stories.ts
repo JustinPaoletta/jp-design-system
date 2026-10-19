@@ -8,9 +8,9 @@ import { JpButton } from '../button/button';
 import { JpTable, type JpTableRowKey } from '../table/table';
 import { JpTableToolbar, type JpTableFilter } from './table-toolbar';
 const players = [
-  { id: 'alex', name: 'Alex Morgan', status: 'Available' },
-  { id: 'jordan', name: 'Jordan Davis', status: 'Day to day' },
-  { id: 'maya', name: 'Maya Chen', status: 'Available' },
+  { id: 'alex', name: 'Jack Flaherty', status: 'Available' },
+  { id: 'jordan', name: 'Freddie Freeman', status: 'Day to day' },
+  { id: 'maya', name: 'Tommy Edman', status: 'Available' },
 ];
 const meta: Meta<JpTableToolbar> = {
   title: 'Primitives/Data Display/Table Toolbar',
@@ -61,9 +61,9 @@ const meta: Meta<JpTableToolbar> = {
         addPlayer: () => {
           roster.update((current) => [
             ...current,
-            { id: 'taylor', name: 'Taylor Reed', status: 'Available' },
+            { id: 'taylor', name: 'Clayton Kershaw', status: 'Available' },
           ]);
-          feedback.set('Taylor Reed added to the roster.');
+          feedback.set('Clayton Kershaw added to the roster.');
         },
         archiveSelected: () => {
           const count = selected().length;
@@ -87,7 +87,7 @@ const meta: Meta<JpTableToolbar> = {
           <jp-button jpTableActions [disabled]="added()" (click)="addPlayer()">Add player</jp-button>
           <jp-button jpTableBulkActions variant="secondary" (click)="archiveSelected()">Archive selected</jp-button>
         </jp-table-toolbar>
-        <jp-table caption="Falcons roster" [columns]="columns" [rows]="visibleRows()" selectable rowKey="id" [selectedKeys]="selected()" (selectedKeysChange)="selected.set($event)" />
+        <jp-table caption="Dodgers roster" [columns]="columns" [rows]="visibleRows()" selectable rowKey="id" [selectedKeys]="selected()" (selectedKeysChange)="selected.set($event)" />
         <p role="status">{{ feedback() }}</p>
         <jp-button variant="ghost" size="sm" (click)="reset()">Reset roster</jp-button>
       </section>`,
@@ -103,25 +103,25 @@ export const FilteredSelection: Story = {
       canvas.getByRole('button', { name: 'Clear filters' }),
     );
     await expect(
-      canvas.getByRole('cell', { name: 'Jordan Davis' }),
+      canvas.getByRole('cell', { name: 'Freddie Freeman' }),
     ).toBeVisible();
     await userEvent.click(
       canvas.getByRole('button', { name: 'Archive selected' }),
     );
     await expect(
-      canvas.queryByRole('cell', { name: 'Alex Morgan' }),
+      canvas.queryByRole('cell', { name: 'Jack Flaherty' }),
     ).toBeNull();
     await expect(canvas.getByText('2 players archived.')).toBeVisible();
     await userEvent.click(canvas.getByRole('button', { name: 'Add player' }));
     await expect(
-      canvas.getByRole('cell', { name: 'Taylor Reed' }),
+      canvas.getByRole('cell', { name: 'Clayton Kershaw' }),
     ).toBeVisible();
     await userEvent.type(
       canvas.getByRole('searchbox', { name: 'Search players' }),
       'Taylor',
     );
     await expect(
-      canvas.queryByRole('cell', { name: 'Jordan Davis' }),
+      canvas.queryByRole('cell', { name: 'Freddie Freeman' }),
     ).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
     await userEvent.click(
@@ -130,11 +130,11 @@ export const FilteredSelection: Story = {
       }),
     );
     await expect(
-      canvas.getByRole('cell', { name: 'Jordan Davis' }),
+      canvas.getByRole('cell', { name: 'Freddie Freeman' }),
     ).toBeVisible();
     await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
     await expect(
-      canvas.getByRole('cell', { name: 'Alex Morgan' }),
+      canvas.getByRole('cell', { name: 'Jack Flaherty' }),
     ).toBeVisible();
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },

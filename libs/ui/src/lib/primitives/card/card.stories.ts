@@ -13,18 +13,18 @@ import { JpCard } from './card';
     <div class="card-stage">
       <jp-card [title]="title()">
         <jp-badge jpCardHeader tone="neutral" size="sm">Final</jp-badge>
-        <p class="game-date">October 11, 2026 · Riverton Field</p>
+        <p class="game-date">October 30, 2024 · Yankee Stadium</p>
         <dl class="scoreboard" aria-label="Final score">
           <div class="team winner">
-            <dt>Riverton Falcons <span>Home</span></dt>
-            <dd><span class="sr-only">Runs: </span>5</dd>
+            <dt>Los Angeles Dodgers <span>Away</span></dt>
+            <dd><span class="sr-only">Runs: </span>7</dd>
           </div>
           <div class="team">
-            <dt>Lakeview Bears <span>Away</span></dt>
-            <dd><span class="sr-only">Runs: </span>3</dd>
+            <dt>New York Yankees <span>Home</span></dt>
+            <dd><span class="sr-only">Runs: </span>6</dd>
           </div>
         </dl>
-        <p class="game-summary">Nine hits. No errors. A Falcons win.</p>
+        <p class="game-summary">Seven hits. No errors. A Dodgers win.</p>
         <div jpCardActions class="recap-actions">
           <jp-button [disabled]="saved()" (click)="saved.set(true)">
             {{ saved() ? 'Recap saved' : 'Save recap' }}
@@ -82,19 +82,19 @@ export const Saved: Story = {
 };
 
 export const Plain: Story = {
-  args: { title: 'Next game' },
+  args: { title: 'Game 5' },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>The Falcons play the Bears on October 12 at 18:30 at Riverton Field.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>World Series Game 5 is October 30, 2024 at Yankee Stadium. First pitch is at 8:08 p.m.</p></jp-card></div>`,
   }),
 };
 
 export const LongContent: Story = {
   args: {
-    title: 'Riverton Falcons postseason preparation and player availability',
+    title: 'Los Angeles Dodgers postseason roster and player availability',
   },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Coach Sam Rivera will review the starting lineup before the next game. Jordan Davis is day to day. Taylor Reed remains injured.</p><p>All other players should arrive at Riverton Field for batting and fielding drills.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Dave Roberts managed the Dodgers. On October 7, Freddie Freeman was day to day with a sprained right ankle. Clayton Kershaw’s 2024 season ended on October 5.</p><p>Jack Flaherty started World Series Game 5. Mookie Betts and Freddie Freeman drove in runs.</p></jp-card></div>`,
   }),
 };

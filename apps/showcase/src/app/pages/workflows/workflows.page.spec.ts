@@ -15,8 +15,8 @@ describe('WorkflowsPage', () => {
   it('validates temporal controls, focuses recovery, and saves a valid schedule', async () => {
     const f = await mount(),
       c = f.componentInstance;
-    c.launch.setValue('2026-09-30');
-    c.dates.setValue(['2026-10-12', '2026-10-10']);
+    c.launch.setValue('2024-09-30');
+    c.dates.setValue(['2024-10-30', '2024-10-25']);
     c.time.setValue('09:10');
     c.saveSchedule();
     f.detectChanges();
@@ -26,8 +26,8 @@ describe('WorkflowsPage', () => {
     expect(document.activeElement).toBe(
       f.nativeElement.querySelector('jp-error-summary section'),
     );
-    c.launch.setValue('2026-10-10');
-    c.dates.setValue(['2026-10-10', '2026-10-12']);
+    c.launch.setValue('2024-10-30');
+    c.dates.setValue(['2024-10-25', '2024-10-30']);
     c.time.setValue('09:15');
     c.saveSchedule();
     f.detectChanges();

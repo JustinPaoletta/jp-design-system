@@ -21,15 +21,15 @@ const meta: Meta<JpDescriptionList> = {
   parameters: { layout: 'padded' },
   args: {
     items: [
-      { term: 'Coach', description: 'Sam Rivera' },
-      { term: 'Home field', description: 'Riverton Field' },
-      { term: 'Next game', description: 'October 12 at 18:30' },
-      { term: 'Errors last game', description: 0 },
+      { term: 'Manager', description: 'Dave Roberts' },
+      { term: 'Home field', description: 'Dodger Stadium' },
+      { term: 'Game 5', description: 'October 30, 2024 at Yankee Stadium' },
+      { term: 'Dodgers errors', description: 0 },
     ],
   },
   render: (args) => ({
     props: args,
-    template: `<jp-card title="Riverton Falcons"><jp-description-list [items]="items" /></jp-card>`,
+    template: `<jp-card title="Los Angeles Dodgers"><jp-description-list [items]="items" /></jp-card>`,
   }),
 };
 export default meta;
@@ -37,7 +37,9 @@ type Story = StoryObj<JpDescriptionList>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(
-      within(canvasElement).getByRole('heading', { name: 'Riverton Falcons' }),
+      within(canvasElement).getByRole('heading', {
+        name: 'Los Angeles Dodgers',
+      }),
     ).toBeVisible();
     await expect(canvasElement.querySelector('dd:last-child')).toBeVisible();
     await expect(
@@ -56,15 +58,15 @@ export const LongContent: Story = {
     items: [
       {
         term: 'Club',
-        description: 'Riverton Falcons postseason development squad',
+        description: '2024 World Series champions',
       },
       {
         term: 'Contact',
-        description: 'postseason-coordination@falcons.example',
+        description: 'postseason@dodgers.example',
       },
       {
-        term: 'Practice location',
-        description: 'Riverton Field, north entrance beside the batting cages',
+        term: 'Game 5 field',
+        description: 'Yankee Stadium, Bronx. First pitch was 8:08 p.m.',
       },
     ],
   },

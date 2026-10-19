@@ -157,10 +157,16 @@ Its source has no workspace aliases or package symlinks.
 The checks do not approve API maturity or a release.
 Screen-reader, Windows and physical-device inspections remain in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
 
+## October 19, 2026 baseball records
+
+Storybook and Showcase now use the [2024 Dodgers and Yankees records](../content/BASEBALL_EXAMPLES.md).
+World Series Game 5 ended Dodgers 7, Yankees 6, with seven Dodgers hits and no Dodgers errors.
+The October 12 inspection below records the earlier fictional copy.
+
 ## October 12, 2026 baseball examples
 
-Storybook and Showcase use the [shared baseball copy](../content/BASEBALL_EXAMPLES.md).
-The game dashboard shows a 5–3 Falcons win, nine hits and no errors.
+On October 12, Storybook and Showcase used fictional baseball copy.
+The game dashboard showed a 5–3 Falcons win, nine hits and no errors.
 Related examples use the same players, roles, positions and availability labels.
 The [design inspection](../../design-qa.md) records desktop and mobile Chrome captures.
 

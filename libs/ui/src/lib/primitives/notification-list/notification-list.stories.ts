@@ -13,17 +13,18 @@ const meta: Meta<JpNotificationList> = {
     items: [
       {
         id: 'one',
-        title: 'Lineup review requested',
-        description: 'Alex Morgan requested a review of the Falcons lineup.',
-        group: 'Today',
+        title: 'Jack Flaherty starts Game 5',
+        description: 'Dave Roberts started Jack Flaherty against the Yankees.',
+        group: 'October 30',
         unread: true,
-        timeLabel: '10:00 UTC',
-        dateTime: '2026-10-04T10:00:00Z',
+        timeLabel: '8:08 p.m.',
+        dateTime: '2024-10-30T20:08:00-04:00',
       },
       {
         id: 'two',
-        title: 'Jordan Davis joined the club',
-        description: 'Jordan accepted the invitation to the Riverton Falcons.',
+        title: 'Clayton Kershaw is out',
+        description:
+          'On October 5, 2024, Dave Roberts said Clayton Kershaw was out for the postseason.',
         group: 'Earlier',
         unread: false,
       },
@@ -54,7 +55,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as read: Lineup review requested',
+        name: 'Mark as read: Jack Flaherty starts Game 5',
       }),
     );
     await expect(
@@ -62,7 +63,7 @@ export const Default: Story = {
     ).toBeVisible();
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as unread: Lineup review requested',
+        name: 'Mark as unread: Jack Flaherty starts Game 5',
       }),
     );
     await expect(

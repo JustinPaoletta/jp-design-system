@@ -13,7 +13,7 @@ class InlineEditDemo {
   readonly label = input('Club name');
   readonly disabled = input(false);
   readonly fail = input(false);
-  readonly value = signal('Riverton Falcons');
+  readonly value = signal('Los Angeles Dodgers');
   readonly persist = async () => {
     if (this.fail()) throw new Error('Denied');
   };
@@ -45,12 +45,14 @@ export const Default: Story = {
     const input = c.getByRole('textbox', { name: 'Club name' });
     await expect(input).toHaveFocus();
     await userEvent.clear(input);
-    await userEvent.type(input, 'Riverton Falcons Varsity');
+    await userEvent.type(input, 'Los Angeles Dodgers Active roster');
     await userEvent.click(c.getByRole('button', { name: /^Save$/ }));
     await expect(
       c.getByRole('button', { name: 'Edit: Club name' }),
     ).toHaveFocus();
-    await expect(canvasElement).toHaveTextContent('Riverton Falcons Varsity');
+    await expect(canvasElement).toHaveTextContent(
+      'Los Angeles Dodgers Active roster',
+    );
   },
 };
 export const Failed: Story = {

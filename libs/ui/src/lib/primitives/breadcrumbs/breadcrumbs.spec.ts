@@ -67,7 +67,7 @@ describe('JpBreadcrumbs', () => {
     fixture.componentRef.setInput('items', [
       { label: 'League', href: '#league' },
       { label: 'Clubs', href: '#clubs' },
-      { label: 'Riverton Falcons', href: '#falcons' },
+      { label: 'Los Angeles Dodgers', href: '#falcons' },
       { label: 'Roster' },
     ]);
     fixture.detectChanges();
@@ -113,7 +113,7 @@ describe('JpBreadcrumbs', () => {
       fixture.componentRef.setInput('items', [
         { label: 'League', href: '#league' },
         { label: 'Clubs', href: '#clubs' },
-        { label: 'Falcons', href: '#falcons' },
+        { label: 'Dodgers', href: '#falcons' },
         { label: 'Roster' },
       ]);
       fixture.detectChanges();
@@ -167,7 +167,7 @@ describe('JpBreadcrumbs', () => {
       const items = [
         { label: 'League', href: '#league' },
         { label: 'Clubs', href: '#clubs' },
-        { label: 'Falcons', href: '#falcons' },
+        { label: 'Dodgers', href: '#falcons' },
         { label: 'Roster' },
       ];
       fixture.componentRef.setInput('items', items);

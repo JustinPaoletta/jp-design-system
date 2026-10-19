@@ -1,7 +1,7 @@
 # Example photo sources
 
 Storybook and Showcase use these local photographs for avatar and media examples.
-Fictional example names do not identify the real people in these photographs.
+Example names are real players. These photographs do not show those players.
 
 | File                                     | Creator       | Source                                                                                                            | License                                           |
 | ---------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
@@ -9,5 +9,7 @@ Fictional example names do not identify the real people in these photographs.
 | [baseball-field.jpg](baseball-field.jpg) | Keith Cassill | [Empty baseball field on a clear day](https://www.pexels.com/photo/empty-baseball-field-on-a-clear-day-37007746/) | [Pexels License](https://www.pexels.com/license/) |
 
 Both source licenses permit free use of these photographs.
-The file names describe example assets, not the depicted person's identity or an actual Falcons home field.
+The file names describe example assets.
+They do not identify the person in the cap photograph.
+The field photograph is not Dodger Stadium or Yankee Stadium.
 Keep this source list with redistributed example photographs.
