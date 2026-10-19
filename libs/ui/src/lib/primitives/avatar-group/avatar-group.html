@@ -1,12 +1,36 @@
-<div role="group" [attr.aria-label]="label()">
+<div class="group" role="group" tabindex="-1" [attr.aria-label]="label()">
   @for (person of visible(); track person.id) {
-  <jp-avatar [name]="person.name" [src]="person.src || ''" /> } @if (extra()) {
-  <span
-    class="overflow"
-    role="img"
-    [attr.aria-label]="hiddenNames()"
-    [attr.title]="hiddenNames()"
-    >{{ overflowLabel()(extra()) }}</span
-  >
+  <jp-avatar [name]="person.name" [src]="person.src || ''" />
+  } @if (extra()) {
+  <jp-popover [open]="open()" (openChange)="setOpen($event)">
+    <button
+      type="button"
+      class="overflow"
+      jpPopoverTrigger
+      [attr.aria-label]="overflowAriaLabel()(extra())"
+    >
+      {{ overflowLabel()(extra()) }}
+    </button>
+    <div
+      jpPopoverContent
+      class="members"
+      [attr.aria-label]="label()"
+      tabindex="-1"
+    >
+      <p class="members__heading">{{ label() }}</p>
+      <ul class="members__list">
+        @for (person of people(); track person.id) {
+        <li>
+          <jp-avatar
+            [name]="person.name"
+            [src]="person.src || ''"
+            size="sm"
+            aria-hidden="true"
+          /><span>{{ person.name }}</span>
+        </li>
+        }
+      </ul>
+    </div>
+  </jp-popover>
   }
 </div>

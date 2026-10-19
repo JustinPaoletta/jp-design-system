@@ -146,7 +146,12 @@ Rejected files emit `filesRejected: JpUploadRejection[]` and remain visible as t
 One selection can include valid and rejected files.
 The native input resets so the same file can be selected again.
 The component creates no previews, object URLs, file-content reads, network calls, hidden drop targets or simulated progress.
-The Showcase example uses local queue states and keeps files on the device.
+The Showcase and Storybook examples use local queue states and keep files on the device.
+
+The Storybook example connects selection, removal, cancellation and retry to that queue.
+Upload or retry starts one simulated request; completion updates the matching item.
+Cancellation removes the item and cancels its pending completion.
+Named loading and error stories stay unchanged until the user acts.
 
 Upload progress uses the existing progressbar.
 Without a progress value, it shows indeterminate progress.

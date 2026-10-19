@@ -3,9 +3,11 @@ import {
   Component,
   Directive,
   booleanAttribute,
+  computed,
   input,
 } from '@angular/core';
 import { JpCopyButton } from '../copy-button/copy-button';
+import { tokenizeCode } from './code-tokens';
 @Directive({
   selector: 'code[jpInlineCode]',
   host: {
@@ -30,5 +32,10 @@ export class JpCodeBlock {
   readonly code = input.required<string>();
   readonly label = input.required<string>();
   readonly language = input('');
+  /** Basic JavaScript, TypeScript and JSON colors. Other languages stay plain. */
+  readonly highlight = input(true, { transform: booleanAttribute });
   readonly copyable = input(true, { transform: booleanAttribute });
+  readonly tokens = computed(() =>
+    tokenizeCode(this.code(), this.highlight() ? this.language() : ''),
+  );
 }

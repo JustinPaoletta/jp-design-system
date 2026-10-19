@@ -117,7 +117,8 @@ input[aria-invalid='true'] {
 .option {
   min-block-size: var(--jp-size-control-md);
   box-sizing: border-box;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 .option[aria-selected='true'] {
   font-weight: var(--jp-font-weight-semibold);

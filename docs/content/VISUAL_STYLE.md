@@ -64,6 +64,16 @@ Align the application name with the main toolbar.
 For narrow calendar lanes, use event rows to keep titles and times readable.
 Use the [baseball examples](BASEBALL_EXAMPLES.md) for consistent names and product text.
 
+Connect example actions to visible state changes.
+A Remove action must remove its item from the example collection.
+Success text must describe the current values.
+If a user edits values during a save request, retain those edits without marking them as saved.
+Keep a separate copy of the submitted values until the request completes.
+
+Use local photo files for photo examples.
+Record the creator, source and license beside each file.
+Example names must not identify the people in supplied photographs.
+
 ## Selection and focus
 
 Mark the selected navigation item with a background change.
@@ -103,6 +113,11 @@ Run the interaction and accessibility checks after a visual change.
 Set the browser viewport before taking a mobile screenshot.
 Use 390px width for the phone examples and 1440px for desktop examples.
 A story name does not change the viewport of a direct iframe URL.
+
+Keep example controls functional. Bind controlled outputs to visible example state.
+Use distinct names for example callbacks and component methods.
+Supply defaults for values that a custom Storybook template binds.
+An undefined binding can replace a component default.
 
 Wait for the story interaction checks to finish.
 Then inspect the final visible state before saving the screenshot.

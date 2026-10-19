@@ -62,7 +62,8 @@ input:disabled {
   font-family: inherit;
   padding: var(--jp-space-xs) var(--jp-space-sm);
   cursor: pointer;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 .jp-combobox__option:hover,
 .jp-combobox__option--active {

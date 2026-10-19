@@ -1,26 +1,14 @@
 # Component Expansion Task List
 
-Updated: October 19, 2026. Remaining work includes the visual details below and five promotion and integration items.
+Updated: October 19, 2026. Five promotion and integration items remain.
 The [documentation index](docs/README.md) links completed feature work.
 The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
 The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
 
-## Current design work
-
-The user approved the [Card reference](design-qa.md#card-reference-review) on October 19, 2026.
-
-- [ ] Inspect the remaining component states against the approved Card direction. Fix each observed mismatch.
-
-## Remaining visual audit suggestions
-
-The October 2026 audit supplied these additional suggestions.
-The [design inspection](design-qa.md) records the completed changes.
-
-- [ ] Add restrained syntax colors to code blocks. Keep plain text and copy behavior available.
-- [ ] Add photo examples for avatars and media. Check image crops, loading and failure states.
-- [ ] Let users inspect all members of an avatar group when the group shows an overflow count.
-- [ ] Collapse middle breadcrumbs when a path exceeds the available width. Keep every destination accessible.
+The October 19 component inspection covers all 97 Storybook groups at desktop and narrow widths.
+The recorded visual suggestions are implemented.
+The [design inspection](design-qa.md#remaining-component-inspection) gives the scope and limits.
 
 ## Promotion and integration follow-up
 

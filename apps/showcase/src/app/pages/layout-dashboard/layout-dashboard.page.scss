@@ -12,3 +12,23 @@
   line-height: var(--jp-font-line-height-tight);
   color: var(--jp-color-text-primary);
 }
+
+.events {
+  list-style: none;
+  display: grid;
+  gap: var(--jp-space-sm);
+  padding: 0;
+  margin: 0;
+}
+
+.events li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--jp-space-xs) var(--jp-space-md);
+}
+
+.events time {
+  color: var(--jp-color-text-muted);
+  font-size: var(--jp-font-size-caption);
+}

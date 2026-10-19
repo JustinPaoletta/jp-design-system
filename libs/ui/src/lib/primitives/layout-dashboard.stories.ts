@@ -7,6 +7,7 @@ import { JpHeading } from './heading/heading';
 import { JpInline } from './inline/inline';
 import { JpStack } from './stack/stack';
 import { JpSurface } from './surface/surface';
+import { JpCard } from './card/card';
 import { JpText } from './text/text';
 
 const meta: Meta = {
@@ -14,7 +15,16 @@ const meta: Meta = {
   component: JpBox,
   decorators: [
     moduleMetadata({
-      imports: [JpBox, JpStack, JpInline, JpGrid, JpSurface, JpText, JpHeading],
+      imports: [
+        JpBox,
+        JpStack,
+        JpInline,
+        JpGrid,
+        JpSurface,
+        JpCard,
+        JpText,
+        JpHeading,
+      ],
     }),
   ],
   render: () => ({
@@ -29,6 +39,23 @@ const meta: Meta = {
           font-weight: var(--jp-font-weight-semibold);
           font-variant-numeric: tabular-nums;
           line-height: var(--jp-font-line-height-tight);
+        }
+        .jp-layout-dashboard-story__events {
+          list-style: none;
+          display: grid;
+          gap: var(--jp-space-sm);
+          padding: 0;
+          margin: 0;
+        }
+        .jp-layout-dashboard-story__events li {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: var(--jp-space-xs) var(--jp-space-md);
+        }
+        .jp-layout-dashboard-story__events time {
+          color: var(--jp-color-text-muted);
+          font-size: var(--jp-font-size-caption);
         }
       </style>
 
@@ -64,45 +91,25 @@ const meta: Meta = {
           </jp-grid>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
-            <jp-surface tone="raised" padding="lg">
-              <jp-stack gap="sm">
-                <jp-heading as="h2" size="h4">Activity</jp-heading>
-                <jp-stack gap="xs">
-                  <jp-text tone="secondary">Game report saved</jp-text>
-                  <jp-text tone="secondary">League lineup approved</jp-text>
-                  <jp-text tone="secondary">Riverton Falcons club dashboard</jp-text>
-                </jp-stack>
-              </jp-stack>
-            </jp-surface>
-            <jp-surface tone="raised" padding="lg">
-              <jp-stack gap="sm">
-                <jp-heading as="h2" size="h4">Insights</jp-heading>
-                <jp-text tone="secondary">
-                  The Falcons scored five runs on nine hits with no errors.
-                </jp-text>
-              </jp-stack>
-            </jp-surface>
+            <jp-card title="Activity">
+              <ul class="jp-layout-dashboard-story__events">
+                <li>Game report saved</li>
+                <li>League lineup approved</li>
+                <li>Falcons roster updated</li>
+              </ul>
+            </jp-card>
+            <jp-card title="Insights">
+              <p>The Falcons scored five runs on nine hits with no errors.</p>
+            </jp-card>
           </jp-grid>
 
-          <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
-            <jp-stack gap="sm">
-              <jp-heading as="h2" size="h4">Recent games</jp-heading>
-              <jp-stack gap="xs">
-                <jp-inline justify="between">
-                  <jp-text>Starting lineup confirmed</jp-text>
-                  <jp-text as="small" size="caption" tone="muted">10m ago</jp-text>
-                </jp-inline>
-                <jp-inline justify="between">
-                  <jp-text>Last season archived</jp-text>
-                  <jp-text as="small" size="caption" tone="muted">22m ago</jp-text>
-                </jp-inline>
-                <jp-inline justify="between">
-                  <jp-text>Next game scheduled at Riverton Field</jp-text>
-                  <jp-text as="small" size="caption" tone="muted">38m ago</jp-text>
-                </jp-inline>
-              </jp-stack>
-            </jp-stack>
-          </jp-surface>
+          <jp-card title="Recent club activity">
+            <ul class="jp-layout-dashboard-story__events">
+              <li><span>Starting lineup confirmed</span><time datetime="2026-10-11T21:00:00Z">21:00 UTC</time></li>
+              <li><span>Last season archived</span><time datetime="2026-10-11T20:48:00Z">20:48 UTC</time></li>
+              <li><span>Next game scheduled at Riverton Field</span><time datetime="2026-10-11T20:32:00Z">20:32 UTC</time></li>
+            </ul>
+          </jp-card>
         </jp-stack>
       </jp-box>
     `,
@@ -119,7 +126,7 @@ export const Dashboard: Story = {
     await expect(dashboardHeading).toBeTruthy();
     const grids = canvasElement.querySelectorAll('.jp-grid__root');
     await expect(grids.length).toBeGreaterThan(1);
-    const cards = canvasElement.querySelectorAll('.jp-surface__root');
-    await expect(cards.length).toBeGreaterThan(3);
+    const cards = canvasElement.querySelectorAll('jp-card');
+    await expect(cards.length).toBe(3);
   },
 };

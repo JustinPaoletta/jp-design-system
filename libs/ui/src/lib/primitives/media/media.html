@@ -14,6 +14,7 @@
       decoding="async"
       [style.object-fit]="fit()"
       [hidden]="phase() === 'failed'"
+      [class.loaded]="phase() === 'loaded'"
       (load)="onLoad(imageSrc)"
       (error)="onError(imageSrc)"
     />} @if (phase() !== 'loaded') {

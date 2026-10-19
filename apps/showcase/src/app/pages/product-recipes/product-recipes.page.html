@@ -1,12 +1,13 @@
-<jp-box padding="lg" maxWidth="wide">
+<div class="example-page">
   <jp-stack gap="lg">
     <jp-breadcrumbs [items]="breadcrumbs" />
-    <jp-heading as="h1">Club workflows</jp-heading>
-    <jp-text tone="secondary"
-      >Working examples of validation, save/retry, searchable records, and
-      destructive confirmation. This demo uses a simulated API: the first
-      request for each action fails, then retry succeeds.</jp-text
-    >
+    <header class="example-page__header">
+      <jp-heading as="h1">Club workflows</jp-heading>
+      <p>
+        Manage the Falcons roster and club account. In this example, each action
+        fails once so you can try again.
+      </p>
+    </header>
     <jp-tabs
       [tabs]="tabs"
       [selectedValue]="tab()"
@@ -78,10 +79,16 @@
         </jp-stack>
       </ng-template>
       <ng-template jpTabPanel="settings">
-        <jp-surface tone="raised" padding="md" border="subtle">
-          <form [formGroup]="form" (ngSubmit)="save()">
-            <jp-stack gap="md">
-              <jp-heading as="h2">Club account</jp-heading>
+        <form
+          class="example-page__settings"
+          [formGroup]="form"
+          (ngSubmit)="save()"
+        >
+          <jp-card title="Club account">
+            <p jpCardHeader class="example-page__description">
+              Choose the coach contact, field position and club membership.
+            </p>
+            <jp-stack gap="lg">
               <jp-input
                 label="Coach email"
                 type="email"
@@ -118,19 +125,21 @@
                 message="Your changes are now saved."
               />
               }
+            </jp-stack>
+            <div jpCardActions>
               <jp-button
                 type="submit"
                 [loading]="saving()"
                 loadingLabel="Saving settings"
                 >Save settings</jp-button
               >
-            </jp-stack>
-          </form>
-        </jp-surface>
+            </div>
+          </jp-card>
+        </form>
       </ng-template>
     </jp-tabs>
   </jp-stack>
-</jp-box>
+</div>
 <jp-dialog
   title="Remove selected players?"
   [open]="dialogOpen()"

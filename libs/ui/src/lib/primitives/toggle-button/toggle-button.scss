@@ -4,13 +4,15 @@
 }
 button {
   min-block-size: var(--jp-size-control-md);
-  padding: var(--jp-space-xs) var(--jp-space-sm);
+  padding: var(--jp-space-xs) var(--jp-space-md);
   border: 1px solid var(--jp-color-button-secondary-border);
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-tight);
   cursor: pointer;
   overflow-wrap: anywhere;
 }

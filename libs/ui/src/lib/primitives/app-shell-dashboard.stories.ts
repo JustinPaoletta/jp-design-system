@@ -78,8 +78,8 @@ const meta: Meta<AppShellDashboardArgs> = {
 .dashboard-heading h1 {margin:0 0 4px; font-size:var(--jp-font-size-heading-h1); letter-spacing:-.025em; font-weight:600;}
 .dashboard p {margin:0; color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-body-sm); line-height:1.5;}
 .dashboard-period {border:1px solid var(--jp-color-border-default); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle); padding:8px 14px; color:var(--jp-color-text-secondary); font:inherit; font-size:var(--jp-font-size-caption); white-space:nowrap;}
-.dashboard-metrics {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:24px 0; margin:0 0 24px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle);}
-.dashboard-metrics div {padding-inline:24px;}
+.dashboard-metrics {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:auto auto; padding:24px 0; margin:0 0 24px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle);}
+.dashboard-metrics div {display:grid; grid-template-rows:subgrid; grid-row:span 2; padding-inline:24px;}
 .dashboard-metrics div + div {border-inline-start:1px solid var(--jp-color-border-default);}
 .dashboard-metrics dt {color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-caption);}
 .dashboard-metrics dd {margin:4px 0 0; font-size:32px; line-height:1.2; font-weight:600; letter-spacing:-.025em; font-variant-numeric:tabular-nums;}

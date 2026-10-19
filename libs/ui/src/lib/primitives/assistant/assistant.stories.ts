@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { expect, userEvent, waitFor } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { Component, inject } from '@angular/core';
 import { JpButton } from '../button/button';
 import { JpInline } from '../inline/inline';
@@ -22,7 +22,7 @@ import { JpAssistantService } from './assistant.service';
           type="button"
           variant="secondary"
           jpAssistantTrigger
-          [jpAssistantContext]="deploymentContext"
+          [jpAssistantContext]="gameContext"
         >
           Ask about the game
         </jp-button>
@@ -60,7 +60,7 @@ import { JpAssistantService } from './assistant.service';
 class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
-  readonly deploymentContext = {
+  readonly gameContext = {
     label: 'Game FAL-1042',
     description: 'Falcons 5, Bears 3. Final score.',
     entityType: 'game',
@@ -68,7 +68,7 @@ class AssistantStoryHost {
   };
 
   seed(): void {
-    this.assistant.open({ context: this.deploymentContext });
+    this.assistant.open({ context: this.gameContext });
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
@@ -110,10 +110,8 @@ class AssistantStoryHost {
         <jp-button variant="secondary" (click)="start()"
           >Start response</jp-button
         >
-        <jp-button variant="ghost" (click)="stream()">Stream chunk</jp-button>
-        <jp-button variant="ghost" (click)="fail()">Fail response</jp-button>
-        <jp-button variant="ghost" (click)="complete()"
-          >Complete response</jp-button
+        <jp-button variant="ghost" (click)="start(true)"
+          >Show response error</jp-button
         >
       </jp-inline>
       <jp-assistant-panel
@@ -129,8 +127,10 @@ class AssistantStoryHost {
 class AssistantAsyncStoryHost {
   private readonly assistant = inject(JpAssistantService);
   private responseId = 0;
+  private shouldFail = false;
 
-  start(): void {
+  start(failed = false): void {
+    this.shouldFail = failed;
     this.assistant.open({ context: null, clearMessages: true });
     this.assistant.addMessage({
       role: 'user',
@@ -140,27 +140,24 @@ class AssistantAsyncStoryHost {
   }
   respond(): void {
     this.responseId = this.assistant.beginResponse();
-  }
-  stream(): void {
-    this.assistant.updateResponse(
-      this.responseId,
-      'The Falcons lead 5–3. Checking the final inning…',
-    );
-  }
-  fail(): void {
-    this.assistant.failResponse(
-      this.responseId,
-      'Connection lost. Your question has been preserved.',
-    );
-  }
-  complete(): void {
-    this.assistant.completeResponse(
-      this.responseId,
-      'All game checks are complete.',
-    );
+    if (this.shouldFail) {
+      this.assistant.failResponse(
+        this.responseId,
+        'Connection lost. Your question has been preserved.',
+      );
+    } else {
+      this.assistant.updateResponse(
+        this.responseId,
+        'The Falcons lead 5–3. Checking the final inning…',
+      );
+    }
   }
   retry(id: number): void {
     this.responseId = id;
+    this.assistant.completeResponse(
+      id,
+      'The final score is Falcons 5, Bears 3. Alex Morgan scored in the ninth inning.',
+    );
   }
 }
 
@@ -203,7 +200,7 @@ export const MessageRoles: Story = {
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
         <jp-assistant-message messageRole="system" content="Game FAL-1042 loaded" />
-        <jp-assistant-message messageRole="assistant" content="Assistant reply stays calm and neutral." />
+        <jp-assistant-message messageRole="assistant" content="Alex Morgan scored the winning run in the ninth inning." />
         <jp-assistant-message messageRole="user" content="Who scored in the ninth inning?" />
       </div>
     `,
@@ -310,47 +307,54 @@ export const ComposerInteraction: Story = {
 export const PendingAndStreaming: Story = {
   render: () => ({ template: '<jp-assistant-async-story-host />' }),
   play: async ({ canvasElement }) => {
-    const button = (label: string) =>
-      Array.from(canvasElement.querySelectorAll('button')).find(
-        (item) => item.textContent?.trim() === label,
-      ) as HTMLButtonElement;
-    await userEvent.click(button('Start response'));
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeTruthy();
-    await userEvent.click(button('Stream chunk'));
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Start response' }),
+    );
+    await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
     await expect(canvasElement.textContent).toContain(
       'Checking the final inning',
     );
-    await userEvent.click(button('Stop response'));
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Stop response' }),
+    );
     await expect(canvasElement.textContent).toContain('Response stopped');
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeNull();
-    await userEvent.click(button('Start response'));
-    await userEvent.click(button('Stream chunk'));
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await expect(canvasElement.textContent).toContain(
+      'The final score is Falcons 5, Bears 3.',
+    );
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Close assistant' }),
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Start response' }),
+    );
   },
 };
 
 export const FailedAndRetry: Story = {
   render: () => ({ template: '<jp-assistant-async-story-host />' }),
   play: async ({ canvasElement }) => {
-    const button = (label: string) =>
-      Array.from(canvasElement.querySelectorAll('button')).find(
-        (item) => item.textContent?.trim() === label,
-      ) as HTMLButtonElement;
-    await userEvent.click(button('Start response'));
-    await userEvent.click(button('Fail response'));
-    await expect(canvasElement.textContent).toContain('Connection lost');
-    await userEvent.click(button('Retry'));
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeTruthy();
-    await userEvent.click(button('Complete response'));
-    await expect(canvasElement.textContent).toContain(
-      'All game checks are complete.',
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show response error' }),
     );
-    await userEvent.click(button('Start response'));
-    await userEvent.click(button('Fail response'));
+    await expect(canvas.getByRole('alert')).toHaveTextContent(
+      'Connection lost',
+    );
+    await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await expect(canvas.queryByRole('alert')).toBeNull();
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await expect(canvasElement.textContent).toContain(
+      'The final score is Falcons 5, Bears 3.',
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Close assistant' }),
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show response error' }),
+    );
   },
 };

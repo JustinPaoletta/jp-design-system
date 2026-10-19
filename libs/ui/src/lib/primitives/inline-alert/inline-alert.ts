@@ -37,9 +37,13 @@ export type JpInlineAlertTone = (typeof JP_INLINE_ALERT_TONES)[number];
       <ng-content />
     </div>
     @if (actionLabel()) {
-      <jp-button variant="secondary" size="sm" (click)="action.emit()">{{
-        actionLabel()
-      }}</jp-button>
+      <jp-button
+        class="jp-inline-alert__action"
+        variant="secondary"
+        size="sm"
+        (click)="action.emit()"
+        >{{ actionLabel() }}</jp-button
+      >
     }
   `,
   styleUrl: './inline-alert.scss',

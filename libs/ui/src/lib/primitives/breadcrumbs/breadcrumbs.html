@@ -1,7 +1,8 @@
-<nav [attr.aria-label]="ariaLabel()">
+<nav [attr.aria-label]="ariaLabel()" tabindex="-1">
   <ol class="jp-breadcrumbs__list">
-    @for (item of items(); track $index; let last = $last) {
-    <li class="jp-breadcrumbs__item">
+    @for (item of visibleItems(); track item.index; let first = $first; let last
+    = $last) {
+    <li class="jp-breadcrumbs__item" [attr.data-breadcrumb-index]="item.index">
       @if (last) {
       <span class="jp-breadcrumbs__current" aria-current="page"
         >{{ item.label }}</span
@@ -13,6 +14,36 @@
       } @if (!last) {
       <span class="jp-breadcrumbs__separator" aria-hidden="true">/</span> }
     </li>
-    }
+    @if (first && hiddenCount()) {
+    <li class="jp-breadcrumbs__item">
+      <jp-dropdown-menu [open]="open()" (openChange)="open.set($event)">
+        <button
+          class="jp-breadcrumbs__overflow"
+          type="button"
+          jpDropdownTrigger
+          [attr.aria-label]="overflowLabel()(hiddenCount())"
+        >
+          <span aria-hidden="true">…</span>
+        </button>
+        @for (ancestor of hiddenItems(); track ancestor.index) { @if
+        (ancestor.href) {
+        <a
+          jpDropdownMenuItem
+          [href]="ancestor.href"
+          [attr.data-breadcrumb-index]="ancestor.index"
+          >{{ ancestor.label }}</a
+        >
+        } @else {
+        <span
+          jpDropdownMenuItem
+          [disabled]="true"
+          [attr.data-breadcrumb-index]="ancestor.index"
+          >{{ ancestor.label }}</span
+        >
+        } }
+      </jp-dropdown-menu>
+      <span class="jp-breadcrumbs__separator" aria-hidden="true">/</span>
+    </li>
+    } }
   </ol>
 </nav>

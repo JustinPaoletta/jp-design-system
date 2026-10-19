@@ -19,6 +19,7 @@ const meta: Meta<JpText> = {
     template: `
       <style>
         .jp-text-story__frame {
+          box-sizing: border-box;
           display: grid;
           gap: var(--jp-space-xs);
           width: 100%;
@@ -37,6 +38,7 @@ const meta: Meta<JpText> = {
         }
 
         .jp-text-story__sample {
+          box-sizing: border-box;
           min-width: 0;
           width: 100%;
           min-height: calc(var(--jp-space-3xl) + var(--jp-space-md) / 2);
@@ -193,6 +195,7 @@ export const Truncated: Story = {
     template: `
       <style>
         .jp-text-story__frame {
+          box-sizing: border-box;
           display: grid;
           gap: var(--jp-space-xs);
           width: 100%;
@@ -211,6 +214,7 @@ export const Truncated: Story = {
         }
 
         .jp-text-story__sample {
+          box-sizing: border-box;
           min-width: 0;
           width: 100%;
           padding: var(--jp-space-sm);

@@ -10,11 +10,17 @@ const meta: Meta<JpCarousel> = {
     moduleMetadata({ imports: [JpCarouselSlide, JpButton, JpInput] }),
   ],
   parameters: { layout: 'padded' },
-  args: { id: 'story-guide', label: 'Join the Falcons' },
+  args: {
+    id: 'story-guide',
+    label: 'Join the Falcons',
+    loop: true,
+    autoRotate: false,
+    disabled: false,
+  },
   render: (args) => ({
-    props: args,
+    props: { ...args, invitationsOpen: false },
     template: `<jp-carousel style="max-width:40rem" [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
-    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Falcons club.</p><jp-button>Open club invitations</jp-button></ng-template>
+    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Falcons club.</p><jp-button (click)="invitationsOpen=!invitationsOpen">{{ invitationsOpen ? 'Close club invitations' : 'Open club invitations' }}</jp-button>@if (invitationsOpen) { <section aria-label="Club invitations"><h3>Pending invitations</h3><p>Jordan Davis and Maya Chen have been invited to the Falcons.</p></section> }</ng-template>
     <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Check the lineup, inspect the field and prepare the equipment.</p><jp-input label="Coach note" /></ng-template>
     <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>Review the final score and prepare for the next game.</p></ng-template>
   </jp-carousel>`,
@@ -35,6 +41,18 @@ export const Keyboard: Story = {
     await expect(
       c.queryByRole('button', { name: 'Open club invitations', hidden: false }),
     ).toBeVisible();
+    await userEvent.click(
+      c.getByRole('button', { name: 'Open club invitations' }),
+    );
+    await expect(
+      c.getByRole('region', { name: 'Club invitations' }),
+    ).toBeVisible();
+    await userEvent.click(
+      c.getByRole('button', { name: 'Close club invitations' }),
+    );
+    await expect(
+      c.queryByRole('region', { name: 'Club invitations' }),
+    ).toBeNull();
     await userEvent.click(c.getByRole('button', { name: 'Next slide' }));
     await expect(
       c.getByRole('heading', { name: 'Set priorities' }),

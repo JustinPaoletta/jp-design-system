@@ -58,3 +58,20 @@ pre:focus-visible {
 code {
   font: inherit;
 }
+.syntax-keyword {
+  color: var(--jp-color-code-keyword);
+}
+.syntax-string {
+  color: var(--jp-color-code-string);
+}
+.syntax-number {
+  color: var(--jp-color-code-number);
+}
+.syntax-comment {
+  color: var(--jp-color-code-comment);
+}
+@media (forced-colors: active) {
+  code span {
+    color: CanvasText;
+  }
+}

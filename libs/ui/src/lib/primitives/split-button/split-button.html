@@ -18,7 +18,7 @@
       [disabled]="disabled() || !actions().length"
       [attr.aria-label]="menuLabel() + ': ' + label()"
     >
-      ▾
+      <jp-icon name="chevron-down" size="md" />
     </button>
     @for(action of actions();track action.id){<button
       type="button"

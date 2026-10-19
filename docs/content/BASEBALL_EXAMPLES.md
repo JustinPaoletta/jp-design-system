@@ -53,3 +53,9 @@ Use component inputs for example-specific copy.
 Update selectors and visual baselines when the example text changes.
 
 The library's generic control defaults remain available to other applications.
+
+## Photo examples
+
+Avatar and media examples use local baseball photographs.
+The [photo source list](../../apps/showcase/public/example-photos/README.md) records their creators and licenses.
+Fictional example names do not identify the real people in these photographs.

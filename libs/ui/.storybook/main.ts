@@ -15,6 +15,12 @@ function isDefinePlugin(
 }
 
 const config: StorybookConfig = {
+  staticDirs: [
+    {
+      from: '../../../apps/showcase/public/example-photos',
+      to: '/example-photos',
+    },
+  ],
   stories: ['../**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {

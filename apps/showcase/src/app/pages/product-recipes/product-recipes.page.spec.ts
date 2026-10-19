@@ -31,6 +31,46 @@ describe('Falcons recipe request recovery', () => {
     expect(page.saved()).toBe(true);
     expect(page.saveError()).toBe('');
   });
+  it('clears the saved state when any field changes and recognizes the saved values', () => {
+    const page = create().componentInstance;
+    page.form.controls.email.setValue('coach@falcons.example');
+    page.save();
+    jest.runOnlyPendingTimers();
+    page.save();
+    jest.runOnlyPendingTimers();
+    expect(page.saved()).toBe(true);
+    page.form.controls.email.setValue('assistant@falcons.example');
+    expect(page.saved()).toBe(false);
+    page.form.controls.email.setValue('coach@falcons.example');
+    expect(page.saved()).toBe(true);
+    page.form.controls.region.setValue('eu');
+    expect(page.saved()).toBe(false);
+    page.form.controls.region.setValue('us');
+    page.form.controls.plan.setValue('priority');
+    expect(page.saved()).toBe(false);
+    page.form.controls.plan.setValue('standard');
+    expect(page.saved()).toBe(true);
+  });
+  it('saves the submitted snapshot without marking edits during a request as saved', () => {
+    const page = create().componentInstance;
+    page.form.controls.email.setValue('coach@falcons.example');
+    page.save();
+    jest.runOnlyPendingTimers();
+    page.save();
+    page.form.controls.email.setValue('assistant@falcons.example');
+    page.form.markAsDirty();
+    jest.runOnlyPendingTimers();
+    expect(page.saving()).toBe(false);
+    expect(page.savedValue()?.email).toBe('coach@falcons.example');
+    expect(page.form.controls.email.value).toBe('assistant@falcons.example');
+    expect(page.saved()).toBe(false);
+    expect(page.form.dirty).toBe(true);
+    page.save();
+    jest.runOnlyPendingTimers();
+    expect(page.savedValue()?.email).toBe('assistant@falcons.example');
+    expect(page.saved()).toBe(true);
+    expect(page.form.pristine).toBe(true);
+  });
   it('keeps existing records available when refresh fails and supports retry', () => {
     const page = create().componentInstance;
     const records = page.records();

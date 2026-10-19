@@ -1,5 +1,11 @@
 {
   "color": {
+    "code": {
+      "keyword": { "value": "{primitive.color.accent.gold.300}" },
+      "string": { "value": "{primitive.color.state.success.300}" },
+      "number": { "value": "{primitive.color.accent.cobalt.200}" },
+      "comment": { "value": "{color.text.muted}" }
+    },
     "surface": {
       "canvas": {
         "value": "{primitive.color.neutral.1100}"

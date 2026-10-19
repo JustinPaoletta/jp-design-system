@@ -545,10 +545,23 @@ Class `JpBreadcrumbs`. Also exports `JpBreadcrumb`
 (`{ label: string; href?: string }`). Story:
 [Primitives/Navigation/Breadcrumbs](../libs/ui/src/lib/primitives/breadcrumbs/breadcrumbs.stories.ts).
 
-| Input       | Type                      | Default      |
-| ----------- | ------------------------- | ------------ |
-| `items`     | readonly `JpBreadcrumb[]` | `[]`         |
-| `ariaLabel` | string                    | `Breadcrumb` |
+| Input           | Type                        | Default                     |
+| --------------- | --------------------------- | --------------------------- |
+| `items`         | readonly `JpBreadcrumb[]`   | `[]`                        |
+| `ariaLabel`     | string                      | `Breadcrumb`                |
+| `maxItems`      | number                      | `5`                         |
+| `overflowLabel` | `(count: number) => string` | `JP_MESSAGES.overflow.more` |
+
+`maxItems` limits visible destinations, excluding the overflow button.
+The minimum is two. Non-finite values use five.
+Containers at or below 576px show at most three destinations.
+
+The first destination and current page remain visible.
+Hidden ancestors appear in a keyboard-accessible menu.
+Ancestors without `href` appear as disabled menu items.
+
+`overflowLabel(count)` names the overflow button.
+When a resize hides the focused destination, focus moves to the overflow button.
 
 Earlier items with `href` are links. Items without `href` are text. The last
 item is always text with `aria-current="page"`, including when it has

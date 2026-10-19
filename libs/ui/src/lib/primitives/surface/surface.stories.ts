@@ -52,6 +52,7 @@ const meta: Meta<JpSurface> = {
 
         .jp-surface-story__frame {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-xs);
           inline-size: 100%;
           padding: var(--jp-space-sm);
@@ -66,26 +67,33 @@ const meta: Meta<JpSurface> = {
         }
 
         .jp-surface-story__stage {
-          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-sm), 3vw, var(--jp-space-lg));
           border: 1px solid var(--jp-color-border-subtle);
           border-radius: var(--jp-radius-xl);
           overflow: visible;
         }
 
         .jp-surface-story__mat {
-          padding: var(--jp-space-2xl);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-md), 4vw, var(--jp-space-2xl));
           border-radius: var(--jp-radius-lg);
           overflow: visible;
         }
 
         .jp-surface-story__compare {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-xl);
-          grid-template-columns: repeat(auto-fit, minmax(calc(var(--jp-space-3xl) * 4), 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--jp-space-3xl) * 4)), 1fr));
         }
 
         .jp-surface-story__sample {
+          min-inline-size: 0;
           max-width: calc(var(--jp-space-3xl) * 5);
+          overflow-wrap: anywhere;
         }
 
         .jp-surface-story__label {
@@ -206,6 +214,7 @@ export const ElevationLadder: Story = {
 
         .jp-surface-story__frame {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-sm);
           inline-size: 100%;
           padding: var(--jp-space-sm);
@@ -220,7 +229,9 @@ export const ElevationLadder: Story = {
         }
 
         .jp-surface-story__stage {
-          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-sm), 3vw, var(--jp-space-lg));
           border: 1px solid var(--jp-color-border-subtle);
           border-radius: var(--jp-radius-xl);
           background: var(--jp-color-surface-canvas);
@@ -229,12 +240,19 @@ export const ElevationLadder: Story = {
 
         .jp-surface-story__mat {
           display: grid;
+          box-sizing: border-box;
+          min-inline-size: 0;
           gap: var(--jp-space-lg);
-          grid-template-columns: repeat(auto-fit, minmax(calc(var(--jp-space-3xl) * 4), 1fr));
-          padding: var(--jp-space-2xl);
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--jp-space-3xl) * 4)), 1fr));
+          padding: clamp(var(--jp-space-md), 4vw, var(--jp-space-2xl));
           border-radius: var(--jp-radius-lg);
           background: var(--jp-color-surface-canvas);
           overflow: visible;
+        }
+
+        .jp-surface-story__mat > div {
+          min-inline-size: 0;
+          overflow-wrap: anywhere;
         }
 
         .jp-surface-story__label {

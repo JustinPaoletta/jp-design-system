@@ -15,6 +15,42 @@ Chrome captures are in `dist/qa/card-refinement/`.
 The review includes desktop, phone, keyboard focus and saved states.
 This approval covers the Card direction. Passing checks do not approve later component changes.
 
+## Remaining component inspection
+
+The October 19 follow-up covers one representative story from each of the 97 Storybook groups.
+Chrome captures use 1000px and 320px widths.
+The 194 final captures have no horizontal page overflow.
+Code and wide tables keep their internal scroll regions.
+
+The inspection found and corrected these related issues:
+
+- File Upload examples now support selection, removal, cancellation, retry and completion.
+- Settings show saved feedback only when current values match the last successful request.
+- Split Button, Context Menu, Inline Edit and menu options use consistent action text.
+- Inline Alert uses clear title and message spacing without a decorative side border.
+- Assistant examples keep Stop and Retry inside the panel at narrow widths.
+- Avatar groups expose all member names. Breadcrumb menus retain hidden destinations.
+- Photos show crop, contain, loading, failure and recovery behavior.
+- Code blocks use basic syntax colors and preserve exact source and copy values.
+- Pagination, Stepper, Banner, Carousel and Table Toolbar examples respond to their controls.
+- Both dashboard compositions use the approved hierarchy. Narrow metric values align.
+- Surface and Text examples fit their narrow containers.
+
+The four suggestions from the supplied visual audit are implemented.
+The examples retain fictional baseball names and locally stored photos.
+The [photo credits](apps/showcase/public/example-photos/README.md) identify the sources and licenses.
+
+Captures are in `dist/qa/system-polish/final-pass/`.
+The local gallery contains all 97 groups and both widths.
+Capture waits for Storybook interactions and accessibility checks to finish.
+Earlier captures that showed unfinished typing were replaced.
+Generated inspection images remain outside Git.
+
+Additional checks cover keyboard access, image recovery, upload recovery and edits during pending saves.
+The [verification record](docs/qa/VERIFICATION.md) gives automated results.
+This inspection does not approve every possible content, theme, device or state combination.
+Manual acceptance and API promotion remain in the [task list](COMPONENT_EXPANSION_PLAN.md).
+
 ## Component-wide Card adaptation
 
 The next inspection covers 20 components and two compositions.

@@ -12,7 +12,9 @@ button {
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-tight);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -28,6 +30,7 @@ button:disabled {
   cursor: not-allowed;
 }
 input[type='file'] {
+  font-size: var(--jp-font-size-body-sm);
   padding: 0;
   border: 0;
   background: transparent;
@@ -36,7 +39,9 @@ input[type='file'] {
   max-inline-size: 100%;
 }
 input::file-selector-button {
-  font: inherit;
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-tight);
   min-block-size: var(--jp-size-control-md);
   padding-inline: var(--jp-space-md);
   margin-inline-end: var(--jp-space-sm);
@@ -44,7 +49,7 @@ input::file-selector-button {
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
-  font-weight: var(--jp-font-weight-semibold);
+  font-weight: var(--jp-font-weight-medium);
   cursor: pointer;
 }
 ul {
@@ -60,6 +65,8 @@ li {
   flex-wrap: wrap;
   gap: var(--jp-space-xs) var(--jp-space-sm);
   padding: var(--jp-space-sm) 0;
+}
+li:not(:last-child) {
   border-block-end: 1px solid var(--jp-color-border-default);
 }
 .file {
@@ -88,7 +95,7 @@ p {
   min-inline-size: 0;
 }
 .file bdi {
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
 }
 .file-icon {
   inline-size: var(--jp-size-icon-md);
@@ -98,7 +105,6 @@ p {
 }
 li button {
   min-block-size: var(--jp-size-control-sm);
-  font-size: var(--jp-font-size-caption);
 }
 li jp-progress,
 li .jp-input__error {

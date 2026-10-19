@@ -1,5 +1,39 @@
 # Verification evidence
 
+## October 19, 2026 remaining component inspection
+
+The [design inspection](../../design-qa.md#remaining-component-inspection) covers all 97 Storybook groups.
+Chrome captures show one representative story per group at 1000px and 320px widths.
+All 194 final captures fit the page width.
+The capture waits for each story to finish its interactions and accessibility checks.
+
+| Check                              | Result                                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| UI unit tests                      | 503 tests in 99 suites pass with coverage gates.                                                       |
+| Showcase unit tests                | 59 tests in 13 suites pass with coverage gates.                                                        |
+| Token unit tests                   | 17 tests in two suites pass.                                                                           |
+| Static Storybook                   | 363 stories in 97 suites pass.                                                                         |
+| Live Storybook                     | The same 363 stories pass. Compiler and runtime isolation checks pass.                                 |
+| Browser behavior and accessibility | 418 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| macOS Chromium visuals             | All 84 comparisons pass. All 22 changed baselines were inspected.                                      |
+| Installed package consumer         | All 18 browser, accent and density combinations pass.                                                  |
+| Source checks                      | UI, Showcase, browser-test and token lint pass. Angular type checks pass.                              |
+
+Additional Chrome checks cover upload recovery, assistant cancellation and retry, image recovery, and open overflow panels.
+Escape returns focus to the avatar and breadcrumb triggers.
+Avatar initials remain visible during a withheld image request. The loaded photo preserves the frame size.
+Dashboard metric values share the same vertical position at 320px.
+
+The focus regressions failed before correction.
+Six added unit cases cover input changes that remove overflow content and preserve focus outside the component.
+Chrome also confirms focus restoration after live avatar and breadcrumb input changes.
+The settings regressions cover edits during a pending save and changes after a successful save.
+
+Documentation writing checks, their 12 tests, local links, formatting and token guards pass.
+
+These results do not establish screen-reader, Windows or physical-device acceptance.
+The five promotion and integration tasks remain in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
+
 ## October 19, 2026 component-wide Card adaptation
 
 The [design inspection](../../design-qa.md#component-wide-card-adaptation) covers 20 components and two compositions.

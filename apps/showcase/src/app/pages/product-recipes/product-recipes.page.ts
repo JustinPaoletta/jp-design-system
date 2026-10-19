@@ -6,6 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -14,11 +15,9 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  JpBox,
   JpStack,
-  JpSurface,
+  JpCard,
   JpHeading,
-  JpText,
   JpButton,
   JpInput,
   JpCombobox,
@@ -44,11 +43,9 @@ import {
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    JpBox,
     JpStack,
-    JpSurface,
+    JpCard,
     JpHeading,
-    JpText,
     JpButton,
     JpInput,
     JpCombobox,
@@ -66,6 +63,7 @@ import {
     JpDialogActions,
   ],
   templateUrl: './product-recipes.page.html',
+  styleUrl: './product-recipes.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductRecipesPage {
@@ -107,7 +105,22 @@ export class ProductRecipesPage {
   });
   readonly saving = signal(false);
   readonly saveError = signal('');
-  readonly saved = signal(false);
+  private readonly formValue = signal(this.form.getRawValue());
+  readonly savedValue = signal<ReturnType<typeof this.form.getRawValue> | null>(
+    null,
+  );
+  readonly saved = computed(() => {
+    const saved = this.savedValue();
+    const current = this.formValue();
+    return (
+      !!saved &&
+      !this.saving() &&
+      !this.saveError() &&
+      saved.email === current.email &&
+      saved.region === current.region &&
+      saved.plan === current.plan
+    );
+  });
   readonly loading = signal(false);
   readonly loadError = signal('');
   readonly deleting = signal(false);
@@ -153,6 +166,11 @@ export class ProductRecipesPage {
     this.search() ? [{ key: 'search', label: this.search() }] : [],
   );
   constructor() {
+    this.form.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.formValue.set(this.form.getRawValue());
+      });
     this.destroyRef.onDestroy(() => {
       this.destroyed = true;
       for (const timer of this.timers) clearTimeout(timer);
@@ -182,8 +200,8 @@ export class ProductRecipesPage {
   save(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid || this.saving()) return;
+    const submittedValue = this.form.getRawValue();
     this.saving.set(true);
-    this.saved.set(false);
     this.saveError.set('');
     this.request('save', (failed) => {
       this.saving.set(false);
@@ -192,7 +210,10 @@ export class ProductRecipesPage {
           ? 'Settings could not be saved. Your entries are preserved.'
           : '',
       );
-      this.saved.set(!failed);
+      if (!failed) {
+        this.savedValue.set(submittedValue);
+        if (this.saved()) this.form.markAsPristine();
+      }
     });
   }
   refresh(): void {

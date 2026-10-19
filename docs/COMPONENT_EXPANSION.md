@@ -46,17 +46,25 @@ heading level. Use surrounding headings to organize longer sections.
 
 ## Identity and measurements
 
-| Export          | Contract                                                                                                                                                                                            |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `JpAvatar`      | Required non-empty `name`; optional `src`; `size: sm/md/lg` defaults to md. Failed images fall back to first/last initials; changing `src` retries the image. No image HTML is accepted.            |
-| `JpAvatarGroup` | Required `label`; `people: readonly JpAvatarPerson[]`; `max` defaults to 4, with a minimum of 1. Overflow exposes hidden people by name. `overflowLabel(count)` can localize visible overflow text. |
-| `JpStatusDot`   | `tone: neutral/success/warning/error/info`, default neutral. `label` names meaningful status; empty labels make it decorative. Include visible status text when color alone would be ambiguous.     |
-| `JpSpinner`     | `label` defaults to localized loading text, `size` defaults to sm. `decorative=true` suppresses its status announcement. Reduced motion stops rotation.                                             |
-| `JpMeter`       | Required `label`; `value=0`, `min=0`, `max=100`; optional `valueText`. Clamps values and repairs invalid bounds. Represents a measurement, not operation progress.                                  |
+| Export          | Contract                                                                                                                                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `JpAvatar`      | Required non-empty `name`; optional `src`; `size: sm/md/lg` defaults to md. Failed images fall back to first/last initials; changing `src` retries the image. No image HTML is accepted.                                                                |
+| `JpAvatarGroup` | Required `label`; `people: readonly JpAvatarPerson[]`; `max` defaults to 4, with a minimum of 1. The overflow button opens the full member list. `overflowLabel(count)` supplies visible text; `overflowAriaLabel(count)` supplies its accessible name. |
+| `JpStatusDot`   | `tone: neutral/success/warning/error/info`, default neutral. `label` names meaningful status; empty labels make it decorative. Include visible status text when color alone would be ambiguous.                                                         |
+| `JpSpinner`     | `label` defaults to localized loading text, `size` defaults to sm. `decorative=true` suppresses its status announcement. Reduced motion stops rotation.                                                                                                 |
+| `JpMeter`       | Required `label`; `value=0`, `min=0`, `max=100`; optional `valueText`. Clamps values and repairs invalid bounds. Represents a measurement, not operation progress.                                                                                      |
 
 `JpAvatarPerson` contains `id`, `name`, and optional `src`. IDs must be unique.
 Avatars are presentation; consumers can place them inside named links or buttons.
-Avatar-group overflow is informational and does not implicitly open a menu.
+
+The avatar-group overflow button opens a named popover with every member.
+Focus moves into the member list when it opens.
+Escape and an outside pointer close the list.
+When focus is inside the closing list, it returns to the overflow button.
+`overflowAriaLabel(count)` defaults to `JP_MESSAGES.overflow.more`.
+
+Photo examples use local files and retain the initials fallback for failed images.
+See the [example photo sources](../apps/showcase/public/example-photos/README.md).
 
 ## Structured content
 
@@ -176,7 +184,7 @@ composition; all classes and types below are exported from the UI package.
 | `JpTimeline` / `jp-timeline`            | Required `label` and readonly `events: JpTimelineEvent[]`. Keeps supplied order. Optional emptyText. No sorting, fetching, or live announcements.                                                                                                                                  |
 | `JpOverflowChip` / `jp-overflow-chip`   | Required `label` and readonly `items: JpOverflowItem[]`. Displays +N, opens a named popover with every hidden item, closes on Escape/outside pointer, and restores focus if it was inside the closing panel. Empty items omit the action. `moreLabel(count)` localizes the action. |
 | `JpCopyButton` / `jp-copy-button`       | Required plain `text`. Optional disabled and label/pendingLabel/successLabel/failureLabel. Emits copied or copyFailed after the clipboard promise settles. Prevents duplicate pending requests.                                                                                    |
-| `JpCodeBlock` / `jp-code-block`         | Required plain `code` and `label`; optional language; copyable=true. Renders escaped text in pre/code, with keyboard scrolling and selectable source. No syntax highlighter dependency or HTML input.                                                                              |
+| `JpCodeBlock` / `jp-code-block`         | Required plain `code` and `label`; optional `language`. `copyable` and `highlight` default to true. Uses escaped text, keyboard scrolling and selectable source. JavaScript, TypeScript and JSON support basic syntax colors.                                                      |
 | `JpInlineCode` / `code[jpInlineCode]`   | Token typography and surface on a native inline code element; project escaped text.                                                                                                                                                                                                |
 
 Checklist item shape: unique `id`, `label`, optional `description`, `disabled`,
@@ -219,8 +227,18 @@ Copying uses the browser Clipboard API in a secure context. Denied or unavailabl
 access produces visible, polite failure feedback and lets the user try again. The library
 does not request permissions, emulate clipboard writes, or claim success after
 failure. Keep code selectable for manual copying. Changing text resets feedback
-and suppresses stale completion. Syntax highlighting, line numbers, and executable
-code demos are outside this preview API.
+and suppresses stale completion.
+
+Code blocks use basic syntax colors for JavaScript, TypeScript and JSON.
+Language names accept `js`, `javascript`, `ts`, `typescript` and `json`, without case sensitivity.
+Set `highlight` to false for plain text.
+Unknown languages also use plain text.
+Source beyond 50,000 characters or 5,000 text segments uses plain text to limit rendering work.
+
+The syntax colors use a small lexical scanner, not a complete language parser.
+It recognizes comments, quoted strings, selected keywords and numbers.
+Angular text interpolation preserves escaping, and Copy uses the original source.
+Line numbers and executable code examples remain outside this API.
 
 Use `provideJpMessages` to configure these additional message defaults:
 

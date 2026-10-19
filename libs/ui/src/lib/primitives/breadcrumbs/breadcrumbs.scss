@@ -35,6 +35,7 @@
   color: var(--jp-color-text-primary);
   text-decoration: underline;
 }
+nav:focus-visible,
 .jp-breadcrumbs__link:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
@@ -46,4 +47,30 @@
 .jp-breadcrumbs__separator {
   flex-shrink: 0;
   color: var(--jp-color-text-muted);
+}
+.jp-breadcrumbs__overflow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--jp-size-control-sm);
+  min-block-size: var(--jp-size-control-sm);
+  padding: 0 var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-surface-subtle);
+  color: var(--jp-color-text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+.jp-breadcrumbs__overflow:hover {
+  color: var(--jp-color-text-primary);
+  background: var(--jp-color-surface-emphasis);
+}
+.jp-breadcrumbs__overflow:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+a[jpDropdownMenuItem] {
+  text-decoration: none;
+  overflow-wrap: anywhere;
 }

@@ -14,6 +14,7 @@ figure {
   background: var(--jp-color-surface-subtle);
 }
 img {
+  opacity: 0;
   display: block;
   inline-size: 100%;
   block-size: 100%;
@@ -41,4 +42,8 @@ figcaption {
   font-size: var(--jp-font-size-caption);
   line-height: var(--jp-font-line-height-normal);
   overflow-wrap: anywhere;
+}
+
+img.loaded {
+  opacity: 1;
 }

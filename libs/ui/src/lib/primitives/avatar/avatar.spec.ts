@@ -34,4 +34,28 @@ describe('JpAvatar', () => {
     f.detectChanges();
     expect(f.componentInstance.initials()).toBe('');
   });
+  it('keeps initials visible while a photo loads and ignores events from a replaced image', async () => {
+    const f = await mount({ name: 'Alex Morgan', src: '/first.jpg' });
+    const first = f.nativeElement.querySelector('img') as HTMLImageElement;
+    expect(
+      f.nativeElement.querySelector('[role=img]').getAttribute('aria-busy'),
+    ).toBe('true');
+    expect(f.nativeElement.textContent).toContain('AM');
+    expect(first.classList.contains('loaded')).toBe(false);
+    f.componentRef.setInput('src', '/second.jpg');
+    f.detectChanges();
+    const second = f.nativeElement.querySelector('img') as HTMLImageElement;
+    expect(second).not.toBe(first);
+    first.dispatchEvent(new Event('error'));
+    first.dispatchEvent(new Event('load'));
+    f.detectChanges();
+    expect(f.componentInstance.failed()).toBe(false);
+    expect(f.componentInstance.loaded()).toBe(false);
+    second.dispatchEvent(new Event('load'));
+    f.detectChanges();
+    expect(second.classList.contains('loaded')).toBe(true);
+    expect(
+      f.nativeElement.querySelector('[role=img]').hasAttribute('aria-busy'),
+    ).toBe(false);
+  });
 });

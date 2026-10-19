@@ -77,7 +77,7 @@ export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
           },
           {
             key: 'checkout',
-            label: 'Checkout',
+            label: 'Base running',
             cells: { owner: 'Alex Morgan', status: 'Coach review', hours: 20 },
           },
         ],
@@ -96,12 +96,12 @@ export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
     children: [
       {
         key: 'navigation',
-        label: 'Navigation',
+        label: 'Outfield routes',
         cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
       },
       {
         key: 'settings',
-        label: 'Settings',
+        label: 'Infield throws',
         cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
       },
     ],

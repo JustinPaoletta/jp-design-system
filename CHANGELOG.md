@@ -7,6 +7,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
+- Apply the Card layout to club settings. Track submitted values so later edits do not show saved feedback.
+- Align button combinations, context actions and inline alerts with the approved typography. Use working actions and baseball copy in assistant examples.
+- Add basic JavaScript, TypeScript and JSON syntax colors to Code Block. Preserve escaped source and a bounded plain-text fallback.
+- Add an avatar overflow list and collapsed breadcrumbs with keyboard access. Add licensed local photo examples and source attribution.
+
 - Apply the approved Card direction to 20 components and two compositions. Align title sizes, descriptions, selection states and actions.
 - Add a narrow stepper layout. Keep selected and focused tabs visible after selection and container resize, including RTL layouts.
 - Correct narrow code-block headers and virtual-table selection spacing. Add narrow-layout and state examples.

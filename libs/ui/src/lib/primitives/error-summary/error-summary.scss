@@ -12,6 +12,9 @@ section {
     var(--jp-color-surface-subtle)
   );
   font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
+  overflow-wrap: anywhere;
 }
 section:focus {
   outline: 2px solid var(--jp-color-focus-ring);
@@ -19,6 +22,8 @@ section:focus {
 }
 h2 {
   font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
   margin: 0;
 }
 ul {

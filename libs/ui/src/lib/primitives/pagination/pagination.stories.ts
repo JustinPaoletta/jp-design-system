@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { expect, userEvent, within } from 'storybook/test';
 import { provideJpMessages } from '../../i18n';
 import { JpPagination } from './pagination';
 
@@ -25,20 +26,40 @@ import { JpPagination } from './pagination';
   ],
   template: `
     <div dir="rtl" lang="ar" style="max-width: 22rem">
-      <jp-pagination [page]="1" [pageSize]="10" [total]="42" />
+      <jp-pagination
+        [page]="page"
+        [pageSize]="10"
+        [total]="42"
+        (pageChange)="page = $event"
+      />
     </div>
   `,
 })
-class PaginationRtlStory {}
+class PaginationRtlStory {
+  page = 1;
+}
 
 const meta: Meta<JpPagination> = {
   title: 'Primitives/Data Display/Pagination',
   component: JpPagination,
   args: { page: 1, pageSize: 10, total: 42 },
+  render: (args) => ({
+    props: args,
+    template: `<jp-pagination [page]="page" [pageSize]="pageSize" [total]="total" [disabled]="disabled" (pageChange)="page=$event" />`,
+  }),
 };
 export default meta;
 type Story = StoryObj<JpPagination>;
-export const FirstPage: Story = {};
+export const FirstPage: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Next' }));
+    await expect(canvas.getByText('Page 2 of 5')).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: 'First page' }));
+    await expect(canvas.getByText('Page 1 of 5')).toBeVisible();
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
+  },
+};
 export const LastPage: Story = { args: { page: 5 } };
 export const Empty: Story = { args: { total: 0 } };
 export const Fetching: Story = { args: { disabled: true } };

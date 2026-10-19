@@ -25,6 +25,24 @@ test('validated settings keep input through failed save and retry', async ({
   await expect(email).toHaveValue('justin@example.com');
   await page.getByRole('button', { name: 'Retry save', exact: true }).click();
   await expect(page.getByText('Your changes are now saved.')).toBeVisible();
+  await email.fill('assistant@falcons.example');
+  await expect(page.getByText('Your changes are now saved.')).toHaveCount(0);
+  await page.clock.install();
+  await page
+    .getByRole('button', { name: 'Save settings', exact: true })
+    .click();
+  await email.fill('manager@falcons.example');
+  await page.clock.fastForward(500);
+  await expect(
+    page.getByRole('button', { name: 'Save settings', exact: true }),
+  ).toBeEnabled();
+  await expect(page.getByText('Your changes are now saved.')).toHaveCount(0);
+  await expect(email).toHaveValue('manager@falcons.example');
+  await page
+    .getByRole('button', { name: 'Save settings', exact: true })
+    .click();
+  await page.clock.fastForward(500);
+  await expect(page.getByText('Your changes are now saved.')).toBeVisible();
 });
 
 test('sort, search, pagination, selection and destructive retry compose', async ({

@@ -145,6 +145,9 @@
   --jp-size-avatar-md: 2.5rem;
   --jp-size-avatar-lg: 3rem;
   --jp-layout-shell-mobile-max: 48rem;
+  --jp-color-code-keyword: var(--jp-primitive-color-accent-gold-300);
+  --jp-color-code-string: var(--jp-primitive-color-state-success-300);
+  --jp-color-code-number: var(--jp-primitive-color-accent-cobalt-200);
   --jp-color-surface-canvas: var(--jp-primitive-color-neutral-1100);
   --jp-color-surface-sunken: var(--jp-primitive-color-neutral-1100);
   --jp-color-surface-subtle: var(--jp-primitive-color-neutral-950);
@@ -245,6 +248,7 @@
   --jp-elevation-floating: var(--jp-primitive-elevation-200);
   --jp-elevation-overlay: var(--jp-primitive-elevation-300);
   --jp-elevation-focus-ring: var(--jp-primitive-elevation-focus-ring);
+  --jp-color-code-comment: var(--jp-color-text-muted);
   --jp-color-foreground-primary: var(--jp-color-text-primary);
   --jp-color-foreground-secondary: var(--jp-color-text-secondary);
   --jp-color-foreground-muted: var(--jp-color-text-muted);

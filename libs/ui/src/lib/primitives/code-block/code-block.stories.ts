@@ -29,7 +29,16 @@ const starters = lineup.map(({ player }) => player);`,
 };
 export default meta;
 type Story = StoryObj<JpCodeBlock>;
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    await expect(
+      canvasElement.querySelector('code .syntax-keyword'),
+    ).toHaveTextContent('const');
+    await expect(
+      canvasElement.querySelector('code .syntax-string'),
+    ).toHaveTextContent("'Alex Morgan'");
+  },
+};
 export const Readonly: Story = { args: { copyable: false } };
 export const LiteralMarkup: Story = {
   args: {
@@ -42,5 +51,38 @@ export const LiteralMarkup: Story = {
       '<jp-button>Save lineup</jp-button>',
     );
     await expect(canvasElement.querySelector('pre jp-button')).toBeNull();
+  },
+};
+
+export const Json: Story = {
+  args: {
+    label: 'Final game score',
+    language: 'JSON',
+    code: `{
+  "game": "FAL-1042",
+  "home": { "club": "Falcons", "runs": 5 },
+  "away": { "club": "Bears", "runs": 3 },
+  "final": true
+}`,
+  },
+  play: async ({ canvasElement }) => {
+    await expect(
+      canvasElement.querySelector('code .syntax-number'),
+    ).toHaveTextContent('5');
+    await expect(
+      canvasElement.querySelector('code .syntax-keyword'),
+    ).toHaveTextContent('true');
+  },
+};
+export const PlainText: Story = {
+  args: { highlight: false },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.querySelectorAll('code span')).toHaveLength(1);
+    await expect(
+      canvasElement.querySelector('code .syntax-keyword'),
+    ).toBeNull();
+    await expect(canvasElement.querySelector('code')).toHaveTextContent(
+      'const starters',
+    );
   },
 };

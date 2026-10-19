@@ -22,7 +22,8 @@ button:focus-visible {
 ul {
   padding-inline-start: var(--jp-space-lg);
   margin: 0;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 li {
   overflow-wrap: anywhere;
