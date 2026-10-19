@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpBadge } from './badge/badge';
@@ -12,7 +12,6 @@ import { JpEmptyState } from './empty-state/empty-state';
 import { JpHeading } from './heading/heading';
 import { JpInline } from './inline/inline';
 import { JpStack } from './stack/stack';
-import { JpSurface } from './surface/surface';
 import { JpSwitch } from './switch/switch';
 import { JpTable, JpTableCellDef } from './table/table';
 import { JpText } from './text/text';
@@ -63,7 +62,6 @@ const meta: Meta<DataDisplayArgs> = {
         JpBox,
         JpStack,
         JpInline,
-        JpSurface,
         JpText,
         JpHeading,
         JpBadge,
@@ -91,10 +89,6 @@ const meta: Meta<DataDisplayArgs> = {
         showEmpty,
         columns,
         rows,
-        documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
-        documentDensity:
-          document.documentElement.getAttribute('data-jp-density') ?? 'default',
         statusTone(status: string) {
           if (status === 'Available') {
             return 'success';
@@ -121,7 +115,8 @@ const meta: Meta<DataDisplayArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <nav jpAppShellSidebar>
+        <span jpAppShellBrand>Riverton Falcons</span>
+      <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
               href="#data"
@@ -154,34 +149,20 @@ const meta: Meta<DataDisplayArgs> = {
         <main jpAppShellMain>
           <jp-box padding="lg" maxWidth="wide">
             <jp-stack gap="lg">
-              <jp-stack gap="xs">
-                <jp-heading as="h1">Player roster</jp-heading>
-                <jp-text tone="secondary">
-                  Review player positions and availability.
-                </jp-text>
-                <jp-inline gap="sm">
-                  <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
-                  <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
-                </jp-inline>
-              </jp-stack>
-
-              <jp-inline gap="sm" wrap="true">
-                <jp-badge tone="success">Available</jp-badge>
-                <jp-badge tone="warning">Day to day</jp-badge>
-                <jp-badge tone="error">Injured</jp-badge>
-                <jp-badge tone="accent">Starter</jp-badge>
-              </jp-inline>
-
-              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
-                <jp-stack gap="md">
-                  <jp-inline align="center" gap="sm" justify="between" wrap="true">
-                    <jp-heading as="h2">Roster</jp-heading>
+              <jp-inline align="center" gap="lg" justify="between" wrap="true">
+                <jp-stack gap="xs">
+                  <jp-inline align="center" gap="md" wrap="true">
+                    <jp-heading as="h1">Player roster</jp-heading>
                     <jp-text size="caption" tone="secondary">{{ showEmpty() ? 0 : rows.length }} players</jp-text>
-                    <jp-button>Add player</jp-button>
                   </jp-inline>
+                  <jp-text tone="secondary">Review player positions and availability.</jp-text>
+                </jp-stack>
+                <jp-button>Add player</jp-button>
+              </jp-inline>
 
                   <jp-table
                     caption="Falcons roster"
+                    [captionHidden]="true"
                     [columns]="columns"
                     [rows]="showEmpty() ? [] : rows"
                     [striped]="false"
@@ -202,16 +183,18 @@ const meta: Meta<DataDisplayArgs> = {
                       </jp-button>
                     </jp-empty-state>
                   </jp-table>
-                </jp-stack>
-              </jp-surface>
-              <aside aria-label="Story controls">                    <jp-switch
+              <details style="font-size:var(--jp-font-size-body-sm);color:var(--jp-color-text-secondary)">
+                <summary style="cursor:pointer;width:fit-content;padding-block:var(--jp-space-sm)">Preview settings</summary>
+                <aside aria-label="Story controls">
+                <jp-switch
                       [ngModel]="showEmpty()"
                       (ngModelChange)="onShowEmptyChange($event)"
                       name="showEmpty"
                     >
                       Show empty state
                     </jp-switch>
-              </aside>
+                </aside>
+              </details>
             </jp-stack>
           </jp-box>
         </main>
@@ -235,13 +218,20 @@ export const Default: Story = {
     );
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 
-    const toggle = canvasElement.querySelector(
-      'jp-switch button, jp-switch [role="switch"]',
-    ) as HTMLElement | null;
-    if (toggle) {
-      await userEvent.click(toggle);
-      // Toggle back so the story ends showing the populated table.
-      await userEvent.click(toggle);
-    }
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('table', { name: 'Falcons roster' }),
+    ).toBeVisible();
+    const settings = canvas.getByText('Preview settings');
+    await userEvent.click(settings);
+    const toggle = canvas.getByRole('switch', { name: 'Show empty state' });
+    await userEvent.click(toggle);
+    await expect(canvas.getByText('No players on the roster')).toBeVisible();
+    await userEvent.click(toggle);
+    await expect(
+      canvas.getByRole('cell', { name: 'Alex Morgan' }),
+    ).toBeVisible();
+    await userEvent.click(settings);
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };

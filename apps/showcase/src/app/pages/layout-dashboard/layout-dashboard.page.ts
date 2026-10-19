@@ -8,7 +8,6 @@ import {
   JpSurface,
   JpText,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-layout-dashboard-page',
@@ -17,9 +16,4 @@ import { injectDocumentTheme } from '../../shared/document-theme';
   styleUrl: './layout-dashboard.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutDashboardPage {
-  private readonly theme = injectDocumentTheme();
-
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
-}
+export class LayoutDashboardPage {}

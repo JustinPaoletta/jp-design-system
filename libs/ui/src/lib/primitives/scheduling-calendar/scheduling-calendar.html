@@ -89,6 +89,7 @@
     tabindex="0"
     [attr.aria-label]="messages.schedule + ', ' + rangeLabel()"
     [class.agenda]="layout() === 'agenda'"
+    [class.overview]="scheduleOverview()"
     [style.--columns]="columns()"
     [style.--all-day-size]="allDaySize() + 'rem'"
   >
@@ -108,7 +109,12 @@
       [attr.aria-label]="day.label"
       [class.today]="day.date === today()"
     >
-      <h3><time [attr.datetime]="day.date">{{ day.label }}</time></h3>
+      <h3 [attr.aria-label]="day.label">
+        <time [attr.datetime]="day.date"
+          ><span>{{ day.weekdayLabel }}</span
+          ><span>{{ day.dateLabel }}</span></time
+        >
+      </h3>
       <ul class="all-day">
         @for (event of day.allDay; track event.id) {
         <li>

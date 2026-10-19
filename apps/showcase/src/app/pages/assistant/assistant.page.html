@@ -3,21 +3,15 @@
     <jp-stack gap="xs">
       <jp-heading as="h1">Falcons assistant</jp-heading>
       <jp-text tone="secondary"
-        >Branded assistant panel, context triggers, and tone-refined message Ask
-        about the Falcons game, players and starting lineup.</jp-text
+        >Ask about the Falcons game, players and starting lineup.</jp-text
       >
-      <jp-inline gap="sm">
-        <jp-text as="small" tone="muted">accent: {{ accent() }}</jp-text>
-        <jp-text as="small" tone="muted">density: {{ density() }}</jp-text>
-      </jp-inline>
     </jp-stack>
 
     <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
       <jp-stack gap="md">
-        <jp-heading as="h2">Ask the coach</jp-heading>
+        <jp-heading as="h2" size="h4">Ask the coach</jp-heading>
         <jp-text tone="secondary"
-          >Open the assistant with entity context from product Read a summary of
-          the Falcons 5–3 win over the Bears.</jp-text
+          >Choose a game, player or roster to start a conversation.</jp-text
         >
         <jp-inline gap="sm" wrap="true">
           <jp-button
@@ -51,10 +45,9 @@
 
     <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
       <jp-stack gap="md">
-        <jp-heading as="h2">Game summary</jp-heading>
+        <jp-heading as="h2" size="h4">Game summary</jp-heading>
         <jp-text tone="secondary"
-          >Seed system, assistant, and user message roles to compare calm Read a
-          summary of the Falcons 5–3 win over the Bears.</jp-text
+          >Read a summary of the Falcons 5–3 win over the Bears.</jp-text
         >
         <jp-inline gap="sm" wrap="true" align="center">
           <jp-button type="button" variant="primary" (click)="seedToneDemo()">

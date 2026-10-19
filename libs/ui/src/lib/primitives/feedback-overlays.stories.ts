@@ -57,6 +57,7 @@ import { JpTooltip } from './tooltip/tooltip';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
+      <span jpAppShellBrand>Riverton Falcons</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -89,14 +90,6 @@ import { JpTooltip } from './tooltip/tooltip';
               <jp-text tone="secondary">
                 Review club messages and player actions.
               </jp-text>
-              <jp-inline gap="sm">
-                <jp-text as="small" tone="muted"
-                  >accent: {{ documentAccent }}</jp-text
-                >
-                <jp-text as="small" tone="muted"
-                  >density: {{ documentDensity }}</jp-text
-                >
-              </jp-inline>
             </jp-stack>
 
             <jp-surface
@@ -198,11 +191,6 @@ class FeedbackOverlaysCompositionHost {
   dialogOpen = false;
   popoverOpen = false;
   menuOpen = false;
-
-  readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
-  readonly documentDensity =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
   showToast(): void {
     this.toasts.show({ message: 'Lineup saved', tone: 'success' });

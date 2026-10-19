@@ -236,3 +236,19 @@
     transition: none;
   }
 }
+
+.jp-app-shell__brand {
+  min-inline-size: 0;
+  margin-inline-end: auto;
+  padding-inline: var(--jp-space-xs);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-semibold);
+}
+.jp-app-shell__brand:empty {
+  display: none;
+}
+@media (width > 48rem) {
+  :host(.jp-app-shell--collapsed) .jp-app-shell__brand {
+    display: none;
+  }
+}

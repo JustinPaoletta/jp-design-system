@@ -19,7 +19,8 @@ header {
 p {
   margin-block: var(--jp-space-xs) 0;
   color: var(--jp-color-text-secondary);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 .actions,
 .meta {

@@ -1,0 +1,10 @@
+/* Inter by Rasmus Andersson. See fonts/LICENSE.txt.
+ * Source: rsms/inter@353b61b9f4430d5f420d56605a6e7993e0941470
+ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/InterVariable.woff2') format('woff2');
+}

@@ -2,10 +2,10 @@
 
 The repository builds two local npm packages and distributes them as tarballs. Private npm publication is not configured.
 
-| Package                    | Output                 | Public entry points                                                             |
-| -------------------------- | ---------------------- | ------------------------------------------------------------------------------- |
-| `@jp-design-system/ui`     | `dist/packages/ui`     | Angular components, directives, services, and types from `libs/ui/src/index.ts` |
-| `@jp-design-system/tokens` | `dist/packages/tokens` | Typed token utilities; `tokens.css`, `tokens.compact.css`, and `tokens.json`    |
+| Package                    | Output                 | Public entry points                                                                       |
+| -------------------------- | ---------------------- | ----------------------------------------------------------------------------------------- |
+| `@jp-design-system/ui`     | `dist/packages/ui`     | Angular components, directives, services, and types from `libs/ui/src/index.ts`           |
+| `@jp-design-system/tokens` | `dist/packages/tokens` | Typed token utilities; `fonts.css`, `tokens.css`, `tokens.compact.css`, and `tokens.json` |
 
 The package scope is `@jp-design-system`, which is the scope already used by those package names. There is no registry, no `publishConfig`, and no publish credential. Consumers install the `.tgz` files produced from the workspace build. They do not install from npm.
 
@@ -39,7 +39,7 @@ Registry access installs application dependencies; it does not publish JP.
 The application compiles with strict Angular templates.
 It reuses the installed workspace build tools, whose versions appear in the report.
 Runtime packages come from the temporary application installation.
-It imports token types and both exported stylesheets.
+It imports token types, the font stylesheet and both token stylesheets.
 It compiles `ngModel`, reactive forms with `FormGroup`, controls, tables and projected tabs.
 It also compiles expansion, workflow, hierarchy, scheduling, interaction and data-performance APIs.
 
@@ -91,9 +91,16 @@ Do not install directly from `libs/ui` or `libs/tokens`. Those directories are s
 Import the token styles once from application global styles:
 
 ```css
+@import '@jp-design-system/tokens/fonts.css';
 @import '@jp-design-system/tokens/tokens.css';
 @import '@jp-design-system/tokens/tokens.compact.css';
 ```
+
+`fonts.css` loads the included Inter font from local files.
+The package includes the font license in `fonts/LICENSE.txt`.
+The font comes from the [official Inter repository](https://github.com/rsms/inter/tree/353b61b9f4430d5f420d56605a6e7993e0941470).
+Omit the font import if your application supplies its own font.
+Set `--jp-font-family-base` to the application font.
 
 Import standalone components from the public UI entry point:
 

@@ -28,6 +28,7 @@ export async function checkConsumerRuntime(directory, diagnostics) {
         '.js': 'text/javascript',
         '.css': 'text/css',
         '.svg': 'image/svg+xml',
+        '.woff2': 'font/woff2',
       };
       response.setHeader(
         'Content-Type',
@@ -59,6 +60,13 @@ export async function checkConsumerRuntime(directory, diagnostics) {
             page.on('pageerror', (error) => errors.push(error.message));
             try {
               await page.goto(baseURL);
+              const fontLoaded = await page.evaluate(async () => {
+                const faces = await document.fonts.load('400 16px Inter');
+                return faces.some(
+                  (face) => face.family === 'Inter' && face.status === 'loaded',
+                );
+              });
+              expect(fontLoaded).toBe(true);
               await expect(
                 page.getByRole('heading', {
                   name: 'Project settings',

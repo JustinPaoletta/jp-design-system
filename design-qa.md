@@ -1,5 +1,39 @@
 # Design inspection
 
+## Card reference review
+
+The current design review focuses on `Primitives/Layout/Card` in Storybook.
+Further component styling waits for review of this reference.
+The earlier changes remain in the draft pull request.
+
+The Card places the title before its header status.
+Body text uses 14px. Actions have a separate footer with a subtle border.
+The baseball example shows the final score, game context and one save action.
+Other stories show saved feedback, plain content and a long title.
+
+Chrome captures are in `dist/qa/card-refinement/`.
+The review includes desktop, phone, keyboard focus and saved states.
+The design still needs user review. Passing checks do not establish visual approval.
+
+## October 19 refinement inspection
+
+A second Chrome inspection found problems that the first audit pass did not resolve.
+The declared font was not supplied. Card headings and routine buttons had too much emphasis.
+The form and roster repeated headings, borders and visible example settings.
+Crowded calendar lanes showed clipped initials instead of readable event titles.
+
+- Include the Inter font and its license with the token package.
+- Use 16px card titles and 14px routine button labels.
+- Align the dashboard brand and toolbar. Reduce chart labels and panel borders.
+- Group form fields in one panel. Keep preview settings in a separate disclosure.
+- Give the roster one heading and one table frame.
+- Use an event overview when calendar lanes cannot fit readable titles and times.
+
+The fresh before-and-after gallery is `dist/qa/design-refinement/index.html`.
+It includes dashboard, form, roster and calendar captures from Chrome.
+Additional captures show phone layouts and the collapsed sidebar.
+These files remain outside Git. Automated results are recorded separately from visual approval.
+
 ## October 19 visual audit changes
 
 The supplied `design-system-visual-audit.pdf` examines 320 captures across 97 component groups.
@@ -63,7 +97,8 @@ The mobile capture includes the full page.
 
 ## Findings
 
-No actionable P0, P1 or P2 findings remain in this inspection.
+That inspection did not identify further P0, P1 or P2 findings.
+The October 19 inspection later found font and composition problems.
 
 | Area             | Result                                                                                                                       |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |

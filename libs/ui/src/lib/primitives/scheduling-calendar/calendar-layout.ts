@@ -300,6 +300,17 @@ export function buildJpCalendarGrid(
       minute
     );
   };
+  const weekdayLabel = new Intl.DateTimeFormat(locale, {
+    timeZone: 'UTC',
+    calendar: 'gregory',
+    weekday: 'short',
+  });
+  const dateLabel = new Intl.DateTimeFormat(locale, {
+    timeZone: 'UTC',
+    calendar: 'gregory',
+    month: 'short',
+    day: 'numeric',
+  });
   const clock = new Intl.DateTimeFormat(locale, {
     timeZone,
     hour: 'numeric',
@@ -458,6 +469,8 @@ export function buildJpCalendarGrid(
     };
     return {
       ...item,
+      weekdayLabel: weekdayLabel.format(Date.parse(item.date + 'T00:00:00Z')),
+      dateLabel: dateLabel.format(Date.parse(item.date + 'T00:00:00Z')),
       duration,
       timed: assignLanes(
         item.timed.map((entry) => {

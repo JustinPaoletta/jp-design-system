@@ -24,6 +24,15 @@ Body text uses 16px. Dense interface text uses `--jp-font-size-body-sm` at 14px.
 Captions use 13px. Heading sizes start at 32px, 24px, 20px and 16px.
 Use 600 weight for headings and 500 weight for labels.
 
+Card titles use 16px, independent of their heading level.
+Routine button labels use 14px and 500 weight. Primary buttons use 600 weight.
+Use a 1.5 line height for descriptions and body text.
+
+The examples load the included Inter font through `libs/tokens/src/fonts.css`.
+Confirm that the font loads before inspecting screenshots.
+A font name in a CSS list does not install that font.
+Applications can import `@jp-design-system/tokens/fonts.css` or supply their own font.
+
 Use `jp-heading` `as` for the document outline.
 Use its optional `size` input when a different visual size is necessary.
 
@@ -39,6 +48,12 @@ Use its optional `size` input when a different visual size is necessary.
 Use JP controls for actions and fields in component examples.
 A projected HTML button does not receive JP button styles automatically.
 Keep Save as the main action. Put destructive actions in a separate section.
+
+Use one heading and one panel boundary for each task.
+Keep example settings in a separate disclosure or Storybook controls.
+Do not show token values as product content.
+Align the application name with the main toolbar.
+For narrow calendar lanes, use event rows to keep titles and times readable.
 Use the [baseball examples](BASEBALL_EXAMPLES.md) for consistent names and product text.
 
 ## Selection and focus

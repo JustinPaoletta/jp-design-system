@@ -1,6 +1,10 @@
 :host {
-  display: inline-flex;
+  display: block;
+  min-inline-size: 0;
   max-inline-size: 100%;
+  container-type: inline-size;
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 button {
   min-block-size: var(--jp-size-control-md);
@@ -10,7 +14,8 @@ button {
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -24,10 +29,6 @@ button:focus-visible {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-:host {
-  display: block;
-  min-inline-size: 0;
 }
 .toolbar,
 .toolbar div,
@@ -61,7 +62,9 @@ li {
   background: var(--jp-color-surface-raised);
 }
 h3 {
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  color: var(--jp-color-text-secondary);
 }
 .status,
 time,
@@ -86,9 +89,19 @@ li:last-child {
 .title {
   gap: var(--jp-space-sm);
 }
+.title > strong {
+  font-weight: var(--jp-font-weight-semibold);
+}
 .title > time,
 .title > .time {
   margin-inline-start: auto;
+}
+@container (max-width: 30rem) {
+  .title > time,
+  .title > .time {
+    flex-basis: 100%;
+    margin-inline-start: 0;
+  }
 }
 .status {
   display: inline-flex;

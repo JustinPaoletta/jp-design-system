@@ -1,77 +1,55 @@
 <jp-box padding="lg" maxWidth="wide">
   <jp-stack gap="lg">
-    <jp-stack gap="xs">
-      <jp-heading as="h1">Player roster</jp-heading>
-      <a jpLink href="/advanced-layout">Advanced layout and table controls</a>
-      <a jpLink href="/data-performance"
-        >Charts, hierarchy, scheduling and interaction tools</a
-      >
-      <jp-text tone="secondary"
-        >Token-driven table, badges, and empty state inside the app
-        shell.</jp-text
-      >
-      <jp-inline gap="sm">
-        <jp-text as="small" tone="muted">accent: {{ accent() }}</jp-text>
-        <jp-text as="small" tone="muted">density: {{ density() }}</jp-text>
-      </jp-inline>
-    </jp-stack>
-
-    <jp-inline gap="sm" wrap="true">
-      <jp-badge tone="neutral">Reserve</jp-badge>
-      <jp-badge tone="accent">Starter</jp-badge>
-      <jp-badge tone="success">Available</jp-badge>
-      <jp-badge tone="warning">Day to day</jp-badge>
-      <jp-badge tone="error">Injured</jp-badge>
-      <jp-badge tone="info">Away game</jp-badge>
-    </jp-inline>
-
-    <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
-      <jp-stack gap="md">
-        <jp-inline align="center" gap="sm" justify="between" wrap="true">
-          <jp-heading as="h2">Roster</jp-heading>
+    <jp-inline align="center" gap="lg" justify="between" wrap="true">
+      <jp-stack gap="xs">
+        <jp-inline align="center" gap="md" wrap="true">
+          <jp-heading as="h1">Player roster</jp-heading>
           <jp-text size="caption" tone="secondary"
             >{{ visibleRows.length }} players</jp-text
           >
         </jp-inline>
-
-        <jp-table
-          caption="Falcons roster"
-          [columns]="columns"
-          [rows]="visibleRows"
-          [striped]="false"
+        <jp-text tone="secondary"
+          >Review player positions and availability.</jp-text
         >
-          <ng-template jpTableCell="status" let-value>
-            <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
-          </ng-template>
-          <jp-empty-state
-            title="No players on the roster"
-            description="No players match these filters."
-          >
-            <jp-button
-              variant="secondary"
-              type="button"
-              (click)="showEmpty = false"
-            >
-              Clear filters
-            </jp-button>
-          </jp-empty-state>
-        </jp-table>
       </jp-stack>
-    </jp-surface>
-    <aside aria-label="Example controls">
-      <jp-switch [(ngModel)]="showEmpty" name="showEmpty">
-        Show empty state
-      </jp-switch>
-    </aside>
+      <jp-button>Add player</jp-button>
+    </jp-inline>
 
-    <jp-surface tone="sunken" padding="md" border="subtle" elevation="none">
+    <jp-table
+      caption="Falcons roster"
+      [captionHidden]="true"
+      [columns]="columns"
+      [rows]="visibleRows"
+      [striped]="false"
+    >
+      <ng-template jpTableCell="status" let-value>
+        <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
+      </ng-template>
       <jp-empty-state
-        title="Standalone empty state"
-        description="Use outside tables for filtered lists or first-run screens."
+        title="No players on the roster"
+        description="No players match these filters."
       >
-        <span jpEmptyStateIcon aria-hidden="true">◇</span>
-        <jp-button variant="primary" type="button">Add player</jp-button>
+        <jp-button
+          variant="secondary"
+          type="button"
+          (click)="showEmpty = false"
+        >
+          Clear filters
+        </jp-button>
       </jp-empty-state>
-    </jp-surface>
+    </jp-table>
+    <details class="preview-settings">
+      <summary>Preview settings</summary>
+      <aside aria-label="Example controls">
+        <jp-switch [(ngModel)]="showEmpty" name="showEmpty">
+          Show empty state
+        </jp-switch>
+      </aside>
+    </details>
+
+    <nav class="related" aria-label="Related examples">
+      <a jpLink href="/advanced-layout">Advanced table controls</a>
+      <a jpLink href="/data-performance">Charts and large tables</a>
+    </nav>
   </jp-stack>
 </jp-box>

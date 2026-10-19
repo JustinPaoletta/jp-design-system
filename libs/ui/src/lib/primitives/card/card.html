@@ -1,7 +1,8 @@
 <article>
   <header>
-    <ng-content select="[jpCardHeader]" />@if (title()) {
-    <jp-heading [as]="headingLevel()">{{ title() }}</jp-heading> }
+    @if (title()) {
+    <jp-heading [as]="headingLevel()" size="h4">{{ title() }}</jp-heading> }
+    <ng-content select="[jpCardHeader]" />
   </header>
   <div class="body"><ng-content /></div>
   <footer><ng-content select="[jpCardActions]" /></footer>

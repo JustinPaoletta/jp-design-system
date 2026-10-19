@@ -17,7 +17,6 @@ import {
   JpText,
   type JpAssistantContext,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-assistant-page',
@@ -38,12 +37,8 @@ import { injectDocumentTheme } from '../../shared/document-theme';
 })
 export class AssistantPage implements OnDestroy {
   private readonly assistant = inject(JpAssistantService);
-  private readonly theme = injectDocumentTheme();
 
   lastReply = 'None yet';
-
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
 
   readonly deploymentContext: JpAssistantContext = {
     label: 'Game FAL-1042',

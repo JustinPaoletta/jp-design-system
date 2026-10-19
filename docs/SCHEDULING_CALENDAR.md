@@ -115,14 +115,20 @@ At container widths up to 56rem, appointments use chronological agenda rows.
 Titles do not truncate, and the timeline does not use horizontal scroll.
 The Agenda control gives this view at any width.
 
-Week view uses seven equal day columns and one shared time gutter.
+Week view uses seven equal day columns.
+When overlap lanes are narrower than 7rem, the week shows full-width event rows within each day.
+These rows show complete titles and visible time ranges.
+The same appointment buttons remain in chronological order.
+Day view uses one column of event rows when overlapping events need more width.
+
+A wider week or Day view uses the aligned time grid with one shared time gutter.
 Overlapping events share the width of their day.
 Long titles can wrap inside the available slot.
 The native tooltip and accessible name retain the full title and time range.
 Native focus scrolling reveals appointment buttons.
 Day view fills the available width.
 
-Schedule view limits the scroll frame height but keeps all appointments in the DOM.
+The time grid limits the scroll frame height but keeps all appointments in the DOM.
 Day headings stay fixed during scroll.
 The all-day strip has a maximum height and scrolls when its content exceeds that height.
 The first render reveals timed activity on the first day that has timed appointments.

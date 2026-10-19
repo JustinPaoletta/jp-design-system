@@ -49,7 +49,27 @@ for (const route of routes) {
             initialCalendarScroll = await calendarFrame.evaluate(
               (element) => element.scrollTop,
             );
-            expect(initialCalendarScroll).toBeGreaterThan(0);
+            const scrollable = await calendarFrame.evaluate(
+              (element) => element.scrollHeight > element.clientHeight,
+            );
+            if (scrollable) expect(initialCalendarScroll).toBeGreaterThan(0);
+            else {
+              await expect(calendarFrame).toHaveClass(/overview/);
+              for (const title of await calendarFrame
+                .locator('.timed strong')
+                .all()) {
+                expect(
+                  await title.evaluate(
+                    (element) =>
+                      element.scrollHeight <= element.clientHeight + 1,
+                  ),
+                ).toBe(true);
+              }
+              for (const time of await calendarFrame
+                .locator('.timed span')
+                .all())
+                await expect(time).toBeVisible();
+            }
             // Chromium's captureBeyondViewport resets this nested scroller.
             // Fit the page before capture and retain its natural scroll position.
             const pageHeight = await page.evaluate(() =>

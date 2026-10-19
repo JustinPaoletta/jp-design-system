@@ -47,7 +47,10 @@
     [attr.aria-colcount]="fullColumnCount()"
   >
     @if (caption()) {
-    <caption class="jp-table__caption">
+    <caption
+      class="jp-table__caption"
+      [class.jp-table__sr-only]="captionHidden()"
+    >
       {{ caption() }}
     </caption>
     } @if (resizable()) {

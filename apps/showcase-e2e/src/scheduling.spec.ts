@@ -43,7 +43,10 @@ test('scheduling: date navigation and native appointment keyboard activation', a
 test('scheduling: simultaneous appointments occupy separate lanes', async ({
   page,
 }) => {
+  await page.getByRole('button', { name: 'Day', exact: true }).click();
   const items = page.locator('jp-scheduling-calendar .timed li');
+  await expect(page.locator('jp-scheduling-calendar .day')).toHaveCount(1);
+  await expect(items.first()).toHaveCSS('position', 'absolute');
   const first = await items.nth(0).boundingBox();
   const second = await items.nth(1).boundingBox();
   const third = await items.nth(2).boundingBox();
@@ -68,13 +71,20 @@ test('scheduling: simultaneous appointments occupy separate lanes', async ({
   const rtlSecond = await items.nth(1).boundingBox();
   expect(rtlFirst?.x ?? 0).toBeGreaterThan(rtlSecond?.x ?? 0);
 });
-test('scheduling: desktop week shares aligned time tracks with equal day columns and contained scrolling', async ({
+test('scheduling: spacious week shares aligned time tracks with equal day columns and contained scrolling', async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 1100 });
+  // Let this test exercise a component wider than the example page's normal limit.
+  await page
+    .locator('app-scheduling-page .page')
+    .evaluate((element: HTMLElement) => {
+      element.style.maxInlineSize = 'none';
+    });
+  await page.setViewportSize({ width: 3000, height: 1100 });
   const frame = page.locator('jp-scheduling-calendar .days');
   await expect(frame).toHaveAttribute('role', 'region');
   await expect(frame).toHaveAttribute('tabindex', '0');
+  await expect(frame).not.toHaveClass(/overview/);
   await expect(
     page.getByRole('button', { name: /Lineup meeting,/ }),
   ).toHaveCount(1);
@@ -116,10 +126,48 @@ test('scheduling: desktop week shares aligned time tracks with equal day columns
     await frame.evaluate((element) => Math.abs(element.scrollLeft)),
   ).toBeLessThanOrEqual(1);
 });
+test('scheduling: crowded week shows complete event rows and preserves focus through a layout change', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  const frame = page.locator('jp-scheduling-calendar .days');
+  await expect(frame).toHaveClass(/overview/);
+  await expect(frame.locator('.time-gutter')).toBeHidden();
+  const widths = await frame
+    .locator('.day')
+    .evaluateAll((days) => days.map((day) => day.clientWidth));
+  expect(widths).toHaveLength(7);
+  expect(Math.max(...widths) - Math.min(...widths)).toBeLessThanOrEqual(1);
+  for (const event of await frame.locator('.timed button').all()) {
+    await expect(event.locator('strong')).toBeVisible();
+    await expect(event.locator('span')).toBeVisible();
+    expect(
+      await event
+        .locator('strong')
+        .evaluate((title) => title.scrollHeight <= title.clientHeight + 1),
+    ).toBe(true);
+  }
+  expect(
+    await frame.evaluate((el) => el.scrollWidth - el.clientWidth),
+  ).toBeLessThanOrEqual(1);
+  const friday = page.locator('.day[aria-label^="Fri"] .timed button');
+  await friday.focus();
+  // Let this test exercise a component wider than the example page's normal limit.
+  await page
+    .locator('app-scheduling-page .page')
+    .evaluate((element: HTMLElement) => {
+      element.style.maxInlineSize = 'none';
+    });
+  await page.setViewportSize({ width: 3000, height: 1100 });
+  await expect(frame).not.toHaveClass(/overview/);
+  await expect(friday).toBeFocused();
+  await expect(friday).toBeInViewport();
+});
 test('scheduling: short slots preserve a title line and restore times in agenda and mobile rows', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.getByRole('button', { name: 'Day', exact: true }).click();
   const event = page.getByRole('button', { name: /Pitching practice,/ });
   const title = event.locator('strong');
   const time = event.locator('span');

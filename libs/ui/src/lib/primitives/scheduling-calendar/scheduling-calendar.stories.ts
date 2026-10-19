@@ -204,25 +204,40 @@ export const CrowdedWeek: Story = {
     const title = appointment.querySelector('strong') as HTMLElement;
     const time = appointment.querySelector('span') as HTMLElement;
     const days = Array.from(canvasElement.querySelectorAll('.day'));
+    await waitFor(() => expect(frame).toHaveClass('overview'));
     if (host.clientWidth > 896) {
       await expect(days).toHaveLength(7);
       await expect(
         Math.max(...days.map((day) => day.clientWidth)) -
           Math.min(...days.map((day) => day.clientWidth)),
       ).toBeLessThanOrEqual(1);
-      await expect(frame.scrollWidth).toBeLessThanOrEqual(
-        frame.clientWidth + 1,
-      );
-      await expect(getComputedStyle(title).whiteSpace).toBe('nowrap');
-      await expect(getComputedStyle(title).textOverflow).toBe('ellipsis');
-      await expect(title.clientHeight).toBeLessThanOrEqual(
-        parseFloat(getComputedStyle(title).lineHeight) + 1,
-      );
-      await expect(getComputedStyle(time).display).toBe('none');
-      await expect(appointment.getAttribute('title')).toMatch(
-        /Lineup meeting.*9:00.*10:30/,
-      );
     }
+    await expect(frame.scrollWidth).toBeLessThanOrEqual(frame.clientWidth + 1);
+    for (const event of canvasElement.querySelectorAll('.timed .appointment')) {
+      const text = event.querySelector('strong') as HTMLElement;
+      await expect(getComputedStyle(text).webkitLineClamp).toBe('none');
+      await expect(text.scrollHeight).toBeLessThanOrEqual(
+        text.clientHeight + 1,
+      );
+      await expect(event.querySelector('span')).toBeVisible();
+    }
+    await expect(appointment.getAttribute('title')).toMatch(
+      /Lineup meeting.*9:00.*10:30/,
+    );
+    appointment.focus();
+    host.style.width = '900px';
+    await expect(appointment).toHaveFocus();
+    await expect(frame).toHaveClass('overview');
+    host.style.width = '1100px';
+    await userEvent.click(canvas.getByRole('button', { name: 'Day' }));
+    await waitFor(() => expect(frame).not.toHaveClass('overview'));
+    if (host.clientWidth > 896) {
+      await expect(
+        getComputedStyle(appointment.parentElement as HTMLElement).position,
+      ).toBe('absolute');
+    }
+    await userEvent.click(canvas.getByRole('button', { name: 'Week' }));
+    await waitFor(() => expect(frame).toHaveClass('overview'));
     await userEvent.click(canvas.getByRole('button', { name: 'Agenda' }));
     await expect(getComputedStyle(title).whiteSpace).toBe('normal');
     await expect(getComputedStyle(time).display).not.toBe('none');
@@ -232,5 +247,6 @@ export const CrowdedWeek: Story = {
     await expect(getComputedStyle(isolatedTime).unicodeBidi).toBe('isolate');
     host.dir = '';
     await userEvent.click(canvas.getByRole('button', { name: 'Schedule' }));
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };

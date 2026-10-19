@@ -1,8 +1,9 @@
 :host {
   display: block;
-  min-width: 0;
+  min-inline-size: 0;
 }
 article {
+  box-sizing: border-box;
   padding: var(--jp-space-lg);
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-lg);
@@ -20,15 +21,30 @@ footer {
 header {
   margin-block-end: var(--jp-space-md);
 }
+header jp-heading {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
 footer {
-  margin-block-start: var(--jp-space-md);
+  margin-block-start: var(--jp-space-lg);
+  padding-block-start: var(--jp-space-md);
+  border-block-start: 1px solid var(--jp-color-border-subtle);
 }
 header:empty,
 footer:empty {
   display: none;
 }
 .body {
-  font-size: var(--jp-font-size-body);
+  display: flow-root;
+  font-size: var(--jp-font-size-body-sm);
+  color: var(--jp-color-text-secondary);
   line-height: var(--jp-font-line-height-normal);
   overflow-wrap: anywhere;
+}
+:host ::ng-deep .body > p:first-child {
+  margin-block-start: 0;
+}
+:host ::ng-deep .body > p:last-child {
+  margin-block-end: 0;
 }

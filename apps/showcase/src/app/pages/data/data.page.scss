@@ -2,3 +2,22 @@
   display: block;
   min-height: 100vh;
 }
+
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-lg);
+  padding-block-start: var(--jp-space-md);
+  border-block-start: 1px solid var(--jp-color-border-default);
+  font-size: var(--jp-font-size-body-sm);
+}
+
+.preview-settings {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+}
+.preview-settings summary {
+  cursor: pointer;
+  inline-size: fit-content;
+  padding-block: var(--jp-space-sm);
+}

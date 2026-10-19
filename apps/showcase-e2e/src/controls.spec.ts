@@ -7,14 +7,61 @@ test.describe('controls', () => {
 
     const shell = page.locator('jp-app-shell');
     const primaryButton = page.locator('jp-button.jp-button--primary button');
-    const emailInput = page.locator('jp-input input');
+    const emailInput = page.getByRole('textbox', {
+      name: 'Email',
+      exact: true,
+    });
 
     await expect(shell).toBeVisible();
     await expect(page.locator('h1')).toContainText('Controls');
     await expect(primaryButton).toBeVisible();
     await expect(primaryButton).toContainText('Save');
 
-    await emailInput.fill('coach@falcons.example');
-    await expect(emailInput).toHaveValue('coach@falcons.example');
+    await emailInput.fill('assistant@falcons.example');
+    await expect(emailInput).toHaveValue('assistant@falcons.example');
+  });
+
+  test('preview density preserves lineup form values', async ({ page }) => {
+    await page.goto('/controls');
+    const email = page.getByRole('textbox', { name: 'Email', exact: true });
+    const notes = page.getByRole('textbox', { name: 'Coach notes' });
+    const role = page.getByRole('combobox', { name: 'Club role' });
+    const messages = page.getByRole('checkbox', { name: 'Get club messages' });
+    const save = page.getByRole('button', { name: 'Save', exact: true });
+    const preview = page
+      .locator('details')
+      .filter({ hasText: 'Preview settings' });
+    const compact = page.getByRole('switch', { name: 'Compact density' });
+
+    await email.fill('assistant@falcons.example');
+    await notes.fill('Confirm the batting order before warmups.');
+    await role.selectOption('admin');
+    await messages.uncheck();
+    const defaultHeight = await save.evaluate(
+      (el) => el.getBoundingClientRect().height,
+    );
+    await expect(compact).toBeHidden();
+    await preview.locator('summary').click();
+    await compact.click();
+    await expect(compact).toHaveAttribute('aria-checked', 'true');
+    await expect
+      .poll(() => save.evaluate((el) => el.getBoundingClientRect().height))
+      .toBeLessThan(defaultHeight);
+    await preview.locator('summary').click();
+    await expect(compact).toBeHidden();
+
+    await expect(email).toHaveValue('assistant@falcons.example');
+    await expect(notes).toHaveValue(
+      'Confirm the batting order before warmups.',
+    );
+    await expect(role).toHaveValue('admin');
+    await expect(messages).not.toBeChecked();
+
+    await preview.locator('summary').click();
+    await compact.click();
+    await expect(compact).toHaveAttribute('aria-checked', 'false');
+    await expect
+      .poll(() => save.evaluate((el) => el.getBoundingClientRect().height))
+      .toBe(defaultHeight);
   });
 });

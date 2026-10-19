@@ -55,6 +55,7 @@ function installMatchMediaMock(initialMatches = false) {
       (sidebarCollapsedChange)="collapsed = $event"
       (mobileNavOpenChange)="drawerOpen = $event"
     >
+      <span jpAppShellBrand>Falcons</span>
       <nav jpAppShellSidebar>
         <a href="#one">One</a>
         <a href="#two">Two</a>
@@ -548,6 +549,10 @@ describe('JpAppShell', () => {
     const hostFixture = TestBed.createComponent(AppShellHostComponent);
     hostFixture.detectChanges();
 
+    expect(
+      hostFixture.nativeElement.querySelector('.jp-app-shell__brand')
+        ?.textContent,
+    ).toContain('Falcons');
     expect(hostFixture.nativeElement.textContent).toContain('One');
     expect(hostFixture.nativeElement.textContent).toContain('Content');
   });

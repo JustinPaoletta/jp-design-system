@@ -14,8 +14,8 @@
   border: 1px solid transparent;
   border-radius: var(--jp-radius-md);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
-  font-weight: var(--jp-font-weight-semibold);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-tight);
   letter-spacing: var(--jp-font-letter-spacing-normal);
   cursor: pointer;
@@ -33,6 +33,7 @@
 }
 
 :host(.jp-button--primary) .jp-button__root {
+  font-weight: var(--jp-font-weight-semibold);
   background: var(--jp-color-button-primary-bg);
   color: var(--jp-color-button-primary-fg);
 }

@@ -34,7 +34,7 @@ Storybook titles below link to the story source. Run
   offers it.
 - Overlay `open` inputs are controlled. Bind `open` and `openChange`.
 - Projection attributes that are not classes are still part of the contract:
-  `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
+  `[jpAppShellBrand]`, `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
   `[jpEmptyStateIcon]`, `[jpTableSearch]`, `[jpTableFilters]`,
   `[jpTableActions]`, `[jpTableBulkActions]`.
 
@@ -138,6 +138,8 @@ Class `JpAppShell`. Story:
 | `mobileNavOpenChange`    | `boolean` | Menu, scrim, Escape, close, or a viewport grow past `48rem` |
 | `sidebarLabel`           | string    | `Primary` (`aria-label` on the sidebar)                     |
 
+Use `[jpAppShellBrand]` for the club or application name beside the sidebar control.
+The brand is hidden when the desktop sidebar collapses.
 Project navigation with `[jpAppShellSidebar]` and page content with
 `[jpAppShellMain]`. The shell does not store the two booleans. Bind them.
 
@@ -432,6 +434,7 @@ Class `JpTable`. Also exports `JpTableCellDef`, `JpTableRowKey`
 | Input or output    | Type                                   | Default                                |
 | ------------------ | -------------------------------------- | -------------------------------------- |
 | `caption`          | string                                 | `''`                                   |
+| `captionHidden`    | boolean                                | `false`                                |
 | `columns`          | `JpSortableTableColumn[]`              | `[]`                                   |
 | `rows`             | `Record<string, JpTableCellValue>[]`   | `[]`                                   |
 | `striped`          | boolean                                | `false`                                |
@@ -449,6 +452,9 @@ The table does not fetch, filter, or reorder `rows`. Sortable headers set
 `aria-sort`. A row whose key is not a string or number can render and cannot
 be selected. The header checkbox selects the current page only.
 `selectionChange` keeps keys that are not on the page.
+
+Set `captionHidden` to `true` when a nearby heading already names the table.
+The native caption remains available to assistive technology.
 
 Rich cells: `<ng-template jpTableCell="columnKey" let-value>`. Context also
 exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.

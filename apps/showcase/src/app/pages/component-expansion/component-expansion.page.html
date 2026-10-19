@@ -51,16 +51,8 @@
         ><jp-disclosure title="Club preferences"
           ><p>Game alerts, score updates and roster records.</p></jp-disclosure
         ></jp-accordion
-      ><jp-list [items]="services"
-        ><ng-template jpListItem let-item
-          ><div>
-            <strong>{{ item.title }}</strong>
-            <p>{{ item.description }}</p>
-          </div>
-          <span>{{ item.meta }}</span></ng-template
-        ></jp-list
-      ></jp-card
-    >
+      ><jp-list [items]="services" />
+    </jp-card>
   </div>
   <jp-card title="Club preferences" headingLevel="h2"
     ><form id="preferences" [formGroup]="form" (ngSubmit)="submit()">

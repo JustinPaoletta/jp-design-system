@@ -3,7 +3,7 @@
     "typography": {
       "family": {
         "sans": {
-          "value": "'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+          "value": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
         },
         "mono": {
           "value": "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace"

@@ -1,5 +1,43 @@
 # Verification evidence
 
+## October 19, 2026 Card reference
+
+The [Card reference review](../../design-qa.md#card-reference-review) limits the next design decision to one component.
+Chrome inspection covers the desktop card, a 390px phone viewport and long text at 320px.
+Keyboard activation saves the example recap and shows confirmation text.
+The focus ring remains visible. These views have no horizontal page overflow.
+
+All 478 UI unit tests pass with coverage gates.
+Live Storybook passes 338 stories in 97 suites, including four Card stories and runtime isolation checks.
+UI lint, Angular types and the Showcase production build pass.
+All 84 macOS Chromium visual comparisons pass after baseline inspection.
+The earlier refinement checks below have their own scope.
+The Card still needs visual approval before further component styling.
+
+## October 19, 2026 design refinement
+
+The second [design inspection](../../design-qa.md) covers the font, dashboard, form, roster and calendar changes.
+The token package supplies Inter and its license.
+Chrome captures show the revised compositions at desktop and phone widths.
+
+| Check                              | Result                                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| UI unit tests                      | 478 tests in 98 suites pass.                                                                          |
+| Showcase unit tests                | 54 tests in 12 suites pass.                                                                           |
+| Token unit tests                   | 17 tests in two suites pass.                                                                          |
+| Source checks                      | UI, Showcase, tokens and browser-test lint pass. Angular type checks pass.                            |
+| Static and live Storybook          | Each run passes 335 stories in 97 suites. Live compiler/runtime isolation checks pass.                |
+| Browser behavior and accessibility | 412 tests pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| Installed package consumer         | All 18 browser, accent and density combinations pass, including the Inter font load check.            |
+
+The Showcase production build passes without component style-budget warnings.
+Calendar tests check readable event rows, focus during layout changes and clock-change ordering.
+The roster keeps its native table caption while hiding the repeated visible heading.
+Form tests check that preview density changes preserve entered values.
+
+These automated results do not replace visual approval or the remaining manual inspections.
+The first audit results below remain as dated history.
+
 ## October 19, 2026 visual audit changes
 
 The [design inspection](../../design-qa.md) records the visual changes and Chrome captures.

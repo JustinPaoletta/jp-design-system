@@ -154,6 +154,7 @@ const preview: Preview = {
             background: var(--jp-color-surface-sunken, ${JP_PAGE_BG});
             color: var(--jp-color-text-primary);
             font-family: var(--jp-font-family-base);
+            line-height: var(--jp-font-line-height-normal);
           "
         >${story}</div>
       `,
@@ -182,6 +183,7 @@ const preview: Preview = {
         body.style.padding = 'var(--jp-space-md)';
         body.style.color = 'var(--jp-color-text-primary)';
         body.style.fontFamily = 'var(--jp-font-family-base)';
+        body.style.lineHeight = 'var(--jp-font-line-height-normal)';
         body.style.boxSizing = 'border-box';
       }
 

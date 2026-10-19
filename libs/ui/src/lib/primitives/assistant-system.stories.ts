@@ -38,6 +38,7 @@ import { JpText } from './text/text';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
+      <span jpAppShellBrand>Riverton Falcons</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -68,17 +69,8 @@ import { JpText } from './text/text';
             <jp-stack gap="xs">
               <jp-heading as="h1">Falcons assistant</jp-heading>
               <jp-text tone="secondary">
-                Ask the coach open the branded assistant panel with calm Ask
-                about the Falcons game or roster.
+                Ask about the Falcons game or roster.
               </jp-text>
-              <jp-inline gap="sm">
-                <jp-text as="small" tone="muted"
-                  >accent: {{ documentAccent }}</jp-text
-                >
-                <jp-text as="small" tone="muted"
-                  >density: {{ documentDensity }}</jp-text
-                >
-              </jp-inline>
             </jp-stack>
 
             <jp-surface
@@ -88,7 +80,7 @@ import { JpText } from './text/text';
               elevation="none"
             >
               <jp-stack gap="md">
-                <jp-heading as="h2">Ask the coach</jp-heading>
+                <jp-heading as="h2" size="h4">Ask the coach</jp-heading>
                 <jp-inline gap="sm" wrap="true">
                   <jp-button
                     type="button"
@@ -128,11 +120,6 @@ class AssistantCompositionHost {
 
   sidebarCollapsed = false;
   mobileNavOpen = false;
-
-  readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
-  readonly documentDensity =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
   readonly deploymentContext = {
     label: 'Game FAL-1042',

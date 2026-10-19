@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Supply Inter and its license through the token package. Load the font in Storybook and Showcase.
+- Simplify form and roster examples. Add optional `jpAppShellBrand` projection and table `captionHidden` input.
+- Use readable event rows when overlapping calendar lanes become too narrow.
+- Refine Card hierarchy and footer spacing. Add a baseball reference for focused visual review before further styling.
+
 - Increase control, icon and text sizes. Separate card, raised-panel and overlay surfaces.
 - Align table headers and cells. Use one calendar time gutter with equal day columns and preserved clock-change ordering.
 - Refine field groups, selection controls, assistant composition, menu rows, feedback and notification layout.

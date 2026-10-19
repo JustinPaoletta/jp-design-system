@@ -5,18 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { expect, userEvent } from 'storybook/test';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
-import { JpBox } from './box/box';
 import { JpButton } from './button/button';
 import { JpCheckbox } from './checkbox/checkbox';
 import { JpHeading } from './heading/heading';
-import { JpIconButton } from './icon-button/icon-button';
-import { JpInline } from './inline/inline';
 import { JpInput } from './input/input';
 import { JpSelect } from './select/select';
 import { JpStack } from './stack/stack';
-import { JpSurface } from './surface/surface';
 import { JpSwitch } from './switch/switch';
-import { JpText } from './text/text';
 import { JpTextarea } from './textarea/textarea';
 
 type ControlsFormArgs = {
@@ -38,14 +33,9 @@ const meta: Meta<ControlsFormArgs> = {
         FormsModule,
         JpAppShell,
         JpAppShellNavItem,
-        JpBox,
         JpStack,
-        JpInline,
-        JpSurface,
-        JpText,
         JpHeading,
         JpButton,
-        JpIconButton,
         JpInput,
         JpTextarea,
         JpSelect,
@@ -57,7 +47,7 @@ const meta: Meta<ControlsFormArgs> = {
   args: {
     sidebarCollapsed: false,
     mobileNavOpen: false,
-    email: '',
+    email: 'coach@falcons.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -71,10 +61,6 @@ const meta: Meta<ControlsFormArgs> = {
         ...args,
         sidebarCollapsed,
         mobileNavOpen,
-        documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
-        documentDensity:
-          document.documentElement.getAttribute('data-jp-density') ?? 'default',
         roleOptions: [
           { value: 'admin', label: 'Coach' },
           { value: 'editor', label: 'Scorekeeper' },
@@ -88,13 +74,139 @@ const meta: Meta<ControlsFormArgs> = {
         },
       },
       template: `
+      <style>
+.lineup-editor {
+  box-sizing: border-box;
+  max-inline-size: 48rem;
+  margin-inline: auto;
+  padding: 32px 24px;
+}
+.lineup-editor__header {
+  margin-block-end: 24px;
+}
+.lineup-editor p {
+  margin: 0;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
+}
+.lineup-editor__header p {
+  margin-block-start: 8px;
+}
+.lineup-editor__panel {
+  overflow: hidden;
+  border: 1px solid var(--jp-color-border-subtle);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-subtle);
+}
+.lineup-editor__fields {
+  display: grid;
+  gap: 24px;
+  padding: 28px;
+}
+.lineup-editor h2 {
+  margin: 0;
+  font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-normal);
+}
+.lineup-editor__section-heading p {
+  margin-block-start: 4px;
+}
+.lineup-editor__contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 20px;
+}
+.lineup-editor__contact > * {
+  min-inline-size: 0;
+}
+.lineup-editor__messages {
+  display: grid;
+  gap: 4px;
+}
+.lineup-editor__messages p {
+  padding-inline-start: calc(var(--jp-size-selection-control) + var(--jp-space-xs));
+  font-size: var(--jp-font-size-caption);
+}
+.lineup-editor__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 28px;
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+}
+.lineup-editor__reset {
+  margin-inline-start: auto;
+}
+.lineup-editor__danger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 24px;
+}
+.lineup-editor__danger h2 {
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+}
+.lineup-editor__danger p {
+  max-inline-size: 29rem;
+  margin-block-start: 4px;
+  font-size: var(--jp-font-size-caption);
+}
+.lineup-editor__delete {
+  flex: none;
+  --jp-color-button-ghost-fg: var(--jp-color-state-error-border);
+  --jp-color-button-ghost-fg-hover: var(--jp-color-state-error-border);
+}
+.lineup-editor__preview {
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+  padding-block: 16px;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+}
+.lineup-editor__preview summary {
+  cursor: pointer;
+  inline-size: fit-content;
+}
+.lineup-editor__preview summary:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--jp-radius-sm);
+}
+.lineup-editor__preview jp-switch {
+  margin-block-start: 16px;
+}
+@media (width <= 48rem) {
+  .lineup-editor {
+    padding: 24px 16px;
+  }
+  .lineup-editor__fields {
+    gap: 20px;
+    padding: 20px;
+  }
+  .lineup-editor__contact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lineup-editor__footer {
+    padding: 16px 20px;
+  }
+  .lineup-editor__danger {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+      </style>
       <jp-app-shell
         [sidebarCollapsed]="sidebarCollapsed()"
         [mobileNavOpen]="mobileNavOpen()"
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <nav jpAppShellSidebar>
+        <span jpAppShellBrand>Riverton Falcons</span>
+      <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
               href="#settings"
@@ -124,75 +236,69 @@ const meta: Meta<ControlsFormArgs> = {
         </nav>
 
         <main jpAppShellMain>
-          <jp-box padding="lg" maxWidth="narrow">
-            <jp-stack gap="lg">
-              <jp-stack gap="xs">
-                <jp-inline align="center" gap="sm" justify="between">
-                  <jp-heading as="h1">Lineup form</jp-heading>
-                  <jp-icon-button ariaLabel="More actions">
-                    <svg viewBox="0 0 16 16" width="100%" height="100%" aria-hidden="true">
-                      <circle cx="8" cy="3" r="1.5" fill="currentColor" />
-                      <circle cx="8" cy="8" r="1.5" fill="currentColor" />
-                      <circle cx="8" cy="13" r="1.5" fill="currentColor" />
-                    </svg>
-                  </jp-icon-button>
-                </jp-inline>
-                <jp-text tone="secondary">
-                  Update the lineup and coach contact details.
-                </jp-text>
-                <jp-inline gap="sm">
-                  <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
-                  <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
-                </jp-inline>
-              </jp-stack>
+<div class="lineup-editor">
+  <header class="lineup-editor__header">
+    <jp-heading as="h1">Lineup form</jp-heading>
+    <p>Update the lineup and coach contact details.</p>
+  </header>
 
-              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
-                <form (submit)="$event.preventDefault()">
-                  <jp-stack gap="lg">
-                    <jp-input
-                      label="Email"
-                      type="email"
-                      placeholder="coach@falcons.example"
-                      hint="Used for Falcons club messages."
-                      [(ngModel)]="email"
-                      name="email"
-                    />
-                    <jp-textarea
-                      label="Coach notes"
-                      rows="3"
-                      [(ngModel)]="notes"
-                      name="notes"
-                    />
-                    <jp-select
-                      label="Club role"
-                      [options]="roleOptions"
-                      [(ngModel)]="role"
-                      name="role"
-                    />
-                    <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
-                      Get club messages
-                    </jp-checkbox>
-                    <jp-switch [(ngModel)]="compact" name="compact">
-                      Compact density
-                    </jp-switch>
-                    <jp-inline gap="sm" wrap="true">
-                      <jp-button variant="primary" type="submit">Save</jp-button>
-                      <jp-button variant="secondary" type="button">Cancel</jp-button>
-                      <jp-button variant="ghost" type="button">Reset</jp-button>
+  <form class="lineup-editor__panel" (submit)="$event.preventDefault()" [attr.data-jp-density]="compact ? 'compact' : null">
+    <div class="lineup-editor__fields">
+      <div class="lineup-editor__section-heading">
+        <h2>Coach contact</h2>
+        <p>The contact for this game's lineup.</p>
+      </div>
+      <div class="lineup-editor__contact">
+        <jp-input
+          label="Email"
+          type="email"
+          placeholder="coach@falcons.example"
+          hint="Used for Falcons club messages."
+          [(ngModel)]="email"
+          name="email"
+        />
+        <jp-select
+          label="Club role"
+          [options]="roleOptions"
+          [(ngModel)]="role"
+          name="role"
+        />
+      </div>
+      <jp-textarea
+        label="Coach notes"
+        placeholder="Add lineup changes or reminders for the coaching staff."
+        rows="3"
+        [(ngModel)]="notes"
+        name="notes"
+      />
+      <div class="lineup-editor__messages">
+        <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
+          Get club messages
+        </jp-checkbox>
+        <p>Game changes and lineup updates from the Falcons.</p>
+      </div>
+    </div>
+    <footer class="lineup-editor__footer">
+      <jp-button variant="primary" type="submit">Save</jp-button>
+      <jp-button variant="ghost" type="button">Cancel</jp-button>
+      <jp-button class="lineup-editor__reset" variant="ghost" type="button">Reset</jp-button>
+    </footer>
+  </form>
 
-                    </jp-inline>
-                  </jp-stack>
-                </form>
-              </jp-surface>
-              <jp-surface tone="subtle" padding="lg" border="subtle" elevation="none">
-                <jp-stack gap="sm">
-                  <jp-heading as="h2" size="h3">Delete lineup</jp-heading>
-                  <jp-text tone="secondary">Delete the saved lineup for this game. Player profiles stay in the club roster.</jp-text>
-                  <jp-button variant="destructive" type="button">Delete lineup</jp-button>
-                </jp-stack>
-              </jp-surface>
-            </jp-stack>
-          </jp-box>
+  <section class="lineup-editor__danger" aria-labelledby="delete-lineup-heading">
+    <div>
+      <h2 id="delete-lineup-heading">Delete lineup</h2>
+      <p>Remove this game's saved lineup. Player profiles stay in the club roster.</p>
+    </div>
+    <jp-button class="lineup-editor__delete" variant="ghost" type="button">Delete lineup</jp-button>
+  </section>
+
+  <details class="lineup-editor__preview">
+    <summary>Preview settings</summary>
+    <jp-switch [(ngModel)]="compact" name="compact">Compact density</jp-switch>
+  </details>
+</div>
+
         </main>
       </jp-app-shell>
     `,
@@ -217,6 +323,8 @@ export const Default: Story = {
       await userEvent.clear(email);
       await userEvent.type(email, 'coach@falcons.example');
       await expect(email.value).toBe('coach@falcons.example');
+      email.blur();
+      await expect(email).not.toHaveFocus();
     }
   },
 };

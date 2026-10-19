@@ -10,14 +10,12 @@ import {
   JpHeading,
   JpInline,
   JpStack,
-  JpSurface,
   JpSwitch,
   JpTable,
   JpTableCellDef,
   type JpTableColumn,
   JpText,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-data-page',
@@ -27,7 +25,6 @@ import { injectDocumentTheme } from '../../shared/document-theme';
     JpBox,
     JpStack,
     JpInline,
-    JpSurface,
     JpText,
     JpHeading,
     JpBadge,
@@ -42,8 +39,6 @@ import { injectDocumentTheme } from '../../shared/document-theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataPage {
-  private readonly theme = injectDocumentTheme();
-
   showEmpty = false;
 
   readonly columns: JpTableColumn[] = [
@@ -79,9 +74,6 @@ export class DataPage {
       region: 'Right field',
     },
   ];
-
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
 
   get visibleRows() {
     return this.showEmpty ? [] : this.rows;

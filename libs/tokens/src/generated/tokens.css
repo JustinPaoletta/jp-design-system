@@ -93,7 +93,7 @@
   --jp-primitive-space-32: 4rem;
   --jp-primitive-space-40: 5rem;
   --jp-primitive-space-48: 6rem;
-  --jp-primitive-typography-family-sans: 'Manrope', 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --jp-primitive-typography-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --jp-primitive-typography-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   --jp-primitive-typography-size-100: 0.75rem;
   --jp-primitive-typography-size-200: 0.8125rem;

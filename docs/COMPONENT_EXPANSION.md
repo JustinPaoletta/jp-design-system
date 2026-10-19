@@ -9,6 +9,12 @@ Explore Showcase `/component-expansion` or the corresponding `Primitives` storie
 Import public classes and types from `@jp-design-system/ui`. Styles use existing
 semantic tokens and follow the containing accent/density settings.
 
+The Card title precedes projected header content, such as a status label.
+Its body uses 14px text. A footer border separates projected actions from the body.
+Empty headers and footers are hidden.
+The Card has no hover or selection effect of its own.
+See the [Card reference review](../design-qa.md#card-reference-review) for the current design inspection.
+
 ## Foundations and navigation
 
 | Export / selector                         | Contract                                                                                                                                                                                                              |

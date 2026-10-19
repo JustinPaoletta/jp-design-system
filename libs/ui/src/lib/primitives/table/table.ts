@@ -227,6 +227,7 @@ export class JpTable {
   }
 
   readonly caption = input('');
+  readonly captionHidden = input(false, { transform: booleanAttribute });
   readonly columns = input<JpSortableTableColumn[]>([]);
   readonly rows = input<Record<string, JpTableCellValue>[]>([]);
   readonly striped = input(false, { transform: booleanAttribute });
