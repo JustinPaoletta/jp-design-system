@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, type NgForm } from '@angular/forms';
 import {
   JpButton,
+  JpCard,
   JpCheckbox,
   JpHeading,
   JpInput,
@@ -16,6 +17,7 @@ import {
     FormsModule,
     JpHeading,
     JpButton,
+    JpCard,
     JpInput,
     JpTextarea,
     JpSelect,
@@ -27,11 +29,42 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlsPage {
+  readonly defaults = {
+    email: 'coach@falcons.example',
+    notes: '',
+    role: 'editor',
+    subscribe: true,
+  };
+  saved: typeof this.defaults | null = { ...this.defaults };
+  feedback = '';
+
   email = 'coach@falcons.example';
   notes = '';
   role = 'editor';
   subscribe = true;
   compact = false;
+
+  save(form: NgForm): void {
+    this.saved = { ...form.value };
+    form.form.markAsPristine();
+    this.feedback = 'Lineup saved in this preview.';
+  }
+
+  cancel(form: NgForm): void {
+    form.resetForm(this.saved ?? this.defaults);
+    this.feedback = 'Changes canceled.';
+  }
+
+  reset(form: NgForm): void {
+    form.resetForm(this.defaults);
+    this.feedback = 'Default lineup restored.';
+  }
+
+  deleteLineup(form: NgForm): void {
+    this.saved = null;
+    form.resetForm(this.defaults);
+    this.feedback = 'Saved lineup removed from this preview.';
+  }
 
   readonly roleOptions = [
     { value: 'admin', label: 'Coach' },

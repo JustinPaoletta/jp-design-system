@@ -2,9 +2,9 @@
 
 ## Card reference review
 
-The current design review focuses on `Primitives/Layout/Card` in Storybook.
-Further component styling waits for review of this reference.
-The earlier changes remain in the draft pull request.
+The user approved `Primitives/Layout/Card` as the visual reference on October 19, 2026.
+Further changes apply its typography, spacing, surfaces and actions to one component group at a time.
+The changes remain in the draft pull request.
 
 The Card places the title before its header status.
 Body text uses 14px. Actions have a separate footer with a subtle border.
@@ -13,7 +13,23 @@ Other stories show saved feedback, plain content and a long title.
 
 Chrome captures are in `dist/qa/card-refinement/`.
 The review includes desktop, phone, keyboard focus and saved states.
-The design still needs user review. Passing checks do not establish visual approval.
+This approval covers the Card direction. Passing checks do not approve later component changes.
+
+## Form and roster adaptation
+
+The Controls Form and Data Display examples now use `JpCard` directly.
+The shared component controls their title size, panel inset, border and action footer.
+The native form retains its controls and density setting.
+Save, Cancel, Reset and Delete update local example state and show a status message.
+
+The roster shows player names with position and squad details beneath them.
+Availability remains in a separate column at phone widths.
+The footer action filters available players and restores the full roster.
+The table retains its native caption and named scroll region without a second panel border.
+The unframed table removes its outer cell inset to preserve word boundaries at 320px.
+
+Chrome comparison captures are in `dist/qa/card-rollout/`.
+The examples store changes only while the page or story remains open.
 
 ## October 19 refinement inspection
 

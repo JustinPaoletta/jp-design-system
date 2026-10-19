@@ -64,4 +64,52 @@ test.describe('controls', () => {
       .poll(() => save.evaluate((el) => el.getBoundingClientRect().height))
       .toBe(defaultHeight);
   });
+
+  test('saves, cancels, resets, and removes a lineup in the preview', async ({
+    page,
+  }) => {
+    await page.goto('/controls');
+    const email = page.getByRole('textbox', { name: 'Email', exact: true });
+    const notes = page.getByRole('textbox', { name: 'Coach notes' });
+    const role = page.getByRole('combobox', { name: 'Club role' });
+    const messages = page.getByRole('checkbox', { name: 'Get club messages' });
+    const status = page.getByRole('status');
+
+    await email.fill('assistant@falcons.example');
+    await notes.fill('Confirm the batting order before warmups.');
+    await role.selectOption('admin');
+    await messages.uncheck();
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(status).toHaveText('Lineup saved in this preview.');
+
+    await email.fill('unsaved@falcons.example');
+    await notes.fill('Unsaved lineup change.');
+    await role.selectOption('viewer');
+    await messages.check();
+    await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect(email).toHaveValue('assistant@falcons.example');
+    await expect(notes).toHaveValue(
+      'Confirm the batting order before warmups.',
+    );
+    await expect(role).toHaveValue('admin');
+    await expect(messages).not.toBeChecked();
+    await expect(status).toHaveText('Changes canceled.');
+
+    await page.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(email).toHaveValue('coach@falcons.example');
+    await expect(notes).toHaveValue('');
+    await expect(role).toHaveValue('editor');
+    await expect(messages).toBeChecked();
+    await expect(status).toHaveText('Default lineup restored.');
+
+    const remove = page.getByRole('button', {
+      name: 'Delete lineup',
+      exact: true,
+    });
+    await remove.click();
+    await expect(status).toHaveText('Saved lineup removed from this preview.');
+    await expect(remove).toBeDisabled();
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(remove).toBeEnabled();
+  });
 });

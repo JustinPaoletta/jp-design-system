@@ -435,6 +435,7 @@ Class `JpTable`. Also exports `JpTableCellDef`, `JpTableRowKey`
 | ------------------ | -------------------------------------- | -------------------------------------- |
 | `caption`          | string                                 | `''`                                   |
 | `captionHidden`    | boolean                                | `false`                                |
+| `framed`           | boolean                                | `true`                                 |
 | `columns`          | `JpSortableTableColumn[]`              | `[]`                                   |
 | `rows`             | `Record<string, JpTableCellValue>[]`   | `[]`                                   |
 | `striped`          | boolean                                | `false`                                |
@@ -455,6 +456,9 @@ be selected. The header checkbox selects the current page only.
 
 Set `captionHidden` to `true` when a nearby heading already names the table.
 The native caption remains available to assistive technology.
+
+Set `framed` to `false` when a containing Card supplies the panel border.
+The table keeps its row dividers, native semantics and focusable scroll region.
 
 Rich cells: `<ng-template jpTableCell="columnKey" let-value>`. Context also
 exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.

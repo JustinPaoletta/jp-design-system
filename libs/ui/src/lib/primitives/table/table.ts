@@ -70,9 +70,11 @@ export class JpTableRowDetail {
     class: 'jp-table',
     '[class.jp-table--striped]': 'striped()',
     '[class.jp-table--empty]': '!hasRows()',
+    '[class.jp-table--unframed]': '!framed()',
   },
 })
 export class JpTable {
+  readonly framed = input(true, { transform: booleanAttribute });
   private readonly messages = inject(JP_MESSAGES);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly id = input('');

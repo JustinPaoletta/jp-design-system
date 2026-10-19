@@ -6,9 +6,10 @@ The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
 The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
 
-## Current design review
+## Current design work
 
-- [ ] Review the [Card reference](design-qa.md#card-reference-review) in Chrome. Confirm typography, spacing, surfaces and actions.
+The user approved the [Card reference](design-qa.md#card-reference-review) on October 19, 2026.
+
 - [ ] Apply the approved Card direction to other components, one group at a time. Inspect each group before continuing.
 
 ## Remaining visual audit suggestions

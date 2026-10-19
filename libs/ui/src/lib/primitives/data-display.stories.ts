@@ -6,27 +6,24 @@ import { expect, userEvent, within } from 'storybook/test';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpBadge } from './badge/badge';
-import { JpBox } from './box/box';
+import { JpCard } from './card/card';
 import { JpButton } from './button/button';
 import { JpEmptyState } from './empty-state/empty-state';
 import { JpHeading } from './heading/heading';
-import { JpInline } from './inline/inline';
 import { JpStack } from './stack/stack';
 import { JpSwitch } from './switch/switch';
 import { JpTable, JpTableCellDef } from './table/table';
-import { JpText } from './text/text';
 
 type DataDisplayArgs = {
   sidebarCollapsed: boolean;
   mobileNavOpen: boolean;
   showEmpty: boolean;
+  availableOnly: boolean;
 };
 
 const columns = [
   { key: 'name', header: 'Player' },
-  { key: 'env', header: 'Squad' },
-  { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Position' },
+  { key: 'status', header: 'Availability' },
 ];
 
 const rows = [
@@ -48,6 +45,12 @@ const rows = [
     status: 'Available',
     region: 'Shortstop',
   },
+  {
+    name: 'Taylor Reed',
+    env: 'Reserve',
+    status: 'Injured',
+    region: 'Right field',
+  },
 ];
 
 const meta: Meta<DataDisplayArgs> = {
@@ -59,10 +62,8 @@ const meta: Meta<DataDisplayArgs> = {
         FormsModule,
         JpAppShell,
         JpAppShellNavItem,
-        JpBox,
+        JpCard,
         JpStack,
-        JpInline,
-        JpText,
         JpHeading,
         JpBadge,
         JpButton,
@@ -77,16 +78,25 @@ const meta: Meta<DataDisplayArgs> = {
     sidebarCollapsed: false,
     mobileNavOpen: false,
     showEmpty: false,
+    availableOnly: false,
   },
   render: (args) => {
     const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     const showEmpty = signal(Boolean(args.showEmpty));
+    const availableOnly = signal(Boolean(args.availableOnly));
     return {
       props: {
         sidebarCollapsed,
         mobileNavOpen,
         showEmpty,
+        availableOnly,
+        visibleRows: () =>
+          showEmpty()
+            ? []
+            : rows.filter(
+                (row) => !availableOnly() || row.status === 'Available',
+              ),
         columns,
         rows,
         statusTone(status: string) {
@@ -96,6 +106,7 @@ const meta: Meta<DataDisplayArgs> = {
           if (status === 'Day to day') {
             return 'warning';
           }
+          if (status === 'Injured') return 'error';
           return 'neutral';
         },
         onSidebarCollapsedChange(next: boolean) {
@@ -109,6 +120,74 @@ const meta: Meta<DataDisplayArgs> = {
         },
       },
       template: `
+      <style>.roster-page {
+  box-sizing: border-box;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding: var(--jp-space-xl) var(--jp-space-lg);
+}
+.roster-page__header {
+  margin-block-end: var(--jp-space-lg);
+}
+.roster-page__count,
+.roster-page__detail,
+.roster-page__actions > span {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.roster-page__table {
+  margin-block-start: var(--jp-space-lg);
+}
+.roster-page__name,
+.roster-page__detail {
+  display: block;
+}
+.roster-page__name {
+  font-weight: var(--jp-font-weight-medium);
+}
+.roster-page__detail {
+  margin-block-start: var(--jp-space-2xs);
+}
+.roster-page__actions {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm) var(--jp-space-md);
+}
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-lg);
+  padding-block: var(--jp-space-md);
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+  font-size: var(--jp-font-size-body-sm);
+}
+.preview-settings {
+  margin-block-start: var(--jp-space-lg);
+  padding-block: var(--jp-space-md);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+}
+.preview-settings summary {
+  cursor: pointer;
+  inline-size: fit-content;
+}
+.preview-settings summary:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--jp-radius-sm);
+}
+.preview-settings aside {
+  padding-block-start: var(--jp-space-md);
+}
+@media (width <= 48rem) {
+  .roster-page {
+    padding: var(--jp-space-lg) var(--jp-space-md);
+  }
+}
+</style>
       <jp-app-shell
         [sidebarCollapsed]="sidebarCollapsed()"
         [mobileNavOpen]="mobileNavOpen()"
@@ -147,56 +226,45 @@ const meta: Meta<DataDisplayArgs> = {
         </nav>
 
         <main jpAppShellMain>
-          <jp-box padding="lg" maxWidth="wide">
-            <jp-stack gap="lg">
-              <jp-inline align="center" gap="lg" justify="between" wrap="true">
-                <jp-stack gap="xs">
-                  <jp-inline align="center" gap="md" wrap="true">
-                    <jp-heading as="h1">Player roster</jp-heading>
-                    <jp-text size="caption" tone="secondary">{{ showEmpty() ? 0 : rows.length }} players</jp-text>
-                  </jp-inline>
-                  <jp-text tone="secondary">Review player positions and availability.</jp-text>
-                </jp-stack>
-                <jp-button>Add player</jp-button>
-              </jp-inline>
-
-                  <jp-table
-                    caption="Falcons roster"
-                    [captionHidden]="true"
-                    [columns]="columns"
-                    [rows]="showEmpty() ? [] : rows"
-                    [striped]="false"
-                  >
-                    <ng-template jpTableCell="status" let-value>
-                      <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
-                    </ng-template>
-                    <jp-empty-state
-                      title="No players on the roster"
-                      description="No players match these filters."
-                    >
-                      <jp-button
-                        variant="secondary"
-                        type="button"
-                        (click)="onShowEmptyChange(false)"
-                      >
-                        Clear filters
-                      </jp-button>
-                    </jp-empty-state>
-                  </jp-table>
-              <details style="font-size:var(--jp-font-size-body-sm);color:var(--jp-color-text-secondary)">
-                <summary style="cursor:pointer;width:fit-content;padding-block:var(--jp-space-sm)">Preview settings</summary>
-                <aside aria-label="Story controls">
-                <jp-switch
-                      [ngModel]="showEmpty()"
-                      (ngModelChange)="onShowEmptyChange($event)"
-                      name="showEmpty"
-                    >
-                      Show empty state
-                    </jp-switch>
-                </aside>
-              </details>
-            </jp-stack>
-          </jp-box>
+<div class="roster-page">
+  <header class="roster-page__header">
+    <jp-heading as="h1">Player roster</jp-heading>
+  </header>
+  <jp-card title="2026 season">
+    <span jpCardHeader class="roster-page__count">{{ visibleRows().length }} players</span>
+    <p>Review player positions and availability.</p>
+    <jp-table
+      class="roster-page__table"
+      caption="Falcons roster"
+      [captionHidden]="true"
+      [framed]="false"
+      [columns]="columns"
+      [rows]="visibleRows()"
+      [striped]="false"
+    >
+      <ng-template jpTableCell="name" let-value let-row="row">
+        <span class="roster-page__name">{{ value }}</span>
+        <span class="roster-page__detail">{{ row.region }} · {{ row.env }}</span>
+      </ng-template>
+      <ng-template jpTableCell="status" let-value>
+        <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
+      </ng-template>
+      <jp-empty-state title="No players on the roster" description="No players match these filters.">
+        <jp-button variant="secondary" type="button" (click)="showEmpty.set(false); availableOnly.set(false)">Clear filters</jp-button>
+      </jp-empty-state>
+    </jp-table>
+    <div jpCardActions class="roster-page__actions">
+      <jp-button [disabled]="showEmpty()" (click)="availableOnly.set(!availableOnly())">{{ availableOnly() ? 'Show all players' : 'Show available' }}</jp-button>
+      <span role="status">{{ availableOnly() ? 'Available players only' : 'Varsity and reserve' }}</span>
+    </div>
+  </jp-card>
+  <details class="preview-settings">
+    <summary>Preview settings</summary>
+    <aside aria-label="Example controls">
+      <jp-switch [ngModel]="showEmpty()" (ngModelChange)="onShowEmptyChange($event)" name="showEmpty">Show empty state</jp-switch>
+    </aside>
+  </details>
+</div>
         </main>
       </jp-app-shell>
     `,
@@ -219,6 +287,18 @@ export const Default: Story = {
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 
     const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show available' }),
+    );
+    await expect(
+      canvas.queryByRole('cell', { name: /Jordan Davis/ }),
+    ).toBeNull();
+    await expect(canvas.getByRole('status')).toHaveTextContent(
+      'Available players only',
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show all players' }),
+    );
     await expect(
       canvas.getByRole('table', { name: 'Falcons roster' }),
     ).toBeVisible();
@@ -229,9 +309,12 @@ export const Default: Story = {
     await expect(canvas.getByText('No players on the roster')).toBeVisible();
     await userEvent.click(toggle);
     await expect(
-      canvas.getByRole('cell', { name: 'Alex Morgan' }),
+      canvas.getByRole('cell', { name: /Alex Morgan/ }),
     ).toBeVisible();
     await userEvent.click(settings);
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };
+
+export const Available: Story = { args: { availableOnly: true } };
+export const Empty: Story = { args: { showEmpty: true } };

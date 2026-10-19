@@ -20,25 +20,15 @@
 .lineup-editor__header p {
   margin-block-start: 8px;
 }
-.lineup-editor__panel {
-  overflow: hidden;
-  border: 1px solid var(--jp-color-border-subtle);
-  border-radius: var(--jp-radius-lg);
-  background: var(--jp-color-surface-subtle);
-}
 .lineup-editor__fields {
   display: grid;
-  gap: 24px;
-  padding: 28px;
+  gap: var(--jp-space-lg);
 }
 .lineup-editor h2 {
   margin: 0;
   font-size: var(--jp-font-size-body);
   font-weight: var(--jp-font-weight-semibold);
   line-height: var(--jp-font-line-height-normal);
-}
-.lineup-editor__section-heading p {
-  margin-block-start: 4px;
 }
 .lineup-editor__contact {
   display: grid;
@@ -63,8 +53,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  padding: 16px 28px;
-  border-block-start: 1px solid var(--jp-color-border-subtle);
+  inline-size: 100%;
+}
+.lineup-editor__feedback {
+  flex-basis: 100%;
+}
+.lineup-editor__feedback:empty {
+  display: none;
 }
 .lineup-editor__reset {
   margin-inline-start: auto;
@@ -114,13 +109,9 @@
   }
   .lineup-editor__fields {
     gap: 20px;
-    padding: 20px;
   }
   .lineup-editor__contact {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .lineup-editor__footer {
-    padding: 16px 20px;
   }
   .lineup-editor__danger {
     flex-wrap: wrap;

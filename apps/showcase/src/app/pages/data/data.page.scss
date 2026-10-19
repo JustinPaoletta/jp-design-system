@@ -1,23 +1,71 @@
 :host {
   display: block;
-  min-height: 100vh;
+  min-block-size: 100vh;
 }
-
+.roster-page {
+  box-sizing: border-box;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding: var(--jp-space-xl) var(--jp-space-lg);
+}
+.roster-page__header {
+  margin-block-end: var(--jp-space-lg);
+}
+.roster-page__count,
+.roster-page__detail,
+.roster-page__actions > span {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.roster-page__table {
+  margin-block-start: var(--jp-space-lg);
+}
+.roster-page__name,
+.roster-page__detail {
+  display: block;
+}
+.roster-page__name {
+  font-weight: var(--jp-font-weight-medium);
+}
+.roster-page__detail {
+  margin-block-start: var(--jp-space-2xs);
+}
+.roster-page__actions {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm) var(--jp-space-md);
+}
 .related {
   display: flex;
   flex-wrap: wrap;
   gap: var(--jp-space-lg);
-  padding-block-start: var(--jp-space-md);
-  border-block-start: 1px solid var(--jp-color-border-default);
+  padding-block: var(--jp-space-md);
+  border-block-start: 1px solid var(--jp-color-border-subtle);
   font-size: var(--jp-font-size-body-sm);
 }
-
 .preview-settings {
+  margin-block-start: var(--jp-space-lg);
+  padding-block: var(--jp-space-md);
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-body-sm);
 }
 .preview-settings summary {
   cursor: pointer;
   inline-size: fit-content;
-  padding-block: var(--jp-space-sm);
+}
+.preview-settings summary:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--jp-radius-sm);
+}
+.preview-settings aside {
+  padding-block-start: var(--jp-space-md);
+}
+@media (width <= 48rem) {
+  .roster-page {
+    padding: var(--jp-space-lg) var(--jp-space-md);
+  }
 }

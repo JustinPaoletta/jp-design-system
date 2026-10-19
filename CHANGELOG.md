@@ -7,6 +7,9 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Apply the approved Card direction to form and roster examples. Add local save feedback and an availability filter.
+- Add optional `JpTable.framed` for tables inside panels. Keep its default frame and native table semantics.
+
 - Supply Inter and its license through the token package. Load the font in Storybook and Showcase.
 - Simplify form and roster examples. Add optional `jpAppShellBrand` projection and table `captionHidden` input.
 - Use readable event rows when overlapping calendar lanes become too narrow.

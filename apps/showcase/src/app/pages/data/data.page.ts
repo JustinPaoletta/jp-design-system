@@ -4,17 +4,14 @@ import {
   JpLink,
   JpBadge,
   type JpBadgeTone,
-  JpBox,
+  JpCard,
   JpButton,
   JpEmptyState,
   JpHeading,
-  JpInline,
-  JpStack,
   JpSwitch,
   JpTable,
   JpTableCellDef,
   type JpTableColumn,
-  JpText,
 } from '@jp-design-system/ui';
 
 @Component({
@@ -22,10 +19,7 @@ import {
   imports: [
     FormsModule,
     JpLink,
-    JpBox,
-    JpStack,
-    JpInline,
-    JpText,
+    JpCard,
     JpHeading,
     JpBadge,
     JpButton,
@@ -40,12 +34,11 @@ import {
 })
 export class DataPage {
   showEmpty = false;
+  availableOnly = false;
 
   readonly columns: JpTableColumn[] = [
     { key: 'name', header: 'Player' },
-    { key: 'env', header: 'Squad' },
-    { key: 'status', header: 'Status' },
-    { key: 'region', header: 'Position' },
+    { key: 'status', header: 'Availability' },
   ];
 
   readonly rows = [
@@ -76,7 +69,11 @@ export class DataPage {
   ];
 
   get visibleRows() {
-    return this.showEmpty ? [] : this.rows;
+    return this.showEmpty
+      ? []
+      : this.rows.filter(
+          (row) => !this.availableOnly || row.status === 'Available',
+        );
   }
 
   statusTone(status: string): JpBadgeTone {

@@ -1,27 +1,27 @@
-<jp-box padding="lg" maxWidth="wide">
-  <jp-stack gap="lg">
-    <jp-inline align="center" gap="lg" justify="between" wrap="true">
-      <jp-stack gap="xs">
-        <jp-inline align="center" gap="md" wrap="true">
-          <jp-heading as="h1">Player roster</jp-heading>
-          <jp-text size="caption" tone="secondary"
-            >{{ visibleRows.length }} players</jp-text
-          >
-        </jp-inline>
-        <jp-text tone="secondary"
-          >Review player positions and availability.</jp-text
-        >
-      </jp-stack>
-      <jp-button>Add player</jp-button>
-    </jp-inline>
-
+<div class="roster-page">
+  <header class="roster-page__header">
+    <jp-heading as="h1">Player roster</jp-heading>
+  </header>
+  <jp-card title="2026 season">
+    <span jpCardHeader class="roster-page__count"
+      >{{ visibleRows.length }} players</span
+    >
+    <p>Review player positions and availability.</p>
     <jp-table
+      class="roster-page__table"
       caption="Falcons roster"
       [captionHidden]="true"
+      [framed]="false"
       [columns]="columns"
       [rows]="visibleRows"
       [striped]="false"
     >
+      <ng-template jpTableCell="name" let-value let-row="row">
+        <span class="roster-page__name">{{ value }}</span>
+        <span class="roster-page__detail"
+          >{{ row.region }} · {{ row.env }}</span
+        >
+      </ng-template>
       <ng-template jpTableCell="status" let-value>
         <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
       </ng-template>
@@ -32,24 +32,31 @@
         <jp-button
           variant="secondary"
           type="button"
-          (click)="showEmpty = false"
+          (click)="showEmpty = false; availableOnly = false"
+          >Clear filters</jp-button
         >
-          Clear filters
-        </jp-button>
       </jp-empty-state>
     </jp-table>
-    <details class="preview-settings">
-      <summary>Preview settings</summary>
-      <aside aria-label="Example controls">
-        <jp-switch [(ngModel)]="showEmpty" name="showEmpty">
-          Show empty state
-        </jp-switch>
-      </aside>
-    </details>
-
-    <nav class="related" aria-label="Related examples">
-      <a jpLink href="/advanced-layout">Advanced table controls</a>
-      <a jpLink href="/data-performance">Charts and large tables</a>
-    </nav>
-  </jp-stack>
-</jp-box>
+    <div jpCardActions class="roster-page__actions">
+      <jp-button [disabled]="showEmpty" (click)="availableOnly = !availableOnly"
+        >{{ availableOnly ? 'Show all players' : 'Show available' }}</jp-button
+      >
+      <span role="status"
+        >{{ availableOnly ? 'Available players only' : 'Varsity and reserve'
+        }}</span
+      >
+    </div>
+  </jp-card>
+  <details class="preview-settings">
+    <summary>Preview settings</summary>
+    <aside aria-label="Example controls">
+      <jp-switch [(ngModel)]="showEmpty" name="showEmpty"
+        >Show empty state</jp-switch
+      >
+    </aside>
+  </details>
+  <nav class="related" aria-label="Related examples">
+    <a jpLink href="/advanced-layout">Advanced table controls</a>
+    <a jpLink href="/data-performance">Charts and large tables</a>
+  </nav>
+</div>

@@ -25,6 +25,11 @@ Captions use 13px. Heading sizes start at 32px, 24px, 20px and 16px.
 Use 600 weight for headings and 500 weight for labels.
 
 Card titles use 16px, independent of their heading level.
+The user approved the Card reference on October 19, 2026.
+Use `JpCard` for composed panels when its slots fit the content.
+Keep its 24px inset, 14px body text and separated action footer.
+Inspect each adapted component group in Chrome before extending the style further.
+
 Routine button labels use 14px and 500 weight. Primary buttons use 600 weight.
 Use a 1.5 line height for descriptions and body text.
 

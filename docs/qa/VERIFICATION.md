@@ -1,5 +1,30 @@
 # Verification evidence
 
+## October 19, 2026 form and roster adaptation
+
+The form and roster use the approved Card direction.
+The [design inspection](../../design-qa.md#form-and-roster-adaptation) describes the changes and Chrome captures.
+
+| Check                            | Result                                                                         |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| UI unit tests                    | All 478 tests in 98 suites pass with coverage gates.                           |
+| Showcase unit tests              | All 57 tests in 13 suites pass with coverage gates.                            |
+| Live Storybook                   | All 340 stories in 97 suites pass. Runtime isolation checks pass.              |
+| Form and roster browser behavior | All 15 checks pass across Chromium, Firefox and WebKit.                        |
+| Form and roster accessibility    | All six automated WCAG AA checks pass across the same engines.                 |
+| Final table CSS checks           | All 42 advanced-layout and roster browser checks pass across the same engines. |
+| Source and build checks          | Scoped lint, Angular types and the Showcase production build pass.             |
+
+Form checks cover projected controls, saved values, Cancel, Reset, Delete and density changes.
+The save action keeps values and clears the form's dirty state.
+Roster checks cover filtering, native table semantics and phone reflow.
+The examples keep changes only while the page or story remains open.
+
+Chrome inspection covers 1440px desktop, 390px phone and 320px narrow viewports.
+Keyboard activation saves the form and retains a visible focus ring.
+Automated accessibility checks do not replace screen-reader inspection.
+This evidence covers the form and roster group. The dated results below retain their original scope.
+
 ## October 19, 2026 Card reference
 
 The [Card reference review](../../design-qa.md#card-reference-review) limits the next design decision to one component.
@@ -12,7 +37,8 @@ Live Storybook passes 338 stories in 97 suites, including four Card stories and 
 UI lint, Angular types and the Showcase production build pass.
 All 84 macOS Chromium visual comparisons pass after baseline inspection.
 The earlier refinement checks below have their own scope.
-The Card still needs visual approval before further component styling.
+
+The user subsequently approved the Card direction. Further component groups need their own inspection.
 
 ## October 19, 2026 design refinement
 

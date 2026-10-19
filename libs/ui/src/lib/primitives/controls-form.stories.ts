@@ -1,11 +1,12 @@
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, type NgForm } from '@angular/forms';
 import { expect, userEvent } from 'storybook/test';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpButton } from './button/button';
+import { JpCard } from './card/card';
 import { JpCheckbox } from './checkbox/checkbox';
 import { JpHeading } from './heading/heading';
 import { JpInput } from './input/input';
@@ -36,6 +37,7 @@ const meta: Meta<ControlsFormArgs> = {
         JpStack,
         JpHeading,
         JpButton,
+        JpCard,
         JpInput,
         JpTextarea,
         JpSelect,
@@ -56,11 +58,39 @@ const meta: Meta<ControlsFormArgs> = {
   render: (args) => {
     const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
+    const defaults = {
+      email: args.email,
+      notes: args.notes,
+      role: args.role,
+      subscribe: args.subscribe,
+    };
+    const saved = signal<typeof defaults | null>({ ...defaults });
+    const feedback = signal('');
     return {
       props: {
         ...args,
         sidebarCollapsed,
         mobileNavOpen,
+        saved,
+        feedback,
+        save(form: NgForm) {
+          saved.set({ ...form.value });
+          form.form.markAsPristine();
+          feedback.set('Lineup saved in this preview.');
+        },
+        cancel(form: NgForm) {
+          form.resetForm(saved() ?? defaults);
+          feedback.set('Changes canceled.');
+        },
+        reset(form: NgForm) {
+          form.resetForm(defaults);
+          feedback.set('Default lineup restored.');
+        },
+        deleteLineup(form: NgForm) {
+          saved.set(null);
+          form.resetForm(defaults);
+          feedback.set('Saved lineup removed from this preview.');
+        },
         roleOptions: [
           { value: 'admin', label: 'Coach' },
           { value: 'editor', label: 'Scorekeeper' },
@@ -93,25 +123,15 @@ const meta: Meta<ControlsFormArgs> = {
 .lineup-editor__header p {
   margin-block-start: 8px;
 }
-.lineup-editor__panel {
-  overflow: hidden;
-  border: 1px solid var(--jp-color-border-subtle);
-  border-radius: var(--jp-radius-lg);
-  background: var(--jp-color-surface-subtle);
-}
 .lineup-editor__fields {
   display: grid;
-  gap: 24px;
-  padding: 28px;
+  gap: var(--jp-space-lg);
 }
 .lineup-editor h2 {
   margin: 0;
   font-size: var(--jp-font-size-body);
   font-weight: var(--jp-font-weight-semibold);
   line-height: var(--jp-font-line-height-normal);
-}
-.lineup-editor__section-heading p {
-  margin-block-start: 4px;
 }
 .lineup-editor__contact {
   display: grid;
@@ -126,7 +146,9 @@ const meta: Meta<ControlsFormArgs> = {
   gap: 4px;
 }
 .lineup-editor__messages p {
-  padding-inline-start: calc(var(--jp-size-selection-control) + var(--jp-space-xs));
+  padding-inline-start: calc(
+    var(--jp-size-selection-control) + var(--jp-space-xs)
+  );
   font-size: var(--jp-font-size-caption);
 }
 .lineup-editor__footer {
@@ -134,8 +156,13 @@ const meta: Meta<ControlsFormArgs> = {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  padding: 16px 28px;
-  border-block-start: 1px solid var(--jp-color-border-subtle);
+  inline-size: 100%;
+}
+.lineup-editor__feedback {
+  flex-basis: 100%;
+}
+.lineup-editor__feedback:empty {
+  display: none;
 }
 .lineup-editor__reset {
   margin-inline-start: auto;
@@ -185,13 +212,9 @@ const meta: Meta<ControlsFormArgs> = {
   }
   .lineup-editor__fields {
     gap: 20px;
-    padding: 20px;
   }
   .lineup-editor__contact {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .lineup-editor__footer {
-    padding: 16px 20px;
   }
   .lineup-editor__danger {
     flex-wrap: wrap;
@@ -242,12 +265,14 @@ const meta: Meta<ControlsFormArgs> = {
     <p>Update the lineup and coach contact details.</p>
   </header>
 
-  <form class="lineup-editor__panel" (submit)="$event.preventDefault()" [attr.data-jp-density]="compact ? 'compact' : null">
+  <form
+    #lineupForm="ngForm"
+    (ngSubmit)="save(lineupForm)"
+    [attr.data-jp-density]="compact ? 'compact' : null"
+  >
+    <jp-card title="Coach contact">
     <div class="lineup-editor__fields">
-      <div class="lineup-editor__section-heading">
-        <h2>Coach contact</h2>
-        <p>The contact for this game's lineup.</p>
-      </div>
+      <p>The contact for this game's lineup.</p>
       <div class="lineup-editor__contact">
         <jp-input
           label="Email"
@@ -278,19 +303,31 @@ const meta: Meta<ControlsFormArgs> = {
         <p>Game changes and lineup updates from the Falcons.</p>
       </div>
     </div>
-    <footer class="lineup-editor__footer">
+    <div jpCardActions class="lineup-editor__footer">
       <jp-button variant="primary" type="submit">Save</jp-button>
-      <jp-button variant="ghost" type="button">Cancel</jp-button>
-      <jp-button class="lineup-editor__reset" variant="ghost" type="button">Reset</jp-button>
-    </footer>
+      <jp-button variant="ghost" type="button" (click)="cancel(lineupForm)">Cancel</jp-button>
+      <jp-button class="lineup-editor__reset" variant="ghost" type="button" (click)="reset(lineupForm)"
+        >Reset</jp-button
+      >
+      <p class="lineup-editor__feedback" role="status">{{ feedback() }}</p>
+    </div>
+    </jp-card>
   </form>
 
-  <section class="lineup-editor__danger" aria-labelledby="delete-lineup-heading">
+  <section
+    class="lineup-editor__danger"
+    aria-labelledby="delete-lineup-heading"
+  >
     <div>
       <h2 id="delete-lineup-heading">Delete lineup</h2>
-      <p>Remove this game's saved lineup. Player profiles stay in the club roster.</p>
+      <p>
+        Remove this game's saved lineup. Player profiles stay in the club
+        roster.
+      </p>
     </div>
-    <jp-button class="lineup-editor__delete" variant="ghost" type="button">Delete lineup</jp-button>
+    <jp-button class="lineup-editor__delete" variant="ghost" type="button" [disabled]="!saved()" (click)="deleteLineup(lineupForm)"
+      >Delete lineup</jp-button
+    >
   </section>
 
   <details class="lineup-editor__preview">
