@@ -30,7 +30,7 @@ describe('SchedulingPage', () => {
     button(f.nativeElement, 'Inspect clock change').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('day');
-    expect(f.componentInstance.date()).toBe('2026-11-01');
+    expect(f.componentInstance.date()).toBe('2024-11-03');
     expect(f.componentInstance.zone()).toBe('America/New_York');
     expect(f.nativeElement.textContent).toContain('Early field check');
     const secondHour = f.nativeElement.querySelector(
@@ -49,7 +49,7 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.state()).toBe('ready');
     button(f.nativeElement, 'Reset schedule').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     expect(f.componentInstance.view()).toBe('week');
     expect(f.componentInstance.selected()).toBeNull();
     expect(f.nativeElement.textContent).toContain('Lineup meeting');
@@ -91,16 +91,16 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.view()).toBe('day');
     button(calendar, 'Next').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-06');
+    expect(f.componentInstance.date()).toBe('2024-10-08');
     expect(calendar.textContent).toContain('Meet the coaches');
     button(calendar, 'Previous').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     button(calendar, 'Next').click();
     f.detectChanges();
     button(calendar, 'Today').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     button(calendar, 'Week').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('week');

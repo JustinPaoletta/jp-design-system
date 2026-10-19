@@ -238,7 +238,7 @@ export const Scrollable: Story = {
       >
     </jp-table-toolbar>
     <jp-table
-      caption="League player roster"
+      caption="2024 Dodgers roster"
       [columns]="columns"
       [rows]="visible()"
       rowKey="name"

@@ -45,9 +45,9 @@ async function expectOutline(locator: Locator) {
 const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
   {
     hierarchy: async (page) => {
-      await page.getByRole('button', { name: 'Expand Batting drills' }).click();
+      await page.getByRole('button', { name: 'Expand Position players' }).click();
       await expect(
-        page.getByRole('checkbox', { name: 'Select Batting order' }),
+        page.getByRole('checkbox', { name: 'Select Infield' }),
       ).toBeVisible();
     },
     scheduling: async (page) => {
@@ -152,18 +152,18 @@ test.describe('acceptance forced colors', () => {
     await expectOutline(row);
     await expect(row).toHaveCSS('border-top-width', '1px');
     await page
-      .getByRole('checkbox', { name: 'Select Season preparation', exact: true })
+      .getByRole('checkbox', { name: 'Select 2024 Dodgers', exact: true })
       .check();
     const selected = page.locator('jp-tree-table tr.selected');
     await expectOutline(selected);
     const disclosure = page.locator('#project-breakdown-row-design button');
-    await expect(disclosure).toHaveAccessibleName('Expand Batting drills');
+    await expect(disclosure).toHaveAccessibleName('Expand Position players');
     await disclosure.focus();
     await disclosure.press('Enter');
-    await expect(disclosure).toHaveAccessibleName('Collapse Batting drills');
+    await expect(disclosure).toHaveAccessibleName('Collapse Position players');
     await expectOutline(disclosure);
     await expect(
-      page.getByRole('checkbox', { name: 'Select Batting order' }),
+      page.getByRole('checkbox', { name: 'Select Infield' }),
     ).toBeVisible();
     await expectDefaultColorSemantics(page);
   });

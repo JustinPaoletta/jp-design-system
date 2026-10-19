@@ -26,7 +26,7 @@
       #workspace
       id="service-workspace"
       primaryLabel="Player profile"
-      secondaryLabel="League player roster"
+      secondaryLabel="2024 Dodgers roster"
       [size]="size()"
       (sizeChange)="resize($event)"
       [collapsed]="collapsed()"
@@ -38,8 +38,8 @@
         <h2>Player profile</h2>
         <jp-media
           [src]="mediaSource()"
-          alt="Diagram of the practice stations"
-          caption="An original illustration for the practice plan."
+          alt="Field diagram"
+          caption="Field diagram for the 2024 Dodgers."
         />
         <jp-button
           variant="secondary"
@@ -53,7 +53,7 @@
         </p>
       </div>
       <div jpSplitSecondary class="inventory">
-        <h2>League player roster</h2>
+        <h2>2024 Dodgers roster</h2>
         <jp-table
           id="service-inventory"
           caption="Players"

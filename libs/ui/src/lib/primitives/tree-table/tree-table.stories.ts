@@ -6,43 +6,38 @@ import { JpTreeTable, type JpTreeTableRow } from './tree-table';
 const rows: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: 'Season preparation',
-    cells: { owner: 'Dave Roberts', hours: 72 },
+    label: '2024 Dodgers',
+    cells: { owner: 'Dave Roberts', hours: 26 },
     children: [
       {
         key: 'design',
-        label: 'Batting drills',
-        cells: { owner: 'Mookie Betts', hours: 32 },
+        label: 'Position players',
+        cells: { owner: 'Freddie Freeman', hours: 13 },
         children: [
           {
             key: 'landing',
-            label: 'Batting order',
-            cells: { owner: 'Mookie Betts', hours: 12 },
+            label: 'Infield',
+            cells: { owner: 'Freddie Freeman', hours: 5 },
           },
         ],
       },
       {
         key: 'engineering',
-        label: 'Pitching drills',
-        cells: { owner: 'Dave Roberts', hours: 40 },
+        label: 'Pitchers',
+        cells: { owner: 'Jack Flaherty', hours: 13 },
       },
     ],
   },
   {
-    key: 'mobile',
-    label: 'Fielding drills',
-    cells: { owner: 'Dave Roberts', hours: 48 },
-  },
-  {
     key: 'archive',
-    label: 'Previous season',
-    cells: { owner: 'Dave Roberts', hours: 0 },
+    label: 'Injured list',
+    cells: { owner: 'Clayton Kershaw', hours: 1 },
     disabled: true,
   },
 ];
 const columns = [
   { key: 'owner', header: 'Lead' },
-  { key: 'hours', header: 'Minutes', align: 'end' as const },
+  { key: 'hours', header: 'Players', align: 'end' as const },
 ];
 @Component({
   selector: 'jp-tree-table-story',
@@ -51,8 +46,8 @@ const columns = [
   template: `
     <jp-tree-table
       id="story-projects"
-      caption="Practice plan"
-      nameHeader="Drill"
+      caption="2024 Dodgers roster"
+      nameHeader="Group"
       [rows]="rows"
       [columns]="columns"
       selectable
@@ -61,7 +56,7 @@ const columns = [
       [selectedKeys]="selected()"
       (selectedKeysChange)="selected.set($event)"
     />
-    <p role="status">Selected drills: {{ selected().length }}</p>
+    <p role="status">Selected groups: {{ selected().length }}</p>
   `,
 })
 class TreeTableStory {
@@ -77,8 +72,8 @@ const meta: Meta<JpTreeTable> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'tree-table-states',
-    caption: 'Practice plan',
-    nameHeader: 'Drill',
+    caption: '2024 Dodgers roster',
+    nameHeader: 'Group',
     rows,
     columns,
   },
@@ -90,30 +85,30 @@ export const ProjectBreakdown: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Season preparation' }),
+      canvas.getByRole('button', { name: 'Expand 2024 Dodgers' }),
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Batting drills' }),
+      canvas.getByRole('button', { name: 'Expand Position players' }),
     );
     await expect(
       canvas.getByRole('rowheader', {
-        name: 'Season preparation / Batting drills / Batting order',
+        name: '2024 Dodgers / Position players / Infield',
       }),
     ).toBeVisible();
     await userEvent.click(
-      canvas.getByRole('checkbox', { name: 'Select Batting order' }),
+      canvas.getByRole('checkbox', { name: 'Select Infield' }),
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Collapse Season preparation' }),
+      canvas.getByRole('button', { name: 'Collapse 2024 Dodgers' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent(
-      'Selected drills: 1',
+      'Selected groups: 1',
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand Season preparation' }),
+      canvas.getByRole('button', { name: 'Expand 2024 Dodgers' }),
     );
     await expect(
-      canvas.getByRole('checkbox', { name: 'Select Batting order' }),
+      canvas.getByRole('checkbox', { name: 'Select Infield' }),
     ).toBeChecked();
   },
 };

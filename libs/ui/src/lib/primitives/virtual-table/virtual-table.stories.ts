@@ -44,12 +44,12 @@ const meta: Meta<JpVirtualTable> = {
   decorators: [
     componentWrapperDecorator(
       (story) =>
-        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">League player roster</h2>${story}</section>`,
+        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">2024 Dodgers roster</h2>${story}</section>`,
     ),
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: 'League player roster',
+    label: '2024 Dodgers roster',
     columns: [
       { key: 'name', header: 'Player' },
       { key: 'region', header: 'Position' },
@@ -92,7 +92,7 @@ export const BrowsePages: Story = {
     ).toBeLessThan(30);
     await userEvent.click(c.getByRole('button', { name: 'Paginated rows' }));
     await expect(
-      c.getByRole('table', { name: 'League player roster' }),
+      c.getByRole('table', { name: '2024 Dodgers roster' }),
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(

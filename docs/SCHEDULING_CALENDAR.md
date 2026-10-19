@@ -32,12 +32,12 @@ It also shows retry, time-zone changes and repeated clock hours.
 `JpCalendarEvent` has `id`, `title`, `start` and `end`.
 Optional fields are `allDay` and `description`.
 Timed values are ISO strings with `Z` or a numeric offset.
-For example: `2026-10-05T09:00:00-04:00`.
+For example: `2024-10-07T09:00:00-04:00`.
 All-day values contain dates only.
 
 Every end is exclusive. For example,
-`{ start: '2026-10-07', end: '2026-10-09', allDay: true }`
-appears on October 7 and 8.
+`{ start: '2024-10-09', end: '2024-10-11', allDay: true }`
+appears on October 9 and 10.
 
 ## Dates, time zones, and overlap
 

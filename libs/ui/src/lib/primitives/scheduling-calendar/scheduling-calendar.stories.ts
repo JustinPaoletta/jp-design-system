@@ -7,8 +7,8 @@ const meta: Meta<JpSchedulingCalendar> = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Team schedule',
-    date: '2026-10-05',
-    today: '2026-10-05',
+    date: '2024-10-07',
+    today: '2024-10-07',
     view: 'week',
     layout: 'schedule',
     timeZone: 'UTC',
@@ -19,20 +19,20 @@ const meta: Meta<JpSchedulingCalendar> = {
       {
         id: 'planning',
         title: 'Lineup meeting',
-        start: '2026-10-05T09:00:00Z',
-        end: '2026-10-05T10:30:00Z',
+        start: '2024-10-07T09:00:00Z',
+        end: '2024-10-07T10:30:00Z',
       },
       {
         id: 'review',
         title: 'Batting practice',
-        start: '2026-10-05T09:30:00Z',
-        end: '2026-10-05T11:00:00Z',
+        start: '2024-10-07T09:30:00Z',
+        end: '2024-10-07T11:00:00Z',
       },
       {
         id: 'release',
         title: 'Away series',
-        start: '2026-10-06',
-        end: '2026-10-08',
+        start: '2024-10-08',
+        end: '2024-10-10',
         allDay: true,
       },
     ],
@@ -65,21 +65,21 @@ export const Error: Story = {
 };
 export const ClockChange: Story = {
   args: {
-    date: '2026-11-01',
+    date: '2024-11-03',
     view: 'day',
     timeZone: 'America/New_York',
     events: [
       {
         id: 'first',
         title: 'Early field check',
-        start: '2026-11-01T01:15:00-04:00',
-        end: '2026-11-01T01:45:00-04:00',
+        start: '2024-11-03T01:15:00-04:00',
+        end: '2024-11-03T01:45:00-04:00',
       },
       {
         id: 'second',
         title: 'Late field check',
-        start: '2026-11-01T01:15:00-05:00',
-        end: '2026-11-01T01:45:00-05:00',
+        start: '2024-11-03T01:15:00-05:00',
+        end: '2024-11-03T01:45:00-05:00',
       },
     ],
   },
@@ -116,16 +116,16 @@ export const BusyAllDay: Story = {
       ...Array.from({ length: 11 }, (_, index) => ({
         id: 'squad-' + index,
         title: 'Dodgers layout ' + (index + 1),
-        start: '2026-10-05',
-        end: '2026-10-06',
+        start: '2024-10-07',
+        end: '2024-10-08',
         allDay: true,
       })),
       {
         id: 'practice',
         title:
           'Jack Flaherty, Freddie Freeman, Mookie Betts and Teoscar Hernández played the 2024 World Series',
-        start: '2026-10-05T09:00:00Z',
-        end: '2026-10-05T09:45:00Z',
+        start: '2024-10-07T09:00:00Z',
+        end: '2024-10-07T09:45:00Z',
       },
     ],
   },
@@ -184,8 +184,8 @@ export const CrowdedWeek: Story = {
       {
         id: 'pitching',
         title: 'Jack Flaherty started Game 5',
-        start: '2026-10-05T10:00:00Z',
-        end: '2026-10-05T10:45:00Z',
+        start: '2024-10-07T10:00:00Z',
+        end: '2024-10-07T10:45:00Z',
       },
     ],
   },

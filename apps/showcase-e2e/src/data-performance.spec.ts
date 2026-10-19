@@ -47,7 +47,7 @@ test('10,000-row table bounds DOM, reaches final rows and retains cross-window s
   page,
 }) => {
   const table = page.locator('jp-virtual-table');
-  const frame = table.getByRole('region', { name: 'League player roster' });
+  const frame = table.getByRole('region', { name: '2024 Dodgers roster' });
   expect(await table.locator('tr[data-row-index]').count()).toBeLessThan(30);
   await expect(table.getByRole('table')).toHaveAttribute(
     'aria-rowcount',

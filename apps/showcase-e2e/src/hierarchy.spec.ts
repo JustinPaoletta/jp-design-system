@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/hierarchy');
   await expect(
     page.getByRole('heading', {
-      name: 'Club training plan',
+      name: '2024 Dodgers roster',
       exact: true,
     }),
   ).toBeVisible();
@@ -97,41 +97,41 @@ test('hierarchy: consumer collapse restores a focused descendant to its ancestor
 test('hierarchy: collapsing a project returns hidden checkbox focus to the disclosure', async ({
   page,
 }) => {
-  await page.getByRole('button', { name: 'Expand Batting drills' }).click();
-  await page.getByRole('checkbox', { name: 'Select Batting order' }).focus();
+  await page.getByRole('button', { name: 'Expand Position players' }).click();
+  await page.getByRole('checkbox', { name: 'Select Infield' }).focus();
   const parent = page.locator('#project-breakdown-row-website button');
   await parent.evaluate((button: HTMLButtonElement) => button.click());
   await expect(parent).toBeFocused();
   await expect(
-    page.getByRole('checkbox', { name: 'Select Batting order' }),
+    page.getByRole('checkbox', { name: 'Select Infield' }),
   ).toBeHidden();
 });
 test('hierarchy: native table disclosure buttons preserve independent hidden selection', async ({
   page,
 }) => {
-  const table = page.getByRole('table', { name: 'Practice plan' });
+  const table = page.getByRole('table', { name: '2024 Dodgers roster' });
   await expect(page.getByRole('treegrid')).toHaveCount(0);
-  const design = table.getByRole('button', { name: 'Expand Batting drills' });
+  const design = table.getByRole('button', { name: 'Expand Position players' });
   await design.focus();
   await design.press('Enter');
   const landing = table.getByRole('checkbox', {
-    name: 'Select Batting order',
+    name: 'Select Infield',
   });
   await landing.check();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Batting drills', exact: true }),
+    table.getByRole('checkbox', { name: 'Select Position players', exact: true }),
   ).not.toBeChecked();
   const website = page.locator('#project-breakdown-row-website button');
   await website.focus();
   await website.press('Space');
   await expect(landing).toBeHidden();
   await expect(
-    page.getByRole('status').filter({ hasText: 'Selected drills:' }),
-  ).toHaveText('Selected drills: 1');
+    page.getByRole('status').filter({ hasText: 'Selected groups:' }),
+  ).toHaveText('Selected groups: 1');
   await website.press('Enter');
   await expect(landing).toBeChecked();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Last season review' }),
+    table.getByRole('checkbox', { name: 'Select Injured list' }),
   ).toBeDisabled();
 });
 for (const dir of ['ltr', 'rtl']) {
@@ -140,7 +140,7 @@ for (const dir of ['ltr', 'rtl']) {
     async ({ page }) => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      await page.getByRole('button', { name: 'Expand Batting drills' }).click();
+      await page.getByRole('button', { name: 'Expand Position players' }).click();
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - innerWidth,
       );

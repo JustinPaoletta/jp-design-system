@@ -179,7 +179,7 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
     page.getByRole('heading', { name: 'Player profile', exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: 'League player roster', exact: true }),
+    page.getByRole('heading', { name: '2024 Dodgers roster', exact: true }),
   ).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -209,7 +209,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
   page,
 }) => {
   await expect(
-    page.getByRole('img', { name: 'Diagram of the practice stations' }),
+    page.getByRole('img', { name: 'Field diagram' }),
   ).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
     'aria-busy',
@@ -217,7 +217,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
   );
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
-    page.getByRole('img', { name: 'Diagram of the practice stations' }),
+    page.getByRole('img', { name: 'Field diagram' }),
   ).toHaveText('Image unavailable');
   await page.getByRole('button', { name: 'Restore image' }).click();
   await expect(page.locator('jp-media img')).toBeVisible();

@@ -53,7 +53,7 @@ test('advanced layout visual image fallback', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
-    page.getByRole('img', { name: 'Diagram of the practice stations' }),
+    page.getByRole('img', { name: 'Field diagram' }),
   ).toHaveText('Image unavailable');
   await expect(page).toHaveScreenshot('advanced-image-error.png', {
     fullPage: true,

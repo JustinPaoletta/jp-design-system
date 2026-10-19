@@ -11,7 +11,7 @@ describe('HierarchyPage', () => {
     ).toBe('Club documents');
     expect(
       fixture.nativeElement.querySelector('caption').textContent.trim(),
-    ).toBe('Practice plan');
+    ).toBe('2024 Dodgers roster');
     fixture.componentInstance.selectedAsset.set('wordmark');
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain(

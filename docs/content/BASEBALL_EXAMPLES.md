@@ -78,10 +78,16 @@ The Yankees scored 815 runs and allowed 668.
 
 The long roster repeats the 2024 World Series players so a table can show many rows.
 The row number is not a statistic.
-Overlap, overnight and clock-change appointments keep demonstration times.
-Those times are not official game times.
-Clock-change examples repeat a local hour.
-They are not games.
+
+The roster tree counts that 26-man roster.
+Thirteen players are position players: five infielders, five outfielders, two catchers and one designated hitter.
+Thirteen players are pitchers.
+Clayton Kershaw is the injured-list row. He is not in that 26.
+
+The sample calendar uses October 7–11, 2024 for overlap, all-day and overnight rows.
+The clock-change day is November 3, 2024, when Eastern Time repeated 1:15 a.m.
+Those clock times are demonstration times.
+They are not official game times.
 
 ## Component examples
 
