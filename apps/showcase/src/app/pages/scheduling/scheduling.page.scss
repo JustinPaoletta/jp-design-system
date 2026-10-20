@@ -11,22 +11,12 @@
 }
 .actions {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: var(--jp-space-sm);
 }
-label {
-  display: flex;
-  align-items: center;
-  gap: var(--jp-space-xs);
-}
-select {
-  background: var(--jp-color-field-bg);
-  color: var(--jp-color-foreground-primary);
-  border: 1px solid var(--jp-color-field-border);
-  border-radius: var(--jp-radius-sm);
-  padding: var(--jp-space-sm);
-  font: inherit;
+.time-zone {
+  inline-size: 15rem;
   max-inline-size: 100%;
 }
 h2 {

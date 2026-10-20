@@ -94,16 +94,14 @@
 </ng-template>
 <ng-template #inspectionControls>
   <div class="inspection">
-    <label class="inspect"
-      >{{ messages.category }}<select
-        [value]="index()"
-        (change)="inspect($event)"
-      >
-        @for (category of labels(); track $index; let i = $index) {
-        <option [value]="i" [selected]="i === index()">{{ category }}</option>
-        }
-      </select></label
-    >
+    <jp-select
+      class="inspect"
+      [label]="messages.category"
+      [options]="categoryOptions()"
+      [ngModel]="'' + index()"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="inspect($event)"
+    />
     <dl aria-live="polite">
       @for (item of visible(); track item.id) {
       <div>

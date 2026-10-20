@@ -250,6 +250,35 @@ describe('calendar dates and appointment placement', () => {
 });
 
 describe('shared calendar time grid', () => {
+  it('includes an earlier appointment on a later weekday in the initial scroll', () => {
+    const calendar = layout(
+      [
+        appointment(
+          'late-monday',
+          '2026-10-05T17:00:00Z',
+          '2026-10-05T18:00:00Z',
+        ),
+        appointment(
+          'early-tuesday',
+          '2026-10-06T08:00:00Z',
+          '2026-10-06T09:00:00Z',
+        ),
+      ],
+      '2026-10-05',
+      'UTC',
+      'week',
+    );
+    expect(buildJpCalendarGrid(calendar, 'UTC', 'en-US').initialMinute).toBe(
+      420,
+    );
+    expect(
+      buildJpCalendarGrid(
+        layout([], '2026-10-05', 'UTC', 'week'),
+        'UTC',
+        'en-US',
+      ).initialMinute,
+    ).toBe(480);
+  });
   it('aligns ordinary days and places overlap lanes inside equal day tracks', () => {
     const calendar = layout(
       [
@@ -267,7 +296,8 @@ describe('shared calendar time grid', () => {
     expect(grid.days[0].timed[0].displayStart).toBe(540);
     expect(grid.days[1].timed[0].displayStart).toBe(540);
     expect(grid.days[0].timed.map((entry) => entry.lanes)).toEqual([2, 2]);
-    expect(grid.initialMinute).toBe(480);
+    // The overnight event continues at midnight on Friday.
+    expect(grid.initialMinute).toBe(0);
     expect(grid.days[0].timed[0].compactTimeLabel).not.toContain('Oct');
   });
   it('aligns local times across a fall clock change and labels both repeated hours with offsets', () => {

@@ -14,6 +14,7 @@ import {
 import {
   JpButton,
   JpInput,
+  JpSelect,
   JpCheckbox,
   JpDatePicker,
   JpDateRangePicker,
@@ -37,6 +38,7 @@ import { ConsumerContracts } from './contracts';
     ReactiveFormsModule,
     JpButton,
     JpInput,
+    JpSelect,
     JpCheckbox,
     JpDatePicker,
     JpDateRangePicker,
@@ -53,6 +55,20 @@ import { ConsumerContracts } from './contracts';
       <h1>Project settings</h1>
       <jp-error-summary [errors]="errors()" />
       <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <jp-select
+          label="Club role"
+          name="role"
+          required
+          formControlName="role"
+          [options]="roles"
+        />
+        <jp-button
+          type="button"
+          variant="secondary"
+          (click)="form.controls.role.reset()"
+        >
+          Reset role
+        </jp-button>
         <jp-input
           id="consumer-project"
           label="Project name"
@@ -154,6 +170,10 @@ import { ConsumerContracts } from './contracts';
 class ConsumerApp {
   readonly summary = viewChild(JpErrorSummary);
   readonly form = new FormGroup({
+    role: new FormControl('editor', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
     project: new FormControl('Release workspace', {
       nonNullable: true,
       validators: [Validators.required],
@@ -170,6 +190,11 @@ class ConsumerApp {
     time: new FormControl('09:00', { nonNullable: true }),
   });
   readonly submitted = signal(false);
+  readonly roles = [
+    { value: 'admin', label: 'Manager' },
+    { value: 'editor', label: 'Scorekeeper' },
+    { value: 'medical', label: 'Medical staff', disabled: true },
+  ];
   readonly errors = signal<readonly JpFieldError[]>([]);
   readonly saving = signal(false);
   readonly saveError = signal(false);

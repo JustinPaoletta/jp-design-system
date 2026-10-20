@@ -68,13 +68,13 @@ Run functional/axe checks in Chromium, Firefox and WebKit, excluding all six mac
 visual title prefixes:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual|select visual"
 ```
 
 Run the visual suite on macOS Chromium:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual|select visual"
 ```
 
 Use the visual command with `--update-snapshots` only when deliberately

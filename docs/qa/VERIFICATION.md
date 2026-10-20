@@ -1,5 +1,40 @@
 # Verification evidence
 
+## October 20, 2026 Select popup correction
+
+Select, schedule time zones and chart categories now use the same themed option list.
+The [design inspection](../../design-qa.md#select-popup-correction) records the visual checks.
+
+| Check                      | Result                                                                                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| UI unit tests              | 508 tests in 99 suites pass with coverage gates.                                                             |
+| Showcase unit tests        | 59 tests in 13 suites pass with coverage gates.                                                              |
+| Live Storybook             | 367 stories in 97 suites pass. Compiler and runtime isolation checks pass.                                   |
+| Affected browser checks    | 169 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases remain intentionally skipped. |
+| macOS Chromium visuals     | All 87 comparisons pass. The inspection covers 18 changed and three new baselines.                           |
+| Installed package consumer | All 18 browser, accent and density combinations pass.                                                        |
+| Source checks              | UI, Showcase and browser-test lint pass. Angular type checks pass.                                           |
+
+The browser checks cover form selection, save, cancel, reset, timezone conversion and chart categories.
+They also cover open-list accessibility, viewport bounds, forced colors and RTL.
+The package checks cover the published Select export, reactive forms, disabled choices, form data and resets.
+
+The calendar review regression failed before correction.
+The weekly grid now uses the earliest visible time across all seven days.
+This includes an overnight appointment that continues at midnight.
+All 39 scheduling browser checks pass after this correction.
+
+A prior overflow screenshot failure also reproduced locally.
+Shared overlays now align their positions to device pixels.
+The overflow test passes five consecutive runs after this change.
+The test also waits for fonts before opening the panel.
+CI retains visual differences from the hidden output directory.
+
+Chrome captures confirm open-menu styling and spacing at 320px.
+A nested menu stays visible beyond a clipped dialog.
+Escape closes that menu while the dialog remains open.
+These checks do not establish manual screen-reader or physical-device acceptance.
+
 ## October 19, 2026 remaining component inspection
 
 The [design inspection](../../design-qa.md#remaining-component-inspection) covers all 97 Storybook groups.

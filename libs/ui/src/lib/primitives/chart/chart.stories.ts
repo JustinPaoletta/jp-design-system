@@ -38,10 +38,10 @@ export const AccessibleData: Story = {
       'aria-pressed',
       'false',
     );
-    await userEvent.selectOptions(
+    await userEvent.click(
       c.getByRole('combobox', { name: 'Inspect category' }),
-      '2',
     );
+    await userEvent.click(await c.findByRole('option', { name: 'June' }));
     await expect(c.getByText('Yankees · June')).toBeVisible();
     await userEvent.click(
       c.getByText('View chart data', { selector: 'summary' }),

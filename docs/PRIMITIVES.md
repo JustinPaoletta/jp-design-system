@@ -278,10 +278,25 @@ Class `JpSelect`. Also exports `JpSelectOption`
 (`{ value: string; label: string; disabled?: boolean }`). Story:
 [Primitives/Controls/Select](../libs/ui/src/lib/primitives/select/select.stories.ts).
 
-Native `<select>`. Value type: `string`. Inputs match the shared field set
+Themed control with a `combobox` trigger and a `listbox` popup.
+Value type: `string`. Inputs match the shared field set
 (`label`, `hint`, `error`, `ariaLabel`, `name`, `autocomplete`, `size`,
-`id`, `required`, `disabled`, `invalid`) plus `options` (default `[]`).
-Id prefix `jp-select-N`. There is no `placeholder` input.
+`id`, `required`, `disabled`, `invalid`) plus `options` (default `[]`)
+and `placeholder` (default `''`). Id prefix `jp-select-N`.
+
+The trigger and popup use field and overlay tokens.
+The chevron has reserved space. Long trigger labels show an ellipsis.
+Popup labels wrap. The popup uses the shared top layer and viewport positioning.
+
+Click, Enter, Space or an arrow key opens the list.
+Arrow keys, Home and End move through enabled options.
+Typing finds an option by its label. Enter, Space or a click selects it.
+Escape, Tab or an outside click closes the list without selecting the active option.
+Focus stays on the trigger during keyboard navigation.
+
+A hidden native control retains `name`, `required`, `autocomplete` and form submission.
+It does not supply the visible popup. A native validation error focuses the visible trigger.
+Angular forms use the existing CVA. Form resets update the displayed selection.
 
 ### jp-checkbox
 

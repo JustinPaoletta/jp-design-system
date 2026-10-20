@@ -57,9 +57,17 @@ describe('SchedulingPage', () => {
   it('wires timezone conversion and loading/restoration through consumer controls', () => {
     const f = TestBed.createComponent(SchedulingPage);
     f.detectChanges();
-    const select = f.nativeElement.querySelector('select') as HTMLSelectElement;
-    select.value = 'UTC';
-    select.dispatchEvent(new Event('change', { bubbles: true }));
+    const select = f.nativeElement.querySelector(
+      '[role="combobox"]',
+    ) as HTMLButtonElement;
+    select.click();
+    f.detectChanges();
+    const option = Array.from(
+      f.nativeElement.querySelectorAll(
+        '[role="option"]',
+      ) as NodeListOf<HTMLElement>,
+    ).find((item) => item.textContent?.trim() === 'UTC');
+    option?.click();
     f.detectChanges();
     expect(f.componentInstance.zone()).toBe('UTC');
     const appointment = f.nativeElement.querySelector(

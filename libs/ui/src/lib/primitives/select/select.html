@@ -4,22 +4,50 @@
     >{{ label() }}</label
   >
   }
-  <select
+  <button
+    #control
+    type="button"
+    role="combobox"
+    aria-haspopup="listbox"
     class="jp-select__control"
-    [attr.id]="resolvedId()"
+    [id]="resolvedId()"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="isOpen() ? resolvedId() + '-listbox' : null"
+    [attr.aria-activedescendant]="activeId()"
     [attr.aria-invalid]="isInvalid() ? true : null"
+    [attr.aria-required]="required() ? true : null"
     [attr.aria-describedby]="describedBy()"
     [attr.aria-label]="ariaLabel() || null"
+    [disabled]="isDisabled()"
+    [style.--jp-field-height]="controlHeight()"
+    (click)="toggle()"
+    (keydown)="onKeydown($event)"
+    (blur)="onBlur()"
+  >
+    <span
+      class="jp-select__value"
+      [class.jp-select__value--placeholder]="!selectedOption()"
+      >{{ selectedOption()?.label ?? placeholder() }}</span
+    >
+    <jp-icon class="jp-select__chevron" name="chevron-down" size="md" />
+  </button>
+  <select
+    #nativeControl
+    class="jp-select__native"
+    tabindex="-1"
+    aria-hidden="true"
     [attr.name]="name() || null"
     [attr.autocomplete]="autocomplete() || null"
     [required]="required()"
     [disabled]="isDisabled()"
-    [value]="value()"
-    [style.--jp-field-height]="controlHeight()"
+    [value]="selectedOption() ? value() : ''"
     (change)="onSelectChange($event)"
-    (blur)="onBlur()"
+    (invalid)="onNativeInvalid($event)"
+    (focus)="focusControl()"
   >
-    @for (option of options(); track option.value) {
+    @if (!hasEmptyOption()) {
+    <option value="" hidden [selected]="!selectedOption()"></option>
+    } @for (option of options(); track option.value) {
     <option
       [value]="option.value"
       [disabled]="option.disabled ?? false"
@@ -29,11 +57,46 @@
     </option>
     }
   </select>
-  @if (error()) {
-  <p class="jp-select__error" [attr.id]="errorId()" role="alert">
-    {{ error() }}
+  <div #popup class="jp-select__popup" [hidden]="!isOpen()">
+    @if (isOpen()) {
+    <div
+      role="listbox"
+      class="jp-select__listbox"
+      [id]="resolvedId() + '-listbox'"
+      [attr.aria-label]="label() || ariaLabel()"
+    >
+      @for (option of options(); track option.value; let i = $index) {
+      <button
+        type="button"
+        role="option"
+        tabindex="-1"
+        class="jp-select__option"
+        [id]="resolvedId() + '-option-' + i"
+        [disabled]="option.disabled || false"
+        [attr.aria-disabled]="option.disabled || null"
+        [attr.aria-selected]="value() === option.value"
+        [class.jp-select__option--active]="activeIndex() === i"
+        (pointerdown)="$event.preventDefault()"
+        (mouseenter)="!option.disabled && activeIndex.set(i)"
+        (click)="choose(option)"
+      >
+        <span>{{ option.label }}</span>
+        <jp-icon
+          class="jp-select__check"
+          [class.jp-select__check--visible]="value() === option.value"
+          name="check"
+          size="md"
+        />
+      </button>
+      }
+    </div>
+    }
+  </div>
+  @if (displayedError()) {
+  <p class="jp-select__error" [id]="errorId()" role="alert">
+    {{ displayedError() }}
   </p>
   } @else if (hint()) {
-  <p class="jp-select__hint" [attr.id]="hintId()">{{ hint() }}</p>
+  <p class="jp-select__hint" [id]="hintId()">{{ hint() }}</p>
   }
 </div>

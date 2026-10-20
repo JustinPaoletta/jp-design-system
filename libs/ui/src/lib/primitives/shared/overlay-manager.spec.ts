@@ -100,6 +100,33 @@ describe('native overlay lifecycle and viewport placement', () => {
     expect(show).not.toHaveBeenCalled();
   });
 
+  it('keeps text on the same device pixels after fractional anchor movement', () => {
+    const { panel, anchor, remove } = elements();
+    const scale = window.devicePixelRatio || 1;
+    const rect = {
+      left: 120 + 0.1 / scale,
+      right: 140 + 0.1 / scale,
+      top: 120,
+      bottom: 140 + 0.1 / scale,
+      width: 20,
+      height: 20,
+    } as DOMRect;
+    jest.mocked(anchor.getBoundingClientRect).mockReturnValue(rect);
+    const cleanup = positionOverlay(panel, anchor);
+    expect(panel.style.left).toBe('120px');
+    expect(panel.style.top).toBe('144px');
+    jest.mocked(anchor.getBoundingClientRect).mockReturnValue({
+      ...rect,
+      left: 120 + 0.2 / scale,
+      bottom: 140 + 0.2 / scale,
+    });
+    window.dispatchEvent(new Event('resize'));
+    expect(panel.style.left).toBe('120px');
+    expect(panel.style.top).toBe('144px');
+    cleanup();
+    remove();
+  });
+
   it('recovers from native open failure and restores original inline styles', () => {
     const { panel, anchor, remove } = elements();
     panel.style.left = '3px';

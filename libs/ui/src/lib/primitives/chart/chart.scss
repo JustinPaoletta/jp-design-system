@@ -63,21 +63,9 @@ dl {
   font-weight: var(--jp-font-weight-semibold);
 }
 .inspect {
-  display: grid;
-  gap: var(--jp-space-xs);
   flex: 1 1 12rem;
+  min-inline-size: 0;
   max-inline-size: 24rem;
-  font-size: var(--jp-font-size-caption);
-}
-select {
-  box-sizing: border-box;
-  min-block-size: var(--jp-size-control-md);
-  padding-inline: var(--jp-space-sm);
-  background: var(--jp-color-field-bg);
-  color: var(--jp-color-field-fg);
-  border: 1px solid var(--jp-color-field-border);
-  border-radius: var(--jp-radius-sm);
-  font: inherit;
 }
 dl {
   margin: 0;
@@ -123,7 +111,6 @@ th {
   background: var(--jp-color-table-header-bg);
 }
 button:focus-visible,
-select:focus-visible,
 summary:focus-visible,
 .data:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);

@@ -4,17 +4,26 @@ import {
   computed,
   signal,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   JpButton,
   JpCard,
   JpPageHeader,
   JpSchedulingCalendar,
+  JpSelect,
   type JpCalendarEvent,
 } from '@jp-design-system/ui';
 
 @Component({
   selector: 'app-scheduling-page',
-  imports: [JpButton, JpCard, JpPageHeader, JpSchedulingCalendar],
+  imports: [
+    FormsModule,
+    JpButton,
+    JpCard,
+    JpPageHeader,
+    JpSchedulingCalendar,
+    JpSelect,
+  ],
   templateUrl: './scheduling.page.html',
   styleUrl: './scheduling.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +32,11 @@ export class SchedulingPage {
   readonly date = signal('2024-10-07');
   readonly view = signal<'day' | 'week'>('week');
   readonly zone = signal('America/New_York');
+  readonly zones = [
+    { value: 'America/New_York', label: 'America/New_York' },
+    { value: 'UTC', label: 'UTC' },
+    { value: 'Europe/London', label: 'Europe/London' },
+  ];
   readonly state = signal<'ready' | 'loading' | 'error'>('ready');
   readonly selected = signal<JpCalendarEvent | null>(null);
   readonly appointments: readonly JpCalendarEvent[] = [

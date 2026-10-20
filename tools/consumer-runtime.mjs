@@ -86,6 +86,27 @@ export async function checkConsumerRuntime(directory, diagnostics) {
                 },
                 { accent, density },
               );
+              const role = page.getByRole('combobox', { name: 'Club role' });
+              await expect(role).toHaveText('Scorekeeper');
+              await role.click();
+              await expect(page.getByRole('listbox')).toBeVisible();
+              await expect(
+                page.getByRole('option', { name: 'Medical staff' }),
+              ).toBeDisabled();
+              await role.press('Home');
+              await role.press('Escape');
+              await expect(role).toHaveText('Scorekeeper');
+              await role.press('Enter');
+              await role.press('Home');
+              await role.press('Enter');
+              await expect(role).toHaveText('Manager');
+              expect(
+                await page
+                  .locator('form')
+                  .evaluate((form) => new FormData(form).get('role')),
+              ).toBe('admin');
+              await page.getByRole('button', { name: 'Reset role' }).click();
+              await expect(role).toHaveText('Scorekeeper');
               const project = page.getByLabel('Project name', { exact: true });
               await expect(project).toHaveAttribute(
                 'aria-describedby',
@@ -132,6 +153,7 @@ export async function checkConsumerRuntime(directory, diagnostics) {
                 .getByRole('button', { name: 'Save settings', exact: true })
                 .click();
               await expect(project).toBeDisabled();
+              await expect(role).toBeDisabled();
               await expect(page.getByRole('alert')).toContainText(
                 'Your entries are preserved.',
               );

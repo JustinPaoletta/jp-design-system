@@ -511,10 +511,13 @@ export function buildJpCalendarGrid(
       ),
     };
   });
-  const first = Math.min(
-    ...(days
-      .find((item) => item.timed.length)
-      ?.timed.map((entry) => entry.displayStart) ?? []),
+  const first = days.reduce(
+    (earliest, day) =>
+      day.timed.reduce(
+        (minute, entry) => Math.min(minute, entry.displayStart),
+        earliest,
+      ),
+    Infinity,
   );
   return {
     days,

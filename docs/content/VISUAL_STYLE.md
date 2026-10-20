@@ -81,6 +81,13 @@ Do not add a vertical accent line.
 Keep the visible keyboard focus outline.
 Selection and focus must have separate states.
 
+Use `jp-select` for a single choice without search.
+Its trigger and option list must use the shared field and overlay tokens.
+Reserve separate space for the label, chevron and control edge.
+Long labels must not move the chevron or cover it.
+Do not add a visible native `<select>` to a component or example.
+Use `jp-combobox` when the user must search the options.
+
 ## Motion
 
 Do not animate layout changes for decoration.
@@ -105,6 +112,12 @@ Do not force an accent in a story unless that story tests the specific accent.
 Compare the rendered interface with the references in Chrome.
 Check desktop, collapsed sidebar and mobile layouts.
 Check controls, tables, overlays and status text.
+
+Open each changed dropdown before accepting its appearance.
+Inspect the option list, selected item, keyboard focus and disabled items.
+Check long labels at 320px width and in both text directions.
+Check the dropdown inside a dialog and a container that clips content.
+
 Inspect changed visual baselines before accepting them.
 Run the interaction and accessibility checks after a visual change.
 

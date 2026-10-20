@@ -106,9 +106,12 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
     /Lineup meeting.*9:00\sAM GMT-4.*10:30\sAM GMT-4/,
   );
   await expect(planning).toBeInViewport();
-  expect(await frame.evaluate((element) => element.scrollTop)).toBeGreaterThan(
-    0,
-  );
+  // Friday's overnight continuation starts at midnight. The initial viewport
+  // must include it instead of scrolling to Monday's first appointment.
+  expect(await frame.evaluate((element) => element.scrollTop)).toBe(0);
+  await expect(
+    page.locator('.day[aria-label^="Fri"] .timed button'),
+  ).toBeInViewport();
   expect(
     await frame.evaluate(
       (element) => element.scrollWidth - element.clientWidth,
@@ -222,15 +225,33 @@ test('scheduling: short slots preserve a title line and restore times in agenda 
 test('scheduling: time-zone conversion and clock-change instances remain distinct', async ({
   page,
 }) => {
-  await page
-    .getByRole('combobox', { name: 'Time zone', exact: true })
-    .selectOption('UTC');
+  const zone = page.getByRole('combobox', { name: 'Time zone', exact: true });
+  await expect(zone).toHaveText('America/New_York');
+  await zone.focus();
+  await zone.press('Enter');
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await expect(
+    page.getByRole('option', { name: 'America/New_York', exact: true }),
+  ).toHaveAttribute('aria-selected', 'true');
+  await zone.press('ArrowDown');
+  await zone.press('Escape');
+  await expect(page.getByRole('listbox')).toBeHidden();
+  await expect(zone).toBeFocused();
+  await expect(zone).toHaveText('America/New_York');
+  await expect(
+    page.getByRole('button', { name: /Lineup meeting,.*9:00\sAM GMT-4/ }),
+  ).toHaveCount(1);
+  await zone.click();
+  await page.getByRole('option', { name: 'UTC', exact: true }).click();
+  await expect(zone).toHaveText('UTC');
+  await expect(page.getByRole('listbox')).toBeHidden();
   await expect(
     page.getByRole('button', { name: /Lineup meeting,.*1:00\sPM GMT/ }),
   ).toHaveCount(1);
   await page
     .getByRole('button', { name: 'Inspect clock change', exact: true })
     .click();
+  await expect(zone).toHaveText('America/New_York');
   const before = page.getByRole('button', {
     name: /Early field check,.*GMT-4/,
   });

@@ -26,9 +26,11 @@ test('chart renders real pixels, legend controls, category inspection and equiva
     'aria-pressed',
     'false',
   );
-  await page
-    .getByRole('combobox', { name: 'Inspect category' })
-    .selectOption('5');
+  await page.getByRole('combobox', { name: 'Inspect category' }).click();
+  await page.getByRole('option', { name: 'September', exact: true }).click();
+  await expect(
+    page.getByRole('combobox', { name: 'Inspect category' }),
+  ).toHaveText('September');
   await expect(page.locator('jp-chart dl')).toContainText('126');
   await page.getByText('View chart data', { selector: 'summary' }).click();
   await expect(
@@ -285,6 +287,15 @@ test('mobile RTL analytics remain readable and scroll without page overflow', as
   await expect(
     page.getByRole('combobox', { name: 'Inspect category' }),
   ).toBeVisible();
+  await page.getByRole('combobox', { name: 'Inspect category' }).click();
+  const choices = page.getByRole('listbox');
+  await expect(choices).toBeVisible();
+  const choiceBounds = await choices.boundingBox();
+  if (!choiceBounds) throw new Error('Expected category choices');
+  expect(choiceBounds.x).toBeGreaterThanOrEqual(0);
+  expect(choiceBounds.x + choiceBounds.width).toBeLessThanOrEqual(390);
+  await page.getByRole('option', { name: 'September', exact: true }).click();
+  await expect(page.locator('jp-chart dl')).toContainText('September');
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

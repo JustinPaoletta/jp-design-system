@@ -1,10 +1,35 @@
 # Design inspection
 
+## Select popup correction
+
+The October 20 review found native option lists in Select, the schedule time zone and the chart category field.
+The earlier captures did not expose their platform popup appearance.
+All three now use `jp-select`, with a themed trigger and option list.
+
+The chevron has reserved space at the control edge.
+Long trigger labels show an ellipsis. Popup labels wrap.
+The selected option has a checkmark. Keyboard navigation has a separate active state.
+The popup uses the shared overlay surface, border, radius and shadow.
+
+Chrome inspection covers the open time-zone list, long labels and a clipped dialog.
+Narrow views use 320px width in both text directions.
+The measured chevron inset is 13px. Long labels retain a 12px gap before the chevron.
+The inspected pages have no horizontal overflow.
+
+Captures are in `output/playwright/select-review/`.
+The local gallery at `dist/qa/system-polish/select-review/` shows the six reviewed states.
+Three new macOS baselines cover the open time-zone list.
+The inspection includes 16 changed schedule and chart baselines.
+Two overlay baselines also reflect positions aligned to device pixels.
+
+The [visual rules](docs/content/VISUAL_STYLE.md#inspection) now require open-list inspection.
+The [verification record](docs/qa/VERIFICATION.md#october-20-2026-select-popup-correction) states the test scope.
+
 ## Card reference review
 
 The user approved `Primitives/Layout/Card` as the visual reference on October 19, 2026.
 Further changes apply its typography, spacing, surfaces and actions across related components.
-The changes remain in the draft pull request.
+The changes remain in pull request #15.
 
 The Card places the title before its header status.
 Body text uses 14px. Actions have a separate footer with a subtle border.

@@ -53,6 +53,9 @@ test('product tools visual open overflow', async ({ page }) => {
   // Keep the trigger and native top-layer panel in the viewport. A full-page
   // capture of a scrolled page resizes the viewport while positioning the panel.
   await page.setViewportSize({ width: 1280, height: 1400 });
+  // Anchor geometry depends on the text before it. Load the final font before
+  // opening the panel, rather than measuring fallback-font positions.
+  await page.evaluate(() => document.fonts.ready);
   await page
     .getByRole('button', { name: 'Show 3 more items: Other players' })
     .click();

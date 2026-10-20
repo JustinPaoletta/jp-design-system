@@ -130,10 +130,10 @@ Linux are functional/accessibility targets, not visual baseline targets.
 
 ## CI selection
 
-The macOS visual job selects all six visual title prefixes:
+The macOS visual job selects all seven visual title prefixes:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual|select visual"
 ```
 
 The Linux Chromium/Firefox/WebKit functional job excludes those same prefixes.

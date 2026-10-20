@@ -66,7 +66,7 @@ describe('JpChart', () => {
     f.detectChanges();
     await f.whenStable();
     const details = f.nativeElement.querySelector('details');
-    expect(details.querySelector('select')).toBeTruthy();
+    expect(details.querySelector('[role="combobox"]')).toBeTruthy();
     expect(details.querySelector('.legend')).toBeTruthy();
     expect(details.querySelector('table')).toBeTruthy();
     expect(details.open).toBe(false);
@@ -109,11 +109,17 @@ describe('JpChart', () => {
     await f.whenStable();
     expect(f.componentInstance.visible().map((s) => s.id)).toEqual(['one']);
   });
-  it('inspects category with keyboard-friendly native control and formats values', async () => {
+  it('inspects category with the themed select and formats values', async () => {
     const f = await setup();
-    const select = f.nativeElement.querySelector('select');
-    select.value = '1';
-    select.dispatchEvent(new Event('change'));
+    const select = f.nativeElement.querySelector('[role="combobox"]');
+    select.click();
+    f.detectChanges();
+    const option = Array.from(
+      f.nativeElement.querySelectorAll(
+        '[role="option"]',
+      ) as NodeListOf<HTMLElement>,
+    ).find((item) => item.textContent?.trim() === 'May');
+    option?.click();
     f.detectChanges();
     expect(f.componentInstance.index()).toBe(1);
     expect(f.nativeElement.querySelector('dl').textContent).toContain('30');

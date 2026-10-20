@@ -42,6 +42,24 @@ async function expectOutline(locator: Locator) {
     .toBe(true);
 }
 
+async function expectSelectFits(page: Page, name: string) {
+  const trigger = page.getByRole('combobox', { name, exact: true });
+  await trigger.click();
+  const choices = page.getByRole('listbox');
+  await expect(choices).toBeVisible();
+  const bounds = await choices.boundingBox();
+  if (!bounds) throw new Error(`Expected ${name} choices`);
+  const viewport = page.viewportSize();
+  if (!viewport) throw new Error('Expected a fixed viewport');
+  expect(bounds.x).toBeGreaterThanOrEqual(0);
+  expect(bounds.y).toBeGreaterThanOrEqual(0);
+  expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width);
+  expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewport.height);
+  await trigger.press('Escape');
+  await expect(choices).toBeHidden();
+  await expect(trigger).toBeFocused();
+}
+
 const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
   {
     hierarchy: async (page) => {
@@ -53,6 +71,7 @@ const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
       ).toBeVisible();
     },
     scheduling: async (page) => {
+      await expectSelectFits(page, 'Time zone');
       // The schedule becomes an agenda at narrow widths; events stay operable.
       const event = page.getByRole('button', { name: /Lineup meeting,/ });
       await event.focus();
@@ -78,6 +97,7 @@ const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
         'data-rendered',
         'true',
       );
+      await expectSelectFits(page, 'Inspect category');
       await page.getByText('View chart data', { selector: 'summary' }).click();
       await page
         .locator('jp-virtual-table')
@@ -234,7 +254,18 @@ test.describe('acceptance forced colors', () => {
     await expect(data.getByRole('row')).toHaveCount(7);
     await chart
       .getByRole('combobox', { name: 'Inspect category' })
-      .selectOption('5');
+      .press('Enter');
+    const choices = page.getByRole('listbox');
+    await expect(choices).toBeVisible();
+    await expect(
+      choices.getByRole('option', { name: 'April', exact: true }),
+    ).toHaveAttribute('aria-selected', 'true');
+    const category = chart.getByRole('combobox', { name: 'Inspect category' });
+    await expectOutline(category);
+    await category.press('End');
+    await category.press('Enter');
+    await expect(category).toHaveText('September');
+    await expect(choices).toBeHidden();
     await expect(chart.locator('dl')).toContainText('162');
     const table = page.locator('jp-virtual-table');
     await table

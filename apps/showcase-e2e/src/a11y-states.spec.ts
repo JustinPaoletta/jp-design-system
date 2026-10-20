@@ -67,6 +67,24 @@ test.describe('a11y state coverage', () => {
     await expectWcag21Aa(page);
   });
 
+  test('open select choices meet WCAG AA and retain the selected role', async ({
+    page,
+  }) => {
+    await page.goto('/controls');
+    const role = page.getByRole('combobox', { name: 'Club role' });
+    await role.click();
+    await expect(role).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByRole('listbox')).toBeVisible();
+    await expect(
+      page.getByRole('option', { name: 'Scorekeeper', exact: true }),
+    ).toHaveAttribute('aria-selected', 'true');
+    await expectWcag21Aa(page);
+    await role.press('Escape');
+    await expect(role).toBeFocused();
+    await expect(role).toHaveText('Scorekeeper');
+    await expect(role).toHaveAttribute('aria-expanded', 'false');
+  });
+
   test('validation error meets WCAG AA', async ({ page }) => {
     await openRecipes(page);
     await page.getByRole('tab', { name: 'Settings', exact: true }).click();

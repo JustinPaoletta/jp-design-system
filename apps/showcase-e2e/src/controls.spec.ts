@@ -35,7 +35,8 @@ test.describe('controls', () => {
 
     await email.fill('notes@dodgers.example');
     await notes.fill('Confirm the batting order before warmups.');
-    await role.selectOption('admin');
+    await role.click();
+    await page.getByRole('option', { name: 'Manager', exact: true }).click();
     await messages.uncheck();
     const defaultHeight = await save.evaluate(
       (el) => el.getBoundingClientRect().height,
@@ -54,7 +55,7 @@ test.describe('controls', () => {
     await expect(notes).toHaveValue(
       'Confirm the batting order before warmups.',
     );
-    await expect(role).toHaveValue('admin');
+    await expect(role).toHaveText('Manager');
     await expect(messages).not.toBeChecked();
 
     await preview.locator('summary').click();
@@ -77,28 +78,30 @@ test.describe('controls', () => {
 
     await email.fill('notes@dodgers.example');
     await notes.fill('Confirm the batting order before warmups.');
-    await role.selectOption('admin');
+    await role.click();
+    await page.getByRole('option', { name: 'Manager', exact: true }).click();
     await messages.uncheck();
     await page.getByRole('button', { name: 'Save', exact: true }).click();
     await expect(status).toHaveText('Lineup saved in this preview.');
 
     await email.fill('unsaved@dodgers.example');
     await notes.fill('Unsaved lineup change.');
-    await role.selectOption('viewer');
+    await role.click();
+    await page.getByRole('option', { name: 'Fan', exact: true }).click();
     await messages.check();
     await page.getByRole('button', { name: 'Cancel', exact: true }).click();
     await expect(email).toHaveValue('notes@dodgers.example');
     await expect(notes).toHaveValue(
       'Confirm the batting order before warmups.',
     );
-    await expect(role).toHaveValue('admin');
+    await expect(role).toHaveText('Manager');
     await expect(messages).not.toBeChecked();
     await expect(status).toHaveText('Changes canceled.');
 
     await page.getByRole('button', { name: 'Reset', exact: true }).click();
     await expect(email).toHaveValue('manager@dodgers.example');
     await expect(notes).toHaveValue('');
-    await expect(role).toHaveValue('editor');
+    await expect(role).toHaveText('Scorekeeper');
     await expect(messages).toBeChecked();
     await expect(status).toHaveText('Default lineup restored.');
 
@@ -111,5 +114,39 @@ test.describe('controls', () => {
     await expect(remove).toBeDisabled();
     await page.getByRole('button', { name: 'Save', exact: true }).click();
     await expect(remove).toBeEnabled();
+  });
+
+  test('role keyboard choices commit on Enter and Escape preserves the saved value', async ({
+    page,
+  }) => {
+    await page.goto('/controls');
+    const role = page.getByRole('combobox', { name: 'Club role' });
+    const status = page.getByRole('status', { includeHidden: true });
+    await expect(role).toHaveText('Scorekeeper');
+    await role.focus();
+    await role.press('Enter');
+    await expect(page.getByRole('listbox')).toBeVisible();
+    await expect(
+      page.getByRole('option', { name: 'Scorekeeper', exact: true }),
+    ).toHaveAttribute('aria-selected', 'true');
+    await role.press('Home');
+    await role.press('Escape');
+    await expect(page.getByRole('listbox')).toBeHidden();
+    await expect(role).toBeFocused();
+    await expect(role).toHaveText('Scorekeeper');
+    await expect(status).toBeEmpty();
+
+    await role.press('Space');
+    await role.press('Home');
+    await role.press('Enter');
+    await expect(role).toHaveText('Manager');
+    await expect(page.getByRole('listbox')).toBeHidden();
+    await expect(status).toBeEmpty();
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(status).toHaveText('Lineup saved in this preview.');
+    await page.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(role).toHaveText('Scorekeeper');
+    await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect(role).toHaveText('Manager');
   });
 });

@@ -25,10 +25,10 @@ that already has a name.
 
 ## Select and combobox
 
-| Need                                           | Use                                           |
-| ---------------------------------------------- | --------------------------------------------- |
-| A short, known list and the platform select UI | [`jp-select`](../PRIMITIVES.md#jp-select)     |
-| Typing to narrow a single string value         | [`jp-combobox`](../PRIMITIVES.md#jp-combobox) |
+| Need                                   | Use                                           |
+| -------------------------------------- | --------------------------------------------- |
+| A known list without a search field    | [`jp-select`](../PRIMITIVES.md#jp-select)     |
+| Typing to narrow a single string value | [`jp-combobox`](../PRIMITIVES.md#jp-combobox) |
 
 Both are string `ControlValueAccessor`s. Combobox filters `options` locally
 by label. Set `loading` while the application fetches options, and set

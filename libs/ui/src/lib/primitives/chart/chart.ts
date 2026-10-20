@@ -15,18 +15,20 @@ import {
   viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import type { Chart, ChartConfiguration } from 'chart.js';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
+import { JpSelect } from '../select/select';
 export interface JpChartSeries {
   id: string;
   label: string;
   values: readonly (number | null)[];
 }
-/** Optional Chart.js bar/line integration, with equivalent native data controls. */
+/** Optional Chart.js bar/line integration, with equivalent data controls. */
 @Component({
   selector: 'jp-chart',
-  imports: [JpButton, NgTemplateOutlet],
+  imports: [FormsModule, JpButton, JpSelect, NgTemplateOutlet],
   templateUrl: './chart.html',
   styleUrl: './chart.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,6 +44,9 @@ export class JpChart {
   readonly controlsCollapsed = input(false, { transform: booleanAttribute });
   readonly type = input<'bar' | 'line'>('bar');
   readonly labels = input<readonly string[]>([]);
+  readonly categoryOptions = computed(() =>
+    this.labels().map((label, index) => ({ value: String(index), label })),
+  );
   readonly series = input<readonly JpChartSeries[]>([]);
   readonly locale = input('en-US');
   readonly formatOptions = input<Intl.NumberFormatOptions>({
@@ -261,7 +266,7 @@ export class JpChart {
     else keys.add(id);
     this.hiddenSeries.set([...keys]);
   }
-  inspect(event: Event): void {
-    this.activeIndex.set(Number((event.target as HTMLSelectElement).value));
+  inspect(value: string): void {
+    this.activeIndex.set(Number(value));
   }
 }

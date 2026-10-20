@@ -20,6 +20,11 @@ describe('ControlsPage preview actions', () => {
     role: 'admin',
     subscribe: false,
   };
+  const roleLabels: Record<string, string> = {
+    admin: 'Manager',
+    editor: 'Scorekeeper',
+    viewer: 'Fan',
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -44,7 +49,9 @@ describe('ControlsPage preview actions', () => {
   async function enterLineup(value: typeof defaults): Promise<void> {
     const email = root.querySelector('jp-input input') as HTMLInputElement;
     const notes = root.querySelector('textarea') as HTMLTextAreaElement;
-    const role = root.querySelector('select') as HTMLSelectElement;
+    const role = root.querySelector(
+      'jp-select [role="combobox"]',
+    ) as HTMLButtonElement;
     const subscribe = root.querySelector(
       'input[type="checkbox"]',
     ) as HTMLInputElement;
@@ -53,8 +60,13 @@ describe('ControlsPage preview actions', () => {
     email.dispatchEvent(new Event('blur'));
     notes.value = value.notes;
     notes.dispatchEvent(new Event('input', { bubbles: true }));
-    role.value = value.role;
-    role.dispatchEvent(new Event('change', { bubbles: true }));
+    role.click();
+    await settle();
+    const option = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[role="option"]'),
+    ).find((element) => element.textContent?.trim() === roleLabels[value.role]);
+    if (!option) throw new Error(`Missing club role ${value.role}`);
+    option.click();
     subscribe.checked = value.subscribe;
     subscribe.dispatchEvent(new Event('change', { bubbles: true }));
     await settle();
@@ -80,9 +92,9 @@ describe('ControlsPage preview actions', () => {
     expect((root.querySelector('textarea') as HTMLTextAreaElement).value).toBe(
       value.notes,
     );
-    expect((root.querySelector('select') as HTMLSelectElement).value).toBe(
-      value.role,
-    );
+    expect(
+      root.querySelector('jp-select [role="combobox"]')?.textContent?.trim(),
+    ).toBe(roleLabels[value.role]);
     expect(
       (root.querySelector('input[type="checkbox"]') as HTMLInputElement)
         .checked,

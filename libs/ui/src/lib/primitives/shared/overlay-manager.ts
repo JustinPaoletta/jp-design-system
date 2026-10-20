@@ -102,8 +102,12 @@ export function positionOverlay(
       )
         top = a.top - p.height - gap;
     }
-    panel.style.left = `${Math.max(offsetLeft + edge, Math.min(left, viewportRight - p.width - edge))}px`;
-    panel.style.top = `${Math.max(offsetTop + edge, Math.min(top, viewportBottom - p.height - edge))}px`;
+    // Align text with device pixels so fractional anchor geometry does not
+    // change glyph rasterization between otherwise identical panel layouts.
+    const scale = win.devicePixelRatio || 1;
+    const snap = (value: number) => Math.round(value * scale) / scale;
+    panel.style.left = `${snap(Math.max(offsetLeft + edge, Math.min(left, viewportRight - p.width - edge)))}px`;
+    panel.style.top = `${snap(Math.max(offsetTop + edge, Math.min(top, viewportBottom - p.height - edge)))}px`;
     panel.style.maxHeight = `${Math.max(0, height - 2 * edge)}px`;
   };
   update();

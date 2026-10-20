@@ -34,10 +34,10 @@ Chart.js canvas contents must have an accessible alternative, as described in it
   back to en-US with two maximum fraction digits.
 - `hiddenSeries`/`hiddenSeriesChange` control legend visibility. Native pressed
   buttons toggle series; hidden series remain available in the data table.
-- `activeIndex`/`activeIndexChange` control a native category select. Its readout
+- `activeIndex`/`activeIndexChange` control a `jp-select` category field. Its readout
   exposes tooltip-equivalent formatted values to keyboard and screen-reader users.
 - `loading`, `error`, and `retry` cover consumer data states. An engine failure
-  leaves the native data controls usable.
+  leaves the data controls usable.
 - The canvas has an image label; the native details/table gives all values,
   including explicit missing values. Forced colors automatically opens the data
   table and suppresses the canvas.
