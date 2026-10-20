@@ -1,0 +1,26 @@
+@use 'sass:selector';
+
+@mixin feedback($selectors) {
+  #{$selectors} {
+    transition: var(--jp-motion-transition-base);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #{$selectors} {
+      transition: none;
+    }
+  }
+}
+
+@mixin pressable($selectors) {
+  @include feedback($selectors);
+  #{selector.append($selectors, ":active:not(:disabled):not([aria-disabled='true'])")} {
+    background-color: var(
+      --jp-press-bg,
+      var(--jp-color-button-secondary-bg-pressed)
+    );
+    color: var(--jp-press-fg, var(--jp-color-text-primary));
+    box-shadow: inset 0 0 0 1px
+      var(--jp-press-border, var(--jp-color-border-strong));
+    transition: none;
+  }
+}

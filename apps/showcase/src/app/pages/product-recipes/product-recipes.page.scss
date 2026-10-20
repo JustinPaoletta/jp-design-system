@@ -25,3 +25,14 @@
     padding: var(--jp-space-lg) var(--jp-space-md);
   }
 }
+
+.example-page__results {
+  position: relative;
+  min-inline-size: 0;
+}
+.example-page__refresh-progress {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(-1 * var(--jp-space-xs));
+  block-size: var(--jp-space-2xs);
+}

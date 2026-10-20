@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   position: relative;
   display: inline-flex;
@@ -76,3 +78,5 @@
   margin: var(--jp-space-2xs) var(--jp-space-xs);
   background: var(--jp-color-border-default);
 }
+
+@include interaction.pressable(':host ::ng-deep .jp-dropdown-menu__item');

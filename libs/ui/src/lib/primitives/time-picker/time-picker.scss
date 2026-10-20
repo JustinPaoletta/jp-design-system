@@ -1,4 +1,8 @@
-@use '../input/input';
+@use '../shared/interaction';
+
+@use '../input/input' with (
+  $with-text-actions: false
+);
 
 :host {
   min-inline-size: 0;
@@ -168,4 +172,16 @@
 
 .jp-time-picker__trigger:focus-visible {
   outline: none;
+}
+
+@include interaction.pressable('button');
+
+.jp-time-picker__apply {
+  --jp-press-bg: var(--jp-color-button-primary-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-primary-fg);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-primary-fg) 24%,
+    transparent
+  );
 }

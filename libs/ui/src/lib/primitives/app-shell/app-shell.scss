@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-height: 100vh;
@@ -252,3 +254,7 @@
     display: none;
   }
 }
+
+@include interaction.pressable(
+  '.jp-app-shell__menu-toggle, .jp-app-shell__drawer-close, .jp-app-shell__collapse-toggle'
+);

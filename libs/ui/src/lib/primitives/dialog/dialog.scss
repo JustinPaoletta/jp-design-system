@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: contents;
 }
@@ -132,3 +134,24 @@
   border-start-start-radius: var(--jp-radius-xl);
   border-start-end-radius: var(--jp-radius-xl);
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .jp-dialog__panel:is(
+      .jp-dialog__panel--start,
+      .jp-dialog__panel--end,
+      .jp-dialog__panel--bottom
+    )[open] {
+    animation: jp-drawer-enter var(--jp-motion-duration-normal)
+      var(--jp-motion-easing-standard);
+  }
+}
+@keyframes jp-drawer-enter {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@include interaction.pressable('.jp-dialog__close');

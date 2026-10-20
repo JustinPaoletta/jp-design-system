@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -61,3 +63,5 @@
     border-bottom-color: Highlight;
   }
 }
+
+@include interaction.pressable('.jp-tabs__tab');

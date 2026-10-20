@@ -31,7 +31,8 @@
   padding: var(--jp-space-2xs);
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-selection-track);
-  transition: var(--jp-motion-transition-base);
+  transition: background-color var(--jp-motion-duration-fast)
+    var(--jp-motion-easing-standard);
 }
 
 .jp-switch__thumb {
@@ -41,15 +42,19 @@
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-selection-thumb);
   transform: translateX(0);
-  transition: var(--jp-motion-transition-base);
+  transition: transform var(--jp-motion-duration-fast)
+    var(--jp-motion-easing-standard);
 }
 
 :host(.jp-switch--checked) .jp-switch__track {
   background: var(--jp-color-selection-track-checked);
 }
 
-:host(.jp-switch--checked) .jp-switch__track {
-  justify-content: flex-end;
+:host(.jp-switch--checked) .jp-switch__thumb {
+  transform: translateX(var(--jp-size-selection-control));
+}
+:host(.jp-switch--checked) .jp-switch__thumb:dir(rtl) {
+  transform: translateX(calc(-1 * var(--jp-size-selection-control)));
 }
 
 .jp-switch__control:focus-visible .jp-switch__track {

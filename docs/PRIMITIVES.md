@@ -225,10 +225,12 @@ Class `JpButton`. Story:
 | `loading`      | boolean                                        | `false`   |
 | `loadingLabel` | string                                         | `Loading` |
 
-The label is projected. `loading` disables the inner button and sets
-`aria-busy`. `loadingLabel` is visually clipped and becomes `aria-label`
-while loading, so it replaces the accessible name. The projected label stays
-on screen. Primary uses accent tokens. Destructive uses error tokens.
+The label is projected. `loading` disables the inner button and sets `aria-busy`.
+During loading, a centered spinner replaces the visible label.
+The hidden label keeps its space, so the button dimensions stay constant.
+`loadingLabel` becomes `aria-label` and replaces the accessible name during loading.
+
+Primary uses accent tokens. Destructive uses error tokens.
 
 ### jp-icon-button
 

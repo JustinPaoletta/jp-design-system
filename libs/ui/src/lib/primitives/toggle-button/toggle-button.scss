@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
@@ -31,4 +33,16 @@ button[aria-pressed='true'] {
   background: var(--jp-color-button-primary-bg);
   color: var(--jp-color-button-primary-fg);
   border-color: var(--jp-color-button-primary-bg);
+}
+
+@include interaction.pressable('button');
+
+button[aria-pressed='true'] {
+  --jp-press-bg: var(--jp-color-button-primary-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-primary-fg);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-primary-fg) 24%,
+    transparent
+  );
 }

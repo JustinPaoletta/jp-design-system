@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -123,3 +125,7 @@ input[aria-invalid='true'] {
 .option[aria-selected='true'] {
   font-weight: var(--jp-font-weight-semibold);
 }
+
+@include interaction.feedback('input, .option');
+
+@include interaction.pressable('.option:not([aria-disabled="true"])');

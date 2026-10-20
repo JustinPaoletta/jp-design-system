@@ -1,10 +1,18 @@
 {
   "color": {
     "code": {
-      "keyword": { "value": "{primitive.color.accent.gold.300}" },
-      "string": { "value": "{primitive.color.state.success.300}" },
-      "number": { "value": "{primitive.color.accent.cobalt.200}" },
-      "comment": { "value": "{color.text.muted}" }
+      "keyword": {
+        "value": "{primitive.color.accent.gold.300}"
+      },
+      "string": {
+        "value": "{primitive.color.state.success.300}"
+      },
+      "number": {
+        "value": "{primitive.color.accent.cobalt.200}"
+      },
+      "comment": {
+        "value": "{color.text.muted}"
+      }
     },
     "surface": {
       "canvas": {
@@ -218,6 +226,18 @@
       },
       "destructive-fg": {
         "value": "{color.text.primary}"
+      },
+      "primary-bg-pressed": {
+        "value": "{color.accent.strong}"
+      },
+      "secondary-bg-pressed": {
+        "value": "{color.surface.emphasis}"
+      },
+      "ghost-bg-pressed": {
+        "value": "{color.surface.raised}"
+      },
+      "destructive-bg-pressed": {
+        "value": "{color.state.error.text}"
       }
     },
     "field": {
@@ -677,6 +697,9 @@
       },
       "shell": {
         "value": "{motion.duration.normal}"
+      },
+      "indicator": {
+        "value": "{primitive.motion.duration.cycle}"
       }
     },
     "easing": {
@@ -695,10 +718,10 @@
     },
     "transition": {
       "base": {
-        "value": "all {motion.duration.normal} {motion.easing.standard}"
+        "value": "background-color {motion.duration.fast} {motion.easing.standard}, border-color {motion.duration.fast} {motion.easing.standard}, color {motion.duration.fast} {motion.easing.standard}"
       },
       "emphasized": {
-        "value": "all {motion.duration.fast} {motion.easing.emphasized}"
+        "value": "background-color {motion.duration.fast} {motion.easing.emphasized}, border-color {motion.duration.fast} {motion.easing.emphasized}, color {motion.duration.fast} {motion.easing.emphasized}"
       },
       "shell": {
         "value": "width {motion.duration.shell} {motion.easing.shell}, transform {motion.duration.shell} {motion.easing.shell}"

@@ -44,6 +44,22 @@ Heading levels use sizes 32px, 24px, 20px, 16px, 14px and 13px. See
 Dense interface text uses `--jp-font-size-body-sm` at 0.875rem.
 This token is available in CSS; it is not a `jp-text` size input.
 
+## Motion tokens
+
+| CSS variable                     | Duration | Purpose                          |
+| -------------------------------- | -------- | -------------------------------- |
+| `--jp-motion-duration-fast`      | 90ms     | Hover colors and switch movement |
+| `--jp-motion-duration-normal`    | 160ms    | Drawer entry                     |
+| `--jp-motion-duration-shell`     | 160ms    | Shell and assistant transitions  |
+| `--jp-motion-duration-slow`      | 240ms    | Optional longer transitions      |
+| `--jp-motion-duration-indicator` | 960ms    | Repeating loading indicators     |
+
+`--jp-motion-transition-base` changes only background color, border color and text color.
+Pressed states and keyboard focus outlines appear immediately.
+The standard and emphasized easing curves do not overshoot.
+Components remove transitions and indicator animation when the user requests reduced motion.
+See the [visual style rules](../../docs/content/VISUAL_STYLE.md#motion).
+
 ## App shell tokens
 
 | Semantic token                 | CSS variable                                | Purpose                        |

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -53,3 +55,5 @@ details[open] summary {
   padding: var(--jp-space-md);
   line-height: var(--jp-font-line-height-normal);
 }
+
+@include interaction.pressable('summary');

@@ -46,10 +46,7 @@
               >Remove player</jp-button
             >
           </jp-table-toolbar>
-          @if (loading()) {
-          <jp-progress
-            label="Refreshing roster"
-          /><jp-skeleton /><jp-skeleton /> } @if (loadError()) {
+          @if (loadError()) {
           <jp-inline-alert
             tone="error"
             title="Refresh failed"
@@ -58,18 +55,31 @@
             (action)="refresh()"
           />
           }
-          <jp-table
-            caption="2024 Dodgers roster"
-            [columns]="columns"
-            [rows]="visible()"
-            [sort]="sort()"
-            (sortChange)="setSort($event)"
-            [selectable]="true"
-            [selectedKeys]="selected()"
-            (selectionChange)="selected.set($event)"
-            emptyTitle="No matching players"
-            emptyDescription="Clear your search or choose a different query."
-          />
+          <div
+            class="example-page__results"
+            role="region"
+            aria-label="Roster results"
+            [attr.aria-busy]="loading() ? true : null"
+          >
+            @if (loading()) {
+            <jp-progress
+              class="example-page__refresh-progress"
+              label="Refreshing roster"
+            />
+            }
+            <jp-table
+              caption="2024 Dodgers roster"
+              [columns]="columns"
+              [rows]="visible()"
+              [sort]="sort()"
+              (sortChange)="setSort($event)"
+              [selectable]="true"
+              [selectedKeys]="selected()"
+              (selectionChange)="selected.set($event)"
+              emptyTitle="No matching players"
+              emptyDescription="Clear your search or choose a different query."
+            />
+          </div>
           <jp-pagination
             [page]="page()"
             [pageSize]="pageSize"

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
@@ -82,3 +84,5 @@ button:disabled {
   background: var(--jp-color-surface-subtle);
   outline-offset: -2px;
 }
+
+@include interaction.pressable('.panel button');

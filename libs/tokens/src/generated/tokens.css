@@ -63,11 +63,12 @@
   --jp-primitive-elevation-300: 0 12px 32px rgba(0, 0, 0, 0.32);
   --jp-primitive-elevation-focus-ring: 0 0 0 2px rgba(205, 168, 82, 0.45);
   --jp-primitive-motion-duration-instant: 0ms;
-  --jp-primitive-motion-duration-fast: 120ms;
-  --jp-primitive-motion-duration-normal: 180ms;
+  --jp-primitive-motion-duration-fast: 90ms;
+  --jp-primitive-motion-duration-normal: 160ms;
   --jp-primitive-motion-duration-slow: 240ms;
+  --jp-primitive-motion-duration-cycle: 960ms;
   --jp-primitive-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-  --jp-primitive-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1.08);
+  --jp-primitive-motion-easing-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
   --jp-primitive-motion-easing-linear: linear;
   --jp-primitive-radius-none: 0;
   --jp-primitive-radius-xs: 0.125rem;
@@ -230,6 +231,7 @@
   --jp-motion-duration-fast: var(--jp-primitive-motion-duration-fast);
   --jp-motion-duration-normal: var(--jp-primitive-motion-duration-normal);
   --jp-motion-duration-slow: var(--jp-primitive-motion-duration-slow);
+  --jp-motion-duration-indicator: var(--jp-primitive-motion-duration-cycle);
   --jp-motion-easing-standard: var(--jp-primitive-motion-easing-standard);
   --jp-motion-easing-emphasized: var(--jp-primitive-motion-easing-emphasized);
   --jp-motion-easing-linear: var(--jp-primitive-motion-easing-linear);
@@ -274,6 +276,10 @@
   --jp-color-button-destructive-bg: var(--jp-color-state-error-strong);
   --jp-color-button-destructive-bg-hover: var(--jp-color-state-error-text);
   --jp-color-button-destructive-fg: var(--jp-color-text-primary);
+  --jp-color-button-primary-bg-pressed: var(--jp-color-accent-strong);
+  --jp-color-button-secondary-bg-pressed: var(--jp-color-surface-emphasis);
+  --jp-color-button-ghost-bg-pressed: var(--jp-color-surface-raised);
+  --jp-color-button-destructive-bg-pressed: var(--jp-color-state-error-text);
   --jp-color-field-bg: var(--jp-color-surface-sunken);
   --jp-color-field-border-invalid: var(--jp-color-state-error-border);
   --jp-color-field-fg: var(--jp-color-text-primary);
@@ -341,8 +347,8 @@
   --jp-font-label-sm: var(--jp-font-weight-medium) var(--jp-font-size-caption)/var(--jp-font-line-height-normal) var(--jp-font-family-base);
   --jp-motion-duration-shell: var(--jp-motion-duration-normal);
   --jp-motion-easing-shell: var(--jp-motion-easing-standard);
-  --jp-motion-transition-base: all var(--jp-motion-duration-normal) var(--jp-motion-easing-standard);
-  --jp-motion-transition-emphasized: all var(--jp-motion-duration-fast) var(--jp-motion-easing-emphasized);
+  --jp-motion-transition-base: background-color var(--jp-motion-duration-fast) var(--jp-motion-easing-standard), border-color var(--jp-motion-duration-fast) var(--jp-motion-easing-standard), color var(--jp-motion-duration-fast) var(--jp-motion-easing-standard);
+  --jp-motion-transition-emphasized: background-color var(--jp-motion-duration-fast) var(--jp-motion-easing-emphasized), border-color var(--jp-motion-duration-fast) var(--jp-motion-easing-emphasized), color var(--jp-motion-duration-fast) var(--jp-motion-easing-emphasized);
   --jp-motion-transition-shell: width var(--jp-motion-duration-shell) var(--jp-motion-easing-shell), transform var(--jp-motion-duration-shell) var(--jp-motion-easing-shell);
 }
 

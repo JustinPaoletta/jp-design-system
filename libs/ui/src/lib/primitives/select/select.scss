@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -181,3 +183,5 @@
     color: GrayText;
   }
 }
+
+@include interaction.pressable('.jp-select__control, .jp-select__option');

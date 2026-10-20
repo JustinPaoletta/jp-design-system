@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 @use '../input/input';
 :host {
   display: block;
@@ -105,3 +107,5 @@ li .jp-input__error {
   order: 1;
   flex: 1 0 100%;
 }
+
+@include interaction.pressable('.choose-files');

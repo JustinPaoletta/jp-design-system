@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -236,3 +238,9 @@
     color: GrayText;
   }
 }
+
+@include interaction.pressable(
+  '.jp-date-picker__trigger, .jp-date-picker__navigation, .jp-date-picker__day:not([aria-disabled="true"])'
+);
+
+@include interaction.feedback('.jp-date-picker__row');

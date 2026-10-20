@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   align-items: center;
@@ -87,3 +89,5 @@
   inline-size: 24px;
   block-size: 24px;
 }
+
+@include interaction.pressable('.jp-chip__remove');
