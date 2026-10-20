@@ -208,17 +208,15 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
 test('advanced layout: meaningful image fallback and source recovery', async ({
   page,
 }) => {
-  await expect(
-    page.getByRole('img', { name: 'Field diagram' }),
-  ).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Field diagram' })).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
     'aria-busy',
     'false',
   );
   await page.getByRole('button', { name: 'Show image error' }).click();
-  await expect(
-    page.getByRole('img', { name: 'Field diagram' }),
-  ).toHaveText('Image unavailable');
+  await expect(page.getByRole('img', { name: 'Field diagram' })).toHaveText(
+    'Image unavailable',
+  );
   await page.getByRole('button', { name: 'Restore image' }).click();
   await expect(page.locator('jp-media img')).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(

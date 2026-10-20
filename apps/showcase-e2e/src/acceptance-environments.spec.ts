@@ -45,7 +45,9 @@ async function expectOutline(locator: Locator) {
 const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
   {
     hierarchy: async (page) => {
-      await page.getByRole('button', { name: 'Expand Position players' }).click();
+      await page
+        .getByRole('button', { name: 'Expand Position players' })
+        .click();
       await expect(
         page.getByRole('checkbox', { name: 'Select Infield' }),
       ).toBeVisible();

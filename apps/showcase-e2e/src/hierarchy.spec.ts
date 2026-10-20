@@ -119,7 +119,10 @@ test('hierarchy: native table disclosure buttons preserve independent hidden sel
   });
   await landing.check();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Position players', exact: true }),
+    table.getByRole('checkbox', {
+      name: 'Select Position players',
+      exact: true,
+    }),
   ).not.toBeChecked();
   const website = page.locator('#project-breakdown-row-website button');
   await website.focus();
@@ -140,7 +143,9 @@ for (const dir of ['ltr', 'rtl']) {
     async ({ page }) => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      await page.getByRole('button', { name: 'Expand Position players' }).click();
+      await page
+        .getByRole('button', { name: 'Expand Position players' })
+        .click();
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - innerWidth,
       );
