@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -85,4 +87,16 @@ input:checked::before {
   input::before {
     display: none;
   }
+}
+
+@include interaction.feedback('input');
+input:hover:not(:disabled) {
+  border-color: var(--jp-color-field-border-hover);
+}
+input:active:not(:disabled) {
+  box-shadow: inset 0 0 0 1px var(--jp-color-focus-ring);
+  transition: none;
+}
+input:checked {
+  transition: none;
 }

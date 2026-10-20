@@ -1,7 +1,7 @@
 # Charts and virtual tables
 
-These APIs are preview. `/data-performance` combines team delivery analytics and
-10,000 services in a consumer screen. Consumers own fetching, sorting, selection,
+These APIs are preview. `/data-performance` combines 2024 season statistics and
+10,000 roster rows in a consumer screen. Consumers own fetching, sorting, selection,
 errors, persistence, and business decisions.
 
 ## Chart integration
@@ -10,7 +10,7 @@ errors, persistence, and business decisions.
 category/linear scales, their elements and tooltip. The engine is dynamically
 imported after browser rendering; importing another UI component does not eagerly
 load or register it. No Angular chart wrapper, date adapter, or canvas dependency
-is required. Engine instances are destroyed on teardown and input/theme changes;
+is required. Engine instances are destroyed on teardown and data, chart type or theme changes;
 stale asynchronous imports cannot create a chart after teardown.
 
 This integration follows the official
@@ -38,6 +38,9 @@ Chart.js canvas contents must have an accessible alternative, as described in it
   exposes tooltip-equivalent formatted values to keyboard and screen-reader users.
 - `loading`, `error`, and `retry` cover consumer data states. An engine failure
   leaves the data controls usable.
+- During refresh, valid chart data keeps its canvas and data table.
+  The legend and category control stay in position and become disabled.
+  Without valid data, loading shows a placeholder.
 - The canvas has an image label; the native details/table gives all values,
   including explicit missing values. Forced colors automatically opens the data
   table and suppresses the canvas.
@@ -74,7 +77,7 @@ Virtualization is for large flat datasets with continuous navigation.
 - `height` defaults to 360 px, clamped to 120–1200. `rowHeight` defaults to 48 px,
   clamped to 40–160 and rounded to the nearest whole CSS pixel. The component and
   exported range helper use the same rounded value to avoid accumulated subpixel
-  drift across large datasets. Text is single-line with an ellipsis and native title. Row
+  drift across large datasets. Truncated text uses an ellipsis and a JP tooltip. Row
   geometry stays fixed across density modes; changing rowHeight recalculates it.
 - `overscan` defaults to six rows each side, clamped to 0–50. `rangeChange` emits
   `JpVirtualRange`: zero-based start and exclusive end, plus total. The exported
@@ -84,6 +87,8 @@ Virtualization is for large flat datasets with continuous navigation.
 - The scroll region is labeled and keyboard focusable. Its native table has a
   sticky 40 px header, full `aria-rowcount`/`aria-colcount`, and original row/column
   indices; inert spacer rows are excluded from accessibility semantics.
+- During refresh, existing rows retain their scroll container, scroll position and focus.
+  Without usable rows, loading shows a placeholder.
 - Selection is consumer-controlled and survives window changes. Sorting emits
   the existing three-state sort request; the consumer supplies the reordered rows.
 - If scrolling would recycle the focused checkbox row, focus moves to the labeled

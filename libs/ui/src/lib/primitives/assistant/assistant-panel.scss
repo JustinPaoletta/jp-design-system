@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: contents;
   font-family: var(--jp-font-family-base);
@@ -252,3 +254,7 @@
     padding: var(--jp-space-md);
   }
 }
+
+@include interaction.pressable(
+  '.jp-assistant-panel__close, .jp-assistant-panel__context-clear'
+);

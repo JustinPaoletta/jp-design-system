@@ -1,3 +1,7 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -330,6 +334,14 @@ h3 span:first-child,
 .day .all-day:has(li) {
   padding: var(--jp-space-xs);
 }
-.appointment:hover {
+.appointment:hover:not(:disabled) {
   background: var(--jp-color-surface-overlay);
 }
+.appointment:disabled {
+  cursor: progress;
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('.toggle button');
+
+@include refresh.indicator('.calendar');

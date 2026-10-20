@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   flex-direction: column;
@@ -92,3 +94,9 @@
 .jp-checkbox__error {
   color: var(--jp-color-field-error);
 }
+
+@include interaction.selection(
+  '.jp-checkbox__root',
+  '.jp-checkbox__input',
+  '.jp-checkbox__box'
+);

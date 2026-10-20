@@ -254,13 +254,19 @@ describe('JpSchedulingCalendar', () => {
     const f = create();
     const retry = jest.fn();
     f.componentInstance.retry.subscribe(retry);
+    const viewport = f.nativeElement.querySelector('.days');
+    const appointments = [...f.nativeElement.querySelectorAll('.appointment')];
     f.componentRef.setInput('loading', true);
     f.detectChanges();
     expect(
       f.nativeElement.querySelector('section').getAttribute('aria-busy'),
     ).toBe('true');
     expect(f.nativeElement.textContent).toContain('Loading appointments');
-    expect(f.nativeElement.querySelectorAll('.appointment')).toHaveLength(0);
+    expect(f.nativeElement.querySelector('.days')).toBe(viewport);
+    expect([...f.nativeElement.querySelectorAll('.appointment')]).toEqual(
+      appointments,
+    );
+    expect(appointments.every((button) => button.disabled)).toBe(true);
     f.componentRef.setInput('loading', false);
     f.componentRef.setInput('error', 'Network unavailable');
     f.detectChanges();

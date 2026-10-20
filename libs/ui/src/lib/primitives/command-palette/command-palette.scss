@@ -1,4 +1,8 @@
-@use '../input/input';
+@use '../shared/interaction';
+
+@use '../input/input' with (
+  $with-text-actions: false
+);
 .results {
   max-block-size: 24rem;
   overflow: auto;
@@ -69,3 +73,5 @@ button.active {
 :host ::ng-deep .jp-dialog__panel {
   width: min(35rem, calc(100vw - 2 * var(--jp-space-md)));
 }
+
+@include interaction.pressable('button');

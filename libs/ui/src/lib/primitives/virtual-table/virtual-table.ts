@@ -178,7 +178,10 @@ export class JpVirtualTable {
     effect(() => {
       const nextKeys = new Set(this.visible().map((row) => this.rowToken(row)));
       const mounted =
-        this.virtual() && !this.loading() && !this.error() && !this.invalid();
+        this.virtual() &&
+        (!this.loading() || this.rows().length > 0) &&
+        !this.error() &&
+        !this.invalid();
       const selectable = this.selectable();
       const frame = this.frame()?.nativeElement;
       if (!frame) return;

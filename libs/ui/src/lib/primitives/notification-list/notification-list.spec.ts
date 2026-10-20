@@ -34,8 +34,11 @@ describe('JpNotificationList', () => {
     expect(all).toHaveBeenCalledTimes(1);
     expect(retry).toHaveBeenCalledTimes(1);
     expect(one.unread).toBe(true);
+    const row = f.nativeElement.querySelector('li');
     f.componentRef.setInput('loading', true);
     f.detectChanges();
+    expect(f.nativeElement.querySelector('li')).toBe(row);
+    expect(row.querySelector('button').disabled).toBe(true);
     c.mark(one);
     c.dismiss(one);
     c.markAll();
@@ -54,6 +57,23 @@ describe('JpNotificationList', () => {
     expect(f.nativeElement.textContent).toContain('No unread notifications');
     c.markAll();
     expect(all).toHaveBeenCalledTimes(1);
+  });
+  it('uses an initial placeholder only until notification data is available', () => {
+    const f = TestBed.createComponent(JpNotificationList);
+    f.componentRef.setInput('label', 'Inbox');
+    f.componentRef.setInput('loading', true);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.loading-lines')).toBeTruthy();
+    f.componentRef.setInput('items', [{ id: 'one', title: 'Lineup ready' }]);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.loading-lines')).toBeNull();
+    expect(f.nativeElement.querySelector('li').textContent).toContain(
+      'Lineup ready',
+    );
+    f.componentRef.setInput('loading', false);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.jp-refresh-status')).toBeNull();
+    expect(f.nativeElement.querySelector('li button').disabled).toBe(false);
   });
 });
 

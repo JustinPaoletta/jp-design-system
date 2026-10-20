@@ -117,6 +117,10 @@ Do not use `transition: all`.
 Show the pressed state on pointer down. Keep action activation on click.
 Keep keyboard focus outlines immediate.
 Do not animate button dimensions or scale their text.
+Use the same rules for row actions, dismiss controls, overflow controls and navigation links.
+
+Keep selection marks and slider values immediate.
+During dragging, update slider positions and pane sizes without transitions.
 
 Use the 160ms normal duration for drawer entry and shell transitions.
 Keep menu opening, focus movement and dismissal immediate.
@@ -125,12 +129,20 @@ Use easing without overshoot.
 Keep the button dimensions constant during loading.
 Center its spinner over the hidden label.
 Retain existing rows during refresh.
+
+Retain populated charts, calendars and notification lists during refresh.
+Keep their scroll containers mounted.
+Use placeholders when no usable data is available.
+
 Put refresh progress inside the existing results region without moving content.
 Use the separate 960ms indicator duration for repeating loading indicators.
 Honor the reduced-motion setting for transitions and loading indicators.
 
 Check pointer down, keyboard focus and loading recovery in Chrome.
 Check that loading does not change the position of adjacent content.
+Check both password-reveal labels without changing the field width.
+
+The [interaction review](../qa/INTERACTION_REVIEW.md) lists the full component inventory.
 
 Keep the Storybook runtime files separate for each server port.
 A preview server must not share generated runtime files with a test server.

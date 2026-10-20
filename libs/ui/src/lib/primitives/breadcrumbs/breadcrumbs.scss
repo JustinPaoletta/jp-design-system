@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -74,3 +76,7 @@ a[jpDropdownMenuItem] {
   text-decoration: none;
   overflow-wrap: anywhere;
 }
+
+@include interaction.pressable('.jp-breadcrumbs__overflow');
+
+@include interaction.link('.jp-breadcrumbs__link');

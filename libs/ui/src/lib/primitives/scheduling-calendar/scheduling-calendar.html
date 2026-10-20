@@ -3,6 +3,9 @@
   [attr.aria-label]="label()"
   [attr.aria-busy]="loading()"
 >
+  @if (loading() && eventCount() && !calendar().invalid && !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
   <div class="toolbar">
     <div class="navigation">
       <jp-button
@@ -64,7 +67,7 @@
     <strong>{{ rangeLabel() }}</strong
     ><span>{{ timeZone() }} · {{ messages.events(eventCount()) }}</span>
   </div>
-  @if (loading()) {
+  @if (loading() && (!eventCount() || calendar().invalid || error())) {
   <p class="state" role="status">{{ messages.loading }}</p>
   } @else if (error()) {
   <div class="state" role="alert">
@@ -121,6 +124,7 @@
           <button
             type="button"
             class="appointment"
+            [disabled]="loading()"
             [attr.aria-label]="event.title + ', ' + messages.allDay + ', ' + day.label"
             (click)="eventActivated.emit(event)"
           >
@@ -149,6 +153,7 @@
               <button
                 type="button"
                 class="appointment"
+                [disabled]="loading()"
                 [class.appointment--short]="item.displayEnd - item.displayStart < 60"
                 [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
                 (click)="eventActivated.emit(item.event)"

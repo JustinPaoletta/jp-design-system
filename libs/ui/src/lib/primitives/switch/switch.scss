@@ -85,3 +85,7 @@
     transition: none;
   }
 }
+
+.jp-switch__control:active:not(:disabled) .jp-switch__track {
+  box-shadow: inset 0 0 0 1px var(--jp-color-focus-ring);
+}

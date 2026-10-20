@@ -1,4 +1,8 @@
-@use '../input/input';
+@use '../shared/interaction';
+
+@use '../input/input' with (
+  $with-text-actions: false
+);
 :host {
   display: block;
   inline-size: 100%;
@@ -61,8 +65,5 @@ span[role='status'] {
   font-size: var(--jp-font-size-caption);
   margin-block-start: var(--jp-space-xs);
 }
-.actions button[type='submit'] {
-  background: var(--jp-color-button-primary-bg);
-  color: var(--jp-color-button-primary-fg);
-  font-weight: var(--jp-font-weight-semibold);
-}
+
+@include interaction.pressable('button');

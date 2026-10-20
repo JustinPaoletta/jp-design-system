@@ -162,6 +162,15 @@ $with-text-actions: true !default;
   border-style: dashed;
 }
 @if $with-text-actions {
+  .jp-input__reveal-label {
+    display: grid;
+  }
+  .jp-input__reveal-label > span {
+    grid-area: 1 / 1;
+  }
+  .jp-input__reveal-label > [aria-hidden='true'] {
+    visibility: hidden;
+  }
   .jp-input__action:hover:not(:disabled) {
     background: var(--jp-color-surface-raised);
   }

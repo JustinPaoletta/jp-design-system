@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   inline-size: 24rem;
@@ -75,3 +77,5 @@
 :host(.jp-toast--info) .jp-toast__icon {
   color: var(--jp-color-toast-info-accent);
 }
+
+@include interaction.pressable('.jp-toast__dismiss');

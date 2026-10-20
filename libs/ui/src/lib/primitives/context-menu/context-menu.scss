@@ -85,4 +85,4 @@ button:disabled {
   outline-offset: -2px;
 }
 
-@include interaction.pressable('.panel button');
+@include interaction.pressable('button');

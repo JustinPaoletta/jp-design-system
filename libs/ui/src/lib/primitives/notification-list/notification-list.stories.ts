@@ -73,7 +73,8 @@ export const Default: Story = {
   },
 };
 export const Empty: Story = { args: { items: [] } };
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = { args: { loading: true, items: [] } };
+export const Refreshing: Story = { args: { loading: true } };
 export const Failed: Story = {
   args: { error: 'Could not load notifications' },
 };

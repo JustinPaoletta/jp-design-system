@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -123,3 +125,7 @@ label:has(input:disabled) {
 .box {
   margin-block-start: 1px;
 }
+
+@include interaction.selection('label', 'input', '.box');
+
+@include interaction.feedback('label');

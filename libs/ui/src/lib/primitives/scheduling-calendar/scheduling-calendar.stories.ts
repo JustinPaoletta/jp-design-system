@@ -59,7 +59,8 @@ export const Empty: Story = {
     await expect(frame).toHaveFocus();
   },
 };
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = { args: { loading: true, events: [] } };
+export const Refreshing: Story = { args: { loading: true } };
 export const Error: Story = {
   args: { error: 'Club events are unavailable. Try again.' },
 };

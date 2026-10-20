@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: flex;
   min-inline-size: 0;
@@ -87,4 +89,10 @@
   .jp-split-pane__separator::after {
     background: ButtonText;
   }
+}
+
+@include interaction.feedback('.jp-split-pane__separator::after');
+.jp-split-pane__separator:active::after {
+  background: var(--jp-color-accent-solid);
+  transition: none;
 }

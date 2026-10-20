@@ -1,4 +1,7 @@
 <section [attr.aria-label]="label()" [attr.aria-busy]="loading()">
+  @if (loading() && items().length && !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
   <div class="toolbar">
     <div role="group" [attr.aria-label]="label()">
       <button
@@ -23,7 +26,7 @@
       {{messages.markAll}}
     </button>
   </div>
-  @if(loading()){
+  @if(loading() && (!items().length || error())){
   <div class="state-panel" role="status">
     <p>{{messages.loading}}</p>
     <div class="loading-lines" aria-hidden="true">
@@ -60,12 +63,14 @@
         <div class="actions">
           <button
             type="button"
+            [disabled]="loading()"
             [attr.aria-label]="(item.unread?messages.markRead:messages.markUnread)+': '+item.title"
             (click)="mark(item)"
           >
             {{item.unread?messages.markRead:messages.markUnread}}</button
           ><button
             type="button"
+            [disabled]="loading()"
             [attr.aria-label]="messages.dismiss+': '+item.title"
             (click)="dismiss(item)"
           >

@@ -20,7 +20,10 @@ type Story = StoryObj<JpChart>;
 export const Default: Story = {};
 export const Line: Story = { args: { type: 'line' } };
 export const Empty: Story = { args: { labels: [], series: [] } };
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = {
+  args: { loading: true, labels: [], series: [] },
+};
+export const Refreshing: Story = { args: { loading: true } };
 export const Error: Story = {
   args: { error: 'Player statistics are temporarily unavailable. Try again.' },
 };

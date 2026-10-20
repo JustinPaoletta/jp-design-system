@@ -164,12 +164,23 @@ describe('JpVirtualTable', () => {
     expect(document.activeElement).toBe(outside);
     outside.remove();
   });
-  it('moves focus to an existing mode control if consumer state removes the viewport', () => {
+  it('retains the viewport and focus during refresh, and recovers focus if an error removes it', () => {
     const f = setup();
     f.componentRef.setInput('selectable', true);
     f.detectChanges();
-    f.nativeElement.querySelector('tbody input').focus();
+    const viewport = f.nativeElement.querySelector('.frame');
+    viewport.scrollTop = 48000;
+    viewport.dispatchEvent(new Event('scroll'));
+    f.detectChanges();
+    const checkbox = f.nativeElement.querySelector('tbody input');
+    checkbox.focus();
     f.componentRef.setInput('loading', true);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.frame')).toBe(viewport);
+    expect(viewport.scrollTop).toBe(48000);
+    expect(document.activeElement).toBe(checkbox);
+    f.componentRef.setInput('loading', false);
+    f.componentRef.setInput('error', 'Network unavailable');
     f.detectChanges();
     expect(document.activeElement).toBe(
       f.nativeElement.querySelector('.modes button[aria-pressed="true"]'),

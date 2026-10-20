@@ -1,5 +1,39 @@
 # Verification evidence
 
+## October 20, 2026 complete interaction pass
+
+The [component inventory](INTERACTION_REVIEW.md) covers all 91 primitive folders.
+Chrome captures cover all 97 Storybook groups and 269 visible control instances.
+Additional checks cover populated refresh states, narrow RTL layouts and all three accents.
+
+Shared feedback now covers row actions, tree controls, dismiss controls, selection controls and resize handles.
+Inline saves and password reveal keep their control dimensions constant.
+Populated data components retain content during refresh.
+Initial loading placeholders remain available when data is absent or unusable.
+
+| Check                         | Result                                                                            |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| UI unit tests                 | 538 tests in 99 suites pass with coverage gates.                                  |
+| Showcase and token unit tests | 59 Showcase tests and 17 token tests pass.                                        |
+| Static Storybook              | 381 stories in 97 suites pass.                                                    |
+| Browser regression set        | 484 checks pass across Chromium, Firefox and WebKit; eight existing skips remain. |
+| macOS Chromium visuals        | All 94 comparisons pass after one reviewed inline-save baseline update.           |
+| Installed package consumer    | All 18 browser, accent and density combinations pass.                             |
+| Source and documentation      | Lint, types, writing, links, formatting, token guards and API readiness pass.     |
+
+The full browser run passed 481 cases.
+Three password tests initially measured browser scrolling instead of component resizing.
+After the viewport setup was corrected, all three passed in a focused run.
+The password checks retain their geometry and accessible-name assertions.
+
+The shared inline-save button changed one visual baseline.
+The review confirmed its padding, corners, loading behavior and adjacent control position.
+No other existing screenshot baseline changed.
+
+Chrome checks confirmed hover and pressed link contrast above 8.9:1 on the sampled canvas in all accents.
+Six additional component views fit a 320px RTL page.
+Human acceptance and release tasks remain in the root task list.
+
 ## October 20, 2026 remaining browser control styling
 
 Date, date-range and time fields now use JP popup panels.

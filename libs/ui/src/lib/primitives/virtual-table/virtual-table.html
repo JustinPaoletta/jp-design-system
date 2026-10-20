@@ -14,7 +14,11 @@
   </button>
 </div>
 <div [attr.aria-busy]="loading()">
-  @if (loading()) {
+  @if (loading() && rows().length && !invalid() && !error()) {
+  <span class="jp-refresh-status" role="status"
+    >{{messages.virtualTable.loading}}</span
+  >
+  } @if (loading() && (!rows().length || invalid() || error())) {
   <p class="state" [style.min-block-size.px]="safeHeight()" role="status">
     {{ messages.virtualTable.loading }}
   </p>

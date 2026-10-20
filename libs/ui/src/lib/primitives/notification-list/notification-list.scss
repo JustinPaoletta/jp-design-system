@@ -1,3 +1,7 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -145,7 +149,7 @@ li:last-child {
   color: var(--jp-color-text-secondary);
   padding-inline: var(--jp-space-xs);
 }
-.actions button:hover {
+.actions button:hover:not(:disabled) {
   color: var(--jp-color-text-primary);
 }
 .state-panel {
@@ -167,3 +171,8 @@ li:last-child {
 .loading-lines span:nth-child(2) {
   max-width: 18rem;
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include refresh.indicator('section[aria-busy]');

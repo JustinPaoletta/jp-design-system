@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -63,3 +65,5 @@ p {
   flex-shrink: 0;
   margin-block-start: var(--jp-space-2xs);
 }
+
+@include interaction.pressable('.dismiss');

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
@@ -31,3 +33,6 @@ li {
 li + li {
   margin-block-start: var(--jp-space-sm);
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');

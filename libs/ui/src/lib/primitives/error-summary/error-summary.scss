@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -42,4 +44,15 @@ h2 {
 h2 jp-icon {
   color: var(--jp-color-state-error-border);
   flex-shrink: 0;
+}
+
+@include interaction.link('a');
+
+a {
+  color: var(--jp-color-text-primary);
+  text-underline-offset: var(--jp-space-2xs);
+}
+a:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
 }

@@ -1,3 +1,7 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -147,8 +151,12 @@ summary:focus-visible,
   }
 }
 
-.legend button:hover {
+.legend button:hover:not(:disabled) {
   background: var(--jp-color-surface-raised);
+}
+.legend button:disabled {
+  cursor: progress;
+  opacity: 0.5;
 }
 .inspection {
   display: flex;
@@ -178,3 +186,7 @@ summary:focus-visible,
   border-radius: var(--jp-radius-md);
   color: var(--jp-color-text-secondary);
 }
+
+@include interaction.pressable('.legend button, summary');
+
+@include refresh.indicator('figure');

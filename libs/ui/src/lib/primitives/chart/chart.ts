@@ -148,11 +148,7 @@ export class JpChart {
         type = this.type(),
         formatter = this.formatter();
       const inactive =
-        this.loading() ||
-        !!this.error() ||
-        this.invalid() ||
-        !labels.length ||
-        !series.length;
+        !!this.error() || this.invalid() || !labels.length || !series.length;
       const generation = ++this.generation;
       this.chart?.destroy();
       this.chart = null;

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   color: var(--jp-color-text-primary);
@@ -150,3 +152,5 @@ input[aria-invalid='true'].number {
     var(--jp-color-border-strong) var(--jp-slider-position) 100%
   );
 }
+
+@include interaction.range;

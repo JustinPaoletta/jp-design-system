@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -113,3 +115,5 @@ fieldset[aria-invalid='true'] .box {
     color: HighlightText;
   }
 }
+
+@include interaction.selection('label', 'input', '.box');

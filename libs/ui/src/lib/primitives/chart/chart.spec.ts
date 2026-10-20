@@ -146,10 +146,19 @@ describe('JpChart', () => {
     });
     const f = await setup();
     expect(f.componentInstance.format(null)).toBe('Sin valor');
+    const canvas = f.nativeElement.querySelector('canvas');
     f.componentRef.setInput('loading', true);
     f.detectChanges();
     expect(f.nativeElement.textContent).toContain('Cargando');
+    expect(f.nativeElement.querySelector('canvas')).toBe(canvas);
+    expect(f.nativeElement.querySelector('.legend button').disabled).toBe(true);
+    f.componentRef.setInput('labels', []);
+    f.componentRef.setInput('series', []);
+    f.detectChanges();
     expect(f.nativeElement.querySelector('canvas')).toBeNull();
+    expect(
+      f.nativeElement.querySelector('[role="status"]').textContent,
+    ).toContain('Cargando');
   });
   it('preserves data when the engine fails', async () => {
     const f = await setup();

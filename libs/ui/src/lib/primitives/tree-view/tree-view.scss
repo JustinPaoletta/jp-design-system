@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -136,3 +138,6 @@ button:disabled {
     (var(--jp-font-size-body-sm) * var(--jp-font-line-height-normal) - 1rem) / 2
   );
 }
+
+@include interaction.pressable('button, .row:not(.disabled)');
+@include interaction.hover('button');

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -111,3 +113,5 @@
 :host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root {
   font-weight: var(--jp-font-weight-semibold);
 }
+
+@include interaction.pressable('.jp-app-shell-nav-item__root');

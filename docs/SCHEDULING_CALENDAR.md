@@ -24,7 +24,7 @@ It also shows retry, time-zone changes and repeated clock hours.
 | `timeZone`                | This value sets the Intl time zone. The default is `UTC`.                                                                              |
 | `locale`                  | This value sets the Intl locale. The default is `en-US`.                                                                               |
 | `weekStartsOn`            | Sunday is `0`; Saturday is `6`. The default is Monday, `1`. Values stay within that range. Non-integers use Monday.                    |
-| `loading`                 | This input removes appointment buttons and shows busy/loading status.                                                                  |
+| `loading`                 | Existing appointments stay visible and disabled during refresh. If no appointments are available, a loading placeholder appears.       |
 | `error`                   | The application supplies failure text. The component shows an alert and retry control.                                                 |
 | `eventActivated`          | This output sends the original event when its native button activates.                                                                 |
 | `retry`                   | This output asks the application to load appointments again.                                                                           |
@@ -138,7 +138,10 @@ Logical inline positions follow RTL.
 
 ### States
 
-Loading removes stale appointment buttons.
+During refresh, existing appointments stay visible and disabled.
+The schedule keeps its scroll container and scroll position.
+Without usable appointments, loading shows a placeholder.
+
 Failure shows an alert and retry control.
 An empty period keeps navigation and shows a translated empty message.
 A date change announces the period and unique appointment count.

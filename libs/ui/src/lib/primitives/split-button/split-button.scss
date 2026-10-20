@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
@@ -53,3 +55,8 @@ button[jpDropdownTrigger] {
   border-end-start-radius: 0;
   border-inline-start: 0;
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include interaction.primary('.primary');

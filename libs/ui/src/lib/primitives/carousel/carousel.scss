@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -91,3 +93,8 @@ button:focus-visible,
   padding: 0;
   gap: var(--jp-space-2xs);
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include interaction.primary('button.current');

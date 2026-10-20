@@ -209,7 +209,9 @@ The component controls the All/Unread filter; the application controls item stat
 Named native links keep link behavior.
 Read actions emit `readChange: {id, unread}`.
 Dismiss, mark-all and retry actions emit `dismissRequested`, `markAllRequested` and `retryRequested`.
-Loading, error, empty and empty-unread states have separate views.
+Without existing items, loading shows a placeholder.
+During refresh, existing notification rows stay visible and their actions become disabled.
+Error, empty and empty-unread states have separate views.
 
 If a synchronous application update removes the focused row, focus moves to a remaining row action or the selected filter.
 Focus outside the list stays in place.
@@ -241,7 +243,9 @@ Enter submits; Escape cancels.
 Required/maxLength and an optional `validate(value) => errorText` function run before the callback.
 
 While a save is pending, the field is readonly and duplicate submissions are blocked.
+The save button keeps its dimensions and shows a centered spinner.
 Cancel remains available.
+
 Failure keeps the draft and focuses the field for retry.
 Success emits the value and restores Edit focus.
 All default action/status text accepts per-instance overrides.

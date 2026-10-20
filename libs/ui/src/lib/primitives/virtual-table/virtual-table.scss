@@ -1,3 +1,7 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
@@ -188,3 +192,8 @@ jp-pagination {
     outline-offset: -2px;
   }
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include refresh.indicator('div[aria-busy]');

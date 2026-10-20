@@ -119,7 +119,14 @@
       [attr.aria-pressed]="passwordVisible()"
       (click)="togglePassword()"
     >
-      {{ passwordVisible() ? hidePasswordLabel() : showPasswordLabel() }}
+      <span class="jp-input__reveal-label">
+        <span [attr.aria-hidden]="passwordVisible() ? true : null"
+          >{{ showPasswordLabel() }}</span
+        >
+        <span [attr.aria-hidden]="passwordVisible() ? null : true"
+          >{{ hidePasswordLabel() }}</span
+        >
+      </span>
     </button>
     }
   </div>

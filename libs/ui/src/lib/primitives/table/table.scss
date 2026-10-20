@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   width: 100%;
@@ -96,7 +98,7 @@
 
 .jp-table__row {
   background: var(--jp-color-table-row-bg);
-  transition: background var(--jp-motion-duration-fast)
+  transition: background-color var(--jp-motion-duration-fast)
     var(--jp-motion-easing-standard);
 }
 
@@ -301,4 +303,20 @@
     position: sticky;
     inset-inline-start: auto !important;
   }
+}
+
+@include interaction.pressable('.jp-table__sort, .jp-table__expand, summary');
+
+@include interaction.feedback(
+  '.jp-table__column-setting input, .jp-table__resize'
+);
+.jp-table__column-setting input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--jp-color-field-border-hover);
+}
+.jp-table__resize:hover,
+.jp-table__resize:active {
+  border-color: var(--jp-color-accent-solid);
+}
+.jp-table__resize:active {
+  transition: none;
 }

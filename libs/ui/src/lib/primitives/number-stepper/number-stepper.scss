@@ -97,3 +97,8 @@ button:disabled {
 }
 
 @include interaction.pressable('button');
+
+@include interaction.feedback('input');
+input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--jp-color-field-border-hover);
+}

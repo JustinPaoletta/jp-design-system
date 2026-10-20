@@ -98,14 +98,15 @@ recipes page uses both.
 | State                              | Composition                                                                                                                            |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | First load, no rows yet            | `jp-progress` with a `label`, plus `jp-skeleton` placeholders. Set `aria-busy="true"` on the region.                                   |
+| Refresh with existing rows         | Keep the table and its scroll container. Put progress above the rows without changing their position. Set `aria-busy="true"`.          |
 | Refresh failed, rows already shown | Keep the table. Add `jp-inline-alert` `tone="error"` and a retry `action`.                                                             |
 | Query matched nothing              | `jp-table` `emptyTitle` / `emptyDescription`, or a projected `jp-empty-state`.                                                         |
 | Nothing has been created           | `jp-empty-state` with a `title`, optional `description`, optional `[jpEmptyStateIcon]`, and a primary `jp-button` in the default slot. |
 | Request finished                   | Remove the skeletons and clear `aria-busy`.                                                                                            |
 
-`jp-skeleton` is decorative. It does not replace the progress name or the
-alert. The recipes page shows progress and skeletons only while `loading()`
-is true, then the table of `visible()` rows.
+`jp-skeleton` is decorative. It does not replace the progress name or the alert.
+The recipes page keeps its existing rows during refresh.
+Its progress bar stays outside the layout flow, so the table does not move.
 
 ## Responsive dashboard
 

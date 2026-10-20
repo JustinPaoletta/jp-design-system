@@ -74,6 +74,7 @@ describe('SchedulingPage', () => {
       '.timed button[aria-label^="Lineup meeting,"]',
     ) as HTMLButtonElement;
     expect(appointment.getAttribute('aria-label')).toMatch(/1:00\sPM GMT/);
+    const viewport = f.nativeElement.querySelector('.days');
     button(f.nativeElement, 'Show loading').click();
     f.detectChanges();
     expect(f.componentInstance.state()).toBe('loading');
@@ -82,10 +83,17 @@ describe('SchedulingPage', () => {
         .querySelector('jp-scheduling-calendar section')
         .getAttribute('aria-busy'),
     ).toBe('true');
-    expect(f.nativeElement.querySelectorAll('.appointment')).toHaveLength(0);
+    expect(f.nativeElement.querySelector('.days')).toBe(viewport);
+    expect(
+      f.nativeElement.querySelector(
+        '.timed button[aria-label^="Lineup meeting,"]',
+      ),
+    ).toBe(appointment);
+    expect(appointment.disabled).toBe(true);
     button(f.nativeElement, 'Restore schedule').click();
     f.detectChanges();
     expect(f.componentInstance.state()).toBe('ready');
+    expect(appointment.disabled).toBe(false);
     expect(f.nativeElement.querySelector('.appointment')).toBeTruthy();
   });
   it('keeps consumer date/view signals synchronized with calendar navigation', () => {

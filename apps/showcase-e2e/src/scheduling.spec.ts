@@ -290,11 +290,29 @@ test('scheduling: loading, retry and empty navigation recover without losing con
     name: 'Team appointments',
     exact: true,
   });
+  const viewport = calendar.locator('.days');
+  const scrollTop = await viewport.evaluate((element) => {
+    element.scrollTop = 96;
+    return element.scrollTop;
+  });
+  const before = await viewport.boundingBox();
+  const firstMeeting = calendar.getByRole('button', {
+    name: /Lineup meeting,/,
+  });
+  const meeting = await firstMeeting.elementHandle();
   await page.getByRole('button', { name: 'Show loading', exact: true }).click();
   await expect(calendar).toHaveAttribute('aria-busy', 'true');
-  await expect(
-    calendar.getByRole('button', { name: /Lineup meeting,/ }),
-  ).toHaveCount(0);
+  await expect(firstMeeting).toBeDisabled();
+  expect(
+    await firstMeeting.evaluate(
+      (element, before) => element === before,
+      meeting,
+    ),
+  ).toBe(true);
+  expect(await viewport.boundingBox()).toEqual(before);
+  expect(await viewport.evaluate((element) => element.scrollTop)).toBe(
+    scrollTop,
+  );
   await page
     .getByRole('button', { name: 'Restore schedule', exact: true })
     .click();

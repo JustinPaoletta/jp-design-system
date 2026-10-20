@@ -1,12 +1,17 @@
 <figure [attr.aria-busy]="loading()">
+  @if (loading() && labels().length && series().length && !invalid() &&
+  !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
   <figcaption>
-    <span>{{ label() }}</span>@if (!controlsCollapsed() && !loading() &&
-    !error() && !invalid() && labels().length && series().length) {
+    <span>{{ label() }}</span>@if (!controlsCollapsed() && !error() &&
+    !invalid() && labels().length && series().length) {
     <ng-container [ngTemplateOutlet]="legendControls" /> }
   </figcaption>
   @if (description()) {
   <p [id]="id() + '-description'">{{ description() }}</p>
-  } @if (loading()) {
+  } @if (loading() && (!labels().length || !series().length || invalid() ||
+  error())) {
   <p class="state" role="status">{{ messages.loading }}</p>
   } @else if (error()) {
   <div class="state" role="alert">
@@ -80,6 +85,7 @@
   <div class="legend" role="group" [attr.aria-label]="messages.series">
     @for (item of series(); track item.id; let i = $index) {
     <button
+      [disabled]="loading()"
       type="button"
       [attr.aria-pressed]="!hiddenSeries().includes(item.id)"
       (click)="toggle(item.id)"
@@ -98,6 +104,7 @@
   <div class="inspection">
     <jp-select
       class="inspect"
+      [disabled]="loading()"
       [label]="messages.category"
       [options]="categoryOptions()"
       [ngModel]="'' + index()"

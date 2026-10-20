@@ -14,12 +14,14 @@ import {
   viewChild,
 } from '@angular/core';
 import { JP_MESSAGES } from '../../i18n';
+import { JpButton } from '../button/button';
 export type JpInlineSave = (
   value: string,
   signal: AbortSignal,
 ) => Promise<void>;
 @Component({
   selector: 'jp-inline-edit',
+  imports: [JpButton],
   templateUrl: './inline-edit.html',
   styleUrl: './inline-edit.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

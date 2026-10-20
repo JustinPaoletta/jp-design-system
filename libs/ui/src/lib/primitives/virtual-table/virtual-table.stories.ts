@@ -80,7 +80,8 @@ export const Paginated: Story = {
   },
 };
 export const Empty: Story = { args: { rows: [] } };
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = { args: { loading: true, rows: [] } };
+export const Refreshing: Story = { args: { loading: true } };
 export const Error: Story = {
   args: { error: 'The player roster could not be loaded. Try again.' },
 };
