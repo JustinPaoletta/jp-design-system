@@ -23,6 +23,15 @@ The [maintainer handoff](docs/qa/READINESS.md) records completed readiness work 
 
 ## Getting started
 
+Open the [hosted Storybook](https://justinpaoletta.github.io/jp-design-system/) to inspect components without a local server.
+GitHub Pages publishes the static build through the [Publish Storybook workflow](.github/workflows/storybook-pages.yml).
+Pushes to `main` and `codex/visual-audit-improvements` update the same public site.
+The site shows the last successful deployment from either branch.
+Failed builds retain the previous site.
+
+After this workflow reaches `main`, use **Run workflow** in GitHub Actions to publish another approved branch.
+The `github-pages` environment must permit that branch.
+
 Use Node `24.21.0` from `.nvmrc` (`nvm install`, then `nvm use`) and npm 11.
 Install workspace dependencies and start either explorer:
 

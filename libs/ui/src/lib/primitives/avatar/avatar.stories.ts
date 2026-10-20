@@ -21,7 +21,7 @@ export const BrokenImage: Story = {
   },
 };
 export const Photo: Story = {
-  args: { src: '/example-photos/baseball-cap.jpg', size: 'lg' },
+  args: { src: 'example-photos/baseball-cap.jpg', size: 'lg' },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
       expect(canvasElement.querySelector('img')).toHaveClass('loaded'),
@@ -37,9 +37,9 @@ export const Photo: Story = {
 export const PhotoSizes: Story = {
   render: () => ({
     template: `<div style="display:flex;align-items:center;gap:var(--jp-space-md)">
-      <jp-avatar name="Jack Flaherty" src="/example-photos/baseball-cap.jpg" size="sm" />
-      <jp-avatar name="Jack Flaherty" src="/example-photos/baseball-cap.jpg" />
-      <jp-avatar name="Jack Flaherty" src="/example-photos/baseball-cap.jpg" size="lg" />
+      <jp-avatar name="Jack Flaherty" src="example-photos/baseball-cap.jpg" size="sm" />
+      <jp-avatar name="Jack Flaherty" src="example-photos/baseball-cap.jpg" />
+      <jp-avatar name="Jack Flaherty" src="example-photos/baseball-cap.jpg" size="lg" />
     </div>`,
   }),
 };

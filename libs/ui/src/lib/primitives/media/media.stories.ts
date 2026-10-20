@@ -71,7 +71,7 @@ export const Transparent: Story = {
 
 export const Photo: Story = {
   args: {
-    src: '/example-photos/baseball-field.jpg',
+    src: 'example-photos/baseball-field.jpg',
     alt: 'Empty baseball field on a clear day',
     caption: 'Empty baseball field · Photo example',
   },
@@ -112,7 +112,7 @@ export const PhotoRecovery: Story = {
     props: { source: 'data:image/png;base64,broken' },
     template: `<div style="display:grid;gap:var(--jp-space-md);max-width:480px">
       <jp-media [src]="source" alt="Empty baseball field on a clear day" caption="Empty baseball field · Retry the photo" loading="eager" />
-      <jp-button variant="secondary" (click)="source='/example-photos/baseball-field.jpg'">Reload photo</jp-button>
+      <jp-button variant="secondary" (click)="source='example-photos/baseball-field.jpg'">Reload photo</jp-button>
     </div>`,
   }),
   play: async ({ canvasElement }) => {

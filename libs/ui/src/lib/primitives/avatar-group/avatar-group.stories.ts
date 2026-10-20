@@ -27,7 +27,7 @@ export const PhotoMembers: Story = {
       {
         id: 'a',
         name: 'Jack Flaherty',
-        src: '/example-photos/baseball-cap.jpg',
+        src: 'example-photos/baseball-cap.jpg',
       },
       { id: 'g', name: 'Freddie Freeman' },
       { id: 'l', name: 'Tommy Edman' },
