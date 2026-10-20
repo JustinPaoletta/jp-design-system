@@ -59,9 +59,12 @@ sort phrase keys append localized copy to the column button name.
 
 ## Locale, dates and time zones
 
-Applications select locale/time zone. Native pickers keep ISO civil-string
-values while the browser owns their display.
+Applications select locale/time zone.
+Date and time fields keep canonical civil-string values.
+`JpDatePicker` uses its locale for month and weekday labels.
+`JP_MESSAGES.dates` supplies built-in picker actions and validation messages.
 The application formats timeline labels.
+
 Scheduling uses `Intl.DateTimeFormat` and keeps Gregorian civil dates.
 Charts use `Intl.NumberFormat`.
 

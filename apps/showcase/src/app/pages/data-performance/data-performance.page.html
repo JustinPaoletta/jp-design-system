@@ -31,8 +31,7 @@
       complete table navigation. Sorting and selection are controlled by this
       screen.
     </p>
-    <details class="rendering-options">
-      <summary>Rendering options</summary>
+    <jp-disclosure class="rendering-options" title="Rendering options">
       <jp-number-stepper
         id="inventory-overscan"
         label="Extra rows around viewport"
@@ -42,7 +41,7 @@
         [ngModel]="overscan()"
         (ngModelChange)="overscan.set($event ?? 6)"
       />
-    </details>
+    </jp-disclosure>
     <jp-virtual-table
       label="2024 Dodgers roster"
       [columns]="columns"

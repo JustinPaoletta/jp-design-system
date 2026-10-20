@@ -68,13 +68,16 @@ Selection emits `actionSelected`.
 IDs must be unique.
 Nested submenus are not supported.
 
-## Native dates and times
+## Dates and times
 
-`JpDatePicker` and `JpTimePicker` use native controls with the existing label, hint, error and CVA behavior.
+`JpDatePicker` and `JpTimePicker` use JP fields and popup panels.
+They keep the existing label, hint, error and CVA behavior.
 They accept id/name, required, readonly and disabled values.
 They supply Angular validators through `NG_VALIDATORS`.
+
 Changes to required/min/max/step request validation again.
-The application supplies visible error text; an invalid form value does not create that text automatically.
+The application supplies form error text through `error`.
+Native form validation uses a styled inline message when submission fails.
 
 Date values are empty strings or Gregorian `YYYY-MM-DD`, with years from 0001 to 9999.
 Min/max use the same format.
@@ -105,12 +108,42 @@ Step uses seconds, defaults to 60 and starts from min or midnight.
 It accepts a positive value or `'any'`.
 Time errors are `time`, `timeBounds`, `minTime`, `maxTime`, `timeStep`, `stepTime` and `required`.
 
-The native picker interface and display order follow the user's platform and locale.
-These components have no custom JP calendar grid, fixed date display format, scheduling calendar or time-zone selector.
+`JpDatePicker` shows a Gregorian calendar with one month and six weeks.
+The text field accepts `YYYY-MM-DD`.
+`locale` defaults to Angular's `LOCALE_ID` and formats month and weekday labels.
+`weekStartsOn` defaults to `0` (Sunday); values from `0` through `6` select the first weekday.
+
+| Key                       | Calendar result                                   |
+| ------------------------- | ------------------------------------------------- |
+| ArrowDown in the field    | The calendar opens.                               |
+| Arrow keys                | Focus moves by one day or one week.               |
+| Home / End                | Focus moves to the first or last weekday.         |
+| PageUp / PageDown         | Focus moves to the previous or next month.        |
+| Shift + PageUp / PageDown | Focus moves to the previous or next year.         |
+| Enter / Space             | An available date is selected.                    |
+| Escape                    | The popup closes and focus returns to its opener. |
+
+Unavailable dates remain in the grid for keyboard navigation.
+They cannot change the value.
+Horizontal arrows follow writing direction.
+Date selection commits the value and closes the popup.
+
+`JpTimePicker` shows a custom panel with time controls and Apply/Clear actions.
+The text field accepts the canonical 24-hour format described above.
+The panel keeps edits separate until Apply.
+Escape cancels panel edits.
+The configured bounds and step also apply to panel values.
+
+`JpDateRangePicker` uses two JP date pickers.
+The endpoints stack when their container cannot show two full date fields.
+`jp-input` with `type="date"` or `type="time"` uses the same themed controls.
+All picker panels use the shared overlay manager.
+Disabled or read-only fields cannot open a panel.
+Form reset closes the panel and restores the supplied value.
+
 The application controls time zones, other input formats and server-side validation.
-The browser controls native keyboard and touch behavior.
-The dark color scheme keeps native picker icons readable.
-DOM axe and pixel baselines do not cover native dialogs.
+These fields do not convert civil values to timestamps.
+Physical touch and assistive-technology inspections remain separate from automated checks.
 
 ```ts
 readonly dates = new FormControl<JpDateRangeValue>(['2026-10-10', '2026-10-14']);
@@ -144,7 +177,8 @@ Valid files emit `filesSelected`.
 Rejected files emit `filesRejected: JpUploadRejection[]` and remain visible as translated errors.
 
 One selection can include valid and rejected files.
-The native input resets so the same file can be selected again.
+The JP selection button opens the system file chooser.
+The file input stays visually hidden and resets so the same file can be selected again.
 The component creates no previews, object URLs, file-content reads, network calls, hidden drop targets or simulated progress.
 The Showcase and Storybook examples use local queue states and keep files on the device.
 

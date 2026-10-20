@@ -10,14 +10,14 @@ It also records actual Chrome zoom and completed engineering checks.
 
 ## Outstanding inspection
 
-| Inspection                                         | Status                                                                                |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| VoiceOver on macOS                                 | Not examined                                                                          |
-| NVDA on Windows                                    | Not examined                                                                          |
-| Windows high contrast with real user palettes      | Not examined                                                                          |
-| Actual 200%/400% browser zoom and text-only zoom   | Chrome larger-feature scope passed; other combinations and text-only zoom remain open |
-| Physical touch and native date/time picker dialogs | Not examined                                                                          |
-| JAWS                                               | Out of scope unless a consumer requirement names it                                   |
+| Inspection                                       | Status                                                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| VoiceOver on macOS                               | Not examined                                                                          |
+| NVDA on Windows                                  | Not examined                                                                          |
+| Windows high contrast with real user palettes    | Not examined                                                                          |
+| Actual 200%/400% browser zoom and text-only zoom | Chrome larger-feature scope passed; other combinations and text-only zoom remain open |
+| Physical touch and custom picker panels          | Not examined                                                                          |
+| JAWS                                             | Out of scope unless a consumer requirement names it                                   |
 
 Chromium forced-colors emulation and 320/640 CSS-pixel reflow are automated
 for the seven larger features. They are partial evidence, not completion of
@@ -61,7 +61,7 @@ real browser zoom rather than shrinking the viewport alone.
 | Navigation/hierarchy | Disclosure grouping, tabs, menus/command palette, lazy-loading tree feedback, tree-table relationships and selection                                                                            |
 | Overlays/shell       | Native dialog/popover plus fallback limits, nested Escape, focus containment/restoration, mobile drawer and assistant navigation                                                                |
 | Data/feedback        | Table sort/selection/details, pinned/resized regions, loading/empty/error distinction, meter/progress meaning and notification actions                                                          |
-| Workflow             | Wizard step/completion announcements, checklist count, upload rejection/retry/remove, date-range validation and native picker dialogs                                                           |
+| Workflow             | Wizard step/completion announcements, checklist count, upload rejection/retry/remove, date-range validation and custom picker panels                                                            |
 | Scheduling           | Day/week/agenda reading order, appointment names/overlaps, time-zone/DST labels, all-day events, empty/error recovery and narrow-screen alternatives                                            |
 | Reorder/carousel     | Move controls plus pickup/drop/cancel announcements, pointer/touch operation, final focus, slide position and optional-rotation pause/reduced-motion behavior                                   |
 | Charts/virtual table | Equivalent chart data and keyboard inspection, high-contrast presentation, logical table indices, paginated accessibility mode, sorting/selection across pages and focus after viewport changes |

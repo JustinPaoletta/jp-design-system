@@ -8,6 +8,7 @@ import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpButton } from './button/button';
 import { JpCard } from './card/card';
 import { JpCheckbox } from './checkbox/checkbox';
+import { JpDisclosure } from './disclosure/disclosure';
 import { JpHeading } from './heading/heading';
 import { JpInput } from './input/input';
 import { JpSelect } from './select/select';
@@ -42,6 +43,7 @@ const meta: Meta<ControlsFormArgs> = {
         JpTextarea,
         JpSelect,
         JpCheckbox,
+        JpDisclosure,
         JpSwitch,
       ],
     }),
@@ -194,18 +196,6 @@ const meta: Meta<ControlsFormArgs> = {
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-body-sm);
 }
-.lineup-editor__preview summary {
-  cursor: pointer;
-  inline-size: fit-content;
-}
-.lineup-editor__preview summary:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--jp-radius-sm);
-}
-.lineup-editor__preview jp-switch {
-  margin-block-start: 16px;
-}
 @media (width <= 48rem) {
   .lineup-editor {
     padding: 24px 16px;
@@ -330,10 +320,9 @@ const meta: Meta<ControlsFormArgs> = {
     >
   </section>
 
-  <details class="lineup-editor__preview">
-    <summary>Preview settings</summary>
+  <jp-disclosure class="lineup-editor__preview" title="Preview settings">
     <jp-switch [(ngModel)]="compact" name="compact">Compact density</jp-switch>
-  </details>
+  </jp-disclosure>
 </div>
 
         </main>

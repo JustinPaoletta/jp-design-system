@@ -16,7 +16,7 @@ legend {
 }
 .dates {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   max-inline-size: 32rem;
   gap: var(--jp-space-sm);
 }

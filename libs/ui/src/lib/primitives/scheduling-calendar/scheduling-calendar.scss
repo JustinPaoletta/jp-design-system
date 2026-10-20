@@ -189,6 +189,10 @@ h3 span:first-child,
   padding-inline: var(--jp-space-xs);
   min-block-size: 2rem;
 }
+.appointment-tooltip {
+  display: contents;
+  --jp-tooltip-trigger-display: contents;
+}
 .appointment strong {
   display: -webkit-box;
   -webkit-box-orient: vertical;

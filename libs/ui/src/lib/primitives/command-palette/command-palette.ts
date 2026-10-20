@@ -32,7 +32,7 @@ let nextPalette = 0;
   templateUrl: './command-palette.html',
   styleUrl: './command-palette.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '(document:keydown)': 'onShortcut($event)' },
+  host: { '[attr.title]': 'null', '(document:keydown)': 'onShortcut($event)' },
 })
 export class JpCommandPalette {
   private readonly messages = inject(JP_MESSAGES);

@@ -142,17 +142,21 @@
             [style.inset-inline-start.%]="item.lane * 100 / item.lanes"
             [style.width.%]="100 / item.lanes"
           >
-            <button
-              type="button"
-              class="appointment"
-              [class.appointment--short]="item.displayEnd - item.displayStart < 60"
-              [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
-              [title]="item.event.title + ' · ' + item.timeLabel"
-              (click)="eventActivated.emit(item.event)"
+            <jp-tooltip
+              class="appointment-tooltip"
+              [content]="item.event.title + ' · ' + item.timeLabel"
             >
-              <strong>{{ item.event.title }}</strong
-              ><span><bdi>{{ item.compactTimeLabel }}</bdi></span>
-            </button>
+              <button
+                type="button"
+                class="appointment"
+                [class.appointment--short]="item.displayEnd - item.displayStart < 60"
+                [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
+                (click)="eventActivated.emit(item.event)"
+              >
+                <strong>{{ item.event.title }}</strong
+                ><span><bdi>{{ item.compactTimeLabel }}</bdi></span>
+              </button>
+            </jp-tooltip>
           </li>
           }
         </ul>

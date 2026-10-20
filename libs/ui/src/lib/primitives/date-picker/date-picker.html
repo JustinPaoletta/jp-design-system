@@ -1,0 +1,177 @@
+<div class="jp-date-picker__field">
+  @if (label()) {
+  <label class="jp-date-picker__label" [for]="resolvedId()"
+    >{{ label() }}</label
+  >
+  }
+  <div
+    class="jp-date-picker__row"
+    [class.jp-date-picker__row--invalid]="isInvalid() || displayedError()"
+    [class.jp-date-picker__row--readonly]="readonly()"
+    [style.--jp-field-height]="controlHeight()"
+  >
+    <input
+      #control
+      class="jp-date-picker__control"
+      type="text"
+      role="combobox"
+      aria-haspopup="dialog"
+      [id]="resolvedId()"
+      [attr.name]="name() || null"
+      [attr.autocomplete]="autocomplete() || null"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.aria-describedby]="fieldDescription()"
+      [attr.aria-invalid]="isInvalid() || displayedError() ? true : null"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-controls]="isOpen() ? resolvedId() + '-calendar' : null"
+      [placeholder]="placeholder() || dateMessages.formatHint"
+      [attr.inputmode]="inputMode() || null"
+      [attr.minlength]="minLength()"
+      [attr.maxlength]="maxLength()"
+      [attr.pattern]="pattern() || null"
+      [required]="required()"
+      [disabled]="isDisabled()"
+      [readOnly]="readonly()"
+      [value]="value()"
+      (input)="onInput($event)"
+      (keydown)="onInputKeydown($event)"
+      (invalid)="onInvalid($event)"
+    />
+    <button
+      #trigger
+      type="button"
+      class="jp-date-picker__trigger"
+      [attr.aria-label]="dateMessages.openCalendar(label() || ariaLabel())"
+      aria-haspopup="dialog"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-controls]="isOpen() ? resolvedId() + '-calendar' : null"
+      [disabled]="isDisabled() || readonly()"
+      (click)="toggle()"
+      (pointerdown)="onPopupPointerdown($event)"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M3 10h18M7 2v6M17 2v6M7 14h2M11 14h2M15 14h2M7 17h2M11 17h2" />
+      </svg>
+    </button>
+  </div>
+  <div
+    #popup
+    class="jp-date-picker__popup"
+    (pointerdown)="onPopupPointerdown($event)"
+    [hidden]="!isOpen()"
+  >
+    @if (isOpen()) {
+    <section
+      role="dialog"
+      [id]="resolvedId() + '-calendar'"
+      [attr.aria-label]="dateMessages.calendarLabel(label() || ariaLabel())"
+      [attr.aria-describedby]="resolvedId() + '-keyboard-hint'"
+    >
+      <header class="jp-date-picker__header">
+        <button
+          type="button"
+          class="jp-date-picker__navigation"
+          [attr.aria-label]="dateMessages.previousMonth"
+          [disabled]="!canMoveMonth(-1)"
+          (click)="changeMonth(-1)"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="m10 4-4 4 4 4" />
+          </svg>
+        </button>
+        <span
+          class="jp-date-picker__month"
+          [id]="resolvedId() + '-month'"
+          aria-live="polite"
+          >{{ monthLabel() }}</span
+        >
+        <button
+          type="button"
+          class="jp-date-picker__navigation"
+          [attr.aria-label]="dateMessages.nextMonth"
+          [disabled]="!canMoveMonth(1)"
+          (click)="changeMonth(1)"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="m6 4 4 4-4 4" />
+          </svg>
+        </button>
+      </header>
+      <table
+        class="jp-date-picker__grid"
+        role="grid"
+        [attr.aria-labelledby]="resolvedId() + '-month'"
+      >
+        <thead>
+          <tr>
+            @for (day of weekdays(); track $index) {
+            <th scope="col" [attr.abbr]="day.long">{{ day.short }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (week of weeks(); track $index) {
+          <tr>
+            @for (day of week; track $index) {
+            <td
+              [attr.aria-selected]="day.value && day.value === value() ? true : null"
+            >
+              @if(day.value) {
+              <button
+                type="button"
+                class="jp-date-picker__day"
+                [class.jp-date-picker__day--outside]="day.outside"
+                [class.jp-date-picker__day--selected]="day.value === value()"
+                [attr.data-date]="day.value"
+                [attr.aria-label]="day.label"
+                [attr.aria-disabled]="day.unavailable ? true : null"
+                [tabIndex]="day.value === activeDate() ? 0 : -1"
+                (focus)="activeDate.set(day.value)"
+                (keydown)="onDayKeydown($event)"
+                (click)="choose(day.value)"
+              >
+                {{ day.day }}
+              </button>
+              }
+            </td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+      <p
+        class="jp-date-picker__keyboard-hint"
+        [id]="resolvedId() + '-keyboard-hint'"
+      >
+        {{ dateMessages.keyboardHint }}
+      </p>
+    </section>
+    }
+  </div>
+  @if (displayedError()) {
+  <p class="jp-date-picker__error" [id]="errorId()" role="alert">
+    {{ displayedError() }}
+  </p>
+  } @else if (hint()) {
+  <p class="jp-date-picker__hint" [id]="hintId()">{{ hint() }}</p>
+  }
+</div>

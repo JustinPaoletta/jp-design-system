@@ -65,7 +65,8 @@ td {
   padding: 0;
   border-block-end: 1px solid var(--jp-color-table-row-border);
 }
-td > span {
+td > span,
+.cell-value {
   box-sizing: border-box;
   display: block;
   block-size: calc(var(--row-height) - 1px);
@@ -74,6 +75,10 @@ td > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.cell-tooltip {
+  display: contents;
+  --jp-tooltip-trigger-display: contents;
 }
 .selection {
   inline-size: 48px;

@@ -106,11 +106,12 @@
           } @for (column of columns(); track column.key; let c = $index) {
           <td
             [attr.aria-colindex]="c + 1 + (selectable() ? 1 : 0)"
+            [attr.aria-label]="text(row[column.key]) || null"
             [style.text-align]="column.align || 'start'"
           >
-            <span [title]="text(row[column.key])"
-              >{{ text(row[column.key]) }}</span
-            >
+            <jp-tooltip class="cell-tooltip" [content]="text(row[column.key])">
+              <span class="cell-value">{{ text(row[column.key]) }}</span>
+            </jp-tooltip>
           </td>
           }
         </tr>

@@ -36,7 +36,9 @@
   <ng-container [ngTemplateOutlet]="inspectionControls" />
   }
   <details [open]="forcedColors()">
-    <summary>{{ messages.data }}</summary>
+    <summary>
+      {{ messages.data }}<jp-icon name="chevron-down" size="sm" />
+    </summary>
     @if (controlsCollapsed()) {
     <ng-container [ngTemplateOutlet]="legendControls" />
     <ng-container [ngTemplateOutlet]="inspectionControls" />

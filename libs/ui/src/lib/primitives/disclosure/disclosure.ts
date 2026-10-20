@@ -14,6 +14,7 @@ import { JP_DISCLOSURE_GROUP } from './disclosure-group';
   templateUrl: './disclosure.html',
   styleUrl: './disclosure.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpDisclosure {
   private readonly group = inject(JP_DISCLOSURE_GROUP, { optional: true });

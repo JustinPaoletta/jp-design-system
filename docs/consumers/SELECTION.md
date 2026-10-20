@@ -113,7 +113,7 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
 | A side/bottom task panel                    | `JpDrawer`; app-shell navigation is separate.                                                                                   |
 | Nested navigation/data                      | `JpTreeView` / `JpTreeTable`; give stable IDs and controlled selection/expansion.                                               |
 | Large flat datasets                         | `JpVirtualTable` with fixed row height and paginated accessibility mode; ordinary tables support richer row details.            |
-| Appointments rather than date entry         | `JpSchedulingCalendar`; native pickers edit civil date/time strings.                                                            |
+| Appointments rather than date entry         | `JpSchedulingCalendar`; JP pickers edit civil date/time strings.                                                                |
 | Compare values visually                     | `JpChart` plus equivalent native data; the application owns aggregation and dataset meaning.                                    |
 | Rearrange items or browse optional slides   | `JpReorder` / `JpCarousel`; carousel rotation is optional.                                                                      |
 

@@ -112,17 +112,17 @@ Prioritize forms, trees, overlays, reorder, calendar, charts and paginated table
 Report failed behavior in [Findings](FINDINGS.md).
 Keep a failed or unexamined item open until its blocking findings are resolved.
 
-### 2. Inspect physical devices and native pickers
+### 2. Inspect physical devices and picker controls
 
 1. Open `/workflows` on the actual browsers your product supports.
-2. Open the launch date, date-range and time controls through their native picker buttons.
+2. Open the date, date-range and time controls through their JP picker buttons.
 3. Select values, cancel a picker and submit invalid values.
 4. Make sure values and focus remain correct.
 5. On a touch device, inspect menus, drawers, sliders, range handles and split panes.
 6. Inspect reorder controls and carousel navigation without a mouse.
 7. Record any small-target or overlapping-control problem.
 
-Playwright engine checks do not establish physical touch or native picker-dialog usability.
+Playwright engine checks do not establish physical touch or screen-reader usability.
 Record the actual browser and device versions.
 
 ### 3. Inspect one real consuming product

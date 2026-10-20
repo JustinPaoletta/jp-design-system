@@ -91,18 +91,6 @@
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-body-sm);
 }
-.lineup-editor__preview summary {
-  cursor: pointer;
-  inline-size: fit-content;
-}
-.lineup-editor__preview summary:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--jp-radius-sm);
-}
-.lineup-editor__preview jp-switch {
-  margin-block-start: 16px;
-}
 @media (width <= 48rem) {
   .lineup-editor {
     padding: 24px 16px;

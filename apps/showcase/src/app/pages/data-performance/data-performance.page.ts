@@ -11,6 +11,7 @@ import { JpVirtualTable } from '@jp-design-system/ui';
 import {
   JpButton,
   JpCard,
+  JpDisclosure,
   JpLink,
   JpNumberStepper,
   JpPageHeader,
@@ -57,6 +58,7 @@ const WORLD_SERIES_ROSTER = [
     JpVirtualTable,
     JpButton,
     JpCard,
+    JpDisclosure,
     JpLink,
     JpNumberStepper,
     JpPageHeader,

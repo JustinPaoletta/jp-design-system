@@ -82,10 +82,31 @@ dd {
   font-weight: var(--jp-font-weight-semibold);
 }
 summary {
-  font-size: var(--jp-font-size-caption);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: var(--jp-space-sm);
+  min-block-size: var(--jp-size-control-md);
+  max-inline-size: 100%;
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+  font-size: var(--jp-font-size-body-sm);
   color: var(--jp-color-text-secondary);
   cursor: pointer;
-  padding-block: var(--jp-space-xs);
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary:hover {
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
+}
+details[open] summary jp-icon {
+  transform: rotate(180deg);
 }
 .data {
   overflow: auto;

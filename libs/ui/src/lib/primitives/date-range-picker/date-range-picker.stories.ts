@@ -26,7 +26,7 @@ export const Default: Story = {
     await expect(c.getByRole('group', { name: 'Series dates' })).toBeVisible();
     await expect(c.getByLabelText('Start date')).toHaveAttribute(
       'type',
-      'date',
+      'text',
     );
   },
 };

@@ -17,6 +17,7 @@ import { JP_MESSAGES } from '../../i18n';
 import { JpCheckbox } from '../checkbox/checkbox';
 import { NgTemplateOutlet } from '@angular/common';
 import { JpEmptyState } from '../empty-state/empty-state';
+import { JpIcon } from '../icon/icon';
 import {
   type JpTableAlign,
   type JpTableCellValue,
@@ -62,7 +63,7 @@ export class JpTableRowDetail {
 
 @Component({
   selector: 'jp-table',
-  imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState],
+  imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState, JpIcon],
   templateUrl: './table.html',
   styleUrl: './table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

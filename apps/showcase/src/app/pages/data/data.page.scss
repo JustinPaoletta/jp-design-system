@@ -52,18 +52,6 @@
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-body-sm);
 }
-.preview-settings summary {
-  cursor: pointer;
-  inline-size: fit-content;
-}
-.preview-settings summary:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--jp-radius-sm);
-}
-.preview-settings aside {
-  padding-block-start: var(--jp-space-md);
-}
 @media (width <= 48rem) {
   .roster-page {
     padding: var(--jp-space-lg) var(--jp-space-md);

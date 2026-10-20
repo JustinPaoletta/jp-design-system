@@ -42,6 +42,7 @@ let nextAssistantPanelId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-assistant-panel',
+    '[attr.title]': 'null',
     '[class.jp-assistant-panel--open]': 'isOpen()',
     '(document:keydown)': 'onDocumentKeydown($event)',
   },

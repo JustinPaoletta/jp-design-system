@@ -101,10 +101,6 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
     expect(Math.abs(day.top - dayGeometry[0].top)).toBeLessThanOrEqual(1);
   }
   const planning = page.getByRole('button', { name: /Lineup meeting,/ });
-  await expect(planning).toHaveAttribute(
-    'title',
-    /Lineup meeting.*9:00\sAM GMT-4.*10:30\sAM GMT-4/,
-  );
   await expect(planning).toBeInViewport();
   // Friday's overnight continuation starts at midnight. The initial viewport
   // must include it instead of scrolling to Monday's first appointment.
@@ -122,6 +118,14 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
       () => document.documentElement.scrollWidth - window.innerWidth,
     ),
   ).toBeLessThanOrEqual(1);
+  await planning.focus();
+  await expect(page.getByRole('tooltip')).toHaveText(
+    /Lineup meeting.*9:00\sAM GMT-4.*10:30\sAM GMT-4/,
+  );
+  await expect(planning).not.toHaveAttribute('title');
+  await planning.press('Escape');
+  await expect(page.getByRole('tooltip')).toBeHidden();
+  await expect(planning).toBeFocused();
   const friday = page.locator('.day[aria-label^="Fri"] .timed button');
   await friday.focus();
   await expect(friday).toBeInViewport();
@@ -203,10 +207,14 @@ test('scheduling: short slots preserve a title line and restore times in agenda 
     'aria-label',
     /10:00\sAM GMT-4.*10:45\sAM GMT-4/,
   );
-  await expect(event).toHaveAttribute(
-    'title',
+  await event.focus();
+  await expect(page.getByRole('tooltip')).toHaveText(
     /10:00\sAM GMT-4.*10:45\sAM GMT-4/,
   );
+  await expect(event).not.toHaveAttribute('title');
+  await event.press('Escape');
+  await expect(page.getByRole('tooltip')).toBeHidden();
+  await expect(event).toBeFocused();
   await page.getByRole('button', { name: 'Agenda', exact: true }).click();
   await expect(time).toBeVisible();
   await expect(time).toContainText(/10–10:45\sAM/);
@@ -314,7 +322,7 @@ for (const dir of ['ltr', 'rtl'])
     });
     await expect(appointment).toBeVisible();
     const position = await appointment.evaluate(
-      (el) => getComputedStyle(el.parentElement as HTMLElement).position,
+      (el) => getComputedStyle(el.closest('.timed li') as HTMLElement).position,
     );
     expect(position).toBe('static');
     const overflow = await page.evaluate(

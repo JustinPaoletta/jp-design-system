@@ -7,6 +7,30 @@ describe('JpFileUpload', () => {
     f.detectChanges();
     return f;
   }
+  it('opens the native file chooser from the themed trigger and disables both controls', () => {
+    const f = mount();
+    const input = f.nativeElement.querySelector('input') as HTMLInputElement;
+    const trigger = f.nativeElement.querySelector(
+      '.choose-files',
+    ) as HTMLButtonElement;
+    const open = jest.spyOn(input, 'click').mockImplementation(() => undefined);
+    expect(input.hidden).toBe(true);
+    expect(trigger.getAttribute('aria-label')).toBe('Choose files: Files');
+    trigger.click();
+    expect(open).toHaveBeenCalledTimes(1);
+    f.componentRef.setInput('multiple', false);
+    f.componentRef.setInput('hint', 'Text files only.');
+    f.componentRef.setInput('disabled', true);
+    f.detectChanges();
+    expect(trigger.getAttribute('aria-label')).toBe('Choose file: Files');
+    expect(trigger.getAttribute('aria-describedby')).toBe(
+      f.componentInstance.resolvedId() + '-hint',
+    );
+    expect(input.disabled).toBe(true);
+    expect(trigger.disabled).toBe(true);
+    trigger.click();
+    expect(open).toHaveBeenCalledTimes(1);
+  });
   it('accepts MIME wildcards/extensions, separates invalid files, and counts the existing queue', () => {
     const f = mount(),
       c = f.componentInstance,

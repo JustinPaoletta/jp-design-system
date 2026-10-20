@@ -109,7 +109,7 @@ The [support matrix](qa/SUPPORT_MATRIX.md#environment-checks-and-limits) gives t
 Actual Chrome 200%/400% zoom was inspected for the seven larger features.
 See [readiness evidence and maintainer instructions](qa/READINESS.md).
 VoiceOver/NVDA, real Windows contrast themes, text-only zoom and other zoom combinations remain open.
-Physical touch and native picker dialogs have not been examined.
+Physical touch and screen-reader use of the custom picker panels remain unexamined.
 Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility

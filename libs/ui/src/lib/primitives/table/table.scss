@@ -155,13 +155,33 @@
 .jp-table__settings {
   margin-block-end: var(--jp-space-sm);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   color: var(--jp-color-text-primary);
 }
 .jp-table__settings summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  box-sizing: border-box;
+  min-block-size: var(--jp-size-control-md);
+  max-inline-size: 100%;
   cursor: pointer;
   inline-size: fit-content;
-  padding: var(--jp-space-xs);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+  list-style: none;
+}
+.jp-table__settings summary::-webkit-details-marker {
+  display: none;
+}
+.jp-table__settings summary:hover {
+  background: var(--jp-color-surface-raised);
+}
+.jp-table__settings[open] summary jp-icon {
+  transform: rotate(180deg);
 }
 .jp-table__settings-body {
   display: flex;
@@ -181,12 +201,20 @@
   inline-size: 7rem;
   min-block-size: var(--jp-size-control-md);
   box-sizing: border-box;
-  border: 1px solid var(--jp-color-border-strong);
-  border-radius: var(--jp-radius-sm);
-  padding-inline: var(--jp-space-xs);
-  background: var(--jp-color-surface-raised);
-  color: var(--jp-color-text-primary);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  padding-inline: var(--jp-space-sm);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
   font: inherit;
+  font-size: var(--jp-font-size-body-sm);
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.jp-table__column-setting input::-webkit-inner-spin-button,
+.jp-table__column-setting input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }
 .jp-table__root--resizable {
   table-layout: fixed;

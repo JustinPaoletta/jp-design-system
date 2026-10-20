@@ -22,6 +22,7 @@ let nextSummaryId = 0;
   templateUrl: './error-summary.html',
   styleUrl: './error-summary.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpErrorSummary {
   private readonly messages = inject(JP_MESSAGES);

@@ -73,9 +73,14 @@
   color: var(--jp-color-field-placeholder);
 }
 
-.jp-input__control[type='date'],
-.jp-input__control[type='time'] {
-  color-scheme: dark;
+.jp-input__control[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.jp-input__control::-webkit-inner-spin-button,
+.jp-input__control::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }
 
 .jp-input__control:hover:not(:disabled):not(:read-only) {

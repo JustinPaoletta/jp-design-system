@@ -21,14 +21,6 @@ p {
 .rendering-options {
   margin-block-end: var(--jp-space-md);
 }
-.rendering-options summary {
-  cursor: pointer;
-  margin-block-end: var(--jp-space-sm);
-}
-.rendering-options summary:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
-}
 @media (max-width: 48rem) {
   .page {
     padding: var(--jp-space-md);

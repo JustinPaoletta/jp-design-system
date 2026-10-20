@@ -36,18 +36,53 @@ function button(root: HTMLElement, text: string) {
   ) as HTMLButtonElement;
 }
 describe('JpSchedulingCalendar', () => {
+  it('shows the themed full event label on focus and dismisses it without moving focus', () => {
+    const f = create(2000);
+    const control = f.nativeElement.querySelector(
+      '.timed button',
+    ) as HTMLButtonElement;
+    expect(control.hasAttribute('title')).toBe(false);
+    control.focus();
+    f.detectChanges();
+    const tooltip = f.nativeElement.querySelector(
+      '[role="tooltip"]',
+    ) as HTMLElement;
+    expect(tooltip.textContent).toContain('Review');
+    expect(tooltip.textContent).toContain('9:00');
+    expect(control.getAttribute('aria-describedby')).toContain(tooltip.id);
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+    );
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('[role="tooltip"]')).toBeNull();
+    expect(control.getAttribute('aria-describedby')).toBeNull();
+    expect(document.activeElement).toBe(control);
+  });
   it('uses readable week rows for narrow overlaps and preserves focus when width changes', () => {
     const originalObserver = globalThis.ResizeObserver;
-    let measure: () => void = () => undefined;
-    const disconnect = jest.fn();
+    const observers = new Map<
+      Element,
+      {
+        measure: () => void;
+        disconnect: ReturnType<typeof jest.fn>;
+      }
+    >();
     globalThis.ResizeObserver = jest
       .fn()
       .mockImplementation((callback: () => void) => {
-        measure = callback;
-        return { observe: jest.fn(), disconnect };
+        const disconnect = jest.fn();
+        return {
+          observe: jest.fn((target: HTMLElement) => {
+            observers.set(target, { measure: callback, disconnect });
+          }),
+          disconnect,
+        };
       });
     try {
       const f = create(1100);
+      const calendarObserver = observers.get(f.nativeElement);
+      if (!calendarObserver) throw new Error('Calendar must observe its host.');
+      const { measure, disconnect } = calendarObserver;
       f.componentRef.setInput('events', [
         events[0],
         { ...events[0], id: 'two', title: 'Pitching practice' },

@@ -50,6 +50,7 @@ export type JpInlineAlertTone = (typeof JP_INLINE_ALERT_TONES)[number];
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-inline-alert',
+    '[attr.title]': 'null',
     '[attr.role]': 'tone() === "error" ? "alert" : "status"',
     '[attr.aria-atomic]': 'true',
     '[class.jp-inline-alert--info]': 'tone() === "info"',

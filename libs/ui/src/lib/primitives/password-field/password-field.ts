@@ -5,12 +5,15 @@ import {
   forwardRef,
   input,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { JpInput } from '../input/input';
+import { JpDatePicker } from '../date-picker/date-picker';
+import { JpTimePicker } from '../time-picker/time-picker';
 import { JP_INPUT_TYPES, type JpInputType } from '../shared/primitive-types';
 import { createStringUnionTransform } from '../shared/token-maps';
 @Component({
   selector: 'jp-password-field',
+  imports: [FormsModule, JpDatePicker, JpTimePicker],
   templateUrl: '../input/input.html',
   styleUrl: '../input/input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

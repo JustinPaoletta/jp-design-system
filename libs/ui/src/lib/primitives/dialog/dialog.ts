@@ -39,6 +39,7 @@ export class JpDialogActions {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-dialog',
+    '[attr.title]': 'null',
     '[class.jp-dialog--open]': 'open()',
     '(document:keydown)': 'onDocumentKeydown($event)',
     '(document:pointerdown)': 'onDocumentPointerDown($event)',

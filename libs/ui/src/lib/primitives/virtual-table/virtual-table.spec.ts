@@ -19,6 +19,25 @@ function setup() {
   return f;
 }
 describe('JpVirtualTable', () => {
+  it('uses a themed full cell tooltip and removes it when the row leaves the render window', () => {
+    const f = setup();
+    const cell = f.nativeElement.querySelector('.cell-value') as HTMLElement;
+    expect(cell.textContent).toContain('Service 0');
+    expect(cell.hasAttribute('title')).toBe(false);
+    const trigger = f.nativeElement.querySelector(
+      '.cell-tooltip',
+    ) as HTMLElement;
+    trigger.dispatchEvent(new Event('pointerenter'));
+    f.detectChanges();
+    expect(
+      f.nativeElement.querySelector('[role="tooltip"]').textContent,
+    ).toContain('Service 0');
+    expect(cell.getAttribute('aria-describedby')).toContain('jp-tooltip-');
+    expect(cell.closest('td')?.getAttribute('aria-label')).toBe('Service 0');
+    f.componentInstance.scrollTop.set(48000);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('[role="tooltip"]')).toBeNull();
+  });
   it('reports the visible viewport range without counting the render buffer', () => {
     const f = setup();
     expect(f.componentInstance.range().end).toBe(19);

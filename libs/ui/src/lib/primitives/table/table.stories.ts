@@ -325,7 +325,7 @@ export const ControlledToolkit: Story = {
 
 @Component({
   selector: 'jp-table-advanced-example',
-  imports: [JpTable, JpTableRowDetail],
+  imports: [JpTable, JpTableRowDetail, JpButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<jp-table
     id="advanced-table-story"
@@ -346,7 +346,9 @@ export const ControlledToolkit: Story = {
   >
     <ng-template jpTableRowDetail let-row
       ><p>Manager: {{ row.owner }}</p>
-      <button type="button">Review {{ row.name }}</button></ng-template
+      <jp-button type="button" variant="secondary"
+        >Review {{ row.name }}</jp-button
+      ></ng-template
     >
   </jp-table>`,
 })

@@ -121,6 +121,12 @@ input[aria-invalid='true'].number {
 .number {
   min-block-size: var(--jp-size-control-md);
   font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.number::-webkit-inner-spin-button,
+.number::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }
 :host(.disabled) .controls {
   opacity: 0.5;

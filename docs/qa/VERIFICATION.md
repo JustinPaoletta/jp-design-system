@@ -1,5 +1,38 @@
 # Verification evidence
 
+## October 20, 2026 remaining browser control styling
+
+Date, date-range and time fields now use JP popup panels.
+Generic `jp-input` date/time types use the same controls.
+File selection, disclosure chevrons, numeric fields and truncated-content tooltips also use JP styling.
+The system file chooser remains native.
+Heading inputs no longer create native hover tooltips on component hosts.
+Date-range fields stack inside narrow desktop cards so their values remain complete.
+
+| Check                         | Result                                                                                  |
+| ----------------------------- | --------------------------------------------------------------------------------------- |
+| UI unit tests                 | 537 tests in 99 suites pass with coverage gates.                                        |
+| Showcase and token unit tests | 59 Showcase tests and 17 token tests pass.                                              |
+| Static and live Storybook     | 377 stories in 97 suites pass in each mode. Runtime isolation checks pass.              |
+| Picker browser checks         | 27 checks pass across Chromium, Firefox and WebKit.                                     |
+| macOS Chromium visuals        | All 94 comparisons pass, including six open-picker states and a date-range error state. |
+| Installed package consumer    | All 18 browser, accent and density combinations pass.                                   |
+
+Chrome captures cover desktop and 320px popup layouts.
+The browser checks cover calendar navigation, constrained dates, date ranges and time drafts.
+They also cover cancellation, focus return, upload selection, RTL layout and axe results.
+Nested-dialog stories check that Escape closes the picker before its parent dialog.
+
+A WebKit regression failed before correction.
+Pointer actions could move focus outside the time panel before Apply committed the value.
+Picker buttons now receive focus before their click action.
+All three viewport cases pass after correction.
+
+Unit regressions cover form reset, disabled/read-only state, fractional steps and changed validation constraints.
+`JpInput` validation messages use JP inline styling instead of browser popups.
+The [visual rules](../content/VISUAL_STYLE.md#selection-and-focus) describe the required control inspection.
+Physical touch and screen-reader acceptance remain open.
+
 ## October 20, 2026 Select popup correction
 
 Select, schedule time zones and chart categories now use the same themed option list.

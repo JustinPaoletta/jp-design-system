@@ -19,6 +19,7 @@ import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 import { JpCheckbox } from '../checkbox/checkbox';
 import { JpPagination } from '../pagination/pagination';
+import { JpTooltip } from '../tooltip/tooltip';
 import {
   JpTable,
   type JpSortableTableColumn,
@@ -68,7 +69,14 @@ export function jpVirtualRange(
 }
 @Component({
   selector: 'jp-virtual-table',
-  imports: [FormsModule, JpButton, JpCheckbox, JpPagination, JpTable],
+  imports: [
+    FormsModule,
+    JpButton,
+    JpCheckbox,
+    JpPagination,
+    JpTable,
+    JpTooltip,
+  ],
   templateUrl: './virtual-table.html',
   styleUrl: './virtual-table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

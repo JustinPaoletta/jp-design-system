@@ -88,6 +88,25 @@ Long labels must not move the chevron or cover it.
 Do not add a visible native `<select>` to a component or example.
 Use `jp-combobox` when the user must search the options.
 
+Use `jp-date-picker`, `jp-date-range-picker` and `jp-time-picker` for temporal fields.
+Their visible fields and popup panels must use JP tokens.
+Do not expose native date or time picker chrome in components or examples.
+`jp-input` delegates its date/time types to these components.
+Keep native form semantics and system file selection.
+The upload trigger, filename queue and feedback must use JP styles.
+
+Hide browser number spinners when the field has JP increment controls or direct numeric entry.
+Keep ArrowUp/ArrowDown and numeric validation available.
+Use a themed chevron for disclosures and hide the browser marker.
+
+A component `title` input must not leave an HTML `title` attribute on its host.
+Use a visible heading or `jp-tooltip` for descriptions.
+Date-range fields must fit their container, including narrow desktop cards.
+
+Inspect both the closed field and the open panel in Chrome.
+Repeat the inspection at 320 CSS pixels and in RTL.
+Inspect disabled, read-only, invalid, focus and reset states before accepting a control.
+
 ## Motion
 
 Do not animate layout changes for decoration.

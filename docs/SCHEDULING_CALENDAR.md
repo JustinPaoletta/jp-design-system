@@ -124,7 +124,7 @@ Day view uses one column of event rows when overlapping events need more width.
 A wider week or Day view uses the aligned time grid with one shared time gutter.
 Overlapping events share the width of their day.
 Long titles can wrap inside the available slot.
-The native tooltip and accessible name retain the full title and time range.
+The JP tooltip and accessible name retain the full title and time range.
 Native focus scrolling reveals appointment buttons.
 Day view fills the available width.
 

@@ -1,0 +1,171 @@
+@use '../input/input';
+
+:host {
+  min-inline-size: 0;
+  font-family: var(--jp-font-family-base);
+}
+.jp-input__control {
+  font-size: var(--jp-font-size-body-sm);
+  font-variant-numeric: tabular-nums;
+}
+.jp-time-picker__trigger {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: none;
+  min-inline-size: var(--jp-size-control-md);
+  margin: var(--jp-space-2xs);
+  padding: var(--jp-space-2xs);
+  border: 0;
+  border-radius: var(--jp-radius-sm);
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  cursor: pointer;
+}
+.jp-input__row:has([aria-expanded='true']) {
+  border-color: var(--jp-color-field-border-hover);
+}
+.jp-time-picker__trigger svg {
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+}
+.jp-time-picker__popup {
+  box-sizing: border-box;
+  inline-size: 18rem;
+  padding: var(--jp-space-sm);
+  border: 1px solid var(--jp-color-overlay-panel-border);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-overlay-panel-bg);
+  color: var(--jp-color-overlay-panel-fg);
+  box-shadow: var(--jp-elevation-floating);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  z-index: var(--jp-z-overlay-dropdown);
+}
+.jp-time-picker__popup[hidden] {
+  display: none !important;
+}
+.jp-time-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  padding-block-end: var(--jp-space-sm);
+  font-weight: var(--jp-font-weight-semibold);
+}
+.jp-time-picker__header > span {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.jp-time-picker__parts {
+  display: flex;
+  gap: var(--jp-space-xs);
+}
+.jp-time-picker__part {
+  display: flex;
+  flex: 1;
+  min-inline-size: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--jp-space-2xs);
+}
+.jp-time-picker__part-label {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+  text-align: center;
+  padding-block-end: var(--jp-space-2xs);
+}
+.jp-time-picker__value {
+  appearance: none;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: var(--jp-size-control-lg);
+  padding: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
+  font: inherit;
+  font-size: var(--jp-font-size-body-lg);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.jp-time-picker__value[aria-invalid='true'] {
+  border-color: var(--jp-color-field-border-invalid);
+}
+.jp-time-picker__step,
+.jp-time-picker__icon-button,
+.jp-time-picker__clear,
+.jp-time-picker__apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-block-size: var(--jp-size-control-sm);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--jp-radius-md);
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  font: inherit;
+  font-weight: var(--jp-font-weight-medium);
+  cursor: pointer;
+}
+.jp-time-picker__icon-button {
+  flex: none;
+  inline-size: var(--jp-size-control-sm);
+  padding: var(--jp-space-xs);
+}
+.jp-time-picker__apply {
+  background: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+}
+.jp-time-picker__trigger:hover:not(:disabled),
+.jp-time-picker__trigger[aria-expanded='true'],
+.jp-time-picker__step:hover:not(:disabled),
+.jp-time-picker__icon-button:hover:not(:disabled),
+.jp-time-picker__clear:hover:not(:disabled) {
+  background: var(--jp-color-surface-emphasis);
+  color: var(--jp-color-text-primary);
+}
+.jp-time-picker__apply:hover:not(:disabled) {
+  background: var(--jp-color-button-primary-bg-hover);
+}
+.jp-time-picker__popup button:focus-visible,
+.jp-time-picker__value:focus-visible,
+.jp-input__row:has(.jp-time-picker__trigger:focus-visible) {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.jp-time-picker__popup button:disabled,
+.jp-time-picker__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.jp-time-picker__draft-error {
+  margin: var(--jp-space-xs) 0 0;
+  color: var(--jp-color-field-error);
+  font-size: var(--jp-font-size-caption);
+}
+.jp-time-picker__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  margin-block-start: var(--jp-space-sm);
+  padding-block-start: var(--jp-space-sm);
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+}
+@media (forced-colors: active) {
+  .jp-time-picker__value[aria-invalid='true'] {
+    border-style: dashed;
+  }
+  .jp-time-picker__popup button:disabled,
+  .jp-time-picker__trigger:disabled {
+    color: GrayText;
+  }
+}
+
+.jp-time-picker__trigger:focus-visible {
+  outline: none;
+}

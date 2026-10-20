@@ -47,14 +47,13 @@
       >
     </div>
   </jp-card>
-  <details class="preview-settings">
-    <summary>Preview settings</summary>
+  <jp-disclosure class="preview-settings" title="Preview settings">
     <aside aria-label="Example controls">
       <jp-switch [(ngModel)]="showEmpty" name="showEmpty"
         >Show empty state</jp-switch
       >
     </aside>
-  </details>
+  </jp-disclosure>
   <nav class="related" aria-label="Related examples">
     <a jpLink href="/advanced-layout">Advanced table controls</a>
     <a jpLink href="/data-performance">Charts and large tables</a>

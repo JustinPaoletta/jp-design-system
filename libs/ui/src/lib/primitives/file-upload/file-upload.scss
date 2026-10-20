@@ -29,28 +29,22 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-input[type='file'] {
-  font-size: var(--jp-font-size-body-sm);
-  padding: 0;
-  border: 0;
-  background: transparent;
-  min-block-size: var(--jp-size-control-md);
-  min-inline-size: 0;
+.choose-files {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  gap: var(--jp-space-sm);
   max-inline-size: 100%;
-}
-input::file-selector-button {
-  font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body-sm);
-  line-height: var(--jp-font-line-height-tight);
-  min-block-size: var(--jp-size-control-md);
   padding-inline: var(--jp-space-md);
-  margin-inline-end: var(--jp-space-sm);
-  border: 1px solid var(--jp-color-button-secondary-border);
-  border-radius: var(--jp-radius-md);
-  background: var(--jp-color-button-secondary-bg);
-  color: var(--jp-color-button-secondary-fg);
-  font-weight: var(--jp-font-weight-medium);
-  cursor: pointer;
+}
+.choose-files svg {
+  flex: none;
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+}
+.choose-files[aria-invalid='true'] {
+  border-color: var(--jp-color-field-border-invalid);
 }
 ul {
   margin-block: var(--jp-space-md) 0;

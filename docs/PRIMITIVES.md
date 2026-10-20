@@ -250,15 +250,25 @@ Class `JpInput`. Story:
 [Primitives/Controls/Input](../libs/ui/src/lib/primitives/input/input.stories.ts).
 Value type: `string`.
 
-| Input                                                                                                | Type                                                          | Default                |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- |
-| `label`, `hint`, `error`, `placeholder`, `ariaLabel`, `name`, `autocomplete`, `pattern`, `inputMode` | string                                                        | `''`                   |
-| `type`                                                                                               | `text`, `email`, `password`, `search`, `tel`, `url`, `number` | `text`                 |
-| `size`                                                                                               | `sm`, `md`, `lg`                                              | `md`                   |
-| `id`                                                                                                 | string or unset                                               | generated `jp-input-N` |
-| `required`, `disabled`, `readonly`, `invalid`                                                        | boolean                                                       | `false`                |
-| `minLength`, `maxLength`                                                                             | number or `null`                                              | `null`                 |
-| `min`, `max`, `step`                                                                                 | string, number, or `null`                                     | `null`                 |
+| Input                                                                                                | Type                                                                          | Default                |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------- |
+| `label`, `hint`, `error`, `placeholder`, `ariaLabel`, `name`, `autocomplete`, `pattern`, `inputMode` | string                                                                        | `''`                   |
+| `type`                                                                                               | `text`, `email`, `password`, `search`, `tel`, `url`, `number`, `date`, `time` | `text`                 |
+| `size`                                                                                               | `sm`, `md`, `lg`                                                              | `md`                   |
+| `id`                                                                                                 | string or unset                                                               | generated `jp-input-N` |
+| `required`, `disabled`, `readonly`, `invalid`                                                        | boolean                                                                       | `false`                |
+| `minLength`, `maxLength`                                                                             | number or `null`                                                              | `null`                 |
+| `min`, `max`, `step`                                                                                 | string, number, or `null`                                                     | `null`                 |
+
+Date and time types use the themed picker components.
+See [Dates and times](WORKFLOW_COMPONENTS.md#dates-and-times).
+Other types keep native input semantics with JP field styling.
+Browser number spinners are hidden; keyboard increments remain available.
+
+Native input validation uses a styled inline error instead of a browser popup.
+`error` takes precedence over this message.
+`JP_MESSAGES.forms` supplies the built-in validation text.
+Input, reset or valid constraint changes clear the built-in error.
 
 ### jp-textarea
 
@@ -891,7 +901,7 @@ remain preview pending the [remaining inspection tasks](../COMPONENT_EXPANSION_P
 | Guide                                              | Components and behaviors                                                                                                                                              |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Component expansion](COMPONENT_EXPANSION.md)      | Icons, links, disclosure, identity, cards/lists, field composition, selection, banners/drawers, stepper/checklist, numeric controls, timeline, overflow and code/copy |
-| [Everyday workflows](WORKFLOW_COMPONENTS.md)       | Commands/context menus, native date/time pickers, upload queues, notifications, grouped actions, inline edit, skip link and announcements                             |
+| [Everyday workflows](WORKFLOW_COMPONENTS.md)       | Commands/context menus, themed date/time pickers, upload queues, notifications, grouped actions, inline edit, skip link and announcements                             |
 | [Advanced layout](ADVANCED_LAYOUT_COMPONENTS.md)   | Split panes, media and table visibility, resizing, pinned regions and row details                                                                                     |
 | [Hierarchy](HIERARCHY_COMPONENTS.md)               | Tree view and tree table                                                                                                                                              |
 | [Scheduling](SCHEDULING_CALENDAR.md)               | Day/week/agenda scheduling calendar                                                                                                                                   |

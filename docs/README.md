@@ -13,7 +13,7 @@ record its limits. Remaining delivery work belongs in the
 - [Component expansion](COMPONENT_EXPANSION.md): disclosure, links, identity,
   form composition, selection, numeric controls, structured content and feedback
 - [Everyday workflows](WORKFLOW_COMPONENTS.md): commands, context menus,
-  native pickers, upload, notifications and inline editing
+  themed pickers, upload, notifications and inline editing
 - [Advanced layout and tables](ADVANCED_LAYOUT_COMPONENTS.md): split panes,
   media, visibility, resizing, pinning and row details
 - [Hierarchy](HIERARCHY_COMPONENTS.md): tree view and tree table

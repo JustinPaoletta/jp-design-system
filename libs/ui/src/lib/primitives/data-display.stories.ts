@@ -9,6 +9,7 @@ import { JpBadge } from './badge/badge';
 import { JpCard } from './card/card';
 import { JpButton } from './button/button';
 import { JpEmptyState } from './empty-state/empty-state';
+import { JpDisclosure } from './disclosure/disclosure';
 import { JpHeading } from './heading/heading';
 import { JpStack } from './stack/stack';
 import { JpSwitch } from './switch/switch';
@@ -68,6 +69,7 @@ const meta: Meta<DataDisplayArgs> = {
         JpBadge,
         JpButton,
         JpEmptyState,
+        JpDisclosure,
         JpTable,
         JpTableCellDef,
         JpSwitch,
@@ -170,18 +172,6 @@ const meta: Meta<DataDisplayArgs> = {
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-body-sm);
 }
-.preview-settings summary {
-  cursor: pointer;
-  inline-size: fit-content;
-}
-.preview-settings summary:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--jp-radius-sm);
-}
-.preview-settings aside {
-  padding-block-start: var(--jp-space-md);
-}
 @media (width <= 48rem) {
   .roster-page {
     padding: var(--jp-space-lg) var(--jp-space-md);
@@ -258,12 +248,11 @@ const meta: Meta<DataDisplayArgs> = {
       <span role="status">{{ availableOnly() ? 'Available players only' : 'Active roster and injured list' }}</span>
     </div>
   </jp-card>
-  <details class="preview-settings">
-    <summary>Preview settings</summary>
+  <jp-disclosure class="preview-settings" title="Preview settings">
     <aside aria-label="Example controls">
       <jp-switch [ngModel]="showEmpty()" (ngModelChange)="onShowEmptyChange($event)" name="showEmpty">Show empty state</jp-switch>
     </aside>
-  </details>
+  </jp-disclosure>
 </div>
         </main>
       </jp-app-shell>

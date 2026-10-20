@@ -122,7 +122,7 @@ test('workflows: inline saves preserve failed drafts, retry and abort without co
     'Cancelled plan',
   );
 });
-test('workflows: native date/time form validates ordered local values and focuses errors', async ({
+test('workflows: themed date/time form validates ordered local values and focuses errors', async ({
   page,
 }) => {
   await page.getByLabel('Game date', { exact: true }).fill('2024-09-30');

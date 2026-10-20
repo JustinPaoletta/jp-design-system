@@ -5,7 +5,7 @@
 }
 
 .jp-tooltip__trigger {
-  display: inline-flex;
+  display: var(--jp-tooltip-trigger-display, inline-flex);
 }
 
 .jp-tooltip__content {

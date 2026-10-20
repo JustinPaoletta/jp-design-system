@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
+import { JpTooltip } from '../tooltip/tooltip';
 import {
   addJpCalendarDays,
   buildJpCalendarLayout,
@@ -27,7 +28,7 @@ import {
 /** Native, chronological appointment controls with collision-aware day/week placement. */
 @Component({
   selector: 'jp-scheduling-calendar',
-  imports: [JpButton],
+  imports: [JpButton, JpTooltip],
   templateUrl: './scheduling-calendar.html',
   styleUrl: './scheduling-calendar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

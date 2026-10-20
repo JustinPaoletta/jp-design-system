@@ -15,6 +15,7 @@ import { JpIcon } from '../icon/icon';
   templateUrl: './banner.html',
   styleUrl: './banner.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpBanner {
   private readonly messages = inject(JP_MESSAGES);

@@ -20,6 +20,7 @@ import type { Chart, ChartConfiguration } from 'chart.js';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 import { JpSelect } from '../select/select';
+import { JpIcon } from '../icon/icon';
 export interface JpChartSeries {
   id: string;
   label: string;
@@ -28,7 +29,7 @@ export interface JpChartSeries {
 /** Optional Chart.js bar/line integration, with equivalent data controls. */
 @Component({
   selector: 'jp-chart',
-  imports: [FormsModule, JpButton, JpSelect, NgTemplateOutlet],
+  imports: [FormsModule, JpButton, JpSelect, JpIcon, NgTemplateOutlet],
   templateUrl: './chart.html',
   styleUrl: './chart.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

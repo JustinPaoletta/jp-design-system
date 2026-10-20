@@ -134,7 +134,7 @@ export const BusyAllDay: Story = {
     const allDay = canvasElement.querySelector('.day .all-day') as HTMLElement;
     const frame = canvasElement.querySelector('.days') as HTMLElement;
     const timed = canvas.getByRole('button', { name: /Jack Flaherty.*,/ });
-    const slot = timed.parentElement;
+    const slot = timed.closest('.timed li');
     if (!slot)
       throw new globalThis.Error('The timed appointment must have a slot.');
     const schedule = getComputedStyle(slot).position === 'absolute';
@@ -221,10 +221,16 @@ export const CrowdedWeek: Story = {
       );
       await expect(event.querySelector('span')).toBeVisible();
     }
-    await expect(appointment.getAttribute('title')).toMatch(
+    await expect(appointment).not.toHaveAttribute('title');
+    appointment.focus();
+    await expect(await canvas.findByRole('tooltip')).toHaveTextContent(
       /Lineup meeting.*9:00.*10:30/,
     );
-    appointment.focus();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() =>
+      expect(canvas.queryByRole('tooltip')).not.toBeInTheDocument(),
+    );
+    await expect(appointment).toHaveFocus();
     host.style.width = '900px';
     await expect(appointment).toHaveFocus();
     await expect(frame).toHaveClass('overview');
@@ -233,7 +239,8 @@ export const CrowdedWeek: Story = {
     await waitFor(() => expect(frame).not.toHaveClass('overview'));
     if (host.clientWidth > 896) {
       await expect(
-        getComputedStyle(appointment.parentElement as HTMLElement).position,
+        getComputedStyle(appointment.closest('.timed li') as HTMLElement)
+          .position,
       ).toBe('absolute');
     }
     await userEvent.click(canvas.getByRole('button', { name: 'Week' }));

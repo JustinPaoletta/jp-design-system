@@ -1,3 +1,60 @@
+@if (type() === 'date') {
+<jp-date-picker
+  [id]="resolvedId()"
+  [label]="label()"
+  [hint]="hint()"
+  [error]="error()"
+  [placeholder]="placeholder()"
+  [ariaLabel]="ariaLabel()"
+  [ariaDescribedBy]="ariaDescribedBy()"
+  [name]="name()"
+  [autocomplete]="autocomplete()"
+  [required]="required()"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [size]="size()"
+  [inputMode]="inputMode()"
+  [minLength]="minLength()"
+  [maxLength]="maxLength()"
+  [pattern]="pattern()"
+  [disabled]="isDisabled()"
+  [readonly]="readonly()"
+  [invalid]="invalid()"
+  [ngModel]="value()"
+  [ngModelOptions]="{standalone: true}"
+  (ngModelChange)="commitValue($event)"
+  (focusout)="onNestedFocusout($event)"
+/>
+} @else if (type() === 'time') {
+<jp-time-picker
+  [id]="resolvedId()"
+  [label]="label()"
+  [hint]="hint()"
+  [error]="error()"
+  [placeholder]="placeholder()"
+  [ariaLabel]="ariaLabel()"
+  [ariaDescribedBy]="ariaDescribedBy()"
+  [name]="name()"
+  [autocomplete]="autocomplete()"
+  [required]="required()"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [size]="size()"
+  [inputMode]="inputMode()"
+  [minLength]="minLength()"
+  [maxLength]="maxLength()"
+  [pattern]="pattern()"
+  [disabled]="isDisabled()"
+  [readonly]="readonly()"
+  [invalid]="invalid()"
+  [ngModel]="value()"
+  [ngModelOptions]="{standalone: true}"
+  (ngModelChange)="commitValue($event)"
+  (focusout)="onNestedFocusout($event)"
+/>
+} @else {
 <div class="jp-input__field">
   @if (label()) {
   <label class="jp-input__label" [attr.for]="resolvedId()">{{ label() }}</label>
@@ -40,6 +97,7 @@
       [value]="value()"
       [style.--jp-field-height]="controlHeight()"
       (input)="onInput($event)"
+      (invalid)="onConstraintInvalid($event)"
       (blur)="onBlur()"
     />
     @if (type() === 'search' && clearable() && value() && !readonly()) {
@@ -65,11 +123,13 @@
     </button>
     }
   </div>
-  @if (error()) {
+  @if (fieldError()) {
   <p class="jp-input__error" [attr.id]="errorId()" role="alert">
-    {{ error() }}
+    {{ fieldError() }}
   </p>
   } @else if (hint()) {
   <p class="jp-input__hint" [attr.id]="hintId()">{{ hint() }}</p>
   }
 </div>
+
+}
