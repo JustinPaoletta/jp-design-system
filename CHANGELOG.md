@@ -7,6 +7,18 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.0-rc.1] - 2026-10-21
+
+- Keep rapid calendar keyboard activation on the active date, including month boundaries.
+- Add picker checks for enlarged root text, forced colors and touch emulation.
+- Exercise date, date-range and time popup controls in installed package checks.
+- Add local paired package archives with integrity hashes and CI downloads.
+- Use themed Select and date/time panels, including generic date/time inputs.
+- Apply immediate pressed feedback and shorter hover transitions across the component catalog.
+- Retain populated charts, calendars, notification lists and virtual tables during refresh.
+- Keep inline save and password reveal dimensions constant.
+- Publish Storybook on GitHub Pages.
+
 - Use 2024 Los Angeles Dodgers and New York Yankees records in component examples.
 - Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
 - Apply the Card layout to club settings. Track submitted values so later edits do not show saved feedback.

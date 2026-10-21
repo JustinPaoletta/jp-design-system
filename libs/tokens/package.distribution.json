@@ -1,6 +1,6 @@
 {
   "name": "@jp-design-system/tokens",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
   "license": "MIT",
   "type": "module",
   "sideEffects": ["./*.css"],

@@ -56,6 +56,8 @@ KEEP_CONSUMER_SMOKE=1 npm exec -- nx run packages:smoke
 
 The built consumer also runs in a browser.
 It exercises invalid forms, save failure/retry, pending controls, table sorting/selection and confirmation dialogs.
+It also opens date, date-range and time panels through the installed packages.
+Keyboard selection, cancellation and focus restoration are checked.
 Open and closed states run the WCAG 2.1 A/AA axe selection.
 
 The default local browser is Chromium.
@@ -69,6 +71,20 @@ CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
 ```
 
 Read [Readiness](qa/READINESS.md#package-consumer) for the fixture, reports and remaining product inspection.
+
+## Candidate archives
+
+Run `npm exec -- nx run packages:pack` to build and pack both packages.
+The output is `dist/packages/archives/<version>/`.
+It contains two `.tgz` files and `manifest.json`.
+The manifest records names, paired versions, byte counts, SHA-256 hashes and npm integrity hashes.
+Packing disables package lifecycle scripts and verifies archive integrity.
+It does not publish packages.
+
+The CI Build job uploads these files as `package-archives`.
+The release dry-run uploads them with evidence as `release-candidate-evidence`.
+Use the artifact from the exact commit you intend to inspect.
+The workflow input does not replace the checked-out package versions.
 
 ## Use in another Angular application
 

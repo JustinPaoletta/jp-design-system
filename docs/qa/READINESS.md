@@ -1,8 +1,7 @@
 # Readiness inspection and maintainer handoff
 
-Engineering evidence was recorded October 8, 2026.
-Documentation was examined October 11, 2026.
-The [verification record](VERIFICATION.md#october-9-hosted-readiness-evidence) identifies the passing hosted revision.
+Engineering evidence was updated October 21, 2026.
+The [verification record](VERIFICATION.md) identifies tested changes and their limits.
 Use this procedure to finish the five tasks in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
 
 ## Completed engineering work
@@ -15,7 +14,7 @@ Use this procedure to finish the five tasks in the [task list](../../COMPONENT_E
 - The inventory records source and maturity evidence for all 113 public classes.
 - Actual Chrome 200%/400% zoom passed on the four larger-feature screens.
 - Handlebars 4.7.10 removes the critical development-tool findings.
-- The `0.1.0-rc.1` dry-run proposal passed without changing package versions.
+- The release branch prepares paired `0.1.0-rc.1` versions and notes for approval.
 
 ### Package consumer
 
@@ -30,13 +29,14 @@ The report records those tool versions.
 
 - Invalid submission focuses the error summary and links back to the field.
 - Date-range validation rejects reversed dates.
+- Date and time panels support keyboard selection, cancellation and focus restoration.
 - Save failure preserves values; retry saves them; pending controls are disabled.
 - Sorting and selection update application data.
 - A confirmation dialog contains focus and restores its opener after Escape.
 - Confirmed removal updates the rows and status text.
 - Open and closed states pass the WCAG 2.1 A/AA axe selection.
 
-All 12 combinations passed locally: three engines, two accents and two densities.
+All 18 combinations passed locally: three engines, three accents and two densities.
 The application is a repository fixture. Actual product feedback remains necessary.
 
 ```sh
@@ -152,23 +152,27 @@ The `Ui` removal version remains unassigned; follow the documented deprecation w
 
 ### 5. Approve and prepare the first release
 
-The proposed first candidate is `0.1.0-rc.1`.
+The prepared first candidate is `0.1.0-rc.1`.
 It permits an inspected trial release while preview APIs remain clearly identified.
-It is a proposal, not a selected or published version.
-The dry-run passed without writing release files.
+The release branch contains the candidate versions and notes.
+The candidate is not approved or published.
 The release tool uses a UTC date for changelog headings.
 
 1. Approve or replace the proposed version.
 2. Select tarball distribution, or request a separate registry setup.
 3. Decide whether the optional Figma kit is required for this release.
 4. Examine the [candidate notes](../../CHANGELOG.md) and [security inspection](../SECURITY_REVIEW.md).
-5. Merge the engineering PR after its required checks pass.
-6. Follow [Release process](../../RELEASE.md) to create the release branch and release PR.
-7. Run the dry-run before writing version changes.
-8. After release PR approval and merge, create the tag and GitHub Release.
+5. Examine the release PR and its required checks.
+6. Download the `package-archives` artifact from its Build job.
+7. Examine `manifest.json` and install both candidate archives together.
+8. Complete the applicable manual and product inspections.
+9. After release PR approval and merge, follow [Release process](../../RELEASE.md) to tag and publish.
 
 ```sh
 node tools/release/prepare.mjs --version 0.1.0-rc.1 --dry-run
 ```
 
-No tag, publication, registry credentials or release version changes are part of this engineering PR.
+The dry-run also verifies an already prepared candidate without changing its notes or date.
+`npm exec -- nx run packages:pack` creates paired local archives with integrity hashes.
+It does not create a tag, GitHub Release or registry publication.
+The optional Figma kit remains deferred under the [Figma policy](../governance/FIGMA.md).

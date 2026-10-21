@@ -87,6 +87,14 @@ Windows palette and readability inspection remains manual.
 Viewport reflow does not exercise browser zoom, text-only zoom, magnification or screen-reader announcements.
 The [actual Chrome zoom record](READINESS.md#actual-zoom-inspection) has a separate, limited scope.
 
+## Additional picker environment checks
+
+`picker-acceptance.spec.ts` checks date and time panels with enlarged root text in LTR and RTL.
+Chromium checks forced colors across gold, neon and cobalt.
+Chromium and WebKit check picker taps with touch emulation.
+Firefox skips touch emulation. Firefox and WebKit skip forced-colors emulation.
+These checks do not establish actual browser zoom, screen-reader usability or physical touch acceptance.
+
 ## Interaction states in axe
 
 Closed-route axe remains in `quality.spec.ts` for `controls`, `data`,

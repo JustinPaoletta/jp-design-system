@@ -48,6 +48,7 @@
       [disabled]="isDisabled() || readonly()"
       (click)="toggle()"
       (pointerdown)="onPopupPointerdown($event)"
+      (mousedown)="onPopupPointerdown($event)"
     >
       <svg
         aria-hidden="true"
@@ -65,6 +66,7 @@
     #popup
     class="jp-date-picker__popup"
     (pointerdown)="onPopupPointerdown($event)"
+    (mousedown)="onPopupPointerdown($event)"
     [hidden]="!isOpen()"
   >
     @if (isOpen()) {

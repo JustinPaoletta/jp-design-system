@@ -1,6 +1,6 @@
 {
   "name": "@jp-design-system/source",
-  "version": "0.0.0",
+  "version": "0.1.0-rc.1",
   "license": "MIT",
   "scripts": {
     "build": "nx run-many -t build --parallel=3",

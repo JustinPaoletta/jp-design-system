@@ -4,7 +4,8 @@ UI and tokens ship together with the same package version.
 The release pull request requires approval.
 After merge, a person creates the tag and GitHub Release.
 
-The repository had no release tags on October 11, 2026.
+The repository had no release tags on October 21, 2026.
+The release branch prepares `0.1.0-rc.1` for approval.
 Registry publication is not configured.
 
 ## Version relationship
@@ -58,7 +59,7 @@ The prepare script reminds the operator of these criteria. It does not judge the
 
 ## Automation
 
-`npm exec -- nx run packages:check-release` runs seven tests in `tools/release/prepare.spec.mjs`:
+`npm exec -- nx run packages:check-release` runs preparation and archive safety tests:
 
 - Accepted SemVer/RC arguments and rejection of malformed arguments
 - Paired package versions and unchanged package identities and dependency versions
@@ -67,6 +68,8 @@ The prepare script reminds the operator of these criteria. It does not judge the
 - Planned writes in a temporary fixture
 - Restoration of earlier files after a later write fails
 - The real dry-run CLI leaving release files unchanged
+- Verification of an already prepared candidate without moving notes or changing its date
+- Paired archives, verified integrity hashes and disabled package scripts
 
 The Build job and Release dry-run workflow run this target.
 The tests use temporary fixtures and synthetic versions.
@@ -77,6 +80,8 @@ They do not select or publish a release.
 Dry-run prints the proposed versions, files and tag `vX.Y.Z`.
 It also shows the heading change from `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD`, with a UTC date.
 It does not write files.
+For an already prepared candidate, it verifies paired versions and the existing release notes.
+New Unreleased notes, empty candidate notes and duplicate sections cause a failure.
 
 Without `--dry-run`, the script writes those files and does not commit, tag, push, or publish. Write mode refuses an empty `## [Unreleased]` section and refuses a changelog that already has a section for that version. Run write mode only on the release branch when you intend to open the release pull request.
 
@@ -99,7 +104,10 @@ The script leaves a fresh empty `## [Unreleased]` section at the top of the chan
 
 The release pull request must pass required checks before merge.
 Build the release tarballs from the merged commit.
-The release workflow does not upload distribution tarballs.
+The Build job uploads local archives as `package-archives`.
+The release dry-run uploads archives and reports as `release-candidate-evidence`.
+These artifacts use the checked-out package versions, not the workflow input version.
+They are review downloads, not a published release.
 
 The [CI protection page](docs/CI_BRANCH_PROTECTION.md) lists required job names and their scope.
 [Quality](docs/QUALITY.md) gives the local commands and exact visual/functional selections.
@@ -119,6 +127,7 @@ npm exec -- nx run packages:check-release
 npm exec -- nx run packages:check-readiness
 npm exec -- nx run packages:build
 CONSUMER_BROWSERS=chromium,firefox,webkit npm exec -- nx run packages:smoke
+npm exec -- nx run packages:pack
 ```
 
 It always passes `--dry-run`, so the input version is not written before the package build. The build and smoke steps validate the checked-out commit. The workflow does not create tags or GitHub Releases.

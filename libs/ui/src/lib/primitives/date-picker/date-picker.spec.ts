@@ -9,6 +9,32 @@ describe('JpDatePicker', () => {
     f.detectChanges();
     return f;
   }
+  it.each(['mouse', 'touch'])(
+    'keeps button focus without cancelling %s activation',
+    async (pointerType) => {
+      const f = await mount();
+      const trigger = f.nativeElement.querySelector('.jp-date-picker__trigger');
+      const event = new Event('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      Object.defineProperty(event, 'pointerType', { value: pointerType });
+      const input = f.nativeElement.querySelector('input');
+      input.focus();
+      trigger.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(pointerType === 'mouse');
+      expect(document.activeElement).toBe(
+        pointerType === 'touch' ? input : trigger,
+      );
+      const mouse = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      trigger.dispatchEvent(mouse);
+      expect(mouse.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(trigger);
+    },
+  );
   it('validates local dates, Gregorian leap years, configured bounds, and required emptiness', async () => {
     const f = await mount(),
       c = f.componentInstance;
@@ -201,6 +227,41 @@ describe('JpDatePicker', () => {
     expect(c.activeDate()).toBe('9999-12-30');
     expect(c.canMoveMonth(1)).toBe(false);
   });
+  it.each(['Enter', ' '])(
+    'commits the active date before the next render with %s',
+    async (key) => {
+      const f = await mount(),
+        c = f.componentInstance,
+        changed = jest.fn();
+      c.registerOnChange(changed);
+      c.writeValue('2026-10-31');
+      c.show(true);
+      f.detectChanges();
+      const oldDay = f.nativeElement.querySelector('[data-date="2026-10-31"]');
+      oldDay.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+      // Enter can arrive before Angular moves focus or renders the next month.
+      const activation = new KeyboardEvent('keydown', {
+        key,
+        bubbles: true,
+        cancelable: true,
+      });
+      oldDay.dispatchEvent(activation);
+      expect(activation.defaultPrevented).toBe(true);
+      expect(changed).toHaveBeenCalledTimes(1);
+      expect(changed).toHaveBeenCalledWith('2026-11-01');
+      expect(c.isOpen()).toBe(false);
+      f.detectChanges();
+      expect(document.activeElement).toBe(
+        f.nativeElement.querySelector('input'),
+      );
+    },
+  );
   it('supports text entry, ArrowDown, Escape, and dismissal outside the control', async () => {
     const f = await mount(),
       c = f.componentInstance,

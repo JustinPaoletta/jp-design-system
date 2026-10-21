@@ -295,10 +295,13 @@ export class JpDatePicker extends TemporalInput {
     this.close();
     this.onBlur();
   }
-  onPopupPointerdown(event: PointerEvent): void {
+  onPopupPointerdown(event: MouseEvent): void {
     const button =
       event.target instanceof Element ? event.target.closest('button') : null;
     if (!button || button.disabled) return;
+    // Leave touch pointer events intact. Its compatibility mousedown is handled
+    // separately, preventing WebKit from focusing a parent before the click.
+    if ('pointerType' in event && event.pointerType === 'touch') return;
     event.preventDefault();
     button.focus({ preventScroll: true });
   }
@@ -364,6 +367,13 @@ export class JpDatePicker extends TemporalInput {
       return;
     }
     if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      // Navigation updates the signal before Angular moves DOM focus. A native
+      // button click could otherwise commit the previously focused day.
+      event.preventDefault();
+      this.choose(this.activeDate());
+      return;
+    }
     const rtl =
       this.host.nativeElement.ownerDocument.defaultView?.getComputedStyle(
         this.host.nativeElement,

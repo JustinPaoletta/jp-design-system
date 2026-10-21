@@ -1,6 +1,6 @@
 # Component Expansion Task List
 
-Updated: October 19, 2026. Five promotion and integration items remain.
+Updated: October 21, 2026. Five promotion and integration items remain.
 The [documentation index](docs/README.md) links completed feature work.
 The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
@@ -30,6 +30,20 @@ Every later component should include its token contract, states, keyboard/form
 behavior, localization, Storybook examples, consumer documentation, and relevant
 browser/package checks. Do not mark a larger feature complete merely because a
 visual placeholder exists.
+
+## Automated acceptance and candidate preparation
+
+Picker checks cover forced colors, enlarged root text and touch emulation.
+Installed packages also exercise date, date-range and time popup controls.
+The release branch prepares paired `0.1.0-rc.1` package versions and release notes.
+`packages:pack` creates archives with verified integrity and a hash manifest.
+CI makes the archives available for download.
+
+These checks do not close the five tasks above.
+Screen-reader sessions, real Windows palettes and physical touch remain untested.
+Actual product feedback and individual API approval remain necessary.
+The optional Figma kit stays deferred until a designer owner exists.
+See the [maintainer instructions](docs/qa/READINESS.md#instructions-for-the-maintainer).
 
 ## Storybook stability requirement
 

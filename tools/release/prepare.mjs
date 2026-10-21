@@ -97,7 +97,7 @@ function trimBlankLines(lines) {
   return lines.slice(start, end);
 }
 
-function moveUnreleased(markdown, version, date) {
+function moveUnreleased(markdown, version, date, allowPrepared = false) {
   const newline = markdown.includes('\r\n') ? '\r\n' : '\n';
   const endedWithNewline = markdown.endsWith(newline);
   const lines = markdown.split(newline);
@@ -120,7 +120,31 @@ function moveUnreleased(markdown, version, date) {
 
   const heading = `## [${version}] - ${date}`;
   const existing = new RegExp(`^## \\[${escapeRegExp(version)}\\](?:\\s|$)`);
-  if (lines.some((line) => existing.test(line.trim()))) {
+  const matches = lines.flatMap((line, index) =>
+    existing.test(line.trim()) ? [index] : [],
+  );
+  if (matches.length === 1 && allowPrepared) {
+    const index = matches[0];
+    const next = lines.findIndex(
+      (line, offset) => offset > index && line.startsWith('## ['),
+    );
+    const hasNotes = lines
+      .slice(index + 1, next === -1 ? undefined : next)
+      .some((line) => line.trim());
+    if (lines.slice(start + 1, end).some((line) => line.trim()))
+      throw new ReleaseInputError(
+        'Prepared candidate has new Unreleased notes. Prepare a new version.',
+      );
+    if (!hasNotes)
+      throw new ReleaseInputError('Prepared candidate has no release notes.');
+    return {
+      text: markdown,
+      hasNotes,
+      heading: lines[index],
+      alreadyPrepared: true,
+    };
+  }
+  if (matches.length) {
     throw new ReleaseInputError(
       `CHANGELOG.md already contains a section for ${version}.`,
     );
@@ -239,7 +263,12 @@ async function readState(directory) {
   return { repositoryText, lockText, uiText, tokensText, changelog };
 }
 
-function buildReleasePlan(state, version, date = new Date()) {
+function buildReleasePlan(
+  state,
+  version,
+  date = new Date(),
+  verifyPrepared = false,
+) {
   const repository = bumpPackageVersion(
     state.repositoryText,
     version,
@@ -263,7 +292,18 @@ function buildReleasePlan(state, version, date = new Date()) {
   }
 
   const dated = utcDate(date);
-  const changelog = moveUnreleased(state.changelog, version, dated);
+  const alreadyVersioned = [
+    repository.previous,
+    lock.previous,
+    ui.previous,
+    tokens.previous,
+  ].every((value) => value === version);
+  const changelog = moveUnreleased(
+    state.changelog,
+    version,
+    dated,
+    verifyPrepared && alreadyVersioned,
+  );
   const outputs = {
     'package.json': repository.updated,
     'package-lock.json': lock.updated,
@@ -321,7 +361,9 @@ function printPlan(plan, dryRun) {
     '  unchanged: libs/tokens/package.json (private workspace metadata, not distributed)',
     `  ${plan.policy}`,
     'Changelog',
-    `  move: ## [Unreleased] -> ${plan.changelog.heading}`,
+    plan.changelog.alreadyPrepared
+      ? `  verified existing candidate: ${plan.changelog.heading}`
+      : `  move: ## [Unreleased] -> ${plan.changelog.heading}`,
     '  leave: ## [Unreleased]',
     `  notes: ${plan.changelog.hasNotes ? 'present' : 'empty'}`,
     'Files',
@@ -361,7 +403,12 @@ async function writeReleaseOutputs(directory, outputs) {
 
 async function main() {
   const { version, dryRun } = parseArgs(process.argv.slice(2));
-  const plan = buildReleasePlan(await readState(root), version);
+  const plan = buildReleasePlan(
+    await readState(root),
+    version,
+    new Date(),
+    dryRun,
+  );
   printPlan(plan, dryRun);
   if (dryRun) return;
   if (!plan.changelog.hasNotes) {
