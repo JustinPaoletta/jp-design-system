@@ -1,4 +1,35 @@
 :host {
   display: block;
-  min-height: 100vh;
+  min-block-size: 100vh;
+}
+
+.example-page {
+  box-sizing: border-box;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding: var(--jp-space-xl) var(--jp-space-lg);
+}
+.example-page__header {
+  margin-block-end: var(--jp-space-lg);
+}
+.example-page__header p {
+  margin-block: var(--jp-space-xs) 0;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
+}
+.example-page__cards {
+  display: grid;
+  gap: var(--jp-space-lg);
+  max-inline-size: 45rem;
+}
+.example-page__status {
+  margin: 0;
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+@media (width <= 48rem) {
+  .example-page {
+    padding: var(--jp-space-lg) var(--jp-space-md);
+  }
 }

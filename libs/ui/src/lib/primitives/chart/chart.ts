@@ -15,18 +15,21 @@ import {
   viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import type { Chart, ChartConfiguration } from 'chart.js';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
+import { JpSelect } from '../select/select';
+import { JpIcon } from '../icon/icon';
 export interface JpChartSeries {
   id: string;
   label: string;
   values: readonly (number | null)[];
 }
-/** Optional Chart.js bar/line integration, with equivalent native data controls. */
+/** Optional Chart.js bar/line integration, with equivalent data controls. */
 @Component({
   selector: 'jp-chart',
-  imports: [JpButton, NgTemplateOutlet],
+  imports: [FormsModule, JpButton, JpSelect, JpIcon, NgTemplateOutlet],
   templateUrl: './chart.html',
   styleUrl: './chart.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,6 +45,9 @@ export class JpChart {
   readonly controlsCollapsed = input(false, { transform: booleanAttribute });
   readonly type = input<'bar' | 'line'>('bar');
   readonly labels = input<readonly string[]>([]);
+  readonly categoryOptions = computed(() =>
+    this.labels().map((label, index) => ({ value: String(index), label })),
+  );
   readonly series = input<readonly JpChartSeries[]>([]);
   readonly locale = input('en-US');
   readonly formatOptions = input<Intl.NumberFormatOptions>({
@@ -142,11 +148,7 @@ export class JpChart {
         type = this.type(),
         formatter = this.formatter();
       const inactive =
-        this.loading() ||
-        !!this.error() ||
-        this.invalid() ||
-        !labels.length ||
-        !series.length;
+        !!this.error() || this.invalid() || !labels.length || !series.length;
       const generation = ++this.generation;
       this.chart?.destroy();
       this.chart = null;
@@ -188,11 +190,12 @@ export class JpChart {
                     data: [...s.values],
                     backgroundColor:
                       type === 'line' && /^#[\da-f]{6}$/i.test(seriesColor)
-                        ? seriesColor + '18'
+                        ? seriesColor + '0c'
                         : seriesColor,
                     fill: type === 'line',
                     borderColor: color('series-' + (i + 1)),
-                    borderWidth: 2,
+                    borderWidth: type === 'line' ? 2 : 0,
+                    borderRadius: type === 'bar' ? 4 : 0,
                     borderDash: i ? [i * 3, 3] : [],
                     pointStyle: (
                       ['circle', 'rect', 'triangle', 'rectRot'] as const
@@ -220,12 +223,13 @@ export class JpChart {
                 scales: {
                   x: {
                     ticks: { color: color('axis') },
-                    grid: { color: color('grid') },
+                    grid: { display: false },
                   },
                   y: {
                     beginAtZero: true,
                     ticks: {
                       color: color('axis'),
+                      maxTicksLimit: 6,
                       precision:
                         formatter.resolvedOptions().style === 'decimal' &&
                         formatter.resolvedOptions().maximumFractionDigits === 0
@@ -259,7 +263,7 @@ export class JpChart {
     else keys.add(id);
     this.hiddenSeries.set([...keys]);
   }
-  inspect(event: Event): void {
-    this.activeIndex.set(Number((event.target as HTMLSelectElement).value));
+  inspect(value: string): void {
+    this.activeIndex.set(Number(value));
   }
 }

@@ -22,7 +22,7 @@ forced-colors, zoom and assistive-technology boundaries.
 If the method is missing or throws, the component sets the `open` attribute. Native `cancel` is
 prevented so the overlay stack decides which registered layer closes.
 
-Menus, popovers, tooltips and combobox use
+Menus, popovers, tooltips, combobox and date/time picker panels use
 [the overlay manager](../../libs/ui/src/lib/primitives/shared/overlay-manager.ts).
 It sets `popover="manual"` and calls `showPopover()` for the native top layer.
 If unsupported or rejected, it removes the popover attribute and uses a
@@ -30,10 +30,11 @@ fixed-position panel measured from the anchor. Pixel coordinates are geometry,
 not theme tokens. The fallback does not promise identical clipping or page
 inertness. See individual APIs before relying on those differences.
 
-Native date/time picker appearance, keyboard conventions and popup UI belong
-to the browser/OS. Automated tests cover control values and validation;
-manual native-picker inspection remains open. Repeated `details.name` grouping
-is tested in the declared Chromium/Firefox/WebKit matrix.
+Date and time picker fields and panels use JP styles.
+They keep civil-string values and the documented keyboard behavior.
+The operating system supplies the file chooser after the JP upload button opens it.
+Physical touch and screen-reader inspections remain open.
+Repeated `details.name` grouping is tested in the declared Chromium/Firefox/WebKit matrix.
 
 ## SSR and hydration
 
@@ -61,8 +62,11 @@ Applications supply message overrides, `lang`/`dir`, and locale/time-zone
 inputs. Providers merge with the parent token when their injector is created;
 they do not watch later locale changes.
 
-Native date/time fields exchange ISO civil strings and use browser-local
-presentation. The application supplies the timeline's formatted `timeLabel` and optional machine-readable `dateTime`.
+`JpDatePicker` exchanges `YYYY-MM-DD` strings and uses its locale for calendar labels.
+`JpTimePicker` exchanges 24-hour civil strings.
+Neither field converts time zones.
+
+The application supplies the timeline's formatted `timeLabel` and optional machine-readable `dateTime`.
 `JpTimeline` has no locale or time-zone input.
 Scheduling uses `Intl.DateTimeFormat` with its locale/time-zone inputs and a Gregorian date model.
 Charts use `Intl.NumberFormat` and their formatting options.

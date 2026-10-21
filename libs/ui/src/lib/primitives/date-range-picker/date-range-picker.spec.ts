@@ -36,7 +36,7 @@ describe('JpDateRangePicker', () => {
       c.validate(new FormControl(['2026-09-01', '2026-10-01'])),
     ).toHaveProperty('dateRange');
   });
-  it('connects native controls to CVA and blocks disabled/readonly mutations', () => {
+  it('connects themed controls to CVA and blocks disabled/readonly mutations', () => {
     const f = mount(),
       c = f.componentInstance,
       changed = jest.fn(),
@@ -52,24 +52,26 @@ describe('JpDateRangePicker', () => {
     f.detectChanges();
     expect(c.describedBy()).toContain('-error');
     const inputs = f.nativeElement.querySelectorAll('input');
+    expect(inputs[0].type).toBe('text');
+    expect(f.nativeElement.querySelectorAll('jp-date-picker')).toHaveLength(2);
     inputs[0].value = '2026-10-10';
     inputs[0].dispatchEvent(new Event('input'));
     expect(changed).toHaveBeenLastCalledWith(['2026-10-10', '']);
     inputs[1].value = '2026-10-12';
     inputs[1].dispatchEvent(new Event('input'));
-    inputs[1].dispatchEvent(new Event('blur'));
+    inputs[1].dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
     expect(changed).toHaveBeenLastCalledWith(['2026-10-10', '2026-10-12']);
     expect(touched).toHaveBeenCalled();
     c.setDisabledState(true);
     f.detectChanges();
     changed.mockClear();
-    c.update(0, { target: inputs[0] } as unknown as Event);
+    c.update(0, '2026-10-11');
     expect(changed).not.toHaveBeenCalled();
     c.setDisabledState(false);
     f.componentRef.setInput('readonly', true);
     f.componentRef.setInput('max', '2026-10-31');
     f.detectChanges();
-    c.update(1, { target: inputs[1] } as unknown as Event);
+    c.update(1, '2026-10-13');
     expect(changed).not.toHaveBeenCalled();
     expect(validation).toHaveBeenCalled();
     c.writeValue(null);

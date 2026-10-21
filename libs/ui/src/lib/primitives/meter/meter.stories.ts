@@ -7,9 +7,10 @@ const meta: Meta<JpMeter> = {
   component: JpMeter,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Season ticket sales',
-    value: 68,
-    valueText: '68 of 100 season tickets',
+    label: '2024 Dodgers wins',
+    value: 98,
+    max: 162,
+    valueText: '98 wins and 64 losses',
   },
 };
 export default meta;

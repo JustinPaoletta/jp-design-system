@@ -1,26 +1,144 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { computed, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { expect, userEvent, within } from 'storybook/test';
 import { JpInput } from '../input/input';
 import { JpButton } from '../button/button';
-import { JpTableToolbar } from './table-toolbar';
+import { JpTable, type JpTableRowKey } from '../table/table';
+import { JpTableToolbar, type JpTableFilter } from './table-toolbar';
+const players = [
+  { id: 'alex', name: 'Jack Flaherty', status: 'Available' },
+  { id: 'jordan', name: 'Freddie Freeman', status: 'Day to day' },
+  { id: 'maya', name: 'Tommy Edman', status: 'Available' },
+];
 const meta: Meta<JpTableToolbar> = {
   title: 'Primitives/Data Display/Table Toolbar',
   component: JpTableToolbar,
   decorators: [
-    moduleMetadata({ imports: [JpInput, JpButton, JpTableToolbar] }),
+    moduleMetadata({
+      imports: [FormsModule, JpInput, JpButton, JpTableToolbar, JpTable],
+    }),
   ],
   args: {
-    activeFilters: [{ key: 'status', label: 'Status: healthy' }],
+    activeFilters: [{ key: 'status', label: 'Availability: Available' }],
     selectedCount: 2,
   },
-  render: (args) => ({
-    props: args,
-    template: `<jp-table-toolbar [activeFilters]="activeFilters" [selectedCount]="selectedCount"><jp-input jpTableSearch label="Search players" type="search" /><jp-button jpTableActions>Add player</jp-button><jp-button jpTableBulkActions variant="secondary">Archive selected</jp-button></jp-table-toolbar>`,
-  }),
+  render: (args) => {
+    const filters = signal<readonly JpTableFilter[]>(args.activeFilters ?? []);
+    const selected = signal<readonly JpTableRowKey[]>(
+      args.selectedCount ? ['alex', 'maya'] : [],
+    );
+    const roster = signal(players);
+    const query = signal('');
+    const feedback = signal('');
+    const added = computed(() =>
+      roster().some((player) => player.id === 'taylor'),
+    );
+    const visibleRows = computed(() =>
+      roster().filter(
+        (player) =>
+          (!filters().length || player.status === 'Available') &&
+          player.name.toLowerCase().includes(query().toLowerCase()),
+      ),
+    );
+    return {
+      props: {
+        filters,
+        selected,
+        query,
+        feedback,
+        visibleRows,
+        added,
+        columns: [
+          { key: 'name', header: 'Player' },
+          { key: 'status', header: 'Availability' },
+        ],
+        removeFilter: (key: string) =>
+          filters.update((current) =>
+            current.filter((filter) => filter.key !== key),
+          ),
+        addPlayer: () => {
+          roster.update((current) => [
+            ...current,
+            { id: 'taylor', name: 'Clayton Kershaw', status: 'Available' },
+          ]);
+          feedback.set('Clayton Kershaw added to the roster.');
+        },
+        archiveSelected: () => {
+          const count = selected().length;
+          roster.update((current) =>
+            current.filter((player) => !selected().includes(player.id)),
+          );
+          selected.set([]);
+          feedback.set(`${count} players archived.`);
+        },
+        reset: () => {
+          filters.set(args.activeFilters ?? []);
+          selected.set(args.selectedCount ? ['alex', 'maya'] : []);
+          roster.set(players);
+          query.set('');
+          feedback.set('');
+        },
+      },
+      template: `<section style="max-inline-size:56rem">
+        <jp-table-toolbar [activeFilters]="filters()" [selectedCount]="selected().length" (removeFilter)="removeFilter($event)" (clearFilters)="filters.set([])">
+          <jp-input jpTableSearch label="Search players" type="search" [ngModel]="query()" (ngModelChange)="query.set($event)" clearable />
+          <jp-button jpTableActions [disabled]="added()" (click)="addPlayer()">Add player</jp-button>
+          <jp-button jpTableBulkActions variant="secondary" (click)="archiveSelected()">Archive selected</jp-button>
+        </jp-table-toolbar>
+        <jp-table caption="Dodgers roster" [columns]="columns" [rows]="visibleRows()" selectable rowKey="id" [selectedKeys]="selected()" (selectedKeysChange)="selected.set($event)" />
+        <p role="status">{{ feedback() }}</p>
+        <jp-button variant="ghost" size="sm" (click)="reset()">Reset roster</jp-button>
+      </section>`,
+    };
+  },
 };
 export default meta;
 type Story = StoryObj<JpTableToolbar>;
-export const FilteredSelection: Story = {};
+export const FilteredSelection: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Clear filters' }),
+    );
+    await expect(
+      canvas.getByRole('cell', { name: 'Freddie Freeman' }),
+    ).toBeVisible();
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Archive selected' }),
+    );
+    await expect(
+      canvas.queryByRole('cell', { name: 'Jack Flaherty' }),
+    ).toBeNull();
+    await expect(canvas.getByText('2 players archived.')).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: 'Add player' }));
+    await expect(
+      canvas.getByRole('cell', { name: 'Clayton Kershaw' }),
+    ).toBeVisible();
+    await userEvent.type(
+      canvas.getByRole('searchbox', { name: 'Search players' }),
+      'Taylor',
+    );
+    await expect(
+      canvas.queryByRole('cell', { name: 'Freddie Freeman' }),
+    ).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
+    await userEvent.click(
+      canvas.getByRole('button', {
+        name: /Remove filter: Availability: Available/,
+      }),
+    );
+    await expect(
+      canvas.getByRole('cell', { name: 'Freddie Freeman' }),
+    ).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
+    await expect(
+      canvas.getByRole('cell', { name: 'Jack Flaherty' }),
+    ).toBeVisible();
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
+  },
+};
 export const Unfiltered: Story = {
   args: { activeFilters: [], selectedCount: 0 },
 };

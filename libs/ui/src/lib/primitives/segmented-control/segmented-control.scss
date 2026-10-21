@@ -1,20 +1,24 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
+  min-inline-size: 0;
   font-family: var(--jp-font-family-base);
 }
-label,
+fieldset {
+  min-inline-size: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
 legend {
   color: var(--jp-color-field-label);
   font-weight: var(--jp-font-weight-medium);
   font-size: var(--jp-font-size-caption);
 }
-label {
-  display: block;
-  margin-block-end: var(--jp-space-2xs);
-}
 .hint,
 .error {
-  margin-block: var(--jp-space-2xs) 0;
+  margin-block: var(--jp-space-xs) 0;
   font-size: var(--jp-font-size-caption);
   line-height: var(--jp-font-line-height-normal);
 }
@@ -24,72 +28,67 @@ label {
 .error {
   color: var(--jp-color-field-error);
 }
-.required {
-  color: var(--jp-color-text-secondary);
-}
-fieldset {
-  min-inline-size: 0;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-.options {
-  display: grid;
-  gap: var(--jp-space-xs);
-  margin-block-start: var(--jp-space-sm);
-}
-.options label {
-  display: flex;
-  align-items: center;
-  gap: var(--jp-space-sm);
-  font-size: var(--jp-font-size-body);
-  color: var(--jp-color-text-primary);
-  font-weight: var(--jp-font-weight-regular);
-  cursor: pointer;
-}
-input {
-  width: var(--jp-size-icon-sm);
-  height: var(--jp-size-icon-sm);
-  margin: 0;
-  accent-color: var(--jp-color-accent-solid);
-  flex-shrink: 0;
-}
-input:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
-}
-label:has(input:disabled) {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 .options {
   display: flex;
   flex-wrap: wrap;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  box-sizing: border-box;
   gap: var(--jp-space-2xs);
   padding: var(--jp-space-2xs);
+  margin-block-start: var(--jp-space-sm);
   background: var(--jp-color-surface-sunken);
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-md);
 }
 .options label {
   position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 0;
+  min-block-size: var(--jp-size-control-sm);
+  box-sizing: border-box;
   padding: var(--jp-space-xs) var(--jp-space-sm);
   border: 1px solid transparent;
   border-radius: var(--jp-radius-sm);
-  margin: 0;
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-text-secondary);
+  overflow-wrap: anywhere;
+  text-align: center;
+  cursor: pointer;
+}
+.options label:hover:not(:has(input:disabled)) {
+  color: var(--jp-color-text-primary);
 }
 .options label.selected {
   background: var(--jp-color-surface-raised);
   border-color: var(--jp-color-border-strong);
+  color: var(--jp-color-text-primary);
 }
 .options label:has(input:focus-visible) {
   outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
+  outline-offset: -2px;
+}
+.options label:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 input {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
   clip-path: inset(50%);
   overflow: hidden;
 }
+@media (forced-colors: active) {
+  .options label.selected {
+    border-color: Highlight;
+  }
+}
+
+@include interaction.pressable('.options label:not(:has(input:disabled))');

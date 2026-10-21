@@ -2,6 +2,23 @@
   display: block;
 }
 div {
-  display: grid;
-  gap: var(--jp-space-xs);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-lg);
+  background: var(--jp-color-surface-subtle);
+}
+:host ::ng-deep jp-disclosure details {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+:host ::ng-deep jp-disclosure + jp-disclosure {
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+}
+:host ::ng-deep jp-disclosure:first-child details[open] summary {
+  border-start-start-radius: calc(var(--jp-radius-lg) - 1px);
+  border-start-end-radius: calc(var(--jp-radius-lg) - 1px);
+}
+:host ::ng-deep jp-disclosure:last-child details:not([open]) summary {
+  border-end-start-radius: calc(var(--jp-radius-lg) - 1px);
+  border-end-end-radius: calc(var(--jp-radius-lg) - 1px);
 }

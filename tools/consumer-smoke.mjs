@@ -72,7 +72,14 @@ try {
     }
     if (
       name === 'tokens' &&
-      !packed.files.some(({ path: file }) => file === 'tokens.css')
+      ![
+        'tokens.css',
+        'fonts.css',
+        'fonts/InterVariable.woff2',
+        'fonts/LICENSE.txt',
+      ].every((required) =>
+        packed.files.some(({ path: file }) => file === required),
+      )
     ) {
       throw new Error('Token tarball lacks public stylesheet');
     }
@@ -138,7 +145,7 @@ try {
   );
   await writeFile(
     path.join(temporary, 'src/styles.css'),
-    '@import "@jp-design-system/tokens/tokens.css";\n@import "@jp-design-system/tokens/tokens.compact.css";\nbody { margin: 0; background: var(--jp-color-surface-canvas); color: var(--jp-color-text-primary); font-family: var(--jp-font-family-base); }\nmain { padding: var(--jp-space-lg); }\nform { display: grid; gap: var(--jp-space-md); }\n',
+    '@import "@jp-design-system/tokens/fonts.css";\n@import "@jp-design-system/tokens/tokens.css";\n@import "@jp-design-system/tokens/tokens.compact.css";\nbody { margin: 0; background: var(--jp-color-surface-canvas); color: var(--jp-color-text-primary); font-family: var(--jp-font-family-base); }\nmain { padding: var(--jp-space-lg); }\nform { display: grid; gap: var(--jp-space-md); }\n',
   );
   await cp(
     path.join(root, 'tools/fixtures/consumer/contracts.ts'),

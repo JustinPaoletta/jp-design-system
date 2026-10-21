@@ -17,6 +17,7 @@ import { JP_MESSAGES } from '../../i18n';
 import { JpCheckbox } from '../checkbox/checkbox';
 import { NgTemplateOutlet } from '@angular/common';
 import { JpEmptyState } from '../empty-state/empty-state';
+import { JpIcon } from '../icon/icon';
 import {
   type JpTableAlign,
   type JpTableCellValue,
@@ -62,7 +63,7 @@ export class JpTableRowDetail {
 
 @Component({
   selector: 'jp-table',
-  imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState],
+  imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState, JpIcon],
   templateUrl: './table.html',
   styleUrl: './table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,9 +71,11 @@ export class JpTableRowDetail {
     class: 'jp-table',
     '[class.jp-table--striped]': 'striped()',
     '[class.jp-table--empty]': '!hasRows()',
+    '[class.jp-table--unframed]': '!framed()',
   },
 })
 export class JpTable {
+  readonly framed = input(true, { transform: booleanAttribute });
   private readonly messages = inject(JP_MESSAGES);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly id = input('');
@@ -227,6 +230,7 @@ export class JpTable {
   }
 
   readonly caption = input('');
+  readonly captionHidden = input(false, { transform: booleanAttribute });
   readonly columns = input<JpSortableTableColumn[]>([]);
   readonly rows = input<Record<string, JpTableCellValue>[]>([]);
   readonly striped = input(false, { transform: booleanAttribute });

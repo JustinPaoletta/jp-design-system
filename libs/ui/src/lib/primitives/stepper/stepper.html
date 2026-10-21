@@ -6,9 +6,9 @@
       [class.error]="step.state === 'error'"
     >
       <span class="marker" aria-hidden="true"
-        >@if (step.state === 'complete') { <jp-icon name="check" /> } @else if
-        (step.state === 'error') { <jp-icon name="warning" /> } @else { {{ index
-        + 1 }} }</span
+        >@if (step.state === 'complete') { <jp-icon name="check" size="sm" /> }
+        @else if (step.state === 'error') {
+        <jp-icon name="warning" size="sm" /> } @else { {{ index + 1 }} }</span
       >
       <div class="content">
         @if (navigable()) {

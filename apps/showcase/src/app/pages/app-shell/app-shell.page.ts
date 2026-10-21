@@ -24,8 +24,8 @@ export class AppShellPage {
     '9th',
   ];
   readonly sessionSeries = [
-    { id: 'sessions', label: 'Falcons', values: [0, 0, 1, 1, 3, 3, 4, 4, 5] },
-    { id: 'bears', label: 'Bears', values: [0, 1, 1, 1, 2, 2, 2, 3, 3] },
+    { id: 'sessions', label: 'Dodgers', values: [0, 0, 0, 0, 5, 5, 5, 7, 7] },
+    { id: 'bears', label: 'Yankees', values: [3, 4, 5, 5, 5, 6, 6, 6, 6] },
   ];
   readonly accent = this.theme.accent;
   readonly density = this.theme.density;

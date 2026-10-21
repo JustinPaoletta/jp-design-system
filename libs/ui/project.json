@@ -23,7 +23,10 @@
         "port": 4400,
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
-        "styles": ["libs/tokens/src/generated/tokens.css"],
+        "styles": [
+          "libs/tokens/src/fonts.css",
+          "libs/tokens/src/generated/tokens.css"
+        ],
         "compodoc": false
       },
       "configurations": {
@@ -33,13 +36,23 @@
       }
     },
     "build-storybook": {
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json",
+        "{workspaceRoot}/apps/showcase/public/example-photos/**/*"
+      ],
       "executor": "@storybook/angular:build-storybook",
       "outputs": ["{options.outputDir}"],
       "options": {
         "outputDir": "dist/storybook/ui",
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
-        "styles": ["libs/tokens/src/generated/tokens.css"],
+        "styles": [
+          "libs/tokens/src/fonts.css",
+          "libs/tokens/src/generated/tokens.css"
+        ],
         "compodoc": false
       },
       "configurations": {

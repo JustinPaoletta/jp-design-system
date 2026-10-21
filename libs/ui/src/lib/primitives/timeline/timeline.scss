@@ -1,18 +1,20 @@
 :host {
   display: block;
+  min-inline-size: 0;
   color: var(--jp-color-text-primary);
   font-family: var(--jp-font-family-base);
 }
 ol {
   list-style: none;
   padding: 0;
+  padding-inline-start: var(--jp-space-2xs);
   margin: 0;
 }
 li {
   position: relative;
   padding-inline-start: var(--jp-space-lg);
   padding-block-end: var(--jp-space-lg);
-  border-inline-start: 1px solid var(--jp-color-border-strong);
+  border-inline-start: 1px solid var(--jp-color-border-subtle);
 }
 li:last-child {
   padding-block-end: 0;
@@ -21,13 +23,17 @@ li:last-child {
 li::before {
   content: '';
   position: absolute;
-  inset-inline-start: calc(var(--jp-space-xs) * -0.5);
-  inset-block-start: var(--jp-space-2xs);
+  box-sizing: border-box;
+  inset-inline-start: -0.5px;
+  inset-block-start: calc(var(--jp-space-2xs) * 1.5);
+  transform: translateX(-50%);
   inline-size: var(--jp-space-xs);
   block-size: var(--jp-space-xs);
   border-radius: var(--jp-radius-full);
   background: var(--jp-color-text-secondary);
-  border: 1px solid var(--jp-color-border-strong);
+}
+:host-context([dir='rtl']) li::before {
+  transform: translateX(50%);
 }
 .event {
   display: grid;
@@ -36,8 +42,9 @@ li::before {
   overflow-wrap: anywhere;
 }
 .title {
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
 }
 time,
 .timestamp,
@@ -52,4 +59,13 @@ p {
     background: CanvasText;
     border-color: CanvasText;
   }
+}
+
+time,
+.timestamp {
+  color: var(--jp-color-text-muted);
+}
+.event p {
+  margin-block-start: var(--jp-space-2xs);
+  font-size: var(--jp-font-size-body-sm);
 }

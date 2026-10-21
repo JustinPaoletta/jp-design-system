@@ -41,6 +41,7 @@
 .dashboard-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
   padding: 20px 0;
   margin: 0 0 16px;
   border: 1px solid var(--jp-color-border-subtle);
@@ -48,6 +49,9 @@
   background: var(--jp-color-surface-raised);
 }
 .dashboard-metrics div {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
   padding-inline: 24px;
 }
 .dashboard-metrics div + div {

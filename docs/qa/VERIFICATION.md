@@ -1,9 +1,274 @@
 # Verification evidence
 
+## October 20, 2026 complete interaction pass
+
+The [component inventory](INTERACTION_REVIEW.md) covers all 91 primitive folders.
+Chrome captures cover all 97 Storybook groups and 269 visible control instances.
+Additional checks cover populated refresh states, narrow RTL layouts and all three accents.
+
+Shared feedback now covers row actions, tree controls, dismiss controls, selection controls and resize handles.
+Inline saves and password reveal keep their control dimensions constant.
+Populated data components retain content during refresh.
+Initial loading placeholders remain available when data is absent or unusable.
+
+| Check                         | Result                                                                            |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| UI unit tests                 | 538 tests in 99 suites pass with coverage gates.                                  |
+| Showcase and token unit tests | 59 Showcase tests and 17 token tests pass.                                        |
+| Static Storybook              | 381 stories in 97 suites pass.                                                    |
+| Browser regression set        | 484 checks pass across Chromium, Firefox and WebKit; eight existing skips remain. |
+| macOS Chromium visuals        | All 94 comparisons pass after one reviewed inline-save baseline update.           |
+| Installed package consumer    | All 18 browser, accent and density combinations pass.                             |
+| Source and documentation      | Lint, types, writing, links, formatting, token guards and API readiness pass.     |
+
+The full browser run passed 481 cases.
+Three password tests initially measured browser scrolling instead of component resizing.
+After the viewport setup was corrected, all three passed in a focused run.
+The password checks retain their geometry and accessible-name assertions.
+
+The shared inline-save button changed one visual baseline.
+The review confirmed its padding, corners, loading behavior and adjacent control position.
+No other existing screenshot baseline changed.
+
+Chrome checks confirmed hover and pressed link contrast above 8.9:1 on the sampled canvas in all accents.
+Six additional component views fit a 320px RTL page.
+Human acceptance and release tasks remain in the root task list.
+
+## October 20, 2026 remaining browser control styling
+
+Date, date-range and time fields now use JP popup panels.
+Generic `jp-input` date/time types use the same controls.
+File selection, disclosure chevrons, numeric fields and truncated-content tooltips also use JP styling.
+The system file chooser remains native.
+Heading inputs no longer create native hover tooltips on component hosts.
+Date-range fields stack inside narrow desktop cards so their values remain complete.
+
+| Check                         | Result                                                                                  |
+| ----------------------------- | --------------------------------------------------------------------------------------- |
+| UI unit tests                 | 537 tests in 99 suites pass with coverage gates.                                        |
+| Showcase and token unit tests | 59 Showcase tests and 17 token tests pass.                                              |
+| Static and live Storybook     | 377 stories in 97 suites pass in each mode. Runtime isolation checks pass.              |
+| Picker browser checks         | 27 checks pass across Chromium, Firefox and WebKit.                                     |
+| macOS Chromium visuals        | All 94 comparisons pass, including six open-picker states and a date-range error state. |
+| Installed package consumer    | All 18 browser, accent and density combinations pass.                                   |
+
+Chrome captures cover desktop and 320px popup layouts.
+The browser checks cover calendar navigation, constrained dates, date ranges and time drafts.
+They also cover cancellation, focus return, upload selection, RTL layout and axe results.
+Nested-dialog stories check that Escape closes the picker before its parent dialog.
+
+A WebKit regression failed before correction.
+Pointer actions could move focus outside the time panel before Apply committed the value.
+Picker buttons now receive focus before their click action.
+All three viewport cases pass after correction.
+
+Unit regressions cover form reset, disabled/read-only state, fractional steps and changed validation constraints.
+`JpInput` validation messages use JP inline styling instead of browser popups.
+The [visual rules](../content/VISUAL_STYLE.md#selection-and-focus) describe the required control inspection.
+Physical touch and screen-reader acceptance remain open.
+
+## October 20, 2026 Select popup correction
+
+Select, schedule time zones and chart categories now use the same themed option list.
+The [design inspection](../../design-qa.md#select-popup-correction) records the visual checks.
+
+| Check                      | Result                                                                                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| UI unit tests              | 508 tests in 99 suites pass with coverage gates.                                                             |
+| Showcase unit tests        | 59 tests in 13 suites pass with coverage gates.                                                              |
+| Live Storybook             | 367 stories in 97 suites pass. Compiler and runtime isolation checks pass.                                   |
+| Affected browser checks    | 169 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases remain intentionally skipped. |
+| macOS Chromium visuals     | All 87 comparisons pass. The inspection covers 18 changed and three new baselines.                           |
+| Installed package consumer | All 18 browser, accent and density combinations pass.                                                        |
+| Source checks              | UI, Showcase and browser-test lint pass. Angular type checks pass.                                           |
+
+The browser checks cover form selection, save, cancel, reset, timezone conversion and chart categories.
+They also cover open-list accessibility, viewport bounds, forced colors and RTL.
+The package checks cover the published Select export, reactive forms, disabled choices, form data and resets.
+
+The calendar review regression failed before correction.
+The weekly grid now uses the earliest visible time across all seven days.
+This includes an overnight appointment that continues at midnight.
+All 39 scheduling browser checks pass after this correction.
+
+A prior overflow screenshot failure also reproduced locally.
+Shared overlays now align their positions to device pixels.
+The overflow test passes five consecutive runs after this change.
+The test also waits for fonts before opening the panel.
+CI retains visual differences from the hidden output directory.
+
+Chrome captures confirm open-menu styling and spacing at 320px.
+A nested menu stays visible beyond a clipped dialog.
+Escape closes that menu while the dialog remains open.
+These checks do not establish manual screen-reader or physical-device acceptance.
+
+## October 19, 2026 remaining component inspection
+
+The [design inspection](../../design-qa.md#remaining-component-inspection) covers all 97 Storybook groups.
+Chrome captures show one representative story per group at 1000px and 320px widths.
+All 194 final captures fit the page width.
+The capture waits for each story to finish its interactions and accessibility checks.
+
+| Check                              | Result                                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| UI unit tests                      | 503 tests in 99 suites pass with coverage gates.                                                       |
+| Showcase unit tests                | 59 tests in 13 suites pass with coverage gates.                                                        |
+| Token unit tests                   | 17 tests in two suites pass.                                                                           |
+| Static Storybook                   | 363 stories in 97 suites pass.                                                                         |
+| Live Storybook                     | The same 363 stories pass. Compiler and runtime isolation checks pass.                                 |
+| Browser behavior and accessibility | 418 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| macOS Chromium visuals             | All 84 comparisons pass. All 22 changed baselines were inspected.                                      |
+| Installed package consumer         | All 18 browser, accent and density combinations pass.                                                  |
+| Source checks                      | UI, Showcase, browser-test and token lint pass. Angular type checks pass.                              |
+
+Additional Chrome checks cover upload recovery, assistant cancellation and retry, image recovery, and open overflow panels.
+Escape returns focus to the avatar and breadcrumb triggers.
+Avatar initials remain visible during a withheld image request. The loaded photo preserves the frame size.
+Dashboard metric values share the same vertical position at 320px.
+
+The focus regressions failed before correction.
+Six added unit cases cover input changes that remove overflow content and preserve focus outside the component.
+Chrome also confirms focus restoration after live avatar and breadcrumb input changes.
+The settings regressions cover edits during a pending save and changes after a successful save.
+
+Documentation writing checks, their 12 tests, local links, formatting and token guards pass.
+
+These results do not establish screen-reader, Windows or physical-device acceptance.
+The five promotion and integration tasks remain in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
+
+## October 19, 2026 component-wide Card adaptation
+
+The [design inspection](../../design-qa.md#component-wide-card-adaptation) covers 20 components and two compositions.
+Chrome captures show 22 views at 1000px and 320px widths.
+The captures have no horizontal page overflow.
+Code blocks and wider tables retain their internal scroll regions.
+
+| Check                              | Result                                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| UI unit tests                      | All 482 tests in 98 suites pass with coverage gates.                                                   |
+| Showcase unit tests                | All 57 tests in 13 suites pass with coverage gates.                                                    |
+| Live Storybook                     | All 351 stories in 97 suites pass. Runtime isolation checks pass.                                      |
+| Browser behavior and accessibility | 418 checks pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| Source checks                      | UI, Showcase and browser-test lint pass. Angular type checks pass.                                     |
+| macOS Chromium visuals             | All 84 comparisons pass after inspection of 67 changed baselines.                                      |
+
+The new regressions check tab visibility after selection and resize, including RTL calculations and observer cleanup.
+Tree checks retain independent description and retry behavior.
+Narrow table checks cover selection bounds, fixed geometry and access to the last row.
+Notifications demonstrate read, unread, dismissal and mark-all actions.
+
+After the tab and table corrections, 81 affected browser checks pass across all three engines.
+Actual Chrome checks confirm RTL tab visibility without document scrolling.
+The narrow table keeps its selected checkbox inside the cell and retains its 48px row height.
+
+The final profile and assistant corrections pass 39 browser checks across the same engines.
+The Showcase production build passes without component style-budget warnings.
+Documentation writing checks, their 12 tests, local links, formatting and token guards pass.
+
+These checks do not replace screen-reader, Windows or physical-device inspection.
+The dated evidence below retains its original scope.
+
+## October 19, 2026 form and roster adaptation
+
+The form and roster use the approved Card direction.
+The [design inspection](../../design-qa.md#form-and-roster-adaptation) describes the changes and Chrome captures.
+
+| Check                            | Result                                                                         |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| UI unit tests                    | All 478 tests in 98 suites pass with coverage gates.                           |
+| Showcase unit tests              | All 57 tests in 13 suites pass with coverage gates.                            |
+| Live Storybook                   | All 340 stories in 97 suites pass. Runtime isolation checks pass.              |
+| Form and roster browser behavior | All 15 checks pass across Chromium, Firefox and WebKit.                        |
+| Form and roster accessibility    | All six automated WCAG AA checks pass across the same engines.                 |
+| Final table CSS checks           | All 42 advanced-layout and roster browser checks pass across the same engines. |
+| Source and build checks          | Scoped lint, Angular types and the Showcase production build pass.             |
+
+Form checks cover projected controls, saved values, Cancel, Reset, Delete and density changes.
+The save action keeps values and clears the form's dirty state.
+Roster checks cover filtering, native table semantics and phone reflow.
+The examples keep changes only while the page or story remains open.
+
+Chrome inspection covers 1440px desktop, 390px phone and 320px narrow viewports.
+Keyboard activation saves the form and retains a visible focus ring.
+Automated accessibility checks do not replace screen-reader inspection.
+This evidence covers the form and roster group. The dated results below retain their original scope.
+
+## October 19, 2026 Card reference
+
+The [Card reference review](../../design-qa.md#card-reference-review) limits the next design decision to one component.
+Chrome inspection covers the desktop card, a 390px phone viewport and long text at 320px.
+Keyboard activation saves the example recap and shows confirmation text.
+The focus ring remains visible. These views have no horizontal page overflow.
+
+All 478 UI unit tests pass with coverage gates.
+Live Storybook passes 338 stories in 97 suites, including four Card stories and runtime isolation checks.
+UI lint, Angular types and the Showcase production build pass.
+All 84 macOS Chromium visual comparisons pass after baseline inspection.
+The earlier refinement checks below have their own scope.
+
+The user subsequently approved the Card direction. Further component groups need their own inspection.
+
+## October 19, 2026 design refinement
+
+The second [design inspection](../../design-qa.md) covers the font, dashboard, form, roster and calendar changes.
+The token package supplies Inter and its license.
+Chrome captures show the revised compositions at desktop and phone widths.
+
+| Check                              | Result                                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| UI unit tests                      | 478 tests in 98 suites pass.                                                                          |
+| Showcase unit tests                | 54 tests in 12 suites pass.                                                                           |
+| Token unit tests                   | 17 tests in two suites pass.                                                                          |
+| Source checks                      | UI, Showcase, tokens and browser-test lint pass. Angular type checks pass.                            |
+| Static and live Storybook          | Each run passes 335 stories in 97 suites. Live compiler/runtime isolation checks pass.                |
+| Browser behavior and accessibility | 412 tests pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| Installed package consumer         | All 18 browser, accent and density combinations pass, including the Inter font load check.            |
+
+The Showcase production build passes without component style-budget warnings.
+Calendar tests check readable event rows, focus during layout changes and clock-change ordering.
+The roster keeps its native table caption while hiding the repeated visible heading.
+Form tests check that preview density changes preserve entered values.
+
+These automated results do not replace visual approval or the remaining manual inspections.
+The first audit results below remain as dated history.
+
+## October 19, 2026 visual audit changes
+
+The [design inspection](../../design-qa.md) records the visual changes and Chrome captures.
+The [visual style guide](../content/VISUAL_STYLE.md) defines shared sizes, surfaces and screenshot states.
+Local checks use Node 24.21.0 on macOS.
+
+| Check                              | Result                                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| UI unit tests                      | 474 tests in 98 suites pass. Statement coverage is 98.08%.                                            |
+| Showcase unit tests                | 58 tests in 11 suites pass. Statement coverage is 98.85%.                                             |
+| Token unit tests                   | 17 tests in two suites pass with full coverage.                                                       |
+| Source checks                      | UI, Showcase, tokens and browser-test lint pass. Angular type checks pass.                            |
+| Static and live Storybook          | Each run passes 335 stories in 97 suites. Live runtime isolation checks pass.                         |
+| Browser behavior and accessibility | 406 tests pass across Chromium, Firefox and WebKit. Eight forced-colors cases have intentional skips. |
+| macOS Chromium visuals             | 84 inspected baseline comparisons pass.                                                               |
+| Installed package consumer         | All 18 browser, accent and density combinations pass.                                                 |
+| Generated tokens                   | Source and generated artifacts match. Color and token guards pass.                                    |
+
+The Showcase production build passes without component style-budget warnings.
+Calendar regressions cover overlapping appointments, bounded all-day content, full mobile titles and clock changes.
+After the final calendar changes, 36 related browser checks pass across all three engines.
+The isolated package consumer uses Angular 22.2.1 and real local tarballs.
+Its source has no workspace aliases or package symlinks.
+
+The checks do not approve API maturity or a release.
+Screen-reader, Windows and physical-device inspections remain in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
+
+## October 19, 2026 baseball records
+
+Storybook and Showcase now use the [2024 Dodgers and Yankees records](../content/BASEBALL_EXAMPLES.md).
+World Series Game 5 ended Dodgers 7, Yankees 6, with seven Dodgers hits and no Dodgers errors.
+The October 12 inspection below records the earlier fictional copy.
+
 ## October 12, 2026 baseball examples
 
-Storybook and Showcase use the [shared baseball copy](../content/BASEBALL_EXAMPLES.md).
-The game dashboard shows a 5–3 Falcons win, nine hits and no errors.
+On October 12, Storybook and Showcase used fictional baseball copy.
+The game dashboard showed a 5–3 Falcons win, nine hits and no errors.
 Related examples use the same players, roles, positions and availability labels.
 The [design inspection](../../design-qa.md) records desktop and mobile Chrome captures.
 

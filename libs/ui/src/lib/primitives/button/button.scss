@@ -1,9 +1,12 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   vertical-align: middle;
 }
 
 .jp-button__root {
+  position: relative;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -14,17 +17,16 @@
   border: 1px solid transparent;
   border-radius: var(--jp-radius-md);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
-  font-weight: var(--jp-font-weight-semibold);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-tight);
   letter-spacing: var(--jp-font-letter-spacing-normal);
   cursor: pointer;
-  transition: var(--jp-motion-transition-base);
 }
 
 :host(.jp-button--sm) .jp-button__root {
   padding-inline: var(--jp-space-sm);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
 }
 
 :host(.jp-button--lg) .jp-button__root {
@@ -33,6 +35,7 @@
 }
 
 :host(.jp-button--primary) .jp-button__root {
+  font-weight: var(--jp-font-weight-semibold);
   background: var(--jp-color-button-primary-bg);
   color: var(--jp-color-button-primary-fg);
 }
@@ -75,7 +78,7 @@
   outline-offset: 2px;
 }
 
-.jp-button__root:disabled {
+.jp-button__root:disabled:not([aria-busy='true']) {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -89,19 +92,14 @@
 .jp-button__spinner {
   width: var(--jp-size-icon-sm);
   height: var(--jp-size-icon-sm);
-  flex-shrink: 0;
+  position: absolute;
+  box-sizing: border-box;
+  inset-inline-start: calc(50% - var(--jp-size-icon-sm) / 2);
+  inset-block-start: calc(50% - var(--jp-size-icon-sm) / 2);
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: var(--jp-radius-full);
-  animation: jp-button-spin var(--jp-motion-duration-slow) linear infinite;
-}
-.jp-button__loading-label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  animation: jp-button-spin var(--jp-motion-duration-indicator) linear infinite;
 }
 @keyframes jp-button-spin {
   to {
@@ -112,4 +110,60 @@
   .jp-button__spinner {
     animation: none;
   }
+}
+
+.jp-button__root[aria-busy='true'] {
+  cursor: progress;
+}
+
+.jp-button__content {
+  display: inline-flex;
+  min-inline-size: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-xs);
+}
+.jp-button__root[aria-busy='true'] .jp-button__content {
+  visibility: hidden;
+}
+@include interaction.pressable('.jp-button__root');
+
+:host(.jp-button--primary) .jp-button__root {
+  --jp-press-bg: var(--jp-color-button-primary-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-primary-fg);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-primary-fg) 24%,
+    transparent
+  );
+}
+
+:host(.jp-button--secondary) .jp-button__root {
+  --jp-press-bg: var(--jp-color-button-secondary-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-secondary-fg);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-secondary-fg) 24%,
+    transparent
+  );
+}
+
+:host(.jp-button--ghost) .jp-button__root {
+  --jp-press-bg: var(--jp-color-button-ghost-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-ghost-fg-hover);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-ghost-fg) 24%,
+    transparent
+  );
+}
+
+:host(.jp-button--destructive) .jp-button__root {
+  --jp-press-bg: var(--jp-color-button-destructive-bg-pressed);
+  --jp-press-fg: var(--jp-color-button-destructive-fg);
+  --jp-press-border: color-mix(
+    in srgb,
+    var(--jp-color-button-destructive-fg) 24%,
+    transparent
+  );
 }

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   vertical-align: middle;
@@ -60,3 +62,5 @@
     transition: none;
   }
 }
+
+@include interaction.pressable('.jp-icon-button__root');

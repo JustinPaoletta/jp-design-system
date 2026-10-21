@@ -24,7 +24,7 @@ It also shows retry, time-zone changes and repeated clock hours.
 | `timeZone`                | This value sets the Intl time zone. The default is `UTC`.                                                                              |
 | `locale`                  | This value sets the Intl locale. The default is `en-US`.                                                                               |
 | `weekStartsOn`            | Sunday is `0`; Saturday is `6`. The default is Monday, `1`. Values stay within that range. Non-integers use Monday.                    |
-| `loading`                 | This input removes appointment buttons and shows busy/loading status.                                                                  |
+| `loading`                 | Existing appointments stay visible and disabled during refresh. If no appointments are available, a loading placeholder appears.       |
 | `error`                   | The application supplies failure text. The component shows an alert and retry control.                                                 |
 | `eventActivated`          | This output sends the original event when its native button activates.                                                                 |
 | `retry`                   | This output asks the application to load appointments again.                                                                           |
@@ -32,12 +32,12 @@ It also shows retry, time-zone changes and repeated clock hours.
 `JpCalendarEvent` has `id`, `title`, `start` and `end`.
 Optional fields are `allDay` and `description`.
 Timed values are ISO strings with `Z` or a numeric offset.
-For example: `2026-10-05T09:00:00-04:00`.
+For example: `2024-10-07T09:00:00-04:00`.
 All-day values contain dates only.
 
 Every end is exclusive. For example,
-`{ start: '2026-10-07', end: '2026-10-09', allDay: true }`
-appears on October 7 and 8.
+`{ start: '2024-10-09', end: '2024-10-11', allDay: true }`
+appears on October 9 and 10.
 
 ## Dates, time zones, and overlap
 
@@ -82,7 +82,9 @@ Overlap detection includes that visible size.
 Short slots at the day end stay inside the day.
 For slots under one elapsed hour, schedule view shows the title without secondary time text.
 The accessible name and tooltip keep exact timestamps.
-Agenda and mobile rows show the full time range.
+
+Agenda and mobile rows show a compact time range.
+The period header identifies the time zone. Repeated-hour events also show their UTC offsets.
 
 Slot positions help users read the schedule.
 They do not permit edits or drag movement.
@@ -113,19 +115,33 @@ At container widths up to 56rem, appointments use chronological agenda rows.
 Titles do not truncate, and the timeline does not use horizontal scroll.
 The Agenda control gives this view at any width.
 
-Week columns have at least 12rem for each concurrent lane.
-Three overlapping events use a 36rem column.
-If the week is wider than its frame, scroll stays inside the frame.
+Week view uses seven equal day columns.
+When overlap lanes are narrower than 7rem, the week shows full-width event rows within each day.
+These rows show complete titles and visible time ranges.
+The same appointment buttons remain in chronological order.
+Day view uses one column of event rows when overlapping events need more width.
+
+A wider week or Day view uses the aligned time grid with one shared time gutter.
+Overlapping events share the width of their day.
+Long titles can wrap inside the available slot.
+The JP tooltip and accessible name retain the full title and time range.
 Native focus scrolling reveals appointment buttons.
 Day view fills the available width.
 
-Schedule view limits the scroll frame height but keeps all appointments in the DOM.
+The time grid limits the scroll frame height but keeps all appointments in the DOM.
 Day headings stay fixed during scroll.
+The all-day strip has a maximum height and scrolls when its content exceeds that height.
+The first render reveals timed activity on the first day that has timed appointments.
+
+Ordinary days share wall-clock positions. Repeated hours have separate positions and offset labels.
 Logical inline positions follow RTL.
 
 ### States
 
-Loading removes stale appointment buttons.
+During refresh, existing appointments stay visible and disabled.
+The schedule keeps its scroll container and scroll position.
+Without usable appointments, loading shows a placeholder.
+
 Failure shows an alert and retry control.
 An empty period keeps navigation and shows a translated empty message.
 A date change announces the period and unique appointment count.

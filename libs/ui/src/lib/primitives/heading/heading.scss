@@ -4,7 +4,13 @@
 
 .jp-heading__root {
   font-family: var(--jp-font-family-base);
-  letter-spacing: var(--jp-font-letter-spacing-tight);
+  letter-spacing: var(--jp-font-letter-spacing-normal);
   line-height: var(--jp-font-line-height-tight);
   margin: 0;
+}
+
+h1.jp-heading__root,
+h2.jp-heading__root,
+h3.jp-heading__root {
+  letter-spacing: var(--jp-font-letter-spacing-tight);
 }

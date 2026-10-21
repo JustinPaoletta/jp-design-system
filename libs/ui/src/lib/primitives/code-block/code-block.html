@@ -1,12 +1,14 @@
 <figure>
   <figcaption>
-    <span>{{ label() }}</span>@if (language()) {
-    <span class="language">{{ language() }}</span> }@if (copyable()) {
-    <jp-copy-button [text]="code()" /> }
+    <div class="caption">
+      <span class="label">{{ label() }}</span>@if (language()) {
+      <span class="language">{{ language() }}</span> }
+    </div>
+    @if (copyable()) { <jp-copy-button [text]="code()" /> }
   </figcaption>
   <pre
     dir="ltr"
     tabindex="0"
     [attr.aria-label]="label()"
-  ><code>{{ code() }}</code></pre>
+  ><code>@for (token of tokens(); track $index) {<span [class]="'syntax-' + token.kind">{{ token.text }}</span>}</code></pre>
 </figure>

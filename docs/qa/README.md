@@ -3,6 +3,7 @@
 - [Readiness and maintainer handoff](READINESS.md): new compatibility and package checks, API evidence, actual zoom and completion instructions
 - [Verification](VERIFICATION.md): confirmed test totals, build/package evidence
   and the visual matrix
+- [Interaction review](INTERACTION_REVIEW.md): full component inventory, motion rules and refresh behavior
 - [Support matrix](SUPPORT_MATRIX.md): accessibility target, browsers,
   assistive technology and platform limits
 - [Findings](FINDINGS.md): resolved regressions and open accessibility gaps

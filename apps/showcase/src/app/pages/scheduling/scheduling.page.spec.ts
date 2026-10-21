@@ -17,7 +17,9 @@ describe('SchedulingPage', () => {
     expect(event.textContent).toContain('Lineup meeting');
     event.click();
     f.detectChanges();
-    expect(f.componentInstance.detail()).toContain('next game');
+    expect(f.componentInstance.detail()).toContain(
+      'Dave Roberts managed the 2024 Dodgers',
+    );
     button(f.nativeElement, 'Close details').click();
     f.detectChanges();
     expect(f.componentInstance.selected()).toBeNull();
@@ -28,7 +30,7 @@ describe('SchedulingPage', () => {
     button(f.nativeElement, 'Inspect clock change').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('day');
-    expect(f.componentInstance.date()).toBe('2026-11-01');
+    expect(f.componentInstance.date()).toBe('2024-11-03');
     expect(f.componentInstance.zone()).toBe('America/New_York');
     expect(f.nativeElement.textContent).toContain('Early field check');
     const secondHour = f.nativeElement.querySelector(
@@ -47,7 +49,7 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.state()).toBe('ready');
     button(f.nativeElement, 'Reset schedule').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     expect(f.componentInstance.view()).toBe('week');
     expect(f.componentInstance.selected()).toBeNull();
     expect(f.nativeElement.textContent).toContain('Lineup meeting');
@@ -55,15 +57,24 @@ describe('SchedulingPage', () => {
   it('wires timezone conversion and loading/restoration through consumer controls', () => {
     const f = TestBed.createComponent(SchedulingPage);
     f.detectChanges();
-    const select = f.nativeElement.querySelector('select') as HTMLSelectElement;
-    select.value = 'UTC';
-    select.dispatchEvent(new Event('change', { bubbles: true }));
+    const select = f.nativeElement.querySelector(
+      '[role="combobox"]',
+    ) as HTMLButtonElement;
+    select.click();
+    f.detectChanges();
+    const option = Array.from(
+      f.nativeElement.querySelectorAll(
+        '[role="option"]',
+      ) as NodeListOf<HTMLElement>,
+    ).find((item) => item.textContent?.trim() === 'UTC');
+    option?.click();
     f.detectChanges();
     expect(f.componentInstance.zone()).toBe('UTC');
     const appointment = f.nativeElement.querySelector(
       '.timed button[aria-label^="Lineup meeting,"]',
     ) as HTMLButtonElement;
     expect(appointment.getAttribute('aria-label')).toMatch(/1:00\sPM GMT/);
+    const viewport = f.nativeElement.querySelector('.days');
     button(f.nativeElement, 'Show loading').click();
     f.detectChanges();
     expect(f.componentInstance.state()).toBe('loading');
@@ -72,10 +83,17 @@ describe('SchedulingPage', () => {
         .querySelector('jp-scheduling-calendar section')
         .getAttribute('aria-busy'),
     ).toBe('true');
-    expect(f.nativeElement.querySelectorAll('.appointment')).toHaveLength(0);
+    expect(f.nativeElement.querySelector('.days')).toBe(viewport);
+    expect(
+      f.nativeElement.querySelector(
+        '.timed button[aria-label^="Lineup meeting,"]',
+      ),
+    ).toBe(appointment);
+    expect(appointment.disabled).toBe(true);
     button(f.nativeElement, 'Restore schedule').click();
     f.detectChanges();
     expect(f.componentInstance.state()).toBe('ready');
+    expect(appointment.disabled).toBe(false);
     expect(f.nativeElement.querySelector('.appointment')).toBeTruthy();
   });
   it('keeps consumer date/view signals synchronized with calendar navigation', () => {
@@ -89,16 +107,16 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.view()).toBe('day');
     button(calendar, 'Next').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-06');
+    expect(f.componentInstance.date()).toBe('2024-10-08');
     expect(calendar.textContent).toContain('Meet the coaches');
     button(calendar, 'Previous').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     button(calendar, 'Next').click();
     f.detectChanges();
     button(calendar, 'Today').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2026-10-05');
+    expect(f.componentInstance.date()).toBe('2024-10-07');
     button(calendar, 'Week').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('week');

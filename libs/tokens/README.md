@@ -17,29 +17,48 @@ Body scale (used by `jp-text`):
 | Semantic token | CSS variable             | Size      |
 | -------------- | ------------------------ | --------- |
 | `caption`      | `--jp-font-size-caption` | 0.8125rem |
-| `body`         | `--jp-font-size-body`    | 0.875rem  |
-| `body-lg`      | `--jp-font-size-body-lg` | 1rem      |
+| `body`         | `--jp-font-size-body`    | 1rem      |
+| `body-lg`      | `--jp-font-size-body-lg` | 1.125rem  |
 
 General-purpose scale (not tied to a primitive):
 
-| Semantic token | CSS variable             | Size     |
-| -------------- | ------------------------ | -------- |
-| `title`        | `--jp-font-size-title`   | 1.125rem |
-| `display`      | `--jp-font-size-display` | 1.5rem   |
+| Semantic token | CSS variable             | Size    |
+| -------------- | ------------------------ | ------- |
+| `title`        | `--jp-font-size-title`   | 1.25rem |
+| `display`      | `--jp-font-size-display` | 2rem    |
 
 Heading level scale (used by `jp-heading` — one token per `h1`–`h6` level):
 
 | Semantic token | CSS variable                | Size      |
 | -------------- | --------------------------- | --------- |
-| `heading-h1`   | `--jp-font-size-heading-h1` | 1.5rem    |
-| `heading-h2`   | `--jp-font-size-heading-h2` | 1.25rem   |
-| `heading-h3`   | `--jp-font-size-heading-h3` | 1.125rem  |
+| `heading-h1`   | `--jp-font-size-heading-h1` | 2rem      |
+| `heading-h2`   | `--jp-font-size-heading-h2` | 1.5rem    |
+| `heading-h3`   | `--jp-font-size-heading-h3` | 1.25rem   |
 | `heading-h4`   | `--jp-font-size-heading-h4` | 1rem      |
 | `heading-h5`   | `--jp-font-size-heading-h5` | 0.875rem  |
 | `heading-h6`   | `--jp-font-size-heading-h6` | 0.8125rem |
 
-Heading levels map to primitive typography sizes 700 → 200. See
+Heading levels use sizes 32px, 24px, 20px, 16px, 14px and 13px. See
 [docs/PRIMITIVES.md](../../docs/PRIMITIVES.md) for how `jp-heading` uses these.
+
+Dense interface text uses `--jp-font-size-body-sm` at 0.875rem.
+This token is available in CSS; it is not a `jp-text` size input.
+
+## Motion tokens
+
+| CSS variable                     | Duration | Purpose                          |
+| -------------------------------- | -------- | -------------------------------- |
+| `--jp-motion-duration-fast`      | 90ms     | Hover colors and switch movement |
+| `--jp-motion-duration-normal`    | 160ms    | Drawer entry                     |
+| `--jp-motion-duration-shell`     | 160ms    | Shell and assistant transitions  |
+| `--jp-motion-duration-slow`      | 240ms    | Optional longer transitions      |
+| `--jp-motion-duration-indicator` | 960ms    | Repeating loading indicators     |
+
+`--jp-motion-transition-base` changes only background color, border color and text color.
+Pressed states and keyboard focus outlines appear immediately.
+The standard and emphasized easing curves do not overshoot.
+Components remove transitions and indicator animation when the user requests reduced motion.
+See the [visual style rules](../../docs/content/VISUAL_STYLE.md#motion).
 
 ## App shell tokens
 
@@ -103,6 +122,12 @@ Selection (checkbox / switch):
 
 Control heights (`sm` / `md` / `lg`) map to `--jp-size-control-*` and tighten under
 `data-jp-density="compact"`.
+Default heights are 32px, 40px and 48px. Compact heights are 28px, 32px and 40px.
+Icons use 16px, 20px and 24px in both densities.
+
+Selection boxes use `--jp-size-selection-control` at 20px.
+Marks use `--jp-size-selection-mark` at 16px.
+Avatars use `--jp-size-avatar-sm`, `--jp-size-avatar-md` and `--jp-size-avatar-lg` at 32px, 40px and 48px.
 
 ## Data display tokens
 

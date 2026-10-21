@@ -49,8 +49,8 @@ const meta: Meta<JpHeading> = {
           Page and section titles. as sets h1–h6; each level maps to its own token scale (h1 largest → h6 smallest).
         </div>
         <div class="jp-heading-story__sample">
-          <jp-heading [as]="asTag" [tone]="tone" [weight]="weight">
-            Heading Primitive
+          <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
+            Dodgers clubhouse
           </jp-heading>
         </div>
       </div>
@@ -131,27 +131,27 @@ export const Scale: Story = {
       <div class="jp-heading-story__scale">
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h1</div>
-          <jp-heading as="h1">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h1">Los Angeles Dodgers game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h2</div>
-          <jp-heading as="h2">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h2">Los Angeles Dodgers game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h3</div>
-          <jp-heading as="h3">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h3">Los Angeles Dodgers game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h4</div>
-          <jp-heading as="h4">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h4">Los Angeles Dodgers game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h5</div>
-          <jp-heading as="h5">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h5">Los Angeles Dodgers game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h6</div>
-          <jp-heading as="h6">Riverton Falcons game day</jp-heading>
+          <jp-heading as="h6">Los Angeles Dodgers game day</jp-heading>
         </div>
       </div>
     `,
@@ -182,7 +182,7 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-heading-story__tones">
-        <jp-heading as="h3" tone="primary">Falcons game day</jp-heading>
+        <jp-heading as="h3" tone="primary">Dodgers game day</jp-heading>
         <jp-heading as="h3" tone="secondary">Starting lineup</jp-heading>
         <jp-heading as="h3" tone="muted">Game notes</jp-heading>
         <jp-heading as="h3" tone="disabled">Previous season</jp-heading>
@@ -193,4 +193,8 @@ export const Tones: Story = {
     const headings = canvasElement.querySelectorAll('h3.jp-heading__root');
     await expect(headings.length).toBe(4);
   },
+};
+
+export const SemanticLevel: Story = {
+  args: { as: 'h2', size: 'h4' },
 };

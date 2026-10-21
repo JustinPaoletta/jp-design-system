@@ -32,6 +32,9 @@
     [attr.aria-label]="sidebarLabel()"
   >
     <div class="jp-app-shell__sidebar-toolbar">
+      <div class="jp-app-shell__brand">
+        <ng-content select="[jpAppShellBrand]" />
+      </div>
       <button
         type="button"
         class="jp-app-shell__collapse-toggle"

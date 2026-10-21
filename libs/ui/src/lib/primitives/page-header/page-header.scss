@@ -1,5 +1,7 @@
 :host {
   display: block;
+  min-inline-size: 0;
+  container-type: inline-size;
 }
 header {
   font-family: var(--jp-font-family-base);
@@ -7,7 +9,7 @@ header {
 .row {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--jp-space-md);
 }
@@ -19,7 +21,8 @@ header {
 p {
   margin-block: var(--jp-space-xs) 0;
   color: var(--jp-color-text-secondary);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 .actions,
 .meta {
@@ -27,8 +30,15 @@ p {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--jp-space-sm);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.actions {
+  flex-shrink: 0;
 }
 .meta {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
   margin-block-start: var(--jp-space-sm);
 }
 .breadcrumbs {
@@ -38,4 +48,13 @@ p {
 .meta:empty,
 .breadcrumbs:empty {
   display: none;
+}
+@container (max-width: 36rem) {
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .copy {
+    flex-basis: auto;
+  }
 }

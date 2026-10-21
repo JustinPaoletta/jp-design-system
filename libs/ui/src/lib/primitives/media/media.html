@@ -14,6 +14,7 @@
       decoding="async"
       [style.object-fit]="fit()"
       [hidden]="phase() === 'failed'"
+      [class.loaded]="phase() === 'loaded'"
       (load)="onLoad(imageSrc)"
       (error)="onError(imageSrc)"
     />} @if (phase() !== 'loaded') {
@@ -23,7 +24,20 @@
       [attr.aria-label]="alt() && phase() === 'failed' ? alt() : null"
       [attr.aria-hidden]="alt() ? null : 'true'"
     >
-      {{ phase() === 'failed' ? errorLabel() : loadingLabel() }}
+      <svg
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8" cy="8" r="1.5" />
+        <path d="m3 17 6-6 5 5 3-3 4 4" />
+      </svg>
+      <span>{{ phase() === 'failed' ? errorLabel() : loadingLabel() }}</span>
     </span>
     }
   </div>

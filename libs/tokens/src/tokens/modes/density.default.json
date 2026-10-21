@@ -1,21 +1,47 @@
 {
   "space": {
-    "2xs": { "value": "{primitive.space.2}" },
-    "xs": { "value": "{primitive.space.4}" },
-    "sm": { "value": "{primitive.space.6}" },
-    "md": { "value": "{primitive.space.8}" },
-    "lg": { "value": "{primitive.space.12}" },
-    "xl": { "value": "{primitive.space.16}" },
-    "2xl": { "value": "{primitive.space.24}" },
-    "3xl": { "value": "{primitive.space.32}" }
+    "2xs": {
+      "value": "{primitive.space.2}"
+    },
+    "xs": {
+      "value": "{primitive.space.4}"
+    },
+    "sm": {
+      "value": "{primitive.space.6}"
+    },
+    "md": {
+      "value": "{primitive.space.8}"
+    },
+    "lg": {
+      "value": "{primitive.space.12}"
+    },
+    "xl": {
+      "value": "{primitive.space.16}"
+    },
+    "2xl": {
+      "value": "{primitive.space.24}"
+    },
+    "3xl": {
+      "value": "{primitive.space.32}"
+    }
   },
   "size": {
     "control": {
-      "xs": { "value": "{primitive.space.8}" },
-      "sm": { "value": "{primitive.space.10}" },
-      "md": { "value": "{primitive.space.12}" },
-      "lg": { "value": "{primitive.space.16}" },
-      "xl": { "value": "{primitive.space.20}" }
+      "xs": {
+        "value": "1.5rem"
+      },
+      "sm": {
+        "value": "2rem"
+      },
+      "md": {
+        "value": "2.5rem"
+      },
+      "lg": {
+        "value": "3rem"
+      },
+      "xl": {
+        "value": "3.5rem"
+      }
     }
   }
 }

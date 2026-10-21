@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -62,3 +64,56 @@ label:has(input:disabled) {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.options label {
+  position: relative;
+  min-block-size: var(--jp-size-control-sm);
+}
+input {
+  position: absolute;
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  opacity: 0;
+}
+.box {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  flex: none;
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  border: 1px solid var(--jp-color-selection-checkbox-border);
+  border-radius: var(--jp-radius-sm);
+  background: var(--jp-color-selection-checkbox-bg);
+  color: transparent;
+}
+.box svg {
+  inline-size: var(--jp-size-selection-mark);
+  block-size: var(--jp-size-selection-mark);
+}
+input:checked + .box {
+  background: var(--jp-color-selection-checkbox-bg-checked);
+  border-color: var(--jp-color-selection-checkbox-bg-checked);
+  color: var(--jp-color-selection-checkbox-fg);
+}
+input:focus-visible + .box {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+fieldset[aria-invalid='true'] .box {
+  border-color: var(--jp-color-field-border-invalid);
+}
+@media (forced-colors: active) {
+  .box {
+    forced-color-adjust: none;
+    background: Canvas;
+    border-color: CanvasText;
+  }
+  input:checked + .box {
+    background: Highlight;
+    border-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+@include interaction.selection('label', 'input', '.box');

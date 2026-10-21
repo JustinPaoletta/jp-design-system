@@ -4,8 +4,16 @@
   [class.large]="size() === 'lg'"
   role="img"
   [attr.aria-label]="name()"
+  [attr.aria-busy]="src() && !loaded() && !failed() ? 'true' : null"
 >
-  @if (src() && !failed()) {
-  <img [src]="src()" alt="" (error)="failed.set(true)" /> } @else {
-  <span aria-hidden="true">{{ initials().toUpperCase() }}</span> }
+  <span aria-hidden="true">{{ initials().toUpperCase() }}</span>
+  @if (src() && !failed()) { @for (imageSrc of [src()]; track imageSrc) {
+  <img
+    [src]="imageSrc"
+    alt=""
+    [class.loaded]="loaded()"
+    (load)="onLoad(imageSrc)"
+    (error)="onError(imageSrc)"
+  />
+  } }
 </span>

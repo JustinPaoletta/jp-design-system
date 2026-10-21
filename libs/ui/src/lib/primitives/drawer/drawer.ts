@@ -14,6 +14,7 @@ import { JpDialog, JpDialogActions } from '../dialog/dialog';
   templateUrl: './drawer.html',
   styleUrl: './drawer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpDrawer {
   private readonly messages = inject(JP_MESSAGES);

@@ -1,6 +1,6 @@
 @if (errors().length) {
 <section #panel tabindex="-1" [attr.aria-labelledby]="titleId()">
-  <h2 [id]="titleId()">{{ title() }}</h2>
+  <h2 [id]="titleId()"><jp-icon name="warning" size="md" />{{ title() }}</h2>
   <ul>
     @for (error of errors(); track $index) {
     <li>

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   font-family: var(--jp-font-family-base);
@@ -62,7 +64,8 @@ input:disabled {
   font-family: inherit;
   padding: var(--jp-space-xs) var(--jp-space-sm);
   cursor: pointer;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 .jp-combobox__option:hover,
 .jp-combobox__option--active {
@@ -76,7 +79,7 @@ input:disabled {
 .jp-combobox__popup p {
   padding: var(--jp-space-xs) var(--jp-space-sm);
   font-size: var(--jp-font-size-caption);
-  color: var(--jp-color-foreground-muted);
+  color: var(--jp-color-text-secondary);
 }
 .jp-combobox__hint,
 .jp-combobox__error {
@@ -91,3 +94,46 @@ input:disabled {
 .jp-combobox__popup[hidden] {
   display: none !important;
 }
+
+input[type='text'] {
+  padding-inline-end: calc(var(--jp-size-icon-md) + 2 * var(--jp-space-sm));
+}
+input::placeholder {
+  color: var(--jp-color-field-placeholder);
+}
+.jp-combobox__chevron {
+  position: absolute;
+  inset-inline-end: var(--jp-space-sm);
+  inset-block-start: calc(
+    (var(--jp-size-control-md) - var(--jp-size-icon-md)) / 2
+  );
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+  color: var(--jp-color-text-secondary);
+  pointer-events: none;
+}
+.jp-combobox__popup {
+  background: var(--jp-color-overlay-panel-bg);
+  border-color: var(--jp-color-overlay-panel-border);
+}
+.jp-combobox__option {
+  min-block-size: var(--jp-size-control-md);
+}
+.jp-combobox__option:hover,
+.jp-combobox__option--active {
+  background: var(--jp-color-surface-emphasis);
+  color: var(--jp-color-text-primary);
+}
+.jp-combobox__option[aria-selected='true'] {
+  font-weight: var(--jp-font-weight-semibold);
+  color: var(--jp-color-accent-solid);
+}
+.jp-combobox__option--active {
+  box-shadow: inset 0 0 0 1px var(--jp-color-border-strong);
+}
+
+@include interaction.feedback('input[type="text"], .jp-combobox__option');
+
+@include interaction.pressable(
+  '.jp-combobox__option:not([aria-disabled="true"])'
+);

@@ -240,6 +240,29 @@ describe('JpAssistantPanel + trigger', () => {
     expect(service.messages()[0].content).toBe('What is the status?');
   });
 
+  it('keeps the draft when Enter confirms composed text', () => {
+    service.open();
+    fixture.detectChanges();
+    const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
+      .componentInstance as JpAssistantPanel;
+    panel.draft.set('Who drove in the go-ahead run?');
+    const compositionEnter = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      isComposing: true,
+      cancelable: true,
+    });
+    panel.onComposerKeydown(compositionEnter);
+    expect(compositionEnter.defaultPrevented).toBe(false);
+    expect(service.messages()).toHaveLength(0);
+    expect(panel.draft()).toBe('Who drove in the go-ahead run?');
+
+    panel.onComposerKeydown(new KeyboardEvent('keydown', { key: 'Enter' }));
+    expect(service.messages()[0]?.content).toBe(
+      'Who drove in the go-ahead run?',
+    );
+    expect(panel.draft()).toBe('');
+  });
+
   it('blocks duplicate submits while pending and exposes retry/cancel events', () => {
     service.open();
     const id = service.beginResponse();
@@ -345,9 +368,11 @@ describe('JpAssistantPanel + trigger', () => {
         bubbles: true,
       }),
     );
-    panel.onDraftInput({
-      target: { value: 'typed' },
-    } as unknown as Event);
+    const composer = fixture.nativeElement.querySelector(
+      'textarea',
+    ) as HTMLTextAreaElement;
+    composer.value = 'typed';
+    composer.dispatchEvent(new Event('input', { bubbles: true }));
     expect(panel.draft()).toBe('typed');
 
     panel.onComposerKeydown(

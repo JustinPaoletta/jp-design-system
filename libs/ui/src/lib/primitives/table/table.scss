@@ -1,11 +1,12 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   width: 100%;
 }
 
 .jp-table__frame {
-  container-type: inline-size;
-  container-name: jp-table-frame;
+  container: jp-table-frame / inline-size;
   box-sizing: border-box;
   width: 100%;
   overflow-x: auto;
@@ -14,9 +15,25 @@
   background: var(--jp-color-table-row-bg);
 }
 
-.jp-table__frame:focus-visible {
+:is(.jp-table__frame, .jp-table__sort, .jp-table__expand):focus-visible,
+.jp-table__settings :is(summary, input):focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
+}
+
+:host(.jp-table--unframed) .jp-table__frame {
+  border: 0;
+  border-radius: 0;
+}
+:host(.jp-table--unframed) .jp-table__header {
+  font-weight: var(--jp-font-weight-medium);
+  letter-spacing: var(--jp-font-letter-spacing-normal);
+}
+:host(.jp-table--unframed) :is(.jp-table__header, .jp-table__cell):first-child {
+  padding-inline-start: 0;
+}
+:host(.jp-table--unframed) :is(.jp-table__header, .jp-table__cell):last-child {
+  padding-inline-end: 0;
 }
 
 .jp-table__root {
@@ -25,11 +42,21 @@
   table-layout: auto;
 }
 
-.jp-table__caption {
-  caption-side: top;
+.jp-table__caption,
+.jp-table__header,
+.jp-table__cell {
   padding: var(--jp-space-sm) var(--jp-space-md);
   text-align: start;
   font-family: var(--jp-font-family-base);
+}
+.jp-table__header,
+.jp-table__cell {
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--jp-color-table-row-border);
+}
+
+.jp-table__caption {
+  caption-side: top;
   font-size: var(--jp-font-size-caption);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
@@ -38,18 +65,21 @@
 
 .jp-table__header {
   position: relative;
-  box-sizing: border-box;
-  padding: var(--jp-space-sm) var(--jp-space-md);
   background: var(--jp-color-table-header-bg);
   color: var(--jp-color-table-header-fg);
-  font-family: var(--jp-font-family-base);
   font-size: var(--jp-font-size-caption);
   font-weight: var(--jp-font-weight-semibold);
   line-height: var(--jp-font-line-height-tight);
   letter-spacing: var(--jp-font-letter-spacing-wide);
-  text-align: start;
-  border-bottom: 1px solid var(--jp-color-table-row-border);
   white-space: nowrap;
+}
+
+.jp-table__cell {
+  color: var(--jp-color-table-cell-fg);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-regular);
+  line-height: var(--jp-font-line-height-normal);
+  vertical-align: middle;
 }
 
 .jp-table__header--center,
@@ -62,26 +92,13 @@
   text-align: end;
 }
 
-.jp-table__cell {
-  box-sizing: border-box;
-  padding: var(--jp-space-sm) var(--jp-space-md);
-  color: var(--jp-color-table-cell-fg);
-  font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
-  font-weight: var(--jp-font-weight-regular);
-  line-height: var(--jp-font-line-height-normal);
-  text-align: start;
-  border-bottom: 1px solid var(--jp-color-table-row-border);
-  vertical-align: middle;
-}
-
 .jp-table__row:last-child .jp-table__cell {
   border-bottom: none;
 }
 
 .jp-table__row {
   background: var(--jp-color-table-row-bg);
-  transition: background var(--jp-motion-duration-fast)
+  transition: background-color var(--jp-motion-duration-fast)
     var(--jp-motion-easing-standard);
 }
 
@@ -118,10 +135,6 @@
   font: inherit;
   cursor: pointer;
 }
-.jp-table__sort:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
-}
 .jp-table__selection {
   width: 1%;
 }
@@ -144,19 +157,33 @@
 .jp-table__settings {
   margin-block-end: var(--jp-space-sm);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   color: var(--jp-color-text-primary);
 }
 .jp-table__settings summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--jp-space-sm);
+  box-sizing: border-box;
+  min-block-size: var(--jp-size-control-md);
+  max-inline-size: 100%;
   cursor: pointer;
   inline-size: fit-content;
-  padding: var(--jp-space-xs);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-subtle);
+  list-style: none;
 }
-.jp-table__settings summary:focus-visible,
-.jp-table__settings input:focus-visible,
-.jp-table__expand:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
+.jp-table__settings summary::-webkit-details-marker {
+  display: none;
+}
+.jp-table__settings summary:hover {
+  background: var(--jp-color-surface-raised);
+}
+.jp-table__settings[open] summary jp-icon {
+  transform: rotate(180deg);
 }
 .jp-table__settings-body {
   display: flex;
@@ -164,35 +191,41 @@
   gap: var(--jp-space-md);
   padding-block: var(--jp-space-sm);
 }
-.jp-table__column-setting {
+.jp-table__column-setting,
+.jp-table__column-setting label {
   display: grid;
   gap: var(--jp-space-xs);
 }
 .jp-table__column-setting label {
-  display: grid;
-  gap: var(--jp-space-xs);
   font-size: var(--jp-font-size-caption);
 }
 .jp-table__column-setting input {
   inline-size: 7rem;
   min-block-size: var(--jp-size-control-md);
   box-sizing: border-box;
-  border: 1px solid var(--jp-color-border-strong);
-  border-radius: var(--jp-radius-sm);
-  padding-inline: var(--jp-space-xs);
-  background: var(--jp-color-surface-raised);
-  color: var(--jp-color-text-primary);
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  padding-inline: var(--jp-space-sm);
+  background: var(--jp-color-field-bg);
+  color: var(--jp-color-field-fg);
   font: inherit;
+  font-size: var(--jp-font-size-body-sm);
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.jp-table__column-setting input::-webkit-inner-spin-button,
+.jp-table__column-setting input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }
 .jp-table__root--resizable {
   table-layout: fixed;
 }
-.jp-table__root--resizable .jp-table__cell {
+.jp-table__root--resizable :is(.jp-table__cell, .jp-table__header) {
   overflow-wrap: anywhere;
 }
 .jp-table__root--resizable .jp-table__header {
   white-space: normal;
-  overflow-wrap: anywhere;
 }
 .jp-table__root--advanced .jp-table__selection {
   inline-size: 48px;
@@ -251,9 +284,7 @@
 }
 @media (forced-colors: active) {
   .jp-table__header,
-  .jp-table__cell {
-    border-color: CanvasText;
-  }
+  .jp-table__cell,
   .jp-table__resize {
     border-color: CanvasText;
   }
@@ -264,8 +295,7 @@
   border-spacing: 0;
 }
 @container jp-table-frame (max-width: 28rem) {
-  .jp-table__frame--sticky-first .jp-table__pin,
-  .jp-table__frame--sticky-first .jp-table__pin-control {
+  .jp-table__frame--sticky-first :is(.jp-table__pin, .jp-table__pin-control) {
     position: static;
   }
   .jp-table__frame--sticky-header.jp-table__frame--sticky-first
@@ -273,4 +303,20 @@
     position: sticky;
     inset-inline-start: auto !important;
   }
+}
+
+@include interaction.pressable('.jp-table__sort, .jp-table__expand, summary');
+
+@include interaction.feedback(
+  '.jp-table__column-setting input, .jp-table__resize'
+);
+.jp-table__column-setting input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--jp-color-field-border-hover);
+}
+.jp-table__resize:hover,
+.jp-table__resize:active {
+  border-color: var(--jp-color-accent-solid);
+}
+.jp-table__resize:active {
+  transition: none;
 }

@@ -2,52 +2,55 @@ import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpBadge } from './badge/badge';
-import { JpBox } from './box/box';
+import { JpCard } from './card/card';
 import { JpButton } from './button/button';
 import { JpEmptyState } from './empty-state/empty-state';
+import { JpDisclosure } from './disclosure/disclosure';
 import { JpHeading } from './heading/heading';
-import { JpInline } from './inline/inline';
 import { JpStack } from './stack/stack';
-import { JpSurface } from './surface/surface';
 import { JpSwitch } from './switch/switch';
 import { JpTable, JpTableCellDef } from './table/table';
-import { JpText } from './text/text';
 
 type DataDisplayArgs = {
   sidebarCollapsed: boolean;
   mobileNavOpen: boolean;
   showEmpty: boolean;
+  availableOnly: boolean;
 };
 
 const columns = [
   { key: 'name', header: 'Player' },
-  { key: 'env', header: 'Squad' },
-  { key: 'status', header: 'Status' },
-  { key: 'region', header: 'Position', align: 'end' as const },
+  { key: 'status', header: 'Availability' },
 ];
 
 const rows = [
   {
-    name: 'Alex Morgan',
-    env: 'Varsity',
+    name: 'Jack Flaherty',
+    env: 'Active roster',
     status: 'Available',
     region: 'Pitcher',
   },
   {
-    name: 'Jordan Davis',
-    env: 'Varsity',
+    name: 'Freddie Freeman',
+    env: 'Active roster',
     status: 'Day to day',
-    region: 'Catcher',
+    region: 'First base',
   },
   {
-    name: 'Maya Chen',
-    env: 'Reserve',
+    name: 'Tommy Edman',
+    env: 'Active roster',
     status: 'Available',
     region: 'Shortstop',
+  },
+  {
+    name: 'Clayton Kershaw',
+    env: 'Injured list',
+    status: 'Injured',
+    region: 'Pitcher',
   },
 ];
 
@@ -60,15 +63,13 @@ const meta: Meta<DataDisplayArgs> = {
         FormsModule,
         JpAppShell,
         JpAppShellNavItem,
-        JpBox,
+        JpCard,
         JpStack,
-        JpInline,
-        JpSurface,
-        JpText,
         JpHeading,
         JpBadge,
         JpButton,
         JpEmptyState,
+        JpDisclosure,
         JpTable,
         JpTableCellDef,
         JpSwitch,
@@ -79,22 +80,27 @@ const meta: Meta<DataDisplayArgs> = {
     sidebarCollapsed: false,
     mobileNavOpen: false,
     showEmpty: false,
+    availableOnly: false,
   },
   render: (args) => {
     const sidebarCollapsed = signal(Boolean(args.sidebarCollapsed));
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     const showEmpty = signal(Boolean(args.showEmpty));
+    const availableOnly = signal(Boolean(args.availableOnly));
     return {
       props: {
         sidebarCollapsed,
         mobileNavOpen,
         showEmpty,
+        availableOnly,
+        visibleRows: () =>
+          showEmpty()
+            ? []
+            : rows.filter(
+                (row) => !availableOnly() || row.status === 'Available',
+              ),
         columns,
         rows,
-        documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
-        documentDensity:
-          document.documentElement.getAttribute('data-jp-density') ?? 'default',
         statusTone(status: string) {
           if (status === 'Available') {
             return 'success';
@@ -102,6 +108,7 @@ const meta: Meta<DataDisplayArgs> = {
           if (status === 'Day to day') {
             return 'warning';
           }
+          if (status === 'Injured') return 'error';
           return 'neutral';
         },
         onSidebarCollapsedChange(next: boolean) {
@@ -115,13 +122,70 @@ const meta: Meta<DataDisplayArgs> = {
         },
       },
       template: `
+      <style>.roster-page {
+  box-sizing: border-box;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding: var(--jp-space-xl) var(--jp-space-lg);
+}
+.roster-page__header {
+  margin-block-end: var(--jp-space-lg);
+}
+.roster-page__count,
+.roster-page__detail,
+.roster-page__actions > span {
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-caption);
+}
+.roster-page__table {
+  margin-block-start: var(--jp-space-lg);
+}
+.roster-page__name,
+.roster-page__detail {
+  display: block;
+}
+.roster-page__name {
+  font-weight: var(--jp-font-weight-medium);
+}
+.roster-page__detail {
+  margin-block-start: var(--jp-space-2xs);
+}
+.roster-page__actions {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--jp-space-sm) var(--jp-space-md);
+}
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jp-space-lg);
+  padding-block: var(--jp-space-md);
+  border-block-start: 1px solid var(--jp-color-border-subtle);
+  font-size: var(--jp-font-size-body-sm);
+}
+.preview-settings {
+  margin-block-start: var(--jp-space-lg);
+  padding-block: var(--jp-space-md);
+  color: var(--jp-color-text-secondary);
+  font-size: var(--jp-font-size-body-sm);
+}
+@media (width <= 48rem) {
+  .roster-page {
+    padding: var(--jp-space-lg) var(--jp-space-md);
+  }
+}
+</style>
       <jp-app-shell
         [sidebarCollapsed]="sidebarCollapsed()"
         [mobileNavOpen]="mobileNavOpen()"
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <nav jpAppShellSidebar>
+        <span jpAppShellBrand>Los Angeles Dodgers</span>
+      <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
               href="#data"
@@ -152,65 +216,44 @@ const meta: Meta<DataDisplayArgs> = {
         </nav>
 
         <main jpAppShellMain>
-          <jp-box padding="lg" maxWidth="wide">
-            <jp-stack gap="lg">
-              <jp-stack gap="xs">
-                <jp-heading as="h1">Player roster</jp-heading>
-                <jp-text tone="secondary">
-                  Review player positions and availability.
-                </jp-text>
-                <jp-inline gap="sm">
-                  <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
-                  <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
-                </jp-inline>
-              </jp-stack>
-
-              <jp-inline gap="sm" wrap="true">
-                <jp-badge tone="success">Available</jp-badge>
-                <jp-badge tone="warning">Day to day</jp-badge>
-                <jp-badge tone="error">Injured</jp-badge>
-                <jp-badge tone="accent">Starter</jp-badge>
-              </jp-inline>
-
-              <jp-surface tone="raised" padding="md" border="subtle" elevation="none">
-                <jp-stack gap="md">
-                  <jp-inline align="center" gap="sm" justify="between" wrap="true">
-                    <jp-heading as="h2">Roster</jp-heading>
-                    <jp-switch
-                      [ngModel]="showEmpty()"
-                      (ngModelChange)="onShowEmptyChange($event)"
-                      name="showEmpty"
-                    >
-                      Show empty state
-                    </jp-switch>
-                  </jp-inline>
-
-                  <jp-table
-                    caption="Falcons roster"
-                    [columns]="columns"
-                    [rows]="showEmpty() ? [] : rows"
-                    [striped]="true"
-                  >
-                    <ng-template jpTableCell="status" let-value>
-                      <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
-                    </ng-template>
-                    <jp-empty-state
-                      title="No players on the roster"
-                      description="No players match these filters."
-                    >
-                      <jp-button
-                        variant="secondary"
-                        type="button"
-                        (click)="onShowEmptyChange(false)"
-                      >
-                        Clear filters
-                      </jp-button>
-                    </jp-empty-state>
-                  </jp-table>
-                </jp-stack>
-              </jp-surface>
-            </jp-stack>
-          </jp-box>
+<div class="roster-page">
+  <header class="roster-page__header">
+    <jp-heading as="h1">Player roster</jp-heading>
+  </header>
+  <jp-card title="2024 season">
+    <span jpCardHeader class="roster-page__count">{{ visibleRows().length }} players</span>
+    <p>Review player positions and availability.</p>
+    <jp-table
+      class="roster-page__table"
+      caption="Dodgers roster"
+      [captionHidden]="true"
+      [framed]="false"
+      [columns]="columns"
+      [rows]="visibleRows()"
+      [striped]="false"
+    >
+      <ng-template jpTableCell="name" let-value let-row="row">
+        <span class="roster-page__name">{{ value }}</span>
+        <span class="roster-page__detail">{{ row.region }} · {{ row.env }}</span>
+      </ng-template>
+      <ng-template jpTableCell="status" let-value>
+        <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
+      </ng-template>
+      <jp-empty-state title="No players on the roster" description="No players match these filters.">
+        <jp-button variant="secondary" type="button" (click)="showEmpty.set(false); availableOnly.set(false)">Clear filters</jp-button>
+      </jp-empty-state>
+    </jp-table>
+    <div jpCardActions class="roster-page__actions">
+      <jp-button [disabled]="showEmpty()" (click)="availableOnly.set(!availableOnly())">{{ availableOnly() ? 'Show all players' : 'Show available' }}</jp-button>
+      <span role="status">{{ availableOnly() ? 'Available players only' : 'Active roster and injured list' }}</span>
+    </div>
+  </jp-card>
+  <jp-disclosure class="preview-settings" title="Preview settings">
+    <aside aria-label="Example controls">
+      <jp-switch [ngModel]="showEmpty()" (ngModelChange)="onShowEmptyChange($event)" name="showEmpty">Show empty state</jp-switch>
+    </aside>
+  </jp-disclosure>
+</div>
         </main>
       </jp-app-shell>
     `,
@@ -228,17 +271,39 @@ export const Default: Story = {
       'Player roster',
     );
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Falcons roster',
+      'Dodgers roster',
     );
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 
-    const toggle = canvasElement.querySelector(
-      'jp-switch button, jp-switch [role="switch"]',
-    ) as HTMLElement | null;
-    if (toggle) {
-      await userEvent.click(toggle);
-      // Toggle back so the story ends showing the populated table.
-      await userEvent.click(toggle);
-    }
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show available' }),
+    );
+    await expect(
+      canvas.queryByRole('cell', { name: /Freddie Freeman/ }),
+    ).toBeNull();
+    await expect(canvas.getByRole('status')).toHaveTextContent(
+      'Available players only',
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show all players' }),
+    );
+    await expect(
+      canvas.getByRole('table', { name: 'Dodgers roster' }),
+    ).toBeVisible();
+    const settings = canvas.getByText('Preview settings');
+    await userEvent.click(settings);
+    const toggle = canvas.getByRole('switch', { name: 'Show empty state' });
+    await userEvent.click(toggle);
+    await expect(canvas.getByText('No players on the roster')).toBeVisible();
+    await userEvent.click(toggle);
+    await expect(
+      canvas.getByRole('cell', { name: /Jack Flaherty/ }),
+    ).toBeVisible();
+    await userEvent.click(settings);
+    (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };
+
+export const Available: Story = { args: { availableOnly: true } };
+export const Empty: Story = { args: { showEmpty: true } };

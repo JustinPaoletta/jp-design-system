@@ -29,6 +29,23 @@
     >
       {{ messages.next }}
     </button>
+    @if (slides().length > 1) {
+    <div class="pickers" role="group" [attr.aria-label]="messages.chooseLabel">
+      @for (slide of slides(); track slide.key(); let i = $index) {
+      <button
+        type="button"
+        [disabled]="disabled()"
+        [attr.aria-label]="slide.label() || messages.choose(i + 1)"
+        [attr.aria-controls]="id() + '-slide-' + i"
+        [attr.aria-disabled]="i === current()"
+        [class.current]="i === current()"
+        (click)="choose(i)"
+      >
+        <span aria-hidden="true">{{ i + 1 }}</span>
+      </button>
+      }
+    </div>
+    }
   </div>
   <div
     #viewport
@@ -59,23 +76,6 @@
     <p class="empty">{{ messages.empty }}</p>
     }
   </div>
-  @if (slides().length > 1) {
-  <div class="pickers" role="group" [attr.aria-label]="messages.chooseLabel">
-    @for (slide of slides(); track slide.key(); let i = $index) {
-    <button
-      type="button"
-      [disabled]="disabled()"
-      [attr.aria-label]="slide.label() || messages.choose(i + 1)"
-      [attr.aria-controls]="id() + '-slide-' + i"
-      [attr.aria-disabled]="i === current()"
-      [class.current]="i === current()"
-      (click)="choose(i)"
-    >
-      <span aria-hidden="true">{{ i + 1 }}</span>
-    </button>
-    }
-  </div>
-  }
   <p
     class="sr-only"
     [attr.aria-live]="running() ? 'off' : 'polite'"

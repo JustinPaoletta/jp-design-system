@@ -47,6 +47,42 @@ function press(element: HTMLElement, key: string) {
 }
 
 describe('JpTreeView', () => {
+  it('keeps descriptive rows named and allows retry without changing selection', () => {
+    const fixture = setup([
+      { key: 'rules', label: 'Club rules', description: 'Updated for 2026' },
+      {
+        key: 'lazy',
+        label: 'Training guides',
+        hasChildren: true,
+        loadState: 'error',
+      },
+    ]);
+    fixture.componentRef.setInput('expandedKeys', ['lazy']);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const rules = requireElement(el, '#test-tree-node-rules');
+    const description = requireElement(el, '#test-tree-node-rules-description');
+    expect(rules.getAttribute('aria-describedby')).toBe(description.id);
+    expect(
+      requireElement(el, '#' + rules.getAttribute('aria-labelledby'))
+        .textContent,
+    ).toContain('Club rules');
+    description.click();
+    fixture.detectChanges();
+    expect(rules.getAttribute('aria-selected')).toBe('true');
+    const requested = jest.fn();
+    const activated = jest.fn();
+    fixture.componentInstance.loadRequested.subscribe(requested);
+    fixture.componentInstance.activated.subscribe(activated);
+    requireElement<HTMLButtonElement>(
+      el,
+      '#test-tree-node-lazy button',
+    ).click();
+    fixture.detectChanges();
+    expect(requested).toHaveBeenCalledTimes(1);
+    expect(activated).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.selectedKey()).toBe('rules');
+  });
   it('uses an initially selected visible node as the tree entry point', () => {
     const fixture = setup();
     fixture.componentRef.setInput('expandedKeys', ['folder']);

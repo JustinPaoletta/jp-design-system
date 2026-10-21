@@ -1,3 +1,9 @@
+<div class="label-row">
+  <span>{{ label() }}</span
+  ><span class="value"
+    >{{ valueText() || (safeValue() + ' / ' + safeMax()) }}</span
+  >
+</div>
 <div
   role="meter"
   [attr.aria-label]="label()"

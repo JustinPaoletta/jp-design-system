@@ -3,6 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
 import { Component, Input } from '@angular/core';
 import { JpButton } from '../button/button';
+import { JpIcon } from '../icon/icon';
 import {
   JpDropdownMenu,
   JpDropdownMenuItem,
@@ -12,16 +13,28 @@ import {
 @Component({
   selector: 'jp-dropdown-story-host',
   standalone: true,
-  imports: [JpDropdownMenu, JpDropdownTrigger, JpDropdownMenuItem, JpButton],
+  imports: [
+    JpDropdownMenu,
+    JpDropdownTrigger,
+    JpDropdownMenuItem,
+    JpButton,
+    JpIcon,
+  ],
   template: `
     <jp-dropdown-menu [open]="open" (openChange)="open = $event">
       <jp-button jpDropdownTrigger type="button" variant="secondary">
-        Player actions
+        Player actions <jp-icon name="chevron-down" size="sm" />
       </jp-button>
       <button type="button" jpDropdownMenuItem (itemSelect)="open = false">
         Edit player
       </button>
-      <button type="button" jpDropdownMenuItem (itemSelect)="open = false">
+      <div role="separator"></div>
+      <button
+        type="button"
+        jpDropdownMenuItem
+        class="jp-dropdown-menu__item--destructive"
+        (itemSelect)="open = false"
+      >
         Remove player
       </button>
     </jp-dropdown-menu>

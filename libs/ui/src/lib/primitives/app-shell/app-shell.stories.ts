@@ -103,7 +103,7 @@ const meta: Meta<AppShellStoryArgs> = {
                 Shell layout with sidebar collapse and mobile drawer.
               </jp-text>
               <jp-surface tone="raised" padding="md">
-                <jp-text>The Falcons won 5–3 against the Bears. View the roster and next game.</jp-text>
+                <jp-text>The Dodgers won 7–6 against the Yankees. The series ended 4 games to 1.</jp-text>
               </jp-surface>
             </jp-stack>
           </jp-box>
@@ -221,6 +221,8 @@ export const Mobile: Story = {
       ).toBeTruthy(),
     );
     await expect(menuToggle.getAttribute('aria-expanded')).toBe('true');
+    await userEvent.keyboard('{Escape}');
+    await expect(menuToggle.getAttribute('aria-expanded')).toBe('false');
   },
 };
 
@@ -257,5 +259,7 @@ export const MobileDrawerOpen: Story = {
         canvasElement.querySelector('.jp-app-shell--mobile-nav-open'),
       ).toBeNull(),
     );
+    await userEvent.click(menuToggle);
+    await expect(main.hasAttribute('inert')).toBe(true);
   },
 };

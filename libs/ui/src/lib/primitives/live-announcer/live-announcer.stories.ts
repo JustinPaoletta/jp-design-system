@@ -1,16 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within, waitFor } from 'storybook/test';
 import { JpAnnouncer, JpLiveAnnouncer } from './live-announcer';
+import { JpButton } from '../button/button';
+import { JpText } from '../text/text';
 @Component({
   selector: 'jp-announcer-demo',
-  imports: [JpLiveAnnouncer],
+  imports: [JpLiveAnnouncer, JpButton, JpText],
   template:
-    '<jp-live-announcer /><button type="button" (click)="announce()">Announce lineup save</button>',
+    '<jp-live-announcer /><jp-button variant="secondary" (click)="announce()">Announce lineup save</jp-button>@if (saved()) { <p><jp-text>Lineup saved</jp-text></p> }',
 })
 class AnnouncerDemo {
   private readonly announcer = inject(JpAnnouncer);
+  readonly saved = signal(false);
   announce() {
+    this.saved.set(true);
     this.announcer.announce('Lineup saved');
   }
 }

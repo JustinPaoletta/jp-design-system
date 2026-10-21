@@ -102,7 +102,7 @@ export class ProductToolsPage {
             : this.submitted() && (this.email.invalid || this.seats.invalid)
               ? 'error'
               : 'upcoming',
-        description: 'Coach email and player count',
+        description: 'Manager email and player count',
       },
       {
         id: 'review',
@@ -115,23 +115,31 @@ export class ProductToolsPage {
   readonly events = [
     {
       id: 'created',
-      title: 'Club registered',
-      timeLabel: '4 October, 10:00 UTC',
-      dateTime: '2026-10-04T10:00:00Z',
-      description: 'Alex registered the Falcons club.',
+      title: 'Clayton Kershaw is out',
+      timeLabel: 'October 5, 2024',
+      dateTime: '2024-10-05',
+      description:
+        'Dave Roberts said Clayton Kershaw was out for the postseason.',
     },
     {
       id: 'reviewed',
-      title: 'Review completed',
-      timeLabel: '4 October, 11:30 UTC',
-      dateTime: '2026-10-04T11:30:00Z',
+      title: 'Freddie Freeman is day to day',
+      timeLabel: 'October 7, 2024',
+      dateTime: '2024-10-07',
+      description: 'A right ankle sprain kept his status day to day.',
     },
-    { id: 'deployment', title: 'Game started', timeLabel: 'Just now' },
+    {
+      id: 'deployment',
+      title: 'Game 5 final',
+      timeLabel: 'October 30, 2024',
+      dateTime: '2024-10-30T23:50:00-04:00',
+      description: 'Dodgers 7, Yankees 6.',
+    },
   ];
   readonly overflow = [
-    { id: 'ada', label: 'Alex Morgan', href: '#reviewer-ada' },
-    { id: 'grace', label: 'Jordan Davis' },
-    { id: 'linus', label: 'Maya Chen' },
+    { id: 'ada', label: 'Jack Flaherty', href: '#reviewer-ada' },
+    { id: 'grace', label: 'Freddie Freeman' },
+    { id: 'linus', label: 'Tommy Edman' },
   ];
   readonly example =
     '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />';

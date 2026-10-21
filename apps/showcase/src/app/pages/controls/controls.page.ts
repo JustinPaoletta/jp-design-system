@@ -1,38 +1,29 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, type NgForm } from '@angular/forms';
 import {
-  JpBox,
   JpButton,
+  JpCard,
   JpCheckbox,
+  JpDisclosure,
   JpHeading,
-  JpIconButton,
-  JpInline,
   JpInput,
   JpSelect,
-  JpStack,
-  JpSurface,
   JpSwitch,
-  JpText,
   JpTextarea,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-controls-page',
   imports: [
     FormsModule,
-    JpBox,
-    JpStack,
-    JpInline,
-    JpSurface,
-    JpText,
     JpHeading,
     JpButton,
-    JpIconButton,
+    JpCard,
     JpInput,
     JpTextarea,
     JpSelect,
     JpCheckbox,
+    JpDisclosure,
     JpSwitch,
   ],
   templateUrl: './controls.page.html',
@@ -40,20 +31,46 @@ import { injectDocumentTheme } from '../../shared/document-theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlsPage {
-  private readonly theme = injectDocumentTheme();
+  readonly defaults = {
+    email: 'manager@dodgers.example',
+    notes: '',
+    role: 'editor',
+    subscribe: true,
+  };
+  saved: typeof this.defaults | null = { ...this.defaults };
+  feedback = '';
 
-  email = '';
+  email = 'manager@dodgers.example';
   notes = '';
   role = 'editor';
   subscribe = true;
   compact = false;
 
+  save(form: NgForm): void {
+    this.saved = { ...form.value };
+    form.form.markAsPristine();
+    this.feedback = 'Lineup saved in this preview.';
+  }
+
+  cancel(form: NgForm): void {
+    form.resetForm(this.saved ?? this.defaults);
+    this.feedback = 'Changes canceled.';
+  }
+
+  reset(form: NgForm): void {
+    form.resetForm(this.defaults);
+    this.feedback = 'Default lineup restored.';
+  }
+
+  deleteLineup(form: NgForm): void {
+    this.saved = null;
+    form.resetForm(this.defaults);
+    this.feedback = 'Saved lineup removed from this preview.';
+  }
+
   readonly roleOptions = [
-    { value: 'admin', label: 'Coach' },
+    { value: 'admin', label: 'Manager' },
     { value: 'editor', label: 'Scorekeeper' },
     { value: 'viewer', label: 'Fan' },
   ];
-
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
 }

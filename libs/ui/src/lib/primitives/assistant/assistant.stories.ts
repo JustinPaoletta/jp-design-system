@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { expect, userEvent, waitFor } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { Component, inject } from '@angular/core';
 import { JpButton } from '../button/button';
 import { JpInline } from '../inline/inline';
@@ -22,7 +22,7 @@ import { JpAssistantService } from './assistant.service';
           type="button"
           variant="secondary"
           jpAssistantTrigger
-          [jpAssistantContext]="deploymentContext"
+          [jpAssistantContext]="gameContext"
         >
           Ask about the game
         </jp-button>
@@ -34,38 +34,54 @@ import { JpAssistantService } from './assistant.service';
         </jp-button>
       </jp-inline>
       <jp-assistant-panel
-        title="Falcons coach"
+        title="Dodgers manager"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the next game."
+        emptyDescription="Ask about players, the final score or the World Series."
         (messageSubmit)="onSubmit($event)"
-      />
+        ><jp-stack jpAssistantSuggestions gap="sm"
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Summarize the final score')"
+            >Summarize the final score</jp-button
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Who is in the starting lineup?')"
+            >Review the starting lineup</jp-button
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Who won the World Series?')"
+            >Show the series result</jp-button
+          ></jp-stack
+        ></jp-assistant-panel
+      >
     </jp-stack>
   `,
 })
 class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
-  readonly deploymentContext = {
-    label: 'Game FAL-1042',
-    description: 'Falcons 5, Bears 3. Final score.',
+  readonly gameContext = {
+    label: 'World Series Game 5',
+    description: 'Dodgers 7, Yankees 6. Final score.',
     entityType: 'game',
-    entityId: 'FAL-1042',
+    entityId: '775296',
   };
 
   seed(): void {
-    this.assistant.open({ context: this.deploymentContext });
+    this.assistant.open({ context: this.gameContext });
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
-      content: 'Game FAL-1042 loaded',
+      content: 'World Series Game 5 loaded',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content: 'I can summarize the score, key plays and next game.',
+      content:
+        'I can summarize the score and key plays from World Series Game 5.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who scored in the ninth inning?',
+      content: 'Who drove in the go-ahead run?',
     });
   }
 
@@ -73,10 +89,15 @@ class AssistantStoryHost {
     this.assistant.open({ context: null, clearMessages: true });
   }
 
+  ask(content: string): void {
+    this.assistant.addMessage({ role: 'user', content });
+    this.onSubmit(content);
+  }
+
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Noted: “${content}”. Sample game result: Falcons 5, Bears 3.`,
+      content: `Noted: “${content}”. Sample game result: Dodgers 7, Yankees 6.`,
     });
   }
 }
@@ -90,16 +111,14 @@ class AssistantStoryHost {
         <jp-button variant="secondary" (click)="start()"
           >Start response</jp-button
         >
-        <jp-button variant="ghost" (click)="stream()">Stream chunk</jp-button>
-        <jp-button variant="ghost" (click)="fail()">Fail response</jp-button>
-        <jp-button variant="ghost" (click)="complete()"
-          >Complete response</jp-button
+        <jp-button variant="ghost" (click)="start(true)"
+          >Show response error</jp-button
         >
       </jp-inline>
       <jp-assistant-panel
-        title="Falcons coach"
+        title="Dodgers manager"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the next game."
+        emptyDescription="Ask about players, the final score or the World Series."
         (messageSubmit)="respond()"
         (responseRetry)="retry($event.responseId)"
       />
@@ -109,8 +128,10 @@ class AssistantStoryHost {
 class AssistantAsyncStoryHost {
   private readonly assistant = inject(JpAssistantService);
   private responseId = 0;
+  private shouldFail = false;
 
-  start(): void {
+  start(failed = false): void {
+    this.shouldFail = failed;
     this.assistant.open({ context: null, clearMessages: true });
     this.assistant.addMessage({
       role: 'user',
@@ -120,27 +141,24 @@ class AssistantAsyncStoryHost {
   }
   respond(): void {
     this.responseId = this.assistant.beginResponse();
-  }
-  stream(): void {
-    this.assistant.updateResponse(
-      this.responseId,
-      'The Falcons lead 5–3. Checking the final inning…',
-    );
-  }
-  fail(): void {
-    this.assistant.failResponse(
-      this.responseId,
-      'Connection lost. Your question has been preserved.',
-    );
-  }
-  complete(): void {
-    this.assistant.completeResponse(
-      this.responseId,
-      'All game checks are complete.',
-    );
+    if (this.shouldFail) {
+      this.assistant.failResponse(
+        this.responseId,
+        'Connection lost. Your question has been preserved.',
+      );
+    } else {
+      this.assistant.updateResponse(
+        this.responseId,
+        'The Yankees lead 5–0. Checking the fifth inning…',
+      );
+    }
   }
   retry(id: number): void {
     this.responseId = id;
+    this.assistant.completeResponse(
+      id,
+      'The final score is Dodgers 7, Yankees 6. Mookie Betts drove in the go-ahead run in the eighth inning.',
+    );
   }
 }
 
@@ -182,9 +200,9 @@ export const MessageRoles: Story = {
         class="jp-assistant-panel__message-list"
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
-        <jp-assistant-message messageRole="system" content="Game FAL-1042 loaded" />
-        <jp-assistant-message messageRole="assistant" content="Assistant reply stays calm and neutral." />
-        <jp-assistant-message messageRole="user" content="Who scored in the ninth inning?" />
+        <jp-assistant-message messageRole="system" content="World Series Game 5 loaded" />
+        <jp-assistant-message messageRole="assistant" content="Mookie Betts drove in Tommy Edman in the eighth inning." />
+        <jp-assistant-message messageRole="user" content="Who drove in the go-ahead run?" />
       </div>
     `,
   }),
@@ -215,7 +233,7 @@ export const Conversation: Story = {
     );
     await userEvent.click(seed as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain(
-      'I can summarize the score, key plays and next game.',
+      'I can summarize the score and key plays from World Series Game 5.',
     );
     await expect(
       canvasElement.querySelectorAll('jp-assistant-message').length,
@@ -237,7 +255,7 @@ export const ContextTrigger: Story = {
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
-    await expect(canvasElement.textContent).toContain('Game FAL-1042');
+    await expect(canvasElement.textContent).toContain('World Series Game 5');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
@@ -290,43 +308,54 @@ export const ComposerInteraction: Story = {
 export const PendingAndStreaming: Story = {
   render: () => ({ template: '<jp-assistant-async-story-host />' }),
   play: async ({ canvasElement }) => {
-    const button = (label: string) =>
-      Array.from(canvasElement.querySelectorAll('button')).find(
-        (item) => item.textContent?.trim() === label,
-      ) as HTMLButtonElement;
-    await userEvent.click(button('Start response'));
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeTruthy();
-    await userEvent.click(button('Stream chunk'));
-    await expect(canvasElement.textContent).toContain(
-      'Checking the final inning',
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Start response' }),
     );
-    await userEvent.click(button('Stop response'));
+    await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
+    await expect(canvasElement.textContent).toContain(
+      'Checking the fifth inning',
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Stop response' }),
+    );
     await expect(canvasElement.textContent).toContain('Response stopped');
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeNull();
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await expect(canvasElement.textContent).toContain(
+      'The final score is Dodgers 7, Yankees 6.',
+    );
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Close assistant' }),
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Start response' }),
+    );
   },
 };
 
 export const FailedAndRetry: Story = {
   render: () => ({ template: '<jp-assistant-async-story-host />' }),
   play: async ({ canvasElement }) => {
-    const button = (label: string) =>
-      Array.from(canvasElement.querySelectorAll('button')).find(
-        (item) => item.textContent?.trim() === label,
-      ) as HTMLButtonElement;
-    await userEvent.click(button('Start response'));
-    await userEvent.click(button('Fail response'));
-    await expect(canvasElement.textContent).toContain('Connection lost');
-    await userEvent.click(button('Retry'));
-    await expect(
-      canvasElement.querySelector('[role="progressbar"]'),
-    ).toBeTruthy();
-    await userEvent.click(button('Complete response'));
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show response error' }),
+    );
+    await expect(canvas.getByRole('alert')).toHaveTextContent(
+      'Connection lost',
+    );
+    await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await expect(canvas.queryByRole('alert')).toBeNull();
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
     await expect(canvasElement.textContent).toContain(
-      'All game checks are complete.',
+      'The final score is Dodgers 7, Yankees 6.',
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Close assistant' }),
+    );
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Show response error' }),
     );
   },
 };

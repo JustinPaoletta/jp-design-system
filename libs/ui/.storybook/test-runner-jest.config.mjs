@@ -8,6 +8,10 @@ const defaults = getJestConfig();
 // supported setupFilesAfterEnv instead, retaining the stock browser transforms.
 export default {
   ...defaults,
+  modulePathIgnorePatterns: [
+    ...(defaults.modulePathIgnorePatterns ?? []),
+    '<rootDir>/dist',
+  ],
   setupFilesAfterEnv: defaults.setupFilesAfterEnv.map((file) =>
     file.endsWith('/playwright/jest-setup.js')
       ? fileURLToPath(new URL('./runner-jest-setup.mjs', import.meta.url))

@@ -19,6 +19,7 @@ import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
 import { JpCheckbox } from '../checkbox/checkbox';
 import { JpPagination } from '../pagination/pagination';
+import { JpTooltip } from '../tooltip/tooltip';
 import {
   JpTable,
   type JpSortableTableColumn,
@@ -68,7 +69,14 @@ export function jpVirtualRange(
 }
 @Component({
   selector: 'jp-virtual-table',
-  imports: [FormsModule, JpButton, JpCheckbox, JpPagination, JpTable],
+  imports: [
+    FormsModule,
+    JpButton,
+    JpCheckbox,
+    JpPagination,
+    JpTable,
+    JpTooltip,
+  ],
   templateUrl: './virtual-table.html',
   styleUrl: './virtual-table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -170,7 +178,10 @@ export class JpVirtualTable {
     effect(() => {
       const nextKeys = new Set(this.visible().map((row) => this.rowToken(row)));
       const mounted =
-        this.virtual() && !this.loading() && !this.error() && !this.invalid();
+        this.virtual() &&
+        (!this.loading() || this.rows().length > 0) &&
+        !this.error() &&
+        !this.invalid();
       const selectable = this.selectable();
       const frame = this.frame()?.nativeElement;
       if (!frame) return;
@@ -274,7 +285,13 @@ export class JpVirtualTable {
     return this.text(row[this.columns()[0]?.key]);
   }
   rangeLabel(): string {
-    const { start, end, total } = this.range();
+    const { start, end, total } = jpVirtualRange(
+      this.rows().length,
+      this.scrollTop(),
+      this.safeHeight(),
+      this.safeRowHeight(),
+      0,
+    );
     return this.messages.virtualTable.range({
       start: total ? start + 1 : 0,
       end,

@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   color: var(--jp-color-text-primary);
@@ -57,3 +59,98 @@ input:focus-visible {
 .error {
   color: var(--jp-color-field-error);
 }
+
+.slider {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.slider::-webkit-slider-runnable-track {
+  block-size: 6px;
+  border: 0;
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-slider-track);
+}
+.slider::-moz-range-track {
+  block-size: 6px;
+  border: 0;
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-slider-track);
+}
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  margin-block-start: calc(
+    (6px - var(--jp-size-selection-control, var(--jp-size-icon-md))) / 2
+  );
+  border: 2px solid var(--jp-color-accent-solid);
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-field-bg);
+}
+.slider::-moz-range-thumb {
+  box-sizing: border-box;
+  inline-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  block-size: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  border: 2px solid var(--jp-color-accent-solid);
+  border-radius: var(--jp-radius-full);
+  background: var(--jp-color-field-bg);
+}
+:host {
+  --jp-slider-direction: to right;
+}
+:host-context([dir='rtl']) {
+  --jp-slider-direction: to left;
+}
+input[aria-invalid='true'].number {
+  border-color: var(--jp-color-field-border-invalid);
+}
+.number {
+  min-block-size: var(--jp-size-control-md);
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.number::-webkit-inner-spin-button,
+.number::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+:host(.disabled) .controls {
+  opacity: 0.5;
+}
+:host(.readonly) .number {
+  background: var(--jp-color-surface-sunken);
+  border-style: dashed;
+}
+@media (forced-colors: active) {
+  .slider {
+    appearance: auto;
+    accent-color: auto;
+  }
+  .slider::-webkit-slider-runnable-track {
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+  .slider::-webkit-slider-thumb {
+    background: Highlight;
+    border-color: CanvasText;
+  }
+  .slider::-moz-range-track {
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+  .slider::-moz-range-thumb {
+    background: Highlight;
+    border-color: CanvasText;
+  }
+}
+.slider {
+  --jp-slider-track: linear-gradient(
+    var(--jp-slider-direction),
+    var(--jp-color-accent-solid) 0 var(--jp-slider-position),
+    var(--jp-color-border-strong) var(--jp-slider-position) 100%
+  );
+}
+
+@include interaction.range;

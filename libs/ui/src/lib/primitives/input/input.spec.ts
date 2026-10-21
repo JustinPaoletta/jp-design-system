@@ -158,4 +158,96 @@ describe('JpInput', () => {
     expect(control.maxLength).toBe(10);
     expect(control.pattern).toBe('[A-Z]+');
   });
+  it.each(['date', 'time'] as const)(
+    'uses the themed %s picker through the generic input API',
+    async (type) => {
+      const changed = jest.fn(),
+        touched = jest.fn();
+      component.registerOnChange(changed);
+      component.registerOnTouched(touched);
+      fixture.componentRef.setInput('type', type);
+      fixture.componentRef.setInput(
+        'label',
+        type === 'date' ? 'Game date' : 'First pitch',
+      );
+      fixture.componentRef.setInput('id', 'game-field');
+      fixture.componentRef.setInput('name', 'game');
+      fixture.componentRef.setInput('hint', 'Dodgers vs. Yankees');
+      fixture.componentRef.setInput('inputMode', 'text');
+      fixture.componentRef.setInput('maxLength', 24);
+      component.writeValue(type === 'date' ? '2024-10-30' : '19:00');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const field: HTMLInputElement =
+        fixture.nativeElement.querySelector('input');
+      expect(field.type).toBe('text');
+      expect(field.id).toBe('game-field');
+      expect(field.name).toBe('game');
+      expect(field.inputMode).toBe('text');
+      expect(field.maxLength).toBe(24);
+      expect(field.getAttribute('aria-describedby')).toContain('-hint');
+      expect(field.value).toBe(type === 'date' ? '2024-10-30' : '19:00');
+      field.value = type === 'date' ? '2024-10-31' : '20:00';
+      field.dispatchEvent(new Event('input'));
+      expect(changed).toHaveBeenLastCalledWith(field.value);
+      const trigger: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button');
+      field.dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, relatedTarget: trigger }),
+      );
+      expect(touched).not.toHaveBeenCalled();
+      field.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+      expect(touched).toHaveBeenCalled();
+      trigger.click();
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelector('[role="dialog"]:not([hidden])'),
+      ).toBeTruthy();
+      component.writeValue('');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      expect(field.value).toBe('');
+      expect(
+        fixture.nativeElement.querySelector('[role="dialog"]:not([hidden])'),
+      ).toBeNull();
+      component.setDisabledState(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      expect(field.disabled).toBe(true);
+    },
+  );
+
+  it('shows native form validation in the styled inline error and clears it after recovery', () => {
+    fixture.componentRef.setInput('required', true);
+    fixture.detectChanges();
+    const field: HTMLInputElement =
+      fixture.nativeElement.querySelector('input');
+    const invalid = new Event('invalid', { cancelable: true });
+    field.dispatchEvent(invalid);
+    fixture.detectChanges();
+    expect(invalid.defaultPrevented).toBe(true);
+    expect(
+      fixture.nativeElement.querySelector('[role="alert"]').textContent,
+    ).toContain('Complete this field.');
+    expect(field.getAttribute('aria-invalid')).toBe('true');
+    fixture.componentRef.setInput('required', false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
+    fixture.componentRef.setInput('type', 'email');
+    field.value = 'invalid';
+    field.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    field.dispatchEvent(new Event('invalid', { cancelable: true }));
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('[role="alert"]').textContent,
+    ).toContain('Enter a valid email address.');
+    field.value = 'manager@dodgers.example';
+    field.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
+  });
 });

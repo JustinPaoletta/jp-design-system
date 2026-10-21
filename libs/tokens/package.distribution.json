@@ -14,7 +14,8 @@
     "./tokens.css": "./tokens.css",
     "./tokens.compact.css": "./tokens.compact.css",
     "./tokens.json": "./tokens.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./fonts.css": "./fonts.css"
   },
   "files": [
     "index.js",
@@ -22,6 +23,7 @@
     "lib",
     "*.css",
     "tokens.json",
-    "README.md"
+    "README.md",
+    "fonts"
   ]
 }

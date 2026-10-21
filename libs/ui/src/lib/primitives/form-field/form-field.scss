@@ -6,11 +6,11 @@ label,
 legend {
   color: var(--jp-color-field-label);
   font-weight: var(--jp-font-weight-medium);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
 }
 label {
   display: block;
-  margin-block-end: var(--jp-space-2xs);
+  margin-block-end: var(--jp-space-xs);
 }
 .hint,
 .error {

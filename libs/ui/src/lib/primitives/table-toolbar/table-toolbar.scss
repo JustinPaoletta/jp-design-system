@@ -15,16 +15,26 @@
   gap: var(--jp-space-sm);
 }
 .jp-table-toolbar__search {
-  flex: 1;
-  min-width: 12rem;
+  flex: 1 1 18rem;
+  min-inline-size: min(100%, 12rem);
+  max-inline-size: 28rem;
+}
+.jp-table-toolbar__controls {
+  align-items: flex-end;
 }
 .jp-table-toolbar__actions {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--jp-size-control-md);
   margin-inline-start: auto;
 }
 .jp-table-toolbar__selection {
+  padding: var(--jp-space-sm) var(--jp-space-md);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-raised);
   color: var(--jp-color-table-caption-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
 }
 .jp-table-toolbar__sr-only {
   position: absolute;

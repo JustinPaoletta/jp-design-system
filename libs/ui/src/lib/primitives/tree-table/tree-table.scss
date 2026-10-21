@@ -1,9 +1,11 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
   color: var(--jp-color-text-primary);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm, 0.875rem);
 }
 .frame {
   max-inline-size: 100%;
@@ -52,9 +54,9 @@ tbody th {
 }
 .disclosure,
 .spacer {
-  flex: 0 0 var(--jp-size-control-xl);
-  inline-size: var(--jp-size-control-xl);
-  block-size: var(--jp-size-control-xl);
+  flex: 0 0 var(--jp-size-control-sm);
+  inline-size: var(--jp-size-control-sm);
+  block-size: var(--jp-size-control-sm);
 }
 button {
   font: inherit;
@@ -77,11 +79,6 @@ button:disabled,
 button:disabled {
   cursor: not-allowed;
 }
-input {
-  inline-size: var(--jp-size-control-md);
-  block-size: var(--jp-size-control-md);
-  accent-color: var(--jp-color-accent-solid);
-}
 .selected {
   background: var(--jp-color-surface-raised);
 }
@@ -97,6 +94,8 @@ input {
   color: var(--jp-color-text-secondary);
 }
 .state {
+  min-block-size: 5rem;
+  padding: 0;
   display: flex;
   gap: var(--jp-space-sm);
   align-items: center;
@@ -124,3 +123,29 @@ input {
     outline-color: Highlight;
   }
 }
+
+.disclosure {
+  display: inline-grid;
+  place-items: center;
+  border-color: transparent;
+  background: transparent;
+}
+.disclosure:hover:not(:disabled) {
+  background: var(--jp-color-surface-raised);
+}
+.disclosure svg {
+  inline-size: 1rem;
+  block-size: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.disclosure svg.open {
+  transform: rotate(90deg);
+}
+:host-context([dir='rtl']) .disclosure svg:not(.open) {
+  transform: rotate(180deg);
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('button');

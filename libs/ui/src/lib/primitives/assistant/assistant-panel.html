@@ -21,7 +21,7 @@
       [attr.aria-label]="closeLabel()"
       (click)="close()"
     >
-      ×
+      <jp-icon name="close" size="sm" />
     </button>
   </header>
 
@@ -41,7 +41,7 @@
       [attr.aria-label]="clearContextLabel()"
       (click)="clearContext()"
     >
-      ×
+      <jp-icon name="close" size="sm" />
     </button>
   </div>
   }
@@ -54,6 +54,7 @@
   >
     @if (messages().length === 0) {
     <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
+    <ng-content select="[jpAssistantSuggestions]" />
     } @else {
     <div class="jp-assistant-panel__message-list">
       @for (message of messages(); track message.id) { @if (message.content) {
@@ -102,25 +103,27 @@
     <label class="jp-assistant-panel__composer-label" [attr.for]="composerId">
       {{ composerLabel() }}
     </label>
-    <textarea
-      #composer
-      class="jp-assistant-panel__composer-input"
-      [id]="composerId"
-      rows="3"
-      [attr.placeholder]="placeholder()"
-      [value]="draft()"
-      (input)="onDraftInput($event)"
-      (keydown)="onComposerKeydown($event)"
-    ></textarea>
-    <div class="jp-assistant-panel__composer-actions">
-      <jp-button
-        type="submit"
-        variant="primary"
-        size="sm"
-        [disabled]="!draft().trim() || isPending()"
-      >
-        {{ sendLabel() }}
-      </jp-button>
+    <div class="jp-assistant-panel__composer-field">
+      <textarea
+        #composer
+        class="jp-assistant-panel__composer-input"
+        [id]="composerId"
+        rows="1"
+        [attr.placeholder]="placeholder()"
+        [value]="draft()"
+        (input)="onDraftInput($event)"
+        (keydown)="onComposerKeydown($event)"
+      ></textarea>
+      <div class="jp-assistant-panel__composer-actions">
+        <jp-button
+          type="submit"
+          variant="primary"
+          size="md"
+          [disabled]="!draft().trim() || isPending()"
+        >
+          {{ sendLabel() }}
+        </jp-button>
+      </div>
     </div>
   </form>
 </aside>

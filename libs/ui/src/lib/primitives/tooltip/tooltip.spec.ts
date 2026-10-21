@@ -27,7 +27,46 @@ class TooltipHost {}
 })
 class TooltipBottomHost {}
 
+@Component({
+  imports: [JpTooltip],
+  template: `
+    <jp-tooltip
+      content="Complete player name"
+      style="display: contents; --jp-tooltip-trigger-display: contents"
+    >
+      <span class="cell-copy">Complete player name</span>
+    </jp-tooltip>
+  `,
+})
+class TooltipCellHost {}
+
 describe('JpTooltip', () => {
+  it('anchors to the projected noninteractive child when the wrapper has no layout box', () => {
+    const fixture = TestBed.createComponent(TooltipCellHost);
+    fixture.detectChanges();
+    const copy = fixture.nativeElement.querySelector(
+      '.cell-copy',
+    ) as HTMLElement;
+    jest.spyOn(copy, 'getBoundingClientRect').mockReturnValue({
+      left: 200,
+      right: 300,
+      top: 100,
+      bottom: 120,
+      x: 200,
+      y: 100,
+      width: 100,
+      height: 20,
+      toJSON: () => ({}),
+    });
+    const host = fixture.nativeElement.querySelector(
+      'jp-tooltip',
+    ) as HTMLElement;
+    host.dispatchEvent(new Event('pointerenter'));
+    fixture.detectChanges();
+    const panel = host.querySelector('[role="tooltip"]') as HTMLElement;
+    expect(panel.style.left).toBe('200px');
+    expect(copy.getAttribute('aria-describedby')).toBe(panel.id);
+  });
   it('shows content on pointer enter and hides on leave', async () => {
     await TestBed.configureTestingModule({
       imports: [TooltipHost],

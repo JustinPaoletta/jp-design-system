@@ -45,6 +45,12 @@ measure an isolated consumer's tree-shaken library cost.
 
 ## Storybook checks
 
+The [Publish Storybook workflow](../.github/workflows/storybook-pages.yml) builds `ui:build-storybook:ci` and deploys `dist/storybook/ui` to GitHub Pages.
+The [hosted Storybook](https://justinpaoletta.github.io/jp-design-system/) uses a repository subdirectory.
+Use relative URLs for story assets, such as `example-photos/baseball-field.jpg`.
+Check photo loading and direct story links after a deployment.
+See the [hosting instructions](../README.md#getting-started) for publishing branches.
+
 ```sh
 npm exec -- nx run ui:test-storybook
 npm exec -- nx run ui:test-storybook-dev
@@ -64,17 +70,17 @@ testing. It also checks the default preview if one is present. See
 
 ## Browser and visual checks
 
-Run functional/axe checks in Chromium, Firefox and WebKit, excluding all six macOS
+Run functional/axe checks in Chromium, Firefox and WebKit, excluding all seven macOS
 visual title prefixes:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --project=firefox --project=webkit --grep-invert="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual|select visual"
 ```
 
 Run the visual suite on macOS Chromium:
 
 ```sh
-npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual"
+npm exec -- nx run showcase-e2e:e2e -- --project=chromium --grep="recipes visual|component expansion visual|product tools visual|workflow visual|advanced layout visual|larger features visual|select visual"
 ```
 
 Use the visual command with `--update-snapshots` only when deliberately
@@ -103,7 +109,7 @@ The [support matrix](qa/SUPPORT_MATRIX.md#environment-checks-and-limits) gives t
 Actual Chrome 200%/400% zoom was inspected for the seven larger features.
 See [readiness evidence and maintainer instructions](qa/READINESS.md).
 VoiceOver/NVDA, real Windows contrast themes, text-only zoom and other zoom combinations remain open.
-Physical touch and native picker dialogs have not been examined.
+Physical touch and screen-reader use of the custom picker panels remain unexamined.
 Follow the [manual checklist](../MANUAL_QA.md).
 
 ## Storybook runner compatibility

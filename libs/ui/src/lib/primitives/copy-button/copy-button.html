@@ -1,8 +1,10 @@
 <jp-button
   variant="secondary"
-  [disabled]="disabled() || state() === 'pending'"
+  [disabled]="disabled()"
+  [loading]="state() === 'pending'"
+  [loadingLabel]="pendingLabel()"
   (click)="copy()"
-  ><jp-icon name="copy" />{{ label() }}</jp-button
+  ><jp-icon name="copy" size="md" />{{ label() }}</jp-button
 >
 <span class="feedback" role="status" aria-live="polite"
   >@if (state() === 'pending') { {{ pendingLabel() }} } @else if (state() ===

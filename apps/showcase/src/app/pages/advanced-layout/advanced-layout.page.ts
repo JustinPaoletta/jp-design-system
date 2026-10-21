@@ -5,7 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   JpButton,
@@ -26,6 +26,7 @@ import {
 @Component({
   selector: 'app-advanced-layout-page',
   imports: [
+    LowerCasePipe,
     RouterLink,
     JpButton,
     JpCard,
@@ -50,27 +51,33 @@ export class AdvancedLayoutPage {
       minWidth: 140,
       maxWidth: 480,
     },
-    { key: 'owner', header: 'Coach', width: 190 },
+    { key: 'owner', header: 'Manager', width: 190 },
     { key: 'region', header: 'Position', width: 240 },
     { key: 'status', header: 'Status', width: 190 },
   ];
-  readonly rows = Array.from({ length: 16 }, (_, index) => ({
+  readonly rows = [
+    ['Jack Flaherty', 'Pitcher', 'Available'],
+    ['Freddie Freeman', 'First base', 'Day to day'],
+    ['Tommy Edman', 'Shortstop', 'Available'],
+    ['Mookie Betts', 'Right field', 'Available'],
+    ['Clayton Kershaw', 'Pitcher', 'Injured'],
+    ['Will Smith', 'Catcher', 'Available'],
+    ['Shohei Ohtani', 'Designated hitter', 'Available'],
+    ['Teoscar Hernández', 'Left field', 'Available'],
+    ['Kiké Hernández', 'Center field', 'Available'],
+    ['Gavin Lux', 'Second base', 'Available'],
+    ['Max Muncy', 'Third base', 'Available'],
+    ['Austin Barnes', 'Catcher', 'Bench'],
+    ['Yoshinobu Yamamoto', 'Pitcher', 'Available'],
+    ['Walker Buehler', 'Pitcher', 'Available'],
+    ['Blake Treinen', 'Pitcher', 'Available'],
+    ['Miguel Rojas', 'Shortstop', 'Available'],
+  ].map(([name, region, status], index) => ({
     id: 'service-' + index,
-    name:
-      [
-        'Alex Morgan',
-        'Jordan Davis',
-        'Maya Chen',
-        'Casey Brooks',
-        'Taylor Reed',
-      ][index] ?? 'League player ' + String(index + 1).padStart(3, '0'),
-    owner: 'Sam Rivera',
-    region: ['Pitcher', 'Catcher', 'Shortstop', 'Center field', 'Right field'][
-      index % 5
-    ],
-    status:
-      ['Available', 'Day to day', 'Available', 'Available', 'Injured'][index] ??
-      (index % 3 ? 'Available' : 'Medical review'),
+    name,
+    owner: 'Dave Roberts',
+    region,
+    status,
   }));
   readonly preferences = signal(
     normalizeJpTablePreferences(null, this.columns),

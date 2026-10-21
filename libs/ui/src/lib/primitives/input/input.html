@@ -1,8 +1,78 @@
+@if (type() === 'date') {
+<jp-date-picker
+  [id]="resolvedId()"
+  [label]="label()"
+  [hint]="hint()"
+  [error]="error()"
+  [placeholder]="placeholder()"
+  [ariaLabel]="ariaLabel()"
+  [ariaDescribedBy]="ariaDescribedBy()"
+  [name]="name()"
+  [autocomplete]="autocomplete()"
+  [required]="required()"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [size]="size()"
+  [inputMode]="inputMode()"
+  [minLength]="minLength()"
+  [maxLength]="maxLength()"
+  [pattern]="pattern()"
+  [disabled]="isDisabled()"
+  [readonly]="readonly()"
+  [invalid]="invalid()"
+  [ngModel]="value()"
+  [ngModelOptions]="{standalone: true}"
+  (ngModelChange)="commitValue($event)"
+  (focusout)="onNestedFocusout($event)"
+/>
+} @else if (type() === 'time') {
+<jp-time-picker
+  [id]="resolvedId()"
+  [label]="label()"
+  [hint]="hint()"
+  [error]="error()"
+  [placeholder]="placeholder()"
+  [ariaLabel]="ariaLabel()"
+  [ariaDescribedBy]="ariaDescribedBy()"
+  [name]="name()"
+  [autocomplete]="autocomplete()"
+  [required]="required()"
+  [min]="min()"
+  [max]="max()"
+  [step]="step()"
+  [size]="size()"
+  [inputMode]="inputMode()"
+  [minLength]="minLength()"
+  [maxLength]="maxLength()"
+  [pattern]="pattern()"
+  [disabled]="isDisabled()"
+  [readonly]="readonly()"
+  [invalid]="invalid()"
+  [ngModel]="value()"
+  [ngModelOptions]="{standalone: true}"
+  (ngModelChange)="commitValue($event)"
+  (focusout)="onNestedFocusout($event)"
+/>
+} @else {
 <div class="jp-input__field">
   @if (label()) {
   <label class="jp-input__label" [attr.for]="resolvedId()">{{ label() }}</label>
   }
   <div class="jp-input__row">
+    @if (type() === 'search') {
+    <svg
+      class="jp-input__search-icon"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m16 16 5 5" />
+    </svg>
+    }
     <input
       #control
       class="jp-input__control"
@@ -27,6 +97,7 @@
       [value]="value()"
       [style.--jp-field-height]="controlHeight()"
       (input)="onInput($event)"
+      (invalid)="onConstraintInvalid($event)"
       (blur)="onBlur()"
     />
     @if (type() === 'search' && clearable() && value() && !readonly()) {
@@ -48,15 +119,24 @@
       [attr.aria-pressed]="passwordVisible()"
       (click)="togglePassword()"
     >
-      {{ passwordVisible() ? hidePasswordLabel() : showPasswordLabel() }}
+      <span class="jp-input__reveal-label">
+        <span [attr.aria-hidden]="passwordVisible() ? true : null"
+          >{{ showPasswordLabel() }}</span
+        >
+        <span [attr.aria-hidden]="passwordVisible() ? null : true"
+          >{{ hidePasswordLabel() }}</span
+        >
+      </span>
     </button>
     }
   </div>
-  @if (error()) {
+  @if (fieldError()) {
   <p class="jp-input__error" [attr.id]="errorId()" role="alert">
-    {{ error() }}
+    {{ fieldError() }}
   </p>
   } @else if (hint()) {
   <p class="jp-input__hint" [attr.id]="hintId()">{{ hint() }}</p>
   }
 </div>
+
+}

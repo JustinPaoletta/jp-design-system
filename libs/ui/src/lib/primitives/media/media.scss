@@ -14,6 +14,7 @@ figure {
   background: var(--jp-color-surface-subtle);
 }
 img {
+  opacity: 0;
   display: block;
   inline-size: 100%;
   block-size: 100%;
@@ -24,8 +25,12 @@ img[hidden] {
 .jp-media__placeholder {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jp-space-xs);
+  box-sizing: border-box;
   padding: var(--jp-space-md);
   color: var(--jp-color-text-secondary);
   font-size: var(--jp-font-size-caption);
@@ -37,4 +42,8 @@ figcaption {
   font-size: var(--jp-font-size-caption);
   line-height: var(--jp-font-line-height-normal);
   overflow-wrap: anywhere;
+}
+
+img.loaded {
+  opacity: 1;
 }

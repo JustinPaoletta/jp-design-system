@@ -7,6 +7,7 @@
   >
     {{ label() }}
   </button>
+  @if (actions().length) {
   <jp-dropdown-menu
     [open]="open() && !disabled()"
     (openChange)="open.set($event)"
@@ -17,7 +18,7 @@
       [disabled]="disabled() || !actions().length"
       [attr.aria-label]="menuLabel() + ': ' + label()"
     >
-      ▾
+      <jp-icon name="chevron-down" size="md" />
     </button>
     @for(action of actions();track action.id){<button
       type="button"
@@ -28,4 +29,5 @@
       {{ action.label }}</button
     >}
   </jp-dropdown-menu>
+  }
 </div>

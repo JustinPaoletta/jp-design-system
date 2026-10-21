@@ -1,6 +1,9 @@
+@use '../shared/interaction';
+
 @use '../input/input';
 :host {
-  display: inline-flex;
+  display: block;
+  min-inline-size: 0;
   max-inline-size: 100%;
 }
 button {
@@ -11,7 +14,9 @@ button {
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-tight);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -26,39 +31,47 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-:host {
-  display: block;
-  min-inline-size: 0;
-}
-input[type='file'] {
-  padding: var(--jp-space-xs);
-  min-inline-size: 0;
+.choose-files {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  gap: var(--jp-space-sm);
   max-inline-size: 100%;
+  padding-inline: var(--jp-space-md);
 }
-input::file-selector-button {
-  font: inherit;
-  border: 1px solid var(--jp-color-border-strong);
-  border-radius: var(--jp-radius-sm);
-  background: var(--jp-color-surface-subtle);
-  color: var(--jp-color-text-primary);
-  margin-inline-end: var(--jp-space-xs);
+.choose-files svg {
+  flex: none;
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+}
+.choose-files[aria-invalid='true'] {
+  border-color: var(--jp-color-field-border-invalid);
 }
 ul {
+  margin-block: var(--jp-space-md) 0;
   padding: 0;
   list-style: none;
   display: grid;
   gap: var(--jp-space-sm);
 }
 li {
-  padding: var(--jp-space-sm);
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-sm);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--jp-space-xs) var(--jp-space-sm);
+  padding: var(--jp-space-sm) 0;
+}
+li:not(:last-child) {
+  border-block-end: 1px solid var(--jp-color-border-default);
 }
 .file {
   display: flex;
+  flex: 1 1 12rem;
   gap: var(--jp-space-sm);
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  min-inline-size: 0;
   overflow-wrap: anywhere;
 }
 .status {
@@ -68,9 +81,31 @@ li {
 jp-progress {
   margin-block: var(--jp-space-xs);
 }
-li button + button {
-  margin-inline-start: var(--jp-space-xs);
-}
 p {
   margin-block: var(--jp-space-xs);
 }
+
+.file-info {
+  display: grid;
+  gap: var(--jp-space-2xs);
+  min-inline-size: 0;
+}
+.file bdi {
+  font-size: var(--jp-font-size-body-sm);
+}
+.file-icon {
+  inline-size: var(--jp-size-icon-md);
+  block-size: var(--jp-size-icon-md);
+  color: var(--jp-color-text-secondary);
+  flex: none;
+}
+li button {
+  min-block-size: var(--jp-size-control-sm);
+}
+li jp-progress,
+li .jp-input__error {
+  order: 1;
+  flex: 1 0 100%;
+}
+
+@include interaction.pressable('button');

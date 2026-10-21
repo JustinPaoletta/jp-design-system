@@ -31,7 +31,7 @@ type ChipStoryArgs = {
   `,
 })
 class ChipStoryHost {
-  readonly labels = signal(['Available', 'Reserve', 'Tryout']);
+  readonly labels = signal(['Available', 'Bench', 'Injured list']);
 
   remove(label: string): void {
     this.labels.update((current) => current.filter((item) => item !== label));
@@ -86,28 +86,30 @@ export const Default: Story = {
 };
 
 export const Small: Story = {
-  args: { size: 'sm', label: 'Reserve' },
+  args: { size: 'sm', label: 'Bench' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-chip');
     await expect(host?.classList.contains('jp-chip--sm')).toBe(true);
     await expect(
       canvasElement.querySelector('button')?.getAttribute('aria-label'),
-    ).toBe('Remove Reserve');
+    ).toBe('Remove Bench');
   },
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, label: 'Tryout' },
+  args: { disabled: true, label: 'Injured list' },
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
     await expect(button?.disabled).toBe(true);
-    await expect(button?.getAttribute('aria-label')).toBe('Remove Tryout');
+    await expect(button?.getAttribute('aria-label')).toBe(
+      'Remove Injured list',
+    );
   },
 };
 
 export const LongLabel: Story = {
   args: {
-    label: 'Starting pitcher for the Riverton Falcons varsity squad',
+    label: 'Jack Flaherty started Game 5 for the Los Angeles Dodgers',
   },
 };
 
@@ -126,6 +128,6 @@ export const FilterGroup: Story = {
     await expect(canvasElement.querySelectorAll('jp-chip').length).toBe(2);
     await expect(
       canvasElement.querySelector('button')?.getAttribute('aria-label'),
-    ).toBe('Remove Reserve');
+    ).toBe('Remove Bench');
   },
 };

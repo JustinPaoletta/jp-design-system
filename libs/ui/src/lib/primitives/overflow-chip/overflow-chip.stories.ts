@@ -8,9 +8,9 @@ const meta: Meta<JpOverflowChip> = {
   args: {
     label: 'Other players',
     items: [
-      { id: 'ada', label: 'Alex Morgan', href: '#reviewer-ada' },
-      { id: 'grace', label: 'Jordan Davis' },
-      { id: 'linus', label: 'Maya Chen' },
+      { id: 'ada', label: 'Jack Flaherty', href: '#reviewer-ada' },
+      { id: 'grace', label: 'Freddie Freeman' },
+      { id: 'linus', label: 'Tommy Edman' },
     ],
   },
 };
@@ -26,8 +26,10 @@ export const Open: Story = {
     });
     await userEvent.click(button);
     await expect(button).toHaveAttribute('aria-expanded', 'true');
-    await expect(c.getByRole('link', { name: 'Alex Morgan' })).toBeVisible();
+    await expect(c.getByRole('link', { name: 'Jack Flaherty' })).toBeVisible();
     await userEvent.keyboard('{Escape}');
     await expect(button).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(button);
+    await expect(c.getByRole('link', { name: 'Jack Flaherty' })).toBeVisible();
   },
 };

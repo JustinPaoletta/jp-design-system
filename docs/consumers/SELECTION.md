@@ -25,10 +25,10 @@ that already has a name.
 
 ## Select and combobox
 
-| Need                                           | Use                                           |
-| ---------------------------------------------- | --------------------------------------------- |
-| A short, known list and the platform select UI | [`jp-select`](../PRIMITIVES.md#jp-select)     |
-| Typing to narrow a single string value         | [`jp-combobox`](../PRIMITIVES.md#jp-combobox) |
+| Need                                   | Use                                           |
+| -------------------------------------- | --------------------------------------------- |
+| A known list without a search field    | [`jp-select`](../PRIMITIVES.md#jp-select)     |
+| Typing to narrow a single string value | [`jp-combobox`](../PRIMITIVES.md#jp-combobox) |
 
 Both are string `ControlValueAccessor`s. Combobox filters `options` locally
 by label. Set `loading` while the application fetches options, and set
@@ -93,8 +93,7 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
   state and replaces the hint in `aria-describedby`.
 - Passing a `label` attribute to `jp-checkbox` or `jp-switch`. The caption is
   projected content.
-- Setting `jp-heading` size independently of `as`. Pick the heading level, or
-  use `jp-text` for other copy.
+- Selecting a heading level for its appearance. Use `as` for the document outline and `size` for a different visual size.
 - Painting large surfaces with the accent. Accent is for primary actions,
   focus, active navigation, and selection.
 - Importing `Ui` / `<lib-ui>`. That export is deprecated. See
@@ -114,7 +113,7 @@ timer (default 4000ms) and is a poor place for the only copy of an error.
 | A side/bottom task panel                    | `JpDrawer`; app-shell navigation is separate.                                                                                   |
 | Nested navigation/data                      | `JpTreeView` / `JpTreeTable`; give stable IDs and controlled selection/expansion.                                               |
 | Large flat datasets                         | `JpVirtualTable` with fixed row height and paginated accessibility mode; ordinary tables support richer row details.            |
-| Appointments rather than date entry         | `JpSchedulingCalendar`; native pickers edit civil date/time strings.                                                            |
+| Appointments rather than date entry         | `JpSchedulingCalendar`; JP pickers edit civil date/time strings.                                                                |
 | Compare values visually                     | `JpChart` plus equivalent native data; the application owns aggregation and dataset meaning.                                    |
 | Rearrange items or browse optional slides   | `JpReorder` / `JpCarousel`; carousel rotation is optional.                                                                      |
 

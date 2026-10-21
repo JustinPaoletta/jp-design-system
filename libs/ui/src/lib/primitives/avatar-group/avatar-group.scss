@@ -1,23 +1,70 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
 }
-div {
+.group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--jp-space-2xs);
+  gap: 0;
 }
 .overflow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--jp-size-control-md);
-  min-height: var(--jp-size-control-md);
+  min-width: var(--jp-size-avatar-md);
+  min-height: var(--jp-size-avatar-md);
   padding-inline: var(--jp-space-2xs);
   box-sizing: border-box;
-  border: 1px solid var(--jp-color-border-default);
+  border: 2px solid var(--jp-color-surface-canvas);
   border-radius: var(--jp-radius-full);
   color: var(--jp-color-text-secondary);
   background: var(--jp-color-surface-subtle);
-  font-size: var(--jp-font-size-caption);
+  font: var(--jp-font-weight-medium) var(--jp-font-size-caption) / 1
+    var(--jp-font-family-base);
+  cursor: pointer;
 }
+
+.group > jp-avatar + jp-avatar,
+.group > jp-popover {
+  margin-inline-start: calc(-1 * var(--jp-space-xs));
+}
+
+.overflow:hover {
+  background: var(--jp-color-surface-emphasis);
+  color: var(--jp-color-text-primary);
+}
+.group:focus-visible,
+.overflow:focus-visible,
+.members:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.members {
+  max-block-size: 20rem;
+  overflow-y: auto;
+}
+.members__heading {
+  margin: 0 0 var(--jp-space-sm);
+  font-weight: var(--jp-font-weight-semibold);
+  color: var(--jp-color-text-primary);
+}
+.members__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--jp-space-sm);
+}
+.members__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+.members__list span {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+@include interaction.pressable('.overflow');

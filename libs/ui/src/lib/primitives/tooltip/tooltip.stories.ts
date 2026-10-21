@@ -16,6 +16,11 @@ const meta: Meta<JpTooltip> = {
       options: JP_TOOLTIP_PLACEMENTS,
     },
   },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector('jp-tooltip') as HTMLElement;
+    await userEvent.hover(host);
+    await expect(host.querySelector('[role="tooltip"]')).toBeVisible();
+  },
   args: {
     content: 'Copy game ID',
     placement: 'top',

@@ -73,13 +73,22 @@ describe('JpButton', () => {
     expect(button.disabled).toBe(true);
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect(button.getAttribute('aria-label')).toBe('Saving');
-    expect(button.textContent).toContain('Saving');
+    expect(
+      button.querySelector('.jp-button__content')?.getAttribute('aria-hidden'),
+    ).toBe('true');
+    expect(
+      button.querySelector('.jp-button__spinner')?.getAttribute('aria-hidden'),
+    ).toBe('true');
     fixture.componentRef.setInput('disabled', true);
     fixture.componentRef.setInput('loading', false);
     fixture.detectChanges();
     expect(button.disabled).toBe(true);
     expect(button.hasAttribute('aria-busy')).toBe(false);
     expect(button.hasAttribute('aria-label')).toBe(false);
+    expect(
+      button.querySelector('.jp-button__content')?.hasAttribute('aria-hidden'),
+    ).toBe(false);
+    expect(button.querySelector('.jp-button__spinner')).toBeNull();
     fixture.componentRef.setInput('disabled', false);
     fixture.detectChanges();
     expect(button.disabled).toBe(false);

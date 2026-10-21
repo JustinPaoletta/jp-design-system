@@ -1,3 +1,7 @@
+@use '../shared/interaction';
+
+$with-text-actions: true !default;
+
 :host {
   display: block;
 }
@@ -5,43 +9,53 @@
 .jp-input__row {
   display: flex;
   align-items: center;
-  gap: var(--jp-space-xs);
+  gap: 0;
+  border: 1px solid var(--jp-color-field-border);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-field-bg);
 }
 .jp-input__row input {
   min-width: 0;
   flex: 1;
 }
-.jp-input__action {
-  flex-shrink: 0;
-  min-height: var(--jp-size-control-sm);
-  padding: var(--jp-space-2xs) var(--jp-space-xs);
-  border: 1px solid var(--jp-color-field-border);
-  border-radius: var(--jp-radius-sm);
-  background: var(--jp-color-surface-subtle);
-  color: var(--jp-color-text-primary);
-  font: inherit;
-  font-size: var(--jp-font-size-caption);
-  cursor: pointer;
-}
-.jp-input__action:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: 2px;
-}
-.jp-input__action:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+@if $with-text-actions {
+  .jp-input__action {
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 0;
+    padding: var(--jp-space-2xs) var(--jp-space-sm);
+    border: 0;
+    border-inline-start: 1px solid var(--jp-color-field-border);
+    border-radius: 0;
+    border-start-end-radius: var(--jp-radius-md);
+    border-end-end-radius: var(--jp-radius-md);
+    background: transparent;
+    color: var(--jp-color-text-primary);
+    font: inherit;
+    font-size: var(--jp-font-size-caption);
+    font-weight: var(--jp-font-weight-medium);
+    cursor: pointer;
+  }
+  .jp-input__action:focus-visible {
+    outline: 2px solid var(--jp-color-focus-ring);
+    outline-offset: 2px;
+  }
+  .jp-input__action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .jp-input__field {
   display: flex;
   flex-direction: column;
-  gap: var(--jp-space-2xs);
+  gap: var(--jp-space-xs);
 }
 
 .jp-input__label {
   color: var(--jp-color-field-label);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
 }
@@ -65,9 +79,16 @@
   color: var(--jp-color-field-placeholder);
 }
 
-.jp-input__control[type='date'],
-.jp-input__control[type='time'] {
-  color-scheme: dark;
+@if $with-text-actions {
+  .jp-input__control[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  .jp-input__control::-webkit-inner-spin-button,
+  .jp-input__control::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
 }
 
 .jp-input__control:hover:not(:disabled):not(:read-only) {
@@ -84,7 +105,7 @@
 }
 
 :host(.jp-input--sm) .jp-input__control {
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
   padding-inline: var(--jp-space-xs);
 }
 
@@ -117,3 +138,54 @@
     transition: none;
   }
 }
+
+.jp-input__row:has(input:hover:not(:disabled):not([readonly])) {
+  border-color: var(--jp-color-field-border-hover);
+}
+.jp-input__row:has(input[aria-invalid='true']) {
+  border-color: var(--jp-color-field-border-invalid);
+}
+.jp-input__row:has(input:focus-visible) {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
+}
+.jp-input__row .jp-input__control {
+  border: 0;
+  min-height: calc(var(--jp-field-height, var(--jp-size-control-md)) - 2px);
+  background: transparent;
+}
+.jp-input__row .jp-input__control:focus-visible {
+  outline: none;
+}
+.jp-input__row:has(input[readonly]) {
+  background: var(--jp-color-surface-sunken);
+  border-style: dashed;
+}
+@if $with-text-actions {
+  .jp-input__reveal-label {
+    display: grid;
+  }
+  .jp-input__reveal-label > span {
+    grid-area: 1 / 1;
+  }
+  .jp-input__reveal-label > [aria-hidden='true'] {
+    visibility: hidden;
+  }
+  .jp-input__action:hover:not(:disabled) {
+    background: var(--jp-color-surface-raised);
+  }
+  .jp-input__search-icon {
+    flex: none;
+    inline-size: var(--jp-size-icon-md);
+    block-size: var(--jp-size-icon-md);
+    margin-inline-start: var(--jp-space-sm);
+    color: var(--jp-color-text-secondary);
+  }
+  .jp-input__control[type='search']::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  @include interaction.pressable('.jp-input__action');
+}
+
+@include interaction.feedback('.jp-input__row');

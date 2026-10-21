@@ -7,13 +7,10 @@ import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
 import { JpAssistantPanel } from './assistant/assistant-panel';
 import { JpAssistantTrigger } from './assistant/assistant-trigger';
 import { JpAssistantService } from './assistant/assistant.service';
-import { JpBox } from './box/box';
 import { JpButton } from './button/button';
 import { JpHeading } from './heading/heading';
 import { JpInline } from './inline/inline';
-import { JpStack } from './stack/stack';
-import { JpSurface } from './surface/surface';
-import { JpText } from './text/text';
+import { JpCard } from './card/card';
 
 @Component({
   selector: 'jp-assistant-composition-host',
@@ -21,15 +18,49 @@ import { JpText } from './text/text';
   imports: [
     JpAppShell,
     JpAppShellNavItem,
-    JpBox,
-    JpStack,
     JpInline,
-    JpSurface,
-    JpText,
+    JpCard,
     JpHeading,
     JpButton,
     JpAssistantPanel,
     JpAssistantTrigger,
+  ],
+  styles: [
+    `
+      .example-page {
+        box-sizing: border-box;
+        max-inline-size: 60rem;
+        margin-inline: auto;
+        padding: var(--jp-space-xl) var(--jp-space-lg);
+      }
+      .example-page__header {
+        margin-block-end: var(--jp-space-lg);
+      }
+      .example-page__header p {
+        margin-block: var(--jp-space-xs) 0;
+        color: var(--jp-color-text-secondary);
+        font-size: var(--jp-font-size-body-sm);
+        line-height: var(--jp-font-line-height-normal);
+      }
+      .example-page__cards {
+        display: grid;
+        gap: var(--jp-space-lg);
+        max-inline-size: 45rem;
+      }
+      .example-page__cards > .example-page__header {
+        margin-block-end: 0;
+      }
+      .example-page__status {
+        margin: 0;
+        color: var(--jp-color-text-secondary);
+        font-size: var(--jp-font-size-caption);
+      }
+      @media (width <= 48rem) {
+        .example-page {
+          padding: var(--jp-space-lg) var(--jp-space-md);
+        }
+      }
+    `,
   ],
   template: `
     <jp-app-shell
@@ -38,6 +69,7 @@ import { JpText } from './text/text';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
+      <span jpAppShellBrand>Los Angeles Dodgers</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -63,62 +95,44 @@ import { JpText } from './text/text';
         </jp-app-shell-nav-item>
       </nav>
       <main jpAppShellMain>
-        <jp-box padding="lg" maxWidth="wide">
-          <jp-stack gap="lg">
-            <jp-stack gap="xs">
-              <jp-heading as="h1">Falcons assistant</jp-heading>
-              <jp-text tone="secondary">
-                Ask the coach open the branded assistant panel with calm Ask
-                about the Falcons game or roster.
-              </jp-text>
-              <jp-inline gap="sm">
-                <jp-text as="small" tone="muted"
-                  >accent: {{ documentAccent }}</jp-text
-                >
-                <jp-text as="small" tone="muted"
-                  >density: {{ documentDensity }}</jp-text
-                >
-              </jp-inline>
-            </jp-stack>
+        <div class="example-page">
+          <div class="example-page__cards">
+            <header class="example-page__header">
+              <jp-heading as="h1">Dodgers assistant</jp-heading>
+              <p>Ask about the Dodgers game or roster.</p>
+            </header>
 
-            <jp-surface
-              tone="raised"
-              padding="md"
-              border="subtle"
-              elevation="none"
-            >
-              <jp-stack gap="md">
-                <jp-heading as="h2">Ask the coach</jp-heading>
-                <jp-inline gap="sm" wrap="true">
-                  <jp-button
-                    type="button"
-                    variant="secondary"
-                    jpAssistantTrigger
-                    [jpAssistantContext]="deploymentContext"
-                  >
-                    Ask about the game
-                  </jp-button>
-                  <jp-button
-                    type="button"
-                    variant="ghost"
-                    jpAssistantTrigger
-                    [jpAssistantContext]="filterContext"
-                    [jpAssistantClearMessages]="true"
-                  >
-                    Ask about the roster
-                  </jp-button>
-                </jp-inline>
-              </jp-stack>
-            </jp-surface>
-          </jp-stack>
-        </jp-box>
+            <jp-card title="Ask the manager">
+              <p>Choose a game or roster to start a conversation.</p>
+              <jp-inline jpCardActions gap="sm" wrap="true">
+                <jp-button
+                  type="button"
+                  variant="primary"
+                  jpAssistantTrigger
+                  [jpAssistantContext]="deploymentContext"
+                >
+                  Ask about the game
+                </jp-button>
+                <jp-button
+                  type="button"
+                  variant="ghost"
+                  jpAssistantTrigger
+                  [jpAssistantContext]="filterContext"
+                  [jpAssistantClearMessages]="true"
+                >
+                  Ask about the roster
+                </jp-button>
+              </jp-inline>
+            </jp-card>
+          </div>
+        </div>
       </main>
     </jp-app-shell>
 
     <jp-assistant-panel
-      title="Falcons coach"
+      title="Dodgers manager"
       emptyTitle="Ask about the lineup"
-      emptyDescription="Ask about players, the final score or the next game."
+      emptyDescription="Ask about players, the final score or the World Series."
       (messageSubmit)="onSubmit($event)"
     />
   `,
@@ -129,28 +143,23 @@ class AssistantCompositionHost {
   sidebarCollapsed = false;
   mobileNavOpen = false;
 
-  readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
-  readonly documentDensity =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
-
   readonly deploymentContext = {
-    label: 'Game FAL-1042',
-    description: 'Falcons 5, Bears 3. Final score.',
+    label: 'World Series Game 5',
+    description: 'Dodgers 7, Yankees 6. Final score.',
     entityType: 'game',
-    entityId: 'FAL-1042',
+    entityId: '775296',
   };
 
   readonly filterContext = {
     label: 'Squad filters',
-    description: 'Varsity + reserve',
+    description: 'Active roster and injured list',
     entityType: 'filters',
   };
 
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Falcons 5, Bears 3.`,
+      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
     });
   }
 }
@@ -174,7 +183,7 @@ type Story = StoryObj<JpAppShell>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Falcons assistant',
+      'Dodgers assistant',
     );
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
       (button) => button.textContent?.trim() === 'Ask about the game',
@@ -182,7 +191,7 @@ export const Default: Story = {
     await expect(trigger).toBeTruthy();
     if (trigger) {
       await userEvent.click(trigger);
-      await expect(canvasElement.textContent).toContain('Game FAL-1042');
+      await expect(canvasElement.textContent).toContain('World Series Game 5');
       await expect(
         canvasElement.querySelector('[role="complementary"]'),
       ).toBeTruthy();

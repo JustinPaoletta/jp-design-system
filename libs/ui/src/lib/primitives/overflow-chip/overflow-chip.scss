@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
@@ -7,7 +9,7 @@
 button {
   border: 1px solid var(--jp-color-border-strong);
   border-radius: var(--jp-radius-full);
-  min-block-size: var(--jp-size-control-md);
+  min-block-size: var(--jp-size-control-sm);
   padding-inline: var(--jp-space-sm);
   background: var(--jp-color-surface-subtle);
   color: var(--jp-color-text-primary);
@@ -22,7 +24,8 @@ button:focus-visible {
 ul {
   padding-inline-start: var(--jp-space-lg);
   margin: 0;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 li {
   overflow-wrap: anywhere;
@@ -30,3 +33,6 @@ li {
 li + li {
   margin-block-start: var(--jp-space-sm);
 }
+
+@include interaction.pressable('button');
+@include interaction.hover('button');

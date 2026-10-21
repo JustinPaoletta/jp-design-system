@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +7,12 @@ import { JpCombobox } from './combobox';
 const meta: Meta<JpCombobox> = {
   title: 'Primitives/Controls/Combobox',
   component: JpCombobox,
-  decorators: [moduleMetadata({ imports: [FormsModule] })],
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 28rem; width: 100%;">${story}</div>`,
+    ),
+    moduleMetadata({ imports: [FormsModule] }),
+  ],
   parameters: { layout: 'padded' },
   args: {
     label: 'Club role',
@@ -14,7 +20,7 @@ const meta: Meta<JpCombobox> = {
     options: [
       { value: 'viewer', label: 'Fan' },
       { value: 'editor', label: 'Scorekeeper' },
-      { value: 'admin', label: 'Coach', disabled: true },
+      { value: 'admin', label: 'Manager', disabled: true },
     ],
     disabled: false,
     error: '',

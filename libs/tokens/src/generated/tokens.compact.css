@@ -12,9 +12,9 @@
   --jp-space-xl: 1.5rem;
   --jp-space-2xl: 2rem;
   --jp-space-3xl: 3rem;
-  --jp-size-control-xs: 0.75rem;
-  --jp-size-control-sm: 1rem;
-  --jp-size-control-md: 1.25rem;
-  --jp-size-control-lg: 1.5rem;
-  --jp-size-control-xl: 2rem;
+  --jp-size-control-xs: 1.5rem;
+  --jp-size-control-sm: 1.75rem;
+  --jp-size-control-md: 2rem;
+  --jp-size-control-lg: 2.5rem;
+  --jp-size-control-xl: 3rem;
 }

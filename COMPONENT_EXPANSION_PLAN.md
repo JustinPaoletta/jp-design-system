@@ -1,8 +1,14 @@
 # Component Expansion Task List
 
-Updated: October 8, 2026. Remaining work: five promotion and integration items. The [documentation index](docs/README.md) links completed feature work. The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
+Updated: October 19, 2026. Five promotion and integration items remain.
+The [documentation index](docs/README.md) links completed feature work.
+The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
 The [changelog](CHANGELOG.md) records changes. Implemented components remain preview APIs until their individual inspections finish. This is the single list of remaining work.
+
+The October 19 component inspection covers all 97 Storybook groups at desktop and narrow widths.
+The recorded visual suggestions are implemented.
+The [design inspection](design-qa.md#remaining-component-inspection) gives the scope and limits.
 
 ## Promotion and integration follow-up
 

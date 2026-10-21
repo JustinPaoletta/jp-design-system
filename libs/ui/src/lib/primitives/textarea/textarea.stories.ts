@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect } from 'storybook/test';
 import { JP_CONTROL_SIZES } from '../shared/primitive-types';
@@ -5,6 +6,11 @@ import { JpTextarea } from './textarea';
 
 const meta: Meta<JpTextarea> = {
   title: 'Primitives/Controls/Textarea',
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 32rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpTextarea,
   parameters: {
     layout: 'padded',
@@ -20,7 +26,7 @@ const meta: Meta<JpTextarea> = {
     rows: { control: 'number' },
   },
   args: {
-    label: 'Coach notes',
+    label: 'Manager notes',
     hint: 'Add notes for the coaches.',
     error: '',
     rows: 4,

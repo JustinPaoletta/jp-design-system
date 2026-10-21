@@ -1,0 +1,108 @@
+@use 'sass:selector';
+
+@mixin feedback($selectors) {
+  #{$selectors} {
+    transition: var(--jp-motion-transition-base);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #{$selectors} {
+      transition: none;
+    }
+  }
+}
+
+@mixin pressable($selectors) {
+  @include feedback($selectors);
+  #{selector.append($selectors, ":active:not(:disabled):not([aria-disabled='true'])")} {
+    background-color: var(
+      --jp-press-bg,
+      var(--jp-color-button-secondary-bg-pressed)
+    );
+    color: var(--jp-press-fg, var(--jp-color-text-primary));
+    box-shadow: inset 0 0 0 1px
+      var(--jp-press-border, var(--jp-color-border-strong));
+    transition: none;
+  }
+}
+
+@mixin hover($selectors) {
+  #{selector.append($selectors, ":hover:not(:disabled):not([aria-disabled='true'])")} {
+    background-color: var(--jp-hover-bg, var(--jp-color-surface-raised));
+    color: var(--jp-hover-fg, var(--jp-color-text-primary));
+  }
+}
+
+@mixin primary($selectors) {
+  #{$selectors} {
+    --jp-hover-bg: var(--jp-color-button-primary-bg-hover);
+    --jp-hover-fg: var(--jp-color-button-primary-fg);
+    --jp-press-bg: var(--jp-color-button-primary-bg-pressed);
+    --jp-press-fg: var(--jp-color-button-primary-fg);
+    --jp-press-border: color-mix(
+      in srgb,
+      var(--jp-color-button-primary-fg) 24%,
+      transparent
+    );
+  }
+}
+
+@mixin link($selectors) {
+  @include feedback($selectors);
+  #{selector.append($selectors, ":hover:not([aria-disabled='true'])")} {
+    color: var(--jp-color-accent-soft);
+    text-decoration: underline;
+  }
+  #{selector.append($selectors, ":active:not([aria-disabled='true'])")} {
+    color: var(--jp-color-accent-muted);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    transition: none;
+  }
+}
+
+@mixin selection($root, $input, $mark) {
+  @include feedback($mark);
+  #{$root}:has(#{$input}:not(:disabled)):hover #{$mark} {
+    box-shadow: inset 0 0 0 1px var(--jp-color-border-strong);
+  }
+  #{$root}:has(#{$input}:not(:disabled)):active #{$mark} {
+    box-shadow: inset 0 0 0 1px var(--jp-color-focus-ring);
+    transition: none;
+  }
+  #{$input}:is(:checked, :indeterminate) + #{$mark} {
+    transition: none;
+  }
+}
+
+@mixin range {
+  @include feedback('.number');
+  .number:hover:not(:disabled):not([readonly]) {
+    border-color: var(--jp-color-field-border-hover);
+  }
+  .slider:disabled,
+  .number:disabled {
+    cursor: not-allowed;
+  }
+  @each $thumb in ('-webkit-slider-thumb', '-moz-range-thumb') {
+    .slider::#{$thumb} {
+      transition: var(--jp-motion-transition-base);
+    }
+    .slider:hover:not(:disabled)::#{$thumb} {
+      background-color: var(--jp-color-surface-raised);
+    }
+    .slider:active:not(:disabled)::#{$thumb} {
+      background-color: var(--jp-color-accent-solid);
+      box-shadow: 0
+        0
+        0
+        3px
+        color-mix(in srgb, var(--jp-color-accent-solid) 24%, transparent);
+      transition: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slider::#{$thumb} {
+        transition: none;
+      }
+    }
+  }
+}

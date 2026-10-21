@@ -99,7 +99,28 @@ export interface JpMessages {
   };
   media: { loading: string; error: string };
   actions: { more: string; skip: string };
-  dates: { start: string; end: string };
+  dates: {
+    start: string;
+    end: string;
+    openCalendar: (label: string) => string;
+    calendarLabel: (label: string) => string;
+    previousMonth: string;
+    nextMonth: string;
+    formatHint: string;
+    keyboardHint: string;
+    openTimePicker: string;
+    timePicker: string;
+    hour: string;
+    minute: string;
+    second: string;
+    invalidDate: string;
+    requiredDate: string;
+    requiredTime: string;
+    invalidTime: string;
+    apply: string;
+    clear: string;
+    close: string;
+  };
   commands: { title: string; search: string; empty: string };
   inlineEdit: {
     edit: string;
@@ -111,6 +132,8 @@ export interface JpMessages {
     empty: string;
   };
   upload: {
+    chooseFile: string;
+    chooseFiles: string;
     empty: string;
     queue: string;
     remove: string;
@@ -149,6 +172,14 @@ export interface JpMessages {
   overflow: { more: (count: number) => string };
   forms: {
     errorSummary: string;
+    requiredValue: string;
+    invalidValue: string;
+    invalidEmail: string;
+    invalidUrl: string;
+    invalidRange: string;
+    invalidStep: string;
+    invalidLength: string;
+    invalidFormat: string;
     clearSearch: string;
     showPassword: string;
     hidePassword: string;
@@ -333,7 +364,29 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
   },
   media: { loading: 'Loading image…', error: 'Image unavailable' },
   actions: { more: 'More actions', skip: 'Skip to content' },
-  dates: { start: 'Start date', end: 'End date' },
+  dates: {
+    start: 'Start date',
+    end: 'End date',
+    openCalendar: (label) => (label ? `Choose ${label}` : 'Choose date'),
+    calendarLabel: (label) => (label ? `${label} calendar` : 'Choose date'),
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+    formatHint: 'YYYY-MM-DD',
+    keyboardHint:
+      'Use arrow keys to move between dates. Press Enter to select.',
+    openTimePicker: 'Choose time',
+    timePicker: 'Choose time',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+    invalidDate: 'Enter a valid date within the allowed range and step.',
+    requiredDate: 'Enter a date.',
+    requiredTime: 'Enter a time.',
+    invalidTime: 'Enter a valid time within the allowed range and step.',
+    apply: 'Apply',
+    clear: 'Clear',
+    close: 'Close',
+  },
   commands: {
     title: 'Commands',
     search: 'Search commands',
@@ -349,6 +402,8 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
     empty: 'Not set',
   },
   upload: {
+    chooseFile: 'Choose file',
+    chooseFiles: 'Choose files',
     empty: 'No files selected',
     queue: 'Selected files',
     remove: 'Remove',
@@ -392,6 +447,14 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
   overflow: { more: (count) => `Show ${count} more items` },
   forms: {
     errorSummary: 'There is a problem',
+    requiredValue: 'Complete this field.',
+    invalidValue: 'Enter a valid value.',
+    invalidEmail: 'Enter a valid email address.',
+    invalidUrl: 'Enter a valid URL.',
+    invalidRange: 'Enter a value within the allowed range.',
+    invalidStep: 'Enter a value that matches the allowed step.',
+    invalidLength: 'Check the value length.',
+    invalidFormat: 'Use the required format.',
     clearSearch: 'Clear search',
     showPassword: 'Show password',
     hidePassword: 'Hide password',

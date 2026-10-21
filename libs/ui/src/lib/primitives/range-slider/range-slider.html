@@ -5,16 +5,21 @@
     <div class="heading">
       <label [for]="resolvedId() + '-' + index"
         >{{ index === 0 ? lowerLabel() : upperLabel() }}</label
-      ><span class="value">{{ valueText()(displayedValue()[index]) }}</span>
+      >@if (!showNumberInputs()) {
+      <span class="value">{{ valueText()(displayedValue()[index]) }}</span> }
     </div>
     <div class="controls">
       <input
         class="slider"
+        [style.--jp-slider-start]="positions()[0] + '%'"
+        [style.--jp-slider-end]="positions()[1] + '%'"
         type="range"
         [id]="resolvedId() + '-' + index"
         [value]="displayedValue()[index]"
-        [min]="index === 0 ? safeMin() : displayedValue()[0]"
-        [max]="index === 0 ? displayedValue()[1] : safeMax()"
+        [min]="safeMin()"
+        [max]="safeMax()"
+        [attr.aria-valuemin]="index === 0 ? safeMin() : displayedValue()[0]"
+        [attr.aria-valuemax]="index === 0 ? displayedValue()[1] : safeMax()"
         [step]="safeStep()"
         [disabled]="isDisabled() || readonly()"
         [attr.aria-valuetext]="valueText()(displayedValue()[index])"

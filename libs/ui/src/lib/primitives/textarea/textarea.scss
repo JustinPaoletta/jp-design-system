@@ -5,13 +5,13 @@
 .jp-textarea__field {
   display: flex;
   flex-direction: column;
-  gap: var(--jp-space-2xs);
+  gap: var(--jp-space-xs);
 }
 
 .jp-textarea__label {
   color: var(--jp-color-field-label);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-caption);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
 }
@@ -72,4 +72,9 @@
   .jp-textarea__control {
     transition: none;
   }
+}
+
+.jp-textarea__control[readonly] {
+  background: var(--jp-color-surface-sunken);
+  border-style: dashed;
 }

@@ -1,48 +1,32 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
-  min-width: 16rem;
-  max-width: 24rem;
+  inline-size: 24rem;
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 .jp-toast__root {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--jp-space-sm);
   box-sizing: border-box;
-  padding: var(--jp-space-sm) var(--jp-space-md);
+  padding: var(--jp-space-md);
   border: 1px solid var(--jp-color-toast-border);
-  border-left-width: 3px;
-  border-radius: var(--jp-radius-md);
+  border-radius: var(--jp-radius-lg);
   background: var(--jp-color-toast-bg);
   color: var(--jp-color-toast-fg);
   box-shadow: var(--jp-elevation-floating);
   font-family: var(--jp-font-family-base);
 }
 
-:host(.jp-toast--neutral) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-neutral-accent);
-}
-
-:host(.jp-toast--success) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-success-accent);
-}
-
-:host(.jp-toast--warning) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-warning-accent);
-}
-
-:host(.jp-toast--error) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-error-accent);
-}
-
-:host(.jp-toast--info) .jp-toast__root {
-  border-left-color: var(--jp-color-toast-info-accent);
-}
-
 .jp-toast__message {
   margin: 0;
   flex: 1;
-  font-size: var(--jp-font-size-body);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
 }
@@ -74,3 +58,24 @@
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: 2px;
 }
+
+.jp-toast__icon {
+  flex-shrink: 0;
+}
+:host(.jp-toast--neutral) .jp-toast__icon {
+  color: var(--jp-color-toast-neutral-accent);
+}
+:host(.jp-toast--success) .jp-toast__icon {
+  color: var(--jp-color-toast-success-accent);
+}
+:host(.jp-toast--warning) .jp-toast__icon {
+  color: var(--jp-color-toast-warning-accent);
+}
+:host(.jp-toast--error) .jp-toast__icon {
+  color: var(--jp-color-toast-error-accent);
+}
+:host(.jp-toast--info) .jp-toast__icon {
+  color: var(--jp-color-toast-info-accent);
+}
+
+@include interaction.pressable('.jp-toast__dismiss');

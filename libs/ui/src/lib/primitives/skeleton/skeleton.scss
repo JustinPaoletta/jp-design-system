@@ -9,7 +9,7 @@
   aspect-ratio: 1;
 }
 :host(.jp-skeleton--animated) {
-  animation: jp-skeleton-pulse calc(var(--jp-motion-duration-slow) * 4)
+  animation: jp-skeleton-pulse var(--jp-motion-duration-indicator)
     var(--jp-motion-easing-standard) infinite alternate;
 }
 @keyframes jp-skeleton-pulse {

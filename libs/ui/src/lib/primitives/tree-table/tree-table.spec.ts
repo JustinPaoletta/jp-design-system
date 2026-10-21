@@ -272,5 +272,11 @@ describe('JpTreeTable', () => {
     fixture.componentInstance.retryRequested.subscribe(retry);
     fixture.nativeElement.querySelector('.state button').click();
     expect(retry).toHaveBeenCalled();
+    expect(
+      fixture.nativeElement.querySelectorAll('[role=status]'),
+    ).toHaveLength(1);
+    expect(
+      fixture.nativeElement.querySelector('tbody [role=status]'),
+    ).toBeTruthy();
   });
 });

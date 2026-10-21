@@ -8,25 +8,18 @@ import {
   JpAssistantPanel,
   JpAssistantService,
   JpAssistantTrigger,
-  JpBox,
   JpButton,
   JpHeading,
   JpInline,
-  JpStack,
-  JpSurface,
-  JpText,
+  JpCard,
   type JpAssistantContext,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-assistant-page',
   imports: [
-    JpBox,
-    JpStack,
     JpInline,
-    JpSurface,
-    JpText,
+    JpCard,
     JpHeading,
     JpButton,
     JpAssistantPanel,
@@ -38,30 +31,26 @@ import { injectDocumentTheme } from '../../shared/document-theme';
 })
 export class AssistantPage implements OnDestroy {
   private readonly assistant = inject(JpAssistantService);
-  private readonly theme = injectDocumentTheme();
 
   lastReply = 'None yet';
 
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
-
   readonly deploymentContext: JpAssistantContext = {
-    label: 'Game FAL-1042',
-    description: 'Falcons 5, Bears 3. Final score.',
+    label: 'World Series Game 5',
+    description: 'Dodgers 7, Yankees 6. Final score.',
     entityType: 'game',
-    entityId: 'FAL-1042',
+    entityId: '775296',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Player Alex Morgan',
-    description: 'Status: Day to day',
-    entityType: 'service',
-    entityId: 'payments-api',
+    label: 'Player Jack Flaherty',
+    description: 'Pitcher · Active roster · Started Game 5',
+    entityType: 'player',
+    entityId: 'jack-flaherty',
   };
 
   readonly filterContext: JpAssistantContext = {
     label: 'Squad filters',
-    description: 'Varsity + reserve',
+    description: 'Active roster and injured list',
     entityType: 'filters',
   };
 
@@ -77,16 +66,16 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'The Falcons won 5–3 against the Lakeview Bears.',
+      content: 'The Dodgers won 7–6 against the New York Yankees.',
     });
     this.assistant.addMessage({
       role: 'assistant',
       content:
-        'The Falcons won 5–3. Alex Morgan and Jordan Davis drove in runs.',
+        'The Dodgers won 7–6. Freddie Freeman and Mookie Betts drove in runs.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who is pitching in the next game?',
+      content: 'Who started Game 5?',
     });
   }
 
@@ -94,7 +83,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Structured reply for “${content}”. Status looks healthy with one degraded dependency.`,
+      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
     });
   }
 }

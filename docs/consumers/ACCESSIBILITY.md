@@ -52,8 +52,8 @@ inputs.
 ## What the application owns
 
 - The document language (`lang` on `<html>`) and a single logical `h1`.
-  Heading levels follow the outline. `jp-heading` `as` sets both the tag and
-  the visual size.
+  Heading levels follow the outline. `jp-heading` `as` sets the tag.
+  Its optional `size` input changes appearance without changing that tag.
 - Accessible names for icon-only controls (`ariaLabel` on `jp-icon-button`)
   and for fields that have no visible `label`.
 - Checkbox and switch captions, projected as content.

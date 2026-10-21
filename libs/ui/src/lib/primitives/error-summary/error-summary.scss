@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -6,8 +8,15 @@ section {
   border: 1px solid var(--jp-color-state-error-border);
   border-radius: var(--jp-radius-md);
   color: var(--jp-color-text-primary);
-  background: var(--jp-color-surface-subtle);
+  background: color-mix(
+    in srgb,
+    var(--jp-color-state-error-border) 8%,
+    var(--jp-color-surface-subtle)
+  );
   font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
+  overflow-wrap: anywhere;
 }
 section:focus {
   outline: 2px solid var(--jp-color-focus-ring);
@@ -15,6 +24,8 @@ section:focus {
 }
 h2 {
   font-size: var(--jp-font-size-body);
+  font-weight: var(--jp-font-weight-semibold);
+  line-height: var(--jp-font-line-height-tight);
   margin: 0;
 }
 ul {
@@ -23,4 +34,25 @@ ul {
 }
 li + li {
   margin-block-start: var(--jp-space-xs);
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--jp-space-sm);
+}
+h2 jp-icon {
+  color: var(--jp-color-state-error-border);
+  flex-shrink: 0;
+}
+
+@include interaction.link('a');
+
+a {
+  color: var(--jp-color-text-primary);
+  text-underline-offset: var(--jp-space-2xs);
+}
+a:focus-visible {
+  outline: 2px solid var(--jp-color-focus-ring);
+  outline-offset: 2px;
 }

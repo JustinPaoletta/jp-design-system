@@ -52,6 +52,7 @@ const meta: Meta<JpSurface> = {
 
         .jp-surface-story__frame {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-xs);
           inline-size: 100%;
           padding: var(--jp-space-sm);
@@ -66,26 +67,33 @@ const meta: Meta<JpSurface> = {
         }
 
         .jp-surface-story__stage {
-          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-sm), 3vw, var(--jp-space-lg));
           border: 1px solid var(--jp-color-border-subtle);
           border-radius: var(--jp-radius-xl);
           overflow: visible;
         }
 
         .jp-surface-story__mat {
-          padding: var(--jp-space-2xl);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-md), 4vw, var(--jp-space-2xl));
           border-radius: var(--jp-radius-lg);
           overflow: visible;
         }
 
         .jp-surface-story__compare {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-xl);
-          grid-template-columns: repeat(auto-fit, minmax(calc(var(--jp-space-3xl) * 4), 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--jp-space-3xl) * 4)), 1fr));
         }
 
         .jp-surface-story__sample {
+          min-inline-size: 0;
           max-width: calc(var(--jp-space-3xl) * 5);
+          overflow-wrap: anywhere;
         }
 
         .jp-surface-story__label {
@@ -115,15 +123,15 @@ const meta: Meta<JpSurface> = {
                 <div class="jp-surface-story__sample">
                   <div class="jp-surface-story__label">none (reference)</div>
                   <jp-surface [as]="asTag" [tone]="tone" [padding]="padding" [radius]="radius" border="subtle" elevation="none">
-                    <div class="jp-surface-story__eyebrow">Falcons clubhouse</div>
+                    <div class="jp-surface-story__eyebrow">Dodgers clubhouse</div>
                     <div>No elevation</div>
                   </jp-surface>
                 </div>
                 <div class="jp-surface-story__sample">
                   <div class="jp-surface-story__label">{{ elevation }} (control)</div>
                   <jp-surface [as]="asTag" [tone]="tone" [padding]="padding" [radius]="radius" [border]="border" [elevation]="elevation">
-                    <div class="jp-surface-story__eyebrow">Falcons clubhouse</div>
-                    <div>Falcons clubhouse</div>
+                    <div class="jp-surface-story__eyebrow">Dodgers clubhouse</div>
+                    <div>Dodgers clubhouse</div>
                   </jp-surface>
                 </div>
               </div>
@@ -206,6 +214,7 @@ export const ElevationLadder: Story = {
 
         .jp-surface-story__frame {
           display: grid;
+          min-inline-size: 0;
           gap: var(--jp-space-sm);
           inline-size: 100%;
           padding: var(--jp-space-sm);
@@ -220,7 +229,9 @@ export const ElevationLadder: Story = {
         }
 
         .jp-surface-story__stage {
-          padding: var(--jp-space-lg);
+          box-sizing: border-box;
+          min-inline-size: 0;
+          padding: clamp(var(--jp-space-sm), 3vw, var(--jp-space-lg));
           border: 1px solid var(--jp-color-border-subtle);
           border-radius: var(--jp-radius-xl);
           background: var(--jp-color-surface-canvas);
@@ -229,12 +240,19 @@ export const ElevationLadder: Story = {
 
         .jp-surface-story__mat {
           display: grid;
+          box-sizing: border-box;
+          min-inline-size: 0;
           gap: var(--jp-space-lg);
-          grid-template-columns: repeat(auto-fit, minmax(calc(var(--jp-space-3xl) * 4), 1fr));
-          padding: var(--jp-space-2xl);
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--jp-space-3xl) * 4)), 1fr));
+          padding: clamp(var(--jp-space-md), 4vw, var(--jp-space-2xl));
           border-radius: var(--jp-radius-lg);
-          background: var(--jp-color-surface-emphasis);
+          background: var(--jp-color-surface-canvas);
           overflow: visible;
+        }
+
+        .jp-surface-story__mat > div {
+          min-inline-size: 0;
+          overflow-wrap: anywhere;
         }
 
         .jp-surface-story__label {
@@ -248,32 +266,32 @@ export const ElevationLadder: Story = {
       <div class="jp-surface-story__shell">
         <div class="jp-surface-story__frame">
           <div class="jp-surface-story__hint">
-            All elevation steps on a fixed raised panel — none, raised, floating, and overlay.
+            Compare surface roles on the application canvas. Use shadows for floating content.
           </div>
           <div class="jp-surface-story__stage">
             <div class="jp-surface-story__mat">
               <div>
                 <div class="jp-surface-story__label">none</div>
-                <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="none">
-                  Elevation none
+                <jp-surface tone="subtle" padding="lg" radius="lg" border="subtle" elevation="none">
+                  Card — game report
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">raised</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="raised">
-                  Elevation raised
+                  Raised panel — team details
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">floating</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="floating">
-                  Elevation floating
+                  Floating panel — player actions
                 </jp-surface>
               </div>
               <div>
                 <div class="jp-surface-story__label">overlay</div>
                 <jp-surface tone="raised" padding="md" radius="lg" border="subtle" elevation="overlay">
-                  Elevation overlay
+                  Overlay — confirm lineup
                 </jp-surface>
               </div>
             </div>

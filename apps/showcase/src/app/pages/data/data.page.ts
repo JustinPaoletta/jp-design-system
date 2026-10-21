@@ -4,35 +4,28 @@ import {
   JpLink,
   JpBadge,
   type JpBadgeTone,
-  JpBox,
+  JpCard,
   JpButton,
   JpEmptyState,
+  JpDisclosure,
   JpHeading,
-  JpInline,
-  JpStack,
-  JpSurface,
   JpSwitch,
   JpTable,
   JpTableCellDef,
   type JpTableColumn,
-  JpText,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-data-page',
   imports: [
     FormsModule,
     JpLink,
-    JpBox,
-    JpStack,
-    JpInline,
-    JpSurface,
-    JpText,
+    JpCard,
     JpHeading,
     JpBadge,
     JpButton,
     JpEmptyState,
+    JpDisclosure,
     JpTable,
     JpTableCellDef,
     JpSwitch,
@@ -42,49 +35,47 @@ import { injectDocumentTheme } from '../../shared/document-theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataPage {
-  private readonly theme = injectDocumentTheme();
-
   showEmpty = false;
+  availableOnly = false;
 
   readonly columns: JpTableColumn[] = [
     { key: 'name', header: 'Player' },
-    { key: 'env', header: 'Squad' },
-    { key: 'status', header: 'Status' },
-    { key: 'region', header: 'Position', align: 'end' },
+    { key: 'status', header: 'Availability' },
   ];
 
   readonly rows = [
     {
-      name: 'Alex Morgan',
-      env: 'Varsity',
+      name: 'Jack Flaherty',
+      env: 'Active roster',
       status: 'Available',
       region: 'Pitcher',
     },
     {
-      name: 'Jordan Davis',
-      env: 'Varsity',
+      name: 'Freddie Freeman',
+      env: 'Active roster',
       status: 'Day to day',
-      region: 'Catcher',
+      region: 'First base',
     },
     {
-      name: 'Maya Chen',
-      env: 'Reserve',
+      name: 'Tommy Edman',
+      env: 'Active roster',
       status: 'Available',
       region: 'Shortstop',
     },
     {
-      name: 'Taylor Reed',
-      env: 'Reserve',
+      name: 'Clayton Kershaw',
+      env: 'Injured list',
       status: 'Injured',
-      region: 'Right field',
+      region: 'Pitcher',
     },
   ];
 
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
-
   get visibleRows() {
-    return this.showEmpty ? [] : this.rows;
+    return this.showEmpty
+      ? []
+      : this.rows.filter(
+          (row) => !this.availableOnly || row.status === 'Available',
+        );
   }
 
   statusTone(status: string): JpBadgeTone {

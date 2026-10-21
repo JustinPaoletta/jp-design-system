@@ -34,7 +34,7 @@ Storybook titles below link to the story source. Run
   offers it.
 - Overlay `open` inputs are controlled. Bind `open` and `openChange`.
 - Projection attributes that are not classes are still part of the contract:
-  `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
+  `[jpAppShellBrand]`, `[jpAppShellSidebar]`, `[jpAppShellMain]`, `[jpAppShellNavIcon]`,
   `[jpEmptyStateIcon]`, `[jpTableSearch]`, `[jpTableFilters]`,
   `[jpTableActions]`, `[jpTableBulkActions]`.
 
@@ -138,6 +138,8 @@ Class `JpAppShell`. Story:
 | `mobileNavOpenChange`    | `boolean` | Menu, scrim, Escape, close, or a viewport grow past `48rem` |
 | `sidebarLabel`           | string    | `Primary` (`aria-label` on the sidebar)                     |
 
+Use `[jpAppShellBrand]` for the club or application name beside the sidebar control.
+The brand is hidden when the desktop sidebar collapses.
 Project navigation with `[jpAppShellSidebar]` and page content with
 `[jpAppShellMain]`. The shell does not store the two booleans. Bind them.
 
@@ -165,9 +167,8 @@ See [Navigation](consumers/COMPOSITION.md#navigation).
 
 ## Typography
 
-`jp-text` separates tag (`as`) and visual `size`. `jp-heading` uses `as`
-for both the heading level and the size token. There is no heading `size`
-input.
+`jp-text` and `jp-heading` separate the tag (`as`) from the visual `size`.
+Without a `size` value, `jp-heading` uses the size token for its heading level.
 
 ### jp-text
 
@@ -193,13 +194,14 @@ bounded container.
 Class `JpHeading`. Story:
 [Primitives/Typography/Heading](../libs/ui/src/lib/primitives/heading/heading.stories.ts).
 
-| Input    | Type                                        | Default    |
-| -------- | ------------------------------------------- | ---------- |
-| `as`     | `h1` through `h6`                           | `h2`       |
-| `tone`   | `primary`, `secondary`, `muted`, `disabled` | `primary`  |
-| `weight` | `regular`, `medium`, `semibold`, `bold`     | `semibold` |
+| Input    | Type                                        | Default            |
+| -------- | ------------------------------------------- | ------------------ |
+| `as`     | `h1` through `h6`                           | `h2`               |
+| `size`   | `h1` through `h6`, or `null`                | `null` (uses `as`) |
+| `tone`   | `primary`, `secondary`, `muted`, `disabled` | `primary`          |
+| `weight` | `regular`, `medium`, `semibold`, `bold`     | `semibold`         |
 
-Sizes are `--jp-font-size-heading-h1` (1.5rem) down to
+Sizes are `--jp-font-size-heading-h1` (2rem) down to
 `--jp-font-size-heading-h6` (0.8125rem).
 
 ## Controls
@@ -223,10 +225,12 @@ Class `JpButton`. Story:
 | `loading`      | boolean                                        | `false`   |
 | `loadingLabel` | string                                         | `Loading` |
 
-The label is projected. `loading` disables the inner button and sets
-`aria-busy`. `loadingLabel` is visually clipped and becomes `aria-label`
-while loading, so it replaces the accessible name. The projected label stays
-on screen. Primary uses accent tokens. Destructive uses error tokens.
+The label is projected. `loading` disables the inner button and sets `aria-busy`.
+During loading, a centered spinner replaces the visible label.
+The hidden label keeps its space, so the button dimensions stay constant.
+`loadingLabel` becomes `aria-label` and replaces the accessible name during loading.
+
+Primary uses accent tokens. Destructive uses error tokens.
 
 ### jp-icon-button
 
@@ -248,15 +252,25 @@ Class `JpInput`. Story:
 [Primitives/Controls/Input](../libs/ui/src/lib/primitives/input/input.stories.ts).
 Value type: `string`.
 
-| Input                                                                                                | Type                                                          | Default                |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------- |
-| `label`, `hint`, `error`, `placeholder`, `ariaLabel`, `name`, `autocomplete`, `pattern`, `inputMode` | string                                                        | `''`                   |
-| `type`                                                                                               | `text`, `email`, `password`, `search`, `tel`, `url`, `number` | `text`                 |
-| `size`                                                                                               | `sm`, `md`, `lg`                                              | `md`                   |
-| `id`                                                                                                 | string or unset                                               | generated `jp-input-N` |
-| `required`, `disabled`, `readonly`, `invalid`                                                        | boolean                                                       | `false`                |
-| `minLength`, `maxLength`                                                                             | number or `null`                                              | `null`                 |
-| `min`, `max`, `step`                                                                                 | string, number, or `null`                                     | `null`                 |
+| Input                                                                                                | Type                                                                          | Default                |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------- |
+| `label`, `hint`, `error`, `placeholder`, `ariaLabel`, `name`, `autocomplete`, `pattern`, `inputMode` | string                                                                        | `''`                   |
+| `type`                                                                                               | `text`, `email`, `password`, `search`, `tel`, `url`, `number`, `date`, `time` | `text`                 |
+| `size`                                                                                               | `sm`, `md`, `lg`                                                              | `md`                   |
+| `id`                                                                                                 | string or unset                                                               | generated `jp-input-N` |
+| `required`, `disabled`, `readonly`, `invalid`                                                        | boolean                                                                       | `false`                |
+| `minLength`, `maxLength`                                                                             | number or `null`                                                              | `null`                 |
+| `min`, `max`, `step`                                                                                 | string, number, or `null`                                                     | `null`                 |
+
+Date and time types use the themed picker components.
+See [Dates and times](WORKFLOW_COMPONENTS.md#dates-and-times).
+Other types keep native input semantics with JP field styling.
+Browser number spinners are hidden; keyboard increments remain available.
+
+Native input validation uses a styled inline error instead of a browser popup.
+`error` takes precedence over this message.
+`JP_MESSAGES.forms` supplies the built-in validation text.
+Input, reset or valid constraint changes clear the built-in error.
 
 ### jp-textarea
 
@@ -276,10 +290,25 @@ Class `JpSelect`. Also exports `JpSelectOption`
 (`{ value: string; label: string; disabled?: boolean }`). Story:
 [Primitives/Controls/Select](../libs/ui/src/lib/primitives/select/select.stories.ts).
 
-Native `<select>`. Value type: `string`. Inputs match the shared field set
+Themed control with a `combobox` trigger and a `listbox` popup.
+Value type: `string`. Inputs match the shared field set
 (`label`, `hint`, `error`, `ariaLabel`, `name`, `autocomplete`, `size`,
-`id`, `required`, `disabled`, `invalid`) plus `options` (default `[]`).
-Id prefix `jp-select-N`. There is no `placeholder` input.
+`id`, `required`, `disabled`, `invalid`) plus `options` (default `[]`)
+and `placeholder` (default `''`). Id prefix `jp-select-N`.
+
+The trigger and popup use field and overlay tokens.
+The chevron has reserved space. Long trigger labels show an ellipsis.
+Popup labels wrap. The popup uses the shared top layer and viewport positioning.
+
+Click, Enter, Space or an arrow key opens the list.
+Arrow keys, Home and End move through enabled options.
+Typing finds an option by its label. Enter, Space or a click selects it.
+Escape, Tab or an outside click closes the list without selecting the active option.
+Focus stays on the trigger during keyboard navigation.
+
+A hidden native control retains `name`, `required`, `autocomplete` and form submission.
+It does not supply the visible popup. A native validation error focuses the visible trigger.
+Angular forms use the existing CVA. Form resets update the displayed selection.
 
 ### jp-checkbox
 
@@ -432,6 +461,8 @@ Class `JpTable`. Also exports `JpTableCellDef`, `JpTableRowKey`
 | Input or output    | Type                                   | Default                                |
 | ------------------ | -------------------------------------- | -------------------------------------- |
 | `caption`          | string                                 | `''`                                   |
+| `captionHidden`    | boolean                                | `false`                                |
+| `framed`           | boolean                                | `true`                                 |
 | `columns`          | `JpSortableTableColumn[]`              | `[]`                                   |
 | `rows`             | `Record<string, JpTableCellValue>[]`   | `[]`                                   |
 | `striped`          | boolean                                | `false`                                |
@@ -449,6 +480,12 @@ The table does not fetch, filter, or reorder `rows`. Sortable headers set
 `aria-sort`. A row whose key is not a string or number can render and cannot
 be selected. The header checkbox selects the current page only.
 `selectionChange` keeps keys that are not on the page.
+
+Set `captionHidden` to `true` when a nearby heading already names the table.
+The native caption remains available to assistive technology.
+
+Set `framed` to `false` when a containing Card supplies the panel border.
+The table keeps its row dividers, native semantics and focusable scroll region.
 
 Rich cells: `<ng-template jpTableCell="columnKey" let-value>`. Context also
 exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.
@@ -535,10 +572,23 @@ Class `JpBreadcrumbs`. Also exports `JpBreadcrumb`
 (`{ label: string; href?: string }`). Story:
 [Primitives/Navigation/Breadcrumbs](../libs/ui/src/lib/primitives/breadcrumbs/breadcrumbs.stories.ts).
 
-| Input       | Type                      | Default      |
-| ----------- | ------------------------- | ------------ |
-| `items`     | readonly `JpBreadcrumb[]` | `[]`         |
-| `ariaLabel` | string                    | `Breadcrumb` |
+| Input           | Type                        | Default                     |
+| --------------- | --------------------------- | --------------------------- |
+| `items`         | readonly `JpBreadcrumb[]`   | `[]`                        |
+| `ariaLabel`     | string                      | `Breadcrumb`                |
+| `maxItems`      | number                      | `5`                         |
+| `overflowLabel` | `(count: number) => string` | `JP_MESSAGES.overflow.more` |
+
+`maxItems` limits visible destinations, excluding the overflow button.
+The minimum is two. Non-finite values use five.
+Containers at or below 576px show at most three destinations.
+
+The first destination and current page remain visible.
+Hidden ancestors appear in a keyboard-accessible menu.
+Ancestors without `href` appear as disabled menu items.
+
+`overflowLabel(count)` names the overflow button.
+When a resize hides the focused destination, focus moves to the overflow button.
 
 Earlier items with `href` are links. Items without `href` are text. The last
 item is always text with `aria-current="page"`, including when it has
@@ -853,7 +903,7 @@ remain preview pending the [remaining inspection tasks](../COMPONENT_EXPANSION_P
 | Guide                                              | Components and behaviors                                                                                                                                              |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Component expansion](COMPONENT_EXPANSION.md)      | Icons, links, disclosure, identity, cards/lists, field composition, selection, banners/drawers, stepper/checklist, numeric controls, timeline, overflow and code/copy |
-| [Everyday workflows](WORKFLOW_COMPONENTS.md)       | Commands/context menus, native date/time pickers, upload queues, notifications, grouped actions, inline edit, skip link and announcements                             |
+| [Everyday workflows](WORKFLOW_COMPONENTS.md)       | Commands/context menus, themed date/time pickers, upload queues, notifications, grouped actions, inline edit, skip link and announcements                             |
 | [Advanced layout](ADVANCED_LAYOUT_COMPONENTS.md)   | Split panes, media and table visibility, resizing, pinned regions and row details                                                                                     |
 | [Hierarchy](HIERARCHY_COMPONENTS.md)               | Tree view and tree table                                                                                                                                              |
 | [Scheduling](SCHEDULING_CALENDAR.md)               | Day/week/agenda scheduling calendar                                                                                                                                   |

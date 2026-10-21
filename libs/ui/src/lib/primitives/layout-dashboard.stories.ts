@@ -7,6 +7,7 @@ import { JpHeading } from './heading/heading';
 import { JpInline } from './inline/inline';
 import { JpStack } from './stack/stack';
 import { JpSurface } from './surface/surface';
+import { JpCard } from './card/card';
 import { JpText } from './text/text';
 
 const meta: Meta = {
@@ -14,7 +15,16 @@ const meta: Meta = {
   component: JpBox,
   decorators: [
     moduleMetadata({
-      imports: [JpBox, JpStack, JpInline, JpGrid, JpSurface, JpText, JpHeading],
+      imports: [
+        JpBox,
+        JpStack,
+        JpInline,
+        JpGrid,
+        JpSurface,
+        JpCard,
+        JpText,
+        JpHeading,
+      ],
     }),
   ],
   render: () => ({
@@ -24,34 +34,28 @@ const meta: Meta = {
           align-items: flex-start;
         }
 
-        .jp-layout-dashboard-story__accent-badge {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-height: calc(var(--jp-space-md) + var(--jp-space-sm));
-          padding: var(--jp-space-2xs) var(--jp-space-xs);
-          border-radius: var(--jp-radius-full);
-          background: var(--jp-color-accent-solid);
-          color: var(--jp-color-accent-contrast);
-          font: var(--jp-font-label-sm);
+        .jp-layout-dashboard-story__metric {
+          font-size: var(--jp-font-size-display);
           font-weight: var(--jp-font-weight-semibold);
-          letter-spacing: var(--jp-font-letter-spacing-wide);
-          text-transform: uppercase;
+          font-variant-numeric: tabular-nums;
+          line-height: var(--jp-font-line-height-tight);
         }
-
-        .jp-layout-dashboard-story__accent-rule {
-          width: 100%;
-          height: var(--jp-space-2xs);
-          border-radius: var(--jp-radius-full);
-          background: linear-gradient(
-            90deg,
-            var(--jp-color-accent-strong) 0%,
-            var(--jp-color-accent-muted) 100%
-          );
+        .jp-layout-dashboard-story__events {
+          list-style: none;
+          display: grid;
+          gap: var(--jp-space-sm);
+          padding: 0;
+          margin: 0;
         }
-
-        .jp-layout-dashboard-story__accent-value {
-          color: var(--jp-color-accent-muted);
+        .jp-layout-dashboard-story__events li {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: var(--jp-space-xs) var(--jp-space-md);
+        }
+        .jp-layout-dashboard-story__events time {
+          color: var(--jp-color-text-muted);
+          font-size: var(--jp-font-size-caption);
         }
       </style>
 
@@ -60,90 +64,55 @@ const meta: Meta = {
           <jp-stack gap="sm" class="jp-layout-dashboard-story__header">
             <jp-inline align="center" gap="sm">
               <jp-heading as="h1">Game overview</jp-heading>
-              <span class="jp-layout-dashboard-story__accent-badge">
-                {{ documentAccent }}
-              </span>
             </jp-inline>
-            <jp-text tone="secondary">Layout-only composition with primitives.</jp-text>
-            <jp-inline gap="sm">
-              <jp-text as="small" tone="muted">accent: {{ documentAccent }}</jp-text>
-              <jp-text as="small" tone="muted">density: {{ documentDensity }}</jp-text>
-            </jp-inline>
-            <div class="jp-layout-dashboard-story__accent-rule" aria-hidden="true"></div>
+            <jp-text tone="secondary">Los Angeles Dodgers 7, New York Yankees 6 · October 30, 2024</jp-text>
+
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Runs scored</jp-text>
-                <jp-text size="body-lg">
-                  <span class="jp-layout-dashboard-story__accent-value">5</span>
-                </jp-text>
+                <jp-text as="small" size="caption" tone="muted">Runs scored</jp-text>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Hits</jp-text>
-                <jp-text size="body-lg">9</jp-text>
+                <jp-text as="small" size="caption" tone="muted">Hits</jp-text>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
-            <jp-surface padding="md" tone="subtle" border="subtle" elevation="none">
+            <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" tone="muted">Errors</jp-text>
-                <jp-text size="body-lg">0</jp-text>
+                <jp-text as="small" size="caption" tone="muted">Errors</jp-text>
+                <span class="jp-layout-dashboard-story__metric">0</span>
               </jp-stack>
             </jp-surface>
           </jp-grid>
 
-          <jp-grid columns="2" gap="md">
-            <jp-surface tone="raised" padding="md">
-              <jp-stack gap="sm">
-                <jp-heading as="h2">Activity</jp-heading>
-                <jp-stack gap="xs">
-                  <jp-text tone="secondary">Game report saved</jp-text>
-                  <jp-text tone="secondary">League lineup approved</jp-text>
-                  <jp-text tone="secondary">Riverton Falcons club dashboard</jp-text>
-                </jp-stack>
-              </jp-stack>
-            </jp-surface>
-            <jp-surface tone="raised" padding="md">
-              <jp-stack gap="sm">
-                <jp-heading as="h2">Insights</jp-heading>
-                <jp-text tone="secondary">
-                  The Falcons scored five runs on nine hits with no errors.
-                </jp-text>
-              </jp-stack>
-            </jp-surface>
+          <jp-grid mode="auto-fit" minColumn="sm" gap="md">
+            <jp-card title="Activity">
+              <ul class="jp-layout-dashboard-story__events">
+                <li>Game report saved</li>
+                <li>League lineup approved</li>
+                <li>Dodgers roster updated</li>
+              </ul>
+            </jp-card>
+            <jp-card title="Insights">
+              <p>The Dodgers scored seven runs on seven hits with no errors.</p>
+            </jp-card>
           </jp-grid>
 
-          <jp-surface tone="subtle" padding="md" border="subtle" elevation="none">
-            <jp-stack gap="sm">
-              <jp-heading as="h2">Recent games</jp-heading>
-              <jp-stack gap="xs">
-                <jp-inline justify="between">
-                  <jp-text>Starting lineup confirmed</jp-text>
-                  <jp-text as="small" tone="muted">10m ago</jp-text>
-                </jp-inline>
-                <jp-inline justify="between">
-                  <jp-text>Last season archived</jp-text>
-                  <jp-text as="small" tone="muted">22m ago</jp-text>
-                </jp-inline>
-                <jp-inline justify="between">
-                  <jp-text>CI updated with Playwright dashboard check</jp-text>
-                  <jp-text as="small" tone="muted">38m ago</jp-text>
-                </jp-inline>
-              </jp-stack>
-            </jp-stack>
-          </jp-surface>
+          <jp-card title="Recent club activity">
+            <ul class="jp-layout-dashboard-story__events">
+              <li><span>Jack Flaherty starts</span><time datetime="2024-10-30T20:08:00-04:00">8:08 p.m.</time></li>
+              <li><span>Freddie Freeman drives in two runs</span><time datetime="2024-10-30">5th inning</time></li>
+              <li><span>Final at Yankee Stadium</span><time datetime="2024-10-30T23:50:00-04:00">11:50 p.m.</time></li>
+            </ul>
+          </jp-card>
         </jp-stack>
       </jp-box>
     `,
-    props: {
-      documentAccent:
-        document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
-      documentDensity:
-        document.documentElement.getAttribute('data-jp-density') ?? 'default',
-    },
   }),
 };
 
@@ -157,7 +126,7 @@ export const Dashboard: Story = {
     await expect(dashboardHeading).toBeTruthy();
     const grids = canvasElement.querySelectorAll('.jp-grid__root');
     await expect(grids.length).toBeGreaterThan(1);
-    const cards = canvasElement.querySelectorAll('.jp-surface__root');
-    await expect(cards.length).toBeGreaterThan(3);
+    const cards = canvasElement.querySelectorAll('jp-card');
+    await expect(cards.length).toBe(3);
   },
 };

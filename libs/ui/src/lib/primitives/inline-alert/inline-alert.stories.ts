@@ -1,11 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { expect, userEvent } from 'storybook/test';
+import { signal } from '@angular/core';
+import {
+  componentWrapperDecorator,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular';
+import { expect, userEvent, waitFor } from 'storybook/test';
 import { JpInlineAlert } from './inline-alert';
 
 const meta: Meta<JpInlineAlert> = {
   title: 'Primitives/Feedback/InlineAlert',
   component: JpInlineAlert,
-  parameters: { a11y: { test: 'error' } },
+  parameters: { a11y: { test: 'error' }, layout: 'padded' },
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width:40rem">${story}</div>`,
+    ),
+  ],
 };
 export default meta;
 type Story = StoryObj<JpInlineAlert>;
@@ -26,7 +36,7 @@ export const Warning: Story = {
     tone: 'warning',
   },
 };
-export const FailedWithRetry: Story = {
+export const RetryInteraction: Story = {
   render: () => {
     const state = {
       failed: true,
@@ -48,6 +58,24 @@ export const FailedWithRetry: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(button);
-    await expect(canvasElement.textContent).toContain('The lineup was saved.');
+    await waitFor(() =>
+      expect(canvasElement.textContent).toContain('The lineup was saved.'),
+    );
+  },
+};
+
+export const FailedWithRetry: Story = {
+  render: () => {
+    const failed = signal(true);
+    return {
+      props: { failed, retry: () => failed.set(false) },
+      template: `<div style="max-width:40rem">
+        @if (failed()) {
+          <jp-inline-alert tone="error" title="Could not save the lineup" message="Your draft is still available." actionLabel="Retry" (action)="retry()" />
+        } @else {
+          <jp-inline-alert tone="success" message="The lineup was saved." />
+        }
+      </div>`,
+    };
   },
 };

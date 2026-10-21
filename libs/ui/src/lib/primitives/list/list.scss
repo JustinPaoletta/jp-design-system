@@ -1,5 +1,9 @@
 :host {
   display: block;
+  min-inline-size: 0;
+  color: var(--jp-color-text-primary);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 ul {
   list-style: none;
@@ -14,18 +18,24 @@ li {
   justify-content: space-between;
   gap: var(--jp-space-sm);
   padding-block: var(--jp-space-md);
-  border-block-end: 1px solid var(--jp-color-border-default);
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+}
+li:first-child {
+  padding-block-start: 0;
 }
 li:last-child {
   border-block-end: 0;
+  padding-block-end: 0;
 }
 .copy {
+  flex: 1 1 12rem;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 strong {
   color: var(--jp-color-text-primary);
   font-weight: var(--jp-font-weight-medium);
+  font-size: var(--jp-font-size-body-sm);
 }
 p {
   margin-block: var(--jp-space-2xs) 0;

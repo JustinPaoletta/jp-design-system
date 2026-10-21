@@ -6,9 +6,10 @@
   [attr.aria-label]="loading() ? loadingLabel() : null"
   [style.--jp-button-height]="rootHeight()"
 >
+  <span class="jp-button__content" [attr.aria-hidden]="loading() ? true : null"
+    ><ng-content
+  /></span>
   @if (loading()) {
   <span class="jp-button__spinner" aria-hidden="true"></span>
-  <span class="jp-button__loading-label">{{ loadingLabel() }}</span>
   }
-  <ng-content />
 </button>

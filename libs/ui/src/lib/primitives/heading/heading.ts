@@ -14,6 +14,7 @@ import {
   JP_TEXT_TONES,
 } from '../shared/primitive-types';
 import {
+  createOptionalStringUnionTransform,
   createStringUnionTransform,
   fontWeightToCssVar,
   headingLevelToCssVar,
@@ -35,6 +36,10 @@ export class JpHeading {
     transform: createStringUnionTransform(JP_HEADING_TAGS, 'h2'),
   });
 
+  readonly size = input<JpHeadingTag | null, unknown>(null, {
+    transform: createOptionalStringUnionTransform(JP_HEADING_TAGS),
+  });
+
   readonly tone = input<JpTextTone, unknown>('primary', {
     transform: createStringUnionTransform(JP_TEXT_TONES, 'primary'),
   });
@@ -45,7 +50,9 @@ export class JpHeading {
 
   readonly tag = computed(() => this.as());
 
-  readonly rootFontSize = computed(() => headingLevelToCssVar(this.as()));
+  readonly rootFontSize = computed(() =>
+    headingLevelToCssVar(this.size() ?? this.as()),
+  );
 
   readonly rootColor = computed(() => textToneToCssVar(this.tone()));
 

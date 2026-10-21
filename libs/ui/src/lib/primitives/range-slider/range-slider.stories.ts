@@ -1,9 +1,22 @@
+import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
+import { componentWrapperDecorator } from '@storybook/angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpRangeSlider } from './range-slider';
 const meta: Meta<JpRangeSlider> = {
   title: 'Primitives/Controls/Range Slider',
+  decorators: [
+    moduleMetadata({ imports: [FormsModule] }),
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 32rem; width: 100%;">${story}</div>`,
+    ),
+  ],
   component: JpRangeSlider,
+  render: (args) => ({
+    props: args,
+    template: `<jp-range-slider [label]="label" [min]="min" [max]="max" [step]="step" [lowerLabel]="lowerLabel" [upperLabel]="upperLabel" [error]="error" [disabled]="disabled" [ngModel]="[20,60]" />`,
+  }),
   parameters: { layout: 'padded' },
   args: {
     label: 'Practice minutes',

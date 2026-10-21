@@ -10,6 +10,7 @@ import {
   signal,
 } from '@angular/core';
 import {
+  FormsModule,
   type AbstractControl,
   type ControlValueAccessor,
   NG_VALIDATORS,
@@ -18,11 +19,13 @@ import {
   type Validator,
 } from '@angular/forms';
 import { JP_MESSAGES } from '../../i18n';
+import { JpDatePicker } from '../date-picker/date-picker';
 import { dateErrors } from '../shared/temporal-value';
 export type JpDateRangeValue = readonly [string, string];
 let nextRange = 0;
 @Component({
   selector: 'jp-date-range-picker',
+  imports: [FormsModule, JpDatePicker],
   templateUrl: './date-range-picker.html',
   styleUrl: './date-range-picker.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -93,14 +96,20 @@ export class JpDateRangePicker implements ControlValueAccessor, Validator {
   setDisabledState(value: boolean): void {
     this.formDisabled.set(value);
   }
-  update(index: 0 | 1, event: Event): void {
+  update(index: 0 | 1, value: string): void {
     if (this.isDisabled() || this.readonly()) return;
     const pair: [string, string] = [...this.value()];
-    pair[index] = (event.target as HTMLInputElement).value;
+    pair[index] = value;
     this.value.set(pair);
     this.changed(pair);
   }
-  blur(): void {
+  blur(event: FocusEvent): void {
+    if (
+      event.relatedTarget instanceof Node &&
+      event.currentTarget instanceof Node &&
+      event.currentTarget.contains(event.relatedTarget)
+    )
+      return;
     this.touched();
   }
   validate(control: AbstractControl): ValidationErrors | null {

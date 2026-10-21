@@ -4,6 +4,7 @@
   inset-block-end: var(--jp-space-md);
   z-index: var(--jp-z-overlay-toast);
   display: block;
+  max-inline-size: calc(100vw - 2 * var(--jp-space-md));
   pointer-events: none;
 }
 

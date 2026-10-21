@@ -1,16 +1,20 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
 }
 button {
   min-block-size: var(--jp-size-control-md);
-  padding: var(--jp-space-xs) var(--jp-space-sm);
+  padding: var(--jp-space-xs) var(--jp-space-md);
   border: 1px solid var(--jp-color-button-secondary-border);
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-tight);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -27,7 +31,7 @@ button:disabled {
 }
 div[role='group'] {
   display: flex;
-  gap: var(--jp-space-2xs);
+  max-inline-size: 100%;
 }
 .primary {
   background: var(--jp-color-button-primary-bg);
@@ -36,3 +40,23 @@ div[role='group'] {
 .primary:hover:not(:disabled) {
   background: var(--jp-color-button-primary-bg-hover);
 }
+
+.primary:has(+ jp-dropdown-menu) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+button[jpDropdownTrigger] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--jp-space-sm);
+  min-inline-size: var(--jp-size-control-md);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-inline-start: 0;
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include interaction.primary('.primary');

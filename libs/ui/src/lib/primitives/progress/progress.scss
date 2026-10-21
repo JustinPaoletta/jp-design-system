@@ -12,7 +12,7 @@
   background: var(--jp-color-accent-solid);
 }
 :host(.jp-progress--indeterminate) .jp-progress__fill {
-  animation: jp-progress-slide calc(var(--jp-motion-duration-slow) * 4)
+  animation: jp-progress-slide var(--jp-motion-duration-indicator)
     var(--jp-motion-easing-standard) infinite alternate;
 }
 @keyframes jp-progress-slide {

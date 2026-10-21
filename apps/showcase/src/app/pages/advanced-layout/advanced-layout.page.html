@@ -26,7 +26,7 @@
       #workspace
       id="service-workspace"
       primaryLabel="Player profile"
-      secondaryLabel="League player roster"
+      secondaryLabel="2024 Dodgers roster"
       [size]="size()"
       (sizeChange)="resize($event)"
       [collapsed]="collapsed()"
@@ -38,8 +38,8 @@
         <h2>Player profile</h2>
         <jp-media
           [src]="mediaSource()"
-          alt="Diagram of the practice stations"
-          caption="An original illustration for the practice plan."
+          alt="Field diagram"
+          caption="Field diagram for the 2024 Dodgers."
         />
         <jp-button
           variant="secondary"
@@ -48,12 +48,12 @@
           'Restore image' }}</jp-button
         >
         <p>
-          Review 16 player records. Expand a row to inspect the coach and latest
-          game notes.
+          Review 16 player records. Expand a row to see the manager and game
+          notes.
         </p>
       </div>
       <div jpSplitSecondary class="inventory">
-        <h2>League player roster</h2>
+        <h2>2024 Dodgers roster</h2>
         <jp-table
           id="service-inventory"
           caption="Players"
@@ -78,8 +78,8 @@
           <ng-template jpTableRowDetail let-row>
             <div class="detail">
               <p>
-                <strong>{{ row.name }}</strong> is managed by {{ row.owner }} in
-                {{ row.region }}.
+                <strong>{{ row.name }}</strong> plays {{ row.region?.toString()
+                | lowercase }}. Manager: {{ row.owner }}.
               </p>
               <jp-button
                 variant="secondary"

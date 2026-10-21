@@ -4,10 +4,13 @@ import type {
   Validator,
   ValidationErrors,
 } from '@angular/forms';
-import { JpInput } from '../input/input';
+import { JpInputControl } from './input-control';
 import { dateErrors, timeSeconds } from './temporal-value';
 @Component({ template: '' })
-export abstract class TemporalInput extends JpInput implements Validator {
+export abstract class TemporalInput
+  extends JpInputControl
+  implements Validator
+{
   private validatorChanged: () => void = () => undefined;
   constructor() {
     super();

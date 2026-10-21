@@ -1,21 +1,20 @@
 <div class="page">
   <jp-page-header
     title="Club events"
-    description="Schedule practices, club meetings and away series in your time zone."
+    description="Sample club appointments for October 2024. Clock times show layout, not official game times."
   />
   <div class="actions">
     <jp-button variant="secondary" (click)="showDst()"
       >Inspect clock change</jp-button
     >
     <jp-button variant="secondary" (click)="reset()">Reset schedule</jp-button>
-    <label
-      >Time zone
-      <select [value]="zone()" (change)="zone.set($any($event.target).value)">
-        <option value="America/New_York">America/New_York</option>
-        <option value="UTC">UTC</option>
-        <option value="Europe/London">Europe/London</option>
-      </select></label
-    >
+    <jp-select
+      class="time-zone"
+      label="Time zone"
+      [options]="zones"
+      [ngModel]="zone()"
+      (ngModelChange)="zone.set($event)"
+    />
     <jp-button
       variant="ghost"
       (click)="state.set(state() === 'loading' ? 'ready' : 'loading')"
@@ -33,7 +32,7 @@
       [(view)]="view"
       [events]="appointments"
       [timeZone]="zone()"
-      today="2026-10-05"
+      today="2024-10-07"
       [loading]="state() === 'loading'"
       [error]="state() === 'error' ? 'Appointments could not be loaded.' : ''"
       (retry)="state.set('ready')"

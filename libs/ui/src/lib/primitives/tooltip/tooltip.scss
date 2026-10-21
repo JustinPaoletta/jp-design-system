@@ -5,7 +5,7 @@
 }
 
 .jp-tooltip__trigger {
-  display: inline-flex;
+  display: var(--jp-tooltip-trigger-display, inline-flex);
 }
 
 .jp-tooltip__content {
@@ -13,9 +13,9 @@
   z-index: var(--jp-z-overlay-tooltip);
   box-sizing: border-box;
   max-width: 16rem;
-  padding: var(--jp-space-2xs) var(--jp-space-xs);
+  padding: var(--jp-space-xs);
   border: 1px solid var(--jp-color-tooltip-border);
-  border-radius: var(--jp-radius-sm);
+  border-radius: var(--jp-radius-md);
   background: var(--jp-color-tooltip-bg);
   color: var(--jp-color-tooltip-fg);
   font-family: var(--jp-font-family-base);

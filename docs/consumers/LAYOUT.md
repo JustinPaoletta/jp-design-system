@@ -50,6 +50,7 @@ into cards. Keyboard users can focus the frame to scroll it.
 Give the main column `min-width: 0` (the shell already does) so the frame
 can shrink and scroll. `jp-text` `truncate` ellipsizes a single line when
 its container is narrower than the text. The host sets `min-width: 0`.
+For essential truncated text, provide a visible expansion control or a labeled detail view.
 
 `jp-grid` `mode="fixed"` (the default) repeats the requested column count (`1`, `2`, `3`, `4`, or `6`) with `minmax(0, 1fr)`. Those columns share the row. They do not wrap onto new rows. `mode="auto-fit"` uses `repeat(auto-fit, minmax(min(<min column>, 100%), 1fr))`.
 

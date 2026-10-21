@@ -54,6 +54,10 @@ await cp(
   path.join(root, 'libs/tokens/README.package.md'),
   path.join(tokensOutput, 'README.md'),
 );
+await cp(path.join(source, 'fonts.css'), path.join(tokensOutput, 'fonts.css'));
+await cp(path.join(source, 'fonts'), path.join(tokensOutput, 'fonts'), {
+  recursive: true,
+});
 await ngPackagr()
   .forProject(path.join(root, 'libs/ui/ng-package.json'))
   .withTsConfig(path.join(root, 'libs/ui/tsconfig.packaging.json'))

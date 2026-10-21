@@ -1,6 +1,6 @@
 # Accessibility findings
 
-Updated October 8, 2026. No screen reader or Windows high-contrast session
+Updated October 19, 2026. No screen reader or Windows high-contrast session
 was performed.
 
 ## Resolved: open combobox options failed WCAG 2.1 AA contrast
@@ -16,21 +16,17 @@ was performed.
   `--jp-color-field-bg`. `a11y state coverage › combobox results meet WCAG AA`
   covers the open list.
 
-## Small and compact controls are below 24 CSS pixels
+## Resolved token sizes: small and compact controls
 
-- **Where:** `libs/tokens/src/generated/tokens.css` (`--jp-size-control-sm` is
-  `1.25rem` / 20px; `[data-jp-density="compact"]` sets `--jp-size-control-md`
-  to `1.25rem` / 20px). Icon buttons use that control size in
-  `libs/ui/src/lib/primitives/icon-button/icon-button.scss`.
-- **Behavior:** WCAG 2.2 Success Criterion 2.5.8 Target Size (Minimum) expects
-  a 24×24 CSS pixel target, with a spacing exception. Default medium controls
-  are `1.5rem` (24px). Small controls, and medium controls in compact density,
-  are 20px before any spacing exception is applied.
-- **Why it is not release-blocking for the current gate:** Showcase axe does
-  not claim WCAG 2.2. axe-core 4.13.0 ships the only `wcag22aa` rule,
-  `target-size`, with `enabled: false`, and the Showcase tag list does not
-  turn it on. This pass did not enable the rule, so this is not a confirmed
-  violation. It becomes relevant if the target moves to WCAG 2.2 AA.
+The earlier scale used 20px small controls and 20px compact medium controls.
+On October 19, 2026, the default heights changed to 32px, 40px and 48px.
+Compact heights changed to 28px, 32px and 40px.
+Icon buttons follow this control scale.
+Selection boxes keep a separate 20px visual size inside their labeled targets.
+
+Chrome measurements confirm 40px medium control frames in the default form example.
+This change does not establish WCAG 2.2 conformance for every target or layout.
+The automated accessibility gate remains WCAG 2.1 A/AA.
 
 ## Forced-colors styles and scoped automation; Windows inspection remains pending
 

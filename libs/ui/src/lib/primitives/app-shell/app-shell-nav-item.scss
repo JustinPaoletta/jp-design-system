@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
 }
@@ -14,7 +16,7 @@
   background: transparent;
   color: var(--jp-color-nav-item-text);
   font: inherit;
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
   line-height: var(--jp-font-line-height-normal);
   text-align: start;
@@ -103,3 +105,13 @@
     transition: none;
   }
 }
+
+:host ::ng-deep .jp-app-shell-nav-item__icon > svg {
+  width: var(--jp-size-icon-md);
+  height: var(--jp-size-icon-md);
+}
+:host(.jp-app-shell-nav-item--active) .jp-app-shell-nav-item__root {
+  font-weight: var(--jp-font-weight-semibold);
+}
+
+@include interaction.pressable('.jp-app-shell-nav-item__root');

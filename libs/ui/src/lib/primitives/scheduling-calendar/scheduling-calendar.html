@@ -3,6 +3,9 @@
   [attr.aria-label]="label()"
   [attr.aria-busy]="loading()"
 >
+  @if (loading() && eventCount() && !calendar().invalid && !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
   <div class="toolbar">
     <div class="navigation">
       <jp-button
@@ -64,7 +67,7 @@
     <strong>{{ rangeLabel() }}</strong
     ><span>{{ timeZone() }} · {{ messages.events(eventCount()) }}</span>
   </div>
-  @if (loading()) {
+  @if (loading() && (!eventCount() || calendar().invalid || error())) {
   <p class="state" role="status">{{ messages.loading }}</p>
   } @else if (error()) {
   <div class="state" role="alert">
@@ -83,27 +86,45 @@
   <p class="state">{{ messages.empty }}</p>
   }
   <div
+    #viewport
     class="days"
     role="region"
     tabindex="0"
     [attr.aria-label]="messages.schedule + ', ' + rangeLabel()"
     [class.agenda]="layout() === 'agenda'"
+    [class.overview]="scheduleOverview()"
     [style.--columns]="columns()"
     [style.--all-day-size]="allDaySize() + 'rem'"
   >
-    @for (day of calendar().days; track day.date) {
+    <div class="time-gutter" aria-hidden="true">
+      <div class="gutter-heading"></div>
+      <div class="all-day">@if (allDaySize()) { {{ messages.allDay }} }</div>
+      <div class="timeline" [style.--minutes]="grid().duration">
+        <div class="hours">
+          @for (hour of grid().hours; track hour.minute) {
+          <span [style.top.rem]="hour.minute / 15">{{ hour.label }}</span> }
+        </div>
+      </div>
+    </div>
+    @for (day of grid().days; track day.date) {
     <section
       class="day"
       [attr.aria-label]="day.label"
       [class.today]="day.date === today()"
     >
-      <h3><time [attr.datetime]="day.date">{{ day.label }}</time></h3>
+      <h3 [attr.aria-label]="day.label">
+        <time [attr.datetime]="day.date"
+          ><span>{{ day.weekdayLabel }}</span
+          ><span>{{ day.dateLabel }}</span></time
+        >
+      </h3>
       <ul class="all-day">
         @for (event of day.allDay; track event.id) {
         <li>
           <button
             type="button"
             class="appointment"
+            [disabled]="loading()"
             [attr.aria-label]="event.title + ', ' + messages.allDay + ', ' + day.label"
             (click)="eventActivated.emit(event)"
           >
@@ -114,28 +135,33 @@
       </ul>
       <div class="timeline" [style.--minutes]="day.duration">
         <div class="hours" aria-hidden="true">
-          @for (hour of day.hours; track hour.minute) {
-          <span [style.top.rem]="hour.minute / 20">{{ hour.label }}</span> }
+          @for (hour of grid().hours; track hour.minute) {
+          <span [style.top.rem]="hour.minute / 15"></span> }
         </div>
         <ul class="timed">
           @for (item of day.timed; track item.event.id) {
           <li
-            [style.top.rem]="item.displayStart / 20"
-            [style.height.rem]="(item.displayEnd - item.displayStart) / 20"
+            [style.top.rem]="item.displayStart / 15"
+            [style.height.rem]="(item.displayEnd - item.displayStart) / 15"
             [style.inset-inline-start.%]="item.lane * 100 / item.lanes"
             [style.width.%]="100 / item.lanes"
           >
-            <button
-              type="button"
-              class="appointment"
-              [class.appointment--short]="item.displayEnd - item.displayStart < 60"
-              [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
-              [title]="item.event.title + ' · ' + item.timeLabel"
-              (click)="eventActivated.emit(item.event)"
+            <jp-tooltip
+              class="appointment-tooltip"
+              [content]="item.event.title + ' · ' + item.timeLabel"
             >
-              <strong>{{ item.event.title }}</strong
-              ><span>{{ item.timeLabel }}</span>
-            </button>
+              <button
+                type="button"
+                class="appointment"
+                [disabled]="loading()"
+                [class.appointment--short]="item.displayEnd - item.displayStart < 60"
+                [attr.aria-label]="item.event.title + ', ' + day.label + ', ' + item.timeLabel"
+                (click)="eventActivated.emit(item.event)"
+              >
+                <strong>{{ item.event.title }}</strong
+                ><span><bdi>{{ item.compactTimeLabel }}</bdi></span>
+              </button>
+            </jp-tooltip>
           </li>
           }
         </ul>

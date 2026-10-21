@@ -1,16 +1,20 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   max-inline-size: 100%;
 }
 button {
   min-block-size: var(--jp-size-control-md);
-  padding: var(--jp-space-xs) var(--jp-space-sm);
+  padding: var(--jp-space-xs) var(--jp-space-md);
   border: 1px solid var(--jp-color-button-secondary-border);
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-tight);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -30,9 +34,12 @@ button:disabled {
   position: relative;
 }
 .region {
-  padding: var(--jp-space-sm);
+  padding: var(--jp-space-lg);
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
   border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
+  border-radius: var(--jp-radius-lg);
   margin-block-end: var(--jp-space-xs);
   overflow-wrap: anywhere;
 }
@@ -50,7 +57,7 @@ button:disabled {
   min-inline-size: 10rem;
   padding: var(--jp-space-2xs);
   border: 1px solid var(--jp-color-overlay-panel-border);
-  border-radius: var(--jp-radius-md);
+  border-radius: var(--jp-radius-lg);
   background: var(--jp-color-overlay-panel-bg);
   color: var(--jp-color-overlay-panel-fg);
   box-shadow: var(--jp-elevation-floating);
@@ -66,3 +73,16 @@ button:disabled {
   border: 0;
   background: transparent;
 }
+
+.panel button {
+  min-height: var(--jp-size-control-md);
+  padding-inline: var(--jp-space-sm);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
+}
+.panel button:focus-visible {
+  background: var(--jp-color-surface-subtle);
+  outline-offset: -2px;
+}
+
+@include interaction.pressable('button');

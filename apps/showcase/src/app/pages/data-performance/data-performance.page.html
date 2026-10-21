@@ -1,7 +1,7 @@
 <div class="page">
   <jp-page-header
-    title="League player statistics"
-    description="Player analytics with equivalent data access and a bounded 10,000-row table."
+    title="2024 season runs"
+    description="April through September runs and a 10,000-row roster table."
     ><a jpPageActions jpLink routerLink="/hierarchy">Hierarchy</a
     ><a jpPageActions jpLink routerLink="/scheduling">Scheduling</a
     ><a jpPageActions jpLink routerLink="/interaction-tools"
@@ -20,19 +20,18 @@
     <jp-chart
       id="delivery-chart"
       label="Team runs by month"
-      description="Compare Falcons and Bears runs from April through September. Open the data table to inspect exact values."
+      description="Compare Dodgers and Yankees runs from April through September. Open the data table to inspect exact values."
       [labels]="labels"
       [series]="series"
       [type]="type()"
   /></jp-card>
-  <jp-card title="League player roster"
+  <jp-card title="2024 Dodgers roster"
     ><p>
       10,000 fixed-height rows. Scroll to browse or switch to paginated rows for
       complete table navigation. Sorting and selection are controlled by this
       screen.
     </p>
-    <details class="rendering-options">
-      <summary>Rendering options</summary>
+    <jp-disclosure class="rendering-options" title="Rendering options">
       <jp-number-stepper
         id="inventory-overscan"
         label="Extra rows around viewport"
@@ -42,9 +41,9 @@
         [ngModel]="overscan()"
         (ngModelChange)="overscan.set($event ?? 6)"
       />
-    </details>
+    </jp-disclosure>
     <jp-virtual-table
-      label="League player roster"
+      label="2024 Dodgers roster"
       [columns]="columns"
       [rows]="rows()"
       [overscan]="overscan()"

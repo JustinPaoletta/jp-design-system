@@ -3,13 +3,12 @@ import { moduleMetadata } from '@storybook/angular';
 import { expect } from 'storybook/test';
 import { Component, Input } from '@angular/core';
 import { JpButton } from '../button/button';
-import { JpText } from '../text/text';
 import { JpDialog, JpDialogActions } from './dialog';
 
 @Component({
   selector: 'jp-dialog-story-host',
   standalone: true,
-  imports: [JpDialog, JpDialogActions, JpButton, JpText],
+  imports: [JpDialog, JpDialogActions, JpButton],
   template: `
     @if (!open) {
       <jp-button type="button" variant="secondary" (click)="open = true">
@@ -17,7 +16,10 @@ import { JpDialog, JpDialogActions } from './dialog';
       </jp-button>
     }
     <jp-dialog [open]="open" [title]="title" (openChange)="open = $event">
-      <jp-text>This action cannot be undone.</jp-text>
+      <p>
+        Remove Jack Flaherty from the Dodgers roster. You cannot undo this
+        change.
+      </p>
       <div jpDialogActions>
         <jp-button type="button" variant="secondary" (click)="open = false">
           Cancel
@@ -54,7 +56,7 @@ const meta: Meta<DialogStoryHost> = {
   },
   decorators: [
     moduleMetadata({
-      imports: [JpDialog, JpDialogActions, JpButton, JpText, DialogStoryHost],
+      imports: [JpDialog, JpDialogActions, JpButton, DialogStoryHost],
     }),
   ],
   render: (args) => ({

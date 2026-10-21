@@ -15,6 +15,7 @@ import { JpIcon } from '../icon/icon';
   templateUrl: './banner.html',
   styleUrl: './banner.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpBanner {
   private readonly messages = inject(JP_MESSAGES);
@@ -28,5 +29,8 @@ export class JpBanner {
   readonly border = computed(
     () => `var(--jp-color-state-${this.tone()}-border)`,
   );
-  readonly background = computed(() => 'var(--jp-color-surface-subtle)');
+  readonly background = computed(
+    () =>
+      `color-mix(in srgb, var(--jp-color-state-${this.tone()}-border) 8%, var(--jp-color-surface-subtle))`,
+  );
 }

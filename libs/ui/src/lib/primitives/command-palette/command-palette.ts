@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   afterRenderEffect,
   booleanAttribute,
@@ -27,11 +28,11 @@ export interface JpCommand {
 let nextPalette = 0;
 @Component({
   selector: 'jp-command-palette',
-  imports: [JpDialog, JpKeyboardHint],
+  imports: [JpIcon, JpDialog, JpKeyboardHint],
   templateUrl: './command-palette.html',
   styleUrl: './command-palette.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '(document:keydown)': 'onShortcut($event)' },
+  host: { '[attr.title]': 'null', '(document:keydown)': 'onShortcut($event)' },
 })
 export class JpCommandPalette {
   private readonly messages = inject(JP_MESSAGES);

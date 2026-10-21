@@ -40,10 +40,62 @@ for (const route of routes) {
               'data-rendered',
               'true',
             );
+          let initialCalendarScroll: number | undefined;
+          const calendarFrame = page.locator('jp-scheduling-calendar .days');
+          if (route === 'scheduling') {
+            await expect(
+              page.getByRole('button', { name: /^Lineup meeting,/ }),
+            ).toBeInViewport();
+            initialCalendarScroll = await calendarFrame.evaluate(
+              (element) => element.scrollTop,
+            );
+            const scrollable = await calendarFrame.evaluate(
+              (element) => element.scrollHeight > element.clientHeight,
+            );
+            if (scrollable) expect(initialCalendarScroll).toBeGreaterThan(0);
+            else {
+              await expect(calendarFrame).toHaveClass(/overview/);
+              for (const title of await calendarFrame
+                .locator('.timed strong')
+                .all()) {
+                expect(
+                  await title.evaluate(
+                    (element) =>
+                      element.scrollHeight <= element.clientHeight + 1,
+                  ),
+                ).toBe(true);
+              }
+              for (const time of await calendarFrame
+                .locator('.timed span')
+                .all())
+                await expect(time).toBeVisible();
+            }
+            // Chromium's captureBeyondViewport resets this nested scroller.
+            // Fit the page before capture and retain its natural scroll position.
+            const pageHeight = await page.evaluate(() =>
+              Math.max(
+                document.documentElement.scrollHeight,
+                document.body.scrollHeight,
+              ),
+            );
+            await page.setViewportSize({
+              width: 1440,
+              height: Math.max(1100, pageHeight),
+            });
+            await expect(calendarFrame).toHaveJSProperty(
+              'scrollTop',
+              initialCalendarScroll,
+            );
+          }
           await expect(page).toHaveScreenshot(
             route + '-' + accent + '-' + density + '.png',
             { fullPage: true, animations: 'disabled', caret: 'hide' },
           );
+          if (initialCalendarScroll !== undefined)
+            await expect(calendarFrame).toHaveJSProperty(
+              'scrollTop',
+              initialCalendarScroll,
+            );
         },
       );
   for (const dir of ['ltr', 'rtl'])

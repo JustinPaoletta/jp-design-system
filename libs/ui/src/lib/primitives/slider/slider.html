@@ -1,10 +1,11 @@
 <div class="heading">
-  <label [for]="resolvedId()">{{ label() }}</label
-  ><span class="value">{{ valueText()(displayedValue()) }}</span>
+  <label [for]="resolvedId()">{{ label() }}</label>@if (!showNumberInput()) {
+  <span class="value">{{ valueText()(displayedValue()) }}</span> }
 </div>
 <div class="controls">
   <input
     class="slider"
+    [style.--jp-slider-position]="position() + '%'"
     type="range"
     [id]="resolvedId()"
     [attr.name]="name() || null"

@@ -1,4 +1,9 @@
 <div class="jp-toast__root">
+  <jp-icon
+    class="jp-toast__icon"
+    [name]="tone() === 'success' ? 'check' : tone() === 'warning' || tone() === 'error' ? 'warning' : 'info'"
+    size="md"
+  />
   <p class="jp-toast__message">{{ message() }}</p>
   <button
     type="button"
@@ -6,6 +11,6 @@
     [attr.aria-label]="messages.toast.dismiss"
     (click)="dismiss()"
   >
-    ×
+    <jp-icon name="close" size="sm" />
   </button>
 </div>

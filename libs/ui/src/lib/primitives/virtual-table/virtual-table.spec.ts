@@ -19,6 +19,45 @@ function setup() {
   return f;
 }
 describe('JpVirtualTable', () => {
+  it('uses a themed full cell tooltip and removes it when the row leaves the render window', () => {
+    const f = setup();
+    const cell = f.nativeElement.querySelector('.cell-value') as HTMLElement;
+    expect(cell.textContent).toContain('Service 0');
+    expect(cell.hasAttribute('title')).toBe(false);
+    const trigger = f.nativeElement.querySelector(
+      '.cell-tooltip',
+    ) as HTMLElement;
+    trigger.dispatchEvent(new Event('pointerenter'));
+    f.detectChanges();
+    expect(
+      f.nativeElement.querySelector('[role="tooltip"]').textContent,
+    ).toContain('Service 0');
+    expect(cell.getAttribute('aria-describedby')).toContain('jp-tooltip-');
+    expect(cell.closest('td')?.getAttribute('aria-label')).toBe('Service 0');
+    f.componentInstance.scrollTop.set(48000);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('[role="tooltip"]')).toBeNull();
+  });
+  it('reports the visible viewport range without counting the render buffer', () => {
+    const f = setup();
+    expect(f.componentInstance.range().end).toBe(19);
+    expect(f.componentInstance.rangeLabel()).toBe('1–7 of 10000 rows');
+    f.componentInstance.scrollTop.set(48000);
+    f.detectChanges();
+    expect(f.componentInstance.rangeLabel()).toBe('1001–1007 of 10000 rows');
+  });
+  it('bounds the paginated fallback and keeps its header available during scrolling', () => {
+    const f = setup();
+    f.componentRef.setInput('virtual', false);
+    f.detectChanges();
+    const frame = f.nativeElement.querySelector(
+      'jp-table .jp-table__frame',
+    ) as HTMLElement;
+    expect(frame.style.getPropertyValue('max-block-size')).toBe('360px');
+    expect(frame.classList.contains('jp-table__frame--sticky-header')).toBe(
+      true,
+    );
+  });
   it('preserves scroll and page when the already-active mode is chosen', () => {
     const f = setup();
     const frame = f.nativeElement.querySelector('.frame');
@@ -125,12 +164,23 @@ describe('JpVirtualTable', () => {
     expect(document.activeElement).toBe(outside);
     outside.remove();
   });
-  it('moves focus to an existing mode control if consumer state removes the viewport', () => {
+  it('retains the viewport and focus during refresh, and recovers focus if an error removes it', () => {
     const f = setup();
     f.componentRef.setInput('selectable', true);
     f.detectChanges();
-    f.nativeElement.querySelector('tbody input').focus();
+    const viewport = f.nativeElement.querySelector('.frame');
+    viewport.scrollTop = 48000;
+    viewport.dispatchEvent(new Event('scroll'));
+    f.detectChanges();
+    const checkbox = f.nativeElement.querySelector('tbody input');
+    checkbox.focus();
     f.componentRef.setInput('loading', true);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.frame')).toBe(viewport);
+    expect(viewport.scrollTop).toBe(48000);
+    expect(document.activeElement).toBe(checkbox);
+    f.componentRef.setInput('loading', false);
+    f.componentRef.setInput('error', 'Network unavailable');
     f.detectChanges();
     expect(document.activeElement).toBe(
       f.nativeElement.querySelector('.modes button[aria-pressed="true"]'),

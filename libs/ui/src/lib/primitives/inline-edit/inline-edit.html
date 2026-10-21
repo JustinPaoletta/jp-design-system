@@ -18,8 +18,12 @@
     (input)="input($event)"
   />
   <div class="actions">
-    <button type="submit" [disabled]="pending()">
-      {{pending()?savingLabel():saveLabel()}}</button
+    <jp-button
+      type="submit"
+      [loading]="pending()"
+      [loadingLabel]="savingLabel()"
+    >
+      {{saveLabel()}}</jp-button
     ><button type="button" (click)="cancel()">{{cancelLabel()}}</button>
   </div>
   @if(error()){

@@ -1,4 +1,7 @@
 <section [attr.aria-label]="label()" [attr.aria-busy]="loading()">
+  @if (loading() && items().length && !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
   <div class="toolbar">
     <div role="group" [attr.aria-label]="label()">
       <button
@@ -23,12 +26,19 @@
       {{messages.markAll}}
     </button>
   </div>
-  @if(loading()){
-  <p role="status">{{messages.loading}}</p>
+  @if(loading() && (!items().length || error())){
+  <div class="state-panel" role="status">
+    <p>{{messages.loading}}</p>
+    <div class="loading-lines" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
   } @else if(error()){
-  <p role="alert">{{error()}}</p>
-  <button type="button" (click)="retry()">{{messages.retry}}</button>} @else {
-  @for(group of groups();track group.name){
+  <div class="state-panel">
+    <p role="alert">{{error()}}</p>
+    <button type="button" (click)="retry()">{{messages.retry}}</button>
+  </div>
+  } @else { @for(group of groups();track group.name){
   <section [attr.aria-label]="group.name || label()">
     @if(group.name){
     <h3>{{group.name}}</h3>
@@ -41,23 +51,26 @@
           {<strong>{{item.title}}</strong>}<span class="status"
             >{{item.unread?messages.unread:messages.read}}</span
           >
+          @if(item.timeLabel){@if(item.dateTime){<time
+            [attr.datetime]="item.dateTime"
+            ><bdi>{{item.timeLabel}}</bdi></time
+          >}@else{<span class="time"><bdi>{{item.timeLabel}}</bdi></span
+          >}}
         </div>
         @if(item.description){
         <p>{{item.description}}</p>
-        } @if(item.timeLabel){@if(item.dateTime){<time
-          [attr.datetime]="item.dateTime"
-          ><bdi>{{item.timeLabel}}</bdi></time
-        >}@else{<span class="time"><bdi>{{item.timeLabel}}</bdi></span
-        >}}
+        }
         <div class="actions">
           <button
             type="button"
+            [disabled]="loading()"
             [attr.aria-label]="(item.unread?messages.markRead:messages.markUnread)+': '+item.title"
             (click)="mark(item)"
           >
             {{item.unread?messages.markRead:messages.markUnread}}</button
           ><button
             type="button"
+            [disabled]="loading()"
             [attr.aria-label]="messages.dismiss+': '+item.title"
             (click)="dismiss(item)"
           >
@@ -69,7 +82,7 @@
     </ul>
   </section>
   } @if(!groups().length){
-  <p role="status">
+  <p class="state-panel" role="status">
     {{filter()==='unread'?messages.emptyUnread:messages.empty}}
   </p>
   } }

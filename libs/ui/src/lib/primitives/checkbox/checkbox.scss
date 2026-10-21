@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: inline-flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
 .jp-checkbox__root {
   position: relative;
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--jp-space-sm);
   cursor: pointer;
   color: var(--jp-color-foreground-primary);
@@ -19,10 +21,10 @@
 .jp-checkbox__input {
   position: absolute;
   z-index: 1;
-  top: var(--jp-space-2xs);
+  top: 0;
   left: 0;
-  width: var(--jp-size-control-sm);
-  height: var(--jp-size-control-sm);
+  width: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  height: var(--jp-size-selection-control, var(--jp-size-icon-md));
   padding: 0;
   margin: 0;
   opacity: 0;
@@ -35,9 +37,9 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: var(--jp-size-control-sm);
-  height: var(--jp-size-control-sm);
-  margin-top: var(--jp-space-2xs);
+  width: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  height: var(--jp-size-selection-control, var(--jp-size-icon-md));
+  margin-top: 0;
   border: 1px solid var(--jp-color-selection-checkbox-border);
   border-radius: var(--jp-radius-sm);
   background: var(--jp-color-selection-checkbox-bg);
@@ -46,8 +48,8 @@
 }
 
 .jp-checkbox__check {
-  width: var(--jp-size-icon-sm);
-  height: var(--jp-size-icon-sm);
+  width: var(--jp-size-selection-mark);
+  height: var(--jp-size-selection-mark);
 }
 
 :host(.jp-checkbox--checked) .jp-checkbox__box,
@@ -92,3 +94,9 @@
 .jp-checkbox__error {
   color: var(--jp-color-field-error);
 }
+
+@include interaction.selection(
+  '.jp-checkbox__root',
+  '.jp-checkbox__input',
+  '.jp-checkbox__box'
+);

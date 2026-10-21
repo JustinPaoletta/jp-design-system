@@ -1,16 +1,27 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
-  display: inline-flex;
+  display: block;
+  min-inline-size: 0;
   max-inline-size: 100%;
+  container-type: inline-size;
+  font-family: var(--jp-font-family-base);
+  color: var(--jp-color-text-primary);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: var(--jp-font-line-height-normal);
 }
 button {
-  min-block-size: var(--jp-size-control-md);
+  min-block-size: var(--jp-size-control-sm);
   padding: var(--jp-space-xs) var(--jp-space-sm);
   border: 1px solid var(--jp-color-button-secondary-border);
   border-radius: var(--jp-radius-md);
   background: var(--jp-color-button-secondary-bg);
   color: var(--jp-color-button-secondary-fg);
   font-family: var(--jp-font-family-base);
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
+  font-weight: var(--jp-font-weight-medium);
   cursor: pointer;
   overflow-wrap: anywhere;
 }
@@ -25,10 +36,6 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-:host {
-  display: block;
-  min-inline-size: 0;
-}
 .toolbar,
 .toolbar div,
 .actions,
@@ -40,25 +47,51 @@ button:disabled {
 }
 .toolbar {
   justify-content: space-between;
+  gap: var(--jp-space-sm);
+  padding-block-end: var(--jp-space-md);
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+}
+.toolbar > div {
+  padding: var(--jp-space-2xs);
+  border-radius: var(--jp-radius-md);
+  background: var(--jp-color-surface-canvas);
+}
+.toolbar > div button {
+  border-color: transparent;
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+}
+.toolbar > div button[aria-pressed='true'] {
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
+}
+.toolbar > button {
+  border-color: transparent;
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+}
+.toolbar bdi {
+  margin-inline-start: var(--jp-space-2xs);
+  font-variant-numeric: tabular-nums;
 }
 ul {
   list-style: none;
   padding: 0;
-  margin: var(--jp-space-sm) 0;
+  margin: 0;
   display: grid;
-  gap: var(--jp-space-sm);
+  gap: 0;
 }
 li {
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-  padding: var(--jp-space-sm);
+  border: 0;
+  border-block-end: 1px solid var(--jp-color-border-subtle);
+  padding-block: var(--jp-space-md);
   overflow-wrap: anywhere;
 }
-.unread {
-  border-inline-start: 3px solid var(--jp-color-accent-solid);
-}
 h3 {
-  font-size: var(--jp-font-size-body);
+  margin-block: var(--jp-space-lg) 0;
+  font-size: var(--jp-font-size-caption);
+  font-weight: var(--jp-font-weight-medium);
+  color: var(--jp-color-text-secondary);
 }
 .status,
 time,
@@ -69,10 +102,77 @@ time,
 .actions {
   margin-block-start: var(--jp-space-sm);
 }
-button[aria-pressed='true'] {
-  background: var(--jp-color-button-primary-bg);
-  color: var(--jp-color-button-primary-fg);
-}
 p {
   margin-block: var(--jp-space-xs);
+  color: var(--jp-color-text-secondary);
 }
+
+li:last-child {
+  border-block-end: 0;
+}
+.title {
+  gap: var(--jp-space-sm);
+}
+.title > strong {
+  font-weight: var(--jp-font-weight-medium);
+}
+.unread .title > strong {
+  font-weight: var(--jp-font-weight-semibold);
+}
+.title > time,
+.title > .time {
+  margin-inline-start: auto;
+}
+@container (max-width: 30rem) {
+  .title > time,
+  .title > .time {
+    flex-basis: 100%;
+    margin-inline-start: 0;
+  }
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jp-space-2xs);
+}
+.unread .status::before {
+  content: '';
+  inline-size: var(--jp-space-xs);
+  block-size: var(--jp-space-xs);
+  border-radius: 50%;
+  background: var(--jp-color-accent-solid);
+}
+.actions button {
+  min-block-size: var(--jp-size-control-sm);
+  border-color: transparent;
+  background: transparent;
+  color: var(--jp-color-text-secondary);
+  padding-inline: var(--jp-space-xs);
+}
+.actions button:hover:not(:disabled) {
+  color: var(--jp-color-text-primary);
+}
+.state-panel {
+  padding-block: var(--jp-space-lg);
+  margin: 0;
+}
+.loading-lines {
+  display: grid;
+  gap: var(--jp-space-sm);
+  margin-block-start: var(--jp-space-md);
+}
+.loading-lines span {
+  display: block;
+  height: var(--jp-space-sm);
+  max-width: 24rem;
+  background: var(--jp-color-surface-raised);
+  border-radius: var(--jp-radius-sm);
+}
+.loading-lines span:nth-child(2) {
+  max-width: 18rem;
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('button');
+
+@include refresh.indicator('section[aria-busy]');

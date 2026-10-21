@@ -1,3 +1,5 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
   color: var(--jp-color-text-primary);
@@ -37,8 +39,8 @@ button {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  min-inline-size: var(--jp-size-control-lg);
-  min-block-size: var(--jp-size-control-lg);
+  min-inline-size: var(--jp-size-control-md);
+  min-block-size: calc(var(--jp-size-control-md) - 2px);
   background: transparent;
   color: var(--jp-color-text-primary);
   border: 0;
@@ -66,4 +68,37 @@ button:disabled {
 }
 .error {
   color: var(--jp-color-field-error);
+}
+
+.control {
+  inline-size: 12rem;
+  max-inline-size: 100%;
+  box-sizing: border-box;
+  border-radius: var(--jp-radius-md);
+}
+.control:has(input[aria-invalid='true']) {
+  border-color: var(--jp-color-field-border-invalid);
+}
+input {
+  font-variant-numeric: tabular-nums;
+}
+input::placeholder {
+  color: var(--jp-color-field-placeholder);
+}
+button:first-child {
+  border-inline-end: 1px solid var(--jp-color-field-border);
+}
+button:last-child {
+  border-inline-start: 1px solid var(--jp-color-field-border);
+}
+input:disabled,
+button:disabled {
+  opacity: 0.6;
+}
+
+@include interaction.pressable('button');
+
+@include interaction.feedback('input');
+input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--jp-color-field-border-hover);
 }

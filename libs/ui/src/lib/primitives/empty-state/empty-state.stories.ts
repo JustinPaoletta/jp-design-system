@@ -23,7 +23,7 @@ const meta: Meta<JpEmptyState> = {
     props: args,
     template: `
       <jp-empty-state [title]="title" [description]="description">
-        <span jpEmptyStateIcon aria-hidden="true">◇</span>
+        <svg jpEmptyStateIcon aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2m3-13v6m-3-3h6"/></svg>
         <jp-button variant="primary">Add player</jp-button>
       </jp-empty-state>
     `,
@@ -45,7 +45,7 @@ export const Default: Story = {
 
 export const TitleOnly: Story = {
   args: {
-    title: 'Nothing here',
+    title: 'All game reports are complete',
     description: '',
   },
   render: (args) => ({
@@ -58,14 +58,14 @@ export const TitleOnly: Story = {
 
 export const WithoutAction: Story = {
   args: {
-    title: 'No results',
-    description: 'Try adjusting your search or filters.',
+    title: 'No players match your search',
+    description: 'Change the player name or clear the position filter.',
   },
   render: (args) => ({
     props: args,
     template: `
       <jp-empty-state [title]="title" [description]="description">
-        <span jpEmptyStateIcon aria-hidden="true">◇</span>
+        <svg jpEmptyStateIcon aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2m3-13v6m-3-3h6"/></svg>
       </jp-empty-state>
     `,
   }),

@@ -7,6 +7,32 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Use 2024 Los Angeles Dodgers and New York Yankees records in component examples.
+- Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
+- Apply the Card layout to club settings. Track submitted values so later edits do not show saved feedback.
+- Align button combinations, context actions and inline alerts with the approved typography. Use working actions and baseball copy in assistant examples.
+- Add basic JavaScript, TypeScript and JSON syntax colors to Code Block. Preserve escaped source and a bounded plain-text fallback.
+- Add an avatar overflow list and collapsed breadcrumbs with keyboard access. Add licensed local photo examples and source attribution.
+
+- Apply the approved Card direction to 20 components and two compositions. Align title sizes, descriptions, selection states and actions.
+- Add a narrow stepper layout. Keep selected and focused tabs visible after selection and container resize, including RTL layouts.
+- Correct narrow code-block headers and virtual-table selection spacing. Add narrow-layout and state examples.
+- Use working copy and notification actions. Keep assistant responses consistent with the baseball examples.
+
+- Apply the approved Card direction to form and roster examples. Add local save feedback and an availability filter.
+- Add optional `JpTable.framed` for tables inside panels. Keep its default frame and native table semantics.
+
+- Supply Inter and its license through the token package. Load the font in Storybook and Showcase.
+- Simplify form and roster examples. Add optional `jpAppShellBrand` projection and table `captionHidden` input.
+- Use readable event rows when overlapping calendar lanes become too narrow.
+- Refine Card hierarchy and footer spacing. Add a baseball reference for focused visual review before further styling.
+
+- Increase control, icon and text sizes. Separate card, raised-panel and overlay surfaces.
+- Align table headers and cells. Use one calendar time gutter with equal day columns and preserved clock-change ordering.
+- Refine field groups, selection controls, assistant composition, menu rows, feedback and notification layout.
+- Add optional `jp-heading` visual `size` without changing its semantic `as` level.
+- Use themed actions in composed examples. Keep open, failed, streaming and mobile stories in their named states.
+
 - Use consistent fictional baseball copy in Storybook and Showcase. Update player names, game statistics, forms, schedules and messages.
 
 - Use charcoal surfaces, smaller corners and low shadows across components.

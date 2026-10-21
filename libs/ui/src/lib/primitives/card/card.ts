@@ -7,6 +7,7 @@ import { type JpHeadingTag } from '../shared/primitive-types';
   templateUrl: './card.html',
   styleUrl: './card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpCard {
   readonly title = input('');

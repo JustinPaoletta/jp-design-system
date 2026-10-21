@@ -9,7 +9,7 @@ span {
   border: 2px solid var(--jp-color-border-strong);
   border-block-start-color: var(--jp-color-text-primary);
   border-radius: var(--jp-radius-full);
-  animation: jp-spin calc(var(--jp-motion-duration-slow) * 4) linear infinite;
+  animation: jp-spin var(--jp-motion-duration-indicator) linear infinite;
 }
 @keyframes jp-spin {
   to {

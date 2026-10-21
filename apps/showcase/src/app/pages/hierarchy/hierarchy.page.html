@@ -1,7 +1,7 @@
 <div class="page">
   <jp-page-header
-    title="Club training plan"
-    description="Browse club documents and review the practice plan."
+    title="2024 Dodgers roster"
+    description="Browse club documents and the 26-man World Series roster."
   />
   <div class="workspace">
     <jp-card title="Club documents">
@@ -34,15 +34,15 @@
       </p>
       <p role="status">{{ opened() }}</p>
     </jp-card>
-    <jp-card title="Practice groups">
+    <jp-card title="Roster groups">
       <p>
-        Expand practice groups using their buttons. Each checkbox selects one
-        row; selecting a parent does not select its children.
+        Expand roster groups using their buttons. Each checkbox selects one row;
+        selecting a parent does not select its children.
       </p>
       <jp-tree-table
         id="project-breakdown"
-        caption="Practice plan"
-        nameHeader="Drill"
+        caption="2024 Dodgers roster"
+        nameHeader="Group"
         [rows]="projects"
         [columns]="columns"
         selectable
@@ -52,7 +52,7 @@
         (selectedKeysChange)="selectedProjects.set($event)"
       />
       <p class="selection" role="status">
-        Selected drills: {{ selectedProjects().length }}
+        Selected groups: {{ selectedProjects().length }}
       </p>
     </jp-card>
   </div>

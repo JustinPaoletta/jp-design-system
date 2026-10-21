@@ -1,4 +1,9 @@
 import {
+  afterNextRender,
+  afterRenderEffect,
+  DestroyRef,
+  ElementRef,
+  viewChild,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -7,12 +12,15 @@ import {
   input,
   model,
   output,
+  signal,
 } from '@angular/core';
 import { JP_MESSAGES } from '../../i18n';
 import { JpButton } from '../button/button';
+import { JpTooltip } from '../tooltip/tooltip';
 import {
   addJpCalendarDays,
   buildJpCalendarLayout,
+  buildJpCalendarGrid,
   isJpCalendarDate,
   type JpCalendarEvent,
 } from './calendar-layout';
@@ -20,13 +28,17 @@ import {
 /** Native, chronological appointment controls with collision-aware day/week placement. */
 @Component({
   selector: 'jp-scheduling-calendar',
-  imports: [JpButton],
+  imports: [JpButton, JpTooltip],
   templateUrl: './scheduling-calendar.html',
   styleUrl: './scheduling-calendar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JpSchedulingCalendar {
   readonly messages = inject(JP_MESSAGES).calendar;
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly availableWidth = signal(0);
+  private readonly rootFontSize = signal(16);
   readonly label = input.required<string>();
   /** Gregorian civil date, independent of the browser clock. */
   readonly date = model.required<string>();
@@ -70,21 +82,98 @@ export class JpSchedulingCalendar {
         ]),
       ).size,
   );
-  readonly allDaySize = computed(
+  readonly allDaySize = computed(() =>
+    Math.min(
+      12,
+      Math.max(0, ...this.calendar().days.map((day) => day.allDay.length)) * 4,
+    ),
+  );
+  readonly grid = computed(() =>
+    buildJpCalendarGrid(this.calendar(), this.timeZone(), this.locale()),
+  );
+  readonly scheduleOverview = computed(() => {
+    if (this.layout() !== 'schedule') return false;
+    const days = this.grid().days;
+    const lanes = Math.max(
+      1,
+      ...days.flatMap((day) => day.timed.map((item) => item.lanes)),
+    );
+    const width = this.availableWidth();
+    const rem = this.rootFontSize();
+    return (
+      width > 0 &&
+      lanes > 1 &&
+      (width - 5.5 * rem) / days.length / lanes < 7 * rem
+    );
+  });
+  readonly columns = computed(
     () =>
-      Math.max(1, ...this.calendar().days.map((day) => day.allDay.length)) * 4,
+      (this.scheduleOverview() ? '' : '5.5rem ') +
+      'repeat(' +
+      this.calendar().days.length +
+      ', minmax(0, 1fr))',
   );
-  /** Preserve a readable appointment width instead of compressing overlap labels. */
-  readonly columns = computed(() =>
-    this.view() === 'day'
-      ? 'minmax(0, 1fr)'
-      : this.calendar()
-          .days.map(
-            (day) =>
-              `minmax(${Math.max(1, ...day.timed.map((item) => item.lanes)) * 12}rem, 1fr)`,
-          )
-          .join(' '),
-  );
+  private readonly viewport = viewChild<ElementRef<HTMLElement>>('viewport');
+  private positionedFrame: HTMLElement | undefined;
+  private positionedKey = '';
+  constructor() {
+    afterNextRender(() => {
+      const host = this.host.nativeElement;
+      const win = host.ownerDocument.defaultView;
+      if (!win) return;
+      const measure = () => {
+        this.availableWidth.set(host.clientWidth);
+        this.rootFontSize.set(
+          parseFloat(
+            win.getComputedStyle(host.ownerDocument.documentElement).fontSize,
+          ) || 16,
+        );
+      };
+      measure();
+      const observer = win.ResizeObserver
+        ? new win.ResizeObserver(measure)
+        : undefined;
+      observer?.observe(host);
+      this.destroyRef.onDestroy(() => observer?.disconnect());
+    });
+    afterRenderEffect(() => {
+      const frame = this.viewport()?.nativeElement;
+      const key = [
+        this.date(),
+        this.view(),
+        this.layout(),
+        this.timeZone(),
+        this.scheduleOverview(),
+      ].join('|');
+      const minute = this.grid().initialMinute;
+      if (
+        !frame ||
+        (this.positionedFrame === frame && this.positionedKey === key)
+      )
+        return;
+      this.positionedFrame = frame;
+      this.positionedKey = key;
+      const win = frame.ownerDocument.defaultView;
+      if (
+        this.layout() === 'schedule' &&
+        win &&
+        frame.scrollHeight > frame.clientHeight
+      ) {
+        const rem =
+          parseFloat(
+            win.getComputedStyle(frame.ownerDocument.documentElement).fontSize,
+          ) || 16;
+        frame.scrollTop = (minute / 15) * rem;
+        const active = frame.ownerDocument.activeElement as HTMLElement | null;
+        if (
+          active &&
+          frame.contains(active) &&
+          active.classList.contains('appointment')
+        )
+          active.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+      }
+    });
+  }
   readonly todayValid = computed(() => isJpCalendarDate(this.today()));
   navigate(direction: number): void {
     if (this.calendar().invalid) return;

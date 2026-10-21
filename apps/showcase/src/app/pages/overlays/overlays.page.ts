@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  JpBox,
   JpButton,
   JpDialog,
   JpDialogActions,
@@ -13,21 +12,21 @@ import {
   JpPopoverContent,
   JpPopoverTrigger,
   JpStack,
-  JpSurface,
+  JpCard,
+  JpCopyButton,
   JpText,
   JpToastOutlet,
   JpToastService,
   JpTooltip,
 } from '@jp-design-system/ui';
-import { injectDocumentTheme } from '../../shared/document-theme';
 
 @Component({
   selector: 'app-overlays-page',
   imports: [
-    JpBox,
     JpStack,
     JpInline,
-    JpSurface,
+    JpCard,
+    JpCopyButton,
     JpText,
     JpHeading,
     JpButton,
@@ -48,15 +47,11 @@ import { injectDocumentTheme } from '../../shared/document-theme';
 })
 export class OverlaysPage {
   private readonly toasts = inject(JpToastService);
-  private readonly theme = injectDocumentTheme();
 
   dialogOpen = false;
   popoverOpen = false;
   menuOpen = false;
   lastAction = 'None yet';
-
-  readonly accent = this.theme.accent;
-  readonly density = this.theme.density;
 
   showToast(tone: 'neutral' | 'success' | 'warning' | 'error' | 'info'): void {
     const messages = {

@@ -10,8 +10,8 @@ const meta: Meta<JpChart> = {
     label: 'Runs by month',
     labels: ['April', 'May', 'June'],
     series: [
-      { id: 'product', label: 'Falcons', values: [32, 44, 38] },
-      { id: 'platform', label: 'Bears', values: [25, 28, 40] },
+      { id: 'product', label: 'Dodgers', values: [130, 120, 141] },
+      { id: 'platform', label: 'Yankees', values: [129, 135, 152] },
     ],
   },
 };
@@ -20,7 +20,10 @@ type Story = StoryObj<JpChart>;
 export const Default: Story = {};
 export const Line: Story = { args: { type: 'line' } };
 export const Empty: Story = { args: { labels: [], series: [] } };
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = {
+  args: { loading: true, labels: [], series: [] },
+};
+export const Refreshing: Story = { args: { loading: true } };
 export const Error: Story = {
   args: { error: 'Player statistics are temporarily unavailable. Try again.' },
 };
@@ -33,20 +36,20 @@ export const AccessibleData: Story = {
         'true',
       ),
     );
-    await userEvent.click(c.getByRole('button', { name: 'Falcons' }));
-    await expect(c.getByRole('button', { name: 'Falcons' })).toHaveAttribute(
+    await userEvent.click(c.getByRole('button', { name: 'Dodgers' }));
+    await expect(c.getByRole('button', { name: 'Dodgers' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
-    await userEvent.selectOptions(
+    await userEvent.click(
       c.getByRole('combobox', { name: 'Inspect category' }),
-      '2',
     );
-    await expect(c.getByText('Bears · June')).toBeVisible();
+    await userEvent.click(await c.findByRole('option', { name: 'June' }));
+    await expect(c.getByText('Yankees · June')).toBeVisible();
     await userEvent.click(
       c.getByText('View chart data', { selector: 'summary' }),
     );
     await expect(c.getByRole('table', { name: 'Runs by month' })).toBeVisible();
-    await expect(c.getByRole('cell', { name: '38' })).toBeVisible();
+    await expect(c.getByRole('cell', { name: '141' })).toBeVisible();
   },
 };

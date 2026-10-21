@@ -1,7 +1,11 @@
+@use '../shared/refresh';
+
+@use '../shared/interaction';
+
 :host {
   display: block;
   min-inline-size: 0;
-  container-type: inline-size;
+  container: jp-calendar / inline-size;
 }
 .calendar {
   color: var(--jp-color-foreground-primary);
@@ -10,7 +14,8 @@
 }
 .toolbar,
 .navigation,
-.modes {
+.modes,
+.period {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -21,74 +26,101 @@
 }
 .toggle {
   display: flex;
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
   overflow: hidden;
 }
 .toggle button {
   border: 0;
-  padding: var(--jp-space-sm);
+  padding: var(--jp-space-xs) var(--jp-space-sm);
   color: var(--jp-color-foreground-primary);
   background: var(--jp-color-surface-sunken);
   font: inherit;
   cursor: pointer;
-  min-block-size: var(--jp-size-control-sm);
+  font-size: var(--jp-font-size-body-sm);
+  line-height: 1.4;
+  min-block-size: calc(var(--jp-size-control-sm) - 2px);
 }
 .toggle button[aria-pressed='true'] {
   background: var(--jp-color-button-secondary-bg);
   font-weight: var(--jp-font-weight-semibold);
 }
-button:focus-visible {
-  outline: 2px solid var(--jp-color-focus-ring);
-  outline-offset: -2px;
-}
-.period {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--jp-space-sm);
-  padding-block: var(--jp-space-md);
-}
-.period span {
-  color: var(--jp-color-foreground-secondary);
-}
-.state {
-  padding: var(--jp-space-md);
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-}
-.days {
-  display: grid;
-  grid-template-columns: var(--columns);
-  border: 1px solid var(--jp-color-border-default);
-  border-radius: var(--jp-radius-md);
-  max-block-size: 44rem;
-  overflow: auto;
-}
+button:focus-visible,
 .days:focus-visible {
   outline: 2px solid var(--jp-color-focus-ring);
   outline-offset: -2px;
 }
+.period {
+  justify-content: space-between;
+  padding-block: var(--jp-space-md);
+  font-size: var(--jp-font-size-body-sm);
+}
+.period span {
+  font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-foreground-secondary);
+}
+.state,
+.days,
+.toggle {
+  border: 1px solid var(--jp-color-border-default);
+  border-radius: var(--jp-radius-md);
+}
+.state {
+  padding: var(--jp-space-md);
+  box-sizing: border-box;
+  min-block-size: 12rem;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--jp-space-md);
+  margin: 0;
+  background: var(--jp-color-surface-subtle);
+}
+.days {
+  display: grid;
+  grid-template-columns: var(--columns);
+  max-block-size: 44rem;
+  scroll-padding-block-start: calc(
+    3.5rem + var(--all-day-size) + var(--jp-space-sm)
+  );
+  scroll-padding-block-end: var(--jp-space-sm);
+  overflow: auto;
+}
+.day,
+.time-gutter {
+  border-inline-end: 1px solid var(--jp-color-border-default);
+}
 .day {
   min-inline-size: 0;
-  border-inline-end: 1px solid var(--jp-color-border-default);
 }
 .day:last-child {
   border-inline-end: 0;
 }
-h3 {
+h3,
+.gutter-heading {
   box-sizing: border-box;
-  block-size: 4rem;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: var(--jp-space-sm);
-  font-size: var(--jp-font-size-body);
+  block-size: 3.5rem;
   background: var(--jp-color-surface-sunken);
   position: sticky;
   inset-block-start: 0;
   z-index: 2;
+}
+h3,
+.gutter-heading,
+.all-day {
   border-block-end: 1px solid var(--jp-color-border-default);
+}
+h3 {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: var(--jp-space-sm);
+  font-size: var(--jp-font-size-body-sm);
+}
+h3 time {
+  display: grid;
+  gap: 2px;
+}
+h3 span:first-child {
+  font-weight: var(--jp-font-weight-medium);
 }
 .today h3 {
   box-shadow: inset 0 -2px var(--jp-color-focus-ring);
@@ -100,9 +132,8 @@ ul {
 }
 .all-day {
   box-sizing: border-box;
-  min-block-size: var(--all-day-size, 4rem);
-  padding: var(--jp-space-xs);
-  border-block-end: 1px solid var(--jp-color-border-default);
+  block-size: var(--all-day-size);
+  overflow: auto;
 }
 .all-day li + li {
   margin-block-start: var(--jp-space-xs);
@@ -123,37 +154,36 @@ ul {
   color: var(--jp-color-foreground-primary);
   background: var(--jp-color-surface-raised);
   font: inherit;
+  font-size: var(--jp-font-size-body-sm);
   text-align: start;
   cursor: pointer;
 }
 .appointment strong,
 .appointment span {
   flex-shrink: 0;
+  overflow-wrap: anywhere;
   line-height: var(--jp-font-line-height-tight);
   max-inline-size: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
-.appointment span {
+.appointment span,
+.time-gutter .all-day,
+h3 span:first-child,
+.hours span {
   font-size: var(--jp-font-size-caption);
   color: var(--jp-color-foreground-secondary);
 }
-.appointment--short span {
-  display: none;
-}
 .timeline {
   position: relative;
-  block-size: calc(var(--minutes) * 0.05rem);
+  block-size: calc(var(--minutes) / 15 * 1rem);
 }
 .hours span {
   position: absolute;
   box-sizing: border-box;
   inline-size: 100%;
-  block-size: 3rem;
+  block-size: 4rem;
   border-block-start: 1px solid var(--jp-color-border-default);
-  color: var(--jp-color-foreground-secondary);
-  font-size: var(--jp-font-size-caption);
   padding-inline: var(--jp-space-xs);
   pointer-events: none;
 }
@@ -163,45 +193,85 @@ ul {
   padding-inline: var(--jp-space-xs);
   min-block-size: 2rem;
 }
+.appointment-tooltip {
+  display: contents;
+  --jp-tooltip-trigger-display: contents;
+}
+.appointment strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.appointment--short strong {
+  -webkit-line-clamp: 1;
+}
+
+.appointment--short span {
+  display: none;
+}
+
+.days:not(.agenda, .overview) .all-day {
+  position: sticky;
+  inset-block-start: 3.5rem;
+  z-index: 2;
+  background: var(--jp-color-surface-sunken);
+}
+.time-gutter .all-day {
+  display: grid;
+  place-items: center;
+}
+
+:is(.agenda, .overview) .time-gutter,
+:is(.agenda, .overview) .hours {
+  display: none;
+}
 .days.agenda {
   grid-template-columns: 1fr;
+}
+.days:is(.agenda, .overview) {
   max-block-size: none;
+  scroll-padding: 0;
 }
 .agenda .day {
   border-inline-end: 0;
   border-block-end: 1px solid var(--jp-color-border-default);
 }
-.agenda h3 {
+:is(.agenda, .overview) h3 {
   position: static;
 }
-.agenda .all-day {
-  min-block-size: 0;
+:is(.agenda, .overview) .all-day {
+  position: static;
   border: 0;
 }
-.agenda .timeline {
+:is(.agenda, .overview) .all-day,
+:is(.agenda, .overview) .timeline {
   block-size: auto;
 }
-.agenda .hours {
-  display: none;
-}
-.agenda .timed li {
+:is(.agenda, .overview) .timed li {
   position: static;
   inline-size: auto !important;
   block-size: auto !important;
   padding-block: var(--jp-space-xs);
 }
-.agenda .appointment {
+:is(.agenda, .overview) .appointment {
   min-block-size: var(--jp-size-control-md);
 }
-.agenda .appointment strong,
-.agenda .appointment span {
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-.agenda .appointment--short span {
+:is(.agenda, .overview) .appointment--short span {
   display: block;
 }
-@container (max-width: 56rem) {
+:is(.agenda, .overview) .appointment strong {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.overview .appointment {
+  padding: var(--jp-space-sm);
+}
+@container jp-calendar (max-width: 56rem) {
+  .time-gutter,
+  .hours {
+    display: none;
+  }
   .days {
     grid-template-columns: 1fr;
     max-block-size: none;
@@ -214,14 +284,11 @@ ul {
     position: static;
   }
   .all-day {
-    min-block-size: 0;
     border: 0;
   }
+  .all-day,
   .timeline {
     block-size: auto;
-  }
-  .hours {
-    display: none;
   }
   .timed li {
     position: static;
@@ -232,13 +299,16 @@ ul {
   .appointment {
     min-block-size: var(--jp-size-control-md);
   }
-  .appointment strong,
-  .appointment span {
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
   .appointment--short span {
     display: block;
+  }
+  .appointment strong {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  .days:not(.agenda, .overview) .all-day {
+    position: static;
   }
 }
 @media (forced-colors: active) {
@@ -250,3 +320,28 @@ ul {
     outline-offset: -2px;
   }
 }
+
+.time-gutter {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 3;
+  background: var(--jp-color-surface-sunken);
+}
+.time-gutter .hours span {
+  text-align: end;
+  line-height: 1.2;
+}
+.day .all-day:has(li) {
+  padding: var(--jp-space-xs);
+}
+.appointment:hover:not(:disabled) {
+  background: var(--jp-color-surface-overlay);
+}
+.appointment:disabled {
+  cursor: progress;
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('.toggle button');
+
+@include refresh.indicator('.calendar');

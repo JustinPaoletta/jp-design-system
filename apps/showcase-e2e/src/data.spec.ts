@@ -12,8 +12,60 @@ test.describe('data display', () => {
     await expect(shell).toBeVisible();
     await expect(page.locator('h1')).toContainText('Player roster');
     await expect(table).toBeVisible();
-    await expect(page.locator('caption')).toContainText('Falcons roster');
+    await expect(page.locator('caption')).toContainText('Dodgers roster');
     await expect(badge).toBeVisible();
     await expect(badge).toContainText('Available');
+  });
+
+  test('filters availability and keeps the embedded table readable on a phone', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/data');
+    const table = page.getByRole('table', { name: 'Dodgers roster' });
+    await expect(table.getByRole('row')).toHaveCount(5);
+    await page
+      .getByRole('button', { name: 'Show available', exact: true })
+      .click();
+    await expect(table.getByRole('row')).toHaveCount(3);
+    await expect(
+      table.getByRole('cell', { name: /Jack Flaherty/ }),
+    ).toBeVisible();
+    await expect(
+      table.getByRole('cell', { name: /Freddie Freeman/ }),
+    ).toHaveCount(0);
+    await expect(page.getByRole('status')).toHaveText('Available players only');
+    await page.getByRole('button', { name: 'Show all players' }).click();
+    await expect(
+      table.getByRole('cell', { name: /Freddie Freeman/ }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('region', { name: 'Dodgers roster' }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+
+    await page.setViewportSize({ width: 320, height: 844 });
+    const positionLines = await page
+      .locator('.roster-page__detail', { hasText: 'Shortstop' })
+      .evaluate((detail) => {
+        const text = detail.firstChild;
+        if (!text) return 0;
+        const start = text.textContent?.indexOf('Shortstop') ?? -1;
+        if (start < 0) return 0;
+        const word = document.createRange();
+        word.setStart(text, start);
+        word.setEnd(text, start + 'Shortstop'.length);
+        return word.getClientRects().length;
+      });
+    expect(positionLines, 'Keep a position name on one line at 320px').toBe(1);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
   });
 });

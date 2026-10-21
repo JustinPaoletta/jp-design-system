@@ -3,3 +3,32 @@
   min-height: 100vh;
   padding: var(--jp-space-xl) 0;
 }
+
+.metric {
+  font-family: var(--jp-font-family-base);
+  font-size: var(--jp-font-size-display);
+  font-weight: var(--jp-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--jp-font-line-height-tight);
+  color: var(--jp-color-text-primary);
+}
+
+.events {
+  list-style: none;
+  display: grid;
+  gap: var(--jp-space-sm);
+  padding: 0;
+  margin: 0;
+}
+
+.events li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--jp-space-xs) var(--jp-space-md);
+}
+
+.events time {
+  color: var(--jp-color-text-muted);
+  font-size: var(--jp-font-size-caption);
+}

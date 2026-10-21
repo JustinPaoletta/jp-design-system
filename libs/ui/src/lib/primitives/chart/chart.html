@@ -1,21 +1,30 @@
 <figure [attr.aria-busy]="loading()">
-  <figcaption>{{ label() }}</figcaption>
+  @if (loading() && labels().length && series().length && !invalid() &&
+  !error()) {
+  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
+  }
+  <figcaption>
+    <span>{{ label() }}</span>@if (!controlsCollapsed() && !error() &&
+    !invalid() && labels().length && series().length) {
+    <ng-container [ngTemplateOutlet]="legendControls" /> }
+  </figcaption>
   @if (description()) {
   <p [id]="id() + '-description'">{{ description() }}</p>
-  } @if (loading()) {
-  <p role="status">{{ messages.loading }}</p>
+  } @if (loading() && (!labels().length || !series().length || invalid() ||
+  error())) {
+  <p class="state" role="status">{{ messages.loading }}</p>
   } @else if (error()) {
-  <p role="alert">{{ error() }}</p>
-  <jp-button variant="secondary" (click)="retry.emit()"
-    >{{ messages.retry }}</jp-button
-  >
+  <div class="state" role="alert">
+    <p>{{ error() }}</p>
+    <jp-button variant="secondary" (click)="retry.emit()"
+      >{{ messages.retry }}</jp-button
+    >
+  </div>
   } @else if (invalid()) {
-  <p role="alert">{{ messages.invalid }}</p>
+  <p class="state" role="alert">{{ messages.invalid }}</p>
   } @else if (!labels().length || !series().length) {
-  <p>{{ messages.empty }}</p>
-  } @else { @if (!controlsCollapsed()) {
-  <ng-container [ngTemplateOutlet]="legendControls" />
-  } @if (visible().length) {
+  <p class="state">{{ messages.empty }}</p>
+  } @else { @if (visible().length) {
   <div class="plot" [attr.data-rendered]="rendered()">
     <canvas
       #canvas
@@ -25,14 +34,16 @@
     ></canvas>
   </div>
   } @else {
-  <p>{{ messages.empty }}</p>
+  <p class="state">{{ messages.empty }}</p>
   } @if (engineError()) {
   <p role="status">{{ messages.failed }}</p>
   } @if (!controlsCollapsed()) {
   <ng-container [ngTemplateOutlet]="inspectionControls" />
   }
   <details [open]="forcedColors()">
-    <summary>{{ messages.data }}</summary>
+    <summary>
+      {{ messages.data }}<jp-icon name="chevron-down" size="sm" />
+    </summary>
     @if (controlsCollapsed()) {
     <ng-container [ngTemplateOutlet]="legendControls" />
     <ng-container [ngTemplateOutlet]="inspectionControls" />
@@ -74,6 +85,7 @@
   <div class="legend" role="group" [attr.aria-label]="messages.series">
     @for (item of series(); track item.id; let i = $index) {
     <button
+      [disabled]="loading()"
       type="button"
       [attr.aria-pressed]="!hiddenSeries().includes(item.id)"
       (click)="toggle(item.id)"
@@ -89,22 +101,23 @@
   </div>
 </ng-template>
 <ng-template #inspectionControls>
-  <label class="inspect"
-    >{{ messages.category }}<select
-      [value]="index()"
-      (change)="inspect($event)"
-    >
-      @for (category of labels(); track $index; let i = $index) {
-      <option [value]="i" [selected]="i === index()">{{ category }}</option>
+  <div class="inspection">
+    <jp-select
+      class="inspect"
+      [disabled]="loading()"
+      [label]="messages.category"
+      [options]="categoryOptions()"
+      [ngModel]="'' + index()"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="inspect($event)"
+    />
+    <dl aria-live="polite">
+      @for (item of visible(); track item.id) {
+      <div>
+        <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
+        <dd>{{ format(item.values[index()]) }}</dd>
+      </div>
       }
-    </select></label
-  >
-  <dl aria-live="polite">
-    @for (item of visible(); track item.id) {
-    <div>
-      <dt>{{ item.label }} · {{ labels()[index()] }}</dt>
-      <dd>{{ format(item.values[index()]) }}</dd>
-    </div>
-    }
-  </dl>
+    </dl>
+  </div>
 </ng-template>

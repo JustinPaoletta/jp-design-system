@@ -6,13 +6,14 @@
     [attr.aria-label]="decreaseLabel() + ' ' + label()"
     (click)="adjust(-1)"
   >
-    <jp-icon name="minus" />
+    <jp-icon name="minus" size="md" />
   </button>
   <input
     type="number"
     [id]="resolvedId()"
     [attr.name]="name() || null"
     [value]="value() ?? ''"
+    placeholder="—"
     [min]="safeMin()"
     [max]="safeMax()"
     [step]="safeStep()"
@@ -29,7 +30,7 @@
     [attr.aria-label]="increaseLabel() + ' ' + label()"
     (click)="adjust(1)"
   >
-    <jp-icon name="plus" />
+    <jp-icon name="plus" size="md" />
   </button>
 </div>
 @if (hint()) {

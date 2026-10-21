@@ -144,7 +144,7 @@ test('interaction tools: reference controls hide inactive content and preserve f
   await expect(
     carousel.getByRole('button', { name: 'Open club invitations' }),
   ).toHaveCount(0);
-  const note = carousel.getByRole('textbox', { name: 'Coach note' });
+  const note = carousel.getByRole('textbox', { name: 'Manager note' });
   await note.fill('Review access');
   await note.press('ArrowRight');
   await expect(note).toBeVisible();

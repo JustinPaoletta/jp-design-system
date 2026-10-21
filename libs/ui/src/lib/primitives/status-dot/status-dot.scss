@@ -4,10 +4,10 @@
 }
 span {
   display: block;
-  width: var(--jp-space-xs);
-  height: var(--jp-space-xs);
+  width: 8px;
+  height: 8px;
   border-radius: var(--jp-radius-full);
-  border: 1px solid currentColor;
+  border: 2px solid var(--jp-color-surface-canvas);
 }
 @media (forced-colors: active) {
   span {

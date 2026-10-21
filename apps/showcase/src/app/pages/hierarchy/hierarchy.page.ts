@@ -62,55 +62,48 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
 export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: 'Season preparation',
-    cells: { owner: 'Sam Rivera', status: 'In training', hours: 72 },
+    label: '2024 Dodgers',
+    cells: { owner: 'Dave Roberts', status: 'Available', hours: 26 },
     children: [
       {
         key: 'design',
-        label: 'Batting drills',
-        cells: { owner: 'Casey Brooks', status: 'Coach review', hours: 32 },
+        label: 'Position players',
+        cells: { owner: 'Freddie Freeman', status: 'Available', hours: 13 },
         children: [
           {
             key: 'landing',
-            label: 'Batting order',
-            cells: { owner: 'Casey Brooks', status: 'Done', hours: 12 },
+            label: 'Infield',
+            cells: { owner: 'Freddie Freeman', status: 'Available', hours: 5 },
           },
           {
             key: 'checkout',
-            label: 'Checkout',
-            cells: { owner: 'Alex Morgan', status: 'Coach review', hours: 20 },
+            label: 'Outfield',
+            cells: { owner: 'Mookie Betts', status: 'Available', hours: 5 },
+          },
+          {
+            key: 'catchers',
+            label: 'Catchers',
+            cells: { owner: 'Will Smith', status: 'Available', hours: 2 },
+          },
+          {
+            key: 'dh',
+            label: 'Designated hitter',
+            cells: { owner: 'Shohei Ohtani', status: 'Available', hours: 1 },
           },
         ],
       },
       {
         key: 'engineering',
-        label: 'Pitching drills',
-        cells: { owner: 'Sam Rivera', status: 'In training', hours: 40 },
-      },
-    ],
-  },
-  {
-    key: 'mobile',
-    label: 'Fielding drills',
-    cells: { owner: 'Sam Rivera', status: 'Planned', hours: 48 },
-    children: [
-      {
-        key: 'navigation',
-        label: 'Navigation',
-        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
-      },
-      {
-        key: 'settings',
-        label: 'Settings',
-        cells: { owner: 'Jordan Davis', status: 'Planned', hours: 24 },
+        label: 'Pitchers',
+        cells: { owner: 'Jack Flaherty', status: 'Available', hours: 13 },
       },
     ],
   },
   {
     key: 'legacy',
-    label: 'Last season review',
+    label: 'Injured list',
     disabled: true,
-    cells: { owner: 'Sam Rivera', status: 'Archived', hours: 0 },
+    cells: { owner: 'Clayton Kershaw', status: 'Injured', hours: 1 },
   },
 ];
 
@@ -144,7 +137,7 @@ export class HierarchyPage {
   readonly columns: readonly JpTreeTableColumn[] = [
     { key: 'owner', header: 'Lead' },
     { key: 'status', header: 'Status' },
-    { key: 'hours', header: 'Minutes', align: 'end' },
+    { key: 'hours', header: 'Players', align: 'end' },
   ];
   readonly expandedProjects = signal<string[]>(['website']);
   readonly selectedProjects = signal<string[]>([]);

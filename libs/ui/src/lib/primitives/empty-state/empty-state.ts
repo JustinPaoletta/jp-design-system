@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-empty-state',
+    '[attr.title]': 'null',
     role: 'status',
   },
 })

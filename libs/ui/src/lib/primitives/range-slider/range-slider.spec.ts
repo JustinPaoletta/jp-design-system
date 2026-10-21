@@ -68,6 +68,23 @@ describe('JpRangeSlider', () => {
     f.detectChanges();
     expect(f.componentInstance.safeMax()).toBe(140);
   });
+  it('keeps equal endpoints at the same position on a fixed scale', async () => {
+    const f = await mount({ min: 0, max: 100, step: 5 });
+    f.componentInstance.writeValue([40, 40]);
+    f.detectChanges();
+    const ranges = f.nativeElement.querySelectorAll(
+      'input[type=range]',
+    ) as NodeListOf<HTMLInputElement>;
+    expect(
+      Array.from(ranges, (range) => [range.min, range.max, range.value]),
+    ).toEqual([
+      ['0', '100', '40'],
+      ['0', '100', '40'],
+    ]);
+    expect(f.componentInstance.positions()).toEqual([40, 40]);
+    expect(ranges[0].getAttribute('aria-valuemax')).toBe('40');
+    expect(ranges[1].getAttribute('aria-valuemin')).toBe('40');
+  });
   it('ignores disabled/read-only changes and supports slider-only presentation', async () => {
     const f = await mount();
     const changed = jest.fn();

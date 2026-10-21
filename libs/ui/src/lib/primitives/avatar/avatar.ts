@@ -19,6 +19,7 @@ export class JpAvatar {
   readonly src = input('');
   readonly size = input<'sm' | 'md' | 'lg'>('md');
   readonly failed = signal(false);
+  readonly loaded = signal(false);
   readonly initials = computed(() => {
     const words = this.name().trim().split(/\s+/).filter(Boolean);
     return (
@@ -30,6 +31,13 @@ export class JpAvatar {
     effect(() => {
       this.src();
       this.failed.set(false);
+      this.loaded.set(false);
     });
+  }
+  onLoad(source: string): void {
+    if (source === this.src()) this.loaded.set(true);
+  }
+  onError(source: string): void {
+    if (source === this.src()) this.failed.set(true);
   }
 }

@@ -2,7 +2,7 @@
 
 - [Documentation writing rules](WRITING.md): ASD-STE100 rules for JP documentation and product text.
 - [Technical terms](TECHNICAL_TERMS.md): meanings of project software terms.
-- [Baseball examples](BASEBALL_EXAMPLES.md): shared fictional clubs, players and game data.
+- [Baseball examples](BASEBALL_EXAMPLES.md): shared 2024 Dodgers and Yankees records.
 - [Visual style](VISUAL_STYLE.md): surfaces, accents, selection and motion.
 - [Icons](ICONS.md): JP glyphs, SVG, accessible names, direction and licensing.
 - [Message rules](../localization/CONTRACT.md): built-in text and translation providers.

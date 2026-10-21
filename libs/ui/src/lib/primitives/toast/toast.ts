@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,6 +12,7 @@ import { createStringUnionTransform } from '../shared/token-maps';
 
 @Component({
   selector: 'jp-toast',
+  imports: [JpIcon],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

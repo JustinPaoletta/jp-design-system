@@ -1,49 +1,55 @@
+@use '../shared/interaction';
+
 :host {
   display: block;
+  min-inline-size: 0;
+  container-type: inline-size;
   color: var(--jp-color-text-primary);
   font-family: var(--jp-font-family-base);
 }
 ol {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--jp-space-lg);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--jp-space-sm);
   margin: 0;
   padding: 0;
 }
 li {
   display: flex;
-  flex: 1 1 auto;
   align-items: start;
   gap: var(--jp-space-sm);
-  border-block-start: 2px solid var(--jp-color-border-subtle);
-  padding-block-start: var(--jp-space-sm);
+  padding: var(--jp-space-sm);
+  border-radius: var(--jp-radius-md);
   min-inline-size: 0;
 }
 .current {
-  border-color: var(--jp-color-focus-ring);
-}
-.error {
-  border-color: var(--jp-color-field-error);
+  background: var(--jp-color-surface-raised);
 }
 .marker {
+  box-sizing: border-box;
   border: 1px solid var(--jp-color-border-strong);
   border-radius: var(--jp-radius-full);
-  inline-size: var(--jp-size-control-lg);
-  block-size: var(--jp-size-control-lg);
+  inline-size: var(--jp-size-control-sm);
+  block-size: var(--jp-size-control-sm);
   flex-shrink: 0;
   display: grid;
   place-items: center;
   font-size: var(--jp-font-size-caption);
+  color: var(--jp-color-text-secondary);
 }
 .content {
+  display: grid;
+  gap: var(--jp-space-2xs);
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }
 .label,
 button {
-  font-size: var(--jp-font-size-body);
+  font-size: var(--jp-font-size-body-sm);
   font-weight: var(--jp-font-weight-medium);
+  line-height: var(--jp-font-line-height-normal);
 }
 button {
   background: transparent;
@@ -53,8 +59,11 @@ button {
   text-align: start;
   font-family: inherit;
   cursor: pointer;
-  text-decoration: underline;
+  min-block-size: var(--jp-size-control-sm);
   text-underline-offset: 3px;
+}
+button:hover:not(:disabled) {
+  text-decoration: underline;
 }
 button:disabled {
   cursor: not-allowed;
@@ -73,11 +82,34 @@ p,
   line-height: var(--jp-font-line-height-normal);
 }
 p {
-  margin-block: var(--jp-space-2xs) 0;
+  margin: 0;
 }
-@media (max-width: 480px) {
+@container (max-width: 36rem) {
   ol {
-    flex-direction: column;
-    gap: var(--jp-space-sm);
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--jp-space-xs);
   }
 }
+.state {
+  display: block;
+}
+.current .marker {
+  background: var(--jp-color-button-primary-bg);
+  border-color: var(--jp-color-button-primary-bg);
+  color: var(--jp-color-button-primary-fg);
+  font-weight: var(--jp-font-weight-semibold);
+}
+.error .marker {
+  background: var(--jp-color-surface-raised);
+  border-color: var(--jp-color-state-error-border);
+  color: var(--jp-color-state-error-border);
+}
+@media (forced-colors: active) {
+  .current {
+    outline: 1px solid Highlight;
+  }
+}
+
+@include interaction.pressable('button');
+@include interaction.hover('button');

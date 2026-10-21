@@ -7,6 +7,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { JpIcon } from '../icon/icon';
 import { JP_MESSAGES } from '../../i18n';
 import {
   JpDropdownMenu,
@@ -20,7 +21,7 @@ export interface JpMenuAction {
 }
 @Component({
   selector: 'jp-split-button',
-  imports: [JpDropdownMenu, JpDropdownTrigger, JpDropdownMenuItem],
+  imports: [JpIcon, JpDropdownMenu, JpDropdownTrigger, JpDropdownMenuItem],
   templateUrl: './split-button.html',
   styleUrl: './split-button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

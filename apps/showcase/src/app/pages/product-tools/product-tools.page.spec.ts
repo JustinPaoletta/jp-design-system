@@ -16,7 +16,7 @@ describe('ProductToolsPage', () => {
     await f.whenStable();
     expect(f.componentInstance.current()).toBe('details');
     expect(f.componentInstance.errors()).toHaveLength(1);
-    f.componentInstance.email.setValue('alex@falcons.example');
+    f.componentInstance.email.setValue('lineup@dodgers.example');
     f.componentInstance.seats.setValue(11);
     f.componentInstance.next();
     expect(f.componentInstance.errors()).toHaveLength(1);
@@ -30,7 +30,7 @@ describe('ProductToolsPage', () => {
     expect(f.nativeElement.textContent).toContain('Club saved.');
     f.componentInstance.back();
     f.detectChanges();
-    expect(f.componentInstance.email.value).toBe('alex@falcons.example');
+    expect(f.componentInstance.email.value).toBe('lineup@dodgers.example');
     expect(f.componentInstance.seats.value).toBe(3);
     f.componentInstance.selectStep('review');
     expect(f.componentInstance.current()).toBe('details');

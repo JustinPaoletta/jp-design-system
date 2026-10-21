@@ -4,8 +4,8 @@ import { expect, userEvent } from 'storybook/test';
 import { Component, inject } from '@angular/core';
 import { JpAppShell } from './app-shell/app-shell';
 import { JpAppShellNavItem } from './app-shell/app-shell-nav-item';
-import { JpBox } from './box/box';
 import { JpButton } from './button/button';
+import { JpCopyButton } from './copy-button/copy-button';
 import { JpDialog, JpDialogActions } from './dialog/dialog';
 import {
   JpDropdownMenu,
@@ -19,9 +19,7 @@ import {
   JpPopoverContent,
   JpPopoverTrigger,
 } from './popover/popover';
-import { JpStack } from './stack/stack';
-import { JpSurface } from './surface/surface';
-import { JpText } from './text/text';
+import { JpCard } from './card/card';
 import { JpToastOutlet } from './toast/toast-outlet';
 import { JpToastService } from './toast/toast.service';
 import { JpTooltip } from './tooltip/tooltip';
@@ -32,13 +30,11 @@ import { JpTooltip } from './tooltip/tooltip';
   imports: [
     JpAppShell,
     JpAppShellNavItem,
-    JpBox,
-    JpStack,
     JpInline,
-    JpSurface,
-    JpText,
+    JpCard,
     JpHeading,
     JpButton,
+    JpCopyButton,
     JpTooltip,
     JpToastOutlet,
     JpDialog,
@@ -50,6 +46,43 @@ import { JpTooltip } from './tooltip/tooltip';
     JpDropdownTrigger,
     JpDropdownMenuItem,
   ],
+  styles: [
+    `
+      .example-page {
+        box-sizing: border-box;
+        max-inline-size: 60rem;
+        margin-inline: auto;
+        padding: var(--jp-space-xl) var(--jp-space-lg);
+      }
+      .example-page__header {
+        margin-block-end: var(--jp-space-lg);
+      }
+      .example-page__header p {
+        margin-block: var(--jp-space-xs) 0;
+        color: var(--jp-color-text-secondary);
+        font-size: var(--jp-font-size-body-sm);
+        line-height: var(--jp-font-line-height-normal);
+      }
+      .example-page__cards {
+        display: grid;
+        gap: var(--jp-space-lg);
+        max-inline-size: 45rem;
+      }
+      .example-page__cards > .example-page__header {
+        margin-block-end: 0;
+      }
+      .example-page__status {
+        margin: 0;
+        color: var(--jp-color-text-secondary);
+        font-size: var(--jp-font-size-caption);
+      }
+      @media (width <= 48rem) {
+        .example-page {
+          padding: var(--jp-space-lg) var(--jp-space-md);
+        }
+      }
+    `,
+  ],
   template: `
     <jp-app-shell
       [sidebarCollapsed]="sidebarCollapsed"
@@ -57,6 +90,7 @@ import { JpTooltip } from './tooltip/tooltip';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
+      <span jpAppShellBrand>Los Angeles Dodgers</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -82,34 +116,20 @@ import { JpTooltip } from './tooltip/tooltip';
         </jp-app-shell-nav-item>
       </nav>
       <main jpAppShellMain>
-        <jp-box padding="lg" maxWidth="wide">
-          <jp-stack gap="lg">
-            <jp-stack gap="xs">
+        <div class="example-page">
+          <div class="example-page__cards">
+            <header class="example-page__header">
               <jp-heading as="h1">Club alerts</jp-heading>
-              <jp-text tone="secondary">
-                Review club messages and player actions.
-              </jp-text>
-              <jp-inline gap="sm">
-                <jp-text as="small" tone="muted"
-                  >accent: {{ documentAccent }}</jp-text
-                >
-                <jp-text as="small" tone="muted"
-                  >density: {{ documentDensity }}</jp-text
-                >
-              </jp-inline>
-            </jp-stack>
+              <p>Review club messages and player actions.</p>
+            </header>
 
-            <jp-surface
-              tone="raised"
-              padding="md"
-              border="subtle"
-              elevation="none"
-            >
-              <jp-inline gap="sm" wrap="true">
+            <jp-card title="World Series Game 5">
+              <p>
+                Dodgers 7, Yankees 6. Review the final lineup and club messages.
+              </p>
+              <jp-inline jpCardActions gap="sm" wrap="true">
                 <jp-tooltip content="Copy game ID" placement="top">
-                  <jp-button type="button" variant="secondary"
-                    >Copy ID</jp-button
-                  >
+                  <jp-copy-button text="775296" label="Copy ID" />
                 </jp-tooltip>
                 <jp-button
                   type="button"
@@ -120,7 +140,7 @@ import { JpTooltip } from './tooltip/tooltip';
                 </jp-button>
                 <jp-button
                   type="button"
-                  variant="destructive"
+                  variant="secondary"
                   (click)="dialogOpen = true"
                 >
                   Delete
@@ -133,7 +153,10 @@ import { JpTooltip } from './tooltip/tooltip';
                     >Filters</jp-button
                   >
                   <div jpPopoverContent>
-                    <jp-text>Filter panel</jp-text>
+                    <p>
+                      The roster includes the active roster and the injured
+                      list.
+                    </p>
                   </div>
                 </jp-popover>
                 <jp-dropdown-menu
@@ -159,9 +182,9 @@ import { JpTooltip } from './tooltip/tooltip';
                   </button>
                 </jp-dropdown-menu>
               </jp-inline>
-            </jp-surface>
-          </jp-stack>
-        </jp-box>
+            </jp-card>
+          </div>
+        </div>
       </main>
     </jp-app-shell>
 
@@ -170,7 +193,9 @@ import { JpTooltip } from './tooltip/tooltip';
       title="Remove player?"
       (openChange)="dialogOpen = $event"
     >
-      <jp-text>This cannot be undone.</jp-text>
+      <p>
+        This removes the selected player from the roster. This cannot be undone.
+      </p>
       <div jpDialogActions>
         <jp-button
           type="button"
@@ -198,11 +223,6 @@ class FeedbackOverlaysCompositionHost {
   dialogOpen = false;
   popoverOpen = false;
   menuOpen = false;
-
-  readonly documentAccent =
-    document.documentElement.getAttribute('data-jp-accent') ?? 'gold';
-  readonly documentDensity =
-    document.documentElement.getAttribute('data-jp-density') ?? 'default';
 
   showToast(): void {
     this.toasts.show({ message: 'Lineup saved', tone: 'success' });

@@ -5,8 +5,11 @@ Built design-token package with native ESM utilities, TypeScript declarations, g
 Import the stylesheet once in application global styles:
 
 ```css
+@import '@jp-design-system/tokens/fonts.css';
 @import '@jp-design-system/tokens/tokens.css';
 ```
+
+`fonts.css` loads the included Inter font from local files. The package includes the font license in `fonts/LICENSE.txt`. Omit this import if your application supplies its own font. Set `--jp-font-family-base` to that font.
 
 `tokens.css` contains defaults, all three accent families, and compact overrides. `@jp-design-system/tokens/tokens.compact.css` is also exported for optional separate overrides; it does not replace the default stylesheet. `@jp-design-system/tokens/tokens.json` exports resolved token data.
 

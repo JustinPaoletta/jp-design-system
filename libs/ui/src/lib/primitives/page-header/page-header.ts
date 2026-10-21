@@ -7,6 +7,7 @@ import { type JpHeadingTag } from '../shared/primitive-types';
   templateUrl: './page-header.html',
   styleUrl: './page-header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[attr.title]': 'null' },
 })
 export class JpPageHeader {
   readonly title = input.required<string>();

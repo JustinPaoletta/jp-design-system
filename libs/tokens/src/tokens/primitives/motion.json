@@ -2,15 +2,32 @@
   "primitive": {
     "motion": {
       "duration": {
-        "instant": { "value": "0ms" },
-        "fast": { "value": "120ms" },
-        "normal": { "value": "180ms" },
-        "slow": { "value": "240ms" }
+        "instant": {
+          "value": "0ms"
+        },
+        "fast": {
+          "value": "90ms"
+        },
+        "normal": {
+          "value": "160ms"
+        },
+        "slow": {
+          "value": "240ms"
+        },
+        "cycle": {
+          "value": "960ms"
+        }
       },
       "easing": {
-        "standard": { "value": "cubic-bezier(0.2, 0, 0, 1)" },
-        "emphasized": { "value": "cubic-bezier(0.2, 0, 0, 1.08)" },
-        "linear": { "value": "linear" }
+        "standard": {
+          "value": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "emphasized": {
+          "value": "cubic-bezier(0.16, 1, 0.3, 1)"
+        },
+        "linear": {
+          "value": "linear"
+        }
       }
     }
   }

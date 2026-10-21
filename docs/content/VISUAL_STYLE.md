@@ -6,11 +6,73 @@ The system uses charcoal surfaces and a warm gold accent.
 ## Surfaces and controls
 
 - Use semantic surface and border tokens.
-- Use small corners for cards, controls and badges.
+- Use 8px corners for controls, 12px for cards and 16px for larger overlays.
 - Keep circular avatars and status dots.
-- Use low shadows for raised surfaces.
+- Use flat surfaces for cards. Reserve stronger shadows for floating panels.
 - Keep headings clear and body text readable.
 - Keep status colors separate from the accent.
+
+## Size and hierarchy
+
+Default controls use 32px, 40px and 48px heights for `sm`, `md` and `lg`.
+Compact controls use 28px, 32px and 40px heights.
+Icons use 16px, 20px and 24px sizes in both densities.
+Selection boxes use 20px. Their marks use 16px.
+Do not use a button height to size a checkbox or switch.
+
+Body text uses 16px. Dense interface text uses `--jp-font-size-body-sm` at 14px.
+Captions use 13px. Heading sizes start at 32px, 24px, 20px and 16px.
+Use 600 weight for headings and 500 weight for labels.
+
+Card titles use 16px, independent of their heading level.
+The user approved the Card reference on October 19, 2026.
+Use `JpCard` for composed panels when its slots fit the content.
+Keep its 24px inset, 14px body text and separated action footer.
+
+Use the approved direction across related components. Inspect each changed group in Chrome.
+Coordinate independent groups in parallel when their files do not overlap.
+Do not require another design approval for each use of the same direction.
+
+Routine button labels use 14px and 500 weight. Primary buttons use 600 weight.
+Use a 1.5 line height for descriptions and body text.
+
+The examples load the included Inter font through `libs/tokens/src/fonts.css`.
+Confirm that the font loads before inspecting screenshots.
+A font name in a CSS list does not install that font.
+Applications can import `@jp-design-system/tokens/fonts.css` or supply their own font.
+
+Use `jp-heading` `as` for the document outline.
+Use its optional `size` input when a different visual size is necessary.
+
+| Surface token | Purpose          | Default color |
+| ------------- | ---------------- | ------------- |
+| `canvas`      | Page background  | `#0b1117`     |
+| `subtle`      | Card background  | `#131c24`     |
+| `raised`      | Raised panel     | `#1a2631`     |
+| `overlay`     | Floating overlay | `#223240`     |
+
+## Examples
+
+Use JP controls for actions and fields in component examples.
+A projected HTML button does not receive JP button styles automatically.
+Keep Save as the main action. Put destructive actions in a separate section.
+
+Use one heading and one panel boundary for each task.
+Keep example settings in a separate disclosure or Storybook controls.
+Do not show token values as product content.
+Align the application name with the main toolbar.
+For narrow calendar lanes, use event rows to keep titles and times readable.
+Use the [baseball examples](BASEBALL_EXAMPLES.md) for consistent names and product text.
+
+Connect example actions to visible state changes.
+A Remove action must remove its item from the example collection.
+Success text must describe the current values.
+If a user edits values during a save request, retain those edits without marking them as saved.
+Keep a separate copy of the submitted values until the request completes.
+
+Use local photo files for photo examples.
+Record the creator, source and license beside each file.
+Example names must not identify the people in supplied photographs.
 
 ## Selection and focus
 
@@ -19,12 +81,68 @@ Do not add a vertical accent line.
 Keep the visible keyboard focus outline.
 Selection and focus must have separate states.
 
+Use `jp-select` for a single choice without search.
+Its trigger and option list must use the shared field and overlay tokens.
+Reserve separate space for the label, chevron and control edge.
+Long labels must not move the chevron or cover it.
+Do not add a visible native `<select>` to a component or example.
+Use `jp-combobox` when the user must search the options.
+
+Use `jp-date-picker`, `jp-date-range-picker` and `jp-time-picker` for temporal fields.
+Their visible fields and popup panels must use JP tokens.
+Do not expose native date or time picker chrome in components or examples.
+`jp-input` delegates its date/time types to these components.
+Keep native form semantics and system file selection.
+The upload trigger, filename queue and feedback must use JP styles.
+
+Hide browser number spinners when the field has JP increment controls or direct numeric entry.
+Keep ArrowUp/ArrowDown and numeric validation available.
+Use a themed chevron for disclosures and hide the browser marker.
+
+A component `title` input must not leave an HTML `title` attribute on its host.
+Use a visible heading or `jp-tooltip` for descriptions.
+Date-range fields must fit their container, including narrow desktop cards.
+
+Inspect both the closed field and the open panel in Chrome.
+Repeat the inspection at 320 CSS pixels and in RTL.
+Inspect disabled, read-only, invalid, focus and reset states before accepting a control.
+
 ## Motion
 
 Do not animate layout changes for decoration.
 Keep chart animation disabled.
-Use short color transitions for hover states.
-Honor the reduced-motion setting.
+Use the 90ms `--jp-motion-transition-base` for hover colors and borders.
+Do not use `transition: all`.
+
+Show the pressed state on pointer down. Keep action activation on click.
+Keep keyboard focus outlines immediate.
+Do not animate button dimensions or scale their text.
+Use the same rules for row actions, dismiss controls, overflow controls and navigation links.
+
+Keep selection marks and slider values immediate.
+During dragging, update slider positions and pane sizes without transitions.
+
+Use the 160ms normal duration for drawer entry and shell transitions.
+Keep menu opening, focus movement and dismissal immediate.
+Use easing without overshoot.
+
+Keep the button dimensions constant during loading.
+Center its spinner over the hidden label.
+Retain existing rows during refresh.
+
+Retain populated charts, calendars and notification lists during refresh.
+Keep their scroll containers mounted.
+Use placeholders when no usable data is available.
+
+Put refresh progress inside the existing results region without moving content.
+Use the separate 960ms indicator duration for repeating loading indicators.
+Honor the reduced-motion setting for transitions and loading indicators.
+
+Check pointer down, keyboard focus and loading recovery in Chrome.
+Check that loading does not change the position of adjacent content.
+Check both password-reveal labels without changing the field width.
+
+The [interaction review](../qa/INTERACTION_REVIEW.md) lists the full component inventory.
 
 Keep the Storybook runtime files separate for each server port.
 A preview server must not share generated runtime files with a test server.
@@ -43,5 +161,35 @@ Do not force an accent in a story unless that story tests the specific accent.
 Compare the rendered interface with the references in Chrome.
 Check desktop, collapsed sidebar and mobile layouts.
 Check controls, tables, overlays and status text.
+
+Open each changed dropdown before accepting its appearance.
+Inspect the option list, selected item, keyboard focus and disabled items.
+Check long labels at 320px width and in both text directions.
+Check the dropdown inside a dialog and a container that clips content.
+
 Inspect changed visual baselines before accepting them.
 Run the interaction and accessibility checks after a visual change.
+
+## Screenshot states
+
+Set the browser viewport before taking a mobile screenshot.
+Use 390px width for the phone examples and 1440px for desktop examples.
+A story name does not change the viewport of a direct iframe URL.
+
+Keep example controls functional. Bind controlled outputs to visible example state.
+Use distinct names for example callbacks and component methods.
+Supply defaults for values that a custom Storybook template binds.
+An undefined binding can replace a component default.
+
+Wait for the story interaction checks to finish.
+Then inspect the final visible state before saving the screenshot.
+An open-overlay example must show its overlay.
+Failure and streaming examples must retain those states after their checks.
+Keep separate examples for recovery actions that change the visible state.
+
+Inspect page overflow, focus, labels and console errors with each changed layout.
+Keep screenshot files outside Git unless they are reviewed regression baselines.
+
+For a component with a scroll frame, check its scroll position before and after a full-page capture.
+If Chromium resets the frame, increase viewport height to the measured page height before capture.
+Check that the component retains its initial scroll position.

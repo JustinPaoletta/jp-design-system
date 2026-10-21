@@ -1,6 +1,8 @@
 @if (columnChooser() || resizable()) {
 <details class="jp-table__settings">
-  <summary>{{ messages.table.columns }}</summary>
+  <summary>
+    {{ messages.table.columns }}<jp-icon name="chevron-down" size="sm" />
+  </summary>
   <div class="jp-table__settings-body">
     @for (column of columns(); track column.key) {
     <div class="jp-table__column-setting">
@@ -47,7 +49,10 @@
     [attr.aria-colcount]="fullColumnCount()"
   >
     @if (caption()) {
-    <caption class="jp-table__caption">
+    <caption
+      class="jp-table__caption"
+      [class.jp-table__sr-only]="captionHidden()"
+    >
       {{ caption() }}
     </caption>
     } @if (resizable()) {

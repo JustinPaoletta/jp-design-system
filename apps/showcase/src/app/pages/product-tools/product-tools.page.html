@@ -23,7 +23,7 @@
         <h3 #stepHeading tabindex="-1">Club details</h3>
         <jp-input
           id="wizard-email"
-          label="Coach email"
+          label="Manager email"
           type="email"
           [formControl]="email"
           [error]="submitted() && email.invalid ? 'Enter a valid email address.' : ''"
@@ -39,7 +39,7 @@
         <jp-button type="submit">Continue</jp-button>
         } @else {
         <h3 #stepHeading tabindex="-1">Review club</h3>
-        <p>Coach email: {{ email.value }}</p>
+        <p>Manager email: {{ email.value }}</p>
         <p>Players: {{ seats.value }}</p>
         <div class="actions">
           <jp-button variant="secondary" (click)="back()">Back</jp-button

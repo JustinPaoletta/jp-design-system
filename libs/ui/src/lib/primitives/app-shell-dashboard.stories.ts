@@ -56,17 +56,17 @@ const meta: Meta<AppShellDashboardArgs> = {
         sessionSeries: [
           {
             id: 'sessions',
-            label: 'Falcons',
-            values: [0, 0, 1, 1, 3, 3, 4, 4, 5],
+            label: 'Dodgers',
+            values: [0, 0, 0, 0, 5, 5, 5, 7, 7],
           },
-          { id: 'bears', label: 'Bears', values: [0, 1, 1, 1, 2, 2, 2, 3, 3] },
+          {
+            id: 'bears',
+            label: 'Yankees',
+            values: [3, 4, 5, 5, 5, 6, 6, 6, 6],
+          },
         ],
         sidebarCollapsed,
         mobileNavOpen,
-        documentAccent:
-          document.documentElement.getAttribute('data-jp-accent') ?? 'gold',
-        documentDensity:
-          document.documentElement.getAttribute('data-jp-density') ?? 'default',
         onSidebarCollapsedChange(next: boolean) {
           sidebarCollapsed.set(next);
         },
@@ -76,36 +76,36 @@ const meta: Meta<AppShellDashboardArgs> = {
       },
       template: `
       <style>
-.dashboard {padding:24px; max-width:1100px; margin-inline:auto; color:var(--jp-color-text-primary);}
-.dashboard-topbar {display:flex; align-items:center; justify-content:space-between; padding:12px 24px; border-bottom:1px solid var(--jp-color-border-subtle); color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-caption);}
-.dashboard-heading {display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px;}
-.dashboard-heading h1 {margin:0 0 4px; font-size:28px; letter-spacing:-.025em;}
-.dashboard p {margin:0; color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-body);}
-.dashboard-period {border:1px solid var(--jp-color-border-default); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-raised); padding:8px 14px; color:var(--jp-color-text-secondary); font:inherit;}
-.dashboard-metrics {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:20px 0; margin:0 0 16px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-raised);}
-.dashboard-metrics div {padding-inline:24px;}
+.dashboard {padding:32px; max-width:1100px; margin-inline:auto; color:var(--jp-color-text-primary);}
+.dashboard-topbar {display:flex; align-items:center; justify-content:space-between; box-sizing:border-box; min-height:57px; padding:12px 32px; border-bottom:1px solid var(--jp-color-border-subtle); color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-caption);}
+.dashboard-heading {display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px;}
+.dashboard-heading h1 {margin:0 0 4px; font-size:var(--jp-font-size-heading-h1); letter-spacing:-.025em; font-weight:600;}
+.dashboard p {margin:0; color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-body-sm); line-height:1.5;}
+.dashboard-period {border:1px solid var(--jp-color-border-default); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle); padding:8px 14px; color:var(--jp-color-text-secondary); font:inherit; font-size:var(--jp-font-size-caption); white-space:nowrap;}
+.dashboard-metrics {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:auto auto; padding:24px 0; margin:0 0 24px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle);}
+.dashboard-metrics div {display:grid; grid-template-rows:subgrid; grid-row:span 2; padding-inline:24px;}
 .dashboard-metrics div + div {border-inline-start:1px solid var(--jp-color-border-default);}
 .dashboard-metrics dt {color:var(--jp-color-text-secondary); font-size:var(--jp-font-size-caption);}
-.dashboard-metrics dd {margin:4px 0 0; font-size:32px; line-height:1.2; font-weight:700; letter-spacing:-.025em; font-variant-numeric:tabular-nums;}
-.dashboard-panels {display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:16px; margin-bottom:16px;}
-.dashboard-panel {padding:18px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-raised); min-width:0;}
-.dashboard-panel h2 {font-size:var(--jp-font-size-body); margin:0 0 18px;}
-.dashboard-activity {list-style:none; padding:0; margin:0; display:grid; gap:24px;}
-.dashboard-activity li {display:grid; grid-template-columns:8px 42px 1fr; align-items:start; gap:12px; font-size:var(--jp-font-size-caption);}
+.dashboard-metrics dd {margin:4px 0 0; font-size:32px; line-height:1.2; font-weight:600; letter-spacing:-.025em; font-variant-numeric:tabular-nums;}
+.dashboard-panels {display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:24px; margin-bottom:24px;}
+.dashboard-panel {padding:20px; border:1px solid var(--jp-color-border-subtle); border-radius:var(--jp-radius-md); background:var(--jp-color-surface-subtle); min-width:0;}
+.dashboard-panel h2 {font-size:var(--jp-font-size-body); margin:0 0 20px; font-weight:600;}
+.dashboard-activity {list-style:none; padding:0; margin:0; display:grid; gap:22px;}
+.dashboard-activity li {display:grid; grid-template-columns:6px 38px 1fr; align-items:start; gap:12px; font-size:var(--jp-font-size-caption);}
 .dashboard-activity time {color:var(--jp-color-text-muted); font-variant-numeric:tabular-nums;}
 .dashboard-dot {width:6px; height:6px; border-radius:50%; background:var(--jp-color-state-success-border); margin-top:6px;}
 .dashboard-dot-neutral {background:var(--jp-color-text-secondary);}
 .dashboard-dot-warning {background:var(--jp-color-accent-solid);}
+.dashboard-summary {padding:4px 0 0;}
+.dashboard-summary h2 {font-size:var(--jp-font-size-body); font-weight:600; margin:0 0 16px;}
 .dashboard-insights {display:grid; grid-template-columns:1fr 1fr auto; gap:24px; align-items:center;}
 .dashboard-insights h3 {margin:0 0 6px; font-size:var(--jp-font-size-caption); font-weight:500;}
 .dashboard-insights p, .dashboard-updated {font-size:var(--jp-font-size-caption); color:var(--jp-color-text-muted);}
 .dashboard-insights > div + div {border-inline-start:1px solid var(--jp-color-border-default); padding-inline-start:24px;}
-.dashboard-brand {display:block; padding:8px 8px 28px; font-weight:600; font-size:var(--jp-font-size-body);}
-.dashboard-workspace {display:block; padding:0 8px 12px; font-size:11px; color:var(--jp-color-text-muted); letter-spacing:.04em;}
 .dashboard-avatar {display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--jp-color-surface-emphasis); font-size:11px;}
 .dashboard-period:focus-visible {outline:2px solid var(--jp-color-focus-ring); outline-offset:2px;}
-@media (width > 48rem) { .jp-app-shell--collapsed .dashboard-brand, .jp-app-shell--collapsed .dashboard-workspace {display:none;} }
-@media (width <= 48rem) {.dashboard {padding:16px;} .dashboard-panels {grid-template-columns:1fr;} .dashboard-insights {grid-template-columns:1fr;} .dashboard-insights > div + div {border:0; padding:0;} .dashboard-metrics div {padding-inline:12px;} .dashboard-metrics dd {font-size:24px;} .dashboard-topbar {padding-inline:16px;} }
+
+@media (width <= 48rem) {.dashboard {padding:16px;} .dashboard-heading {flex-wrap:wrap; align-items:flex-start;} .dashboard-panels {grid-template-columns:1fr;} .dashboard-insights {grid-template-columns:1fr;} .dashboard-insights > div + div {border:0; padding:0;} .dashboard-metrics div {padding-inline:12px;} .dashboard-metrics dd {font-size:24px;} .dashboard-topbar {padding-inline:16px;} }
       </style>
 
       <jp-app-shell
@@ -114,9 +114,8 @@ const meta: Meta<AppShellDashboardArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
+        <span jpAppShellBrand>Los Angeles Dodgers</span>
         <nav jpAppShellSidebar aria-label="Primary">
-          <span class="dashboard-brand">Falcons</span>
-          <span class="dashboard-workspace">FALCONS</span>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
               href="#overview"
@@ -155,21 +154,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </nav>
 
         <main jpAppShellMain>
-<div class="dashboard-topbar"><span>Falcons / Game day</span><span class="dashboard-avatar" aria-label="Jordan Davis">JD</span></div>
+<div class="dashboard-topbar"><span>Dodgers / Game day</span><span class="dashboard-avatar" aria-label="Freddie Freeman">FF</span></div>
 <section class="dashboard" aria-labelledby="overview-title">
-  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Riverton Falcons vs. Lakeview Bears.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
-  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>5</dd></div><div><dt>Hits</dt><dd>9</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
+  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Los Angeles Dodgers vs. New York Yankees.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
+  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>7</dd></div><div><dt>Hits</dt><dd>7</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
   <div class="dashboard-panels">
-    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Falcons 5 (solid), Bears 3 (dashed). Final score." type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:14rem"></jp-chart></section>
+    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Dodgers 7 (solid) · Yankees 6 (dashed)" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
     <section class="dashboard-panel"><h2>Activity</h2><ol class="dashboard-activity">
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:10</time><span>Final score recorded</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:06</time><span>Maya Chen made the final out</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time>21:02</time><span>Casey Brooks scored a run</span></li>
-      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time>20:58</time><span>Jordan Davis drove in a run</span></li>
-      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time>20:54</time><span>Alex Morgan hit a single</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Mookie Betts scores Tommy Edman</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Gavin Lux scores Kiké Hernández</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">6th</time><span>Giancarlo Stanton scores Juan Soto</span></li>
+      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Teoscar Hernández scores two runs</span></li>
+      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Freddie Freeman scores two runs</span></li>
     </ol></section>
   </div>
-  <section class="dashboard-panel"><h2>Insights</h2><div class="dashboard-insights"><div><h3>The Falcons win 5–3.</h3><p>The Falcons scored five runs on nine hits with no errors.</p></div><div><h3>Next game: October 12.</h3><p>The Falcons host the Bears at 18:30 at Riverton Field.</p></div><small class="dashboard-updated">Updated 21:10<br>Oct 11, 2026</small></div></section>
+  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Dodgers win 7–6.</h3><p>The Dodgers scored seven runs on seven hits with no errors.</p></div><div><h3>World Series: 4 games to 1.</h3><p>Game 5 was the last game. First pitch was 8:08 p.m. at Yankee Stadium.</p></div><small class="dashboard-updated">Final<br>Oct 30, 2024</small></div></section>
 </section>
         </main>
       </jp-app-shell>

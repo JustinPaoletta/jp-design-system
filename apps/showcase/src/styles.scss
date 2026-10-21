@@ -1,3 +1,4 @@
+@import '../../../libs/tokens/src/fonts.css';
 @import '../../../libs/tokens/src/generated/tokens.css';
 
 html,
@@ -7,4 +8,5 @@ body {
   background: var(--jp-color-surface-canvas);
   color: var(--jp-color-text-primary);
   font-family: var(--jp-font-family-base);
+  line-height: var(--jp-font-line-height-normal);
 }

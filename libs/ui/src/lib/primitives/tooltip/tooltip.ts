@@ -164,6 +164,9 @@ export class JpTooltip {
     const projected = host.querySelector(
       'button, a, [tabindex], input, select, textarea',
     ) as HTMLElement | null;
-    return projected ?? (host.firstElementChild as HTMLElement | null);
+    const wrapper = host.querySelector<HTMLElement>('.jp-tooltip__trigger');
+    return (
+      projected ?? (wrapper?.firstElementChild as HTMLElement | null) ?? wrapper
+    );
   }
 }

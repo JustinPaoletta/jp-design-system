@@ -1,3 +1,4 @@
+import { componentWrapperDecorator } from '@storybook/angular';
 import { Component, input, signal } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
@@ -12,7 +13,7 @@ class InlineEditDemo {
   readonly label = input('Club name');
   readonly disabled = input(false);
   readonly fail = input(false);
-  readonly value = signal('Riverton Falcons');
+  readonly value = signal('Los Angeles Dodgers');
   readonly persist = async () => {
     if (this.fail()) throw new Error('Denied');
   };
@@ -25,7 +26,12 @@ const render = (args: Record<string, unknown>, fail = false) => ({
 const meta: Meta<JpInlineEdit> = {
   title: 'Primitives/Controls/Inline Edit',
   component: JpInlineEdit,
-  decorators: [moduleMetadata({ imports: [InlineEditDemo] })],
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 28rem; width: 100%;">${story}</div>`,
+    ),
+    moduleMetadata({ imports: [InlineEditDemo] }),
+  ],
   parameters: { layout: 'padded' },
   args: { label: 'Club name', disabled: false },
   render: (args) => render(args),
@@ -39,12 +45,14 @@ export const Default: Story = {
     const input = c.getByRole('textbox', { name: 'Club name' });
     await expect(input).toHaveFocus();
     await userEvent.clear(input);
-    await userEvent.type(input, 'Riverton Falcons Varsity');
+    await userEvent.type(input, 'Los Angeles Dodgers Active roster');
     await userEvent.click(c.getByRole('button', { name: /^Save$/ }));
     await expect(
       c.getByRole('button', { name: 'Edit: Club name' }),
     ).toHaveFocus();
-    await expect(canvasElement).toHaveTextContent('Riverton Falcons Varsity');
+    await expect(canvasElement).toHaveTextContent(
+      'Los Angeles Dodgers Active roster',
+    );
   },
 };
 export const Failed: Story = {

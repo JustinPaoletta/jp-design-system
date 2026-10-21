@@ -1,3 +1,4 @@
+import { JpIcon } from '../icon/icon';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,8 +18,15 @@ export type JpInlineAlertTone = (typeof JP_INLINE_ALERT_TONES)[number];
 
 @Component({
   selector: 'jp-inline-alert',
-  imports: [JpButton],
+  imports: [JpIcon, JpButton],
   template: `
+    <jp-icon
+      class="jp-inline-alert__icon"
+      [name]="
+        tone() === 'success' ? 'check' : tone() === 'info' ? 'info' : 'warning'
+      "
+      size="md"
+    />
     <div class="jp-inline-alert__copy">
       @if (title()) {
         <strong>{{ title() }}</strong>
@@ -29,15 +37,20 @@ export type JpInlineAlertTone = (typeof JP_INLINE_ALERT_TONES)[number];
       <ng-content />
     </div>
     @if (actionLabel()) {
-      <jp-button variant="secondary" size="sm" (click)="action.emit()">{{
-        actionLabel()
-      }}</jp-button>
+      <jp-button
+        class="jp-inline-alert__action"
+        variant="secondary"
+        size="sm"
+        (click)="action.emit()"
+        >{{ actionLabel() }}</jp-button
+      >
     }
   `,
   styleUrl: './inline-alert.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'jp-inline-alert',
+    '[attr.title]': 'null',
     '[attr.role]': 'tone() === "error" ? "alert" : "status"',
     '[attr.aria-atomic]': 'true',
     '[class.jp-inline-alert--info]': 'tone() === "info"',

@@ -80,15 +80,15 @@ export class WorkflowsPage {
     viewChild<ElementRef<HTMLElement>>('notificationRegion');
   readonly commandOpen = signal(false);
   readonly action = signal('No action selected');
-  readonly projectName = signal('Riverton Falcons');
+  readonly projectName = signal('Los Angeles Dodgers');
   failNextSave = true;
   readonly favorite = new FormControl(false);
-  readonly launch = new FormControl('2026-10-10', { nonNullable: true });
+  readonly launch = new FormControl('2024-10-30', { nonNullable: true });
   readonly dates = new FormControl<JpDateRangeValue>(
-    ['2026-10-10', '2026-10-14'],
+    ['2024-10-25', '2024-10-30'],
     { nonNullable: true },
   );
-  readonly time = new FormControl('09:00', {
+  readonly time = new FormControl('20:00', {
     nonNullable: true,
     validators: [Validators.required],
   });
@@ -130,12 +130,12 @@ export class WorkflowsPage {
   readonly notifications = signal<readonly JpNotification[]>([
     {
       id: 'review',
-      title: 'Lineup review requested',
-      description: 'Alex requested a review of the game plan.',
-      group: 'Today',
+      title: 'Jack Flaherty starts Game 5',
+      description: 'Dave Roberts started Jack Flaherty against the Yankees.',
+      group: 'October 30',
       unread: true,
-      timeLabel: '10:00 UTC',
-      dateTime: '2026-10-04T10:00:00Z',
+      timeLabel: '8:08 p.m.',
+      dateTime: '2024-10-30T20:08:00-04:00',
     },
     {
       id: 'release',
@@ -244,7 +244,7 @@ export class WorkflowsPage {
         ? [
             {
               controlId: 'launch-date',
-              message: 'Choose a game date in October 2026.',
+              message: 'Choose a game date in October 2024.',
             },
           ]
         : []),
@@ -252,7 +252,7 @@ export class WorkflowsPage {
         ? [
             {
               controlId: 'event-dates-start',
-              message: 'Choose an ordered date range in October 2026.',
+              message: 'Choose an ordered date range in October 2024.',
             },
           ]
         : []),
@@ -261,7 +261,7 @@ export class WorkflowsPage {
             {
               controlId: 'event-time',
               message:
-                'Choose a time between 09:00 and 17:00 in 15-minute steps.',
+                'Choose a time between 09:00 and 21:00 in 15-minute steps.',
             },
           ]
         : []),
