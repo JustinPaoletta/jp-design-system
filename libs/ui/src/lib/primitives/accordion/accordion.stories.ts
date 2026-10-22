@@ -10,7 +10,7 @@ const meta: Meta<JpAccordion> = {
   decorators: [moduleMetadata({ imports: [JpDisclosure] })],
   render: (args) => ({
     props: args,
-    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="Club details" [open]="true">Los Angeles Dodgers. Manager: Dave Roberts. Home field: Dodger Stadium.</jp-disclosure><jp-disclosure title="Game 5" [open]="multiple">October 30, 2024 at Yankee Stadium. First pitch was 8:08 p.m. Jack Flaherty started.</jp-disclosure></jp-accordion>`,
+    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="Club details" [open]="true">Tampa Bay Rays. The club won ALCS Game 6.</jp-disclosure><jp-disclosure title="ALCS Game 6" [open]="multiple">The Rays won ALCS Game 6 and advanced to the World Series.</jp-disclosure></jp-accordion>`,
   }),
 };
 export default meta;

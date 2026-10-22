@@ -46,7 +46,7 @@ export class SchedulingPage {
       start: '2024-10-07T09:00:00-04:00',
       end: '2024-10-07T10:30:00-04:00',
       description:
-        'Dave Roberts managed the 2024 Dodgers. This sample overlaps the next appointment.',
+        'The Rays won ALCS Game 6. This sample overlaps the next appointment.',
     },
     {
       id: 'review',
@@ -54,22 +54,21 @@ export class SchedulingPage {
       start: '2024-10-07T09:30:00-04:00',
       end: '2024-10-07T11:00:00-04:00',
       description:
-        'Freddie Freeman was day to day on October 7, 2024. This sample overlaps the lineup meeting.',
+        'The Rays roster is set for ALCS Game 6. This sample overlaps the lineup meeting.',
     },
     {
       id: 'handoff',
       title: 'Pitching practice',
       start: '2024-10-07T10:00:00-04:00',
       end: '2024-10-07T10:45:00-04:00',
-      description:
-        'Jack Flaherty started World Series Game 5 on October 30, 2024.',
+      description: 'The Rays won ALCS Game 6 and advanced to the World Series.',
     },
     {
       id: 'office',
       title: 'Meet the coaches',
       start: '2024-10-08T13:00:00-04:00',
       end: '2024-10-08T14:00:00-04:00',
-      description: 'The Dodgers coaching staff reported to Dave Roberts.',
+      description: 'The Rays staff prepared for ALCS Game 6.',
     },
     {
       id: 'release',
@@ -78,7 +77,7 @@ export class SchedulingPage {
       start: '2024-10-09',
       end: '2024-10-11',
       description:
-        'The ending date is exclusive. World Series Game 5 was October 30, 2024.',
+        'The ending date is exclusive. This date is a demonstration time.',
     },
     {
       id: 'overnight',

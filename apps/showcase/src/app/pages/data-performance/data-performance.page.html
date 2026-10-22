@@ -1,6 +1,6 @@
 <div class="page">
   <jp-page-header
-    title="2024 season runs"
+    title="Sample runs"
     description="April through September runs and a 10,000-row roster table."
     ><a jpPageActions jpLink routerLink="/hierarchy">Hierarchy</a
     ><a jpPageActions jpLink routerLink="/scheduling">Scheduling</a
@@ -8,7 +8,7 @@
       >Game preparation</a
     ></jp-page-header
   >
-  <jp-card title="Season runs"
+  <jp-card title="Sample runs"
     ><div class="actions">
       <jp-button
         variant="secondary"
@@ -20,12 +20,12 @@
     <jp-chart
       id="delivery-chart"
       label="Team runs by month"
-      description="Compare Dodgers and Yankees runs from April through September. Open the data table to inspect exact values."
+      description="Compare Rays runs with ALCS Game 6 sample values. Open the data table to inspect exact values."
       [labels]="labels"
       [series]="series"
       [type]="type()"
   /></jp-card>
-  <jp-card title="2024 Dodgers roster"
+  <jp-card title="2026 Rays roster"
     ><p>
       10,000 fixed-height rows. Scroll to browse or switch to paginated rows for
       complete table navigation. Sorting and selection are controlled by this
@@ -43,7 +43,7 @@
       />
     </jp-disclosure>
     <jp-virtual-table
-      label="2024 Dodgers roster"
+      label="2026 Rays roster"
       [columns]="columns"
       [rows]="rows()"
       [overscan]="overscan()"

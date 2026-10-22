@@ -12,7 +12,7 @@ const meta: Meta<JpMedia> = {
   args: {
     src: illustration,
     alt: 'Empty baseball field on a clear day',
-    caption: 'Sample field photo. Dodger Stadium is the Dodgers home field.',
+    caption: 'Sample field photo. It does not show a named ballpark.',
     loading: 'eager',
     fit: 'cover',
   },

@@ -22,7 +22,7 @@ const meta: Meta<JpFormSection> = {
   parameters: { layout: 'padded' },
   args: {
     legend: 'Club messages',
-    hint: 'Choose which Dodgers updates you receive by email.',
+    hint: 'Choose which Rays updates you receive by email.',
     error: '',
     disabled: false,
   },

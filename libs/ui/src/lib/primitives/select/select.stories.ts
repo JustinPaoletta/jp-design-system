@@ -115,11 +115,11 @@ export const LongLabels: Story = {
     options: [
       {
         value: 'editor',
-        label: 'Scorekeeper for the Dodgers home and away games',
+        label: 'Scorekeeper for Rays home and away games',
       },
       {
         value: 'admin',
-        label: 'Manager for the Dodgers player development program',
+        label: 'Manager for the Rays player development program',
       },
       {
         value: 'medical',

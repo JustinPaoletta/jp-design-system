@@ -21,15 +21,15 @@ const meta: Meta<JpDescriptionList> = {
   parameters: { layout: 'padded' },
   args: {
     items: [
-      { term: 'Manager', description: 'Dave Roberts' },
-      { term: 'Home field', description: 'Dodger Stadium' },
-      { term: 'Game 5', description: 'October 30, 2024 at Yankee Stadium' },
-      { term: 'Dodgers errors', description: 0 },
+      { term: 'Manager', description: 'Kevin Cash' },
+      { term: 'Series', description: '2026 ALCS' },
+      { term: 'Game', description: 'ALCS Game 6' },
+      { term: 'Result', description: 'Won' },
     ],
   },
   render: (args) => ({
     props: args,
-    template: `<jp-card title="Los Angeles Dodgers"><jp-description-list [items]="items" /></jp-card>`,
+    template: `<jp-card title="Tampa Bay Rays"><jp-description-list [items]="items" /></jp-card>`,
   }),
 };
 export default meta;
@@ -38,12 +38,12 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(
       within(canvasElement).getByRole('heading', {
-        name: 'Los Angeles Dodgers',
+        name: 'Tampa Bay Rays',
       }),
     ).toBeVisible();
     await expect(canvasElement.querySelector('dd:last-child')).toBeVisible();
     await expect(
-      within(canvasElement).getByText('0', { selector: 'dd' }),
+      within(canvasElement).getByText('Won', { selector: 'dd' }),
     ).toBeVisible();
   },
 };
@@ -58,15 +58,15 @@ export const LongContent: Story = {
     items: [
       {
         term: 'Club',
-        description: '2024 World Series champions',
+        description: '2026 ALCS winner',
       },
       {
         term: 'Contact',
-        description: 'postseason@dodgers.example',
+        description: 'postseason@rays.example',
       },
       {
-        term: 'Game 5 field',
-        description: 'Yankee Stadium, Bronx. First pitch was 8:08 p.m.',
+        term: 'Result',
+        description: 'The Rays won and advanced to the World Series.',
       },
     ],
   },

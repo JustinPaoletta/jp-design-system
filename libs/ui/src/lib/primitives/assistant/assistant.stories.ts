@@ -34,22 +34,18 @@ import { JpAssistantService } from './assistant.service';
         </jp-button>
       </jp-inline>
       <jp-assistant-panel
-        title="Dodgers manager"
+        title="Rays manager"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the World Series."
+        emptyDescription="Ask about players, ALCS Game 6 or the World Series."
         (messageSubmit)="onSubmit($event)"
         ><jp-stack jpAssistantSuggestions gap="sm"
-          ><jp-button
-            variant="secondary"
-            (click)="ask('Summarize the final score')"
-            >Summarize the final score</jp-button
+          ><jp-button variant="secondary" (click)="ask('Summarize ALCS Game 6')"
+            >Summarize ALCS Game 6</jp-button
           ><jp-button
             variant="secondary"
             (click)="ask('Who is in the starting lineup?')"
             >Review the starting lineup</jp-button
-          ><jp-button
-            variant="secondary"
-            (click)="ask('Who won the World Series?')"
+          ><jp-button variant="secondary" (click)="ask('Who won ALCS Game 6?')"
             >Show the series result</jp-button
           ></jp-stack
         ></jp-assistant-panel
@@ -61,10 +57,10 @@ class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
   readonly gameContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: 'ALCS Game 6',
+    description: 'The Rays won ALCS Game 6.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: 'ALCS-G6',
   };
 
   seed(): void {
@@ -72,12 +68,11 @@ class AssistantStoryHost {
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
-      content: 'World Series Game 5 loaded',
+      content: 'ALCS Game 6 loaded',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content:
-        'I can summarize the score and key plays from World Series Game 5.',
+      content: 'I can summarize the Rays win in ALCS Game 6.',
     });
     this.assistant.addMessage({
       role: 'user',
@@ -97,7 +92,7 @@ class AssistantStoryHost {
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Noted: “${content}”. Sample game result: Dodgers 7, Yankees 6.`,
+      content: `Noted: “${content}”. Sample game result: the Rays won ALCS Game 6.`,
     });
   }
 }
@@ -116,9 +111,9 @@ class AssistantStoryHost {
         >
       </jp-inline>
       <jp-assistant-panel
-        title="Dodgers manager"
+        title="Rays manager"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the World Series."
+        emptyDescription="Ask about players, ALCS Game 6 or the World Series."
         (messageSubmit)="respond()"
         (responseRetry)="retry($event.responseId)"
       />
@@ -149,7 +144,7 @@ class AssistantAsyncStoryHost {
     } else {
       this.assistant.updateResponse(
         this.responseId,
-        'The Yankees lead 5–0. Checking the fifth inning…',
+        'ALCS Game 6 is in progress.',
       );
     }
   }
@@ -157,7 +152,7 @@ class AssistantAsyncStoryHost {
     this.responseId = id;
     this.assistant.completeResponse(
       id,
-      'The final score is Dodgers 7, Yankees 6. Mookie Betts drove in the go-ahead run in the eighth inning.',
+      'The Rays won ALCS Game 6 and advanced to the World Series.',
     );
   }
 }
@@ -200,8 +195,8 @@ export const MessageRoles: Story = {
         class="jp-assistant-panel__message-list"
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
-        <jp-assistant-message messageRole="system" content="World Series Game 5 loaded" />
-        <jp-assistant-message messageRole="assistant" content="Mookie Betts drove in Tommy Edman in the eighth inning." />
+        <jp-assistant-message messageRole="system" content="ALCS Game 6 loaded" />
+        <jp-assistant-message messageRole="assistant" content="The Rays won ALCS Game 6." />
         <jp-assistant-message messageRole="user" content="Who drove in the go-ahead run?" />
       </div>
     `,
@@ -233,7 +228,7 @@ export const Conversation: Story = {
     );
     await userEvent.click(seed as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain(
-      'I can summarize the score and key plays from World Series Game 5.',
+      'I can summarize the Rays win in ALCS Game 6.',
     );
     await expect(
       canvasElement.querySelectorAll('jp-assistant-message').length,
@@ -255,7 +250,7 @@ export const ContextTrigger: Story = {
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
-    await expect(canvasElement.textContent).toContain('World Series Game 5');
+    await expect(canvasElement.textContent).toContain('ALCS Game 6');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
@@ -314,7 +309,7 @@ export const PendingAndStreaming: Story = {
     );
     await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
     await expect(canvasElement.textContent).toContain(
-      'Checking the fifth inning',
+      'ALCS Game 6 is in progress.',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Stop response' }),
@@ -322,8 +317,10 @@ export const PendingAndStreaming: Story = {
     await expect(canvasElement.textContent).toContain('Response stopped');
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
-    await expect(canvasElement.textContent).toContain(
-      'The final score is Dodgers 7, Yankees 6.',
+    await waitFor(() =>
+      expect(canvasElement.textContent).toContain(
+        'The Rays won ALCS Game 6 and advanced to the World Series.',
+      ),
     );
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(
@@ -346,11 +343,13 @@ export const FailedAndRetry: Story = {
       'Connection lost',
     );
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await waitFor(() =>
+      expect(canvasElement.textContent).toContain(
+        'The Rays won ALCS Game 6 and advanced to the World Series.',
+      ),
+    );
     await expect(canvas.queryByRole('alert')).toBeNull();
     await expect(canvas.queryByRole('progressbar')).toBeNull();
-    await expect(canvasElement.textContent).toContain(
-      'The final score is Dodgers 7, Yankees 6.',
-    );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Close assistant' }),
     );

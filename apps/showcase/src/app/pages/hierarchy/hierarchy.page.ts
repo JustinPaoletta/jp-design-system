@@ -62,40 +62,40 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
 export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: '2024 Dodgers',
-    cells: { owner: 'Dave Roberts', status: 'Available', hours: 26 },
+    label: '2026 Rays',
+    cells: { owner: 'Kevin Cash', status: 'Available', hours: 26 },
     children: [
       {
         key: 'design',
         label: 'Position players',
-        cells: { owner: 'Freddie Freeman', status: 'Available', hours: 13 },
+        cells: { owner: 'Yandy Díaz', status: 'Available', hours: 13 },
         children: [
           {
             key: 'landing',
             label: 'Infield',
-            cells: { owner: 'Freddie Freeman', status: 'Available', hours: 5 },
+            cells: { owner: 'Yandy Díaz', status: 'Available', hours: 5 },
           },
           {
             key: 'checkout',
             label: 'Outfield',
-            cells: { owner: 'Mookie Betts', status: 'Available', hours: 5 },
+            cells: { owner: 'Josh Lowe', status: 'Available', hours: 5 },
           },
           {
             key: 'catchers',
             label: 'Catchers',
-            cells: { owner: 'Will Smith', status: 'Available', hours: 2 },
+            cells: { owner: 'Ben Rortvedt', status: 'Available', hours: 2 },
           },
           {
             key: 'dh',
             label: 'Designated hitter',
-            cells: { owner: 'Shohei Ohtani', status: 'Available', hours: 1 },
+            cells: { owner: 'Junior Caminero', status: 'Available', hours: 1 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitchers',
-        cells: { owner: 'Jack Flaherty', status: 'Available', hours: 13 },
+        cells: { owner: 'Shane Baz', status: 'Available', hours: 13 },
       },
     ],
   },
@@ -103,7 +103,7 @@ export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
     key: 'legacy',
     label: 'Injured list',
     disabled: true,
-    cells: { owner: 'Clayton Kershaw', status: 'Injured', hours: 1 },
+    cells: { owner: 'Shane McClanahan', status: 'Injured', hours: 1 },
   },
 ];
 

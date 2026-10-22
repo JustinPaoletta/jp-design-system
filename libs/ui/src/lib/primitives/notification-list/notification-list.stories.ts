@@ -13,18 +13,17 @@ const meta: Meta<JpNotificationList> = {
     items: [
       {
         id: 'one',
-        title: 'Jack Flaherty starts Game 5',
-        description: 'Dave Roberts started Jack Flaherty against the Yankees.',
-        group: 'October 30',
+        title: 'Rays win ALCS Game 6',
+        description: 'The Rays won ALCS Game 6.',
+        group: '2026 ALCS',
         unread: true,
-        timeLabel: '8:08 p.m.',
+        timeLabel: '2026',
         dateTime: '2024-10-30T20:08:00-04:00',
       },
       {
         id: 'two',
-        title: 'Clayton Kershaw is out',
-        description:
-          'On October 5, 2024, Dave Roberts said Clayton Kershaw was out for the postseason.',
+        title: 'Injured list sample',
+        description: 'The injured-list row is a sample status for the Rays.',
         group: 'Earlier',
         unread: false,
       },
@@ -55,7 +54,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as read: Jack Flaherty starts Game 5',
+        name: 'Mark as read: Rays win ALCS Game 6',
       }),
     );
     await expect(
@@ -63,7 +62,7 @@ export const Default: Story = {
     ).toBeVisible();
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as unread: Jack Flaherty starts Game 5',
+        name: 'Mark as unread: Rays win ALCS Game 6',
       }),
     );
     await expect(

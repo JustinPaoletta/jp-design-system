@@ -16,10 +16,7 @@ import { JpDialog, JpDialogActions } from './dialog';
       </jp-button>
     }
     <jp-dialog [open]="open" [title]="title" (openChange)="open = $event">
-      <p>
-        Remove Jack Flaherty from the Dodgers roster. You cannot undo this
-        change.
-      </p>
+      <p>Remove Shane Baz from the Rays roster. You cannot undo this change.</p>
       <div jpDialogActions>
         <jp-button type="button" variant="secondary" (click)="open = false">
           Cancel

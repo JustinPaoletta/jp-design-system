@@ -36,9 +36,9 @@ describe('JpAvatarGroup', () => {
   it('opens a readable list of all hidden members and restores focus on Escape', async () => {
     const f = await mount({
       people: [
-        { id: 'a', name: 'Jack Flaherty' },
-        { id: 'b', name: 'Freddie Freeman' },
-        { id: 'c', name: 'Tommy Edman' },
+        { id: 'a', name: 'Shane Baz' },
+        { id: 'b', name: 'Yandy Díaz' },
+        { id: 'c', name: 'Taylor Walls' },
       ],
       max: 1,
       label: 'Players',
@@ -53,9 +53,9 @@ describe('JpAvatarGroup', () => {
     ) as HTMLElement;
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
     expect(document.activeElement).toBe(panel);
-    expect(panel.textContent).toContain('Jack Flaherty');
-    expect(panel.textContent).toContain('Freddie Freeman');
-    expect(panel.textContent).toContain('Tommy Edman');
+    expect(panel.textContent).toContain('Shane Baz');
+    expect(panel.textContent).toContain('Yandy Díaz');
+    expect(panel.textContent).toContain('Taylor Walls');
     panel.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
     );
@@ -64,7 +64,7 @@ describe('JpAvatarGroup', () => {
     expect(document.activeElement).toBe(trigger);
     trigger.click();
     f.detectChanges();
-    f.componentRef.setInput('people', [{ id: 'a', name: 'Jack Flaherty' }]);
+    f.componentRef.setInput('people', [{ id: 'a', name: 'Shane Baz' }]);
     f.detectChanges();
     expect(f.componentInstance.open()).toBe(false);
     expect(f.nativeElement.querySelector('button')).toBeNull();

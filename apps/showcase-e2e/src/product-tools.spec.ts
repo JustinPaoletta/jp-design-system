@@ -15,7 +15,7 @@ test('product tools: wizard validates, focuses recovery, and preserves values on
     .click();
   const email = page.getByRole('textbox', { name: 'Manager email' });
   await expect(email).toBeFocused();
-  await email.fill('lineup@dodgers.example');
+  await email.fill('lineup@rays.example');
   const seats = page.getByRole('spinbutton', { name: 'Players' });
   await seats.fill('11');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
@@ -30,7 +30,7 @@ test('product tools: wizard validates, focuses recovery, and preserves values on
     page.getByRole('heading', { name: 'Review club', exact: true }),
   ).toBeFocused();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
-  await expect(email).toHaveValue('lineup@dodgers.example');
+  await expect(email).toHaveValue('lineup@rays.example');
   await expect(seats).toHaveValue('3');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByRole('button', { name: 'Save club', exact: true }).click();
@@ -112,7 +112,7 @@ test('product tools: overflow content is reachable by keyboard and restores focu
   await expect(opener).toHaveAttribute('aria-expanded', 'true');
   // WebKit follows macOS link navigation: Option+Tab includes links.
   await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
-  await expect(page.getByRole('link', { name: 'Jack Flaherty' })).toBeFocused();
+  await expect(page.getByRole('link', { name: 'Shane Baz' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
   await expect(opener).toBeFocused();

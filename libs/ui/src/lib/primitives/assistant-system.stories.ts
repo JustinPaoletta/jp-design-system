@@ -69,7 +69,7 @@ import { JpCard } from './card/card';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
-      <span jpAppShellBrand>Los Angeles Dodgers</span>
+      <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -98,8 +98,8 @@ import { JpCard } from './card/card';
         <div class="example-page">
           <div class="example-page__cards">
             <header class="example-page__header">
-              <jp-heading as="h1">Dodgers assistant</jp-heading>
-              <p>Ask about the Dodgers game or roster.</p>
+              <jp-heading as="h1">Rays assistant</jp-heading>
+              <p>Ask about the Rays game or roster.</p>
             </header>
 
             <jp-card title="Ask the manager">
@@ -130,9 +130,9 @@ import { JpCard } from './card/card';
     </jp-app-shell>
 
     <jp-assistant-panel
-      title="Dodgers manager"
+      title="Rays manager"
       emptyTitle="Ask about the lineup"
-      emptyDescription="Ask about players, the final score or the World Series."
+      emptyDescription="Ask about players, ALCS Game 6 or the World Series."
       (messageSubmit)="onSubmit($event)"
     />
   `,
@@ -144,10 +144,10 @@ class AssistantCompositionHost {
   mobileNavOpen = false;
 
   readonly deploymentContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: 'ALCS Game 6',
+    description: 'The Rays won ALCS Game 6.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: 'ALCS-G6',
   };
 
   readonly filterContext = {
@@ -159,7 +159,7 @@ class AssistantCompositionHost {
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
+      content: `Sample game summary for “${content}”: the Rays won ALCS Game 6.`,
     });
   }
 }
@@ -183,7 +183,7 @@ type Story = StoryObj<JpAppShell>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Dodgers assistant',
+      'Rays assistant',
     );
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
       (button) => button.textContent?.trim() === 'Ask about the game',
@@ -191,7 +191,7 @@ export const Default: Story = {
     await expect(trigger).toBeTruthy();
     if (trigger) {
       await userEvent.click(trigger);
-      await expect(canvasElement.textContent).toContain('World Series Game 5');
+      await expect(canvasElement.textContent).toContain('ALCS Game 6');
       await expect(
         canvasElement.querySelector('[role="complementary"]'),
       ).toBeTruthy();

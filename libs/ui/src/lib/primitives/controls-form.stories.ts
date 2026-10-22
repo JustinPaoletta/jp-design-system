@@ -51,7 +51,7 @@ const meta: Meta<ControlsFormArgs> = {
   args: {
     sidebarCollapsed: false,
     mobileNavOpen: false,
-    email: 'manager@dodgers.example',
+    email: 'manager@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -218,7 +218,7 @@ const meta: Meta<ControlsFormArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Los Angeles Dodgers</span>
+        <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -267,8 +267,8 @@ const meta: Meta<ControlsFormArgs> = {
         <jp-input
           label="Email"
           type="email"
-          placeholder="manager@dodgers.example"
-          hint="Used for Dodgers club messages."
+          placeholder="manager@rays.example"
+          hint="Used for Rays club messages."
           [(ngModel)]="email"
           name="email"
         />
@@ -290,7 +290,7 @@ const meta: Meta<ControlsFormArgs> = {
         <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
           Get club messages
         </jp-checkbox>
-        <p>Game changes and lineup updates from the Dodgers.</p>
+        <p>Game changes and lineup updates from the Rays.</p>
       </div>
     </div>
     <div jpCardActions class="lineup-editor__footer">
@@ -347,8 +347,8 @@ export const Default: Story = {
     await expect(email).toBeTruthy();
     if (email) {
       await userEvent.clear(email);
-      await userEvent.type(email, 'manager@dodgers.example');
-      await expect(email.value).toBe('manager@dodgers.example');
+      await userEvent.type(email, 'manager@rays.example');
+      await expect(email.value).toBe('manager@rays.example');
       email.blur();
       await expect(email).not.toHaveFocus();
     }

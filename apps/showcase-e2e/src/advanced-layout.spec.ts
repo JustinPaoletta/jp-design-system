@@ -67,23 +67,21 @@ test('advanced layout: row details and selection stay independent', async ({
   await expand.click();
   await expect(expand).toHaveAttribute('aria-expanded', 'true');
   const row = page.locator('.jp-table__detail-row');
-  await expect(row).toContainText('plays pitcher. Manager: Dave Roberts.');
+  await expect(row).toContainText('plays pitcher. Manager: Kevin Cash.');
   await row.getByRole('button', { name: 'Review game' }).click();
-  await expect(page.getByRole('status')).toContainText(
-    'Reviewed Jack Flaherty',
-  );
+  await expect(page.getByRole('status')).toContainText('Reviewed Shane Baz');
   await page
-    .getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true })
+    .getByRole('checkbox', { name: 'Select Shane Baz', exact: true })
     .check();
   await expect(
-    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Shane Baz', exact: true }),
   ).toBeChecked();
   await page
-    .getByRole('button', { name: 'Hide details: Jack Flaherty', exact: true })
+    .getByRole('button', { name: 'Hide details: Shane Baz', exact: true })
     .click();
   await expect(row).toHaveCount(0);
   await expect(
-    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Shane Baz', exact: true }),
   ).toBeChecked();
 });
 for (const dir of ['ltr', 'rtl'])
@@ -179,7 +177,7 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
     page.getByRole('heading', { name: 'Player profile', exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: '2024 Dodgers roster', exact: true }),
+    page.getByRole('heading', { name: '2026 Rays roster', exact: true }),
   ).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -239,7 +237,7 @@ for (const accent of ['neon', 'cobalt'])
         await page.getByText('Columns', { selector: 'summary' }).click();
         await page
           .getByRole('button', {
-            name: 'Show details: Jack Flaherty',
+            name: 'Show details: Shane Baz',
             exact: true,
           })
           .click();

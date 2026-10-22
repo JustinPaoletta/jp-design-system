@@ -115,31 +115,30 @@ export class ProductToolsPage {
   readonly events = [
     {
       id: 'created',
-      title: 'Clayton Kershaw is out',
-      timeLabel: 'October 5, 2024',
+      title: 'Injured list sample',
+      timeLabel: 'Sample',
       dateTime: '2024-10-05',
-      description:
-        'Dave Roberts said Clayton Kershaw was out for the postseason.',
+      description: 'The injured-list row is a sample status for the Rays.',
     },
     {
       id: 'reviewed',
-      title: 'Freddie Freeman is day to day',
-      timeLabel: 'October 7, 2024',
+      title: 'Day to day sample',
+      timeLabel: 'Sample',
       dateTime: '2024-10-07',
-      description: 'A right ankle sprain kept his status day to day.',
+      description: 'The status sample is day to day.',
     },
     {
       id: 'deployment',
-      title: 'Game 5 final',
-      timeLabel: 'October 30, 2024',
+      title: 'ALCS Game 6 final',
+      timeLabel: 'ALCS Game 6',
       dateTime: '2024-10-30T23:50:00-04:00',
-      description: 'Dodgers 7, Yankees 6.',
+      description: 'The Rays won ALCS Game 6.',
     },
   ];
   readonly overflow = [
-    { id: 'ada', label: 'Jack Flaherty', href: '#reviewer-ada' },
-    { id: 'grace', label: 'Freddie Freeman' },
-    { id: 'linus', label: 'Tommy Edman' },
+    { id: 'ada', label: 'Shane Baz', href: '#reviewer-ada' },
+    { id: 'grace', label: 'Yandy Díaz' },
+    { id: 'linus', label: 'Taylor Walls' },
   ];
   readonly example =
     '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />';

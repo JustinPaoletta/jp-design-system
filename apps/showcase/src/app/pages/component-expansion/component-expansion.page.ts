@@ -112,9 +112,9 @@ export class ComponentExpansionPage {
     { value: 'push', label: 'Push', disabled: true },
   ];
   readonly reviewers = [
-    { value: 'ada', label: 'Jack Flaherty' },
-    { value: 'grace', label: 'Freddie Freeman' },
-    { value: 'linus', label: 'Tommy Edman' },
+    { value: 'ada', label: 'Shane Baz' },
+    { value: 'grace', label: 'Yandy Díaz' },
+    { value: 'linus', label: 'Taylor Walls' },
     { value: 'unavailable', label: 'Injured player', disabled: true },
   ];
   readonly views = [
@@ -122,9 +122,9 @@ export class ComponentExpansionPage {
     { value: 'archived', label: 'Archived' },
   ];
   readonly people = [
-    { id: 'ada', name: 'Jack Flaherty' },
-    { id: 'grace', name: 'Freddie Freeman' },
-    { id: 'linus', name: 'Tommy Edman' },
+    { id: 'ada', name: 'Shane Baz' },
+    { id: 'grace', name: 'Yandy Díaz' },
+    { id: 'linus', name: 'Taylor Walls' },
   ];
   readonly details = [
     { term: 'Squad', description: 'Active roster' },
@@ -134,13 +134,13 @@ export class ComponentExpansionPage {
   readonly services = [
     {
       id: 'gateway',
-      title: 'Jack Flaherty',
+      title: 'Shane Baz',
       description: 'Active roster',
       meta: 'Available',
     },
     {
       id: 'worker',
-      title: 'Freddie Freeman',
+      title: 'Yandy Díaz',
       description: 'Active roster',
       meta: 'Day to day',
     },

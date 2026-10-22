@@ -1,6 +1,6 @@
 # Charts and virtual tables
 
-These APIs are preview. `/data-performance` combines 2024 season statistics and
+These APIs are preview. `/data-performance` combines Rays sample statistics and
 10,000 roster rows in a consumer screen. Consumers own fetching, sorting, selection,
 errors, persistence, and business decisions.
 

@@ -13,24 +13,26 @@ import { JpCard } from './card';
     <div class="card-stage">
       <jp-card [title]="title()">
         <jp-badge jpCardHeader tone="neutral" size="sm">Final</jp-badge>
-        <p class="game-date">October 30, 2024 · Yankee Stadium</p>
+        <p class="game-date">2026 ALCS · Game 6</p>
         <dl class="scoreboard" aria-label="Final score">
           <div class="team winner">
-            <dt>Los Angeles Dodgers <span>Away</span></dt>
-            <dd><span class="sr-only">Runs: </span>7</dd>
+            <dt>Tampa Bay Rays <span>Winner</span></dt>
+            <dd><span class="sr-only">Result: </span>Win</dd>
           </div>
           <div class="team">
-            <dt>New York Yankees <span>Home</span></dt>
-            <dd><span class="sr-only">Runs: </span>6</dd>
+            <dt>ALCS Game 6 <span>Series</span></dt>
+            <dd><span class="sr-only">Side: </span>—</dd>
           </div>
         </dl>
-        <p class="game-summary">Seven hits. No errors. A Dodgers win.</p>
+        <p class="game-summary">
+          The Rays won and advanced to the World Series.
+        </p>
         <div jpCardActions class="recap-actions">
           <jp-button [disabled]="saved()" (click)="saved.set(true)">
             {{ saved() ? 'Recap saved' : 'Save recap' }}
           </jp-button>
           <span role="status">{{
-            saved() ? 'Saved to your game notes.' : 'Final in 9 innings'
+            saved() ? 'Saved to your game notes.' : 'ALCS Game 6 is final'
           }}</span>
         </div>
       </jp-card>
@@ -82,19 +84,19 @@ export const Saved: Story = {
 };
 
 export const Plain: Story = {
-  args: { title: 'Game 5' },
+  args: { title: 'ALCS Game 6' },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>World Series Game 5 is October 30, 2024 at Yankee Stadium. First pitch is at 8:08 p.m.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>The Rays won ALCS Game 6 and advanced to the World Series.</p></jp-card></div>`,
   }),
 };
 
 export const LongContent: Story = {
   args: {
-    title: 'Los Angeles Dodgers postseason roster and player availability',
+    title: 'Tampa Bay Rays roster for ALCS Game 6',
   },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Dave Roberts managed the Dodgers. On October 7, Freddie Freeman was day to day with a sprained right ankle. Clayton Kershaw’s 2024 season ended on October 5.</p><p>Jack Flaherty started World Series Game 5. Mookie Betts and Freddie Freeman drove in runs.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>The Tampa Bay Rays won ALCS Game 6. The club advanced to the World Series.</p><p>This sample roster is for the Rays.</p></jp-card></div>`,
   }),
 };

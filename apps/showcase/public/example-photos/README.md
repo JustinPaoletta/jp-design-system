@@ -11,5 +11,5 @@ Example names are real players. These photographs do not show those players.
 Both source licenses permit free use of these photographs.
 The file names describe example assets.
 They do not identify the person in the cap photograph.
-The field photograph is not Dodger Stadium or Yankee Stadium.
+The field photograph does not show a named ballpark.
 Keep this source list with redistributed example photographs.

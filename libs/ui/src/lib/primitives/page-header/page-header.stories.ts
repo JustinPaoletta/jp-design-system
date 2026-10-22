@@ -22,12 +22,12 @@ const meta: Meta<JpPageHeader> = {
   args: {
     title: 'Player roster',
     headingLevel: 'h1',
-    description: 'Manage the 2024 Dodgers roster.',
+    description: 'Manage the 2026 Rays roster.',
   },
   render: (args) => ({
     props: { ...args, saved: false },
     template: `<jp-page-header [title]="title" [description]="description" [headingLevel]="headingLevel">
-      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2024 season · World Series' }}</span>
+      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2026 ALCS · World Series' }}</span>
       <jp-button jpPageActions [disabled]="saved" (click)="saved = true">{{ saved ? 'Roster saved' : 'Save roster' }}</jp-button>
     </jp-page-header>`,
   }),
@@ -50,7 +50,6 @@ export const Saved: Story = {
 export const LongContent: Story = {
   args: {
     title: 'Postseason player availability',
-    description:
-      'Review the 2024 Dodgers roster before World Series Game 5 at Yankee Stadium.',
+    description: 'Review the 2026 Rays roster for ALCS Game 6.',
   },
 };

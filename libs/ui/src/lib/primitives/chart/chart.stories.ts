@@ -10,8 +10,8 @@ const meta: Meta<JpChart> = {
     label: 'Runs by month',
     labels: ['April', 'May', 'June'],
     series: [
-      { id: 'product', label: 'Dodgers', values: [130, 120, 141] },
-      { id: 'platform', label: 'Yankees', values: [129, 135, 152] },
+      { id: 'product', label: 'Rays', values: [130, 120, 141] },
+      { id: 'platform', label: 'ALCS Game 6', values: [129, 135, 152] },
     ],
   },
 };
@@ -36,8 +36,8 @@ export const AccessibleData: Story = {
         'true',
       ),
     );
-    await userEvent.click(c.getByRole('button', { name: 'Dodgers' }));
-    await expect(c.getByRole('button', { name: 'Dodgers' })).toHaveAttribute(
+    await userEvent.click(c.getByRole('button', { name: 'Rays' }));
+    await expect(c.getByRole('button', { name: 'Rays' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
@@ -45,7 +45,7 @@ export const AccessibleData: Story = {
       c.getByRole('combobox', { name: 'Inspect category' }),
     );
     await userEvent.click(await c.findByRole('option', { name: 'June' }));
-    await expect(c.getByText('Yankees · June')).toBeVisible();
+    await expect(c.getByText('ALCS Game 6 · June')).toBeVisible();
     await userEvent.click(
       c.getByText('View chart data', { selector: 'summary' }),
     );

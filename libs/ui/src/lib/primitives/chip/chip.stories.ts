@@ -109,7 +109,8 @@ export const Disabled: Story = {
 
 export const LongLabel: Story = {
   args: {
-    label: 'Jack Flaherty started Game 5 for the Los Angeles Dodgers',
+    label:
+      'The Tampa Bay Rays won ALCS Game 6 and advanced to the World Series',
   },
 };
 

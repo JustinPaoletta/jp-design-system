@@ -153,7 +153,7 @@ test('themed controls: upload trigger keeps file chooser behavior and hides brow
   ).setFiles({
     name: 'lineup.txt',
     mimeType: 'text/plain',
-    buffer: Buffer.from('Dodgers lineup'),
+    buffer: Buffer.from('Rays lineup'),
   });
   await expect(page.locator('jp-file-upload')).toContainText('lineup.txt');
   await expect(page.locator('jp-file-upload')).toContainText('Ready');

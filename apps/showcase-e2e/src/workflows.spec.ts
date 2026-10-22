@@ -200,12 +200,12 @@ test('workflows: inbox filters unread, recovers focus on dismissal, and retains 
   await inbox.getByRole('button', { name: 'Unread 2', exact: true }).click();
   await expect(inbox).not.toContainText('Club invitation accepted');
   await inbox
-    .getByRole('button', { name: 'Mark as read: Jack Flaherty starts Game 5' })
+    .getByRole('button', { name: 'Mark as read: Rays win ALCS Game 6' })
     .press('Enter');
   await expect(
     inbox.getByRole('button', { name: 'Mark as read: Game report ready' }),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Jack Flaherty starts Game 5');
+  await expect(inbox).not.toContainText('Rays win ALCS Game 6');
   await inbox
     .getByRole('button', { name: 'Mark all as read', exact: true })
     .click();

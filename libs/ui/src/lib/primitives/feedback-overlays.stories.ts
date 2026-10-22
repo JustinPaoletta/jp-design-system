@@ -90,7 +90,7 @@ import { JpTooltip } from './tooltip/tooltip';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
-      <span jpAppShellBrand>Los Angeles Dodgers</span>
+      <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -123,13 +123,14 @@ import { JpTooltip } from './tooltip/tooltip';
               <p>Review club messages and player actions.</p>
             </header>
 
-            <jp-card title="World Series Game 5">
+            <jp-card title="ALCS Game 6">
               <p>
-                Dodgers 7, Yankees 6. Review the final lineup and club messages.
+                The Rays won ALCS Game 6. Review the final lineup and club
+                messages.
               </p>
               <jp-inline jpCardActions gap="sm" wrap="true">
                 <jp-tooltip content="Copy game ID" placement="top">
-                  <jp-copy-button text="775296" label="Copy ID" />
+                  <jp-copy-button text="ALCS-G6" label="Copy ID" />
                 </jp-tooltip>
                 <jp-button
                   type="button"

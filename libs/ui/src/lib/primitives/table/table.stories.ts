@@ -30,9 +30,9 @@ const columns = [
 ];
 
 const rows = [
-  { name: 'Jack Flaherty', status: 'Available', region: 'Pitcher' },
-  { name: 'Freddie Freeman', status: 'Day to day', region: 'First base' },
-  { name: 'Tommy Edman', status: 'Available', region: 'Shortstop' },
+  { name: 'Shane Baz', status: 'Available', region: 'Pitcher' },
+  { name: 'Yandy Díaz', status: 'Day to day', region: 'First base' },
+  { name: 'Taylor Walls', status: 'Available', region: 'Shortstop' },
 ];
 
 const meta: Meta<TableArgs> = {
@@ -47,7 +47,7 @@ const meta: Meta<TableArgs> = {
     layout: 'padded',
   },
   args: {
-    caption: 'Dodgers roster',
+    caption: 'Rays roster',
     striped: true,
     empty: false,
   },
@@ -93,7 +93,7 @@ type Story = StoryObj<TableArgs>;
 export const Populated: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Dodgers roster',
+      'Rays roster',
     );
     await expect(canvasElement.querySelectorAll('tbody tr').length).toBe(3);
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
@@ -134,32 +134,32 @@ const wideColumns = [
 
 const wideRows = [
   {
-    name: 'Jack Flaherty',
+    name: 'Shane Baz',
     env: 'Active roster',
     status: 'Available',
     region: 'Pitcher',
-    owner: 'Dave Roberts',
-    lastDeploy: 'Oct 30, 2024',
+    owner: 'Kevin Cash',
+    lastDeploy: '2026',
     requests: 0,
     latency: 0,
   },
   {
-    name: 'Freddie Freeman',
+    name: 'Yandy Díaz',
     env: 'Active roster',
     status: 'Day to day',
     region: 'First base',
-    owner: 'Dave Roberts',
-    lastDeploy: 'Oct 30, 2024',
+    owner: 'Kevin Cash',
+    lastDeploy: '2026',
     requests: 4,
     latency: 1,
   },
   {
-    name: 'Tommy Edman',
+    name: 'Taylor Walls',
     env: 'Active roster',
     status: 'Available',
     region: 'Shortstop',
-    owner: 'Dave Roberts',
-    lastDeploy: 'Oct 30, 2024',
+    owner: 'Kevin Cash',
+    lastDeploy: '2026',
     requests: 5,
     latency: 1,
   },
@@ -238,7 +238,7 @@ export const Scrollable: Story = {
       >
     </jp-table-toolbar>
     <jp-table
-      caption="2024 Dodgers roster"
+      caption="2026 Rays roster"
       [columns]="columns"
       [rows]="visible()"
       rowKey="name"
@@ -304,12 +304,12 @@ export const ControlledToolkit: Story = {
       'ascending',
     );
     await userEvent.click(
-      canvas.getByRole('checkbox', { name: 'Select Jack Flaherty' }),
+      canvas.getByRole('checkbox', { name: 'Select Shane Baz' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent('1 selected');
     await userEvent.click(canvas.getByRole('button', { name: /^Next$/ }));
     await expect(canvasElement.querySelector('tbody')).toHaveTextContent(
-      'Tommy Edman',
+      'Yandy Díaz',
     );
     await userEvent.type(
       canvas.getByRole('searchbox', { name: 'Search players' }),
@@ -329,7 +329,7 @@ export const ControlledToolkit: Story = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<jp-table
     id="advanced-table-story"
-    caption="Dodgers roster details"
+    caption="Rays roster details"
     [columns]="columns"
     [rows]="rows"
     columnChooser
@@ -361,14 +361,14 @@ class AdvancedTableExample {
   readonly rows = [
     {
       id: 'api',
-      name: 'Jack Flaherty',
-      owner: 'Dave Roberts',
+      name: 'Shane Baz',
+      owner: 'Kevin Cash',
       region: 'Pitcher',
     },
     {
       id: 'jobs',
-      name: 'Freddie Freeman',
-      owner: 'Dave Roberts',
+      name: 'Yandy Díaz',
+      owner: 'Kevin Cash',
       region: 'First base',
     },
   ];
@@ -392,16 +392,16 @@ export const AdvancedControls: Story = {
     await userEvent.tab();
     await expect(width).toHaveValue(320);
     const expand = c.getByRole('button', {
-      name: 'Show details: Jack Flaherty',
+      name: 'Show details: Shane Baz',
     });
     await userEvent.click(expand);
     await expect(expand).toHaveAttribute('aria-expanded', 'true');
     await expect(
-      c.getByRole('button', { name: 'Review Jack Flaherty' }),
+      c.getByRole('button', { name: 'Review Shane Baz' }),
     ).toBeVisible();
     await userEvent.click(expand);
     await expect(
-      c.queryByRole('button', { name: 'Review Jack Flaherty' }),
+      c.queryByRole('button', { name: 'Review Shane Baz' }),
     ).toBeNull();
   },
 };

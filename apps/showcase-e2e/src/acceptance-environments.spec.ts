@@ -174,7 +174,7 @@ test.describe('acceptance forced colors', () => {
     await expectOutline(row);
     await expect(row).toHaveCSS('border-top-width', '1px');
     await page
-      .getByRole('checkbox', { name: 'Select 2024 Dodgers', exact: true })
+      .getByRole('checkbox', { name: 'Select 2026 Rays', exact: true })
       .check();
     const selected = page.locator('jp-tree-table tr.selected');
     await expectOutline(selected);
@@ -270,7 +270,7 @@ test.describe('acceptance forced colors', () => {
     const table = page.locator('jp-virtual-table');
     await table
       .getByRole('checkbox', {
-        name: 'Select Shohei Ohtani 00001',
+        name: 'Select Junior Caminero 00001',
         exact: true,
       })
       .check();
@@ -278,7 +278,7 @@ test.describe('acceptance forced colors', () => {
     await table.getByRole('button', { name: 'Paginated rows' }).click();
     await expect(
       table.getByRole('checkbox', {
-        name: 'Select Shohei Ohtani 00001',
+        name: 'Select Junior Caminero 00001',
         exact: true,
       }),
     ).toBeChecked();

@@ -35,17 +35,17 @@ export class AssistantPage implements OnDestroy {
   lastReply = 'None yet';
 
   readonly deploymentContext: JpAssistantContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: 'ALCS Game 6',
+    description: 'The Rays won ALCS Game 6.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: 'ALCS-G6',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Player Jack Flaherty',
-    description: 'Pitcher · Active roster · Started Game 5',
+    label: 'Player Shane Baz',
+    description: 'Pitcher · Active roster · ALCS Game 6',
     entityType: 'player',
-    entityId: 'jack-flaherty',
+    entityId: 'shane-baz',
   };
 
   readonly filterContext: JpAssistantContext = {
@@ -66,16 +66,15 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'The Dodgers won 7–6 against the New York Yankees.',
+      content: 'The Rays won ALCS Game 6 and advanced to the World Series.',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content:
-        'The Dodgers won 7–6. Freddie Freeman and Mookie Betts drove in runs.',
+      content: 'The Rays won ALCS Game 6 and advanced to the World Series.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who started Game 5?',
+      content: 'Who won ALCS Game 6?',
     });
   }
 
@@ -83,7 +82,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
+      content: `Sample game summary for “${content}”: the Rays won ALCS Game 6.`,
     });
   }
 }

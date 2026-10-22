@@ -2,24 +2,24 @@
   <jp-page-header
     title="Clubhouse components"
     description="Meet the players, manage club preferences and browse the roster."
-    ><span jpPageMeta>2024 Dodgers</span
+    ><span jpPageMeta>2026 Rays</span
     ><jp-button jpPageActions (click)="drawerOpen.set(true)"
       >Open details</jp-button
     ></jp-page-header
   >
   @if (bannerVisible()) {
   <jp-banner
-    title="Dodgers clubhouse"
-    message="These examples use the 2024 Los Angeles Dodgers and New York Yankees."
+    title="Rays clubhouse"
+    message="These examples use the Tampa Bay Rays in ALCS Game 6."
     dismissible
     (dismissed)="bannerVisible.set(false)"
   />
   }
   <div class="grid">
-    <jp-card title="2024 Dodgers" headingLevel="h2"
+    <jp-card title="2026 Rays" headingLevel="h2"
       ><div class="row">
-        <jp-avatar name="Jack Flaherty" /><jp-avatar
-          name="Freddie Freeman"
+        <jp-avatar name="Shane Baz" /><jp-avatar
+          name="Yandy Díaz"
           src="/missing-avatar.png"
         /><jp-avatar-group
           label="Club reviewers"
@@ -30,10 +30,10 @@
       <jp-divider decorative /><jp-description-list [items]="details" />
       <div class="measurement">
         <jp-meter
-          label="2024 Dodgers wins"
+          label="ALCS Game 6"
           [value]="98"
           [max]="162"
-          valueText="98 wins and 64 losses"
+          valueText="Rays won"
         />
       </div>
       <div class="row">

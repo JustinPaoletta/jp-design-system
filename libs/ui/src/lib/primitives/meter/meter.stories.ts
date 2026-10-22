@@ -7,10 +7,10 @@ const meta: Meta<JpMeter> = {
   component: JpMeter,
   parameters: { layout: 'padded' },
   args: {
-    label: '2024 Dodgers wins',
+    label: 'ALCS Game 6',
     value: 98,
     max: 162,
-    valueText: '98 wins and 64 losses',
+    valueText: 'Rays won',
   },
 };
 export default meta;

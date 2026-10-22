@@ -134,11 +134,11 @@ export class ProductRecipesPage {
     { key: 'status', header: 'Status', sortable: true },
   ];
   readonly records = signal<Record<string, JpTableCellValue>[]>([
-    { id: 'payments', name: 'Jack Flaherty', status: 'Available' },
-    { id: 'search', name: 'Freddie Freeman', status: 'Day to day' },
-    { id: 'billing', name: 'Tommy Edman', status: 'Available' },
-    { id: 'events', name: 'Mookie Betts', status: 'Available' },
-    { id: 'media', name: 'Clayton Kershaw', status: 'Injured' },
+    { id: 'payments', name: 'Shane Baz', status: 'Available' },
+    { id: 'search', name: 'Yandy Díaz', status: 'Day to day' },
+    { id: 'billing', name: 'Taylor Walls', status: 'Available' },
+    { id: 'events', name: 'Josh Lowe', status: 'Available' },
+    { id: 'media', name: 'Shane McClanahan', status: 'Injured' },
   ]);
   readonly filtered = computed(() => {
     const query = this.search().trim().toLowerCase();

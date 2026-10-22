@@ -80,7 +80,7 @@ export class WorkflowsPage {
     viewChild<ElementRef<HTMLElement>>('notificationRegion');
   readonly commandOpen = signal(false);
   readonly action = signal('No action selected');
-  readonly projectName = signal('Los Angeles Dodgers');
+  readonly projectName = signal('Tampa Bay Rays');
   failNextSave = true;
   readonly favorite = new FormControl(false);
   readonly launch = new FormControl('2024-10-30', { nonNullable: true });
@@ -130,11 +130,11 @@ export class WorkflowsPage {
   readonly notifications = signal<readonly JpNotification[]>([
     {
       id: 'review',
-      title: 'Jack Flaherty starts Game 5',
-      description: 'Dave Roberts started Jack Flaherty against the Yankees.',
-      group: 'October 30',
+      title: 'Rays win ALCS Game 6',
+      description: 'The Rays won ALCS Game 6.',
+      group: '2026 ALCS',
       unread: true,
-      timeLabel: '8:08 p.m.',
+      timeLabel: '2026',
       dateTime: '2024-10-30T20:08:00-04:00',
     },
     {

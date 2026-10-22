@@ -79,18 +79,18 @@ class TableFallbackHost {
 describe('JpTable', () => {
   it('keeps a visually hidden native caption and named scroll region', () => {
     const fixture = TestBed.createComponent(JpTable);
-    fixture.componentRef.setInput('caption', 'Dodgers roster');
+    fixture.componentRef.setInput('caption', 'Rays roster');
     fixture.componentRef.setInput('captionHidden', true);
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     const caption = root.querySelector('table > caption');
-    expect(caption?.textContent).toContain('Dodgers roster');
+    expect(caption?.textContent).toContain('Rays roster');
     expect(caption?.classList.contains('jp-table__sr-only')).toBe(true);
     expect(caption?.hasAttribute('aria-hidden')).toBe(false);
     expect(caption?.hasAttribute('hidden')).toBe(false);
     expect(
       root.querySelector('[role="region"]')?.getAttribute('aria-label'),
-    ).toBe('Dodgers roster');
+    ).toBe('Rays roster');
     fixture.componentRef.setInput('captionHidden', false);
     fixture.detectChanges();
     expect(caption?.classList.contains('jp-table__sr-only')).toBe(false);
