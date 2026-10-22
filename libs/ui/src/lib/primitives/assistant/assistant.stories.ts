@@ -184,6 +184,19 @@ export default meta;
 type Story = StoryObj<JpAssistantPanel>;
 
 /**
+ * The dock is `position: fixed` and `100dvh`. Storybook gives that element a
+ * transform, so a content-sized docs canvas clips it. Match the canvas to the
+ * dock height. Message roles stay content-sized because they have no dock.
+ */
+const dockedPanelDocs = {
+  docs: {
+    story: {
+      height: '100dvh',
+    },
+  },
+};
+
+/**
  * Message role tones stay neutral: system is muted, assistant sits on a sunken
  * surface, user is a subtle right-aligned bubble. Accent is reserved as a signal
  * elsewhere (context chip + Send button), not on message bodies.
@@ -205,8 +218,9 @@ export const MessageRoles: Story = {
 
 /** Empty state shown when the panel is open but no messages exist yet. */
 export const EmptyState: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const openEmpty = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -219,8 +233,9 @@ export const EmptyState: Story = {
 
 /** A seeded conversation covering all three message roles inside the panel. */
 export const Conversation: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const seed = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -241,8 +256,9 @@ export const Conversation: Story = {
  * moves focus to the composer. The Send button is disabled until text is typed.
  */
 export const ContextTrigger: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -272,8 +288,9 @@ export const ContextTrigger: Story = {
  * submits (Shift+Enter would insert a newline instead).
  */
 export const ComposerInteraction: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -301,7 +318,11 @@ export const ComposerInteraction: Story = {
 };
 
 export const PendingAndStreaming: Story = {
-  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  parameters: dockedPanelDocs,
+  render: () => ({
+    template:
+      '<div class="jp-storybook-dock"><jp-assistant-async-story-host /></div>',
+  }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
@@ -333,7 +354,11 @@ export const PendingAndStreaming: Story = {
 };
 
 export const FailedAndRetry: Story = {
-  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  parameters: dockedPanelDocs,
+  render: () => ({
+    template:
+      '<div class="jp-storybook-dock"><jp-assistant-async-story-host /></div>',
+  }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
