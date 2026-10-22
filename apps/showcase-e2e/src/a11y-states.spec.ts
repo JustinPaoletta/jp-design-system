@@ -138,7 +138,7 @@ test.describe('a11y state coverage', () => {
     await composer.fill('What is the game score?');
     await composer.press('Enter');
     await expect(panel).toContainText(
-      'Sample game summary for “What is the game score?”: The Rays won ALCS Game 6.',
+      'Sample game summary for “What is the game score?”: the Rays won ALCS Game 6.',
     );
     await expectWcag21Aa(page);
   });

@@ -17,7 +17,7 @@ export const BrokenImage: Story = {
     await waitFor(() => expect(canvasElement.querySelector('img')).toBeNull());
     await expect(
       within(canvasElement).getByRole('img', { name: 'Shane Baz' }),
-    ).toHaveTextContent('JF');
+    ).toHaveTextContent('SB');
   },
 };
 export const Photo: Story = {

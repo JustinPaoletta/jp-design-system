@@ -73,7 +73,7 @@ test('component expansion: multi-select preserves selections, supports keys, and
 }) => {
   const query = page.getByRole('combobox', { name: 'Players' });
   await query.focus();
-  await query.fill('Tommy');
+  await query.fill('Taylor');
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await expect(query).toHaveAttribute('aria-expanded', 'true');

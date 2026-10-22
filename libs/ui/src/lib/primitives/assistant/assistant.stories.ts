@@ -309,7 +309,7 @@ export const PendingAndStreaming: Story = {
     );
     await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
     await expect(canvasElement.textContent).toContain(
-      'Checking the fifth inning',
+      'ALCS Game 6 is in progress.',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Stop response' }),
@@ -317,8 +317,10 @@ export const PendingAndStreaming: Story = {
     await expect(canvasElement.textContent).toContain('Response stopped');
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
-    await expect(canvasElement.textContent).toContain(
-      'The Rays won ALCS Game 6.',
+    await waitFor(() =>
+      expect(canvasElement.textContent).toContain(
+        'The Rays won ALCS Game 6 and advanced to the World Series.',
+      ),
     );
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(
@@ -341,11 +343,13 @@ export const FailedAndRetry: Story = {
       'Connection lost',
     );
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
+    await waitFor(() =>
+      expect(canvasElement.textContent).toContain(
+        'The Rays won ALCS Game 6 and advanced to the World Series.',
+      ),
+    );
     await expect(canvas.queryByRole('alert')).toBeNull();
     await expect(canvas.queryByRole('progressbar')).toBeNull();
-    await expect(canvasElement.textContent).toContain(
-      'The Rays won ALCS Game 6.',
-    );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Close assistant' }),
     );

@@ -309,7 +309,7 @@ export const ControlledToolkit: Story = {
     await expect(canvas.getByRole('status')).toHaveTextContent('1 selected');
     await userEvent.click(canvas.getByRole('button', { name: /^Next$/ }));
     await expect(canvasElement.querySelector('tbody')).toHaveTextContent(
-      'Taylor Walls',
+      'Yandy Díaz',
     );
     await userEvent.type(
       canvas.getByRole('searchbox', { name: 'Search players' }),
