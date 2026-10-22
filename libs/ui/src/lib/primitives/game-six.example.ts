@@ -421,42 +421,32 @@ export function gameSixAnswer(question: string): string {
   return 'This archive covers Game 6 of the 2026 ALCS. Ask about the final score, starting lineup, home runs, final out or Freddy Peralta’s pitching.';
 }
 
-// Licensed file photos. None of these images was taken during Game 6.
-// See apps/showcase/public/example-photos/README.md for the license record.
-export const RAYS_FILE_PHOTOS = {
-  venue: {
-    src: 'example-photos/rays-file-photos/tropicana-field-2024.jpg',
-    alt: 'Tropicana Field interior photographed on June 10, 2024, before the 2026 ALCS.',
-    caption: 'Tropicana Field · June 10, 2024 · Quintin Soloviev',
-    source:
-      'https://commons.wikimedia.org/wiki/File:Tropicana_Field_in_Tampa,_Florida_2024.jpg',
-    license: 'CC BY 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+// Original AI-generated interpretations, not photographs or exact reconstructions.
+// See apps/showcase/public/example-illustrations/README.md for the source record.
+export const GAME_SIX_ILLUSTRATIONS = {
+  celebration: {
+    src: 'example-illustrations/game-six/pennant-night.webp',
+    alt: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
+    caption: 'A pennant to remember · AI-generated illustration',
+  },
+  finalOut: {
+    src: 'example-illustrations/game-six/final-out.webp',
+    alt: 'Cartoon illustration of Liam Hicks reaching up to catch the foul pop for the final out.',
+    caption: 'The final out · AI-generated illustration',
   },
   peralta: {
-    src: 'example-photos/rays-file-photos/freddy-peralta-2026.png',
-    alt: 'Freddy Peralta during an interview on October 12, 2026, before Game 6.',
-    caption: 'Freddy Peralta · October 12, 2026 · Latinos En Pelota',
-    source:
-      'https://commons.wikimedia.org/wiki/File:Freddy_Peralta_(Np_Meaq8nvI).png',
-    license: 'CC BY 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    src: 'example-illustrations/game-six/freddy-peralta.webp',
+    alt: 'Cartoon portrait of Freddy Peralta in a navy cap and cream jersey.',
+    caption: 'Freddy Peralta · AI-generated illustration',
   },
   diaz: {
-    src: 'example-photos/rays-file-photos/yandy-diaz-2021.jpg',
-    alt: 'Yandy Díaz batting on July 11, 2021, before the 2026 ALCS.',
-    caption: 'Yandy Díaz · July 11, 2021 · Jeff Marquis',
-    source:
-      'https://commons.wikimedia.org/wiki/File:Yandy_D%C3%ADaz_(51308556840)_(cropped).jpg',
-    license: 'CC BY 2.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+    src: 'example-illustrations/game-six/yandy-diaz.webp',
+    alt: 'Cartoon portrait of Yandy Díaz in a navy cap and cream jersey.',
+    caption: 'Yandy Díaz · AI-generated illustration',
   },
   caminero: {
-    src: 'example-photos/rays-file-photos/junior-caminero-2026.jpg',
-    alt: 'Junior Caminero on the field on June 22, 2026, before the ALCS.',
-    caption: 'Junior Caminero · June 22, 2026 · Raysfanjake1984',
-    source: 'https://commons.wikimedia.org/wiki/File:JuniorCaminero.jpg',
-    license: 'CC0 1.0',
-    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    src: 'example-illustrations/game-six/junior-caminero.webp',
+    alt: 'Cartoon portrait of Junior Caminero in a navy cap and cream jersey.',
+    caption: 'Junior Caminero · AI-generated illustration',
   },
 } as const;

@@ -1,5 +1,4 @@
-import { JpLink } from '../link/link';
-import { RAYS_FILE_PHOTOS } from '../game-six.example';
+import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { JpMedia } from './media';
@@ -8,25 +7,19 @@ const fieldDrawing = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 3
 const meta: Meta<JpMedia> = {
   title: 'Primitives/Content/Media',
   component: JpMedia,
-  decorators: [moduleMetadata({ imports: [JpButton, JpLink] })],
+  decorators: [moduleMetadata({ imports: [JpButton] })],
   parameters: { layout: 'padded' },
   args: {
-    src: RAYS_FILE_PHOTOS.venue.src,
-    alt: RAYS_FILE_PHOTOS.venue.alt,
-    caption: RAYS_FILE_PHOTOS.venue.caption,
+    src: GAME_SIX_ILLUSTRATIONS.celebration.src,
+    alt: GAME_SIX_ILLUSTRATIONS.celebration.alt,
+    caption: GAME_SIX_ILLUSTRATIONS.celebration.caption,
     loading: 'eager',
     fit: 'cover',
   },
   render: (args) => ({
-    props: {
-      ...args,
-      photo: RAYS_FILE_PHOTOS.venue,
-      showPhotoCredit:
-        args.src === RAYS_FILE_PHOTOS.venue.src ||
-        args.src === 'data:image/png;base64,broken',
-    },
+    props: args,
     template:
-      '<div style="max-width:480px"><jp-media style="max-width:480px" [src]="src" [alt]="alt" [caption]="caption" [aspectRatio]="aspectRatio" [loading]="loading" [fit]="fit" />@if (showPhotoCredit) { <p>File photo, not Game 6. Display may crop to fit. <a jpLink [href]="photo.source" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink [href]="photo.licenseUrl" target="_blank" rel="noopener noreferrer">{{ photo.license }}</a></p> }</div>',
+      '<div style="max-width:480px"><jp-media [src]="src" [alt]="alt" [caption]="caption" [aspectRatio]="aspectRatio" [loading]="loading" [fit]="fit" /></div>',
   }),
 };
 export default meta;
@@ -35,7 +28,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     const image = c.getByRole('img', {
-      name: RAYS_FILE_PHOTOS.venue.alt,
+      name: GAME_SIX_ILLUSTRATIONS.celebration.alt,
     });
     await waitFor(() => expect(image).toHaveClass('loaded'));
     await expect(image).toBeVisible();
@@ -52,7 +45,7 @@ export const BrokenImage: Story = {
     const c = within(canvasElement);
     await waitFor(() =>
       expect(
-        c.getByRole('img', { name: RAYS_FILE_PHOTOS.venue.alt }),
+        c.getByRole('img', { name: GAME_SIX_ILLUSTRATIONS.celebration.alt }),
       ).toHaveTextContent('Image unavailable'),
     );
   },
@@ -65,7 +58,7 @@ export const Portrait: Story = {
   args: {
     aspectRatio: 3 / 4,
     fit: 'cover',
-    caption: RAYS_FILE_PHOTOS.venue.caption + ' · Portrait crop',
+    caption: GAME_SIX_ILLUSTRATIONS.celebration.caption + ' · Portrait crop',
   },
 };
 export const Transparent: Story = {
@@ -77,11 +70,11 @@ export const Transparent: Story = {
   },
 };
 
-export const Photo: Story = {
+export const Illustration: Story = {
   args: {
-    src: RAYS_FILE_PHOTOS.venue.src,
-    alt: RAYS_FILE_PHOTOS.venue.alt,
-    caption: RAYS_FILE_PHOTOS.venue.caption,
+    src: GAME_SIX_ILLUSTRATIONS.celebration.src,
+    alt: GAME_SIX_ILLUSTRATIONS.celebration.alt,
+    caption: GAME_SIX_ILLUSTRATIONS.celebration.caption,
   },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
@@ -92,20 +85,20 @@ export const Photo: Story = {
     await expect(getComputedStyle(img).objectFit).toBe('cover');
   },
 };
-export const PhotoPortraitCrop: Story = {
-  ...Photo,
+export const IllustrationPortraitCrop: Story = {
+  ...Illustration,
   args: {
-    ...Photo.args,
+    ...Illustration.args,
     aspectRatio: 3 / 4,
-    caption: RAYS_FILE_PHOTOS.venue.caption + ' · Portrait crop',
+    caption: GAME_SIX_ILLUSTRATIONS.celebration.caption + ' · Portrait crop',
   },
 };
-export const PhotoContain: Story = {
+export const IllustrationContain: Story = {
   args: {
-    ...Photo.args,
+    ...Illustration.args,
     aspectRatio: 1,
     fit: 'contain',
-    caption: RAYS_FILE_PHOTOS.venue.caption,
+    caption: GAME_SIX_ILLUSTRATIONS.celebration.caption,
   },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
@@ -115,16 +108,15 @@ export const PhotoContain: Story = {
     await expect(getComputedStyle(img).objectFit).toBe('contain');
   },
 };
-export const PhotoRecovery: Story = {
+export const IllustrationRecovery: Story = {
   render: () => ({
     props: {
       source: 'data:image/png;base64,broken',
-      photo: RAYS_FILE_PHOTOS.venue,
+      artwork: GAME_SIX_ILLUSTRATIONS.celebration,
     },
     template: `<div style="display:grid;gap:var(--jp-space-md);max-width:480px">
-      <jp-media [src]="source" [alt]="photo.alt" [caption]="photo.caption" loading="eager" />
-      <p>File photo, not Game 6. Display cropped to fit. <a jpLink [href]="photo.source" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink [href]="photo.licenseUrl" target="_blank" rel="noopener noreferrer">{{ photo.license }}</a></p>
-      <jp-button variant="secondary" (click)="source=photo.src">Reload photo</jp-button>
+      <jp-media [src]="source" [alt]="artwork.alt" [caption]="artwork.caption" loading="eager" />
+      <jp-button variant="secondary" (click)="source=artwork.src">Reload illustration</jp-button>
     </div>`,
   }),
   play: async ({ canvasElement }) => {
@@ -132,7 +124,7 @@ export const PhotoRecovery: Story = {
     await waitFor(() =>
       expect(
         canvas.getByRole('img', {
-          name: RAYS_FILE_PHOTOS.venue.alt,
+          name: GAME_SIX_ILLUSTRATIONS.celebration.alt,
         }),
       ).toHaveTextContent('Image unavailable'),
     );
@@ -140,7 +132,9 @@ export const PhotoRecovery: Story = {
       '.jp-media__frame',
     ) as HTMLElement;
     const height = frame.getBoundingClientRect().height;
-    await userEvent.click(canvas.getByRole('button', { name: 'Reload photo' }));
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Reload illustration' }),
+    );
     await waitFor(() =>
       expect(canvasElement.querySelector('img')).toHaveClass('loaded'),
     );

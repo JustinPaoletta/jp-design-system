@@ -54,7 +54,7 @@ test('advanced layout visual image fallback', async ({ page }) => {
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
     page.getByRole('img', {
-      name: 'Tropicana Field interior photographed on June 10, 2024, before the 2026 ALCS.',
+      name: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
     }),
   ).toHaveText('Image unavailable');
   await expect(page).toHaveScreenshot('advanced-image-error.png', {

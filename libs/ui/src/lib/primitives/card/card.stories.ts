@@ -1,5 +1,4 @@
-import { RAYS_FILE_PHOTOS } from '../game-six.example';
-import { JpLink } from '../link/link';
+import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import { JpMedia } from '../media/media';
 import { Component, input, signal } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
@@ -10,37 +9,19 @@ import { JpCard } from './card';
 
 @Component({
   selector: 'jp-card-reference',
-  imports: [JpCard, JpBadge, JpButton, JpMedia, JpLink],
+  imports: [JpCard, JpBadge, JpButton, JpMedia],
   styleUrl: './card.stories.scss',
   template: `
     <div class="card-stage">
       <jp-card [title]="title()">
         <jp-badge jpCardHeader tone="neutral" size="sm">Final</jp-badge>
         <jp-media
-          [src]="photo.src"
-          [alt]="photo.alt"
-          [caption]="photo.caption"
+          [src]="artwork.src"
+          [alt]="artwork.alt"
+          [caption]="artwork.caption"
           [aspectRatio]="4 / 3"
           loading="eager"
         />
-        <p class="game-date">
-          File photo, not Game 6.
-          <a
-            jpLink
-            [href]="photo.source"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Source</a
-          >
-          ·
-          <a
-            jpLink
-            [href]="photo.licenseUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            >{{ photo.license }}</a
-          >
-        </p>
         <p class="game-date">October 19, 2026 · Tropicana Field</p>
         <dl class="scoreboard" aria-label="Final score">
           <div class="team winner">
@@ -68,7 +49,7 @@ import { JpCard } from './card';
   `,
 })
 class CardReferenceStory {
-  readonly photo = RAYS_FILE_PHOTOS.venue;
+  readonly artwork = GAME_SIX_ILLUSTRATIONS.celebration;
   readonly title = input('American League champions');
   readonly saved = signal(false);
 }

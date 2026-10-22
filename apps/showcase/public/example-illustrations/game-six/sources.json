@@ -1,0 +1,59 @@
+{
+  "description": "Original AI-generated interpretations for the Game 6 examples. These images are not photographs or exact reconstructions.",
+  "eventSources": [
+    "https://statsapi.mlb.com/api/v1.1/game/849815/feed/live",
+    "https://www.mlb.com/news/rays-win-alcs-2026"
+  ],
+  "images": [
+    {
+      "file": "pennant-night.webp",
+      "prompt": "Use case: illustration-story. Asset type: landscape hero art for a polished dark baseball design system, 1536 by 1024 landscape. Create an original interpretive celebration of Tampa Bay winning the American League pennant after 2026 ALCS Game 6 at Tropicana Field. Fresh invented composition from a slightly elevated viewpoint beside the infield: a compact joyful gathering of about six baseball teammates in cream uniforms and navy caps exchanging hugs and raised hands on the edge of the diamond. Warm human emotion and restrained energy. Behind them, a clearly indoor domed ballpark, broad curved roof trusses, distant stands suggested with simple dabs of color, quiet gold stadium lights. Main players centered with generous surrounding space so 4:3 and square crops remain coherent. Anatomically sound figures, distinct limbs, believable gloves, no confetti obscuring faces. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Based on the event description alone, not a reconstruction of a specific photograph. Do not include a trophy or World Series imagery.",
+      "generatedOn": "2026-10-22",
+      "method": "OpenAI image generation from text; no input photograph",
+      "eventDate": "2026-10-19",
+      "sourceSha256": "31a809f7e1543d18cc810963f5894450ea46180280421252e0b0f8b885e47f8d",
+      "sha256": "20ac4196efe8f583016326065988cc86ed3625da29ef03be871b877a8683b2cb",
+      "encoding": "WebP quality 88; original dimensions and composition"
+    },
+    {
+      "file": "final-out.webp",
+      "prompt": "Use case: illustration-story. Asset type: landscape editorial scene, 1536 by 1024. An original interpretive cartoon of the final out of 2026 ALCS Game 6: Tampa Bay catcher Liam Hicks catches a foul popup to finish the pennant-clinching game at Tropicana Field. A low side-on composition: one catcher in cream uniform and navy catcher chest protector and shin guards, eyes following a single baseball immediately above his open catcher's mitt on his left hand. His mitt reaches high, his right hand is near his chest; no extra arms or fingers. His removed mask lies on the dirt. The catcher stands on foul-territory dirt near the curved grass edge; suggest the indoor dome and distant crowd in a simplified background. Compose the whole catcher within the central 70 percent of the image with room above the mitt, so nothing essential is clipped. Joyful anticipation, believable balance and equipment. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Fresh composition based solely on the described game event, not any photograph. No umpire or batter competing with the main figure.",
+      "generatedOn": "2026-10-22",
+      "method": "OpenAI image generation from text; no input photograph",
+      "eventDate": "2026-10-19",
+      "sourceSha256": "6acaefaa13eec2ebdc5feb6d2b608beb84037374f8fe65df15c1ff948428ebc0",
+      "sha256": "7fdea15a360a3aaa328eb2045f38ea531ff2285fbeae628f33856f6640ee79e1",
+      "encoding": "WebP quality 88; original dimensions and composition"
+    },
+    {
+      "file": "freddy-peralta.webp",
+      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars and a baseball MVP card, 1024 by 1024. Create an original stylized cartoon portrait of baseball pitcher Freddy Peralta, friendly relaxed smile, navy baseball cap without logos, cream baseball jersey with navy collar, three-quarter head-and-shoulders pose turned slightly toward viewer. Medium brown skin, short dark hair, neatly trimmed dark beard and mustache. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
+      "generatedOn": "2026-10-22",
+      "method": "OpenAI image generation from text; no input photograph",
+      "eventDate": "2026-10-19",
+      "sourceSha256": "ecabb9c0481852d9f995b843490ffe1144f0a6e8fa0747895c5914f5648efce1",
+      "sha256": "08f21b6853a94cc2f38f086e95ed97892feca7e769245d7f9e2d86bc88246ab5",
+      "encoding": "WebP quality 88; original dimensions and composition"
+    },
+    {
+      "file": "yandy-diaz.webp",
+      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars, 1024 by 1024. Create an original stylized cartoon portrait of baseball player Yandy D\u00edaz, confident warm small smile, navy baseball cap without logos, cream baseball jersey with navy collar, muscular upper shoulders, three-quarter head-and-shoulders pose turned slightly toward viewer. Deep brown skin, short dark hair, close neat beard and mustache, broad adult facial features. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
+      "generatedOn": "2026-10-22",
+      "method": "OpenAI image generation from text; no input photograph",
+      "eventDate": "2026-10-19",
+      "sourceSha256": "595c08a54e285c62e24dea2b82c4c1821837ff2dfce3492f00191d3b4f9da3df",
+      "sha256": "37da41d2fab948425a724d1c8bedef0131a9930d46535ddf5aa6cb7e443c63d9",
+      "encoding": "WebP quality 88; original dimensions and composition"
+    },
+    {
+      "file": "junior-caminero.webp",
+      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars, 1024 by 1024. Create an original stylized cartoon portrait of baseball player Junior Caminero, youthful confident smile, navy baseball cap without logos, cream baseball jersey with navy collar, three-quarter head-and-shoulders pose turned slightly toward viewer. Medium warm brown skin, short dark hair, subtle short goatee and mustache, youthful rounded adult facial features. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
+      "generatedOn": "2026-10-22",
+      "method": "OpenAI image generation from text; no input photograph",
+      "eventDate": "2026-10-19",
+      "sourceSha256": "51220ec279e9601734667c8252def330361ed16823e6e415ff19356e4f7dc236",
+      "sha256": "f1e62e91fee0465ff20618d58505436d1eb117893bccc587a10df2d8ee392274",
+      "encoding": "WebP quality 88; original dimensions and composition"
+    }
+  ]
+}

@@ -63,8 +63,8 @@ Escape and an outside pointer close the list.
 When focus is inside the closing list, it returns to the overflow button.
 `overflowAriaLabel(count)` defaults to `JP_MESSAGES.overflow.more`.
 
-Photo examples use local files and retain the initials fallback for failed images.
-See the [example photo sources](../apps/showcase/public/example-photos/README.md).
+Illustration examples use local files and retain the initials fallback for failed images.
+See the [illustration source record](../apps/showcase/public/example-illustrations/README.md).
 
 ## Structured content
 

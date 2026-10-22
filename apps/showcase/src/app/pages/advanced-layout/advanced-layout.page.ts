@@ -1,4 +1,4 @@
-import { RAYS_FILE_PHOTOS } from '@jp-design-system/ui/primitives/game-six.example';
+import { GAME_SIX_ILLUSTRATIONS } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -86,8 +86,8 @@ export class AdvancedLayoutPage {
   readonly selected = signal<JpTableRowKey[]>([]);
   readonly size = signal(35);
   readonly collapsed = signal(false);
-  readonly photo = RAYS_FILE_PHOTOS.venue;
-  readonly mediaSource = signal<string>(this.photo.src);
+  readonly artwork = GAME_SIX_ILLUSTRATIONS.celebration;
+  readonly mediaSource = signal<string>(this.artwork.src);
   readonly storageStatus = signal('Preferences are saved on this device.');
   readonly detailAction = signal('');
   constructor() {

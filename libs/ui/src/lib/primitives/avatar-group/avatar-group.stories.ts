@@ -1,8 +1,6 @@
-import { RAYS_FILE_PHOTOS } from '../game-six.example';
-import { JpLink } from '../link/link';
+import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import {
   componentWrapperDecorator,
-  moduleMetadata,
   type Meta,
   type StoryObj,
 } from '@storybook/angular';
@@ -10,16 +8,15 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import { JpAvatarGroup } from './avatar-group';
 
-const photoCredit = componentWrapperDecorator(
+const illustrationCaption = componentWrapperDecorator(
   (story) =>
-    `<div style="max-width:40rem">${story}<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">File images, not Game 6. Cropped to fit.</p>${[RAYS_FILE_PHOTOS.peralta, RAYS_FILE_PHOTOS.diaz, RAYS_FILE_PHOTOS.caminero].map((photo) => `<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">${photo.caption} · <a jpLink href="${photo.source}" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink href="${photo.licenseUrl}" target="_blank" rel="noopener noreferrer">${photo.license}</a></p>`).join('')}</div>`,
+    `<div style="max-width:40rem">${story}<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">AI-generated player illustrations.</p></div>`,
 );
 
 const meta: Meta<JpAvatarGroup> = {
   title: 'Primitives/Identity/Avatar Group',
   component: JpAvatarGroup,
   parameters: { layout: 'padded' },
-  decorators: [moduleMetadata({ imports: [JpLink] })],
   args: {
     label: 'Players',
     people: [
@@ -34,25 +31,25 @@ export default meta;
 type Story = StoryObj<JpAvatarGroup>;
 export const Default: Story = {};
 
-export const PhotoMembers: Story = {
-  decorators: [photoCredit],
+export const IllustratedMembers: Story = {
+  decorators: [illustrationCaption],
   args: {
     people: [
       {
         id: 'a',
         name: 'Freddy Peralta',
-        src: RAYS_FILE_PHOTOS.peralta.src,
+        src: GAME_SIX_ILLUSTRATIONS.peralta.src,
       },
       {
         id: 'g',
         name: 'Yandy Díaz',
-        src: RAYS_FILE_PHOTOS.diaz.src,
+        src: GAME_SIX_ILLUSTRATIONS.diaz.src,
       },
       { id: 'l', name: 'Taylor Walls' },
       {
         id: 's',
         name: 'Junior Caminero',
-        src: RAYS_FILE_PHOTOS.caminero.src,
+        src: GAME_SIX_ILLUSTRATIONS.caminero.src,
       },
       { id: 'r', name: 'Richie Palacios' },
     ],

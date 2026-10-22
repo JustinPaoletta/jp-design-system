@@ -8,7 +8,7 @@ Do not call this result a World Series championship.
 
 ## Source record
 
-The [shared example record](../../libs/ui/src/lib/primitives/game-six.example.ts) contains the scores, players, statistics, chronology and photo references.
+The [shared example record](../../libs/ui/src/lib/primitives/game-six.example.ts) contains the scores, players, statistics, chronology and illustration references.
 It is not a public component API.
 The examples do not request live scores.
 
@@ -97,14 +97,14 @@ The `.example` email addresses are demonstration values.
 They are not team mailboxes.
 Keep generic component defaults available to other applications.
 
-## Photographs
+## Illustrations
 
-The [photo source record](../../apps/showcase/public/example-photos/README.md) identifies each image, creator, date and license.
-The included file photographs show Rays players and Tropicana Field on other dates.
-None shows Game 6.
-Visible captions preserve that distinction.
+The [illustration source record](../../apps/showcase/public/example-illustrations/README.md) identifies each generated image and its use.
+The five original cartoon illustrations show the pennant celebration, the final out and three players.
+They were generated from text without input photographs.
+The scenes and portraits are interpretations, not exact reconstructions.
 
-Keep source and license links beside the photographs.
-Keep the file licenses with redistributed copies and screenshot baselines.
-The source record also lists actual Game 6 photographs that require a license.
-No license for those game photographs has been purchased.
+Keep the AI-generated illustration label in visible captions.
+Keep image descriptions in alternative text and player names in accessible avatar labels.
+Keep the generation prompts and file hashes with the assets.
+Use the MLB sources above for game facts.

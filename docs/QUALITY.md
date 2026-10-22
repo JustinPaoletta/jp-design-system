@@ -47,8 +47,8 @@ measure an isolated consumer's tree-shaken library cost.
 
 The [Publish Storybook workflow](../.github/workflows/storybook-pages.yml) builds `ui:build-storybook:ci` and deploys `dist/storybook/ui` to GitHub Pages.
 The [hosted Storybook](https://justinpaoletta.github.io/jp-design-system/) uses a repository subdirectory.
-Use relative URLs for story assets, such as `example-photos/rays-file-photos/tropicana-field-2024.jpg`.
-Check photo loading and direct story links after a deployment.
+Use relative URLs for story assets, such as `example-illustrations/game-six/pennant-night.webp`.
+Check image loading and direct story links after a deployment.
 See the [hosting instructions](../README.md#getting-started) for publishing branches.
 
 ```sh

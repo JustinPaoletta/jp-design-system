@@ -210,7 +210,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
 }) => {
   await expect(
     page.getByRole('img', {
-      name: 'Tropicana Field interior photographed on June 10, 2024, before the 2026 ALCS.',
+      name: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
     }),
   ).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
@@ -220,7 +220,7 @@ test('advanced layout: meaningful image fallback and source recovery', async ({
   await page.getByRole('button', { name: 'Show image error' }).click();
   await expect(
     page.getByRole('img', {
-      name: 'Tropicana Field interior photographed on June 10, 2024, before the 2026 ALCS.',
+      name: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
     }),
   ).toHaveText('Image unavailable');
   await page.getByRole('button', { name: 'Restore image' }).click();

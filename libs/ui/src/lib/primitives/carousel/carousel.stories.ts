@@ -1,5 +1,5 @@
 import { JpLink } from '../link/link';
-import { GAME_SIX, RAYS_FILE_PHOTOS } from '../game-six.example';
+import { GAME_SIX, GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import { JpMedia } from '../media/media';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
@@ -26,14 +26,37 @@ const meta: Meta<JpCarousel> = {
     props: {
       ...args,
       invitationsOpen: false,
-      photos: RAYS_FILE_PHOTOS,
+      artwork: GAME_SIX_ILLUSTRATIONS,
       game: GAME_SIX,
     },
-    template: `<jp-carousel style="max-width:40rem" [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
-    <ng-template jpCarouselSlide="access" label="The night Tampa Bay clinched"><h2>The night Tampa Bay clinched</h2><jp-media [src]="photos.venue.src" [alt]="photos.venue.alt" [caption]="photos.venue.caption" [aspectRatio]="4 / 3" loading="eager" /><p>File photo, not Game 6. <a jpLink [href]="photos.venue.source" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink [href]="photos.venue.licenseUrl" target="_blank" rel="noopener noreferrer">{{ photos.venue.license }}</a></p><p>October 19, 2026. Rays 7, Guardians 3. The American League pennant belongs to Tampa Bay.</p><jp-button (click)="invitationsOpen=!invitationsOpen">{{ invitationsOpen ? 'Close game details' : 'Read game details' }}</jp-button>@if (invitationsOpen) { <section aria-label="Game details"><h3>A home-field celebration</h3><p>40,230 fans filled Tropicana Field. Tampa Bay won the series four games to two.</p><a jpLink [href]="game.recapUrl" target="_blank" rel="noopener noreferrer">Read the MLB recap</a></section> }</ng-template>
-    <ng-template jpCarouselSlide="priorities" label="The final out"><h2>The final out</h2><p>With two outs in the ninth, Chase DeLauter lifted a foul pop. Liam Hicks made the catch, and the Rays had their third American League pennant.</p><jp-input label="Your Game 6 memory" hint="Add a personal note about this night." /></ng-template>
-    <ng-template jpCarouselSlide="review" label="American League champions"><h2>American League champions</h2><jp-media [src]="photos.peralta.src" [alt]="photos.peralta.alt" [caption]="photos.peralta.caption" [aspectRatio]="1" fit="contain" loading="eager" /><p>Interview still, not Game 6. <a jpLink [href]="photos.peralta.source" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink [href]="photos.peralta.licenseUrl" target="_blank" rel="noopener noreferrer">{{ photos.peralta.license }}</a></p><p>Freddy Peralta earned ALCS MVP honors. In Game 6, he allowed one earned run in 5⅓ innings.</p><a jpLink [href]="game.recapUrl" target="_blank" rel="noopener noreferrer">Read the Game 6 report</a></ng-template>
-  </jp-carousel>`,
+    template: `
+      <jp-carousel style="max-width:40rem" [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
+        <ng-template jpCarouselSlide="access" label="The night Tampa Bay clinched">
+          <h2>The night Tampa Bay clinched</h2>
+          <jp-media [src]="artwork.celebration.src" [alt]="artwork.celebration.alt" [caption]="artwork.celebration.caption" [aspectRatio]="3 / 2" loading="eager" />
+          <p>October 19, 2026. Rays 7, Guardians 3. The American League pennant belongs to Tampa Bay.</p>
+          <jp-button (click)="invitationsOpen=!invitationsOpen">{{ invitationsOpen ? 'Close game details' : 'Read game details' }}</jp-button>
+          @if (invitationsOpen) {
+            <section aria-label="Game details">
+              <h3>A home-field celebration</h3>
+              <p>40,230 fans filled Tropicana Field. Tampa Bay won the series four games to two.</p>
+              <a jpLink [href]="game.recapUrl" target="_blank" rel="noopener noreferrer">Read the MLB recap</a>
+            </section>
+          }
+        </ng-template>
+        <ng-template jpCarouselSlide="priorities" label="The final out">
+          <h2>The final out</h2>
+          <jp-media [src]="artwork.finalOut.src" [alt]="artwork.finalOut.alt" [caption]="artwork.finalOut.caption" [aspectRatio]="3 / 2" loading="eager" />
+          <p>With two outs in the ninth, Chase DeLauter lifted a foul pop. Liam Hicks made the catch, and the Rays had their third American League pennant.</p>
+          <jp-input label="Your Game 6 memory" hint="Add a personal note about this night." />
+        </ng-template>
+        <ng-template jpCarouselSlide="review" label="American League champions">
+          <h2>American League champions</h2>
+          <jp-media style="max-width:20rem;display:block" [src]="artwork.peralta.src" [alt]="artwork.peralta.alt" [caption]="artwork.peralta.caption" [aspectRatio]="1" fit="contain" loading="eager" />
+          <p>Freddy Peralta earned ALCS MVP honors. In Game 6, he allowed one earned run in 5⅓ innings.</p>
+          <a jpLink [href]="game.recapUrl" target="_blank" rel="noopener noreferrer">Read the Game 6 report</a>
+        </ng-template>
+      </jp-carousel>`,
   }),
 };
 export default meta;

@@ -70,9 +70,10 @@ Success text must describe the current values.
 If a user edits values during a save request, retain those edits without marking them as saved.
 Keep a separate copy of the submitted values until the request completes.
 
-Use local photo files for photo examples.
-Record the creator, source and license beside each file.
-Example names must not identify the people in supplied photographs.
+Use local image files for examples.
+Keep the generation record with AI-generated illustrations and identify them in visible captions.
+For photographs, record the creator, source and license beside each file.
+Do not give stock portrait subjects invented player identities.
 
 ## Selection and focus
 

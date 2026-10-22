@@ -55,15 +55,15 @@ The inspection found and corrected these related issues:
 - Inline Alert uses clear title and message spacing without a decorative side border.
 - Assistant examples keep Stop and Retry inside the panel at narrow widths.
 - Avatar groups expose all member names. Breadcrumb menus retain hidden destinations.
-- Photos show crop, contain, loading, failure and recovery behavior.
+- Images show crop, contain, loading, failure and recovery behavior.
 - Code blocks use basic syntax colors and preserve exact source and copy values.
 - Pagination, Stepper, Banner, Carousel and Table Toolbar examples respond to their controls.
 - Both dashboard compositions use the approved hierarchy. Narrow metric values align.
 - Surface and Text examples fit their narrow containers.
 
 The four suggestions from the supplied visual audit are implemented.
-The examples use the 2026 ALCS Game 6 record and locally stored photos.
-The [photo credits](apps/showcase/public/example-photos/README.md) identify the sources and licenses.
+The current examples use the 2026 ALCS Game 6 record and locally stored illustrations.
+The [illustration source record](apps/showcase/public/example-illustrations/README.md) identifies the images, generation prompts and file hashes.
 
 Captures are in `dist/qa/system-polish/final-pass/`.
 The local gallery contains all 97 groups and both widths.

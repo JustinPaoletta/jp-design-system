@@ -1,24 +1,21 @@
-import { RAYS_FILE_PHOTOS } from '../game-six.example';
-import { JpLink } from '../link/link';
+import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import {
   componentWrapperDecorator,
-  moduleMetadata,
   type Meta,
   type StoryObj,
 } from '@storybook/angular';
 import { expect, waitFor, within } from 'storybook/test';
 import { JpAvatar } from './avatar';
 
-const photoCredit = componentWrapperDecorator(
+const illustrationCaption = componentWrapperDecorator(
   (story) =>
-    `<div style="max-width:40rem">${story}<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">File images, not Game 6. Cropped to fit.</p>${[RAYS_FILE_PHOTOS.peralta].map((photo) => `<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">${photo.caption} · <a jpLink href="${photo.source}" target="_blank" rel="noopener noreferrer">Source</a> · <a jpLink href="${photo.licenseUrl}" target="_blank" rel="noopener noreferrer">${photo.license}</a></p>`).join('')}</div>`,
+    `<div style="max-width:40rem">${story}<p style="font-size:var(--jp-font-size-caption);color:var(--jp-color-text-muted)">AI-generated player illustrations.</p></div>`,
 );
 
 const meta: Meta<JpAvatar> = {
   title: 'Primitives/Identity/Avatar',
   component: JpAvatar,
   parameters: { layout: 'padded' },
-  decorators: [moduleMetadata({ imports: [JpLink] })],
   args: { name: 'Freddy Peralta' },
 };
 export default meta;
@@ -33,9 +30,9 @@ export const BrokenImage: Story = {
     ).toHaveTextContent('FP');
   },
 };
-export const Photo: Story = {
-  decorators: [photoCredit],
-  args: { src: RAYS_FILE_PHOTOS.peralta.src, size: 'lg' },
+export const Illustration: Story = {
+  decorators: [illustrationCaption],
+  args: { src: GAME_SIX_ILLUSTRATIONS.peralta.src, size: 'lg' },
   play: async ({ canvasElement }) => {
     await waitFor(() =>
       expect(canvasElement.querySelector('img')).toHaveClass('loaded'),
@@ -48,14 +45,14 @@ export const Photo: Story = {
     ).not.toHaveAttribute('aria-busy');
   },
 };
-export const PhotoSizes: Story = {
-  decorators: [photoCredit],
+export const IllustrationSizes: Story = {
+  decorators: [illustrationCaption],
   render: () => ({
-    props: { photo: RAYS_FILE_PHOTOS.peralta },
+    props: { artwork: GAME_SIX_ILLUSTRATIONS.peralta },
     template: `<div style="display:flex;align-items:center;gap:var(--jp-space-md)">
-      <jp-avatar name="Freddy Peralta" [src]="photo.src" size="sm" />
-      <jp-avatar name="Freddy Peralta" [src]="photo.src" />
-      <jp-avatar name="Freddy Peralta" [src]="photo.src" size="lg" />
+      <jp-avatar name="Freddy Peralta" [src]="artwork.src" size="sm" />
+      <jp-avatar name="Freddy Peralta" [src]="artwork.src" />
+      <jp-avatar name="Freddy Peralta" [src]="artwork.src" size="lg" />
     </div>`,
   }),
 };

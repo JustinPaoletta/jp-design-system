@@ -38,33 +38,15 @@
         <h2>Tropicana Field</h2>
         <jp-media
           [src]="mediaSource()"
-          [alt]="photo.alt"
-          [caption]="photo.caption"
+          [alt]="artwork.alt"
+          [caption]="artwork.caption"
           [aspectRatio]="4 / 3"
         />
-        <p>
-          File photo, not Game 6.
-          <a
-            jpLink
-            [href]="photo.source"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Source</a
-          >
-          ·
-          <a
-            jpLink
-            [href]="photo.licenseUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            >{{ photo.license }}</a
-          >
-        </p>
         <jp-button
           variant="secondary"
-          (click)="mediaSource.set(mediaSource() === photo.src ? '/missing-demo-image.svg' : photo.src)"
-          >{{ mediaSource() === photo.src ? 'Show image error' : 'Restore image'
-          }}</jp-button
+          (click)="mediaSource.set(mediaSource() === artwork.src ? '/missing-demo-image.svg' : artwork.src)"
+          >{{ mediaSource() === artwork.src ? 'Show image error' : 'Restore
+          image' }}</jp-button
         >
         <p>
           Review the 15 Rays who appeared in Game 6. Expand a row to see the
