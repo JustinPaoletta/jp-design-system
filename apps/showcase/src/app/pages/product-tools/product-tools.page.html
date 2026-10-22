@@ -20,10 +20,10 @@
       >
         <jp-error-summary [errors]="errors()" />
         @if (current() === 'details') {
-        <h3 #stepHeading tabindex="-1">Club details</h3>
+        <h3 #stepHeading tabindex="-1">Game 6 details</h3>
         <jp-input
           id="wizard-email"
-          label="Manager email"
+          label="Your email"
           type="email"
           [formControl]="email"
           [error]="submitted() && email.invalid ? 'Enter a valid email address.' : ''"
@@ -39,7 +39,7 @@
         <jp-button type="submit">Continue</jp-button>
         } @else {
         <h3 #stepHeading tabindex="-1">Review club</h3>
-        <p>Manager email: {{ email.value }}</p>
+        <p>Your email: {{ email.value }}</p>
         <p>Players: {{ seats.value }}</p>
         <div class="actions">
           <jp-button variant="secondary" (click)="back()">Back</jp-button
@@ -50,7 +50,7 @@
         } }
       </form>
     </jp-card>
-    <jp-card title="Game checklist"
+    <jp-card title="Game 6 checklist"
       ><jp-checklist
         label="Game tasks"
         [items]="checklist"
@@ -59,7 +59,7 @@
     <jp-card title="Numeric controls">
       <div class="numeric">
         <jp-slider
-          label="Practice repetitions"
+          label="Replay volume"
           [min]="0"
           [max]="100"
           [step]="5"
@@ -67,7 +67,7 @@
           hint="Use arrow keys or enter an exact value."
         />
         <jp-range-slider
-          label="Practice minutes"
+          label="Replay minutes"
           lowerLabel="From"
           upperLabel="To"
           [min]="0"

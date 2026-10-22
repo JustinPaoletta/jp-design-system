@@ -9,8 +9,8 @@
   >
   @if (bannerVisible()) {
   <jp-banner
-    title="Rays clubhouse"
-    message="These examples use the Tampa Bay Rays in ALCS Game 6."
+    title="Game 6 archive"
+    message="Tampa Bay won Game 6, 7–3, to become the 2026 American League champions."
     dismissible
     (dismissed)="bannerVisible.set(false)"
   />
@@ -18,11 +18,11 @@
   <div class="grid">
     <jp-card title="2026 Rays" headingLevel="h2"
       ><div class="row">
-        <jp-avatar name="Shane Baz" /><jp-avatar
+        <jp-avatar name="Freddy Peralta" /><jp-avatar
           name="Yandy Díaz"
           src="/missing-avatar.png"
         /><jp-avatar-group
-          label="Club reviewers"
+          label="Featured Rays"
           [people]="people"
           [max]="2"
         /><jp-status-dot tone="success" label="Player online" />
@@ -30,10 +30,10 @@
       <jp-divider decorative /><jp-description-list [items]="details" />
       <div class="measurement">
         <jp-meter
-          label="ALCS Game 6"
-          [value]="98"
-          [max]="162"
-          valueText="Rays won"
+          label="2026 Rays ALCS wins"
+          [value]="4"
+          [max]="4"
+          valueText="4 wins in a best-of-seven series"
         />
       </div>
       <div class="row">
@@ -46,16 +46,16 @@
         <a jpLink href="#preferences">Jump to preferences</a
         ><jp-keyboard-hint [keys]="['Control', 'K']" />
       </div>
-      <jp-accordion id="showcase-settings" label="Club settings"
-        ><jp-disclosure title="Club settings"
-          ><p>Club name, coaches and squad.</p></jp-disclosure
-        ><jp-disclosure title="Club preferences"
+      <jp-accordion id="showcase-settings" label="Archive settings"
+        ><jp-disclosure title="Archive settings"
+          ><p>Collection name, coaches and squad.</p></jp-disclosure
+        ><jp-disclosure title="Archive preferences"
           ><p>Game alerts, score updates and roster records.</p></jp-disclosure
         ></jp-accordion
       ><jp-list [items]="services" />
     </jp-card>
   </div>
-  <jp-card title="Club preferences" headingLevel="h2"
+  <jp-card title="Archive preferences" headingLevel="h2"
     ><form id="preferences" [formGroup]="form" (ngSubmit)="submit()">
       <jp-error-summary [errors]="errors()" />
       <jp-form-section
@@ -65,7 +65,7 @@
           #emailField
           controlId="expansion-email"
           label="Email"
-          hint="Use the manager email. This address is not a real mailbox."
+          hint="Use a demonstration address, such as fan@rays.example."
           [error]="emailError()"
           required
           ><jp-input
@@ -108,7 +108,7 @@
         label="Players"
         [options]="reviewers"
         formControlName="reviewers"
-        hint="Search and select multiple reviewers."
+        hint="Choose the Game 6 players to include in your collection."
       /><jp-button type="submit">Save preferences</jp-button>@if (saved()) {
       <jp-banner
         title="Preferences saved"
@@ -121,14 +121,14 @@
   >
   <jp-card title="Search" headingLevel="h2"
     ><jp-search-field
-      label="Search clubs"
+      label="Search game collections"
       [formControl]="search"
       placeholder="Search by name"
     />
     <p class="query">Query: {{ search.value || 'None' }}</p></jp-card
   >
   <jp-drawer
-    title="Club details"
+    title="Game 6 details"
     [open]="drawerOpen()"
     (openChange)="drawerOpen.set($event)"
     ><jp-description-list [items]="details" /><jp-button

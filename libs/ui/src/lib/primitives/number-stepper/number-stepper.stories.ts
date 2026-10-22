@@ -17,7 +17,7 @@ const meta: Meta<JpNumberStepper> = {
     min: 1,
     max: 5,
     step: 1,
-    hint: 'Choose one to five players for this drill.',
+    hint: 'Choose one to five players to feature in your Game 6 collection.',
   },
 };
 export default meta;

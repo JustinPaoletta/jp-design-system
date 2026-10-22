@@ -6,10 +6,10 @@ const meta: Meta<JpDisclosure> = {
   title: 'Primitives/Navigation/Disclosure',
   component: JpDisclosure,
   parameters: { layout: 'padded' },
-  args: { title: 'Club preferences' },
+  args: { title: 'Archive preferences' },
   render: (args) => ({
     props: args,
-    template: `<jp-disclosure [title]="title" [open]="open" (openChange)="open=$event">Configure retries and timeouts.</jp-disclosure>`,
+    template: `<jp-disclosure [title]="title" [open]="open" (openChange)="open=$event">Keep your Game 6 notes, photographs and favorite moments together.</jp-disclosure>`,
   }),
 };
 export default meta;

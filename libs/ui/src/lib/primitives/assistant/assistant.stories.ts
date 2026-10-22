@@ -1,3 +1,4 @@
+import { gameSixAnswer } from '../game-six.example';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
@@ -34,18 +35,20 @@ import { JpAssistantService } from './assistant.service';
         </jp-button>
       </jp-inline>
       <jp-assistant-panel
-        title="Rays manager"
+        title="Game 6 companion"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, ALCS Game 6 or the World Series."
+        emptyDescription="Ask about players, the final score or the ALCS."
         (messageSubmit)="onSubmit($event)"
         ><jp-stack jpAssistantSuggestions gap="sm"
-          ><jp-button variant="secondary" (click)="ask('Summarize ALCS Game 6')"
-            >Summarize ALCS Game 6</jp-button
+          ><jp-button
+            variant="secondary"
+            (click)="ask('Summarize the final score')"
+            >Summarize the final score</jp-button
           ><jp-button
             variant="secondary"
             (click)="ask('Who is in the starting lineup?')"
             >Review the starting lineup</jp-button
-          ><jp-button variant="secondary" (click)="ask('Who won ALCS Game 6?')"
+          ><jp-button variant="secondary" (click)="ask('Who won the ALCS?')"
             >Show the series result</jp-button
           ></jp-stack
         ></jp-assistant-panel
@@ -57,10 +60,10 @@ class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
   readonly gameContext = {
-    label: 'ALCS Game 6',
-    description: 'The Rays won ALCS Game 6.',
+    label: '2026 ALCS Game 6',
+    description: 'Rays 7, Guardians 3. Final score.',
     entityType: 'game',
-    entityId: 'ALCS-G6',
+    entityId: '849815',
   };
 
   seed(): void {
@@ -68,11 +71,11 @@ class AssistantStoryHost {
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
-      content: 'ALCS Game 6 loaded',
+      content: '2026 ALCS Game 6 loaded',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content: 'I can summarize the Rays win in ALCS Game 6.',
+      content: 'I can summarize the score and key plays from 2026 ALCS Game 6.',
     });
     this.assistant.addMessage({
       role: 'user',
@@ -92,7 +95,7 @@ class AssistantStoryHost {
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Noted: “${content}”. Sample game result: the Rays won ALCS Game 6.`,
+      content: gameSixAnswer(content),
     });
   }
 }
@@ -111,9 +114,9 @@ class AssistantStoryHost {
         >
       </jp-inline>
       <jp-assistant-panel
-        title="Rays manager"
+        title="Game 6 companion"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, ALCS Game 6 or the World Series."
+        emptyDescription="Ask about players, the final score or the ALCS."
         (messageSubmit)="respond()"
         (responseRetry)="retry($event.responseId)"
       />
@@ -144,7 +147,7 @@ class AssistantAsyncStoryHost {
     } else {
       this.assistant.updateResponse(
         this.responseId,
-        'ALCS Game 6 is in progress.',
+        'The Rays lead 5–3. Checking the eighth inning…',
       );
     }
   }
@@ -152,7 +155,7 @@ class AssistantAsyncStoryHost {
     this.responseId = id;
     this.assistant.completeResponse(
       id,
-      'The Rays won ALCS Game 6 and advanced to the World Series.',
+      'The final score is Rays 7, Guardians 3. Richie Palacios put Tampa Bay ahead with a two-run double in the second.',
     );
   }
 }
@@ -208,8 +211,8 @@ export const MessageRoles: Story = {
         class="jp-assistant-panel__message-list"
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
-        <jp-assistant-message messageRole="system" content="ALCS Game 6 loaded" />
-        <jp-assistant-message messageRole="assistant" content="The Rays won ALCS Game 6." />
+        <jp-assistant-message messageRole="system" content="2026 ALCS Game 6 loaded" />
+        <jp-assistant-message messageRole="assistant" content="Junior Caminero drove in Taylor Walls in the eighth inning." />
         <jp-assistant-message messageRole="user" content="Who drove in the go-ahead run?" />
       </div>
     `,
@@ -243,7 +246,7 @@ export const Conversation: Story = {
     );
     await userEvent.click(seed as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain(
-      'I can summarize the Rays win in ALCS Game 6.',
+      'I can summarize the score and key plays from 2026 ALCS Game 6.',
     );
     await expect(
       canvasElement.querySelectorAll('jp-assistant-message').length,
@@ -266,7 +269,7 @@ export const ContextTrigger: Story = {
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
-    await expect(canvasElement.textContent).toContain('ALCS Game 6');
+    await expect(canvasElement.textContent).toContain('2026 ALCS Game 6');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
@@ -313,7 +316,9 @@ export const ComposerInteraction: Story = {
     await expect(canvasElement.textContent).toContain(
       'What is the game score?',
     );
-    await expect(canvasElement.textContent).toContain('Noted:');
+    await expect(canvasElement.textContent).toContain(
+      'Richie Palacios opened the scoring',
+    );
   },
 };
 
@@ -330,7 +335,7 @@ export const PendingAndStreaming: Story = {
     );
     await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
     await expect(canvasElement.textContent).toContain(
-      'ALCS Game 6 is in progress.',
+      'Checking the eighth inning',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Stop response' }),
@@ -338,10 +343,8 @@ export const PendingAndStreaming: Story = {
     await expect(canvasElement.textContent).toContain('Response stopped');
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
-    await waitFor(() =>
-      expect(canvasElement.textContent).toContain(
-        'The Rays won ALCS Game 6 and advanced to the World Series.',
-      ),
+    await expect(canvasElement.textContent).toContain(
+      'The final score is Rays 7, Guardians 3.',
     );
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(
@@ -368,13 +371,11 @@ export const FailedAndRetry: Story = {
       'Connection lost',
     );
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
-    await waitFor(() =>
-      expect(canvasElement.textContent).toContain(
-        'The Rays won ALCS Game 6 and advanced to the World Series.',
-      ),
-    );
     await expect(canvas.queryByRole('alert')).toBeNull();
     await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await expect(canvasElement.textContent).toContain(
+      'The final score is Rays 7, Guardians 3.',
+    );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Close assistant' }),
     );

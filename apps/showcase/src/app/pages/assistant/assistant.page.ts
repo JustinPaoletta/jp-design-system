@@ -1,3 +1,4 @@
+import { gameSixAnswer } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -35,22 +36,22 @@ export class AssistantPage implements OnDestroy {
   lastReply = 'None yet';
 
   readonly deploymentContext: JpAssistantContext = {
-    label: 'ALCS Game 6',
-    description: 'The Rays won ALCS Game 6.',
+    label: '2026 ALCS Game 6',
+    description: 'Rays 7, Guardians 3. Final score.',
     entityType: 'game',
-    entityId: 'ALCS-G6',
+    entityId: '849815',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Player Shane Baz',
-    description: 'Pitcher · Active roster · ALCS Game 6',
+    label: 'Player Freddy Peralta',
+    description: 'Pitcher · Active roster · Started Game 6',
     entityType: 'player',
-    entityId: 'shane-baz',
+    entityId: '642547',
   };
 
   readonly filterContext: JpAssistantContext = {
     label: 'Squad filters',
-    description: 'Active roster and injured list',
+    description: 'Active roster and bullpen',
     entityType: 'filters',
   };
 
@@ -66,15 +67,16 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'The Rays won ALCS Game 6 and advanced to the World Series.',
+      content: 'The Rays won 7–3 against the Cleveland Guardians.',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content: 'The Rays won ALCS Game 6 and advanced to the World Series.',
+      content:
+        'The Rays won 7–3. Yandy Díaz and Junior Caminero drove in runs.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who won ALCS Game 6?',
+      content: 'Who started Game 6?',
     });
   }
 
@@ -82,7 +84,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: the Rays won ALCS Game 6.`,
+      content: gameSixAnswer(content),
     });
   }
 }

@@ -6,9 +6,9 @@ const meta: Meta<JpSchedulingCalendar> = {
   component: JpSchedulingCalendar,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Team schedule',
-    date: '2024-10-07',
-    today: '2024-10-07',
+    label: 'Game 6 archive reminders',
+    date: '2026-10-19',
+    today: '2026-10-19',
     view: 'week',
     layout: 'schedule',
     timeZone: 'UTC',
@@ -18,21 +18,21 @@ const meta: Meta<JpSchedulingCalendar> = {
     events: [
       {
         id: 'planning',
-        title: 'Lineup meeting',
-        start: '2024-10-07T09:00:00Z',
-        end: '2024-10-07T10:30:00Z',
+        title: 'Review Game 6 notes',
+        start: '2026-10-19T09:00:00Z',
+        end: '2026-10-19T10:30:00Z',
       },
       {
         id: 'review',
-        title: 'Batting practice',
-        start: '2024-10-07T09:30:00Z',
-        end: '2024-10-07T11:00:00Z',
+        title: 'Organize Game 6 photos',
+        start: '2026-10-19T09:30:00Z',
+        end: '2026-10-19T11:00:00Z',
       },
       {
         id: 'release',
-        title: 'Away series',
-        start: '2024-10-08',
-        end: '2024-10-10',
+        title: 'Game 6 archive project',
+        start: '2026-10-20',
+        end: '2026-10-22',
         allDay: true,
       },
     ],
@@ -40,7 +40,7 @@ const meta: Meta<JpSchedulingCalendar> = {
   render: (args) => ({
     props: args,
     template:
-      '<jp-scheduling-calendar [label]="label" [date]="date" [today]="today" [events]="events" [view]="view" [layout]="layout" [timeZone]="timeZone" [locale]="locale" [loading]="loading" [error]="error" />',
+      '<p>Personal archive reminders with example times. These are not official team appointments.</p><jp-scheduling-calendar [label]="label" [date]="date" [today]="today" [events]="events" [view]="view" [layout]="layout" [timeZone]="timeZone" [locale]="locale" [loading]="loading" [error]="error" />',
   }),
 };
 export default meta;
@@ -62,25 +62,25 @@ export const Empty: Story = {
 export const Loading: Story = { args: { loading: true, events: [] } };
 export const Refreshing: Story = { args: { loading: true } };
 export const Error: Story = {
-  args: { error: 'Club events are unavailable. Try again.' },
+  args: { error: 'Archive reminders are unavailable. Try again.' },
 };
 export const ClockChange: Story = {
   args: {
-    date: '2024-11-03',
+    date: '2026-11-01',
     view: 'day',
     timeZone: 'America/New_York',
     events: [
       {
         id: 'first',
-        title: 'Early field check',
-        start: '2024-11-03T01:15:00-04:00',
-        end: '2024-11-03T01:45:00-04:00',
+        title: 'First photo backup',
+        start: '2026-11-01T01:15:00-04:00',
+        end: '2026-11-01T01:45:00-04:00',
       },
       {
         id: 'second',
-        title: 'Late field check',
-        start: '2024-11-03T01:15:00-05:00',
-        end: '2024-11-03T01:45:00-05:00',
+        title: 'Second photo backup',
+        start: '2026-11-01T01:15:00-05:00',
+        end: '2026-11-01T01:45:00-05:00',
       },
     ],
   },
@@ -90,11 +90,11 @@ export const Navigation: Story = {
     const c = within(canvasElement);
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(
-      c.queryByRole('button', { name: /Lineup meeting,/ }),
+      c.queryByRole('button', { name: /Review Game 6 notes,/ }),
     ).not.toBeInTheDocument();
     await userEvent.click(c.getByRole('button', { name: 'Today' }));
     await expect(
-      c.getByRole('button', { name: /Lineup meeting,/ }),
+      c.getByRole('button', { name: /Review Game 6 notes,/ }),
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Day' }));
     await expect(c.getByRole('button', { name: 'Day' })).toHaveAttribute(
@@ -117,16 +117,16 @@ export const BusyAllDay: Story = {
       ...Array.from({ length: 11 }, (_, index) => ({
         id: 'squad-' + index,
         title: 'Rays layout ' + (index + 1),
-        start: '2024-10-07',
-        end: '2024-10-08',
+        start: '2026-10-19',
+        end: '2026-10-20',
         allDay: true,
       })),
       {
         id: 'practice',
         title:
-          'Shane Baz, Yandy Díaz, Josh Lowe and Kameron Misner are on the Rays roster',
-        start: '2024-10-07T09:00:00Z',
-        end: '2024-10-07T09:45:00Z',
+          'Freddy Peralta, Yandy Díaz and Junior Caminero helped Tampa Bay clinch the 2026 American League pennant',
+        start: '2026-10-19T09:00:00Z',
+        end: '2026-10-19T09:45:00Z',
       },
     ],
   },
@@ -134,7 +134,7 @@ export const BusyAllDay: Story = {
     const canvas = within(canvasElement);
     const allDay = canvasElement.querySelector('.day .all-day') as HTMLElement;
     const frame = canvasElement.querySelector('.days') as HTMLElement;
-    const timed = canvas.getByRole('button', { name: /Shane Baz.*,/ });
+    const timed = canvas.getByRole('button', { name: /Freddy Peralta.*,/ });
     const slot = timed.closest('.timed li');
     if (!slot)
       throw new globalThis.Error('The timed appointment must have a slot.');
@@ -184,16 +184,16 @@ export const CrowdedWeek: Story = {
       ...(meta.args?.events ?? []),
       {
         id: 'pitching',
-        title: 'The Rays won ALCS Game 6',
-        start: '2024-10-07T10:00:00Z',
-        end: '2024-10-07T10:45:00Z',
+        title: 'Freddy Peralta started Game 6',
+        start: '2026-10-19T10:00:00Z',
+        end: '2026-10-19T10:45:00Z',
       },
     ],
   },
   render: (args) => ({
     props: args,
     template:
-      '<jp-scheduling-calendar style="width:1100px;max-width:100%" [label]="label" [date]="date" [today]="today" [events]="events" [view]="view" [layout]="layout" [timeZone]="timeZone" [locale]="locale" />',
+      '<p>Personal archive reminders with example times. These are not official team appointments.</p><jp-scheduling-calendar style="width:1100px;max-width:100%" [label]="label" [date]="date" [today]="today" [events]="events" [view]="view" [layout]="layout" [timeZone]="timeZone" [locale]="locale" />',
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -201,7 +201,9 @@ export const CrowdedWeek: Story = {
       'jp-scheduling-calendar',
     ) as HTMLElement;
     const frame = canvasElement.querySelector('.days') as HTMLElement;
-    const appointment = canvas.getByRole('button', { name: /Lineup meeting,/ });
+    const appointment = canvas.getByRole('button', {
+      name: /Review Game 6 notes,/,
+    });
     const title = appointment.querySelector('strong') as HTMLElement;
     const time = appointment.querySelector('span') as HTMLElement;
     const days = Array.from(canvasElement.querySelectorAll('.day'));
@@ -225,7 +227,7 @@ export const CrowdedWeek: Story = {
     await expect(appointment).not.toHaveAttribute('title');
     appointment.focus();
     await expect(await canvas.findByRole('tooltip')).toHaveTextContent(
-      /Lineup meeting.*9:00.*10:30/,
+      /Review Game 6 notes.*9:00.*10:30/,
     );
     await userEvent.keyboard('{Escape}');
     await waitFor(() =>

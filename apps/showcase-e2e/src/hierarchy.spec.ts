@@ -16,9 +16,9 @@ for (const dir of ['ltr', 'rtl']) {
     'hierarchy: tree keyboard navigation and explicit selection ' + dir,
     async ({ page }) => {
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
-      const tree = page.getByRole('tree', { name: 'Club documents' });
+      const tree = page.getByRole('tree', { name: 'Game 6 documents' });
       const brand = tree.getByRole('treeitem', {
-        name: 'Club documents',
+        name: 'Game 6 documents',
         exact: true,
       });
       await brand.focus();
@@ -53,7 +53,7 @@ for (const dir of ['ltr', 'rtl']) {
       await expect(brand).toBeFocused();
       await brand.press('g');
       await expect(
-        tree.getByRole('treeitem', { name: 'Game documents', exact: true }),
+        tree.getByRole('treeitem', { name: 'Game 6 records', exact: true }),
       ).toBeFocused();
     },
   );
@@ -62,14 +62,14 @@ test('hierarchy: lazy branch loading, error and keyboard retry', async ({
   page,
 }) => {
   const library = page.getByRole('treeitem', {
-    name: 'Training guides',
+    name: 'Archive guides',
     exact: true,
   });
   await library.focus();
   await library.press('ArrowRight');
   await expect(library).toHaveAttribute('aria-busy', 'true');
   await expect(
-    page.getByRole('button', { name: 'Retry: Training guides' }),
+    page.getByRole('button', { name: 'Retry: Archive guides' }),
   ).toBeVisible();
   await library.press('Enter');
   await expect(
@@ -88,7 +88,7 @@ test('hierarchy: consumer collapse restores a focused descendant to its ancestor
     .getByRole('button', { name: 'Collapse folders' })
     .evaluate((button: HTMLButtonElement) => button.click());
   await expect(
-    page.getByRole('treeitem', { name: 'Club documents', exact: true }),
+    page.getByRole('treeitem', { name: 'Game 6 documents', exact: true }),
   ).toBeFocused();
   await expect(
     page.getByRole('treeitem', { name: 'Lineup.svg', exact: true }),
@@ -134,7 +134,7 @@ test('hierarchy: native table disclosure buttons preserve independent hidden sel
   await website.press('Enter');
   await expect(landing).toBeChecked();
   await expect(
-    table.getByRole('checkbox', { name: 'Select Injured list' }),
+    table.getByRole('checkbox', { name: 'Select 2025 archive' }),
   ).toBeDisabled();
 });
 for (const dir of ['ltr', 'rtl']) {

@@ -11,7 +11,7 @@ test('validated settings keep input through failed save and retry', async ({
   await expect(
     page.getByText('Enter a valid notification email.'),
   ).toBeVisible();
-  const email = page.getByLabel('Manager email');
+  const email = page.getByLabel('Your email');
   await email.fill('justin@example.com');
   await page
     .getByRole('button', { name: 'Save settings', exact: true })
@@ -51,11 +51,11 @@ test('sort, search, pagination, selection and destructive retry compose', async 
   await page.goto('/product-recipes');
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(page.getByRole('table')).toContainText('Taylor Walls');
-  await page.getByLabel('Search players').fill('Baz');
-  await expect(page.getByRole('table')).toContainText('Shane Baz');
-  await page.getByRole('checkbox', { name: /Select Shane Baz/ }).check();
+  await page.getByLabel('Search players').fill('Freddy');
+  await expect(page.getByRole('table')).toContainText('Freddy Peralta');
+  await page.getByRole('checkbox', { name: /Select Freddy Peralta/ }).check();
   await page
-    .getByRole('button', { name: 'Remove player', exact: true })
+    .getByRole('button', { name: 'Remove from collection', exact: true })
     .click();
   const dialog = page.getByRole('dialog', {
     name: 'Remove selected players?',

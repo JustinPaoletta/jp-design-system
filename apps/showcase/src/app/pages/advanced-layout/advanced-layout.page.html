@@ -25,7 +25,7 @@
     <jp-split-pane
       #workspace
       id="service-workspace"
-      primaryLabel="Player profile"
+      primaryLabel="Tropicana Field"
       secondaryLabel="2026 Rays roster"
       [size]="size()"
       (sizeChange)="resize($event)"
@@ -35,21 +35,40 @@
       [max]="70"
     >
       <div jpSplitPrimary class="overview">
-        <h2>Player profile</h2>
+        <h2>Tropicana Field</h2>
         <jp-media
           [src]="mediaSource()"
-          alt="Field diagram"
-          caption="Field diagram for the 2026 Rays."
+          [alt]="photo.alt"
+          [caption]="photo.caption"
+          [aspectRatio]="4 / 3"
         />
+        <p>
+          File photo, not Game 6.
+          <a
+            jpLink
+            [href]="photo.source"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Source</a
+          >
+          ·
+          <a
+            jpLink
+            [href]="photo.licenseUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ photo.license }}</a
+          >
+        </p>
         <jp-button
           variant="secondary"
-          (click)="mediaSource.set(mediaSource() === '/media-preview.svg' ? '/missing-demo-image.svg' : '/media-preview.svg')"
-          >{{ mediaSource() === '/media-preview.svg' ? 'Show image error' :
-          'Restore image' }}</jp-button
+          (click)="mediaSource.set(mediaSource() === photo.src ? '/missing-demo-image.svg' : photo.src)"
+          >{{ mediaSource() === photo.src ? 'Show image error' : 'Restore image'
+          }}</jp-button
         >
         <p>
-          Review 16 player records. Expand a row to see the manager and game
-          notes.
+          Review the 15 Rays who appeared in Game 6. Expand a row to see the
+          manager and game notes.
         </p>
       </div>
       <div jpSplitSecondary class="inventory">

@@ -1,3 +1,5 @@
+import { JpLink } from '../link/link';
+import { GAME_SIX_BATTING, GAME_SIX_PITCHING } from '../game-six.example';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -30,9 +32,9 @@ const columns = [
 ];
 
 const rows = [
-  { name: 'Shane Baz', status: 'Available', region: 'Pitcher' },
-  { name: 'Yandy Díaz', status: 'Day to day', region: 'First base' },
-  { name: 'Taylor Walls', status: 'Available', region: 'Shortstop' },
+  { name: 'Freddy Peralta', status: 'Starter', region: 'Pitcher' },
+  { name: 'Yandy Díaz', status: 'Home run', region: 'Designated hitter' },
+  { name: 'Taylor Walls', status: 'Starter', region: 'Shortstop' },
 ];
 
 const meta: Meta<TableArgs> = {
@@ -40,7 +42,14 @@ const meta: Meta<TableArgs> = {
   component: JpTable,
   decorators: [
     moduleMetadata({
-      imports: [JpTable, JpTableCellDef, JpBadge, JpEmptyState, JpButton],
+      imports: [
+        JpTable,
+        JpTableCellDef,
+        JpBadge,
+        JpEmptyState,
+        JpButton,
+        JpLink,
+      ],
     }),
   ],
   parameters: {
@@ -57,10 +66,10 @@ const meta: Meta<TableArgs> = {
       columns,
       rows: args.empty ? [] : rows,
       statusTone(value: string) {
-        if (value === 'Available') {
+        if (value === 'Starter') {
           return 'success';
         }
-        if (value === 'Day to day') {
+        if (value === 'Home run') {
           return 'warning';
         }
         return 'neutral';
@@ -77,8 +86,8 @@ const meta: Meta<TableArgs> = {
           <jp-badge [tone]="statusTone(value)">{{ value }}</jp-badge>
         </ng-template>
         <jp-empty-state
-          title="No players on the roster"
-          description="No players match these filters."
+          title="No matching Game 6 players"
+          description="Clear the filters to return to the Game 6 roster."
         >
           <jp-button variant="secondary">Clear filters</jp-button>
         </jp-empty-state>
@@ -117,7 +126,7 @@ export const Empty: Story = {
     await expect(canvasElement.querySelector('tbody')).toBeNull();
     await expect(
       canvasElement.querySelector('.jp-empty-state__title')?.textContent,
-    ).toContain('No players on the roster');
+    ).toContain('No matching Game 6 players');
   },
 };
 
@@ -134,34 +143,34 @@ const wideColumns = [
 
 const wideRows = [
   {
-    name: 'Shane Baz',
+    name: 'Freddy Peralta',
     env: 'Active roster',
-    status: 'Available',
+    status: 'Starter',
     region: 'Pitcher',
     owner: 'Kevin Cash',
-    lastDeploy: '2026',
+    lastDeploy: 'Oct 19, 2026',
     requests: 0,
     latency: 0,
   },
   {
     name: 'Yandy Díaz',
     env: 'Active roster',
-    status: 'Day to day',
-    region: 'First base',
+    status: 'Home run',
+    region: 'Designated hitter',
     owner: 'Kevin Cash',
-    lastDeploy: '2026',
+    lastDeploy: 'Oct 19, 2026',
     requests: 4,
     latency: 1,
   },
   {
     name: 'Taylor Walls',
     env: 'Active roster',
-    status: 'Available',
+    status: 'Starter',
     region: 'Shortstop',
     owner: 'Kevin Cash',
-    lastDeploy: '2026',
-    requests: 5,
-    latency: 1,
+    lastDeploy: 'Oct 19, 2026',
+    requests: 1,
+    latency: 0,
   },
 ];
 
@@ -171,10 +180,10 @@ export const Scrollable: Story = {
       columns: wideColumns,
       rows: wideRows,
       statusTone(value: string) {
-        if (value === 'Available') {
+        if (value === 'Starter') {
           return 'success';
         }
-        if (value === 'Day to day') {
+        if (value === 'Home run') {
           return 'warning';
         }
         return 'neutral';
@@ -304,7 +313,7 @@ export const ControlledToolkit: Story = {
       'ascending',
     );
     await userEvent.click(
-      canvas.getByRole('checkbox', { name: 'Select Shane Baz' }),
+      canvas.getByRole('checkbox', { name: 'Select Freddy Peralta' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent('1 selected');
     await userEvent.click(canvas.getByRole('button', { name: /^Next$/ }));
@@ -361,7 +370,7 @@ class AdvancedTableExample {
   readonly rows = [
     {
       id: 'api',
-      name: 'Shane Baz',
+      name: 'Freddy Peralta',
       owner: 'Kevin Cash',
       region: 'Pitcher',
     },
@@ -369,7 +378,7 @@ class AdvancedTableExample {
       id: 'jobs',
       name: 'Yandy Díaz',
       owner: 'Kevin Cash',
-      region: 'First base',
+      region: 'Designated hitter',
     },
   ];
   readonly visible = signal(['name', 'owner', 'region']);
@@ -392,16 +401,51 @@ export const AdvancedControls: Story = {
     await userEvent.tab();
     await expect(width).toHaveValue(320);
     const expand = c.getByRole('button', {
-      name: 'Show details: Shane Baz',
+      name: 'Show details: Freddy Peralta',
     });
     await userEvent.click(expand);
     await expect(expand).toHaveAttribute('aria-expanded', 'true');
     await expect(
-      c.getByRole('button', { name: 'Review Shane Baz' }),
+      c.getByRole('button', { name: 'Review Freddy Peralta' }),
     ).toBeVisible();
     await userEvent.click(expand);
     await expect(
-      c.queryByRole('button', { name: 'Review Shane Baz' }),
+      c.queryByRole('button', { name: 'Review Freddy Peralta' }),
     ).toBeNull();
   },
+};
+
+export const GameSixBatting: Story = {
+  render: () => ({
+    props: {
+      rows: GAME_SIX_BATTING,
+      columns: [
+        { key: 'name', header: 'Player' },
+        { key: 'position', header: 'Position' },
+        { key: 'atBats', header: 'AB', align: 'end' },
+        { key: 'runs', header: 'R', align: 'end' },
+        { key: 'hits', header: 'H', align: 'end' },
+        { key: 'rbi', header: 'RBI', align: 'end' },
+        { key: 'homeRuns', header: 'HR', align: 'end' },
+      ],
+    },
+    template: `<div style="max-inline-size:64rem;margin-inline:auto"><jp-table caption="Tampa Bay batting · 2026 ALCS Game 6" [columns]="columns" [rows]="rows"><ng-template jpTableCell="name" let-value><span style="white-space:nowrap">{{ value }}</span></ng-template><ng-template jpTableCell="position" let-value><span style="white-space:nowrap">{{ value }}</span></ng-template></jp-table><p>AB: at-bats · R: runs · H: hits · RBI: runs batted in · HR: home runs</p><p>Team totals: 30 at-bats, 7 runs, 7 hits, 7 RBI, 2 home runs. <a jpLink href="https://www.mlb.com/gameday/guardians-vs-rays/2026/10/19/849815/final/box" target="_blank" rel="noopener noreferrer">MLB box score</a></p></div>`,
+  }),
+};
+export const GameSixPitching: Story = {
+  render: () => ({
+    props: {
+      rows: GAME_SIX_PITCHING,
+      columns: [
+        { key: 'name', header: 'Pitcher' },
+        { key: 'innings', header: 'IP', align: 'end' },
+        { key: 'hits', header: 'H', align: 'end' },
+        { key: 'earnedRuns', header: 'ER', align: 'end' },
+        { key: 'strikeouts', header: 'K', align: 'end' },
+        { key: 'walks', header: 'BB', align: 'end' },
+        { key: 'pitches', header: 'Pitches', align: 'end' },
+      ],
+    },
+    template: `<div style="max-inline-size:64rem;margin-inline:auto"><jp-table caption="Tampa Bay pitching · 2026 ALCS Game 6" [columns]="columns" [rows]="rows"><ng-template jpTableCell="name" let-value><span style="white-space:nowrap">{{ value }}</span></ng-template></jp-table><p>IP: innings pitched · H: hits · ER: earned runs · K: strikeouts · BB: walks</p><p>In baseball notation, 5.1 means 5⅓ innings. Freddy Peralta earned the win. <a jpLink href="https://www.mlb.com/gameday/guardians-vs-rays/2026/10/19/849815/final/box" target="_blank" rel="noopener noreferrer">MLB box score</a></p></div>`,
+  }),
 };

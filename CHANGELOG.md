@@ -7,7 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-- Use the 2026 ALCS Game 6 record for the Tampa Bay Rays in component examples.
+- Use verified 2026 ALCS Game 6 records in Storybook and Showcase. Add full Rays batting and pitching tables.
+- Use consistent Game 6 copy and charts. Add licensed file photographs with visible dates, credits and license links.
 - Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
 - Apply the Card layout to club settings. Track submitted values so later edits do not show saved feedback.
 - Align button combinations, context actions and inline alerts with the approved typography. Use working actions and baseball copy in assistant examples.

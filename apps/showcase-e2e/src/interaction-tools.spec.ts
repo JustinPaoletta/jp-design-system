@@ -4,42 +4,42 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/interaction-tools');
   await expect(
-    page.getByRole('heading', { name: 'Game preparation', exact: true }),
+    page.getByRole('heading', { name: 'Game 6 collection', exact: true }),
   ).toBeVisible();
 });
 test('interaction tools: click alternatives persist priorities and retain focus', async ({
   page,
 }) => {
-  const list = page.getByRole('list', { name: 'Game priorities' });
+  const list = page.getByRole('list', { name: 'Collection priorities' });
   const down = page.getByRole('button', {
-    name: 'Move down: Inspect the field',
+    name: 'Move down: Choose your Game 6 highlights',
   });
   await down.click();
   await expect(list.getByRole('listitem').nth(1)).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await expect(down).toBeFocused();
   await page.reload();
   await expect(list.getByRole('listitem').nth(1)).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await page.getByRole('button', { name: 'Reset priorities' }).click();
   await expect(list.getByRole('listitem').first()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   const boundary = page.getByRole('button', {
-    name: 'Move up: Inspect the field',
+    name: 'Move up: Choose your Game 6 highlights',
   });
   await expect(boundary).toHaveAttribute('aria-disabled', 'true');
   await boundary.evaluate((button) => (button as HTMLButtonElement).click());
   await expect(list.getByRole('listitem').first()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
 });
 test('interaction tools: keyboard reorder supports pickup, boundaries, drop and cancellation', async ({
   page,
 }) => {
-  const list = page.getByRole('list', { name: 'Game priorities' });
+  const list = page.getByRole('list', { name: 'Collection priorities' });
   const handle = page.locator(
     'jp-reorder button[data-item=audit][data-action=handle]',
   );
@@ -47,26 +47,26 @@ test('interaction tools: keyboard reorder supports pickup, boundaries, drop and 
   await handle.press('Space');
   await handle.press('End');
   await expect(list.getByRole('listitem').last()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await expect(page.locator('jp-reorder [role=status]')).toContainText(
     'position 4 of 4',
   );
   await handle.press('Escape');
   await expect(list.getByRole('listitem').first()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await expect(handle).toBeFocused();
   await handle.press('Space');
   await handle.press('ArrowDown');
   await handle.press('Enter');
   await expect(list.getByRole('listitem').nth(1)).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await expect(handle).toBeFocused();
   await page.reload();
   await expect(list.getByRole('listitem').nth(1)).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
 });
 test('interaction tools: pointer handle drag commits once and retains focus', async ({
@@ -75,7 +75,7 @@ test('interaction tools: pointer handle drag commits once and retains focus', as
   const handle = page.locator(
     'jp-reorder button[data-item=audit][data-action=handle]',
   );
-  const list = page.getByRole('list', { name: 'Game priorities' });
+  const list = page.getByRole('list', { name: 'Collection priorities' });
   const start = await handle.boundingBox();
   const end = await list.getByRole('listitem').last().boundingBox();
   if (!start || !end) throw new Error('Expected draggable priorities');
@@ -86,12 +86,12 @@ test('interaction tools: pointer handle drag commits once and retains focus', as
   });
   await page.mouse.up();
   await expect(list.getByRole('listitem').last()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await expect(handle).toBeFocused();
   await page.reload();
   await expect(list.getByRole('listitem').last()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
 });
 test('interaction tools: pointer cancellation restores draft without saving', async ({
@@ -100,7 +100,7 @@ test('interaction tools: pointer cancellation restores draft without saving', as
   const handle = page.locator(
     'jp-reorder button[data-item=audit][data-action=handle]',
   );
-  const list = page.getByRole('list', { name: 'Game priorities' });
+  const list = page.getByRole('list', { name: 'Collection priorities' });
   const box = await handle.boundingBox();
   const end = await list.getByRole('listitem').last().boundingBox();
   if (!box || !end) throw new Error('Expected priorities');
@@ -126,25 +126,25 @@ test('interaction tools: pointer cancellation restores draft without saving', as
     .dispatchEvent('pointercancel', { pointerId });
   await page.mouse.up();
   await expect(list.getByRole('listitem').first()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
   await page.reload();
   await expect(list.getByRole('listitem').first()).toContainText(
-    'Inspect the field',
+    'Choose your Game 6 highlights',
   );
 });
 test('interaction tools: reference controls hide inactive content and preserve form input', async ({
   page,
 }) => {
-  const carousel = page.getByRole('region', { name: 'Clubhouse reference' });
+  const carousel = page.getByRole('region', { name: 'Game 6 highlights' });
   await expect(
-    carousel.getByRole('button', { name: 'Open club invitations' }),
+    carousel.getByRole('button', { name: 'Open sharing details' }),
   ).toBeVisible();
   await carousel.getByRole('button', { name: 'Next slide' }).click();
   await expect(
-    carousel.getByRole('button', { name: 'Open club invitations' }),
+    carousel.getByRole('button', { name: 'Open sharing details' }),
   ).toHaveCount(0);
-  const note = carousel.getByRole('textbox', { name: 'Manager note' });
+  const note = carousel.getByRole('textbox', { name: 'Your game note' });
   await note.fill('Review access');
   await note.press('ArrowRight');
   await expect(note).toBeVisible();
@@ -152,8 +152,10 @@ test('interaction tools: reference controls hide inactive content and preserve f
     .getByRole('button', { name: 'Review progress', exact: true })
     .click();
   await expect(note).toHaveCount(0);
-  await carousel.getByRole('button', { name: 'Schedule practice' }).click();
-  await expect(page.getByRole('status').last()).toHaveText('Review scheduled');
+  await carousel.getByRole('button', { name: 'Save collection note' }).click();
+  await expect(page.getByRole('status').last()).toHaveText(
+    'Collection note saved for this session',
+  );
   await carousel
     .getByRole('button', { name: 'Set priorities', exact: true })
     .click();
@@ -168,7 +170,7 @@ test('interaction tools: viewport keys and RTL swipe direction are deliberate', 
   page,
 }) => {
   await page.locator('html').evaluate((el) => el.setAttribute('dir', 'rtl'));
-  const carousel = page.getByRole('region', { name: 'Clubhouse reference' });
+  const carousel = page.getByRole('region', { name: 'Game 6 highlights' });
   const viewport = carousel.locator('.viewport');
   await viewport.focus();
   await viewport.press('ArrowLeft');
@@ -181,7 +183,7 @@ test('interaction tools: viewport keys and RTL swipe direction are deliberate', 
   ).toBeVisible();
   await viewport.press('Home');
   await expect(
-    carousel.getByRole('heading', { name: 'Invite club members' }),
+    carousel.getByRole('heading', { name: 'Share this game' }),
   ).toBeVisible();
   const box = await viewport.boundingBox();
   if (!box) throw new Error('Expected viewport');
@@ -199,17 +201,19 @@ test('interaction tools: mobile priorities and cards fit their containing page',
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('html').evaluate((el) => el.setAttribute('dir', 'rtl'));
   await expect(
-    page.getByRole('button', { name: 'Move down: Inspect the field' }),
+    page.getByRole('button', {
+      name: 'Move down: Choose your Game 6 highlights',
+    }),
   ).toBeVisible();
   await page
-    .getByRole('button', { name: 'Move down: Inspect the field' })
+    .getByRole('button', { name: 'Move down: Choose your Game 6 highlights' })
     .click();
   await expect(
     page
-      .getByRole('list', { name: 'Game priorities' })
+      .getByRole('list', { name: 'Collection priorities' })
       .getByRole('listitem')
       .nth(1),
-  ).toContainText('Inspect the field');
+  ).toContainText('Choose your Game 6 highlights');
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -224,7 +228,7 @@ for (const direction of ['ltr', 'rtl'] as const) {
       .locator('html')
       .evaluate((el, dir) => el.setAttribute('dir', dir), direction);
     await page
-      .getByRole('button', { name: 'Reorder: Inspect the field' })
+      .getByRole('button', { name: 'Reorder: Choose your Game 6 highlights' })
       .click();
     await page
       .getByRole('button', { name: 'Set priorities', exact: true })

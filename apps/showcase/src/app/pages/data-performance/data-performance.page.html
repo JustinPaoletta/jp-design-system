@@ -1,14 +1,14 @@
 <div class="page">
   <jp-page-header
-    title="Sample runs"
-    description="April through September runs and a 10,000-row roster table."
+    title="Game 6 by the numbers"
+    description="Follow the score from the first inning to the final out."
     ><a jpPageActions jpLink routerLink="/hierarchy">Hierarchy</a
     ><a jpPageActions jpLink routerLink="/scheduling">Scheduling</a
     ><a jpPageActions jpLink routerLink="/interaction-tools"
-      >Game preparation</a
+      >Game 6 collection</a
     ></jp-page-header
   >
-  <jp-card title="Sample runs"
+  <jp-card title="The path to 7–3"
     ><div class="actions">
       <jp-button
         variant="secondary"
@@ -19,17 +19,17 @@
     </div>
     <jp-chart
       id="delivery-chart"
-      label="Team runs by month"
-      description="Compare Rays runs with ALCS Game 6 sample values. Open the data table to inspect exact values."
+      label="Game 6 · Cumulative runs"
+      description="Score after each inning. Tampa Bay did not bat in the ninth."
       [labels]="labels"
       [series]="series"
       [type]="type()"
   /></jp-card>
   <jp-card title="2026 Rays roster"
     ><p>
-      10,000 fixed-height rows. Scroll to browse or switch to paginated rows for
-      complete table navigation. Sorting and selection are controlled by this
-      screen.
+      This performance example repeats the 26-player ALCS roster across 10,000
+      rows. Scroll to browse or switch to paginated rows for complete table
+      navigation. Sorting and selection are controlled by this screen.
     </p>
     <jp-disclosure class="rendering-options" title="Rendering options">
       <jp-number-stepper

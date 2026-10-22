@@ -74,7 +74,7 @@ const meta: Meta<JpInline> = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Shane Baz</span>
+              <span class="jp-inline-story__item">Freddy Peralta</span>
               <span class="jp-inline-story__item">Yandy Díaz</span>
               <span class="jp-inline-story__item">Taylor Walls</span>
             </jp-inline>
@@ -191,7 +191,7 @@ export const WrapStress: Story = {
           </div>
           <div class="jp-inline-story__viewport">
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Shane Baz</span>
+              <span class="jp-inline-story__item">Freddy Peralta</span>
               <span class="jp-inline-story__item">Yandy Díaz</span>
               <span class="jp-inline-story__item">Taylor Walls</span>
               <span class="jp-inline-story__item">Delta</span>
@@ -291,11 +291,11 @@ export const NoWrap: Story = {
             aria-label="Horizontally scrollable inline demo"
           >
             <jp-inline [as]="asTag" [gap]="gap" [align]="align" [justify]="justify" [wrap]="wrap">
-              <span class="jp-inline-story__item">Shane Baz</span>
+              <span class="jp-inline-story__item">Freddy Peralta</span>
               <span class="jp-inline-story__item">Yandy Díaz</span>
               <span class="jp-inline-story__item">Taylor Walls</span>
-              <span class="jp-inline-story__item">Josh Lowe</span>
-              <span class="jp-inline-story__item">Shane McClanahan</span>
+              <span class="jp-inline-story__item">Junior Caminero</span>
+              <span class="jp-inline-story__item">Bryan Baker</span>
             </jp-inline>
           </div>
         </div>

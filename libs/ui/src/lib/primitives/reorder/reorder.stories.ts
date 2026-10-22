@@ -7,15 +7,16 @@ const meta: Meta<JpReorder> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'story-priorities',
-    label: 'Game priorities',
+    label: 'Collection priorities',
     items: [
       {
         id: 'audit',
-        label: 'Inspect the field',
-        description: 'Check the bases and clear the playing area.',
+        label: 'Choose your Game 6 highlights',
+        description:
+          'Start with Palacios’s double, the two home runs and the final out.',
       },
-      { id: 'docs', label: 'Prepare the lineup' },
-      { id: 'release', label: 'Write the game report' },
+      { id: 'docs', label: 'Read the Game 6 lineup' },
+      { id: 'release', label: 'Write your Game 6 memory' },
     ],
   },
 };
@@ -28,25 +29,27 @@ export const KeyboardAndCancel: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     const handle = c.getByRole('button', {
-      name: 'Reorder: Inspect the field',
+      name: 'Reorder: Choose your Game 6 highlights',
     });
     await userEvent.click(handle);
     await userEvent.keyboard('{End}');
     await expect(c.getByRole('status')).toHaveTextContent('3 of 3');
     await userEvent.keyboard('{Escape}');
     await expect(c.getAllByRole('listitem')[0]).toHaveTextContent(
-      'Inspect the field',
+      'Choose your Game 6 highlights',
     );
     await userEvent.click(
-      c.getByRole('button', { name: 'Move down: Inspect the field' }),
+      c.getByRole('button', {
+        name: 'Move down: Choose your Game 6 highlights',
+      }),
     );
     await expect(c.getAllByRole('listitem')[1]).toHaveTextContent(
-      'Inspect the field',
+      'Choose your Game 6 highlights',
     );
     await userEvent.click(handle);
     await userEvent.keyboard('{Home}{Enter}');
     await expect(c.getAllByRole('listitem')[0]).toHaveTextContent(
-      'Inspect the field',
+      'Choose your Game 6 highlights',
     );
     await expect(handle).toHaveFocus();
   },

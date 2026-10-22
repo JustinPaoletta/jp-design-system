@@ -1,3 +1,4 @@
+import { GAME_SIX_INNINGS, GAME_SIX_SCORE_SERIES } from './game-six.example';
 import { signal } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -42,29 +43,8 @@ const meta: Meta<AppShellDashboardArgs> = {
     const mobileNavOpen = signal(Boolean(args.mobileNavOpen));
     return {
       props: {
-        sessionLabels: [
-          '1st',
-          '2nd',
-          '3rd',
-          '4th',
-          '5th',
-          '6th',
-          '7th',
-          '8th',
-          '9th',
-        ],
-        sessionSeries: [
-          {
-            id: 'sessions',
-            label: 'Rays',
-            values: [0, 0, 0, 0, 5, 5, 5, 7, 7],
-          },
-          {
-            id: 'bears',
-            label: 'ALCS Game 6',
-            values: [3, 4, 5, 5, 5, 6, 6, 6, 6],
-          },
-        ],
+        sessionLabels: GAME_SIX_INNINGS,
+        sessionSeries: GAME_SIX_SCORE_SERIES,
         sidebarCollapsed,
         mobileNavOpen,
         onSidebarCollapsedChange(next: boolean) {
@@ -154,21 +134,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </nav>
 
         <main jpAppShellMain>
-<div class="dashboard-topbar"><span>Rays / ALCS Game 6</span><span class="dashboard-avatar" aria-label="Yandy Díaz">YD</span></div>
+<div class="dashboard-topbar"><span>Rays / 2026 ALCS</span><span class="dashboard-avatar" aria-label="Yandy Díaz">YD</span></div>
 <section class="dashboard" aria-labelledby="overview-title">
-  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Tampa Bay Rays won ALCS Game 6.</p></div><span class="dashboard-period">Final · Game 6</span></header>
-  <dl class="dashboard-metrics"><div><dt>Game</dt><dd>6</dd></div><div><dt>Season</dt><dd>2026</dd></div><div><dt>Result</dt><dd>Win</dd></div></dl>
+  <header class="dashboard-heading"><div><h1 id="overview-title">American League champions</h1><p>Tampa Bay Rays vs. Cleveland Guardians.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
+  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>7</dd></div><div><dt>Hits</dt><dd>7</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
   <div class="dashboard-panels">
-    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Rays (solid). ALCS Game 6 (dashed)." type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
-    <section class="dashboard-panel"><h2>Activity</h2><ol class="dashboard-activity">
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays won ALCS Game 6</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays advanced to the World Series</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>ALCS Game 6 is final</span></li>
-      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays clinched the series</span></li>
-      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2026">G6</time><span>World Series berth is set</span></li>
+    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Game 6 · Cumulative runs" description="Rays 7 (solid) · Guardians 3 (dashed)" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
+    <section class="dashboard-panel"><h2>The turning points</h2><ol class="dashboard-activity">
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026-10-19">9th</time><span>Hicks catches the final out. Tampa Bay wins the pennant.</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026-10-19">8th</time><span>Díaz hits a two-run home run. Rays lead 7–3.</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026-10-19">8th</time><span>Kelly strikes out Rocchio with the bases loaded.</span></li>
+      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2026-10-19">7th</time><span>Caminero hits a two-run home run. Rays lead 5–1.</span></li>
+      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2026-10-19">2nd</time><span>Palacios doubles home two runs.</span></li>
     </ol></section>
   </div>
-  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Rays won ALCS Game 6.</h3><p>The Rays advanced to the World Series.</p></div><div><h3>World Series berth.</h3><p>The Rays won Game 6 and clinched a World Series berth.</p></div><small class="dashboard-updated">Final<br>2026</small></div></section>
+  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Rays win 7–3.</h3><p>The Rays scored seven runs on seven hits with no errors.</p></div><div><h3>ALCS: 4 games to 2.</h3><p>Tampa Bay clinched its third American League pennant at home.</p></div><small class="dashboard-updated">Final<br>Oct 19, 2026</small></div></section>
 </section>
         </main>
       </jp-app-shell>

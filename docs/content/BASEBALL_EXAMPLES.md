@@ -1,86 +1,110 @@
-# Baseball examples
+# Game 6 examples
 
-Storybook and Showcase use one game from the 2026 ALCS.
-The Tampa Bay Rays won Game 6 and advanced to the World Series.
-The examples leave the opponent unnamed.
-A component that needs a second side uses the label "ALCS Game 6".
-Photographs do not show the named players or a club ballpark.
+Storybook and Showcase feature Game 6 of the 2026 American League Championship Series (ALCS).
+Tampa Bay beat Cleveland 7–3 on October 19, 2026.
+The Rays won the series four games to two.
+Use "2026 American League champions" for the title.
+Do not call this result a World Series championship.
 
-## Shared facts
+## Source record
 
-| Item                | Record                                         |
-| ------------------- | ---------------------------------------------- |
-| Club                | Tampa Bay Rays                                 |
-| Series              | 2026 ALCS                                      |
-| Featured game       | ALCS Game 6                                    |
-| Result              | The Rays won and advanced to the World Series. |
-| Second side         | ALCS Game 6                                    |
-| Sample manager      | Kevin Cash                                     |
-| Contact address     | `manager@rays.example`                         |
-| Player availability | Available, Day to day, Bench and Injured       |
-| Roster groups       | Active roster, Bench and Injured list          |
+The [shared example record](../../libs/ui/src/lib/primitives/game-six.example.ts) contains the scores, players, statistics, chronology and photo references.
+It is not a public component API.
+The examples do not request live scores.
 
-The contact address uses the reserved `.example` domain.
-It is not a club mailbox.
-The examples leave the ballpark unnamed.
-Chart numbers are sample display values.
-They keep the component layout.
+The [MLB box score](https://www.mlb.com/gameday/guardians-vs-rays/2026/10/19/849815/final/box) identifies the game as `849815`.
+The [MLB data feed](https://statsapi.mlb.com/api/v1.1/game/849815/feed/live) supplies the player statistics and inning scores.
+These records were inspected on October 22, 2026.
 
-## Players in examples
+| Item            | Record                                   |
+| --------------- | ---------------------------------------- |
+| Home team       | Tampa Bay Rays                           |
+| Visiting team   | Cleveland Guardians                      |
+| Date            | October 19, 2026                         |
+| Venue           | Tropicana Field, St. Petersburg, Florida |
+| First pitch     | 8:08 p.m. Eastern Time                   |
+| Game duration   | 2 hours, 55 minutes                      |
+| Attendance      | 40,230                                   |
+| Rays            | 7 runs, 7 hits, 0 errors                 |
+| Guardians       | 3 runs, 7 hits, 0 errors                 |
+| Winning pitcher | Freddy Peralta                           |
+| Losing pitcher  | Shawn Armstrong                          |
+| Rays manager    | Kevin Cash                               |
+| ALCS MVP        | Freddy Peralta                           |
 
-These names are sample roster labels for the Rays.
-The labels show positions and availability.
-Kevin Cash is the sample manager label.
+## Scoring
 
-| Player           | Position    | Status     |
-| ---------------- | ----------- | ---------- |
-| Shane Baz        | Pitcher     | Available  |
-| Yandy Díaz       | First base  | Day to day |
-| Taylor Walls     | Shortstop   | Available  |
-| Josh Lowe        | Right field | Available  |
-| Shane McClanahan | Pitcher     | Injured    |
+The chart shows the cumulative score after each inning.
+Tampa Bay did not bat in the ninth inning.
+The final point retains its seven runs.
 
-Sample rows also use Junior Caminero, Kameron Misner, Jonny DeLuca, Brandon Lowe, Curtis Mead, Ben Rortvedt and Logan Driscoll.
-The long roster also uses Zack Littell, Edwin Uceta, Kevin Kelly, Mason Montgomery, Colin Poche, Ian Seymour, Jacob Lopez and Garrett Cleavinger.
+| Team      | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   |
+| --------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Rays      | 0   | 2   | 3   | 3   | 3   | 3   | 5   | 7   | 7   |
+| Guardians | 0   | 0   | 0   | 0   | 0   | 1   | 1   | 3   | 3   |
 
-## Charts and tables
+The [MLB recap](https://www.mlb.com/news/rays-win-alcs-2026) describes the game.
+Richie Palacios hit a two-run double in the second inning.
+Jonny DeLuca added a sacrifice fly in the third inning.
+Junior Caminero hit a two-run home run in the seventh inning.
+Yandy Díaz hit a two-run home run in the eighth inning.
 
-A second series uses the label "ALCS Game 6".
-That label names the game.
+Liam Hicks caught Chase DeLauter's foul pop for the final out.
+Bryan Baker retired all three batters in the ninth inning.
+The [MLB pennant report](https://www.mlb.com/rays/news/rays-reach-world-series-on-18th-anniversary-of-first-al-pennant) records that final play.
 
-The long roster repeats sample Rays rows so a table can show many rows.
-The row number is not a statistic.
+## Player statistics
 
-The roster tree counts a 26-man roster.
-Thirteen players are position players: five infielders, five outfielders, two catchers and one designated hitter.
-Thirteen players are pitchers.
-The injured-list row is a sample status.
-That row is outside the 26.
+Use game statistics in the batting and pitching tables.
+Do not substitute season totals or statistics from another game.
+Use the recorded defensive position for this game.
+Yandy Díaz was the designated hitter.
+Jonathan Aranda played first base.
 
-## Demonstration times
+Peralta pitched 5⅓ innings in Game 6.
+He allowed five hits and one earned run, with three strikeouts and three walks.
+The pitching table uses baseball notation: `5.1` means 5⅓ innings, not 5.1 decimal innings.
+The six Rays pitchers recorded 27 outs.
 
-The sample calendar uses October 7–11, 2024 for overlap, all-day and overnight rows.
-The clock-change day is November 3, 2024, when Eastern Time repeated 1:15 a.m.
-Those clock times are demonstration times.
-ALCS Game 6 has no date in these examples.
+Peralta's ALCS totals were 12 innings, nine strikeouts and a 0.75 earned run average (ERA).
+These are series totals, not Game 6 totals.
+See the [MLB MVP report](https://www.mlb.com/rays/news/freddy-peralta-wins-2026-alcs-mvp).
 
-The date controls that stay in October 2024 use the same demonstration month.
-Their minimum, maximum and selected values exercise range and keyboard behavior.
+The 26-player ALCS roster contains 12 pitchers and 14 position players.
+The position groups contain six infielders, five outfielders, two catchers and one designated hitter.
 
-## Component examples
+## Example behavior
 
-Use the Rays names in related examples.
-Keep the component names in the Storybook navigation.
-Use baseball copy for visible example data, labels, hints and messages.
-Keep standard control actions, such as Save, Cancel and Retry, clear.
-Use component inputs for example-specific copy.
-Update selectors and visual baselines when the example text changes.
+Keep component names and API instructions in the Storybook navigation.
+Use short action labels, such as "Save game notes" and "Read game details".
+Keep the historical score separate from editable personal notes.
+Do not invent player injuries, team appointments, quotes or invitations.
 
-The library's generic control defaults remain available to other applications.
+The assistant examples answer questions from the shared record.
+They do not connect to an AI service.
+For questions outside the record, they describe the available topics.
 
-## Photo examples
+The long table repeats the roster to test 10,000 rows.
+Its visible description identifies that repetition.
+Row numbers are not baseball statistics.
 
-Avatar and media examples use local baseball photographs.
-The [photo source list](../../apps/showcase/public/example-photos/README.md) records their creators and licenses.
-Player names in examples do not identify the people in these photographs.
-The field photograph does not show a named ballpark.
+The calendar includes personal archive reminders with example times.
+Those reminders are not official team appointments.
+The clock-change example uses November 1, 2026 in Eastern Time.
+That date is separate from the game date.
+
+The `.example` email addresses are demonstration values.
+They are not team mailboxes.
+Keep generic component defaults available to other applications.
+
+## Photographs
+
+The [photo source record](../../apps/showcase/public/example-photos/README.md) identifies each image, creator, date and license.
+The included file photographs show Rays players and Tropicana Field on other dates.
+None shows Game 6.
+Visible captions preserve that distinction.
+
+Keep source and license links beside the photographs.
+Keep the file licenses with redistributed copies and screenshot baselines.
+The source record also lists actual Game 6 photographs that require a license.
+No license for those game photographs has been purchased.

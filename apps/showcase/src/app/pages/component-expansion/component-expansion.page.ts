@@ -112,37 +112,37 @@ export class ComponentExpansionPage {
     { value: 'push', label: 'Push', disabled: true },
   ];
   readonly reviewers = [
-    { value: 'ada', label: 'Shane Baz' },
+    { value: 'ada', label: 'Freddy Peralta' },
     { value: 'grace', label: 'Yandy Díaz' },
     { value: 'linus', label: 'Taylor Walls' },
-    { value: 'unavailable', label: 'Injured player', disabled: true },
+    { value: 'unavailable', label: 'Relief player', disabled: true },
   ];
   readonly views = [
     { value: 'active', label: 'Active' },
     { value: 'archived', label: 'Archived' },
   ];
   readonly people = [
-    { id: 'ada', name: 'Shane Baz' },
+    { id: 'ada', name: 'Freddy Peralta' },
     { id: 'grace', name: 'Yandy Díaz' },
     { id: 'linus', name: 'Taylor Walls' },
   ];
   readonly details = [
     { term: 'Squad', description: 'Active roster' },
     { term: 'Position', description: 'Pitcher' },
-    { term: 'Retries', description: 0 },
+    { term: 'Peralta’s Game 6 strikeouts', description: 3 },
   ];
   readonly services = [
     {
       id: 'gateway',
-      title: 'Shane Baz',
+      title: 'Freddy Peralta',
       description: 'Active roster',
-      meta: 'Available',
+      meta: 'Starter',
     },
     {
       id: 'worker',
       title: 'Yandy Díaz',
       description: 'Active roster',
-      meta: 'Day to day',
+      meta: 'Home run',
     },
   ];
   emailError(): string {

@@ -120,17 +120,16 @@ import { JpTooltip } from './tooltip/tooltip';
           <div class="example-page__cards">
             <header class="example-page__header">
               <jp-heading as="h1">Club alerts</jp-heading>
-              <p>Review club messages and player actions.</p>
+              <p>Review Game 6 updates and player actions.</p>
             </header>
 
-            <jp-card title="ALCS Game 6">
+            <jp-card title="2026 ALCS Game 6">
               <p>
-                The Rays won ALCS Game 6. Review the final lineup and club
-                messages.
+                Rays 7, Guardians 3. Review the final lineup and Game 6 updates.
               </p>
               <jp-inline jpCardActions gap="sm" wrap="true">
                 <jp-tooltip content="Copy game ID" placement="top">
-                  <jp-copy-button text="ALCS-G6" label="Copy ID" />
+                  <jp-copy-button text="849815" label="Copy ID" />
                 </jp-tooltip>
                 <jp-button
                   type="button"
@@ -155,8 +154,8 @@ import { JpTooltip } from './tooltip/tooltip';
                   >
                   <div jpPopoverContent>
                     <p>
-                      The roster includes the active roster and the injured
-                      list.
+                      The ALCS roster includes 12 pitchers and 14 position
+                      players.
                     </p>
                   </div>
                 </jp-popover>
@@ -191,7 +190,7 @@ import { JpTooltip } from './tooltip/tooltip';
 
     <jp-dialog
       [open]="dialogOpen"
-      title="Remove player?"
+      title="Remove from collection?"
       (openChange)="dialogOpen = $event"
     >
       <p>
@@ -226,7 +225,7 @@ class FeedbackOverlaysCompositionHost {
   menuOpen = false;
 
   showToast(): void {
-    this.toasts.show({ message: 'Lineup saved', tone: 'success' });
+    this.toasts.show({ message: 'Game notes saved', tone: 'success' });
   }
 }
 

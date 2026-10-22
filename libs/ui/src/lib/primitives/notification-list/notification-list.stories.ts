@@ -9,22 +9,23 @@ const meta: Meta<JpNotificationList> = {
   parameters: { layout: 'padded' },
   decorators: [moduleMetadata({ imports: [JpCard] })],
   args: {
-    label: 'Club messages',
+    label: 'Game 6 updates',
     items: [
       {
         id: 'one',
-        title: 'Rays win ALCS Game 6',
-        description: 'The Rays won ALCS Game 6.',
-        group: '2026 ALCS',
+        title: 'Freddy Peralta starts Game 6',
+        description: 'Kevin Cash started Freddy Peralta against the Guardians.',
+        group: 'October 19',
         unread: true,
-        timeLabel: '2026',
-        dateTime: '2024-10-30T20:08:00-04:00',
+        timeLabel: '8:08 p.m.',
+        dateTime: '2026-10-19T20:08:00-04:00',
       },
       {
         id: 'two',
-        title: 'Injured list sample',
-        description: 'The injured-list row is a sample status for the Rays.',
-        group: 'Earlier',
+        title: 'Baker closes Game 6',
+        description:
+          'Bryan Baker retired all three Cleveland batters in the ninth inning.',
+        group: 'October 19',
         unread: false,
       },
     ],
@@ -54,7 +55,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as read: Rays win ALCS Game 6',
+        name: 'Mark as read: Freddy Peralta starts Game 6',
       }),
     );
     await expect(
@@ -62,7 +63,7 @@ export const Default: Story = {
     ).toBeVisible();
     await userEvent.click(
       canvas.getByRole('button', {
-        name: 'Mark as unread: Rays win ALCS Game 6',
+        name: 'Mark as unread: Freddy Peralta starts Game 6',
       }),
     );
     await expect(
@@ -75,5 +76,5 @@ export const Empty: Story = { args: { items: [] } };
 export const Loading: Story = { args: { loading: true, items: [] } };
 export const Refreshing: Story = { args: { loading: true } };
 export const Failed: Story = {
-  args: { error: 'Could not load notifications' },
+  args: { error: 'Game 6 updates could not be loaded. Try again.' },
 };

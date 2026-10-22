@@ -41,7 +41,7 @@ test('advanced layout visual preferences and detail', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1300 });
   await page.getByText('Columns', { selector: 'summary' }).click();
   await page
-    .getByRole('button', { name: 'Show details: Shane Baz', exact: true })
+    .getByRole('button', { name: 'Show details: Freddy Peralta', exact: true })
     .click();
   await expect(page).toHaveScreenshot('advanced-controls-detail.png', {
     fullPage: true,
@@ -52,9 +52,11 @@ test('advanced layout visual preferences and detail', async ({ page }) => {
 test('advanced layout visual image fallback', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.getByRole('button', { name: 'Show image error' }).click();
-  await expect(page.getByRole('img', { name: 'Field diagram' })).toHaveText(
-    'Image unavailable',
-  );
+  await expect(
+    page.getByRole('img', {
+      name: 'Tropicana Field interior photographed on June 10, 2024, before the 2026 ALCS.',
+    }),
+  ).toHaveText('Image unavailable');
   await expect(page).toHaveScreenshot('advanced-image-error.png', {
     fullPage: true,
     animations: 'disabled',

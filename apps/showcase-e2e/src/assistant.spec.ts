@@ -9,13 +9,13 @@ test.describe('assistant system', () => {
 
     const shell = page.locator('jp-app-shell');
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Rays assistant');
+    await expect(page.locator('h1')).toContainText('Game 6 companion');
 
     await page.getByRole('button', { name: 'Ask about the game' }).click();
-    const panel = page.getByRole('complementary', { name: 'Rays manager' });
+    const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('ALCS Game 6');
-    await expect(panel).toContainText('The Rays won ALCS Game 6.');
+    await expect(panel).toContainText('2026 ALCS Game 6');
+    await expect(panel).toContainText('Rays 7, Guardians 3. Final score.');
 
     await panel.locator('textarea').focus();
     await page.keyboard.press('Escape');
@@ -29,10 +29,11 @@ test.describe('assistant system', () => {
     await page.goto('/assistant');
 
     await page.getByRole('button', { name: 'Load game summary' }).click();
-    const panel = page.getByRole('complementary', { name: 'Rays manager' });
+    const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
     await expect(panel).toBeVisible();
+    await expect(panel).toContainText('The Rays won 7–3');
     await expect(panel).toContainText(
-      'The Rays won ALCS Game 6 and advanced to the World Series.',
+      'Yandy Díaz and Junior Caminero drove in runs',
     );
   });
 });

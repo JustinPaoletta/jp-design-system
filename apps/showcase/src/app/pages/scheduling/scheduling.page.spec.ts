@@ -14,10 +14,12 @@ describe('SchedulingPage', () => {
     const event = f.nativeElement.querySelector(
       '.timed button',
     ) as HTMLButtonElement;
-    expect(event.textContent).toContain('Lineup meeting');
+    expect(event.textContent).toContain('Review Game 6 notes');
     event.click();
     f.detectChanges();
-    expect(f.componentInstance.detail()).toContain('The Rays won ALCS Game 6');
+    expect(f.componentInstance.detail()).toContain(
+      'Tampa Bay’s 7–3 pennant-clinching win',
+    );
     button(f.nativeElement, 'Close details').click();
     f.detectChanges();
     expect(f.componentInstance.selected()).toBeNull();
@@ -28,11 +30,11 @@ describe('SchedulingPage', () => {
     button(f.nativeElement, 'Inspect clock change').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('day');
-    expect(f.componentInstance.date()).toBe('2024-11-03');
+    expect(f.componentInstance.date()).toBe('2026-11-01');
     expect(f.componentInstance.zone()).toBe('America/New_York');
-    expect(f.nativeElement.textContent).toContain('Early field check');
+    expect(f.nativeElement.textContent).toContain('First photo backup');
     const secondHour = f.nativeElement.querySelector(
-      '.timed button[aria-label^="Late field check,"]',
+      '.timed button[aria-label^="Second photo backup,"]',
     ) as HTMLButtonElement;
     secondHour.click();
     f.detectChanges();
@@ -47,10 +49,10 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.state()).toBe('ready');
     button(f.nativeElement, 'Reset schedule').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2024-10-07');
+    expect(f.componentInstance.date()).toBe('2026-10-19');
     expect(f.componentInstance.view()).toBe('week');
     expect(f.componentInstance.selected()).toBeNull();
-    expect(f.nativeElement.textContent).toContain('Lineup meeting');
+    expect(f.nativeElement.textContent).toContain('Review Game 6 notes');
   });
   it('wires timezone conversion and loading/restoration through consumer controls', () => {
     const f = TestBed.createComponent(SchedulingPage);
@@ -69,7 +71,7 @@ describe('SchedulingPage', () => {
     f.detectChanges();
     expect(f.componentInstance.zone()).toBe('UTC');
     const appointment = f.nativeElement.querySelector(
-      '.timed button[aria-label^="Lineup meeting,"]',
+      '.timed button[aria-label^="Review Game 6 notes,"]',
     ) as HTMLButtonElement;
     expect(appointment.getAttribute('aria-label')).toMatch(/1:00\sPM GMT/);
     const viewport = f.nativeElement.querySelector('.days');
@@ -84,7 +86,7 @@ describe('SchedulingPage', () => {
     expect(f.nativeElement.querySelector('.days')).toBe(viewport);
     expect(
       f.nativeElement.querySelector(
-        '.timed button[aria-label^="Lineup meeting,"]',
+        '.timed button[aria-label^="Review Game 6 notes,"]',
       ),
     ).toBe(appointment);
     expect(appointment.disabled).toBe(true);
@@ -105,16 +107,16 @@ describe('SchedulingPage', () => {
     expect(f.componentInstance.view()).toBe('day');
     button(calendar, 'Next').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2024-10-08');
-    expect(calendar.textContent).toContain('Meet the coaches');
+    expect(f.componentInstance.date()).toBe('2026-10-20');
+    expect(calendar.textContent).toContain('Finish the game collection');
     button(calendar, 'Previous').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2024-10-07');
+    expect(f.componentInstance.date()).toBe('2026-10-19');
     button(calendar, 'Next').click();
     f.detectChanges();
     button(calendar, 'Today').click();
     f.detectChanges();
-    expect(f.componentInstance.date()).toBe('2024-10-07');
+    expect(f.componentInstance.date()).toBe('2026-10-19');
     button(calendar, 'Week').click();
     f.detectChanges();
     expect(f.componentInstance.view()).toBe('week');

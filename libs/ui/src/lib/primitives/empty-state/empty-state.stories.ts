@@ -16,7 +16,7 @@ const meta: Meta<JpEmptyState> = {
     layout: 'padded',
   },
   args: {
-    title: 'No players on the roster',
+    title: 'No matching Game 6 players',
     description: 'Add a player to see them on the roster.',
   },
   render: (args) => ({
@@ -39,7 +39,7 @@ export const Default: Story = {
     await expect(host?.getAttribute('role')).toBe('status');
     await expect(
       canvasElement.querySelector('.jp-empty-state__title')?.textContent,
-    ).toContain('No players on the roster');
+    ).toContain('No matching Game 6 players');
   },
 };
 

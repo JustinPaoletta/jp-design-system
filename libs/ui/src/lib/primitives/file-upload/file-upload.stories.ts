@@ -20,7 +20,7 @@ import {
 } from './file-upload';
 
 const file = new File(
-  ['Rays lineup: Shane Baz, Yandy Díaz, Taylor Walls.'],
+  ['Rays lineup: Freddy Peralta, Yandy Díaz, Taylor Walls.'],
   'lineup.txt',
   { type: 'text/plain' },
 );
@@ -183,15 +183,19 @@ export const QueueRecovery: Story = {
       { id: 'ready', file, status: 'ready' },
       {
         id: 'pending',
-        file: new File(['Practice at 4 PM.'], 'practice.txt', {
-          type: 'text/plain',
-        }),
+        file: new File(
+          ['Rays 7, Guardians 3. ALCS Game 6, October 19, 2026.'],
+          'game-6-notes.txt',
+          {
+            type: 'text/plain',
+          },
+        ),
         status: 'uploading',
         progress: 40,
       },
       {
         id: 'failed',
-        file: new File(['The Rays won ALCS Game 6.'], 'score.txt', {
+        file: new File(['Rays 7, Guardians 3.'], 'score.txt', {
           type: 'text/plain',
         }),
         status: 'error',
@@ -206,9 +210,11 @@ export const QueueRecovery: Story = {
     );
     await expect(canvas.queryByText('lineup.txt')).not.toBeInTheDocument();
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Cancel upload: practice.txt' }),
+      canvas.getByRole('button', { name: 'Cancel upload: game-6-notes.txt' }),
     );
-    await expect(canvas.queryByText('practice.txt')).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByText('game-6-notes.txt'),
+    ).not.toBeInTheDocument();
     await userEvent.click(
       canvas.getByRole('button', { name: 'Retry upload: score.txt' }),
     );

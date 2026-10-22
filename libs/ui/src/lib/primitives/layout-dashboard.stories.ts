@@ -65,49 +65,49 @@ const meta: Meta = {
             <jp-inline align="center" gap="sm">
               <jp-heading as="h1">Game overview</jp-heading>
             </jp-inline>
-            <jp-text tone="secondary">Tampa Bay Rays won ALCS Game 6</jp-text>
+            <jp-text tone="secondary">Tampa Bay Rays 7, Cleveland Guardians 3 · October 19, 2026</jp-text>
 
           </jp-stack>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" size="caption" tone="muted">Game</jp-text>
-                <span class="jp-layout-dashboard-story__metric">6</span>
+                <jp-text as="small" size="caption" tone="muted">Runs scored</jp-text>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" size="caption" tone="muted">Season</jp-text>
-                <span class="jp-layout-dashboard-story__metric">2026</span>
+                <jp-text as="small" size="caption" tone="muted">Hits</jp-text>
+                <span class="jp-layout-dashboard-story__metric">7</span>
               </jp-stack>
             </jp-surface>
             <jp-surface padding="lg" tone="subtle" border="subtle" elevation="none">
               <jp-stack gap="xs">
-                <jp-text as="small" size="caption" tone="muted">Result</jp-text>
-                <span class="jp-layout-dashboard-story__metric">Win</span>
+                <jp-text as="small" size="caption" tone="muted">Errors</jp-text>
+                <span class="jp-layout-dashboard-story__metric">0</span>
               </jp-stack>
             </jp-surface>
           </jp-grid>
 
           <jp-grid mode="auto-fit" minColumn="sm" gap="md">
-            <jp-card title="Activity">
+            <jp-card title="The pennant is ours">
               <ul class="jp-layout-dashboard-story__events">
-                <li>Game report saved</li>
-                <li>League lineup approved</li>
-                <li>Rays roster updated</li>
+                <li>Rays win the ALCS, four games to two</li>
+                <li>Freddy Peralta named ALCS MVP</li>
+                <li>Third American League pennant in club history</li>
               </ul>
             </jp-card>
-            <jp-card title="Insights">
-              <p>The Rays advanced to the World Series.</p>
+            <jp-card title="The final line">
+              <p>The Rays scored seven runs on seven hits with no errors.</p>
             </jp-card>
           </jp-grid>
 
-          <jp-card title="Recent club activity">
+          <jp-card title="Game 6 at a glance">
             <ul class="jp-layout-dashboard-story__events">
-              <li><span>Rays win ALCS Game 6</span><time datetime="2024-10-30T20:08:00-04:00">2026</time></li>
-              <li><span>The Rays won ALCS Game 6</span><time datetime="2024-10-30">2026</time></li>
-              <li><span>ALCS Game 6 is final</span><time datetime="2024-10-30T23:50:00-04:00">2026</time></li>
+              <li><span>Freddy Peralta starts</span><time datetime="2026-10-19T20:08:00-04:00">8:08 p.m.</time></li>
+              <li><span>Yandy Díaz drives in two runs</span><time datetime="2026-10-19">8th inning</time></li>
+              <li><span>Final at Tropicana Field</span><time datetime="2026-10-19">Final</time></li>
             </ul>
           </jp-card>
         </jp-stack>

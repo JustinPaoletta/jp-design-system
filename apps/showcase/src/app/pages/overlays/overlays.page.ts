@@ -56,7 +56,7 @@ export class OverlaysPage {
   showToast(tone: 'neutral' | 'success' | 'warning' | 'error' | 'info'): void {
     const messages = {
       neutral: 'Roster update queued',
-      success: 'Lineup saved',
+      success: 'Game notes saved',
       warning: 'Roster nearly full',
       error: 'Lineup unavailable',
       info: 'New version available',
@@ -75,7 +75,7 @@ export class OverlaysPage {
   }
 
   onMenuDelete(): void {
-    this.lastAction = 'Remove player';
+    this.lastAction = 'Remove from collection';
     this.dialogOpen = true;
   }
 }

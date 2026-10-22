@@ -14,7 +14,7 @@ const meta: Meta<JpTabs> = {
   decorators: [moduleMetadata({ imports: [JpTabPanel, JpInput] })],
   parameters: { layout: 'padded' },
   args: {
-    ariaLabel: 'Club account',
+    ariaLabel: 'Archive account',
     selectedValue: 'profile',
     tabs: [
       { value: 'profile', label: 'Player profile' },
@@ -28,7 +28,7 @@ const meta: Meta<JpTabs> = {
       <jp-tabs [tabs]="tabs" [ariaLabel]="ariaLabel" [(selectedValue)]="selectedValue">
         <ng-template jpTabPanel="profile">
           <p>Player profile information</p>
-          <jp-input label="Player name" placeholder="Shane Baz" />
+          <jp-input label="Player name" placeholder="Freddy Peralta" />
         </ng-template>
         <ng-template jpTabPanel="billing"><p>Club dues information</p></ng-template>
         <ng-template jpTabPanel="security"><p>Club access and sign-in</p></ng-template>

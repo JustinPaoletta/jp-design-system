@@ -8,9 +8,9 @@ import { JpButton } from '../button/button';
 import { JpTable, type JpTableRowKey } from '../table/table';
 import { JpTableToolbar, type JpTableFilter } from './table-toolbar';
 const players = [
-  { id: 'alex', name: 'Shane Baz', status: 'Available' },
-  { id: 'jordan', name: 'Yandy Díaz', status: 'Day to day' },
-  { id: 'maya', name: 'Taylor Walls', status: 'Available' },
+  { id: 'alex', name: 'Freddy Peralta', status: 'Starter' },
+  { id: 'jordan', name: 'Yandy Díaz', status: 'Home run' },
+  { id: 'maya', name: 'Taylor Walls', status: 'Starter' },
 ];
 const meta: Meta<JpTableToolbar> = {
   title: 'Primitives/Data Display/Table Toolbar',
@@ -21,7 +21,7 @@ const meta: Meta<JpTableToolbar> = {
     }),
   ],
   args: {
-    activeFilters: [{ key: 'status', label: 'Availability: Available' }],
+    activeFilters: [{ key: 'status', label: 'Availability: Starter' }],
     selectedCount: 2,
   },
   render: (args) => {
@@ -38,7 +38,7 @@ const meta: Meta<JpTableToolbar> = {
     const visibleRows = computed(() =>
       roster().filter(
         (player) =>
-          (!filters().length || player.status === 'Available') &&
+          (!filters().length || player.status === 'Starter') &&
           player.name.toLowerCase().includes(query().toLowerCase()),
       ),
     );
@@ -61,9 +61,9 @@ const meta: Meta<JpTableToolbar> = {
         addPlayer: () => {
           roster.update((current) => [
             ...current,
-            { id: 'taylor', name: 'Shane McClanahan', status: 'Available' },
+            { id: 'taylor', name: 'Bryan Baker', status: 'Starter' },
           ]);
-          feedback.set('Shane McClanahan added to the roster.');
+          feedback.set('Bryan Baker added to the roster.');
         },
         archiveSelected: () => {
           const count = selected().length;
@@ -108,11 +108,13 @@ export const FilteredSelection: Story = {
     await userEvent.click(
       canvas.getByRole('button', { name: 'Archive selected' }),
     );
-    await expect(canvas.queryByRole('cell', { name: 'Shane Baz' })).toBeNull();
+    await expect(
+      canvas.queryByRole('cell', { name: 'Freddy Peralta' }),
+    ).toBeNull();
     await expect(canvas.getByText('2 players archived.')).toBeVisible();
     await userEvent.click(canvas.getByRole('button', { name: 'Add player' }));
     await expect(
-      canvas.getByRole('cell', { name: 'Shane McClanahan' }),
+      canvas.getByRole('cell', { name: 'Bryan Baker' }),
     ).toBeVisible();
     await userEvent.type(
       canvas.getByRole('searchbox', { name: 'Search players' }),
@@ -122,14 +124,16 @@ export const FilteredSelection: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
     await userEvent.click(
       canvas.getByRole('button', {
-        name: /Remove filter: Availability: Available/,
+        name: /Remove filter: Availability: Starter/,
       }),
     );
     await expect(
       canvas.getByRole('cell', { name: 'Yandy Díaz' }),
     ).toBeVisible();
     await userEvent.click(canvas.getByRole('button', { name: 'Reset roster' }));
-    await expect(canvas.getByRole('cell', { name: 'Shane Baz' })).toBeVisible();
+    await expect(
+      canvas.getByRole('cell', { name: 'Freddy Peralta' }),
+    ).toBeVisible();
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };

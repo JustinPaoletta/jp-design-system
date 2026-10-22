@@ -10,12 +10,12 @@ const meta: Meta<JpButtonGroup> = {
   title: 'Primitives/Controls/Button Group',
   component: JpButtonGroup,
   decorators: [moduleMetadata({ imports: [JpButton] })],
-  args: { label: 'Lineup actions', orientation: 'horizontal' },
+  args: { label: 'Game notes actions', orientation: 'horizontal' },
   parameters: { layout: 'padded' },
   render: (args) => ({
     props: args,
     template:
-      '<jp-button-group [label]="label" [orientation]="orientation"><jp-button>Save lineup</jp-button><jp-button variant="secondary">Cancel</jp-button></jp-button-group>',
+      '<jp-button-group [label]="label" [orientation]="orientation"><jp-button>Save game notes</jp-button><jp-button variant="secondary">Cancel</jp-button></jp-button-group>',
   }),
 };
 export default meta;

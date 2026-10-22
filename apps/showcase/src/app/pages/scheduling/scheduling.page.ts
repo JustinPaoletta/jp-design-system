@@ -29,7 +29,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchedulingPage {
-  readonly date = signal('2024-10-07');
+  readonly date = signal('2026-10-19');
   readonly view = signal<'day' | 'week'>('week');
   readonly zone = signal('America/New_York');
   readonly zones = [
@@ -42,62 +42,63 @@ export class SchedulingPage {
   readonly appointments: readonly JpCalendarEvent[] = [
     {
       id: 'planning',
-      title: 'Lineup meeting',
-      start: '2024-10-07T09:00:00-04:00',
-      end: '2024-10-07T10:30:00-04:00',
+      title: 'Review Game 6 notes',
+      start: '2026-10-19T09:00:00-04:00',
+      end: '2026-10-19T10:30:00-04:00',
       description:
-        'The Rays won ALCS Game 6. This sample overlaps the next appointment.',
+        'Review your notes about Tampa Bay’s 7–3 pennant-clinching win. Example reminder time.',
     },
     {
       id: 'review',
-      title: 'Batting practice',
-      start: '2024-10-07T09:30:00-04:00',
-      end: '2024-10-07T11:00:00-04:00',
+      title: 'Organize Game 6 photos',
+      start: '2026-10-19T09:30:00-04:00',
+      end: '2026-10-19T11:00:00-04:00',
       description:
-        'The Rays roster is set for ALCS Game 6. This sample overlaps the lineup meeting.',
+        'Add captions and source credits to the Game 6 photographs. Example reminder time.',
     },
     {
       id: 'handoff',
-      title: 'Pitching practice',
-      start: '2024-10-07T10:00:00-04:00',
-      end: '2024-10-07T10:45:00-04:00',
-      description: 'The Rays won ALCS Game 6 and advanced to the World Series.',
+      title: 'Read the pitching recap',
+      start: '2026-10-19T10:00:00-04:00',
+      end: '2026-10-19T10:45:00-04:00',
+      description:
+        'Read about Peralta’s 5⅓ innings and ALCS MVP award. Example reminder time.',
     },
     {
       id: 'office',
-      title: 'Meet the coaches',
-      start: '2024-10-08T13:00:00-04:00',
-      end: '2024-10-08T14:00:00-04:00',
-      description: 'The Rays staff prepared for ALCS Game 6.',
+      title: 'Finish the game collection',
+      start: '2026-10-20T13:00:00-04:00',
+      end: '2026-10-20T14:00:00-04:00',
+      description: 'Bring your Game 6 notes and photographs together.',
     },
     {
       id: 'release',
-      title: 'Away series',
+      title: 'Game 6 archive project',
       allDay: true,
-      start: '2024-10-09',
-      end: '2024-10-11',
+      start: '2026-10-21',
+      end: '2026-10-23',
       description:
-        'The ending date is exclusive. This date is a demonstration time.',
+        'A personal project to preserve Game 6. These are example project dates.',
     },
     {
       id: 'overnight',
-      title: 'Overnight field preparation',
-      start: '2024-10-10T23:30:00-04:00',
-      end: '2024-10-11T01:00:00-04:00',
+      title: 'Late-night recap reading',
+      start: '2026-10-22T23:30:00-04:00',
+      end: '2026-10-23T01:00:00-04:00',
       description: 'Continues across midnight; each day shows its segment.',
     },
     {
       id: 'first-hour',
-      title: 'Early field check',
-      start: '2024-11-03T01:15:00-04:00',
-      end: '2024-11-03T01:45:00-04:00',
+      title: 'First photo backup',
+      start: '2026-11-01T01:15:00-04:00',
+      end: '2026-11-01T01:45:00-04:00',
       description: 'First occurrence of 01:15, UTC−04:00.',
     },
     {
       id: 'second-hour',
-      title: 'Late field check',
-      start: '2024-11-03T01:15:00-05:00',
-      end: '2024-11-03T01:45:00-05:00',
+      title: 'Second photo backup',
+      start: '2026-11-01T01:15:00-05:00',
+      end: '2026-11-01T01:45:00-05:00',
       description: 'Second occurrence of 01:15, UTC−05:00.',
     },
   ];
@@ -107,13 +108,13 @@ export class SchedulingPage {
       'Activate an appointment to inspect its details.',
   );
   showDst(): void {
-    this.date.set('2024-11-03');
+    this.date.set('2026-11-01');
     this.view.set('day');
     this.zone.set('America/New_York');
     this.state.set('ready');
   }
   reset(): void {
-    this.date.set('2024-10-07');
+    this.date.set('2026-10-19');
     this.view.set('week');
     this.state.set('ready');
     this.selected.set(null);

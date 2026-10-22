@@ -12,7 +12,7 @@ import { JpTreeView, type JpTreeNode, type JpTreeSelection } from './tree-view';
 const assets: readonly JpTreeNode[] = [
   {
     key: 'brand',
-    label: 'Club documents',
+    label: 'Game 6 documents',
     children: [
       {
         key: 'logos',
@@ -27,12 +27,12 @@ const assets: readonly JpTreeNode[] = [
   },
   {
     key: 'product',
-    label: 'Game documents',
+    label: 'Game 6 records',
     children: [{ key: 'icons', label: 'Field-positions.svg' }],
   },
   {
     key: 'shared',
-    label: 'Training guides',
+    label: 'Archive guides',
     hasChildren: true,
     loadState: 'idle',
   },
@@ -45,7 +45,7 @@ const assets: readonly JpTreeNode[] = [
   template: `
     <jp-tree-view
       id="story-assets"
-      label="Club documents"
+      label="Game 6 documents"
       [nodes]="nodes()"
       [disabled]="disabled()"
       [selection]="selection()"
@@ -104,7 +104,7 @@ const meta: Meta<JpTreeView> = {
   component: JpTreeView,
   decorators: [moduleMetadata({ imports: [TreeStory] })],
   parameters: { layout: 'padded' },
-  args: { id: 'tree-states', label: 'Club documents', nodes: assets },
+  args: { id: 'tree-states', label: 'Game 6 documents', nodes: assets },
 };
 export default meta;
 type Story = StoryObj<JpTreeView>;
@@ -112,7 +112,7 @@ export const AssetBrowser: Story = {
   render: () => ({ template: '<jp-tree-story />' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const brand = canvas.getByRole('treeitem', { name: 'Club documents' });
+    const brand = canvas.getByRole('treeitem', { name: 'Game 6 documents' });
     brand.focus();
     await userEvent.keyboard('{ArrowDown}');
     const logos = canvas.getByRole('treeitem', { name: 'Lineup sheets' });
@@ -132,11 +132,11 @@ export const LazyRetry: Story = {
   render: () => ({ template: '<jp-tree-story />' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const library = canvas.getByRole('treeitem', { name: 'Training guides' });
+    const library = canvas.getByRole('treeitem', { name: 'Archive guides' });
     library.focus();
     await userEvent.keyboard('{ArrowRight}');
     await expect(
-      canvas.getByRole('button', { name: 'Retry: Training guides' }),
+      canvas.getByRole('button', { name: 'Retry: Archive guides' }),
     ).toBeVisible();
     await userEvent.keyboard('{Enter}{ArrowRight}');
     await expect(
@@ -149,7 +149,7 @@ export const LazyError: Story = {
     nodes: [
       {
         key: 'training',
-        label: 'Training guides',
+        label: 'Archive guides',
         hasChildren: true,
         loadState: 'error',
       },
@@ -170,7 +170,7 @@ export const RightToLeft: Story = {
   render: () => ({ template: '<div dir="rtl"><jp-tree-story /></div>' }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const product = canvas.getByRole('treeitem', { name: 'Game documents' });
+    const product = canvas.getByRole('treeitem', { name: 'Game 6 records' });
     product.focus();
     await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
     await expect(

@@ -22,7 +22,7 @@ const meta: Meta<JpSelect> = {
     invalid: { control: 'boolean' },
   },
   args: {
-    label: 'Club role',
+    label: 'Archive role',
     hint: 'Controls access to club records.',
     error: '',
     size: 'md',
@@ -47,7 +47,7 @@ type Story = StoryObj<JpSelect>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    const control = c.getByRole('combobox', { name: 'Club role' });
+    const control = c.getByRole('combobox', { name: 'Archive role' });
     await expect(control).toHaveTextContent('Scorekeeper');
     await userEvent.click(control);
     await expect(
@@ -115,7 +115,7 @@ export const LongLabels: Story = {
     options: [
       {
         value: 'editor',
-        label: 'Scorekeeper for Rays home and away games',
+        label: 'Scorekeeper for the Rays home and away games',
       },
       {
         value: 'admin',
@@ -136,7 +136,7 @@ export const LongLabels: Story = {
 export const InsideDialog: Story = {
   render: (args) => ({
     props: { ...args, selectedRole: 'editor', dialogVisible: true },
-    template: `<jp-dialog title="Club access" [open]="dialogVisible" (openChange)="dialogVisible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-select label="Club role" [options]="options" [(ngModel)]="selectedRole" /></div></jp-dialog>`,
+    template: `<jp-dialog title="Club access" [open]="dialogVisible" (openChange)="dialogVisible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-select label="Archive role" [options]="options" [(ngModel)]="selectedRole" /></div></jp-dialog>`,
   }),
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);

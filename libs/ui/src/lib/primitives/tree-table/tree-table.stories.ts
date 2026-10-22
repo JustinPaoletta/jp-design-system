@@ -12,31 +12,31 @@ const rows: readonly JpTreeTableRow[] = [
       {
         key: 'design',
         label: 'Position players',
-        cells: { owner: 'Yandy Díaz', hours: 13 },
+        cells: { owner: 'Yandy Díaz', hours: 14 },
         children: [
           {
             key: 'landing',
             label: 'Infield',
-            cells: { owner: 'Yandy Díaz', hours: 5 },
+            cells: { owner: 'Yandy Díaz', hours: 6 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitchers',
-        cells: { owner: 'Shane Baz', hours: 13 },
+        cells: { owner: 'Freddy Peralta', hours: 12 },
       },
     ],
   },
   {
     key: 'archive',
-    label: 'Injured list',
-    cells: { owner: 'Shane McClanahan', hours: 1 },
+    label: '2025 archive',
+    cells: { owner: '—', hours: '—' },
     disabled: true,
   },
 ];
 const columns = [
-  { key: 'owner', header: 'Lead' },
+  { key: 'owner', header: 'Featured player' },
   { key: 'hours', header: 'Players', align: 'end' as const },
 ];
 @Component({

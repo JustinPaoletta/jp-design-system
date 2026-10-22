@@ -49,8 +49,8 @@ const meta: Meta<JpGrid> = {
           Fixed mode — columns sets equal tracks (try 2, 4, or 6). See AutoFit story to test responsive reflow at narrow widths.
         </div>
         <jp-grid [as]="asTag" [gap]="gap" [columns]="columns" [mode]="mode" [minColumn]="minColumn">
-          <div class="jp-grid-story__card">Runs: 5</div>
-          <div class="jp-grid-story__card">Hits: 9</div>
+          <div class="jp-grid-story__card">Runs: 7</div>
+          <div class="jp-grid-story__card">Hits: 7</div>
           <div class="jp-grid-story__card">Errors: 0</div>
         </jp-grid>
       </div>
@@ -162,12 +162,12 @@ export const AutoFit: Story = {
           Resize to a mobile width — cards reflow to fewer columns with no horizontal overflow.
         </div>
         <jp-grid [as]="asTag" [gap]="gap" [columns]="columns" [mode]="mode" [minColumn]="minColumn">
-          <div class="jp-grid-story__card">Runs: 5</div>
-          <div class="jp-grid-story__card">Hits: 9</div>
+          <div class="jp-grid-story__card">Runs: 7</div>
+          <div class="jp-grid-story__card">Hits: 7</div>
           <div class="jp-grid-story__card">Errors: 0</div>
-          <div class="jp-grid-story__card">Walks: 3</div>
-          <div class="jp-grid-story__card">Strikeouts: 8</div>
-          <div class="jp-grid-story__card">Home runs: 1</div>
+          <div class="jp-grid-story__card">Walks: 6</div>
+          <div class="jp-grid-story__card">Strikeouts: 3</div>
+          <div class="jp-grid-story__card">Home runs: 2</div>
         </jp-grid>
       </div>
     `,

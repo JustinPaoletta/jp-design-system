@@ -30,12 +30,14 @@ for (const failure of ['missing', 'throws'] as const) {
       page,
     }) => {
       const opener = page.getByRole('button', {
-        name: 'Remove player',
+        name: 'Remove from collection',
         exact: true,
       });
       await opener.focus();
       await opener.press('Enter');
-      const dialog = page.getByRole('dialog', { name: 'Remove player?' });
+      const dialog = page.getByRole('dialog', {
+        name: 'Remove from collection?',
+      });
       await expect(dialog).toBeVisible();
       expect(
         await dialog.evaluate((element) => element.matches(':modal')),
