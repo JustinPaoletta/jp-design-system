@@ -62,7 +62,7 @@ The inspection found and corrected these related issues:
 - Surface and Text examples fit their narrow containers.
 
 The four suggestions from the supplied visual audit are implemented.
-The examples use 2024 Dodgers and Yankees records and locally stored photos.
+The examples use the 2026 ALCS Game 6 record and locally stored photos.
 The [photo credits](apps/showcase/public/example-photos/README.md) identify the sources and licenses.
 
 Captures are in `dist/qa/system-polish/final-pass/`.
@@ -276,4 +276,4 @@ These generated images are not tracked in Git.
 
 The 84 visual baselines were inspected and updated for the new copy.
 The charcoal surfaces, restrained accents and navigation treatment remain consistent with the October 11 reference inspection.
-Later examples use the 2024 Dodgers and Yankees records in the [copy guide](docs/content/BASEBALL_EXAMPLES.md).
+Later examples use the 2026 ALCS Game 6 record in the [copy guide](docs/content/BASEBALL_EXAMPLES.md).

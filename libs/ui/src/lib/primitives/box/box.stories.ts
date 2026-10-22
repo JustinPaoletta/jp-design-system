@@ -65,7 +65,7 @@ const meta: Meta<BoxStoryArgs> = {
         <div class="jp-box-story__viewport">
           <jp-box [as]="asTag" [padding]="padding" [paddingX]="paddingXValue" [paddingY]="paddingYValue" [maxWidth]="maxWidth">
             <div class="jp-box-story__content" data-testid="box-content">
-              Dodgers clubhouse
+              Rays clubhouse
             </div>
           </jp-box>
         </div>

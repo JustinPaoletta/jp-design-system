@@ -28,6 +28,6 @@ export const Invalid: Story = {
 export const Populated: Story = {
   render: (args) => ({
     props: args,
-    template: `<jp-search-field [label]="label" [ngModel]="'Dodgers'" />`,
+    template: `<jp-search-field [label]="label" [ngModel]="'Rays'" />`,
   }),
 };

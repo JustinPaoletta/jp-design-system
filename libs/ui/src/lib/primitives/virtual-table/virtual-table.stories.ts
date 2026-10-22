@@ -6,32 +6,32 @@ import {
 import { expect, userEvent, within } from 'storybook/test';
 import { JpVirtualTable } from './virtual-table';
 const roster = [
-  ['Shohei Ohtani', 'Designated hitter'],
-  ['Mookie Betts', 'Right field'],
-  ['Freddie Freeman', 'First base'],
-  ['Teoscar Hernández', 'Left field'],
-  ['Tommy Edman', 'Shortstop'],
-  ['Will Smith', 'Catcher'],
-  ['Max Muncy', 'Third base'],
-  ['Gavin Lux', 'Second base'],
-  ['Kiké Hernández', 'Center field'],
-  ['Andy Pages', 'Outfield'],
-  ['Chris Taylor', 'Outfield'],
-  ['Miguel Rojas', 'Shortstop'],
-  ['Austin Barnes', 'Catcher'],
-  ['Jack Flaherty', 'Pitcher'],
-  ['Yoshinobu Yamamoto', 'Pitcher'],
-  ['Walker Buehler', 'Pitcher'],
-  ['Blake Treinen', 'Pitcher'],
-  ['Alex Vesia', 'Pitcher'],
-  ['Brusdar Graterol', 'Pitcher'],
-  ['Michael Kopech', 'Pitcher'],
-  ['Ryan Brasier', 'Pitcher'],
-  ['Anthony Banda', 'Pitcher'],
-  ['Daniel Hudson', 'Pitcher'],
-  ['Landon Knack', 'Pitcher'],
-  ['Ben Casparius', 'Pitcher'],
-  ['Brent Honeywell', 'Pitcher'],
+  ['Junior Caminero', 'Designated hitter'],
+  ['Josh Lowe', 'Right field'],
+  ['Yandy Díaz', 'First base'],
+  ['Kameron Misner', 'Left field'],
+  ['Taylor Walls', 'Shortstop'],
+  ['Ben Rortvedt', 'Catcher'],
+  ['Curtis Mead', 'Third base'],
+  ['Brandon Lowe', 'Second base'],
+  ['Jonny DeLuca', 'Center field'],
+  ['Chandler Simpson', 'Outfield'],
+  ['Jonathan Aranda', 'Outfield'],
+  ['Jose Caballero', 'Shortstop'],
+  ['Logan Driscoll', 'Catcher'],
+  ['Shane Baz', 'Pitcher'],
+  ['Taj Bradley', 'Pitcher'],
+  ['Ryan Pepiot', 'Pitcher'],
+  ['Pete Fairbanks', 'Pitcher'],
+  ['Drew Rasmussen', 'Pitcher'],
+  ['Zack Littell', 'Pitcher'],
+  ['Edwin Uceta', 'Pitcher'],
+  ['Kevin Kelly', 'Pitcher'],
+  ['Mason Montgomery', 'Pitcher'],
+  ['Colin Poche', 'Pitcher'],
+  ['Ian Seymour', 'Pitcher'],
+  ['Jacob Lopez', 'Pitcher'],
+  ['Garrett Cleavinger', 'Pitcher'],
 ] as const;
 const rows = Array.from({ length: 10000 }, (_, i) => ({
   id: i,
@@ -44,12 +44,12 @@ const meta: Meta<JpVirtualTable> = {
   decorators: [
     componentWrapperDecorator(
       (story) =>
-        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">2024 Dodgers roster</h2>${story}</section>`,
+        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">2026 Rays roster</h2>${story}</section>`,
     ),
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: '2024 Dodgers roster',
+    label: '2026 Rays roster',
     columns: [
       { key: 'name', header: 'Player' },
       { key: 'region', header: 'Position' },
@@ -93,11 +93,11 @@ export const BrowsePages: Story = {
     ).toBeLessThan(30);
     await userEvent.click(c.getByRole('button', { name: 'Paginated rows' }));
     await expect(
-      c.getByRole('table', { name: '2024 Dodgers roster' }),
+      c.getByRole('table', { name: '2026 Rays roster' }),
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(
-      c.getByRole('cell', { name: 'Ben Casparius · 51' }),
+      c.getByRole('cell', { name: 'Jacob Lopez · 51' }),
     ).toBeVisible();
   },
 };
@@ -134,7 +134,7 @@ export const Narrow: Story = {
     frame.dispatchEvent(new Event('scroll'));
     await expect(
       await within(canvasElement).findByRole('cell', {
-        name: 'Walker Buehler · 10000',
+        name: 'Ryan Pepiot · 10000',
       }),
     ).toBeVisible();
   },

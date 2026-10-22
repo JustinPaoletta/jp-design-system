@@ -63,7 +63,7 @@ const meta: Meta<JpText> = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Los Angeles Dodgers play the New York Yankees at 8:08 p.m. at Yankee Stadium.
+            The Tampa Bay Rays won ALCS Game 6 and advanced to the World Series.
           </jp-text>
         </div>
       </div>
@@ -172,9 +172,9 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-text-story__tones">
-        <jp-text tone="primary">The Dodgers won 7–6.</jp-text>
-        <jp-text tone="secondary">Jack Flaherty starts at pitcher.</jp-text>
-        <jp-text tone="muted">Final score, October 30.</jp-text>
+        <jp-text tone="primary">The Rays won ALCS Game 6.</jp-text>
+        <jp-text tone="secondary">The Rays advanced to the World Series.</jp-text>
+        <jp-text tone="muted">ALCS Game 6, 2026.</jp-text>
         <jp-text tone="disabled">Last season is archived.</jp-text>
       </div>
     `,
@@ -230,7 +230,7 @@ export const Truncated: Story = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Los Angeles Dodgers play the New York Yankees at Yankee Stadium. First pitch is at 8:08 p.m., and Jack Flaherty starts.
+            The Tampa Bay Rays won ALCS Game 6 and advanced to the World Series.
           </jp-text>
         </div>
       </div>

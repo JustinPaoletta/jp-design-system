@@ -116,7 +116,7 @@ export const BusyAllDay: Story = {
     events: [
       ...Array.from({ length: 11 }, (_, index) => ({
         id: 'squad-' + index,
-        title: 'Dodgers layout ' + (index + 1),
+        title: 'Rays layout ' + (index + 1),
         start: '2024-10-07',
         end: '2024-10-08',
         allDay: true,
@@ -124,7 +124,7 @@ export const BusyAllDay: Story = {
       {
         id: 'practice',
         title:
-          'Jack Flaherty, Freddie Freeman, Mookie Betts and Teoscar Hernández played the 2024 World Series',
+          'Shane Baz, Yandy Díaz, Josh Lowe and Kameron Misner are on the Rays roster',
         start: '2024-10-07T09:00:00Z',
         end: '2024-10-07T09:45:00Z',
       },
@@ -134,14 +134,14 @@ export const BusyAllDay: Story = {
     const canvas = within(canvasElement);
     const allDay = canvasElement.querySelector('.day .all-day') as HTMLElement;
     const frame = canvasElement.querySelector('.days') as HTMLElement;
-    const timed = canvas.getByRole('button', { name: /Jack Flaherty.*,/ });
+    const timed = canvas.getByRole('button', { name: /Shane Baz.*,/ });
     const slot = timed.closest('.timed li');
     if (!slot)
       throw new globalThis.Error('The timed appointment must have a slot.');
     const schedule = getComputedStyle(slot).position === 'absolute';
     if (schedule)
       await expect(allDay.clientHeight).toBeLessThan(frame.clientHeight / 2);
-    const last = canvas.getByRole('button', { name: /Dodgers layout 11,/ });
+    const last = canvas.getByRole('button', { name: /Rays layout 11,/ });
     last.focus();
     if (schedule)
       await waitFor(() => expect(allDay.scrollTop).toBeGreaterThan(0));
@@ -184,7 +184,7 @@ export const CrowdedWeek: Story = {
       ...(meta.args?.events ?? []),
       {
         id: 'pitching',
-        title: 'Jack Flaherty started Game 5',
+        title: 'The Rays won ALCS Game 6',
         start: '2024-10-07T10:00:00Z',
         end: '2024-10-07T10:45:00Z',
       },

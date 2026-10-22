@@ -29,25 +29,25 @@ const columns = [
 
 const rows = [
   {
-    name: 'Jack Flaherty',
+    name: 'Shane Baz',
     env: 'Active roster',
     status: 'Available',
     region: 'Pitcher',
   },
   {
-    name: 'Freddie Freeman',
+    name: 'Yandy Díaz',
     env: 'Active roster',
     status: 'Day to day',
     region: 'First base',
   },
   {
-    name: 'Tommy Edman',
+    name: 'Taylor Walls',
     env: 'Active roster',
     status: 'Available',
     region: 'Shortstop',
   },
   {
-    name: 'Clayton Kershaw',
+    name: 'Shane McClanahan',
     env: 'Injured list',
     status: 'Injured',
     region: 'Pitcher',
@@ -184,7 +184,7 @@ const meta: Meta<DataDisplayArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Los Angeles Dodgers</span>
+        <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -220,12 +220,12 @@ const meta: Meta<DataDisplayArgs> = {
   <header class="roster-page__header">
     <jp-heading as="h1">Player roster</jp-heading>
   </header>
-  <jp-card title="2024 season">
+  <jp-card title="2026 Rays">
     <span jpCardHeader class="roster-page__count">{{ visibleRows().length }} players</span>
     <p>Review player positions and availability.</p>
     <jp-table
       class="roster-page__table"
-      caption="Dodgers roster"
+      caption="Rays roster"
       [captionHidden]="true"
       [framed]="false"
       [columns]="columns"
@@ -271,7 +271,7 @@ export const Default: Story = {
       'Player roster',
     );
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
-      'Dodgers roster',
+      'Rays roster',
     );
     await expect(canvasElement.querySelector('jp-badge')).toBeTruthy();
 
@@ -279,9 +279,7 @@ export const Default: Story = {
     await userEvent.click(
       canvas.getByRole('button', { name: 'Show available' }),
     );
-    await expect(
-      canvas.queryByRole('cell', { name: /Freddie Freeman/ }),
-    ).toBeNull();
+    await expect(canvas.queryByRole('cell', { name: /Yandy Díaz/ })).toBeNull();
     await expect(canvas.getByRole('status')).toHaveTextContent(
       'Available players only',
     );
@@ -289,7 +287,7 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Show all players' }),
     );
     await expect(
-      canvas.getByRole('table', { name: 'Dodgers roster' }),
+      canvas.getByRole('table', { name: 'Rays roster' }),
     ).toBeVisible();
     const settings = canvas.getByText('Preview settings');
     await userEvent.click(settings);
@@ -297,9 +295,7 @@ export const Default: Story = {
     await userEvent.click(toggle);
     await expect(canvas.getByText('No players on the roster')).toBeVisible();
     await userEvent.click(toggle);
-    await expect(
-      canvas.getByRole('cell', { name: /Jack Flaherty/ }),
-    ).toBeVisible();
+    await expect(canvas.getByRole('cell', { name: /Shane Baz/ })).toBeVisible();
     await userEvent.click(settings);
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },

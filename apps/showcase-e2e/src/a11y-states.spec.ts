@@ -103,8 +103,8 @@ test.describe('a11y state coverage', () => {
 
   test('selected table row meets WCAG AA', async ({ page }) => {
     await openRecipes(page);
-    await page.getByRole('checkbox', { name: 'Select Jack Flaherty' }).check();
-    await expect(page.getByRole('row', { name: /Jack Flaherty/ })).toHaveClass(
+    await page.getByRole('checkbox', { name: 'Select Shane Baz' }).check();
+    await expect(page.getByRole('row', { name: /Shane Baz/ })).toHaveClass(
       /jp-table__row--selected/,
     );
     await expectWcag21Aa(page);
@@ -127,10 +127,10 @@ test.describe('a11y state coverage', () => {
   test('assistant response meets WCAG AA', async ({ page }) => {
     await page.goto('/assistant');
     await expect(
-      page.getByRole('heading', { name: 'Dodgers assistant' }),
+      page.getByRole('heading', { name: 'Rays assistant' }),
     ).toBeVisible();
     await page.getByRole('button', { name: 'Ask about the game' }).click();
-    const panel = page.getByRole('complementary', { name: 'Dodgers manager' });
+    const panel = page.getByRole('complementary', { name: 'Rays manager' });
     const composer = page.getByRole('textbox', {
       name: 'Message the assistant',
     });
@@ -138,7 +138,7 @@ test.describe('a11y state coverage', () => {
     await composer.fill('What is the game score?');
     await composer.press('Enter');
     await expect(panel).toContainText(
-      'Sample game summary for “What is the game score?”: Dodgers 7, Yankees 6.',
+      'Sample game summary for “What is the game score?”: The Rays won ALCS Game 6.',
     );
     await expectWcag21Aa(page);
   });

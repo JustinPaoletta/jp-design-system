@@ -4,7 +4,7 @@
     <header class="example-page__header">
       <jp-heading as="h1">Club workflows</jp-heading>
       <p>
-        Manage the Dodgers roster and club account. In this example, each action
+        Manage the Rays roster and club account. In this example, each action
         fails once so you can try again.
       </p>
     </header>
@@ -12,7 +12,7 @@
       [tabs]="tabs"
       [selectedValue]="tab()"
       (selectedValueChange)="tab.set($event)"
-      ariaLabel="Dodgers examples"
+      ariaLabel="Rays examples"
       id="recipe-tabs"
     >
       <ng-template jpTabPanel="services">
@@ -68,7 +68,7 @@
             />
             }
             <jp-table
-              caption="2024 Dodgers roster"
+              caption="2026 Rays roster"
               [columns]="columns"
               [rows]="visible()"
               [sort]="sort()"

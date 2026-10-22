@@ -41,7 +41,7 @@ test('advanced layout visual preferences and detail', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1300 });
   await page.getByText('Columns', { selector: 'summary' }).click();
   await page
-    .getByRole('button', { name: 'Show details: Jack Flaherty', exact: true })
+    .getByRole('button', { name: 'Show details: Shane Baz', exact: true })
     .click();
   await expect(page).toHaveScreenshot('advanced-controls-detail.png', {
     fullPage: true,

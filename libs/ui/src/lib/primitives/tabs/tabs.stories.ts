@@ -28,7 +28,7 @@ const meta: Meta<JpTabs> = {
       <jp-tabs [tabs]="tabs" [ariaLabel]="ariaLabel" [(selectedValue)]="selectedValue">
         <ng-template jpTabPanel="profile">
           <p>Player profile information</p>
-          <jp-input label="Player name" placeholder="Jack Flaherty" />
+          <jp-input label="Player name" placeholder="Shane Baz" />
         </ng-template>
         <ng-template jpTabPanel="billing"><p>Club dues information</p></ng-template>
         <ng-template jpTabPanel="security"><p>Club access and sign-in</p></ng-template>

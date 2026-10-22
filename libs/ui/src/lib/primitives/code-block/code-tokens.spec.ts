@@ -28,7 +28,7 @@ describe('tokenizeCode', () => {
 
   it('keeps escaped quotes and backticks inside string tokens', () => {
     const code =
-      String.raw`const message = 'Jack\'s start'; const note = "Lineup: \"ready\""; const score = \`Dodgers 7\`;`.replace(
+      String.raw`const message = 'Shane\'s start'; const note = "Lineup: \"ready\""; const score = \`Rays win\`;`.replace(
         /\\`/g,
         '`',
       );
@@ -39,9 +39,9 @@ describe('tokenizeCode', () => {
         .filter((token) => token.kind === 'string')
         .map((token) => token.text),
     ).toEqual([
-      String.raw`'Jack\'s start'`,
+      String.raw`'Shane\'s start'`,
       String.raw`"Lineup: \"ready\""`,
-      '`Dodgers 7`',
+      '`Rays win`',
     ]);
   });
 

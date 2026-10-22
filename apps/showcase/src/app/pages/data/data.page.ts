@@ -45,25 +45,25 @@ export class DataPage {
 
   readonly rows = [
     {
-      name: 'Jack Flaherty',
+      name: 'Shane Baz',
       env: 'Active roster',
       status: 'Available',
       region: 'Pitcher',
     },
     {
-      name: 'Freddie Freeman',
+      name: 'Yandy Díaz',
       env: 'Active roster',
       status: 'Day to day',
       region: 'First base',
     },
     {
-      name: 'Tommy Edman',
+      name: 'Taylor Walls',
       env: 'Active roster',
       status: 'Available',
       region: 'Shortstop',
     },
     {
-      name: 'Clayton Kershaw',
+      name: 'Shane McClanahan',
       env: 'Injured list',
       status: 'Injured',
       region: 'Pitcher',

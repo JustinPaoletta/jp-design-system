@@ -17,9 +17,7 @@ describe('SchedulingPage', () => {
     expect(event.textContent).toContain('Lineup meeting');
     event.click();
     f.detectChanges();
-    expect(f.componentInstance.detail()).toContain(
-      'Dave Roberts managed the 2024 Dodgers',
-    );
+    expect(f.componentInstance.detail()).toContain('The Rays won ALCS Game 6');
     button(f.nativeElement, 'Close details').click();
     f.detectChanges();
     expect(f.componentInstance.selected()).toBeNull();

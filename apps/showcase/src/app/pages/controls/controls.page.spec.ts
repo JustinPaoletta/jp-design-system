@@ -9,13 +9,13 @@ describe('ControlsPage preview actions', () => {
   let form: NgForm;
 
   const defaults = {
-    email: 'manager@dodgers.example',
+    email: 'manager@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
   };
   const savedLineup = {
-    email: 'notes@dodgers.example',
+    email: 'notes@rays.example',
     notes: 'Confirm the batting order before warmups.',
     role: 'admin',
     subscribe: false,
@@ -116,7 +116,7 @@ describe('ControlsPage preview actions', () => {
     );
 
     await enterLineup({
-      email: 'unsaved@dodgers.example',
+      email: 'unsaved@rays.example',
       notes: 'Unsaved change.',
       role: 'viewer',
       subscribe: true,

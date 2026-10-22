@@ -20,7 +20,7 @@ import {
 } from './file-upload';
 
 const file = new File(
-  ['Dodgers lineup: Jack Flaherty, Freddie Freeman, Tommy Edman.'],
+  ['Rays lineup: Shane Baz, Yandy Díaz, Taylor Walls.'],
   'lineup.txt',
   { type: 'text/plain' },
 );
@@ -191,7 +191,7 @@ export const QueueRecovery: Story = {
       },
       {
         id: 'failed',
-        file: new File(['Dodgers 7, Yankees 6.'], 'score.txt', {
+        file: new File(['The Rays won ALCS Game 6.'], 'score.txt', {
           type: 'text/plain',
         }),
         status: 'error',

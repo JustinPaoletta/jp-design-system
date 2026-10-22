@@ -94,9 +94,9 @@ test('recipes visual neon default open dialog', async ({ page }) => {
 test('recipes visual neon default assistant response', async ({ page }) => {
   await prepareNeonDefault(page, '/assistant', { width: 1280, height: 900 });
   await page.getByRole('button', { name: 'Load game summary' }).click();
-  const panel = page.getByRole('complementary', { name: 'Dodgers manager' });
+  const panel = page.getByRole('complementary', { name: 'Rays manager' });
   await expect(panel).toContainText(
-    'Freddie Freeman and Mookie Betts drove in runs',
+    'The Rays won ALCS Game 6 and advanced to the World Series.',
   );
   await panel.locator('textarea').evaluate((element) => {
     if (element instanceof HTMLElement) element.blur();

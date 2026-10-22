@@ -201,7 +201,7 @@ describe('Showcase dashboard pages', () => {
     fixture.detectChanges();
 
     assistant.open({
-      context: { label: 'World Series Game 5' },
+      context: { label: 'ALCS Game 6' },
     });
     assistant.addMessage({ role: 'user', content: 'hello' });
     expect(assistant.isOpen()).toBe(true);

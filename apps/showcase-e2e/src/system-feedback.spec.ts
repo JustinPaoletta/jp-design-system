@@ -157,7 +157,7 @@ test('system feedback: inline saving keeps the save and cancel controls in posit
   await page.goto('/workflows');
   await page.getByRole('button', { name: 'Edit: Club name' }).click();
   const field = page.getByRole('textbox', { name: 'Club name' });
-  await field.fill('Dodgers clubhouse');
+  await field.fill('Rays clubhouse');
   const save = page.locator('jp-inline-edit jp-button button');
   const cancel = page
     .locator('jp-inline-edit button')
@@ -175,7 +175,7 @@ test('system feedback: inline saving keeps the save and cancel controls in posit
   await page.clock.fastForward(600);
   await page.clock.runFor(32);
   await expect(save).toBeEnabled();
-  await expect(field).toHaveValue('Dodgers clubhouse');
+  await expect(field).toHaveValue('Rays clubhouse');
   expect(await save.boundingBox()).toEqual(before);
 });
 
@@ -187,7 +187,7 @@ test('system feedback: password reveal keeps the field and action widths constan
   const host = page.locator('jp-password-field');
   const field = host.locator('input');
   const reveal = host.locator('button');
-  await field.fill('Dodgers-demo');
+  await field.fill('Rays-demo');
   await reveal.scrollIntoViewIfNeeded();
   const fieldBefore = await field.boundingBox();
   const actionBefore = await reveal.boundingBox();
@@ -198,7 +198,7 @@ test('system feedback: password reveal keeps the field and action widths constan
   expect(await reveal.boundingBox()).toEqual(actionBefore);
   await reveal.press('Space');
   await expect(field).toHaveAttribute('type', 'password');
-  await expect(field).toHaveValue('Dodgers-demo');
+  await expect(field).toHaveValue('Rays-demo');
   await expect(reveal).toHaveAccessibleName(/show/i);
   expect(await field.boundingBox()).toEqual(fieldBefore);
 });

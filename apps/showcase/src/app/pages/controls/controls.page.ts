@@ -32,7 +32,7 @@ import {
 })
 export class ControlsPage {
   readonly defaults = {
-    email: 'manager@dodgers.example',
+    email: 'manager@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -40,7 +40,7 @@ export class ControlsPage {
   saved: typeof this.defaults | null = { ...this.defaults };
   feedback = '';
 
-  email = 'manager@dodgers.example';
+  email = 'manager@rays.example';
   notes = '';
   role = 'editor';
   subscribe = true;

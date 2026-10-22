@@ -35,7 +35,7 @@ export class InteractionToolsPage {
     {
       id: 'audit',
       label: 'Inspect the field',
-      description: 'Check the field before first pitch.',
+      description: 'Check the field before ALCS Game 6.',
     },
     {
       id: 'docs',

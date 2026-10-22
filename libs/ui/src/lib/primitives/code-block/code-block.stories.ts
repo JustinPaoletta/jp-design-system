@@ -19,9 +19,9 @@ const meta: Meta<JpCodeBlock> = {
     label: 'Starting lineup',
     language: 'TypeScript',
     code: `const lineup = [
-  { player: 'Jack Flaherty', position: 'Pitcher' },
-  { player: 'Freddie Freeman', position: 'First base' },
-  { player: 'Tommy Edman', position: 'Shortstop' },
+  { player: 'Shane Baz', position: 'Pitcher' },
+  { player: 'Yandy Díaz', position: 'First base' },
+  { player: 'Taylor Walls', position: 'Shortstop' },
 ];
 
 const starters = lineup.map(({ player }) => player);`,
@@ -36,7 +36,7 @@ export const Default: Story = {
     ).toHaveTextContent('const');
     await expect(
       canvasElement.querySelector('code .syntax-string'),
-    ).toHaveTextContent("'Jack Flaherty'");
+    ).toHaveTextContent("'Shane Baz'");
   },
 };
 export const Readonly: Story = { args: { copyable: false } };
@@ -56,19 +56,20 @@ export const LiteralMarkup: Story = {
 
 export const Json: Story = {
   args: {
-    label: 'Final game score',
+    label: 'ALCS Game 6 result',
     language: 'JSON',
     code: `{
-  "game": "World Series",
-  "away": { "club": "Dodgers", "runs": 7 },
-  "home": { "club": "Yankees", "runs": 6 },
+  "game": "ALCS Game 6",
+  "club": "Rays",
+  "result": "won",
+  "gameNumber": 6,
   "final": true
 }`,
   },
   play: async ({ canvasElement }) => {
     await expect(
       canvasElement.querySelector('code .syntax-number'),
-    ).toHaveTextContent('7');
+    ).toHaveTextContent('6');
     await expect(
       canvasElement.querySelector('code .syntax-keyword'),
     ).toHaveTextContent('true');

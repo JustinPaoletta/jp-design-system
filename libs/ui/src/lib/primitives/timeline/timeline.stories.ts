@@ -23,24 +23,25 @@ const meta: Meta<JpTimeline> = {
     events: [
       {
         id: 'lineup',
-        title: 'Jack Flaherty starts',
-        timeLabel: 'October 30, 2024',
+        title: 'Rays win ALCS Game 6',
+        timeLabel: 'ALCS Game 6',
         dateTime: '2024-10-30',
-        description: 'Dave Roberts started Jack Flaherty in Game 5.',
+        description: 'The Rays won ALCS Game 6.',
       },
       {
         id: 'first-pitch',
-        title: 'First pitch',
-        timeLabel: 'October 30 · 8:08 p.m.',
+        title: 'Club update',
+        timeLabel: 'ALCS Game 6',
         dateTime: '2024-10-30T20:08:00-04:00',
-        description: 'Game 5 begins at Yankee Stadium.',
+        description: 'ALCS Game 6 is final.',
       },
       {
         id: 'final',
         title: 'Final',
-        timeLabel: 'October 30 · 11:50 p.m.',
+        timeLabel: 'World Series berth',
         dateTime: '2024-10-30T23:50:00-04:00',
-        description: 'Dodgers 7, Yankees 6. The series ends 4 games to 1.',
+        description:
+          'The Rays won ALCS Game 6 and advanced to the World Series.',
       },
     ],
   },

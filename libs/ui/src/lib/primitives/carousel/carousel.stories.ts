@@ -12,7 +12,7 @@ const meta: Meta<JpCarousel> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'story-guide',
-    label: 'Join the Dodgers',
+    label: 'Join the Rays',
     loop: true,
     autoRotate: false,
     disabled: false,
@@ -20,9 +20,9 @@ const meta: Meta<JpCarousel> = {
   render: (args) => ({
     props: { ...args, invitationsOpen: false },
     template: `<jp-carousel style="max-width:40rem" [id]="id" [label]="label" [autoRotate]="autoRotate" [disabled]="disabled" [loop]="loop">
-    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Dodgers club.</p><jp-button (click)="invitationsOpen=!invitationsOpen">{{ invitationsOpen ? 'Close club invitations' : 'Open club invitations' }}</jp-button>@if (invitationsOpen) { <section aria-label="Club invitations"><h3>Pending invitations</h3><p>Freddie Freeman and Tommy Edman have been invited to the Dodgers.</p></section> }</ng-template>
+    <ng-template jpCarouselSlide="access" label="Invite club members"><h2>Invite club members</h2><p>Invite players and coaches to the Rays club.</p><jp-button (click)="invitationsOpen=!invitationsOpen">{{ invitationsOpen ? 'Close club invitations' : 'Open club invitations' }}</jp-button>@if (invitationsOpen) { <section aria-label="Club invitations"><h3>Pending invitations</h3><p>Yandy Díaz and Taylor Walls have been invited to the Rays.</p></section> }</ng-template>
     <ng-template jpCarouselSlide="priorities" label="Set priorities"><h2>Set priorities</h2><p>Check the lineup, inspect the field and prepare the equipment.</p><jp-input label="Manager note" /></ng-template>
-    <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>The Dodgers won World Series Game 5, 7–6.</p></ng-template>
+    <ng-template jpCarouselSlide="review" label="Review progress"><h2>Review progress</h2><p>The Rays won ALCS Game 6 and advanced to the World Series.</p></ng-template>
   </jp-carousel>`,
   }),
 };

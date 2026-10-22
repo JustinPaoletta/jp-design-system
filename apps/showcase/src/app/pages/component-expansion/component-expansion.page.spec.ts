@@ -18,7 +18,7 @@ describe('ComponentExpansionPage', () => {
     expect(f.componentInstance.emailError()).toBe(
       'Enter a valid email address.',
     );
-    f.componentInstance.form.controls.email.setValue('lineup@dodgers.example');
+    f.componentInstance.form.controls.email.setValue('lineup@rays.example');
     f.componentInstance.form.controls.password.setValue('example-password');
     f.componentInstance.submit();
     f.detectChanges();

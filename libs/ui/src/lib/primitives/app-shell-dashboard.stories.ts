@@ -56,12 +56,12 @@ const meta: Meta<AppShellDashboardArgs> = {
         sessionSeries: [
           {
             id: 'sessions',
-            label: 'Dodgers',
+            label: 'Rays',
             values: [0, 0, 0, 0, 5, 5, 5, 7, 7],
           },
           {
             id: 'bears',
-            label: 'Yankees',
+            label: 'ALCS Game 6',
             values: [3, 4, 5, 5, 5, 6, 6, 6, 6],
           },
         ],
@@ -114,7 +114,7 @@ const meta: Meta<AppShellDashboardArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Los Angeles Dodgers</span>
+        <span jpAppShellBrand>Tampa Bay Rays</span>
         <nav jpAppShellSidebar aria-label="Primary">
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -154,21 +154,21 @@ const meta: Meta<AppShellDashboardArgs> = {
         </nav>
 
         <main jpAppShellMain>
-<div class="dashboard-topbar"><span>Dodgers / Game day</span><span class="dashboard-avatar" aria-label="Freddie Freeman">FF</span></div>
+<div class="dashboard-topbar"><span>Rays / ALCS Game 6</span><span class="dashboard-avatar" aria-label="Yandy Díaz">YD</span></div>
 <section class="dashboard" aria-labelledby="overview-title">
-  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Los Angeles Dodgers vs. New York Yankees.</p></div><span class="dashboard-period">Final · 9 innings</span></header>
-  <dl class="dashboard-metrics"><div><dt>Runs scored</dt><dd>7</dd></div><div><dt>Hits</dt><dd>7</dd></div><div><dt>Errors</dt><dd>0</dd></div></dl>
+  <header class="dashboard-heading"><div><h1 id="overview-title">Game day</h1><p>Tampa Bay Rays won ALCS Game 6.</p></div><span class="dashboard-period">Final · Game 6</span></header>
+  <dl class="dashboard-metrics"><div><dt>Game</dt><dd>6</dd></div><div><dt>Season</dt><dd>2026</dd></div><div><dt>Result</dt><dd>Win</dd></div></dl>
   <div class="dashboard-panels">
-    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Dodgers 7 (solid) · Yankees 6 (dashed)" type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
+    <section class="dashboard-panel"><jp-chart id="overview-sessions" label="Runs by inning" description="Rays (solid). ALCS Game 6 (dashed)." type="line" [controlsCollapsed]="true" [labels]="sessionLabels" [series]="sessionSeries" [activeIndex]="8" [formatOptions]="{ maximumFractionDigits: 0 }" style="--jp-chart-plot-height:13rem"></jp-chart></section>
     <section class="dashboard-panel"><h2>Activity</h2><ol class="dashboard-activity">
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Mookie Betts scores Tommy Edman</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">8th</time><span>Gavin Lux scores Kiké Hernández</span></li>
-      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2024-10-30">6th</time><span>Giancarlo Stanton scores Juan Soto</span></li>
-      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Teoscar Hernández scores two runs</span></li>
-      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2024-10-30">5th</time><span>Freddie Freeman scores two runs</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays won ALCS Game 6</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays advanced to the World Series</span></li>
+      <li><span class="dashboard-dot" aria-hidden="true"></span><time datetime="2026">G6</time><span>ALCS Game 6 is final</span></li>
+      <li><span class="dashboard-dot dashboard-dot-neutral" aria-hidden="true"></span><time datetime="2026">G6</time><span>The Rays clinched the series</span></li>
+      <li><span class="dashboard-dot dashboard-dot-warning" aria-hidden="true"></span><time datetime="2026">G6</time><span>World Series berth is set</span></li>
     </ol></section>
   </div>
-  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Dodgers win 7–6.</h3><p>The Dodgers scored seven runs on seven hits with no errors.</p></div><div><h3>World Series: 4 games to 1.</h3><p>Game 5 was the last game. First pitch was 8:08 p.m. at Yankee Stadium.</p></div><small class="dashboard-updated">Final<br>Oct 30, 2024</small></div></section>
+  <section class="dashboard-summary"><h2>Game notes</h2><div class="dashboard-insights"><div><h3>The Rays won ALCS Game 6.</h3><p>The Rays advanced to the World Series.</p></div><div><h3>World Series berth.</h3><p>The Rays won Game 6 and clinched a World Series berth.</p></div><small class="dashboard-updated">Final<br>2026</small></div></section>
 </section>
         </main>
       </jp-app-shell>

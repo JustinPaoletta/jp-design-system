@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/hierarchy');
   await expect(
     page.getByRole('heading', {
-      name: '2024 Dodgers roster',
+      name: '2026 Rays roster',
       exact: true,
     }),
   ).toBeVisible();
@@ -109,7 +109,7 @@ test('hierarchy: collapsing a project returns hidden checkbox focus to the discl
 test('hierarchy: native table disclosure buttons preserve independent hidden selection', async ({
   page,
 }) => {
-  const table = page.getByRole('table', { name: '2024 Dodgers roster' });
+  const table = page.getByRole('table', { name: '2026 Rays roster' });
   await expect(page.getByRole('treegrid')).toHaveCount(0);
   const design = table.getByRole('button', { name: 'Expand Position players' });
   await design.focus();

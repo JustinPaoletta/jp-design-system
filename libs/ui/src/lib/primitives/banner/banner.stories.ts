@@ -11,8 +11,8 @@ const meta: Meta<JpBanner> = {
   parameters: { layout: 'padded' },
   decorators: [moduleMetadata({ imports: [JpButton] })],
   args: {
-    title: 'Yankee Stadium',
-    message: 'World Series Game 5 started at 8:08 p.m. Eastern Time.',
+    title: 'ALCS Game 6',
+    message: 'The Rays won ALCS Game 6 and advanced to the World Series.',
     dismissible: true,
     tone: 'info',
     announce: false,
@@ -31,11 +31,11 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Dismiss banner' }),
     );
     await expect(
-      canvas.queryByRole('region', { name: 'Yankee Stadium' }),
+      canvas.queryByRole('region', { name: 'ALCS Game 6' }),
     ).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Show banner' }));
     await expect(
-      canvas.getByRole('region', { name: 'Yankee Stadium' }),
+      canvas.getByRole('region', { name: 'ALCS Game 6' }),
     ).toBeVisible();
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
@@ -44,7 +44,6 @@ export const Error: Story = {
   args: {
     title: 'Score feed interrupted',
     tone: 'error',
-    message:
-      'The Game 5 feed stopped. The final score is Dodgers 7, Yankees 6. Try again.',
+    message: 'The ALCS Game 6 feed stopped. The Rays won. Try again.',
   },
 };

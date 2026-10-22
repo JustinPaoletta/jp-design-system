@@ -14,7 +14,7 @@ export const Default: Story = {};
 
 export const WithStatus: Story = {
   render: () => ({
-    template: `<div style="display:flex;align-items:center;gap:var(--jp-space-sm);font:var(--jp-font-size-body)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-secondary)"><jp-spinner size="md" decorative /><span role="status">Refreshing the Dodgers roster…</span></div>`,
+    template: `<div style="display:flex;align-items:center;gap:var(--jp-space-sm);font:var(--jp-font-size-body)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-secondary)"><jp-spinner size="md" decorative /><span role="status">Refreshing the Rays roster…</span></div>`,
   }),
 };
 export const Sizes: Story = {

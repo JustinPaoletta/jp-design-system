@@ -21,7 +21,7 @@ const meta: Meta<JpTimePicker> = {
   parameters: { layout: 'padded' },
   args: {
     label: 'First pitch',
-    hint: 'Choose a 15-minute broadcast slot for Dodgers–Yankees.',
+    hint: 'Choose a 15-minute broadcast slot for ALCS Game 6.',
     min: '09:00',
     max: '22:00',
     step: 900,

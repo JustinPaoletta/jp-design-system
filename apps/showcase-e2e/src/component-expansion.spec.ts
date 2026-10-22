@@ -60,7 +60,7 @@ test('component expansion: search clearing, password reveal, and form validation
   ).toBeFocused();
   await page
     .getByRole('textbox', { name: 'Email', exact: true })
-    .fill('lineup@dodgers.example');
+    .fill('lineup@rays.example');
   await page.getByRole('button', { name: 'Save preferences' }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Preferences saved' }),
@@ -87,7 +87,7 @@ test('component expansion: multi-select preserves selections, supports keys, and
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Remove Tommy Edman' }).click();
+  await page.getByRole('button', { name: 'Remove Taylor Walls' }).click();
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(1);
   await expect(query).toBeFocused();
 });

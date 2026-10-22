@@ -172,7 +172,7 @@ describe('JpInput', () => {
       );
       fixture.componentRef.setInput('id', 'game-field');
       fixture.componentRef.setInput('name', 'game');
-      fixture.componentRef.setInput('hint', 'Dodgers vs. Yankees');
+      fixture.componentRef.setInput('hint', 'Rays vs. ALCS Game 6');
       fixture.componentRef.setInput('inputMode', 'text');
       fixture.componentRef.setInput('maxLength', 24);
       component.writeValue(type === 'date' ? '2024-10-30' : '19:00');
@@ -245,7 +245,7 @@ describe('JpInput', () => {
     expect(
       fixture.nativeElement.querySelector('[role="alert"]').textContent,
     ).toContain('Enter a valid email address.');
-    field.value = 'manager@dodgers.example';
+    field.value = 'manager@rays.example';
     field.dispatchEvent(new Event('input'));
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
