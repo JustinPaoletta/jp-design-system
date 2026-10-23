@@ -162,7 +162,8 @@ Built-in labels and role descriptions use `JP_MESSAGES.carousel`.
 Timers start after browser render. Component destruction removes them.
 They do not run on the server.
 
-With rotation enabled, a Pause/Start control comes before slide content.
+With rotation enabled, a play/pause icon button comes before slide content.
+Its accessible name identifies the action: "Pause rotation" or "Start rotation".
 Hover pauses the timer. Keyboard focus stops rotation until the user starts
 it again. Manual navigation also stops rotation.
 

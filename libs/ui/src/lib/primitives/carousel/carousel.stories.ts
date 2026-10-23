@@ -81,7 +81,26 @@ export const RightToLeft: Story = {
 };
 export const Bounded: Story = { args: { loop: false } };
 export const Disabled: Story = { args: { disabled: true } };
-export const RotationOptIn: Story = { args: { autoRotate: true } };
+export const RotationOptIn: Story = {
+  args: { autoRotate: true },
+  play: async ({ canvasElement }) => {
+    const c = within(canvasElement);
+    await userEvent.click(
+      await c.findByRole('button', { name: 'Pause rotation' }),
+    );
+    await expect(
+      c.getByRole('button', { name: 'Start rotation' }),
+    ).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    await expect(
+      c.getByRole('button', { name: 'Pause rotation' }),
+    ).toHaveFocus();
+    await userEvent.click(c.getByRole('button', { name: 'Pause rotation' }));
+    await expect(
+      c.getByRole('button', { name: 'Start rotation' }),
+    ).toBeVisible();
+  },
+};
 export const Keyboard: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);

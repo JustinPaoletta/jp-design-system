@@ -76,7 +76,8 @@ button {
   overflow-wrap: anywhere;
   cursor: pointer;
 }
-.direction {
+.direction,
+.rotation {
   inline-size: var(--jp-size-control-md);
   padding: 0;
 }

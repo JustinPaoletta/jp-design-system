@@ -238,6 +238,33 @@ describe('JpCarousel', () => {
     jest.advanceTimersByTime(5000);
     expect(component.current()).toBe(final);
   });
+  it('keeps a pointer pause request when focus stops rotation before the click', () => {
+    const fixture = setup();
+    const host = fixture.componentInstance;
+    host.auto = true;
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    document.body.append(root);
+    try {
+      const button = root.querySelector<HTMLButtonElement>('.rotation');
+      if (!button) throw new Error('Expected rotation control');
+      expect(button.textContent).toContain('Pause rotation');
+      button.dispatchEvent(new MouseEvent('pointerdown', { button: 0 }));
+      button.focus();
+      button.dispatchEvent(new MouseEvent('click', { detail: 1 }));
+      fixture.detectChanges();
+      expect(host.carousel().rotating()).toBe(false);
+      expect(button.textContent).toContain('Start rotation');
+      button.dispatchEvent(new MouseEvent('click', { detail: 0 }));
+      fixture.detectChanges();
+      expect(host.carousel().rotating()).toBe(true);
+      expect(button.textContent).toContain('Pause rotation');
+    } finally {
+      fixture.destroy();
+      root.remove();
+    }
+  });
   it('honors reduced-motion changes and removes media listeners', () => {
     const remove = jest.fn();
     let callback: (() => void) | undefined;

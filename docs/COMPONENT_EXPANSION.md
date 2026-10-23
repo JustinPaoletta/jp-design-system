@@ -28,7 +28,7 @@ See the [Card reference review](../design-qa.md#card-reference-review) for the c
 | `JpVisuallyHidden` / `[jpVisuallyHidden]` | Hides content visually while retaining it in the accessibility tree. Do not apply to interactive controls that must be visibly focusable.                                                                             |
 
 Icon names: `check`, `close`, `search`, `chevron-down`, `chevron-right`, `plus`,
-`minus`, `info`, `warning`, `user`, `copy`, and `external-link`. Glyphs are authored
+`minus`, `info`, `warning`, `user`, `copy`, `external-link`, `play`, and `pause`. Glyphs are authored
 in JP and distributed under the repository's MIT license; no icon package is added.
 Name icon-only actions on their button and leave their icons decorative.
 

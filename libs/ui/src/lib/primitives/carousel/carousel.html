@@ -7,11 +7,17 @@
     <div class="status">
       @if (autoRotate() && slides().length > 1) {
       <button
+        class="rotation"
         type="button"
         [disabled]="disabled() || reducedMotion()"
-        (click)="toggleRotation()"
+        (pointerdown)="captureRotationIntent($event)"
+        (pointercancel)="clearRotationIntent()"
+        (click)="toggleRotation($event)"
       >
-        {{ rotating() ? messages.pause : messages.play }}
+        <jp-icon [name]="rotating() ? 'pause' : 'play'" />
+        <span class="sr-only"
+          >{{ rotating() ? messages.pause : messages.play }}</span
+        >
       </button>
       }
       <span class="position"><bdi>{{ position() }}</bdi></span>
