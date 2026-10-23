@@ -436,17 +436,17 @@ export const GAME_SIX_ILLUSTRATIONS = {
   },
   peralta: {
     src: 'example-illustrations/game-six/freddy-peralta.webp',
-    alt: 'Cartoon portrait of Freddy Peralta in a navy cap and cream jersey.',
+    alt: 'Cartoon portrait of Freddy Peralta smiling broadly in a navy cap and cream jersey.',
     caption: 'Freddy Peralta · AI-generated illustration',
   },
   diaz: {
     src: 'example-illustrations/game-six/yandy-diaz.webp',
-    alt: 'Cartoon portrait of Yandy Díaz in a navy cap and cream jersey.',
+    alt: 'Cartoon portrait of Yandy Díaz with short hair and a gray chin goatee, wearing a cream jersey.',
     caption: 'Yandy Díaz · AI-generated illustration',
   },
   caminero: {
     src: 'example-illustrations/game-six/junior-caminero.webp',
-    alt: 'Cartoon portrait of Junior Caminero in a navy cap and cream jersey.',
+    alt: 'Cartoon portrait of Junior Caminero smiling in a navy batting helmet, with a full beard and cream jersey.',
     caption: 'Junior Caminero · AI-generated illustration',
   },
 } as const;

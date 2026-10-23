@@ -18,10 +18,15 @@ The [example content guide](../../../../docs/content/BASEBALL_EXAMPLES.md) ident
 ## Source record
 
 OpenAI image generation produced the five images from text on October 22, 2026.
+The three player portraits were revised on October 23, 2026, with the original generated illustrations as inputs.
+Official MLB player profiles informed the facial descriptions.
 No photograph was supplied as an input image.
 The [source record](game-six/sources.json) contains each prompt, generation date and SHA-256 file hash.
 It also contains hashes for the original PNG outputs.
 The repository stores WebP copies at the original image dimensions.
+
+The Avatar story "Player Portraits" shows all three portraits beside their small, medium and large avatar crops.
+Check facial features, expressions and silhouettes together when you change these assets.
 
 Keep the illustration label in visible captions and describe each image in its alternative text.
 Avatar examples use a visible group caption with each player's accessible name.

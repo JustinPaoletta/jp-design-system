@@ -1,6 +1,8 @@
 import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
+import { JpMedia } from '../media/media';
 import {
   componentWrapperDecorator,
+  moduleMetadata,
   type Meta,
   type StoryObj,
 } from '@storybook/angular';
@@ -54,5 +56,32 @@ export const IllustrationSizes: Story = {
       <jp-avatar name="Freddy Peralta" [src]="artwork.src" />
       <jp-avatar name="Freddy Peralta" [src]="artwork.src" size="lg" />
     </div>`,
+  }),
+};
+
+export const PlayerPortraits: Story = {
+  decorators: [illustrationCaption, moduleMetadata({ imports: [JpMedia] })],
+  render: () => ({
+    props: {
+      players: [
+        { name: 'Freddy Peralta', ...GAME_SIX_ILLUSTRATIONS.peralta },
+        { name: 'Yandy Díaz', ...GAME_SIX_ILLUSTRATIONS.diaz },
+        { name: 'Junior Caminero', ...GAME_SIX_ILLUSTRATIONS.caminero },
+      ],
+    },
+    template: `
+      <section aria-label="Game 6 player portraits" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:var(--jp-space-lg)">
+        @for (player of players; track player.name) {
+          <div style="display:grid;gap:var(--jp-space-md)">
+            <jp-media [src]="player.src" [alt]="player.alt" [caption]="player.name" [aspectRatio]="1" loading="eager" />
+            <div style="display:flex;align-items:center;gap:var(--jp-space-md)">
+              <jp-avatar [name]="player.name" [src]="player.src" size="sm" />
+              <jp-avatar [name]="player.name" [src]="player.src" />
+              <jp-avatar [name]="player.name" [src]="player.src" size="lg" />
+            </div>
+          </div>
+        }
+      </section>
+    `,
   }),
 };

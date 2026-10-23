@@ -27,33 +27,42 @@
     },
     {
       "file": "freddy-peralta.webp",
-      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars and a baseball MVP card, 1024 by 1024. Create an original stylized cartoon portrait of baseball pitcher Freddy Peralta, friendly relaxed smile, navy baseball cap without logos, cream baseball jersey with navy collar, three-quarter head-and-shoulders pose turned slightly toward viewer. Medium brown skin, short dark hair, neatly trimmed dark beard and mustache. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
-      "generatedOn": "2026-10-22",
-      "method": "OpenAI image generation from text; no input photograph",
+      "prompt": "Use case: precise-object-edit. Redesign this original illustrated portrait as Freddy Peralta. Facial identity: short even beard stubble, rounded cheeks, broad toothy smile and narrow smiling eyes. Make the beard close to the skin, with an open cheek area and a clearly visible chin contour, not a thick dark beard block. Pose: shoulders angled toward the left edge of the picture, head turned back toward the viewer in an easy, laughing three-quarter pose. Navy curved-brim cap worn normally, close-cropped hair beneath it. Give him an open, joyful expression. Keep the square format, midnight navy backdrop, restrained gold brush circle, cream baseball jersey and original ink-and-gouache sports illustration style of the supplied artwork. Redraw the person with the distinct facial design specified below. This must look like a deliberately drawn individual, not the same generic bearded model. Use clean bold facial shapes readable in a 32-pixel circular avatar. Keep headwear, face and neck comfortably inside the central 75 percent, leave clear margin above the head. No lettering, logos, numbers, watermarks or photographic rendering. The supplied input is our own AI-generated illustration; no photograph is supplied.",
+      "generatedOn": "2026-10-23",
+      "method": "OpenAI image edit of the original generated illustration; no input photograph",
       "eventDate": "2026-10-19",
-      "sourceSha256": "ecabb9c0481852d9f995b843490ffe1144f0a6e8fa0747895c5914f5648efce1",
-      "sha256": "08f21b6853a94cc2f38f086e95ed97892feca7e769245d7f9e2d86bc88246ab5",
-      "encoding": "WebP quality 88; original dimensions and composition"
+      "sourceSha256": "c41e0b1dfcdc3ea532584063f1ca2088984c706bcc49f085c35104bd19fae41c",
+      "sha256": "4333636e94193db64b92576a8cac55b3cc956dc15fe9aa81d20c20098a3c93bb",
+      "encoding": "WebP quality 88; original dimensions and composition",
+      "inputIllustrationSha256": "08f21b6853a94cc2f38f086e95ed97892feca7e769245d7f9e2d86bc88246ab5",
+      "appearanceReference": "https://www.mlb.com/player/freddy-peralta-642547",
+      "referenceUse": "Official player profile inspected for facial features; photograph not supplied to image generation"
     },
     {
       "file": "yandy-diaz.webp",
-      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars, 1024 by 1024. Create an original stylized cartoon portrait of baseball player Yandy D\u00edaz, confident warm small smile, navy baseball cap without logos, cream baseball jersey with navy collar, muscular upper shoulders, three-quarter head-and-shoulders pose turned slightly toward viewer. Deep brown skin, short dark hair, close neat beard and mustache, broad adult facial features. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
-      "generatedOn": "2026-10-22",
-      "method": "OpenAI image generation from text; no input photograph",
+      "prompt": "Use case: precise-object-edit. Redesign this original illustrated portrait as Yandy Díaz. Facial identity: longer angular face, pronounced cheekbones, salt-and-pepper chin goatee, clean cheeks and alert wide eyes. His distinctive short gray-and-black goatee must be clearly separated from the thin mustache; do not give him a full cheek beard. Broad muscular neck and powerful shoulders. Pose: nearly frontal face, level chin and composed closed-mouth half-smile, upright confident posture. Remove the baseball cap to reveal a very short black close-cut haircut with a subtle fade, a strong distinct bareheaded silhouette. Keep the square format, midnight navy backdrop, restrained gold brush circle, cream baseball jersey and original ink-and-gouache sports illustration style of the supplied artwork. Redraw the person with the distinct facial design specified below. This must look like a deliberately drawn individual, not the same generic bearded model. Use clean bold facial shapes readable in a 32-pixel circular avatar. Keep headwear, face and neck comfortably inside the central 75 percent, leave clear margin above the head. No lettering, logos, numbers, watermarks or photographic rendering. The supplied input is our own AI-generated illustration; no photograph is supplied.",
+      "generatedOn": "2026-10-23",
+      "method": "OpenAI image edit of the original generated illustration; no input photograph",
       "eventDate": "2026-10-19",
-      "sourceSha256": "595c08a54e285c62e24dea2b82c4c1821837ff2dfce3492f00191d3b4f9da3df",
-      "sha256": "37da41d2fab948425a724d1c8bedef0131a9930d46535ddf5aa6cb7e443c63d9",
-      "encoding": "WebP quality 88; original dimensions and composition"
+      "sourceSha256": "0582e22478641b709ed253e119f644e1f2e8e7895a70039d44d36d726f7a4b0a",
+      "sha256": "062678dc7ecd3e523078e06d63a0b50be7b8e1c70ac5d3df5cf6129276d2a419",
+      "encoding": "WebP quality 88; original dimensions and composition",
+      "inputIllustrationSha256": "37da41d2fab948425a724d1c8bedef0131a9930d46535ddf5aa6cb7e443c63d9",
+      "appearanceReference": "https://www.mlb.com/player/yandy-diaz-650490",
+      "referenceUse": "Official player profile inspected for facial features; photograph not supplied to image generation"
     },
     {
       "file": "junior-caminero.webp",
-      "prompt": "Use case: illustration-story. Asset type: square player portrait for small circular avatars, 1024 by 1024. Create an original stylized cartoon portrait of baseball player Junior Caminero, youthful confident smile, navy baseball cap without logos, cream baseball jersey with navy collar, three-quarter head-and-shoulders pose turned slightly toward viewer. Medium warm brown skin, short dark hair, subtle short goatee and mustache, youthful rounded adult facial features. Expressive recognizable adult features, no caricature exaggeration. Plain midnight navy backdrop with a subtle muted-gold circular brush shape behind the head. Keep entire cap, head, neck and upper shoulders within the middle 70 percent; face centered for circular cropping. Original editorial cartoon illustration, hand-inked confident contours with subtle gouache and printed-paper texture, sophisticated sports-magazine artwork rather than a children's cartoon. Limited palette of deep midnight navy, soft cream, muted sky blue and restrained warm gold, natural warm skin colors. Clear shapes that read at small sizes, no glow, no photorealism, no text, no lettering, no watermarks, no logos. Create from this textual description alone; do not reproduce any existing photograph. No bat, ball, awards, text, badges or number.",
-      "generatedOn": "2026-10-22",
-      "method": "OpenAI image generation from text; no input photograph",
+      "prompt": "Use case: precise-object-edit. Redesign this original illustrated portrait as Junior Caminero. Facial identity: youthful rounded cheeks, full dark tapered beard, exuberant grin with visible braces and gently narrowed eyes. The beard forms a dense pointed shape below the chin, visually distinct from short stubble or a separate goatee. Pose: turn his face toward the right edge of the image, gaze just past the viewer, head slightly tilted with joyful energy. Replace the fabric cap with a simple midnight-navy batting helmet, unbranded, showing the complete face and beard. Wider youthful face, expressive lifted cheeks. Keep the square format, midnight navy backdrop, restrained gold brush circle, cream baseball jersey and original ink-and-gouache sports illustration style of the supplied artwork. Redraw the person with the distinct facial design specified below. This must look like a deliberately drawn individual, not the same generic bearded model. Use clean bold facial shapes readable in a 32-pixel circular avatar. Keep headwear, face and neck comfortably inside the central 75 percent, leave clear margin above the head. No lettering, logos, numbers, watermarks or photographic rendering. The supplied input is our own AI-generated illustration; no photograph is supplied.",
+      "generatedOn": "2026-10-23",
+      "method": "OpenAI image edit of the original generated illustration; no input photograph",
       "eventDate": "2026-10-19",
-      "sourceSha256": "51220ec279e9601734667c8252def330361ed16823e6e415ff19356e4f7dc236",
-      "sha256": "f1e62e91fee0465ff20618d58505436d1eb117893bccc587a10df2d8ee392274",
-      "encoding": "WebP quality 88; original dimensions and composition"
+      "sourceSha256": "f082cf63feb79bafdf6c14658cf73adcbf257b276f6488fd18161c6bd67ba090",
+      "sha256": "33d51cdcbeea5357a314202ecbb90b8af3439591ed2a81e240851dfc0c2e7d86",
+      "encoding": "WebP quality 88; original dimensions and composition",
+      "inputIllustrationSha256": "f1e62e91fee0465ff20618d58505436d1eb117893bccc587a10df2d8ee392274",
+      "appearanceReference": "https://www.mlb.com/player/junior-caminero-691406",
+      "referenceUse": "Official player profile inspected for facial features; photograph not supplied to image generation"
     }
   ]
 }
