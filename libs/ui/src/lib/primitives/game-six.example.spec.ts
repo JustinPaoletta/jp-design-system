@@ -62,4 +62,28 @@ describe('Game 6 archive record', () => {
       'This archive covers Game 6',
     );
   });
+  it.each([
+    ['Who started at catcher?', 'Liam Hicks'],
+    ['Who started in right field?', 'Victor Mesa Jr.'],
+    ['Who was the starting first baseman?', 'Jonathan Aranda'],
+    ['Who started at second base?', 'Richie Palacios'],
+    ['Who started at third base?', 'Junior Caminero'],
+    ['Who started at shortstop?', 'Taylor Walls'],
+    ['Who was the starting left fielder?', 'Chandler Simpson'],
+    ['Who started in centre field?', 'Jonny DeLuca'],
+    ['Who started as DH?', 'Yandy Díaz'],
+  ])('answers the lineup position in %s', (question, player) => {
+    const answer = gameSixAnswer(question);
+    expect(answer).toContain(player);
+    expect(answer).not.toContain('Freddy Peralta');
+  });
+  it('keeps starting-pitcher questions distinct from an unspecified starter', () => {
+    expect(gameSixAnswer('Who started on the mound?')).toContain(
+      'Freddy Peralta',
+    );
+    expect(gameSixAnswer('Who was the starting pitcher?')).toContain(
+      'Freddy Peralta',
+    );
+    expect(gameSixAnswer('Who started?')).toContain('starting lineup');
+  });
 });

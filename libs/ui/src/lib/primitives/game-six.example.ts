@@ -402,13 +402,32 @@ export const GAME_SIX_MOMENTS = [
 export function gameSixAnswer(question: string): string {
   if (/world series|202[0-5]|202[7-9]/i.test(question))
     return 'This archive covers the 2026 ALCS clincher. Tampa Bay won the American League pennant in Game 6; this record does not cover the World Series or other seasons.';
-  if (/lineup|start.*line/i.test(question))
+  if (/\bstart(?:ed|ing|ers?)?\b/i.test(question)) {
+    const positionQuestion = question
+      .toLowerCase()
+      .replace(/\bfielder\b/g, 'field')
+      .replace(/\bbaseman\b/g, 'base')
+      .replace(/\bcentre\b/g, 'center')
+      .replace(/\bdh\b/g, 'designated hitter');
+    const player = GAME_SIX_BATTING.find((batter) =>
+      positionQuestion.includes(batter.position.toLowerCase()),
+    );
+    if (player) {
+      const position = player.position.toLowerCase();
+      const role =
+        position === 'designated hitter'
+          ? 'as the designated hitter'
+          : `${position.endsWith('field') ? 'in' : 'at'} ${position}`;
+      return `${player.name} started ${role} for Tampa Bay in Game 6.`;
+    }
+  }
+  if (/lineup|start.*line|^\s*who started[?.!\s]*$/i.test(question))
     return (
       'Tampa Bay’s starting lineup: ' +
       GAME_SIX_BATTING.map((player) => player.name).join(', ') +
       '. Freddy Peralta started on the mound.'
     );
-  if (/mvp|pitch|peralta|who started/i.test(question))
+  if (/mvp|pitch|peralta|\bmound\b/i.test(question))
     return 'Freddy Peralta allowed one earned run and five hits in 5⅓ innings, with three strikeouts. He won ALCS MVP after a 0.75 ERA over 12 innings in the series.';
   if (/go.ahead|first run|palacios/i.test(question))
     return 'Richie Palacios drove in the first two runs with a double in the second inning. Tampa Bay led the rest of the game.';
