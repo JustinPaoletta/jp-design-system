@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { JP_MESSAGES } from '../../i18n';
+import { JpIcon } from '../icon/icon';
 
 @Directive({ selector: 'ng-template[jpCarouselSlide]' })
 export class JpCarouselSlide {
@@ -29,7 +30,7 @@ export class JpCarouselSlide {
 /** Explicitly controlled reference cards; no motion or rotation by default. */
 @Component({
   selector: 'jp-carousel',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, JpIcon],
   templateUrl: './carousel.html',
   styleUrl: './carousel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

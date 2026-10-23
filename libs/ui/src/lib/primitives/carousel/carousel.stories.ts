@@ -1,7 +1,12 @@
 import { JpLink } from '../link/link';
 import { GAME_SIX, GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
 import { JpMedia } from '../media/media';
-import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import {
+  componentWrapperDecorator,
+  moduleMetadata,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpButton } from '../button/button';
 import { JpInput } from '../input/input';
@@ -62,6 +67,18 @@ const meta: Meta<JpCarousel> = {
 export default meta;
 type Story = StoryObj<JpCarousel>;
 export const Default: Story = {};
+export const Narrow: Story = {
+  decorators: [
+    componentWrapperDecorator(
+      (story) => `<div style="max-width:20rem">${story}</div>`,
+    ),
+  ],
+};
+export const RightToLeft: Story = {
+  decorators: [
+    componentWrapperDecorator((story) => `<div dir="rtl">${story}</div>`),
+  ],
+};
 export const Bounded: Story = { args: { loop: false } };
 export const Disabled: Story = { args: { disabled: true } };
 export const RotationOptIn: Story = { args: { autoRotate: true } };

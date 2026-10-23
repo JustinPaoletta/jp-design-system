@@ -107,8 +107,16 @@ export class JpReorder {
     });
   }
   private focus(id: string, action = 'handle'): void {
+    const document = this.host.nativeElement.ownerDocument;
+    const previousFocus = document.activeElement;
     afterNextRender(
       () => {
+        // Reordering can blur a moved node. Do not override a later focus choice.
+        if (
+          document.activeElement !== previousFocus &&
+          document.activeElement !== document.body
+        )
+          return;
         const button = Array.from(
           this.host.nativeElement.querySelectorAll<HTMLButtonElement>(
             'button[data-item]',

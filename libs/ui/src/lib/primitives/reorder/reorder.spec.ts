@@ -99,6 +99,25 @@ describe('JpReorder', () => {
     expect(component.order()).toEqual(['b', 'a', 'c']);
     fixture.nativeElement.remove();
   });
+  it('does not reclaim focus when the user leaves before the reorder renders', () => {
+    const fixture = setup();
+    const root = fixture.nativeElement as HTMLElement;
+    const nextControl = document.createElement('button');
+    nextControl.textContent = 'Next slide';
+    document.body.append(root, nextControl);
+    try {
+      root.querySelector<HTMLButtonElement>('button[data-item=a]')?.focus();
+      fixture.componentInstance.move(items[0], 1, 'down');
+      nextControl.focus();
+      fixture.detectChanges();
+      expect(fixture.componentInstance.order()).toEqual(['b', 'a', 'c']);
+      expect(document.activeElement).toBe(nextControl);
+    } finally {
+      fixture.destroy();
+      root.remove();
+      nextControl.remove();
+    }
+  });
   it('cancels safely on external order, item removal or disabled state changes', () => {
     const fixture = setup();
     const component = fixture.componentInstance;
