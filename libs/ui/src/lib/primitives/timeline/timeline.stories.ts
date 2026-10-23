@@ -1,3 +1,4 @@
+import { GAME_SIX_MOMENTS } from '../game-six.example';
 import {
   componentWrapperDecorator,
   moduleMetadata,
@@ -18,42 +19,23 @@ const meta: Meta<JpTimeline> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: 'Game preparation',
-    emptyText: 'No game updates yet.',
-    events: [
-      {
-        id: 'lineup',
-        title: 'Jack Flaherty starts',
-        timeLabel: 'October 30, 2024',
-        dateTime: '2024-10-30',
-        description: 'Dave Roberts started Jack Flaherty in Game 5.',
-      },
-      {
-        id: 'first-pitch',
-        title: 'First pitch',
-        timeLabel: 'October 30 · 8:08 p.m.',
-        dateTime: '2024-10-30T20:08:00-04:00',
-        description: 'Game 5 begins at Yankee Stadium.',
-      },
-      {
-        id: 'final',
-        title: 'Final',
-        timeLabel: 'October 30 · 11:50 p.m.',
-        dateTime: '2024-10-30T23:50:00-04:00',
-        description: 'Dodgers 7, Yankees 6. The series ends 4 games to 1.',
-      },
-    ],
+    label: 'The night Tampa Bay clinched',
+    emptyText: 'No moments in this collection. Add a Game 6 highlight.',
+    events: GAME_SIX_MOMENTS,
   },
   render: (args) => ({
     props: args,
-    template: `<jp-card title="Game preparation"><jp-timeline [label]="label" [events]="events" [emptyText]="emptyText" /></jp-card>`,
+    template: `<jp-card title="The night Tampa Bay clinched"><jp-timeline [label]="label" [events]="events" [emptyText]="emptyText" /></jp-card>`,
   }),
 };
 export default meta;
 type Story = StoryObj<JpTimeline>;
 export const Default: Story = {};
 export const Empty: Story = {
-  args: { events: [], emptyText: 'No game updates yet.' },
+  args: {
+    events: [],
+    emptyText: 'No moments in this collection. Add a Game 6 highlight.',
+  },
 };
 export const Plain: Story = {
   render: (args) => ({

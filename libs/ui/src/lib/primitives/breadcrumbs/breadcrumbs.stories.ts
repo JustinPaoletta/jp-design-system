@@ -11,7 +11,7 @@ const meta: Meta<JpBreadcrumbs> = {
     maxItems: 5,
     items: [
       { label: 'Clubs', href: '#projects' },
-      { label: 'Los Angeles Dodgers', href: '#design-system' },
+      { label: 'Tampa Bay Rays', href: '#design-system' },
       { label: 'Settings' },
     ],
   },
@@ -38,8 +38,8 @@ export const LongHierarchy: Story = {
       { label: 'League', href: '#organization' },
       { label: 'Clubhouse', href: '#workspace' },
       { label: 'Clubs', href: '#projects' },
-      { label: 'Los Angeles Dodgers', href: '#design-system' },
-      { label: 'Roster notification preferences' },
+      { label: 'Tampa Bay Rays', href: '#design-system' },
+      { label: 'Game 6 notification preferences' },
     ],
   },
 };
@@ -68,7 +68,7 @@ export const NarrowContainer: Story = {
     await userEvent.keyboard('{Escape}');
     await expect(trigger).toHaveFocus();
     await expect(
-      canvas.getByText('Roster notification preferences'),
+      canvas.getByText('Game 6 notification preferences'),
     ).toHaveAttribute('aria-current', 'page');
   },
 };

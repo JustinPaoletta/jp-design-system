@@ -9,13 +9,13 @@ test.describe('assistant system', () => {
 
     const shell = page.locator('jp-app-shell');
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Dodgers assistant');
+    await expect(page.locator('h1')).toContainText('Game 6 companion');
 
     await page.getByRole('button', { name: 'Ask about the game' }).click();
-    const panel = page.getByRole('complementary', { name: 'Dodgers manager' });
+    const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('World Series Game 5');
-    await expect(panel).toContainText('Dodgers 7, Yankees 6. Final score.');
+    await expect(panel).toContainText('2026 ALCS Game 6');
+    await expect(panel).toContainText('Rays 7, Guardians 3. Final score.');
 
     await panel.locator('textarea').focus();
     await page.keyboard.press('Escape');
@@ -29,11 +29,11 @@ test.describe('assistant system', () => {
     await page.goto('/assistant');
 
     await page.getByRole('button', { name: 'Load game summary' }).click();
-    const panel = page.getByRole('complementary', { name: 'Dodgers manager' });
+    const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText('The Dodgers won 7–6');
+    await expect(panel).toContainText('The Rays won 7–3');
     await expect(panel).toContainText(
-      'Freddie Freeman and Mookie Betts drove in runs',
+      'Yandy Díaz and Junior Caminero drove in runs',
     );
   });
 });

@@ -16,20 +16,22 @@ test('scheduling: date navigation and native appointment keyboard activation', a
   });
   await calendar.getByRole('button', { name: 'Day', exact: true }).click();
   await expect(calendar.locator('.day')).toHaveCount(1);
-  const planning = calendar.getByRole('button', { name: /Lineup meeting,/ });
+  const planning = calendar.getByRole('button', {
+    name: /Review Game 6 notes,/,
+  });
   await planning.focus();
   await planning.press('Enter');
   await expect(
     page.getByRole('complementary', { name: 'Appointment details' }),
-  ).toContainText('Dave Roberts managed the 2024 Dodgers');
+  ).toContainText('Tampa Bay’s 7–3 pennant-clinching win');
   await planning.press('Space');
   await expect(
-    page.getByRole('heading', { name: 'Lineup meeting', exact: true }),
+    page.getByRole('heading', { name: 'Review Game 6 notes', exact: true }),
   ).toBeVisible();
   await calendar.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(planning).toHaveCount(0);
   await expect(
-    calendar.getByRole('button', { name: /Meet the coaches,/ }),
+    calendar.getByRole('button', { name: /Finish the game collection,/ }),
   ).toBeVisible();
   await calendar.getByRole('button', { name: 'Previous', exact: true }).click();
   await expect(planning).toHaveCount(1);
@@ -37,7 +39,7 @@ test('scheduling: date navigation and native appointment keyboard activation', a
   await calendar.getByRole('button', { name: 'Week', exact: true }).click();
   await expect(calendar.locator('.day')).toHaveCount(7);
   await expect(
-    calendar.getByRole('button', { name: /Away series,/ }),
+    calendar.getByRole('button', { name: /Game 6 archive project,/ }),
   ).toHaveCount(2);
 });
 test('scheduling: simultaneous appointments occupy separate lanes', async ({
@@ -86,7 +88,7 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
   await expect(frame).toHaveAttribute('tabindex', '0');
   await expect(frame).not.toHaveClass(/overview/);
   await expect(
-    page.getByRole('button', { name: /Lineup meeting,/ }),
+    page.getByRole('button', { name: /Review Game 6 notes,/ }),
   ).toHaveCount(1);
   await expect(frame.locator('.time-gutter')).toHaveCount(1);
   const dayGeometry = await frame.locator('.day').evaluateAll((days) =>
@@ -100,7 +102,7 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
     expect(Math.abs(day.width - dayGeometry[0].width)).toBeLessThanOrEqual(1);
     expect(Math.abs(day.top - dayGeometry[0].top)).toBeLessThanOrEqual(1);
   }
-  const planning = page.getByRole('button', { name: /Lineup meeting,/ });
+  const planning = page.getByRole('button', { name: /Review Game 6 notes,/ });
   await expect(planning).toBeInViewport();
   // Friday's overnight continuation starts at midnight. The initial viewport
   // must include it instead of scrolling to Monday's first appointment.
@@ -120,7 +122,7 @@ test('scheduling: spacious week shares aligned time tracks with equal day column
   ).toBeLessThanOrEqual(1);
   await planning.focus();
   await expect(page.getByRole('tooltip')).toHaveText(
-    /Lineup meeting.*9:00\sAM GMT-4.*10:30\sAM GMT-4/,
+    /Review Game 6 notes.*9:00\sAM GMT-4.*10:30\sAM GMT-4/,
   );
   await expect(planning).not.toHaveAttribute('title');
   await planning.press('Escape');
@@ -175,7 +177,7 @@ test('scheduling: short slots preserve a title line and restore times in agenda 
 }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.getByRole('button', { name: 'Day', exact: true }).click();
-  const event = page.getByRole('button', { name: /Pitching practice,/ });
+  const event = page.getByRole('button', { name: /Read the pitching recap,/ });
   const title = event.locator('strong');
   const time = event.locator('span');
   await expect(event).toHaveClass(/appointment--short/);
@@ -247,24 +249,24 @@ test('scheduling: time-zone conversion and clock-change instances remain distinc
   await expect(zone).toBeFocused();
   await expect(zone).toHaveText('America/New_York');
   await expect(
-    page.getByRole('button', { name: /Lineup meeting,.*9:00\sAM GMT-4/ }),
+    page.getByRole('button', { name: /Review Game 6 notes,.*9:00\sAM GMT-4/ }),
   ).toHaveCount(1);
   await zone.click();
   await page.getByRole('option', { name: 'UTC', exact: true }).click();
   await expect(zone).toHaveText('UTC');
   await expect(page.getByRole('listbox')).toBeHidden();
   await expect(
-    page.getByRole('button', { name: /Lineup meeting,.*1:00\sPM GMT/ }),
+    page.getByRole('button', { name: /Review Game 6 notes,.*1:00\sPM GMT/ }),
   ).toHaveCount(1);
   await page
     .getByRole('button', { name: 'Inspect clock change', exact: true })
     .click();
   await expect(zone).toHaveText('America/New_York');
   const before = page.getByRole('button', {
-    name: /Early field check,.*GMT-4/,
+    name: /First photo backup,.*GMT-4/,
   });
   const after = page.getByRole('button', {
-    name: /Late field check,.*GMT-5/,
+    name: /Second photo backup,.*GMT-5/,
   });
   await expect(before).toHaveCount(1);
   await expect(after).toHaveCount(1);
@@ -297,7 +299,7 @@ test('scheduling: loading, retry and empty navigation recover without losing con
   });
   const before = await viewport.boundingBox();
   const firstMeeting = calendar.getByRole('button', {
-    name: /Lineup meeting,/,
+    name: /Review Game 6 notes,/,
   });
   const meeting = await firstMeeting.elementHandle();
   await page.getByRole('button', { name: 'Show loading', exact: true }).click();
@@ -324,8 +326,10 @@ test('scheduling: loading, retry and empty navigation recover without losing con
   );
   await calendar.getByRole('button', { name: 'Retry', exact: true }).click();
   await expect(
-    calendar.getByRole('button', { name: /Lineup meeting,/ }),
+    calendar.getByRole('button', { name: /Review Game 6 notes,/ }),
   ).toHaveCount(1);
+  await calendar.getByRole('button', { name: 'Next', exact: true }).click();
+  // The following week contains the clock-change reminders on November 1.
   await calendar.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(calendar).toContainText('No appointments');
 });
@@ -336,7 +340,7 @@ for (const dir of ['ltr', 'rtl'])
       document.documentElement.dir = dir;
     }, dir);
     const appointment = page.getByRole('button', {
-      name: /Pitching practice,/,
+      name: /Read the pitching recap,/,
     });
     await expect(appointment).toBeVisible();
     const position = await appointment.evaluate(
@@ -350,7 +354,7 @@ for (const dir of ['ltr', 'rtl'])
     await appointment.click();
     await expect(
       page.getByRole('complementary', { name: 'Appointment details' }),
-    ).toContainText('Jack Flaherty started');
+    ).toContainText('Peralta’s 5⅓ innings');
   });
 for (const accent of ['neon', 'cobalt'])
   for (const density of ['default', 'compact'])
@@ -365,7 +369,9 @@ for (const accent of ['neon', 'cobalt'])
           { accent, density },
         );
         await page.getByRole('button', { name: 'Agenda', exact: true }).click();
-        await page.getByRole('button', { name: /Batting practice,/ }).click();
+        await page
+          .getByRole('button', { name: /Organize Game 6 photos,/ })
+          .click();
         const result = await new AxeBuilder({ page })
           .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
           .analyze();

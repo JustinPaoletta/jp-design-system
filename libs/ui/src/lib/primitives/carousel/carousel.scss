@@ -12,16 +12,34 @@ section {
   overflow: clip;
 }
 .controls,
+.status,
+.navigation,
 .pickers {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--jp-space-sm);
-  flex-wrap: wrap;
-  padding: var(--jp-space-sm);
 }
 .controls {
+  justify-content: space-between;
+  padding: var(--jp-space-sm) var(--jp-space-lg);
   border-block-end: 1px solid var(--jp-color-border-default);
+}
+.status {
+  min-inline-size: 0;
+  flex-wrap: wrap;
+}
+.navigation {
+  flex-shrink: 0;
+}
+.pickers {
+  flex-wrap: wrap;
+  padding: var(--jp-space-sm) var(--jp-space-lg);
+  border-block-start: 1px solid var(--jp-color-border-default);
+  gap: var(--jp-space-xs);
+}
+.position {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }
 .position,
 .empty {
@@ -41,16 +59,30 @@ section {
   display: none !important;
 }
 button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--jp-color-text-primary);
   font: inherit;
   font-size: var(--jp-font-size-caption);
   background: var(--jp-color-surface-subtle);
   border: 1px solid var(--jp-color-border-default);
   border-radius: var(--jp-radius-sm);
-  min-block-size: var(--jp-size-control-sm);
-  min-inline-size: var(--jp-size-control-sm);
+  min-block-size: var(--jp-size-control-md);
+  min-inline-size: var(--jp-size-control-md);
+  max-inline-size: 100%;
   padding-inline: var(--jp-space-sm);
+  overflow-wrap: anywhere;
   cursor: pointer;
+}
+.direction,
+.rotation {
+  inline-size: var(--jp-size-control-md);
+  padding: 0;
+}
+.previous jp-icon {
+  transform: rotate(180deg);
 }
 button.current {
   background: var(--jp-color-accent-solid);
@@ -77,6 +109,7 @@ button:focus-visible,
 @media (forced-colors: active) {
   section,
   .controls,
+  .pickers,
   button {
     border-color: CanvasText;
   }
@@ -87,11 +120,6 @@ button:focus-visible,
   .viewport:focus-visible {
     outline-color: Highlight;
   }
-}
-
-.pickers {
-  padding: 0;
-  gap: var(--jp-space-2xs);
 }
 
 @include interaction.pressable('button');

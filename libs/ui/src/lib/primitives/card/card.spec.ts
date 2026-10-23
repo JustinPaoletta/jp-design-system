@@ -13,12 +13,12 @@ class Host {}
 @Component({
   imports: [JpCard, JpPageHeader, JpDisclosure, JpInlineAlert],
   template: `
-    <jp-page-header title="Dodgers roster" />
+    <jp-page-header title="Rays roster" />
     <jp-card title="Player availability">
       <jp-disclosure title="Lineup notes"
-        >Freddie Freeman is available.</jp-disclosure
+        >Yandy Díaz is available.</jp-disclosure
       >
-      <jp-inline-alert title="Lineup saved" message="Ready for Game 5." />
+      <jp-inline-alert title="Lineup saved" message="Ready for ALCS Game 6." />
     </jp-card>
   `,
 })
@@ -28,7 +28,7 @@ describe('JpCard', () => {
     const f = TestBed.createComponent(StaticTitleHost);
     f.detectChanges();
     for (const [selector, contentSelector, title] of [
-      ['jp-page-header', 'h1', 'Dodgers roster'],
+      ['jp-page-header', 'h1', 'Rays roster'],
       ['jp-card', 'h2', 'Player availability'],
       ['jp-disclosure', 'summary', 'Lineup notes'],
       ['jp-inline-alert', 'strong', 'Lineup saved'],
@@ -39,7 +39,7 @@ describe('JpCard', () => {
     }
     expect(
       f.nativeElement.querySelector('[role="status"]').textContent,
-    ).toContain('Ready for Game 5.');
+    ).toContain('Ready for ALCS Game 6.');
   });
   it('lets consumers choose the heading level and exposes projected header, body and actions', async () => {
     await TestBed.configureTestingModule({

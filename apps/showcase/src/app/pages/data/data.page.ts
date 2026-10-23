@@ -40,32 +40,32 @@ export class DataPage {
 
   readonly columns: JpTableColumn[] = [
     { key: 'name', header: 'Player' },
-    { key: 'status', header: 'Availability' },
+    { key: 'status', header: 'Game 6' },
   ];
 
   readonly rows = [
     {
-      name: 'Jack Flaherty',
+      name: 'Freddy Peralta',
       env: 'Active roster',
-      status: 'Available',
+      status: 'Starter',
       region: 'Pitcher',
     },
     {
-      name: 'Freddie Freeman',
+      name: 'Yandy Díaz',
       env: 'Active roster',
-      status: 'Day to day',
-      region: 'First base',
+      status: 'Home run',
+      region: 'Designated hitter',
     },
     {
-      name: 'Tommy Edman',
+      name: 'Taylor Walls',
       env: 'Active roster',
-      status: 'Available',
+      status: 'Starter',
       region: 'Shortstop',
     },
     {
-      name: 'Clayton Kershaw',
-      env: 'Injured list',
-      status: 'Injured',
+      name: 'Bryan Baker',
+      env: 'Bullpen',
+      status: 'Relief',
       region: 'Pitcher',
     },
   ];
@@ -74,17 +74,17 @@ export class DataPage {
     return this.showEmpty
       ? []
       : this.rows.filter(
-          (row) => !this.availableOnly || row.status === 'Available',
+          (row) => !this.availableOnly || row.env === 'Active roster',
         );
   }
 
   statusTone(status: string): JpBadgeTone {
     switch (status) {
-      case 'Available':
+      case 'Starter':
         return 'success';
-      case 'Day to day':
+      case 'Home run':
         return 'warning';
-      case 'Injured':
+      case 'Relief':
         return 'error';
       default:
         return 'neutral';

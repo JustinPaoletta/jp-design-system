@@ -6,11 +6,11 @@ const meta: Meta<JpAccordion> = {
   title: 'Primitives/Navigation/Accordion',
   component: JpAccordion,
   parameters: { layout: 'padded' },
-  args: { label: 'Club settings' },
+  args: { label: 'Archive settings' },
   decorators: [moduleMetadata({ imports: [JpDisclosure] })],
   render: (args) => ({
     props: args,
-    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="Club details" [open]="true">Los Angeles Dodgers. Manager: Dave Roberts. Home field: Dodger Stadium.</jp-disclosure><jp-disclosure title="Game 5" [open]="multiple">October 30, 2024 at Yankee Stadium. First pitch was 8:08 p.m. Jack Flaherty started.</jp-disclosure></jp-accordion>`,
+    template: `<jp-accordion [label]="label" [multiple]="multiple"><jp-disclosure title="Game 6 details" [open]="true">Tampa Bay Rays. Manager: Kevin Cash. Home field: Tropicana Field.</jp-disclosure><jp-disclosure title="Game 6" [open]="multiple">October 19, 2026 at Tropicana Field. First pitch was 8:08 p.m. Freddy Peralta started.</jp-disclosure></jp-accordion>`,
   }),
 };
 export default meta;

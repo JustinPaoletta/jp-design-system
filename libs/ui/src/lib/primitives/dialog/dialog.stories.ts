@@ -17,8 +17,7 @@ import { JpDialog, JpDialogActions } from './dialog';
     }
     <jp-dialog [open]="open" [title]="title" (openChange)="open = $event">
       <p>
-        Remove Jack Flaherty from the Dodgers roster. You cannot undo this
-        change.
+        Remove Freddy Peralta from the Rays roster. You cannot undo this change.
       </p>
       <div jpDialogActions>
         <jp-button type="button" variant="secondary" (click)="open = false">
@@ -33,7 +32,7 @@ import { JpDialog, JpDialogActions } from './dialog';
 })
 class DialogStoryHost {
   @Input() open = false;
-  @Input() title = 'Remove player?';
+  @Input() title = 'Remove from collection?';
 }
 
 const meta: Meta<DialogStoryHost> = {
@@ -52,7 +51,7 @@ const meta: Meta<DialogStoryHost> = {
   },
   args: {
     open: false,
-    title: 'Remove player?',
+    title: 'Remove from collection?',
   },
   decorators: [
     moduleMetadata({

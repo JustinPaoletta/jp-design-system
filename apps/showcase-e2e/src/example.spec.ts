@@ -4,7 +4,7 @@ test('has title', async ({ page }) => {
   await page.goto('/');
 
   await expect(page).toHaveURL(/assistant/);
-  await expect(page.locator('h1')).toContainText('Dodgers assistant');
+  await expect(page.locator('h1')).toContainText('Game 6 companion');
 });
 
 test('layout dashboard remains available', async ({ page }) => {

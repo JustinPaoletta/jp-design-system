@@ -1,11 +1,11 @@
 <div class="example-page">
   <header class="example-page__header">
-    <jp-heading as="h1">Dodgers assistant</jp-heading>
-    <p>Ask about the Dodgers game, players and starting lineup.</p>
+    <jp-heading as="h1">Game 6 companion</jp-heading>
+    <p>Answers come from the verified Game 6 record.</p>
   </header>
   <div class="example-page__cards">
-    <jp-card title="Ask the manager">
-      <p>Choose a game, player or roster to start a conversation.</p>
+    <jp-card title="Explore Game 6">
+      <p>Ask about the final score, lineup, home runs or final out.</p>
       <jp-inline jpCardActions gap="sm" wrap="true">
         <jp-button
           type="button"
@@ -19,7 +19,7 @@
           variant="secondary"
           jpAssistantTrigger
           [jpAssistantContext]="tableRowContext"
-          >Ask about Jack Flaherty</jp-button
+          >Ask about Freddy Peralta</jp-button
         >
         <jp-button
           type="button"
@@ -32,7 +32,7 @@
       </jp-inline>
     </jp-card>
     <jp-card title="Game summary">
-      <p>Read a summary of the Dodgers 7–6 win over the Yankees.</p>
+      <p>Read a summary of the Rays 7–3 win over the Guardians.</p>
       <jp-inline jpCardActions gap="sm" wrap="true" align="center">
         <jp-button type="button" variant="secondary" (click)="seedToneDemo()"
           >Load game summary</jp-button
@@ -46,8 +46,8 @@
 </div>
 
 <jp-assistant-panel
-  title="Dodgers manager"
+  title="Game 6 companion"
   emptyTitle="Ask about the lineup"
-  emptyDescription="Ask about players, the final score or the World Series."
+  emptyDescription="Ask about players, the final score or the ALCS."
   (messageSubmit)="onMessageSubmit($event)"
 />

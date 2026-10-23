@@ -36,8 +36,8 @@ test('workflows: commands filter metadata, skip disabled options, run, and resto
   ).toBeVisible();
   await search.press('Escape');
   await expect(opener).toBeFocused();
-  await page.getByRole('button', { name: 'Edit: Club name' }).click();
-  const name = page.getByRole('textbox', { name: 'Club name' });
+  await page.getByRole('button', { name: 'Edit: Collection name' }).click();
+  const name = page.getByRole('textbox', { name: 'Collection name' });
   await name.press('Control+k');
   await expect(search).toHaveCount(0);
   await name.press('Escape');
@@ -45,7 +45,7 @@ test('workflows: commands filter metadata, skip disabled options, run, and resto
 test('workflows: context actions support pointer, keyboard and visible alternatives', async ({
   page,
 }) => {
-  const region = page.getByRole('group', { name: 'Game plan', exact: true });
+  const region = page.getByRole('group', { name: 'Game 6 notes', exact: true });
   await region.click({ button: 'right' });
   const rename = page.getByRole('menuitem', { name: 'Rename' });
   await expect(rename).toBeFocused();
@@ -60,7 +60,9 @@ test('workflows: context actions support pointer, keyboard and visible alternati
     page.getByRole('status').filter({ hasText: 'Last action: rename' }),
   ).toBeVisible();
   await expect(region).toBeFocused();
-  await page.getByRole('button', { name: 'More actions: Game plan' }).click();
+  await page
+    .getByRole('button', { name: 'More actions: Game 6 notes' })
+    .click();
   await expect(rename).toBeFocused();
   await page.getByRole('button', { name: 'Open commands' }).click();
   await expect(
@@ -94,9 +96,9 @@ test('workflows: split actions and toggle use native keyboard controls', async (
 test('workflows: inline saves preserve failed drafts, retry and abort without committing', async ({
   page,
 }) => {
-  const edit = page.getByRole('button', { name: 'Edit: Club name' });
+  const edit = page.getByRole('button', { name: 'Edit: Collection name' });
   await edit.click();
-  const input = page.getByRole('textbox', { name: 'Club name' });
+  const input = page.getByRole('textbox', { name: 'Collection name' });
   await expect(input).toBeFocused();
   await input.fill('Updated plan');
   await input.press('Enter');
@@ -125,24 +127,24 @@ test('workflows: inline saves preserve failed drafts, retry and abort without co
 test('workflows: themed date/time form validates ordered local values and focuses errors', async ({
   page,
 }) => {
-  await page.getByLabel('Game date', { exact: true }).fill('2024-09-30');
-  await page.getByLabel('Start date', { exact: true }).fill('2024-10-30');
-  await page.getByLabel('End date', { exact: true }).fill('2024-10-25');
-  await page.getByLabel('First pitch', { exact: true }).fill('09:10');
+  await page.getByLabel('Game date', { exact: true }).fill('2026-09-30');
+  await page.getByLabel('Start date', { exact: true }).fill('2026-10-19');
+  await page.getByLabel('End date', { exact: true }).fill('2026-10-12');
+  await page.getByLabel('Replay reminder', { exact: true }).fill('09:10');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   const summary = page.getByRole('region', { name: 'There is a problem' });
   await expect(summary).toBeFocused();
   await expect(summary.getByRole('link')).toHaveCount(3);
   await summary
     .getByRole('link', {
-      name: 'Choose an ordered date range in October 2024.',
+      name: 'Choose an ordered date range in October 2026.',
     })
     .click();
   await expect(page.getByLabel('Start date', { exact: true })).toBeFocused();
-  await page.getByLabel('Game date', { exact: true }).fill('2024-10-30');
-  await page.getByLabel('Start date', { exact: true }).fill('2024-10-25');
-  await page.getByLabel('End date', { exact: true }).fill('2024-10-30');
-  await page.getByLabel('First pitch', { exact: true }).fill('09:15');
+  await page.getByLabel('Game date', { exact: true }).fill('2026-10-19');
+  await page.getByLabel('Start date', { exact: true }).fill('2026-10-12');
+  await page.getByLabel('End date', { exact: true }).fill('2026-10-19');
+  await page.getByLabel('Replay reminder', { exact: true }).fill('09:15');
   await page.getByRole('button', { name: 'Save schedule' }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Schedule saved.' }),
@@ -194,31 +196,33 @@ test('workflows: inbox filters unread, recovers focus on dismissal, and retains 
   page,
 }) => {
   const inbox = page.getByRole('region', {
-    name: 'Club messages',
+    name: 'Game 6 updates',
     exact: true,
   });
   await inbox.getByRole('button', { name: 'Unread 2', exact: true }).click();
-  await expect(inbox).not.toContainText('Club invitation accepted');
+  await expect(inbox).not.toContainText('Peralta named ALCS MVP');
   await inbox
-    .getByRole('button', { name: 'Mark as read: Jack Flaherty starts Game 5' })
+    .getByRole('button', { name: 'Mark as read: Freddy Peralta starts Game 6' })
     .press('Enter');
   await expect(
-    inbox.getByRole('button', { name: 'Mark as read: Game report ready' }),
+    inbox.getByRole('button', {
+      name: 'Mark as read: Tampa Bay wins the pennant',
+    }),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Jack Flaherty starts Game 5');
+  await expect(inbox).not.toContainText('Freddy Peralta starts Game 6');
   await inbox
     .getByRole('button', { name: 'Mark all as read', exact: true })
     .click();
   await expect(inbox.getByRole('status')).toHaveText('No unread notifications');
   await inbox.getByRole('button', { name: 'All', exact: true }).click();
-  await expect(inbox).toContainText('Club invitation accepted');
+  await expect(inbox).toContainText('Peralta named ALCS MVP');
   await inbox
-    .getByRole('button', { name: 'Dismiss: Game report ready' })
+    .getByRole('button', { name: 'Dismiss: Tampa Bay wins the pennant' })
     .click();
   await expect(
     page.locator('[aria-label="Notification updates"]'),
   ).toBeFocused();
-  await expect(inbox).not.toContainText('Game report ready');
+  await expect(inbox).not.toContainText('Tampa Bay wins the pennant');
 });
 test('workflows: skip link moves native focus and mobile RTL reflows without overflow', async ({
   page,
@@ -262,7 +266,7 @@ for (const accent of ['neon', 'cobalt'])
       ).toEqual([]);
       await page.keyboard.press('Escape');
       await page
-        .getByRole('button', { name: 'More actions: Game plan' })
+        .getByRole('button', { name: 'More actions: Game 6 notes' })
         .click();
       expect(
         (

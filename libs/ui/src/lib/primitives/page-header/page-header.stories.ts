@@ -20,14 +20,14 @@ const meta: Meta<JpPageHeader> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    title: 'Player roster',
+    title: 'Game 6 roster',
     headingLevel: 'h1',
-    description: 'Manage the 2024 Dodgers roster.',
+    description: 'Explore the Rays who won the 2026 American League pennant.',
   },
   render: (args) => ({
     props: { ...args, saved: false },
     template: `<jp-page-header [title]="title" [description]="description" [headingLevel]="headingLevel">
-      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2024 season · World Series' }}</span>
+      <span jpPageMeta role="status">{{ saved ? 'Roster saved in this preview.' : '2026 ALCS · Game 6' }}</span>
       <jp-button jpPageActions [disabled]="saved" (click)="saved = true">{{ saved ? 'Roster saved' : 'Save roster' }}</jp-button>
     </jp-page-header>`,
   }),
@@ -49,8 +49,8 @@ export const Saved: Story = {
 };
 export const LongContent: Story = {
   args: {
-    title: 'Postseason player availability',
+    title: 'The Game 6 players',
     description:
-      'Review the 2024 Dodgers roster before World Series Game 5 at Yankee Stadium.',
+      'Explore the players who helped Tampa Bay win Game 6 at Tropicana Field on October 19, 2026.',
   },
 };

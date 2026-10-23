@@ -103,7 +103,7 @@ const meta: Meta<AppShellStoryArgs> = {
                 Shell layout with sidebar collapse and mobile drawer.
               </jp-text>
               <jp-surface tone="raised" padding="md">
-                <jp-text>The Dodgers won 7–6 against the Yankees. The series ended 4 games to 1.</jp-text>
+                <jp-text>The Rays won 7–3 against the Guardians. The series ended 4 games to 2.</jp-text>
               </jp-surface>
             </jp-stack>
           </jp-box>

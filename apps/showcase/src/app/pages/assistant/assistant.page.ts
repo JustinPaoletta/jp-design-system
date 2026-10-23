@@ -1,3 +1,4 @@
+import { gameSixAnswer } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -35,22 +36,22 @@ export class AssistantPage implements OnDestroy {
   lastReply = 'None yet';
 
   readonly deploymentContext: JpAssistantContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: '2026 ALCS Game 6',
+    description: 'Rays 7, Guardians 3. Final score.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: '849815',
   };
 
   readonly tableRowContext: JpAssistantContext = {
-    label: 'Player Jack Flaherty',
-    description: 'Pitcher · Active roster · Started Game 5',
+    label: 'Player Freddy Peralta',
+    description: 'Pitcher · Active roster · Started Game 6',
     entityType: 'player',
-    entityId: 'jack-flaherty',
+    entityId: '642547',
   };
 
   readonly filterContext: JpAssistantContext = {
     label: 'Squad filters',
-    description: 'Active roster and injured list',
+    description: 'Active roster and bullpen',
     entityType: 'filters',
   };
 
@@ -66,16 +67,16 @@ export class AssistantPage implements OnDestroy {
     this.assistant.open({ clearMessages: true, context: null });
     this.assistant.addMessage({
       role: 'system',
-      content: 'The Dodgers won 7–6 against the New York Yankees.',
+      content: 'The Rays won 7–3 against the Cleveland Guardians.',
     });
     this.assistant.addMessage({
       role: 'assistant',
       content:
-        'The Dodgers won 7–6. Freddie Freeman and Mookie Betts drove in runs.',
+        'The Rays won 7–3. Yandy Díaz and Junior Caminero drove in runs.',
     });
     this.assistant.addMessage({
       role: 'user',
-      content: 'Who started Game 5?',
+      content: 'Who started Game 6?',
     });
   }
 
@@ -83,7 +84,7 @@ export class AssistantPage implements OnDestroy {
     this.lastReply = content;
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
+      content: gameSixAnswer(content),
     });
   }
 }

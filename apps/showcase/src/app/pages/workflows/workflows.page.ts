@@ -80,12 +80,12 @@ export class WorkflowsPage {
     viewChild<ElementRef<HTMLElement>>('notificationRegion');
   readonly commandOpen = signal(false);
   readonly action = signal('No action selected');
-  readonly projectName = signal('Los Angeles Dodgers');
+  readonly projectName = signal('The night Tampa Bay clinched');
   failNextSave = true;
   readonly favorite = new FormControl(false);
-  readonly launch = new FormControl('2024-10-30', { nonNullable: true });
+  readonly launch = new FormControl('2026-10-19', { nonNullable: true });
   readonly dates = new FormControl<JpDateRangeValue>(
-    ['2024-10-25', '2024-10-30'],
+    ['2026-10-12', '2026-10-19'],
     { nonNullable: true },
   );
   readonly time = new FormControl('20:00', {
@@ -103,7 +103,7 @@ export class WorkflowsPage {
     },
     {
       id: 'settings',
-      label: 'Club settings',
+      label: 'Archive settings',
       description: 'Manage the club',
       section: 'Navigate',
     },
@@ -130,26 +130,26 @@ export class WorkflowsPage {
   readonly notifications = signal<readonly JpNotification[]>([
     {
       id: 'review',
-      title: 'Jack Flaherty starts Game 5',
-      description: 'Dave Roberts started Jack Flaherty against the Yankees.',
-      group: 'October 30',
+      title: 'Freddy Peralta starts Game 6',
+      description: 'Kevin Cash started Freddy Peralta against the Guardians.',
+      group: 'October 19',
       unread: true,
       timeLabel: '8:08 p.m.',
-      dateTime: '2024-10-30T20:08:00-04:00',
+      dateTime: '2026-10-19T20:08:00-04:00',
     },
     {
       id: 'release',
-      title: 'Game report ready',
-      group: 'Today',
+      title: 'Tampa Bay wins the pennant',
+      group: 'October 19',
       unread: true,
       href: '#workflow-main',
     },
     {
       id: 'invite',
-      title: 'Club invitation accepted',
-      group: 'Earlier',
+      title: 'Peralta named ALCS MVP',
+      group: 'October 19',
       unread: false,
-      timeLabel: 'Yesterday',
+      timeLabel: 'After Game 6',
     },
   ]);
   readonly saveName = (_value: string, signal: AbortSignal) =>
@@ -244,7 +244,7 @@ export class WorkflowsPage {
         ? [
             {
               controlId: 'launch-date',
-              message: 'Choose a game date in October 2024.',
+              message: 'Choose a game date in October 2026.',
             },
           ]
         : []),
@@ -252,7 +252,7 @@ export class WorkflowsPage {
         ? [
             {
               controlId: 'event-dates-start',
-              message: 'Choose an ordered date range in October 2024.',
+              message: 'Choose an ordered date range in October 2026.',
             },
           ]
         : []),

@@ -295,8 +295,8 @@ Screen-reader, Windows and physical-device inspections remain in the [task list]
 
 ## October 19, 2026 baseball records
 
-Storybook and Showcase now use the [2024 Dodgers and Yankees records](../content/BASEBALL_EXAMPLES.md).
-World Series Game 5 ended Dodgers 7, Yankees 6, with seven Dodgers hits and no Dodgers errors.
+Storybook and Showcase now use the [2026 ALCS Game 6 record](../content/BASEBALL_EXAMPLES.md).
+The Tampa Bay Rays won ALCS Game 6 and advanced to the World Series.
 The October 12 inspection below records the earlier fictional copy.
 
 ## October 12, 2026 baseball examples

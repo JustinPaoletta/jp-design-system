@@ -9,13 +9,13 @@ describe('ControlsPage preview actions', () => {
   let form: NgForm;
 
   const defaults = {
-    email: 'manager@dodgers.example',
+    email: 'fan@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
   };
   const savedLineup = {
-    email: 'notes@dodgers.example',
+    email: 'notes@rays.example',
     notes: 'Confirm the batting order before warmups.',
     role: 'admin',
     subscribe: false,
@@ -112,11 +112,11 @@ describe('ControlsPage preview actions', () => {
     expect(form.pristine).toBe(true);
     expect(form.touched).toBe(true);
     expect(root.querySelector('[role="status"]')?.textContent).toContain(
-      'Lineup saved in this preview.',
+      'Game notes saved in this preview.',
     );
 
     await enterLineup({
-      email: 'unsaved@dodgers.example',
+      email: 'unsaved@rays.example',
       notes: 'Unsaved change.',
       role: 'viewer',
       subscribe: true,

@@ -22,8 +22,8 @@ for (const view of [
     await field.press('ArrowDown');
     const calendar = page.getByRole('dialog', { name: 'Game date calendar' });
     await expect(calendar).toBeVisible();
-    await expect(calendar.locator('[data-date="2024-10-30"]')).toBeFocused();
-    await expect(calendar.locator('[data-date="2024-09-30"]')).toHaveAttribute(
+    await expect(calendar.locator('[data-date="2026-10-19"]')).toBeFocused();
+    await expect(calendar.locator('[data-date="2026-09-30"]')).toHaveAttribute(
       'aria-disabled',
       'true',
     );
@@ -38,7 +38,7 @@ for (const view of [
     await page.keyboard.press('ArrowRight');
     await page.keyboard.press('Enter');
     await expect(field).toHaveValue(
-      view.dir === 'rtl' ? '2024-10-29' : '2024-10-31',
+      view.dir === 'rtl' ? '2026-10-18' : '2026-10-20',
     );
     await expect(calendar).toBeHidden();
     await expect(field).toBeFocused();
@@ -49,13 +49,13 @@ for (const view of [
     await start.press('ArrowDown');
     await page
       .getByRole('dialog', { name: 'Start date calendar' })
-      .locator('[data-date="2024-10-25"]')
+      .locator('[data-date="2026-10-12"]')
       .click();
     const end = page.getByLabel('End date', { exact: true });
     await end.press('ArrowDown');
     await page
       .getByRole('dialog', { name: 'End date calendar' })
-      .locator('[data-date="2024-10-30"]')
+      .locator('[data-date="2026-10-19"]')
       .click();
     await page
       .getByRole('button', { name: 'Save schedule', exact: true })
@@ -81,7 +81,7 @@ for (const view of [
       view.dir,
     );
     const field = page.getByRole('textbox', {
-      name: 'First pitch',
+      name: 'Replay reminder',
       exact: true,
     });
     await expect(field).toHaveAttribute('type', 'text');
@@ -89,7 +89,7 @@ for (const view of [
       .getByRole('button', { name: 'Choose time', exact: true })
       .click();
     const popup = page.getByRole('dialog', {
-      name: 'First pitch',
+      name: 'Replay reminder',
       exact: true,
     });
     await expect(
@@ -153,7 +153,7 @@ test('themed controls: upload trigger keeps file chooser behavior and hides brow
   ).setFiles({
     name: 'lineup.txt',
     mimeType: 'text/plain',
-    buffer: Buffer.from('Dodgers lineup'),
+    buffer: Buffer.from('Rays lineup'),
   });
   await expect(page.locator('jp-file-upload')).toContainText('lineup.txt');
   await expect(page.locator('jp-file-upload')).toContainText('Ready');
@@ -169,12 +169,12 @@ test('themed controls: calendar pointer navigation keeps the popup open', async 
   const popup = page.getByRole('dialog', { name: 'Game date calendar' });
   await popup.getByRole('button', { name: 'Next month' }).click();
   await expect(popup).toBeVisible();
-  await expect(popup).toContainText('November 2024');
+  await expect(popup).toContainText('November 2026');
   await popup.getByRole('button', { name: 'Previous month' }).click();
-  await expect(popup).toContainText('October 2024');
-  await popup.locator('[data-date="2024-10-31"]').click();
+  await expect(popup).toContainText('October 2026');
+  await popup.locator('[data-date="2026-10-20"]').click();
   await expect(page.getByLabel('Game date', { exact: true })).toHaveValue(
-    '2024-10-31',
+    '2026-10-20',
   );
 });
 

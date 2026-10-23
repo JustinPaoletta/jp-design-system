@@ -6,21 +6,21 @@ const meta: Meta<JpChecklist> = {
   component: JpChecklist,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Game checklist',
+    label: 'Game 6 checklist',
     items: [
       {
         id: 'quality',
-        label: 'Game preparation',
+        label: 'Game 6 collection',
         children: [
-          { id: 'test', label: 'Check the lineup' },
-          { id: 'a11y', label: 'Check the equipment' },
-          { id: 'blocked', label: 'League approval', disabled: true },
+          { id: 'test', label: 'Read the box score' },
+          { id: 'a11y', label: 'Add photo credits' },
+          { id: 'blocked', label: 'Publish collection', disabled: true },
         ],
       },
       {
         id: 'publish',
-        label: 'Confirm the lineup',
-        description: 'After the lineup check',
+        label: 'Save the game recap',
+        description: 'After you review the box score',
       },
     ],
   },
@@ -34,17 +34,17 @@ export const NestedCompletion: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await userEvent.click(
-      c.getByRole('checkbox', { name: 'Game preparation' }),
+      c.getByRole('checkbox', { name: 'Game 6 collection' }),
     );
     await expect(
-      c.getByRole('checkbox', { name: 'Check the lineup' }),
+      c.getByRole('checkbox', { name: 'Read the box score' }),
     ).toBeChecked();
     await expect(
-      c.getByRole('checkbox', { name: 'League approval' }),
+      c.getByRole('checkbox', { name: 'Publish collection' }),
     ).not.toBeChecked();
     await expect(c.getByRole('status')).toHaveTextContent('2 of 4 completed');
     await userEvent.click(
-      c.getByRole('checkbox', { name: 'Check the lineup' }),
+      c.getByRole('checkbox', { name: 'Read the box score' }),
     );
     await expect(c.getByRole('status')).toHaveTextContent('1 of 4 completed');
   },

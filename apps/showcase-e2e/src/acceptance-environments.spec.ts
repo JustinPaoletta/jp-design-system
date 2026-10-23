@@ -73,23 +73,25 @@ const exercise: Record<(typeof routes)[number], (page: Page) => Promise<void>> =
     scheduling: async (page) => {
       await expectSelectFits(page, 'Time zone');
       // The schedule becomes an agenda at narrow widths; events stay operable.
-      const event = page.getByRole('button', { name: /Lineup meeting,/ });
+      const event = page.getByRole('button', { name: /Review Game 6 notes,/ });
       await event.focus();
       await event.press('Enter');
       await expect(
         page.getByRole('complementary', { name: 'Appointment details' }),
-      ).toContainText('Lineup meeting');
+      ).toContainText('Review Game 6 notes');
     },
     'interaction-tools': async (page) => {
       await page
-        .getByRole('button', { name: 'Move down: Inspect the field' })
+        .getByRole('button', {
+          name: 'Move down: Choose your Game 6 highlights',
+        })
         .click();
       await page
         .locator('jp-carousel')
         .getByRole('button', { name: 'Next slide' })
         .click();
       await expect(
-        page.getByRole('textbox', { name: 'Manager note' }),
+        page.getByRole('textbox', { name: 'Your game note' }),
       ).toBeVisible();
     },
     'data-performance': async (page) => {
@@ -174,7 +176,7 @@ test.describe('acceptance forced colors', () => {
     await expectOutline(row);
     await expect(row).toHaveCSS('border-top-width', '1px');
     await page
-      .getByRole('checkbox', { name: 'Select 2024 Dodgers', exact: true })
+      .getByRole('checkbox', { name: 'Select 2026 Rays', exact: true })
       .check();
     const selected = page.locator('jp-tree-table tr.selected');
     await expectOutline(selected);
@@ -204,10 +206,10 @@ test.describe('acceptance forced colors', () => {
     await handle.press('Enter');
     await expect(
       page
-        .getByRole('list', { name: 'Game priorities' })
+        .getByRole('list', { name: 'Collection priorities' })
         .getByRole('listitem')
         .nth(1),
-    ).toContainText('Inspect the field');
+    ).toContainText('Choose your Game 6 highlights');
     await expect(handle).toBeFocused();
     const next = page
       .locator('jp-carousel')
@@ -216,7 +218,7 @@ test.describe('acceptance forced colors', () => {
     await next.press('Enter');
     await expectOutline(next);
     await expect(
-      page.getByRole('textbox', { name: 'Manager note' }),
+      page.getByRole('textbox', { name: 'Your game note' }),
     ).toBeVisible();
     await expect(
       page.locator('jp-carousel .pickers button.current'),
@@ -232,13 +234,13 @@ test.describe('acceptance forced colors', () => {
     await agenda.click();
     await expect(agenda).toHaveAttribute('aria-pressed', 'true');
     await expectOutline(agenda);
-    const event = page.getByRole('button', { name: /Lineup meeting,/ });
+    const event = page.getByRole('button', { name: /Review Game 6 notes,/ });
     await event.focus();
     await event.press('Enter');
     await expectOutline(event);
     await expect(
       page.getByRole('complementary', { name: 'Appointment details' }),
-    ).toContainText('Lineup meeting');
+    ).toContainText('Review Game 6 notes');
     await expectDefaultColorSemantics(page);
   });
 
@@ -249,28 +251,28 @@ test.describe('acceptance forced colors', () => {
     const chart = page.locator('jp-chart');
     await expect(chart.locator('.plot')).toBeHidden();
     await expect(chart.locator('details')).toHaveAttribute('open', '');
-    const data = chart.getByRole('table', { name: 'Team runs by month' });
+    const data = chart.getByRole('table', { name: 'Game 6 · Cumulative runs' });
     await expect(data).toBeVisible();
-    await expect(data.getByRole('row')).toHaveCount(7);
+    await expect(data.getByRole('row')).toHaveCount(10);
     await chart
       .getByRole('combobox', { name: 'Inspect category' })
       .press('Enter');
     const choices = page.getByRole('listbox');
     await expect(choices).toBeVisible();
     await expect(
-      choices.getByRole('option', { name: 'April', exact: true }),
+      choices.getByRole('option', { name: '1st', exact: true }),
     ).toHaveAttribute('aria-selected', 'true');
     const category = chart.getByRole('combobox', { name: 'Inspect category' });
     await expectOutline(category);
     await category.press('End');
     await category.press('Enter');
-    await expect(category).toHaveText('September');
+    await expect(category).toHaveText('9th');
     await expect(choices).toBeHidden();
-    await expect(chart.locator('dl')).toContainText('162');
+    await expect(chart.locator('dl')).toContainText('7');
     const table = page.locator('jp-virtual-table');
     await table
       .getByRole('checkbox', {
-        name: 'Select Shohei Ohtani 00001',
+        name: 'Select Ben Williamson 00001',
         exact: true,
       })
       .check();
@@ -278,7 +280,7 @@ test.describe('acceptance forced colors', () => {
     await table.getByRole('button', { name: 'Paginated rows' }).click();
     await expect(
       table.getByRole('checkbox', {
-        name: 'Select Shohei Ohtani 00001',
+        name: 'Select Ben Williamson 00001',
         exact: true,
       }),
     ).toBeChecked();

@@ -19,7 +19,7 @@ const meta: Meta<JpRangeSlider> = {
   }),
   parameters: { layout: 'padded' },
   args: {
-    label: 'Practice minutes',
+    label: 'Replay minutes',
     min: 0,
     max: 100,
     step: 5,

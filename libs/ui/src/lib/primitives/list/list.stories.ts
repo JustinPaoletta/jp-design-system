@@ -26,21 +26,21 @@ const meta: Meta<JpList> = {
     items: [
       {
         id: 'a',
-        title: 'Jack Flaherty',
+        title: 'Freddy Peralta',
         description: 'Pitcher · Active roster',
-        meta: 'Available',
+        meta: 'Starter',
       },
       {
         id: 'b',
-        title: 'Freddie Freeman',
-        description: 'First base · Active roster',
-        meta: 'Day to day',
+        title: 'Yandy Díaz',
+        description: 'Designated hitter · Game 6 starter',
+        meta: 'Home run',
       },
       {
         id: 'c',
-        title: 'Tommy Edman',
+        title: 'Taylor Walls',
         description: 'Shortstop · Active roster',
-        meta: 'Available',
+        meta: 'Starter',
       },
     ],
   },
@@ -50,7 +50,7 @@ type Story = StoryObj<JpList>;
 export const Default: Story = {
   render: (args) => ({
     props: args,
-    template: `<jp-card title="Player availability">
+    template: `<jp-card title="Game 6 players">
       <jp-list [items]="items">
         <ng-template jpListItem let-player>
           <div style="display:flex;align-items:center;gap:var(--jp-space-sm);min-inline-size:0;flex:1 1 9rem">
@@ -60,7 +60,7 @@ export const Default: Story = {
               <p style="margin:var(--jp-space-2xs) 0 0;color:var(--jp-color-text-secondary);font-size:var(--jp-font-size-caption)">{{player.description}}</p>
             </div>
           </div>
-          <jp-badge [tone]="player.meta === 'Available' ? 'success' : 'warning'" size="sm">{{player.meta}}</jp-badge>
+          <jp-badge [tone]="player.meta === 'Starter' ? 'success' : 'warning'" size="sm">{{player.meta}}</jp-badge>
         </ng-template>
       </jp-list>
     </jp-card>`,

@@ -25,8 +25,8 @@
     <jp-split-pane
       #workspace
       id="service-workspace"
-      primaryLabel="Player profile"
-      secondaryLabel="2024 Dodgers roster"
+      primaryLabel="Tropicana Field"
+      secondaryLabel="2026 Rays roster"
       [size]="size()"
       (sizeChange)="resize($event)"
       [collapsed]="collapsed()"
@@ -35,25 +35,26 @@
       [max]="70"
     >
       <div jpSplitPrimary class="overview">
-        <h2>Player profile</h2>
+        <h2>Tropicana Field</h2>
         <jp-media
           [src]="mediaSource()"
-          alt="Field diagram"
-          caption="Field diagram for the 2024 Dodgers."
+          [alt]="artwork.alt"
+          [caption]="artwork.caption"
+          [aspectRatio]="4 / 3"
         />
         <jp-button
           variant="secondary"
-          (click)="mediaSource.set(mediaSource() === '/media-preview.svg' ? '/missing-demo-image.svg' : '/media-preview.svg')"
-          >{{ mediaSource() === '/media-preview.svg' ? 'Show image error' :
-          'Restore image' }}</jp-button
+          (click)="mediaSource.set(mediaSource() === artwork.src ? '/missing-demo-image.svg' : artwork.src)"
+          >{{ mediaSource() === artwork.src ? 'Show image error' : 'Restore
+          image' }}</jp-button
         >
         <p>
-          Review 16 player records. Expand a row to see the manager and game
-          notes.
+          Review the 15 Rays who appeared in Game 6. Expand a row to see the
+          manager and game notes.
         </p>
       </div>
       <div jpSplitSecondary class="inventory">
-        <h2>2024 Dodgers roster</h2>
+        <h2>2026 Rays roster</h2>
         <jp-table
           id="service-inventory"
           caption="Players"

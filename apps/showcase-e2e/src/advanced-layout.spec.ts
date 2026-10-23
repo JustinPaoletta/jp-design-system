@@ -67,23 +67,23 @@ test('advanced layout: row details and selection stay independent', async ({
   await expand.click();
   await expect(expand).toHaveAttribute('aria-expanded', 'true');
   const row = page.locator('.jp-table__detail-row');
-  await expect(row).toContainText('plays pitcher. Manager: Dave Roberts.');
+  await expect(row).toContainText('plays pitcher. Manager: Kevin Cash.');
   await row.getByRole('button', { name: 'Review game' }).click();
   await expect(page.getByRole('status')).toContainText(
-    'Reviewed Jack Flaherty',
+    'Reviewed Freddy Peralta',
   );
   await page
-    .getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true })
+    .getByRole('checkbox', { name: 'Select Freddy Peralta', exact: true })
     .check();
   await expect(
-    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Freddy Peralta', exact: true }),
   ).toBeChecked();
   await page
-    .getByRole('button', { name: 'Hide details: Jack Flaherty', exact: true })
+    .getByRole('button', { name: 'Hide details: Freddy Peralta', exact: true })
     .click();
   await expect(row).toHaveCount(0);
   await expect(
-    page.getByRole('checkbox', { name: 'Select Jack Flaherty', exact: true }),
+    page.getByRole('checkbox', { name: 'Select Freddy Peralta', exact: true }),
   ).toBeChecked();
 });
 for (const dir of ['ltr', 'rtl'])
@@ -135,7 +135,7 @@ for (const dir of ['ltr', 'rtl'])
     async ({ page }) => {
       await page.evaluate((dir) => (document.documentElement.dir = dir), dir);
       const separator = page.getByRole('separator', {
-        name: 'Player profile',
+        name: 'Tropicana Field',
       });
       await separator.focus();
       await separator.press(dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight');
@@ -145,7 +145,7 @@ for (const dir of ['ltr', 'rtl'])
       await separator.press('Enter');
       await expect(separator).toHaveAttribute('aria-valuenow', '0');
       await expect(
-        page.getByRole('heading', { name: 'Player profile', exact: true }),
+        page.getByRole('heading', { name: 'Tropicana Field', exact: true }),
       ).toHaveCount(0);
       await separator.press('Enter');
       await expect(separator).toHaveAttribute('aria-valuenow', '70');
@@ -170,16 +170,16 @@ for (const dir of ['ltr', 'rtl'])
 test('advanced layout: mobile stacking restores both panes and focuses hidden separator safely', async ({
   page,
 }) => {
-  const separator = page.getByRole('separator', { name: 'Player profile' });
+  const separator = page.getByRole('separator', { name: 'Tropicana Field' });
   await separator.focus();
   await separator.press('Enter');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(separator).toHaveCount(0);
   await expect(
-    page.getByRole('heading', { name: 'Player profile', exact: true }),
+    page.getByRole('heading', { name: 'Tropicana Field', exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole('heading', { name: '2024 Dodgers roster', exact: true }),
+    page.getByRole('heading', { name: '2026 Rays roster', exact: true }),
   ).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -208,15 +208,21 @@ test('advanced layout: mobile stacking restores both panes and focuses hidden se
 test('advanced layout: meaningful image fallback and source recovery', async ({
   page,
 }) => {
-  await expect(page.getByRole('img', { name: 'Field diagram' })).toBeVisible();
+  await expect(
+    page.getByRole('img', {
+      name: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
+    }),
+  ).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
     'aria-busy',
     'false',
   );
   await page.getByRole('button', { name: 'Show image error' }).click();
-  await expect(page.getByRole('img', { name: 'Field diagram' })).toHaveText(
-    'Image unavailable',
-  );
+  await expect(
+    page.getByRole('img', {
+      name: 'Cartoon illustration of Rays teammates celebrating the Game 6 win beneath the Tropicana Field dome.',
+    }),
+  ).toHaveText('Image unavailable');
   await page.getByRole('button', { name: 'Restore image' }).click();
   await expect(page.locator('jp-media img')).toBeVisible();
   await expect(page.locator('jp-media [aria-busy]')).toHaveAttribute(
@@ -239,7 +245,7 @@ for (const accent of ['neon', 'cobalt'])
         await page.getByText('Columns', { selector: 'summary' }).click();
         await page
           .getByRole('button', {
-            name: 'Show details: Jack Flaherty',
+            name: 'Show details: Freddy Peralta',
             exact: true,
           })
           .click();

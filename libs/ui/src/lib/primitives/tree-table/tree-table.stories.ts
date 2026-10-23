@@ -6,37 +6,37 @@ import { JpTreeTable, type JpTreeTableRow } from './tree-table';
 const rows: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: '2024 Dodgers',
-    cells: { owner: 'Dave Roberts', hours: 26 },
+    label: '2026 Rays',
+    cells: { owner: 'Kevin Cash', hours: 26 },
     children: [
       {
         key: 'design',
         label: 'Position players',
-        cells: { owner: 'Freddie Freeman', hours: 13 },
+        cells: { owner: 'Yandy Díaz', hours: 14 },
         children: [
           {
             key: 'landing',
             label: 'Infield',
-            cells: { owner: 'Freddie Freeman', hours: 5 },
+            cells: { owner: 'Yandy Díaz', hours: 6 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitchers',
-        cells: { owner: 'Jack Flaherty', hours: 13 },
+        cells: { owner: 'Freddy Peralta', hours: 12 },
       },
     ],
   },
   {
     key: 'archive',
-    label: 'Injured list',
-    cells: { owner: 'Clayton Kershaw', hours: 1 },
+    label: '2025 archive',
+    cells: { owner: '—', hours: '—' },
     disabled: true,
   },
 ];
 const columns = [
-  { key: 'owner', header: 'Lead' },
+  { key: 'owner', header: 'Featured player' },
   { key: 'hours', header: 'Players', align: 'end' as const },
 ];
 @Component({
@@ -46,7 +46,7 @@ const columns = [
   template: `
     <jp-tree-table
       id="story-projects"
-      caption="2024 Dodgers roster"
+      caption="2026 Rays roster"
       nameHeader="Group"
       [rows]="rows"
       [columns]="columns"
@@ -72,7 +72,7 @@ const meta: Meta<JpTreeTable> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'tree-table-states',
-    caption: '2024 Dodgers roster',
+    caption: '2026 Rays roster',
     nameHeader: 'Group',
     rows,
     columns,
@@ -85,27 +85,27 @@ export const ProjectBreakdown: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand 2024 Dodgers' }),
+      canvas.getByRole('button', { name: 'Expand 2026 Rays' }),
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Expand Position players' }),
     );
     await expect(
       canvas.getByRole('rowheader', {
-        name: '2024 Dodgers / Position players / Infield',
+        name: '2026 Rays / Position players / Infield',
       }),
     ).toBeVisible();
     await userEvent.click(
       canvas.getByRole('checkbox', { name: 'Select Infield' }),
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Collapse 2024 Dodgers' }),
+      canvas.getByRole('button', { name: 'Collapse 2026 Rays' }),
     );
     await expect(canvas.getByRole('status')).toHaveTextContent(
       'Selected groups: 1',
     );
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Expand 2024 Dodgers' }),
+      canvas.getByRole('button', { name: 'Expand 2026 Rays' }),
     );
     await expect(
       canvas.getByRole('checkbox', { name: 'Select Infield' }),

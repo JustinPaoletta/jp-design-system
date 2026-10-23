@@ -1,3 +1,4 @@
+import { gameSixAnswer } from '../game-six.example';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
@@ -34,9 +35,9 @@ import { JpAssistantService } from './assistant.service';
         </jp-button>
       </jp-inline>
       <jp-assistant-panel
-        title="Dodgers manager"
+        title="Game 6 companion"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the World Series."
+        emptyDescription="Ask about players, the final score or the ALCS."
         (messageSubmit)="onSubmit($event)"
         ><jp-stack jpAssistantSuggestions gap="sm"
           ><jp-button
@@ -47,9 +48,7 @@ import { JpAssistantService } from './assistant.service';
             variant="secondary"
             (click)="ask('Who is in the starting lineup?')"
             >Review the starting lineup</jp-button
-          ><jp-button
-            variant="secondary"
-            (click)="ask('Who won the World Series?')"
+          ><jp-button variant="secondary" (click)="ask('Who won the ALCS?')"
             >Show the series result</jp-button
           ></jp-stack
         ></jp-assistant-panel
@@ -61,10 +60,10 @@ class AssistantStoryHost {
   private readonly assistant = inject(JpAssistantService);
 
   readonly gameContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: '2026 ALCS Game 6',
+    description: 'Rays 7, Guardians 3. Final score.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: '849815',
   };
 
   seed(): void {
@@ -72,12 +71,11 @@ class AssistantStoryHost {
     this.assistant.clearMessages();
     this.assistant.addMessage({
       role: 'system',
-      content: 'World Series Game 5 loaded',
+      content: '2026 ALCS Game 6 loaded',
     });
     this.assistant.addMessage({
       role: 'assistant',
-      content:
-        'I can summarize the score and key plays from World Series Game 5.',
+      content: 'I can summarize the score and key plays from 2026 ALCS Game 6.',
     });
     this.assistant.addMessage({
       role: 'user',
@@ -97,7 +95,7 @@ class AssistantStoryHost {
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Noted: “${content}”. Sample game result: Dodgers 7, Yankees 6.`,
+      content: gameSixAnswer(content),
     });
   }
 }
@@ -116,9 +114,9 @@ class AssistantStoryHost {
         >
       </jp-inline>
       <jp-assistant-panel
-        title="Dodgers manager"
+        title="Game 6 companion"
         emptyTitle="Ask about the lineup"
-        emptyDescription="Ask about players, the final score or the World Series."
+        emptyDescription="Ask about players, the final score or the ALCS."
         (messageSubmit)="respond()"
         (responseRetry)="retry($event.responseId)"
       />
@@ -149,7 +147,7 @@ class AssistantAsyncStoryHost {
     } else {
       this.assistant.updateResponse(
         this.responseId,
-        'The Yankees lead 5–0. Checking the fifth inning…',
+        'The Rays lead 5–3. Checking the eighth inning…',
       );
     }
   }
@@ -157,7 +155,7 @@ class AssistantAsyncStoryHost {
     this.responseId = id;
     this.assistant.completeResponse(
       id,
-      'The final score is Dodgers 7, Yankees 6. Mookie Betts drove in the go-ahead run in the eighth inning.',
+      'The final score is Rays 7, Guardians 3. Richie Palacios put Tampa Bay ahead with a two-run double in the second.',
     );
   }
 }
@@ -189,6 +187,19 @@ export default meta;
 type Story = StoryObj<JpAssistantPanel>;
 
 /**
+ * The dock is `position: fixed` and `100dvh`. Storybook gives that element a
+ * transform, so a content-sized docs canvas clips it. Match the canvas to the
+ * dock height. Message roles stay content-sized because they have no dock.
+ */
+const dockedPanelDocs = {
+  docs: {
+    story: {
+      height: '100dvh',
+    },
+  },
+};
+
+/**
  * Message role tones stay neutral: system is muted, assistant sits on a sunken
  * surface, user is a subtle right-aligned bubble. Accent is reserved as a signal
  * elsewhere (context chip + Send button), not on message bodies.
@@ -200,8 +211,8 @@ export const MessageRoles: Story = {
         class="jp-assistant-panel__message-list"
         style="display:flex;flex-direction:column;gap:0.75rem;max-width:22rem;padding:1rem;"
       >
-        <jp-assistant-message messageRole="system" content="World Series Game 5 loaded" />
-        <jp-assistant-message messageRole="assistant" content="Mookie Betts drove in Tommy Edman in the eighth inning." />
+        <jp-assistant-message messageRole="system" content="2026 ALCS Game 6 loaded" />
+        <jp-assistant-message messageRole="assistant" content="Junior Caminero drove in Taylor Walls in the eighth inning." />
         <jp-assistant-message messageRole="user" content="Who drove in the go-ahead run?" />
       </div>
     `,
@@ -210,8 +221,9 @@ export const MessageRoles: Story = {
 
 /** Empty state shown when the panel is open but no messages exist yet. */
 export const EmptyState: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const openEmpty = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -224,8 +236,9 @@ export const EmptyState: Story = {
 
 /** A seeded conversation covering all three message roles inside the panel. */
 export const Conversation: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const seed = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -233,7 +246,7 @@ export const Conversation: Story = {
     );
     await userEvent.click(seed as HTMLButtonElement);
     await expect(canvasElement.textContent).toContain(
-      'I can summarize the score and key plays from World Series Game 5.',
+      'I can summarize the score and key plays from 2026 ALCS Game 6.',
     );
     await expect(
       canvasElement.querySelectorAll('jp-assistant-message').length,
@@ -246,8 +259,9 @@ export const Conversation: Story = {
  * moves focus to the composer. The Send button is disabled until text is typed.
  */
 export const ContextTrigger: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -255,7 +269,7 @@ export const ContextTrigger: Story = {
     );
     await userEvent.click(trigger as HTMLButtonElement);
 
-    await expect(canvasElement.textContent).toContain('World Series Game 5');
+    await expect(canvasElement.textContent).toContain('2026 ALCS Game 6');
     await expect(
       canvasElement.querySelector('[role="complementary"]'),
     ).toBeTruthy();
@@ -277,8 +291,9 @@ export const ContextTrigger: Story = {
  * submits (Shift+Enter would insert a newline instead).
  */
 export const ComposerInteraction: Story = {
+  parameters: dockedPanelDocs,
   render: () => ({
-    template: `<jp-assistant-story-host />`,
+    template: `<div class="jp-storybook-dock"><jp-assistant-story-host /></div>`,
   }),
   play: async ({ canvasElement }) => {
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
@@ -301,12 +316,18 @@ export const ComposerInteraction: Story = {
     await expect(canvasElement.textContent).toContain(
       'What is the game score?',
     );
-    await expect(canvasElement.textContent).toContain('Noted:');
+    await expect(canvasElement.textContent).toContain(
+      'Richie Palacios opened the scoring',
+    );
   },
 };
 
 export const PendingAndStreaming: Story = {
-  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  parameters: dockedPanelDocs,
+  render: () => ({
+    template:
+      '<div class="jp-storybook-dock"><jp-assistant-async-story-host /></div>',
+  }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
@@ -314,7 +335,7 @@ export const PendingAndStreaming: Story = {
     );
     await expect(canvas.getByRole('progressbar')).toBeInTheDocument();
     await expect(canvasElement.textContent).toContain(
-      'Checking the fifth inning',
+      'Checking the eighth inning',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Stop response' }),
@@ -323,7 +344,7 @@ export const PendingAndStreaming: Story = {
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Retry' }));
     await expect(canvasElement.textContent).toContain(
-      'The final score is Dodgers 7, Yankees 6.',
+      'The final score is Rays 7, Guardians 3.',
     );
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await userEvent.click(
@@ -336,7 +357,11 @@ export const PendingAndStreaming: Story = {
 };
 
 export const FailedAndRetry: Story = {
-  render: () => ({ template: '<jp-assistant-async-story-host />' }),
+  parameters: dockedPanelDocs,
+  render: () => ({
+    template:
+      '<div class="jp-storybook-dock"><jp-assistant-async-story-host /></div>',
+  }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(
@@ -349,7 +374,7 @@ export const FailedAndRetry: Story = {
     await expect(canvas.queryByRole('alert')).toBeNull();
     await expect(canvas.queryByRole('progressbar')).toBeNull();
     await expect(canvasElement.textContent).toContain(
-      'The final score is Dodgers 7, Yankees 6.',
+      'The final score is Rays 7, Guardians 3.',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Close assistant' }),

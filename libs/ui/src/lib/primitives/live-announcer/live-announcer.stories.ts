@@ -8,14 +8,14 @@ import { JpText } from '../text/text';
   selector: 'jp-announcer-demo',
   imports: [JpLiveAnnouncer, JpButton, JpText],
   template:
-    '<jp-live-announcer /><jp-button variant="secondary" (click)="announce()">Announce lineup save</jp-button>@if (saved()) { <p><jp-text>Lineup saved</jp-text></p> }',
+    '<jp-live-announcer /><jp-button variant="secondary" (click)="announce()">Announce lineup save</jp-button>@if (saved()) { <p><jp-text>Game notes saved</jp-text></p> }',
 })
 class AnnouncerDemo {
   private readonly announcer = inject(JpAnnouncer);
   readonly saved = signal(false);
   announce() {
     this.saved.set(true);
-    this.announcer.announce('Lineup saved');
+    this.announcer.announce('Game notes saved');
   }
 }
 const meta: Meta = {
@@ -32,7 +32,7 @@ export const Default: Story = {
       c.getByRole('button', { name: 'Announce lineup save' }),
     );
     await waitFor(() =>
-      expect(c.getByRole('status')).toHaveTextContent('Lineup saved'),
+      expect(c.getByRole('status')).toHaveTextContent('Game notes saved'),
     );
   },
 };

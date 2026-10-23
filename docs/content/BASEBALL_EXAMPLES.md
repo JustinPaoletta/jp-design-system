@@ -1,108 +1,110 @@
-# Baseball examples
+# Game 6 examples
 
-Storybook and Showcase use the 2024 Major League Baseball season.
-The Los Angeles Dodgers play the New York Yankees.
-Scores, roster facts and season totals come from that season and the World Series.
-Photographs do not show the named players or a club ballpark.
+Storybook and Showcase feature Game 6 of the 2026 American League Championship Series (ALCS).
+Tampa Bay beat Cleveland 7–3 on October 19, 2026.
+The Rays won the series four games to two.
+Use "2026 American League champions" for the title.
+Do not call this result a World Series championship.
 
-## Shared facts
+## Source record
 
-| Item                | Record                                   |
-| ------------------- | ---------------------------------------- |
-| Club                | Los Angeles Dodgers                      |
-| Opponent            | New York Yankees                         |
-| Dodgers manager     | Dave Roberts                             |
-| Yankees manager     | Aaron Boone                              |
-| Dodgers home field  | Dodger Stadium                           |
-| Game 5 field        | Yankee Stadium                           |
-| Season              | 2024                                     |
-| Featured game       | World Series Game 5, October 30, 2024    |
-| Contact address     | `manager@dodgers.example`                |
-| Dodgers record      | 98 wins and 64 losses                    |
-| Yankees record      | 94 wins and 68 losses                    |
-| Player availability | Available, Day to day, Bench and Injured |
-| Roster groups       | Active roster, Bench and Injured list    |
+The [shared example record](../../libs/ui/src/lib/primitives/game-six.example.ts) contains the scores, players, statistics, chronology and illustration references.
+It is not a public component API.
+The examples do not request live scores.
 
-The contact address uses the reserved `.example` domain.
-It is not a club mailbox.
+The [MLB box score](https://www.mlb.com/gameday/guardians-vs-rays/2026/10/19/849815/final/box) identifies the game as `849815`.
+The [MLB data feed](https://statsapi.mlb.com/api/v1.1/game/849815/feed/live) supplies the player statistics and inning scores.
+These records were inspected on October 22, 2026.
 
-## Players in examples
+| Item            | Record                                   |
+| --------------- | ---------------------------------------- |
+| Home team       | Tampa Bay Rays                           |
+| Visiting team   | Cleveland Guardians                      |
+| Date            | October 19, 2026                         |
+| Venue           | Tropicana Field, St. Petersburg, Florida |
+| First pitch     | 8:08 p.m. Eastern Time                   |
+| Game duration   | 2 hours, 55 minutes                      |
+| Attendance      | 40,230                                   |
+| Rays            | 7 runs, 7 hits, 0 errors                 |
+| Guardians       | 3 runs, 7 hits, 0 errors                 |
+| Winning pitcher | Freddy Peralta                           |
+| Losing pitcher  | Shawn Armstrong                          |
+| Rays manager    | Kevin Cash                               |
+| ALCS MVP        | Freddy Peralta                           |
 
-| Player          | Position    | Status     | Recorded fact                                                                 |
-| --------------- | ----------- | ---------- | ----------------------------------------------------------------------------- |
-| Jack Flaherty   | Pitcher     | Available  | He started Game 5 on October 30, 2024.                                        |
-| Freddie Freeman | First base  | Day to day | On October 7, 2024, Dave Roberts called him day to day after an ankle sprain. |
-| Tommy Edman     | Shortstop   | Available  | He started Game 5.                                                            |
-| Mookie Betts    | Right field | Available  | He started Game 5 and drove in two runs.                                      |
-| Clayton Kershaw | Pitcher     | Injured    | On October 5, 2024, his season ended with a bone spur in his left big toe.    |
+## Scoring
 
-Game 5 also started Will Smith, Shohei Ohtani, Teoscar Hernández, Kiké Hernández, Gavin Lux and Max Muncy.
-Austin Barnes was the backup catcher and did not play in that game.
+The chart shows the cumulative score after each inning.
+Tampa Bay did not bat in the ninth inning.
+The final point retains its seven runs.
 
-## Game 5
+| Team      | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   |
+| --------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Rays      | 0   | 2   | 3   | 3   | 3   | 3   | 5   | 7   | 7   |
+| Guardians | 0   | 0   | 0   | 0   | 0   | 1   | 1   | 3   | 3   |
 
-The Dodgers won 7–6 at Yankee Stadium.
-The Dodgers had seven hits and no errors.
-The Yankees had eight hits and three errors.
-First pitch was 8:08 p.m. local time.
+The [MLB recap](https://www.mlb.com/news/rays-win-alcs-2026) describes the game.
+Richie Palacios hit a two-run double in the second inning.
+Jonny DeLuca added a sacrifice fly in the third inning.
+Junior Caminero hit a two-run home run in the seventh inning.
+Yandy Díaz hit a two-run home run in the eighth inning.
 
-The game lasted 3 hours and 42 minutes.
-The Dodgers won the World Series 4 games to 1.
-That game was the last game of the series.
+Liam Hicks caught Chase DeLauter's foul pop for the final out.
+Bryan Baker retired all three batters in the ninth inning.
+The [MLB pennant report](https://www.mlb.com/rays/news/rays-reach-world-series-on-18th-anniversary-of-first-al-pennant) records that final play.
 
-Cumulative runs after each inning:
+## Player statistics
 
-| Club    | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   |
-| ------- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Dodgers | 0   | 0   | 0   | 0   | 5   | 5   | 5   | 7   | 7   |
-| Yankees | 3   | 4   | 5   | 5   | 5   | 6   | 6   | 6   | 6   |
+Use game statistics in the batting and pitching tables.
+Do not substitute season totals or statistics from another game.
+Use the recorded defensive position for this game.
+Yandy Díaz was the designated hitter.
+Jonathan Aranda played first base.
 
-## Season runs
+Peralta pitched 5⅓ innings in Game 6.
+He allowed five hits and one earned run, with three strikeouts and three walks.
+The pitching table uses baseball notation: `5.1` means 5⅓ innings, not 5.1 decimal innings.
+The six Rays pitchers recorded 27 outs.
 
-These totals are regular-season runs from April through September 2024.
-March games are not in the monthly charts.
+Peralta's ALCS totals were 12 innings, nine strikeouts and a 0.75 earned run average (ERA).
+These are series totals, not Game 6 totals.
+See the [MLB MVP report](https://www.mlb.com/rays/news/freddy-peralta-wins-2026-alcs-mvp).
 
-| Month     | Dodgers | Yankees |
-| --------- | ------- | ------- |
-| April     | 130     | 129     |
-| May       | 120     | 135     |
-| June      | 141     | 152     |
-| July      | 104     | 129     |
-| August    | 146     | 123     |
-| September | 162     | 126     |
+The 26-player ALCS roster contains 12 pitchers and 14 position players.
+The position groups contain six infielders, five outfielders, two catchers and one designated hitter.
 
-The Dodgers scored 842 runs and allowed 686.
-The Yankees scored 815 runs and allowed 668.
+## Example behavior
 
-## Long tables and schedules
+Keep component names and API instructions in the Storybook navigation.
+Use short action labels, such as "Save game notes" and "Read game details".
+Keep the historical score separate from editable personal notes.
+Do not invent player injuries, team appointments, quotes or invitations.
 
-The long roster repeats the 2024 World Series players so a table can show many rows.
-The row number is not a statistic.
+The assistant examples answer questions from the shared record.
+They do not connect to an AI service.
+For questions outside the record, they describe the available topics.
 
-The roster tree counts that 26-man roster.
-Thirteen players are position players: five infielders, five outfielders, two catchers and one designated hitter.
-Thirteen players are pitchers.
-Clayton Kershaw is the injured-list row. He is not in that 26.
+The long table repeats the roster to test 10,000 rows.
+Its visible description identifies that repetition.
+Row numbers are not baseball statistics.
 
-The sample calendar uses October 7–11, 2024 for overlap, all-day and overnight rows.
-The clock-change day is November 3, 2024, when Eastern Time repeated 1:15 a.m.
-Those clock times are demonstration times.
-They are not official game times.
+The calendar includes personal archive reminders with example times.
+Those reminders are not official team appointments.
+The clock-change example uses November 1, 2026 in Eastern Time.
+That date is separate from the game date.
 
-## Component examples
+The `.example` email addresses are demonstration values.
+They are not team mailboxes.
+Keep generic component defaults available to other applications.
 
-Use these names and records in related examples.
-Keep the component names in the Storybook navigation.
-Use baseball copy for visible example data, labels, hints and messages.
-Keep standard control actions, such as Save, Cancel and Retry, clear.
-Use component inputs for example-specific copy.
-Update selectors and visual baselines when the example text changes.
+## Illustrations
 
-The library's generic control defaults remain available to other applications.
+The [illustration source record](../../apps/showcase/public/example-illustrations/README.md) identifies each generated image and its use.
+The five original cartoon illustrations show the pennant celebration, the final out and three players.
+They were generated from text without input photographs.
+The scenes and portraits are interpretations, not exact reconstructions.
 
-## Photo examples
-
-Avatar and media examples use local baseball photographs.
-The [photo source list](../../apps/showcase/public/example-photos/README.md) records their creators and licenses.
-Player names in examples do not identify the people in these photographs.
-The field photograph is not Dodger Stadium or Yankee Stadium.
+Keep the AI-generated illustration label in visible captions.
+Keep image descriptions in alternative text and player names in accessible avatar labels.
+Keep the generation prompts and file hashes with the assets.
+Use the MLB sources above for game facts.

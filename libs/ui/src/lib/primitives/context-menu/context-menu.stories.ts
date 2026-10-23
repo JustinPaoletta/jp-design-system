@@ -7,7 +7,7 @@ const meta: Meta<JpContextMenu> = {
   component: JpContextMenu,
   parameters: { layout: 'padded' },
   args: {
-    label: 'Game plan',
+    label: 'Game 6 notes',
     actions: [
       { id: 'rename', label: 'Rename' },
       { id: 'duplicate', label: 'Duplicate' },
@@ -27,7 +27,7 @@ const meta: Meta<JpContextMenu> = {
           ),
       },
       template: `<div style="max-width:28rem;display:grid;gap:1rem">
-        <jp-context-menu [label]="label" [actions]="actions" [disabled]="disabled" (actionSelected)="onStoryActionSelected($event)"><p style="margin:0">Game plan. Right-click or use Shift + F10.</p></jp-context-menu>
+        <jp-context-menu [label]="label" [actions]="actions" [disabled]="disabled" (actionSelected)="onStoryActionSelected($event)"><p style="margin:0">Game 6 notes. Right-click or use Shift + F10.</p></jp-context-menu>
         @if (selected()) { <p role="status" style="margin:0;font-size:var(--jp-font-size-body-sm);color:var(--jp-color-text-secondary)">{{ selected() }} selected for the game plan.</p> }
       </div>`,
     };
@@ -39,17 +39,17 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await userEvent.click(
-      c.getByRole('button', { name: 'More actions: Game plan' }),
+      c.getByRole('button', { name: 'More actions: Game 6 notes' }),
     );
     await expect(c.getByRole('menuitem', { name: 'Rename' })).toHaveFocus();
     await userEvent.keyboard('{ArrowDown}');
     await expect(c.getByRole('menuitem', { name: 'Duplicate' })).toHaveFocus();
     await userEvent.keyboard('{Escape}');
     await expect(
-      c.getByRole('button', { name: 'More actions: Game plan' }),
+      c.getByRole('button', { name: 'More actions: Game 6 notes' }),
     ).toHaveFocus();
     await userEvent.click(
-      c.getByRole('button', { name: 'More actions: Game plan' }),
+      c.getByRole('button', { name: 'More actions: Game 6 notes' }),
     );
     await expect(c.getByRole('menu')).toBeVisible();
     await userEvent.click(c.getByRole('menuitem', { name: 'Duplicate' }));
@@ -59,7 +59,7 @@ export const Default: Story = {
       ),
     );
     await userEvent.click(
-      c.getByRole('button', { name: 'More actions: Game plan' }),
+      c.getByRole('button', { name: 'More actions: Game 6 notes' }),
     );
   },
 };

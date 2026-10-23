@@ -16,15 +16,15 @@ const meta: Meta<JpTimePicker> = {
   component: JpTimePicker,
   render: (args) => ({
     props: args,
-    template: `<jp-time-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'20:00'" />`,
+    template: `<jp-time-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error || ''" [disabled]="disabled" [readonly]="readonly" [ngModel]="'20:08'" />`,
   }),
   parameters: { layout: 'padded' },
   args: {
     label: 'First pitch',
-    hint: 'Choose a 15-minute broadcast slot for Dodgers–Yankees.',
+    hint: 'Game 6 began at 8:08 p.m. Eastern Time.',
     min: '09:00',
     max: '22:00',
-    step: 900,
+    step: 60,
   },
 };
 export default meta;
@@ -60,19 +60,20 @@ export const Keyboard: Story = {
     const minute = canvas.getByRole('spinbutton', { name: 'Minute' });
     minute.focus();
     await userEvent.keyboard('{ArrowUp}{Enter}');
-    await expect(canvas.getByLabelText('First pitch')).toHaveValue('20:15');
+    await expect(canvas.getByLabelText('First pitch')).toHaveValue('20:09');
     await expect(canvas.getByLabelText('First pitch')).toHaveFocus();
     await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}{Escape}');
     await expect(canvas.queryByRole('dialog')).not.toBeInTheDocument();
-    await expect(canvas.getByLabelText('First pitch')).toHaveValue('20:15');
+    await expect(canvas.getByLabelText('First pitch')).toHaveValue('20:09');
   },
 };
 export const Seconds: Story = {
   args: {
+    label: 'Replay marker',
     min: '19:00:00.125',
     max: '22:00',
     step: 0.25,
-    hint: 'Keep the broadcast delay accurate to a quarter second.',
+    hint: 'Example replay marker, adjustable by a quarter second.',
   },
   render: (args) => ({
     props: args,
@@ -103,7 +104,7 @@ export const Invalid: Story = {
 export const InsideDialog: Story = {
   render: (args) => ({
     props: { ...args, dialogVisible: true },
-    template: `<jp-dialog title="Broadcast schedule" [open]="dialogVisible" (openChange)="dialogVisible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-time-picker label="First pitch" [min]="min" [max]="max" [step]="step" [ngModel]="'20:00'" /></div></jp-dialog>`,
+    template: `<jp-dialog title="Broadcast schedule" [open]="dialogVisible" (openChange)="dialogVisible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-time-picker label="First pitch" [min]="min" [max]="max" [step]="step" [ngModel]="'20:08'" /></div></jp-dialog>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

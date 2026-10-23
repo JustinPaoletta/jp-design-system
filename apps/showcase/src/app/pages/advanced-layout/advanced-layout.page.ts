@@ -1,3 +1,4 @@
+import { GAME_SIX_ILLUSTRATIONS } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -56,26 +57,25 @@ export class AdvancedLayoutPage {
     { key: 'status', header: 'Status', width: 190 },
   ];
   readonly rows = [
-    ['Jack Flaherty', 'Pitcher', 'Available'],
-    ['Freddie Freeman', 'First base', 'Day to day'],
-    ['Tommy Edman', 'Shortstop', 'Available'],
-    ['Mookie Betts', 'Right field', 'Available'],
-    ['Clayton Kershaw', 'Pitcher', 'Injured'],
-    ['Will Smith', 'Catcher', 'Available'],
-    ['Shohei Ohtani', 'Designated hitter', 'Available'],
-    ['Teoscar Hernández', 'Left field', 'Available'],
-    ['Kiké Hernández', 'Center field', 'Available'],
-    ['Gavin Lux', 'Second base', 'Available'],
-    ['Max Muncy', 'Third base', 'Available'],
-    ['Austin Barnes', 'Catcher', 'Bench'],
-    ['Yoshinobu Yamamoto', 'Pitcher', 'Available'],
-    ['Walker Buehler', 'Pitcher', 'Available'],
-    ['Blake Treinen', 'Pitcher', 'Available'],
-    ['Miguel Rojas', 'Shortstop', 'Available'],
+    ['Freddy Peralta', 'Pitcher', 'Starter'],
+    ['Yandy Díaz', 'Designated hitter', 'Home run'],
+    ['Taylor Walls', 'Shortstop', 'Starter'],
+    ['Junior Caminero', 'Third base', 'Home run'],
+    ['Bryan Baker', 'Pitcher', 'Relief'],
+    ['Liam Hicks', 'Catcher', 'Starter'],
+    ['Jonathan Aranda', 'First base', 'Starter'],
+    ['Chandler Simpson', 'Left field', 'Starter'],
+    ['Jonny DeLuca', 'Center field', 'Starter'],
+    ['Richie Palacios', 'Second base', 'Starter'],
+    ['Victor Mesa Jr.', 'Right field', 'Starter'],
+    ['Cam Booser', 'Pitcher', 'Relief'],
+    ['Tyler Wells', 'Pitcher', 'Relief'],
+    ['Ian Seymour', 'Pitcher', 'Relief'],
+    ['Kevin Kelly', 'Pitcher', 'Relief'],
   ].map(([name, region, status], index) => ({
     id: 'service-' + index,
     name,
-    owner: 'Dave Roberts',
+    owner: 'Kevin Cash',
     region,
     status,
   }));
@@ -86,7 +86,8 @@ export class AdvancedLayoutPage {
   readonly selected = signal<JpTableRowKey[]>([]);
   readonly size = signal(35);
   readonly collapsed = signal(false);
-  readonly mediaSource = signal('/media-preview.svg');
+  readonly artwork = GAME_SIX_ILLUSTRATIONS.celebration;
+  readonly mediaSource = signal<string>(this.artwork.src);
   readonly storageStatus = signal('Preferences are saved on this device.');
   readonly detailAction = signal('');
   constructor() {

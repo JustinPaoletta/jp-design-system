@@ -20,7 +20,7 @@ import {
 export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
   {
     key: 'brand',
-    label: 'Club documents',
+    label: 'Game 6 documents',
     children: [
       {
         key: 'logos',
@@ -39,7 +39,7 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
   },
   {
     key: 'product',
-    label: 'Game documents',
+    label: 'Game 6 records',
     children: [
       { key: 'icons', label: 'Field-positions.svg' },
       { key: 'illustrations', label: 'Field-diagram.svg' },
@@ -47,7 +47,7 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
   },
   {
     key: 'shared',
-    label: 'Training guides',
+    label: 'Archive guides',
     hasChildren: true,
     loadState: 'idle',
   },
@@ -62,48 +62,48 @@ export const HIERARCHY_ASSETS: readonly JpTreeNode[] = [
 export const HIERARCHY_PROJECTS: readonly JpTreeTableRow[] = [
   {
     key: 'website',
-    label: '2024 Dodgers',
-    cells: { owner: 'Dave Roberts', status: 'Available', hours: 26 },
+    label: '2026 Rays',
+    cells: { owner: 'Kevin Cash', status: 'Starter', hours: 26 },
     children: [
       {
         key: 'design',
         label: 'Position players',
-        cells: { owner: 'Freddie Freeman', status: 'Available', hours: 13 },
+        cells: { owner: 'Yandy Díaz', status: 'Starter', hours: 14 },
         children: [
           {
             key: 'landing',
             label: 'Infield',
-            cells: { owner: 'Freddie Freeman', status: 'Available', hours: 5 },
+            cells: { owner: 'Taylor Walls', status: 'Rostered', hours: 6 },
           },
           {
             key: 'checkout',
             label: 'Outfield',
-            cells: { owner: 'Mookie Betts', status: 'Available', hours: 5 },
+            cells: { owner: 'Chandler Simpson', status: 'Rostered', hours: 5 },
           },
           {
             key: 'catchers',
             label: 'Catchers',
-            cells: { owner: 'Will Smith', status: 'Available', hours: 2 },
+            cells: { owner: 'Liam Hicks', status: 'Starter', hours: 2 },
           },
           {
             key: 'dh',
             label: 'Designated hitter',
-            cells: { owner: 'Shohei Ohtani', status: 'Available', hours: 1 },
+            cells: { owner: 'Yandy Díaz', status: 'Starter', hours: 1 },
           },
         ],
       },
       {
         key: 'engineering',
         label: 'Pitchers',
-        cells: { owner: 'Jack Flaherty', status: 'Available', hours: 13 },
+        cells: { owner: 'Freddy Peralta', status: 'Starter', hours: 12 },
       },
     ],
   },
   {
     key: 'legacy',
-    label: 'Injured list',
+    label: '2025 archive',
     disabled: true,
-    cells: { owner: 'Clayton Kershaw', status: 'Injured', hours: 1 },
+    cells: { owner: '—', status: 'Archived', hours: '—' },
   },
 ];
 
@@ -131,11 +131,11 @@ export class HierarchyPage {
       }
       return null;
     };
-    return find(this.assets()) ?? 'No club document selected';
+    return find(this.assets()) ?? 'No game document selected';
   });
   readonly projects = HIERARCHY_PROJECTS;
   readonly columns: readonly JpTreeTableColumn[] = [
-    { key: 'owner', header: 'Lead' },
+    { key: 'owner', header: 'Featured player' },
     { key: 'status', header: 'Status' },
     { key: 'hours', header: 'Players', align: 'end' },
   ];

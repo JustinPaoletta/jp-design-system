@@ -44,7 +44,7 @@ for (const route of routes) {
           const calendarFrame = page.locator('jp-scheduling-calendar .days');
           if (route === 'scheduling') {
             await expect(
-              page.getByRole('button', { name: /^Lineup meeting,/ }),
+              page.getByRole('button', { name: /^Review Game 6 notes,/ }),
             ).toBeInViewport();
             initialCalendarScroll = await calendarFrame.evaluate(
               (element) => element.scrollTop,

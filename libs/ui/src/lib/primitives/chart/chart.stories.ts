@@ -1,3 +1,4 @@
+import { GAME_SIX_INNINGS, GAME_SIX_SCORE_SERIES } from '../game-six.example';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { JpChart } from './chart';
@@ -7,12 +8,10 @@ const meta: Meta<JpChart> = {
   parameters: { layout: 'padded' },
   args: {
     id: 'story-chart',
-    label: 'Runs by month',
-    labels: ['April', 'May', 'June'],
-    series: [
-      { id: 'product', label: 'Dodgers', values: [130, 120, 141] },
-      { id: 'platform', label: 'Yankees', values: [129, 135, 152] },
-    ],
+    label: 'Game 6 · Cumulative runs',
+    description: 'Score after each inning. Tampa Bay did not bat in the ninth.',
+    labels: GAME_SIX_INNINGS,
+    series: GAME_SIX_SCORE_SERIES,
   },
 };
 export default meta;
@@ -36,20 +35,22 @@ export const AccessibleData: Story = {
         'true',
       ),
     );
-    await userEvent.click(c.getByRole('button', { name: 'Dodgers' }));
-    await expect(c.getByRole('button', { name: 'Dodgers' })).toHaveAttribute(
+    await userEvent.click(c.getByRole('button', { name: 'Rays' }));
+    await expect(c.getByRole('button', { name: 'Rays' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
     await userEvent.click(
       c.getByRole('combobox', { name: 'Inspect category' }),
     );
-    await userEvent.click(await c.findByRole('option', { name: 'June' }));
-    await expect(c.getByText('Yankees · June')).toBeVisible();
+    await userEvent.click(await c.findByRole('option', { name: '8th' }));
+    await expect(c.getByText('Guardians · 8th')).toBeVisible();
     await userEvent.click(
       c.getByText('View chart data', { selector: 'summary' }),
     );
-    await expect(c.getByRole('table', { name: 'Runs by month' })).toBeVisible();
-    await expect(c.getByRole('cell', { name: '141' })).toBeVisible();
+    await expect(
+      c.getByRole('table', { name: 'Game 6 · Cumulative runs' }),
+    ).toBeVisible();
+    await expect(c.getAllByRole('cell', { name: '7' })[0]).toBeVisible();
   },
 };

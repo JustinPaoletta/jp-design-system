@@ -41,7 +41,7 @@
         "^production",
         "{projectRoot}/.storybook/**/*",
         "{projectRoot}/tsconfig.storybook.json",
-        "{workspaceRoot}/apps/showcase/public/example-photos/**/*"
+        "{workspaceRoot}/apps/showcase/public/example-illustrations/**/*"
       ],
       "executor": "@storybook/angular:build-storybook",
       "outputs": ["{options.outputDir}"],

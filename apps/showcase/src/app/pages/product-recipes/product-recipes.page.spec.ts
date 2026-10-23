@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ProductRecipesPage } from './product-recipes.page';
 
-describe('Dodgers recipe request recovery', () => {
+describe('Rays recipe request recovery', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     TestBed.configureTestingModule({ imports: [ProductRecipesPage] });
@@ -33,15 +33,15 @@ describe('Dodgers recipe request recovery', () => {
   });
   it('clears the saved state when any field changes and recognizes the saved values', () => {
     const page = create().componentInstance;
-    page.form.controls.email.setValue('manager@dodgers.example');
+    page.form.controls.email.setValue('fan@rays.example');
     page.save();
     jest.runOnlyPendingTimers();
     page.save();
     jest.runOnlyPendingTimers();
     expect(page.saved()).toBe(true);
-    page.form.controls.email.setValue('notes@dodgers.example');
+    page.form.controls.email.setValue('notes@rays.example');
     expect(page.saved()).toBe(false);
-    page.form.controls.email.setValue('manager@dodgers.example');
+    page.form.controls.email.setValue('fan@rays.example');
     expect(page.saved()).toBe(true);
     page.form.controls.region.setValue('eu');
     expect(page.saved()).toBe(false);
@@ -53,21 +53,21 @@ describe('Dodgers recipe request recovery', () => {
   });
   it('saves the submitted snapshot without marking edits during a request as saved', () => {
     const page = create().componentInstance;
-    page.form.controls.email.setValue('manager@dodgers.example');
+    page.form.controls.email.setValue('fan@rays.example');
     page.save();
     jest.runOnlyPendingTimers();
     page.save();
-    page.form.controls.email.setValue('notes@dodgers.example');
+    page.form.controls.email.setValue('notes@rays.example');
     page.form.markAsDirty();
     jest.runOnlyPendingTimers();
     expect(page.saving()).toBe(false);
-    expect(page.savedValue()?.email).toBe('manager@dodgers.example');
-    expect(page.form.controls.email.value).toBe('notes@dodgers.example');
+    expect(page.savedValue()?.email).toBe('fan@rays.example');
+    expect(page.form.controls.email.value).toBe('notes@rays.example');
     expect(page.saved()).toBe(false);
     expect(page.form.dirty).toBe(true);
     page.save();
     jest.runOnlyPendingTimers();
-    expect(page.savedValue()?.email).toBe('notes@dodgers.example');
+    expect(page.savedValue()?.email).toBe('notes@rays.example');
     expect(page.saved()).toBe(true);
     expect(page.form.pristine).toBe(true);
   });
@@ -105,15 +105,15 @@ describe('Dodgers recipe request recovery', () => {
   it('resets paging on search/sort and calculates filtered pages', () => {
     const page = create().componentInstance;
     page.page.set(2);
-    page.setSearch('Jack');
+    page.setSearch('Freddy');
     expect(page.page()).toBe(1);
     expect(page.visible()).toHaveLength(1);
     expect(page.filters()).toHaveLength(1);
     page.setSearch('');
     page.setSort({ key: 'name', direction: 'desc' });
-    expect(page.filtered()[0]['name']).toBe('Tommy Edman');
+    expect(page.filtered()[0]['name']).toBe('Yandy Díaz');
     page.setSort({ key: 'name', direction: 'asc' });
-    expect(page.filtered()[0]['name']).toBe('Clayton Kershaw');
+    expect(page.filtered()[0]['name']).toBe('Bryan Baker');
     page.setSort(null);
     expect(page.filtered()).toEqual(page.records());
     expect(page.filters()).toEqual([]);

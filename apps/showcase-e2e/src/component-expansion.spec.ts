@@ -9,10 +9,12 @@ test.beforeEach(async ({ page }) => {
 test('component expansion: native disclosure keyboard operation and exclusive grouping', async ({
   page,
 }) => {
-  const general = page.locator('summary').filter({ hasText: 'Club settings' });
+  const general = page
+    .locator('summary')
+    .filter({ hasText: 'Archive settings' });
   const advanced = page
     .locator('summary')
-    .filter({ hasText: 'Club preferences' });
+    .filter({ hasText: 'Archive preferences' });
   // Assert the native grouping contract in both supported browser engines.
   await expect(general.locator('..')).toHaveJSProperty(
     'name',
@@ -37,7 +39,9 @@ test('component expansion: native disclosure keyboard operation and exclusive gr
 test('component expansion: search clearing, password reveal, and form validation recovery', async ({
   page,
 }) => {
-  const search = page.getByRole('searchbox', { name: 'Search clubs' });
+  const search = page.getByRole('searchbox', {
+    name: 'Search game collections',
+  });
   await search.fill('gateway');
   await page.getByRole('button', { name: 'Clear search' }).click();
   await expect(search).toHaveValue('');
@@ -60,7 +64,7 @@ test('component expansion: search clearing, password reveal, and form validation
   ).toBeFocused();
   await page
     .getByRole('textbox', { name: 'Email', exact: true })
-    .fill('lineup@dodgers.example');
+    .fill('lineup@rays.example');
   await page.getByRole('button', { name: 'Save preferences' }).click();
   await expect(
     page.getByRole('status').filter({ hasText: 'Preferences saved' }),
@@ -73,21 +77,21 @@ test('component expansion: multi-select preserves selections, supports keys, and
 }) => {
   const query = page.getByRole('combobox', { name: 'Players' });
   await query.focus();
-  await query.fill('Tommy');
+  await query.fill('Taylor');
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await expect(query).toHaveAttribute('aria-expanded', 'true');
   await page.keyboard.press('Escape');
   await expect(query).toHaveAttribute('aria-expanded', 'false');
   await query.click();
-  await query.fill('Injured');
+  await query.fill('Relief');
   await expect(
-    page.getByRole('option', { name: 'Injured player' }),
+    page.getByRole('option', { name: 'Relief player' }),
   ).toHaveAttribute('aria-disabled', 'true');
   await page.keyboard.press('Enter');
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(2);
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Remove Tommy Edman' }).click();
+  await page.getByRole('button', { name: 'Remove Taylor Walls' }).click();
   await expect(page.locator('jp-multi-select jp-chip')).toHaveCount(1);
   await expect(query).toBeFocused();
 });
@@ -97,7 +101,7 @@ test('component expansion: drawer traps focus, dismisses, and returns to its ope
 }) => {
   const opener = page.getByRole('button', { name: 'Open details' });
   await opener.click();
-  const drawer = page.getByRole('dialog', { name: 'Club details' });
+  const drawer = page.getByRole('dialog', { name: 'Game 6 details' });
   await expect(drawer).toBeVisible();
   await expect(
     drawer.getByRole('button', { name: 'Close panel' }),
@@ -164,11 +168,11 @@ test('component expansion: mobile RTL layout fits the viewport', async ({
   ).toBe(true);
   await page.getByRole('button', { name: 'Open details' }).click();
   await expect(
-    page.getByRole('dialog', { name: 'Club details' }),
+    page.getByRole('dialog', { name: 'Game 6 details' }),
   ).toBeVisible();
   expect(
     await page
-      .getByRole('dialog', { name: 'Club details' })
+      .getByRole('dialog', { name: 'Game 6 details' })
       .evaluate((el) => el.getBoundingClientRect().left),
   ).toBeLessThan(5);
   await page.screenshot({

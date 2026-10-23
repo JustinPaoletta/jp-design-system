@@ -1,12 +1,12 @@
 <div class="page">
   <jp-page-header
-    title="2024 Dodgers roster"
-    description="Browse club documents and the 26-man World Series roster."
+    title="2026 Rays roster"
+    description="Browse game documents and the 26-player ALCS roster."
   />
   <div class="workspace">
-    <jp-card title="Club documents">
+    <jp-card title="Game 6 documents">
       <p>
-        Arrow keys move focus without selecting. Enter opens a club document;
+        Arrow keys move focus without selecting. Enter opens a game document;
         Space selects it. Use the disclosure arrow to expand a folder.
       </p>
       <div class="actions">
@@ -16,7 +16,7 @@
       </div>
       <jp-tree-view
         id="asset-browser"
-        label="Club documents"
+        label="Game 6 documents"
         [nodes]="assets()"
         [expandedKeys]="folders()"
         (expandedKeysChange)="folders.set($event)"
@@ -29,7 +29,7 @@
         Selected document: <strong>{{ assetName() }}</strong>
       </p>
       <p class="hint">
-        Training guides simulates an unavailable request. Expand it, then retry
+        Archive guides simulates an unavailable request. Expand it, then retry
         with Enter or the retry control.
       </p>
       <p role="status">{{ opened() }}</p>
@@ -41,7 +41,7 @@
       </p>
       <jp-tree-table
         id="project-breakdown"
-        caption="2024 Dodgers roster"
+        caption="2026 Rays roster"
         nameHeader="Group"
         [rows]="projects"
         [columns]="columns"

@@ -50,7 +50,7 @@ const meta: Meta<JpHeading> = {
         </div>
         <div class="jp-heading-story__sample">
           <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
-            Dodgers clubhouse
+            Game 6 archive
           </jp-heading>
         </div>
       </div>
@@ -131,27 +131,27 @@ export const Scale: Story = {
       <div class="jp-heading-story__scale">
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h1</div>
-          <jp-heading as="h1">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h1">Tampa Bay Rays game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h2</div>
-          <jp-heading as="h2">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h2">Tampa Bay Rays game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h3</div>
-          <jp-heading as="h3">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h3">Tampa Bay Rays game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h4</div>
-          <jp-heading as="h4">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h4">Tampa Bay Rays game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h5</div>
-          <jp-heading as="h5">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h5">Tampa Bay Rays game day</jp-heading>
         </div>
         <div class="jp-heading-story__row">
           <div class="jp-heading-story__eyebrow">h6</div>
-          <jp-heading as="h6">Los Angeles Dodgers game day</jp-heading>
+          <jp-heading as="h6">Tampa Bay Rays game day</jp-heading>
         </div>
       </div>
     `,
@@ -182,7 +182,7 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-heading-story__tones">
-        <jp-heading as="h3" tone="primary">Dodgers game day</jp-heading>
+        <jp-heading as="h3" tone="primary">Rays game day</jp-heading>
         <jp-heading as="h3" tone="secondary">Starting lineup</jp-heading>
         <jp-heading as="h3" tone="muted">Game notes</jp-heading>
         <jp-heading as="h3" tone="disabled">Previous season</jp-heading>

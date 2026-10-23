@@ -51,7 +51,7 @@ const meta: Meta<ControlsFormArgs> = {
   args: {
     sidebarCollapsed: false,
     mobileNavOpen: false,
-    email: 'manager@dodgers.example',
+    email: 'fan@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -78,7 +78,7 @@ const meta: Meta<ControlsFormArgs> = {
         save(form: NgForm) {
           saved.set({ ...form.value });
           form.form.markAsPristine();
-          feedback.set('Lineup saved in this preview.');
+          feedback.set('Game notes saved in this preview.');
         },
         cancel(form: NgForm) {
           form.resetForm(saved() ?? defaults);
@@ -218,7 +218,7 @@ const meta: Meta<ControlsFormArgs> = {
         (sidebarCollapsedChange)="onSidebarCollapsedChange($event)"
         (mobileNavOpenChange)="onMobileNavOpenChange($event)"
       >
-        <span jpAppShellBrand>Los Angeles Dodgers</span>
+        <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
           <jp-stack gap="2xs">
             <jp-app-shell-nav-item
@@ -267,20 +267,20 @@ const meta: Meta<ControlsFormArgs> = {
         <jp-input
           label="Email"
           type="email"
-          placeholder="manager@dodgers.example"
-          hint="Used for Dodgers club messages."
+          placeholder="fan@rays.example"
+          hint="Your archive account uses this address."
           [(ngModel)]="email"
           name="email"
         />
         <jp-select
-          label="Club role"
+          label="Archive role"
           [options]="roleOptions"
           [(ngModel)]="role"
           name="role"
         />
       </div>
       <jp-textarea
-        label="Manager notes"
+        label="Your game notes"
         placeholder="Add lineup changes or reminders for the coaching staff."
         rows="3"
         [(ngModel)]="notes"
@@ -288,9 +288,9 @@ const meta: Meta<ControlsFormArgs> = {
       />
       <div class="lineup-editor__messages">
         <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
-          Get club messages
+          Get Game 6 updates
         </jp-checkbox>
-        <p>Game changes and lineup updates from the Dodgers.</p>
+        <p>Updates about your Game 6 collection.</p>
       </div>
     </div>
     <div jpCardActions class="lineup-editor__footer">
@@ -347,8 +347,8 @@ export const Default: Story = {
     await expect(email).toBeTruthy();
     if (email) {
       await userEvent.clear(email);
-      await userEvent.type(email, 'manager@dodgers.example');
-      await expect(email.value).toBe('manager@dodgers.example');
+      await userEvent.type(email, 'fan@rays.example');
+      await expect(email.value).toBe('fan@rays.example');
       email.blur();
       await expect(email).not.toHaveFocus();
     }

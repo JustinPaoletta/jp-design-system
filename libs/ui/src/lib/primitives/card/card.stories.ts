@@ -1,3 +1,5 @@
+import { GAME_SIX_ILLUSTRATIONS } from '../game-six.example';
+import { JpMedia } from '../media/media';
 import { Component, input, signal } from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
@@ -7,24 +9,33 @@ import { JpCard } from './card';
 
 @Component({
   selector: 'jp-card-reference',
-  imports: [JpCard, JpBadge, JpButton],
+  imports: [JpCard, JpBadge, JpButton, JpMedia],
   styleUrl: './card.stories.scss',
   template: `
     <div class="card-stage">
       <jp-card [title]="title()">
         <jp-badge jpCardHeader tone="neutral" size="sm">Final</jp-badge>
-        <p class="game-date">October 30, 2024 · Yankee Stadium</p>
+        <jp-media
+          [src]="artwork.src"
+          [alt]="artwork.alt"
+          [caption]="artwork.caption"
+          [aspectRatio]="4 / 3"
+          loading="eager"
+        />
+        <p class="game-date">October 19, 2026 · Tropicana Field</p>
         <dl class="scoreboard" aria-label="Final score">
           <div class="team winner">
-            <dt>Los Angeles Dodgers <span>Away</span></dt>
+            <dt>Tampa Bay Rays <span>Home</span></dt>
             <dd><span class="sr-only">Runs: </span>7</dd>
           </div>
           <div class="team">
-            <dt>New York Yankees <span>Home</span></dt>
-            <dd><span class="sr-only">Runs: </span>6</dd>
+            <dt>Cleveland Guardians <span>Away</span></dt>
+            <dd><span class="sr-only">Runs: </span>3</dd>
           </div>
         </dl>
-        <p class="game-summary">Seven hits. No errors. A Dodgers win.</p>
+        <p class="game-summary">
+          Seven runs. One pennant. A night to remember.
+        </p>
         <div jpCardActions class="recap-actions">
           <jp-button [disabled]="saved()" (click)="saved.set(true)">
             {{ saved() ? 'Recap saved' : 'Save recap' }}
@@ -38,7 +49,8 @@ import { JpCard } from './card';
   `,
 })
 class CardReferenceStory {
-  readonly title = input('Game recap');
+  readonly artwork = GAME_SIX_ILLUSTRATIONS.celebration;
+  readonly title = input('American League champions');
   readonly saved = signal(false);
 }
 
@@ -47,7 +59,7 @@ const meta: Meta<JpCard> = {
   component: JpCard,
   decorators: [moduleMetadata({ imports: [JpButton, CardReferenceStory] })],
   parameters: { layout: 'padded' },
-  args: { title: 'Game recap' },
+  args: { title: 'American League champions' },
   render: (args) => ({
     props: args,
     template: `<jp-card-reference [title]="title" />`,
@@ -60,7 +72,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
-      canvas.getByRole('heading', { name: 'Game recap' }),
+      canvas.getByRole('heading', { name: 'American League champions' }),
     ).toBeVisible();
     await expect(
       canvas.getByRole('button', { name: 'Save recap' }),
@@ -82,19 +94,19 @@ export const Saved: Story = {
 };
 
 export const Plain: Story = {
-  args: { title: 'Game 5' },
+  args: { title: 'Game 6' },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>World Series Game 5 is October 30, 2024 at Yankee Stadium. First pitch is at 8:08 p.m.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Tampa Bay clinched the American League pennant on October 19, 2026. The Rays beat Cleveland 7–3 at Tropicana Field and won the series 4–2.</p></jp-card></div>`,
   }),
 };
 
 export const LongContent: Story = {
   args: {
-    title: 'Los Angeles Dodgers postseason roster and player availability',
+    title: 'The players who brought the pennant home',
   },
   render: (args) => ({
     props: args,
-    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Dave Roberts managed the Dodgers. On October 7, Freddie Freeman was day to day with a sprained right ankle. Clayton Kershaw’s 2024 season ended on October 5.</p><p>Jack Flaherty started World Series Game 5. Mookie Betts and Freddie Freeman drove in runs.</p></jp-card></div>`,
+    template: `<div style="max-inline-size: 32rem; margin: var(--jp-space-lg) auto"><jp-card [title]="title"><p>Freddy Peralta set the tone with 5⅓ innings of one-run pitching. Richie Palacios put Tampa Bay ahead with a two-run double in the second.</p><p>Junior Caminero homered in the seventh. Yandy Díaz added a two-run shot in the eighth. In the ninth, Liam Hicks caught the final out, and Tampa Bay celebrated its third American League pennant.</p></jp-card></div>`,
   }),
 };

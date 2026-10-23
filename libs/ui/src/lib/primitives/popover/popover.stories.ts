@@ -14,7 +14,7 @@ import { JpPopover, JpPopoverContent, JpPopoverTrigger } from './popover';
       <jp-button jpPopoverTrigger type="button" variant="secondary">
         Filters
       </jp-button>
-      <div jpPopoverContent aria-label="Roster filters">
+      <div jpPopoverContent aria-label="Game 6 player filters">
         <p>Choose a squad and player position.</p>
       </div>
     </jp-popover>
@@ -88,7 +88,7 @@ export const ViewportEdge: Story = {
 export const NestedPanels: Story = {
   render: () => ({
     props: { outer: false, inner: false },
-    template: `<jp-popover [open]="outer" (openChange)="outer = $event"><jp-button variant="secondary" jpPopoverTrigger>Open roster</jp-button><div jpPopoverContent aria-label="Roster actions"><p>Escape closes the child first.</p><jp-popover [open]="inner" (openChange)="inner = $event"><jp-button variant="secondary" jpPopoverTrigger>Open player details</jp-button><div jpPopoverContent aria-label="Player details">Jack Flaherty starts at pitcher.</div></jp-popover></div></jp-popover>`,
+    template: `<jp-popover [open]="outer" (openChange)="outer = $event"><jp-button variant="secondary" jpPopoverTrigger>Open roster</jp-button><div jpPopoverContent aria-label="Roster actions"><p>Escape closes the child first.</p><jp-popover [open]="inner" (openChange)="inner = $event"><jp-button variant="secondary" jpPopoverTrigger>Open player details</jp-button><div jpPopoverContent aria-label="Player details">Freddy Peralta earned the win and ALCS MVP honors.</div></jp-popover></div></jp-popover>`,
   }),
   play: async ({ canvasElement }) => {
     const triggers = canvasElement.querySelectorAll('[jppopovertrigger]');

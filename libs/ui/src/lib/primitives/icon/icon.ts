@@ -11,6 +11,8 @@ export const JP_ICON_PATHS = {
   search: 'M10.8 10.8l3.4 3.4M12 7a5 5 0 1 1-10 0 5 5 0 0 1 10 0',
   'chevron-down': 'M3.5 6l4.5 4 4.5-4',
   'chevron-right': 'M6 3.5l4 4.5-4 4.5',
+  play: 'M5 3.5 12 8 5 12.5z',
+  pause: 'M5.5 3.5v9m5-9v9',
   plus: 'M8 3v10M3 8h10',
   minus: 'M3 8h10',
   info: 'M8 7.5v4M8 4.5h.01M14 8a6 6 0 1 1-12 0 6 6 0 0 1 12 0',

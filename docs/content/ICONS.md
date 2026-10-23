@@ -8,7 +8,7 @@ Existing projection slots also accept consumer-authored inline SVG.
 ## Built-in glyphs
 
 Names: `check`, `close`, `search`, `chevron-down`, `chevron-right`, `plus`,
-`minus`, `info`, `warning`, `user`, `copy`, `external-link`. The typed
+`minus`, `info`, `warning`, `user`, `copy`, `external-link`, `play`, `pause`. The typed
 `JpIconName` and `JP_ICON_PATHS` exports define the inventory. See
 [the icon API](../COMPONENT_EXPANSION.md) and
 [original source](../../libs/ui/src/lib/primitives/icon/icon.ts).

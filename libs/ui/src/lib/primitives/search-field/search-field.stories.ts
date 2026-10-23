@@ -15,7 +15,7 @@ const meta: Meta<JpSearchField> = {
   ],
   component: JpSearchField,
   parameters: { layout: 'padded' },
-  args: { label: 'Search clubs', placeholder: 'Search by name' },
+  args: { label: 'Search game collections', placeholder: 'Search by name' },
 };
 export default meta;
 type Story = StoryObj<JpSearchField>;
@@ -28,6 +28,6 @@ export const Invalid: Story = {
 export const Populated: Story = {
   render: (args) => ({
     props: args,
-    template: `<jp-search-field [label]="label" [ngModel]="'Dodgers'" />`,
+    template: `<jp-search-field [label]="label" [ngModel]="'Rays'" />`,
   }),
 };

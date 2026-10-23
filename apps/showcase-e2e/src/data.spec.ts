@@ -10,11 +10,11 @@ test.describe('data display', () => {
     const badge = page.locator('jp-table jp-badge').first();
 
     await expect(shell).toBeVisible();
-    await expect(page.locator('h1')).toContainText('Player roster');
+    await expect(page.locator('h1')).toContainText('Game 6 roster');
     await expect(table).toBeVisible();
-    await expect(page.locator('caption')).toContainText('Dodgers roster');
+    await expect(page.locator('caption')).toContainText('Rays roster');
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText('Available');
+    await expect(badge).toContainText('Starter');
   });
 
   test('filters availability and keeps the embedded table readable on a phone', async ({
@@ -22,25 +22,23 @@ test.describe('data display', () => {
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/data');
-    const table = page.getByRole('table', { name: 'Dodgers roster' });
+    const table = page.getByRole('table', { name: 'Rays roster' });
     await expect(table.getByRole('row')).toHaveCount(5);
     await page
-      .getByRole('button', { name: 'Show available', exact: true })
+      .getByRole('button', { name: 'Show starters', exact: true })
       .click();
-    await expect(table.getByRole('row')).toHaveCount(3);
+    await expect(table.getByRole('row')).toHaveCount(4);
     await expect(
-      table.getByRole('cell', { name: /Jack Flaherty/ }),
+      table.getByRole('cell', { name: /Freddy Peralta/ }),
     ).toBeVisible();
-    await expect(
-      table.getByRole('cell', { name: /Freddie Freeman/ }),
-    ).toHaveCount(0);
-    await expect(page.getByRole('status')).toHaveText('Available players only');
+    await expect(table.getByRole('cell', { name: /Bryan Baker/ })).toHaveCount(
+      0,
+    );
+    await expect(page.getByRole('status')).toHaveText('Game 6 starters');
     await page.getByRole('button', { name: 'Show all players' }).click();
+    await expect(table.getByRole('cell', { name: /Yandy Díaz/ })).toBeVisible();
     await expect(
-      table.getByRole('cell', { name: /Freddie Freeman/ }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('region', { name: 'Dodgers roster' }),
+      page.getByRole('region', { name: 'Rays roster' }),
     ).toBeVisible();
     expect(
       await page.evaluate(

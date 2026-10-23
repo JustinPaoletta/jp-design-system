@@ -9,7 +9,7 @@ describe('AdvancedLayoutPage', () => {
     const fixture = TestBed.createComponent(AdvancedLayoutPage);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('jp-split-pane')).toBeTruthy();
-    expect(fixture.nativeElement.querySelectorAll('tbody tr')).toHaveLength(16);
+    expect(fixture.nativeElement.querySelectorAll('tbody tr')).toHaveLength(15);
     fixture.nativeElement.querySelector('.jp-table__expand').click();
     fixture.detectChanges();
     expect(

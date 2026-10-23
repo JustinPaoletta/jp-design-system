@@ -27,7 +27,7 @@ test('press feedback is immediate without activating early or moving the button'
   await expect(page.getByRole('status')).toHaveCount(0);
   await page.mouse.up();
   await expect(page.getByRole('status')).toHaveText(
-    'Lineup saved in this preview.',
+    'Game notes saved in this preview.',
   );
 
   await page.keyboard.press('Tab');
@@ -123,10 +123,10 @@ test('menus open and dismiss without layout animation or delayed keyboard focus'
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/controls');
-  const select = page.getByRole('combobox', { name: 'Club role' });
+  const select = page.getByRole('combobox', { name: 'Archive role' });
   await select.focus();
   await select.press('Enter');
-  const menu = page.getByRole('listbox', { name: 'Club role' });
+  const menu = page.getByRole('listbox', { name: 'Archive role' });
   await expect(menu).toBeVisible();
   await expect(select).toHaveAttribute('aria-expanded', 'true');
   expect(
@@ -204,7 +204,7 @@ test('reduced motion removes hover, switch, drawer and loading animation', async
   ).toBe('0s');
   await page.goto('/component-expansion');
   await page.getByRole('button', { name: 'Open details' }).click();
-  const drawer = page.getByRole('dialog', { name: 'Club details' });
+  const drawer = page.getByRole('dialog', { name: 'Game 6 details' });
   expect(
     await drawer.evaluate((element) => getComputedStyle(element).animationName),
   ).toBe('none');

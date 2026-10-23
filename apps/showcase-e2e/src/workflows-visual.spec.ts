@@ -48,7 +48,9 @@ test('workflow visual commands', async ({ page }) => {
 });
 test('workflow visual context menu', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });
-  await page.getByRole('button', { name: 'More actions: Game plan' }).click();
+  await page
+    .getByRole('button', { name: 'More actions: Game 6 notes' })
+    .click();
   await expect(page.getByRole('menuitem', { name: 'Rename' })).toBeFocused();
   await expect(page).toHaveScreenshot('workflow-context.png', {
     animations: 'disabled',
@@ -57,8 +59,10 @@ test('workflow visual context menu', async ({ page }) => {
 });
 test('workflow visual failed inline save', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });
-  await page.getByRole('button', { name: 'Edit: Club name' }).click();
-  await page.getByRole('textbox', { name: 'Club name' }).fill('Updated plan');
+  await page.getByRole('button', { name: 'Edit: Collection name' }).click();
+  await page
+    .getByRole('textbox', { name: 'Collection name' })
+    .fill('Updated plan');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(
     page.getByRole('alert').filter({ hasText: 'Could not save' }),
@@ -109,7 +113,7 @@ for (const view of [
         .click();
       await expect(
         page.getByRole('dialog', {
-          name: control === 'date' ? 'Game date calendar' : 'First pitch',
+          name: control === 'date' ? 'Game date calendar' : 'Replay reminder',
           exact: true,
         }),
       ).toBeVisible();
@@ -125,8 +129,8 @@ test('workflow visual date-range validation in a narrow parent', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1000, height: 1000 });
-  await page.getByLabel('Start date', { exact: true }).fill('2024-10-30');
-  await page.getByLabel('End date', { exact: true }).fill('2024-10-25');
+  await page.getByLabel('Start date', { exact: true }).fill('2026-10-19');
+  await page.getByLabel('End date', { exact: true }).fill('2026-10-12');
   await page
     .getByRole('button', { name: 'Save schedule', exact: true })
     .click();

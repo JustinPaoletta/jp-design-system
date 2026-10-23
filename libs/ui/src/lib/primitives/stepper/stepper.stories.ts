@@ -14,7 +14,7 @@ const meta: Meta<JpStepper> = {
       {
         id: 'details',
         label: 'Details',
-        description: 'Club name and manager email',
+        description: 'Collection name and contact email',
       },
       { id: 'review', label: 'Review' },
     ],

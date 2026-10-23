@@ -17,23 +17,23 @@ test.describe('controls', () => {
     await expect(primaryButton).toBeVisible();
     await expect(primaryButton).toContainText('Save');
 
-    await emailInput.fill('notes@dodgers.example');
-    await expect(emailInput).toHaveValue('notes@dodgers.example');
+    await emailInput.fill('notes@rays.example');
+    await expect(emailInput).toHaveValue('notes@rays.example');
   });
 
   test('preview density preserves lineup form values', async ({ page }) => {
     await page.goto('/controls');
     const email = page.getByRole('textbox', { name: 'Email', exact: true });
-    const notes = page.getByRole('textbox', { name: 'Manager notes' });
-    const role = page.getByRole('combobox', { name: 'Club role' });
-    const messages = page.getByRole('checkbox', { name: 'Get club messages' });
+    const notes = page.getByRole('textbox', { name: 'Your game notes' });
+    const role = page.getByRole('combobox', { name: 'Archive role' });
+    const messages = page.getByRole('checkbox', { name: 'Get Game 6 updates' });
     const save = page.getByRole('button', { name: 'Save', exact: true });
     const preview = page
       .locator('details')
       .filter({ hasText: 'Preview settings' });
     const compact = page.getByRole('switch', { name: 'Compact density' });
 
-    await email.fill('notes@dodgers.example');
+    await email.fill('notes@rays.example');
     await notes.fill('Confirm the batting order before warmups.');
     await role.click();
     await page.getByRole('option', { name: 'Manager', exact: true }).click();
@@ -51,7 +51,7 @@ test.describe('controls', () => {
     await preview.locator('summary').click();
     await expect(compact).toBeHidden();
 
-    await expect(email).toHaveValue('notes@dodgers.example');
+    await expect(email).toHaveValue('notes@rays.example');
     await expect(notes).toHaveValue(
       'Confirm the batting order before warmups.',
     );
@@ -71,26 +71,26 @@ test.describe('controls', () => {
   }) => {
     await page.goto('/controls');
     const email = page.getByRole('textbox', { name: 'Email', exact: true });
-    const notes = page.getByRole('textbox', { name: 'Manager notes' });
-    const role = page.getByRole('combobox', { name: 'Club role' });
-    const messages = page.getByRole('checkbox', { name: 'Get club messages' });
+    const notes = page.getByRole('textbox', { name: 'Your game notes' });
+    const role = page.getByRole('combobox', { name: 'Archive role' });
+    const messages = page.getByRole('checkbox', { name: 'Get Game 6 updates' });
     const status = page.getByRole('status');
 
-    await email.fill('notes@dodgers.example');
+    await email.fill('notes@rays.example');
     await notes.fill('Confirm the batting order before warmups.');
     await role.click();
     await page.getByRole('option', { name: 'Manager', exact: true }).click();
     await messages.uncheck();
     await page.getByRole('button', { name: 'Save', exact: true }).click();
-    await expect(status).toHaveText('Lineup saved in this preview.');
+    await expect(status).toHaveText('Game notes saved in this preview.');
 
-    await email.fill('unsaved@dodgers.example');
+    await email.fill('unsaved@rays.example');
     await notes.fill('Unsaved lineup change.');
     await role.click();
     await page.getByRole('option', { name: 'Fan', exact: true }).click();
     await messages.check();
     await page.getByRole('button', { name: 'Cancel', exact: true }).click();
-    await expect(email).toHaveValue('notes@dodgers.example');
+    await expect(email).toHaveValue('notes@rays.example');
     await expect(notes).toHaveValue(
       'Confirm the batting order before warmups.',
     );
@@ -99,7 +99,7 @@ test.describe('controls', () => {
     await expect(status).toHaveText('Changes canceled.');
 
     await page.getByRole('button', { name: 'Reset', exact: true }).click();
-    await expect(email).toHaveValue('manager@dodgers.example');
+    await expect(email).toHaveValue('fan@rays.example');
     await expect(notes).toHaveValue('');
     await expect(role).toHaveText('Scorekeeper');
     await expect(messages).toBeChecked();
@@ -120,7 +120,7 @@ test.describe('controls', () => {
     page,
   }) => {
     await page.goto('/controls');
-    const role = page.getByRole('combobox', { name: 'Club role' });
+    const role = page.getByRole('combobox', { name: 'Archive role' });
     const status = page.getByRole('status', { includeHidden: true });
     await expect(role).toHaveText('Scorekeeper');
     await role.focus();
@@ -143,7 +143,7 @@ test.describe('controls', () => {
     await expect(page.getByRole('listbox')).toBeHidden();
     await expect(status).toBeEmpty();
     await page.getByRole('button', { name: 'Save', exact: true }).click();
-    await expect(status).toHaveText('Lineup saved in this preview.');
+    await expect(status).toHaveText('Game notes saved in this preview.');
     await page.getByRole('button', { name: 'Reset', exact: true }).click();
     await expect(role).toHaveText('Scorekeeper');
     await page.getByRole('button', { name: 'Cancel', exact: true }).click();

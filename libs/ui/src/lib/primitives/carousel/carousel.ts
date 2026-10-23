@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { JP_MESSAGES } from '../../i18n';
+import { JpIcon } from '../icon/icon';
 
 @Directive({ selector: 'ng-template[jpCarouselSlide]' })
 export class JpCarouselSlide {
@@ -29,7 +30,7 @@ export class JpCarouselSlide {
 /** Explicitly controlled reference cards; no motion or rotation by default. */
 @Component({
   selector: 'jp-carousel',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, JpIcon],
   templateUrl: './carousel.html',
   styleUrl: './carousel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -90,6 +91,7 @@ export class JpCarousel {
     }),
   );
   private pointer: { id: number; x: number; y: number } | null = null;
+  private rotationPointerIntent: 'pause' | 'play' | null = null;
   constructor() {
     afterNextRender(() => {
       const query =
@@ -141,9 +143,21 @@ export class JpCarousel {
   focusEntered(): void {
     this.focusStopped.set(true);
   }
-  toggleRotation(): void {
+  captureRotationIntent(event: PointerEvent): void {
+    // Pointer focus stops rotation before click. Keep the action that was pressed.
+    this.rotationPointerIntent =
+      event.button === 0 ? (this.rotating() ? 'pause' : 'play') : null;
+  }
+  clearRotationIntent(): void {
+    this.rotationPointerIntent = null;
+  }
+  toggleRotation(event?: MouseEvent): void {
+    const intent =
+      event && event.detail > 0 ? this.rotationPointerIntent : null;
+    this.clearRotationIntent();
     if (!this.autoRotate() || this.disabled() || this.reducedMotion()) return;
-    if (this.rotating()) this.paused.set(true);
+    const shouldPause = intent === null ? this.rotating() : intent === 'pause';
+    if (shouldPause) this.paused.set(true);
     else {
       this.focusStopped.set(false);
       this.paused.set(false);

@@ -63,7 +63,7 @@ const meta: Meta<JpText> = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Los Angeles Dodgers play the New York Yankees at 8:08 p.m. at Yankee Stadium.
+            On October 19, 2026, Tampa Bay beat Cleveland 7–3 at Tropicana Field and won the American League pennant.
           </jp-text>
         </div>
       </div>
@@ -143,9 +143,9 @@ export const Sizes: Story = {
       </style>
 
       <div class="jp-text-story__scale">
-        <jp-text size="body-lg">Body large — comfortable lead paragraph copy.</jp-text>
-        <jp-text size="body">Body — the default reading size for most content.</jp-text>
-        <jp-text size="caption">Caption — supporting metadata and helper text.</jp-text>
+        <jp-text size="body-lg">The pennant belongs to Tampa Bay.</jp-text>
+        <jp-text size="body">The Rays beat Cleveland 7–3 in Game 6 to win the 2026 ALCS, four games to two.</jp-text>
+        <jp-text size="caption">October 19, 2026 · Tropicana Field · St. Petersburg, Florida</jp-text>
       </div>
     `,
   }),
@@ -172,9 +172,9 @@ export const Tones: Story = {
       </style>
 
       <div class="jp-text-story__tones">
-        <jp-text tone="primary">The Dodgers won 7–6.</jp-text>
-        <jp-text tone="secondary">Jack Flaherty starts at pitcher.</jp-text>
-        <jp-text tone="muted">Final score, October 30.</jp-text>
+        <jp-text tone="primary">The Rays won 7–3.</jp-text>
+        <jp-text tone="secondary">Freddy Peralta earned the win and ALCS MVP honors.</jp-text>
+        <jp-text tone="muted">Final score · October 19, 2026.</jp-text>
         <jp-text tone="disabled">Last season is archived.</jp-text>
       </div>
     `,
@@ -230,7 +230,7 @@ export const Truncated: Story = {
         </div>
         <div class="jp-text-story__sample">
           <jp-text [as]="asTag" [size]="size" [tone]="tone" [weight]="weight" [truncate]="truncate" [mono]="mono">
-            The Los Angeles Dodgers play the New York Yankees at Yankee Stadium. First pitch is at 8:08 p.m., and Jack Flaherty starts.
+            Tampa Bay won Game 6 at Tropicana Field. Freddy Peralta started, Yandy Díaz and Junior Caminero homered, and the Rays became American League champions.
           </jp-text>
         </div>
       </div>

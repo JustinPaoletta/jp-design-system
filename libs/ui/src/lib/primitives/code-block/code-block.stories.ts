@@ -16,12 +16,12 @@ const meta: Meta<JpCodeBlock> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: 'Starting lineup',
+    label: 'Featured Game 6 players',
     language: 'TypeScript',
     code: `const lineup = [
-  { player: 'Jack Flaherty', position: 'Pitcher' },
-  { player: 'Freddie Freeman', position: 'First base' },
-  { player: 'Tommy Edman', position: 'Shortstop' },
+  { player: 'Freddy Peralta', position: 'Pitcher' },
+  { player: 'Yandy Díaz', position: 'Designated hitter' },
+  { player: 'Taylor Walls', position: 'Shortstop' },
 ];
 
 const starters = lineup.map(({ player }) => player);`,
@@ -36,7 +36,7 @@ export const Default: Story = {
     ).toHaveTextContent('const');
     await expect(
       canvasElement.querySelector('code .syntax-string'),
-    ).toHaveTextContent("'Jack Flaherty'");
+    ).toHaveTextContent("'Freddy Peralta'");
   },
 };
 export const Readonly: Story = { args: { copyable: false } };
@@ -44,11 +44,11 @@ export const LiteralMarkup: Story = {
   args: {
     label: 'HTML example',
     language: 'HTML',
-    code: '<jp-button>Save lineup</jp-button>',
+    code: '<jp-button>Save game notes</jp-button>',
   },
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('code')).toHaveTextContent(
-      '<jp-button>Save lineup</jp-button>',
+      '<jp-button>Save game notes</jp-button>',
     );
     await expect(canvasElement.querySelector('pre jp-button')).toBeNull();
   },
@@ -59,9 +59,9 @@ export const Json: Story = {
     label: 'Final game score',
     language: 'JSON',
     code: `{
-  "game": "World Series",
-  "away": { "club": "Dodgers", "runs": 7 },
-  "home": { "club": "Yankees", "runs": 6 },
+  "game": "2026 ALCS Game 6",
+  "home": { "club": "Rays", "runs": 7 },
+  "away": { "club": "Guardians", "runs": 3 },
   "final": true
 }`,
   },

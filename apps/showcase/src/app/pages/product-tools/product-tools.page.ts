@@ -1,3 +1,4 @@
+import { GAME_SIX_MOMENTS } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -78,17 +79,17 @@ export class ProductToolsPage {
   readonly checklist = [
     {
       id: 'quality',
-      label: 'Game preparation',
+      label: 'Game 6 collection',
       children: [
-        { id: 'tests', label: 'Check the lineup' },
-        { id: 'accessibility', label: 'Check the equipment' },
-        { id: 'approval', label: 'League approval', disabled: true },
+        { id: 'tests', label: 'Read the box score' },
+        { id: 'accessibility', label: 'Add photo credits' },
+        { id: 'approval', label: 'Publish collection', disabled: true },
       ],
     },
     {
       id: 'notes',
-      label: 'Write the game report',
-      description: 'Record the score and key plays.',
+      label: 'Write your Game 6 memory',
+      description: 'Add the moment you want to remember.',
     },
   ];
   steps(): readonly JpStep[] {
@@ -102,7 +103,7 @@ export class ProductToolsPage {
             : this.submitted() && (this.email.invalid || this.seats.invalid)
               ? 'error'
               : 'upcoming',
-        description: 'Manager email and player count',
+        description: 'Your email and player count',
       },
       {
         id: 'review',
@@ -112,34 +113,11 @@ export class ProductToolsPage {
       },
     ];
   }
-  readonly events = [
-    {
-      id: 'created',
-      title: 'Clayton Kershaw is out',
-      timeLabel: 'October 5, 2024',
-      dateTime: '2024-10-05',
-      description:
-        'Dave Roberts said Clayton Kershaw was out for the postseason.',
-    },
-    {
-      id: 'reviewed',
-      title: 'Freddie Freeman is day to day',
-      timeLabel: 'October 7, 2024',
-      dateTime: '2024-10-07',
-      description: 'A right ankle sprain kept his status day to day.',
-    },
-    {
-      id: 'deployment',
-      title: 'Game 5 final',
-      timeLabel: 'October 30, 2024',
-      dateTime: '2024-10-30T23:50:00-04:00',
-      description: 'Dodgers 7, Yankees 6.',
-    },
-  ];
+  readonly events = GAME_SIX_MOMENTS;
   readonly overflow = [
-    { id: 'ada', label: 'Jack Flaherty', href: '#reviewer-ada' },
-    { id: 'grace', label: 'Freddie Freeman' },
-    { id: 'linus', label: 'Tommy Edman' },
+    { id: 'ada', label: 'Freddy Peralta', href: '#reviewer-ada' },
+    { id: 'grace', label: 'Yandy Díaz' },
+    { id: 'linus', label: 'Taylor Walls' },
   ];
   readonly example =
     '<jp-number-stepper label="Players" [min]="1" [max]="10" [formControl]="seats" />';

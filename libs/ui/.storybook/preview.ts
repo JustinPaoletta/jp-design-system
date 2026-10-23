@@ -80,6 +80,32 @@ function applyStage(
       .docs-story {
         background-color: ${stageValue} !important;
       }
+
+      /*
+       * The dock is fixed to the viewport. In docs, that viewport is taller
+       * and wider than the story column, so the dock is clipped. A story
+       * frame contains it and keeps the same end-docked layout.
+       */
+      .jp-storybook-dock {
+        position: absolute;
+        inset: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .jp-storybook-dock .jp-assistant-panel__surface,
+      .jp-storybook-dock .jp-assistant-panel__scrim {
+        position: absolute !important;
+        max-width: 100% !important;
+      }
+      .jp-storybook-dock .jp-assistant-panel__surface {
+        inset-block: 0 !important;
+        inset-inline-end: 0 !important;
+        height: auto !important;
+        width: min(var(--jp-size-assistant-panel-width), 100%) !important;
+      }
+      .jp-storybook-dock .jp-assistant-panel__scrim {
+        inset: 0 !important;
+      }
     `,
   );
 

@@ -1,3 +1,4 @@
+import { gameSixAnswer } from './game-six.example';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent } from 'storybook/test';
@@ -69,7 +70,7 @@ import { JpCard } from './card/card';
       (sidebarCollapsedChange)="sidebarCollapsed = $event"
       (mobileNavOpenChange)="mobileNavOpen = $event"
     >
-      <span jpAppShellBrand>Los Angeles Dodgers</span>
+      <span jpAppShellBrand>Tampa Bay Rays</span>
       <nav jpAppShellSidebar>
         <jp-app-shell-nav-item
           href="#"
@@ -98,12 +99,15 @@ import { JpCard } from './card/card';
         <div class="example-page">
           <div class="example-page__cards">
             <header class="example-page__header">
-              <jp-heading as="h1">Dodgers assistant</jp-heading>
-              <p>Ask about the Dodgers game or roster.</p>
+              <jp-heading as="h1">Game 6 companion</jp-heading>
+              <p>Ask about the Rays game or roster.</p>
             </header>
 
-            <jp-card title="Ask the manager">
-              <p>Choose a game or roster to start a conversation.</p>
+            <jp-card title="Explore Game 6">
+              <p>
+                Explore the final score, starting lineup and plays that won the
+                pennant.
+              </p>
               <jp-inline jpCardActions gap="sm" wrap="true">
                 <jp-button
                   type="button"
@@ -130,9 +134,9 @@ import { JpCard } from './card/card';
     </jp-app-shell>
 
     <jp-assistant-panel
-      title="Dodgers manager"
+      title="Game 6 companion"
       emptyTitle="Ask about the lineup"
-      emptyDescription="Ask about players, the final score or the World Series."
+      emptyDescription="Ask about players, the final score or the ALCS."
       (messageSubmit)="onSubmit($event)"
     />
   `,
@@ -144,22 +148,22 @@ class AssistantCompositionHost {
   mobileNavOpen = false;
 
   readonly deploymentContext = {
-    label: 'World Series Game 5',
-    description: 'Dodgers 7, Yankees 6. Final score.',
+    label: '2026 ALCS Game 6',
+    description: 'Rays 7, Guardians 3. Final score.',
     entityType: 'game',
-    entityId: '775296',
+    entityId: '849815',
   };
 
   readonly filterContext = {
     label: 'Squad filters',
-    description: 'Active roster and injured list',
+    description: 'Active roster and bullpen',
     entityType: 'filters',
   };
 
   onSubmit(content: string): void {
     this.assistant.addMessage({
       role: 'assistant',
-      content: `Sample game summary for “${content}”: Dodgers 7, Yankees 6.`,
+      content: gameSixAnswer(content),
     });
   }
 }
@@ -183,7 +187,7 @@ type Story = StoryObj<JpAppShell>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Dodgers assistant',
+      'Game 6 companion',
     );
     const trigger = Array.from(canvasElement.querySelectorAll('button')).find(
       (button) => button.textContent?.trim() === 'Ask about the game',
@@ -191,7 +195,7 @@ export const Default: Story = {
     await expect(trigger).toBeTruthy();
     if (trigger) {
       await userEvent.click(trigger);
-      await expect(canvasElement.textContent).toContain('World Series Game 5');
+      await expect(canvasElement.textContent).toContain('2026 ALCS Game 6');
       await expect(
         canvasElement.querySelector('[role="complementary"]'),
       ).toBeTruthy();

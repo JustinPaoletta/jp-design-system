@@ -66,15 +66,15 @@ export const Accent: Story = {
 };
 
 export const Success: Story = {
-  args: { tone: 'success', label: 'Available' },
+  args: { tone: 'success', label: 'Starter' },
 };
 
 export const Warning: Story = {
-  args: { tone: 'warning', label: 'Day to day' },
+  args: { tone: 'warning', label: 'Home run' },
 };
 
 export const Error: Story = {
-  args: { tone: 'error', label: 'Injured' },
+  args: { tone: 'error', label: 'Relief' },
 };
 
 export const Info: Story = {
@@ -95,9 +95,9 @@ export const AllTones: Story = {
       <div style="display: flex; flex-wrap: wrap; gap: var(--jp-space-sm);">
         <jp-badge tone="neutral">Bench</jp-badge>
         <jp-badge tone="accent">Starter</jp-badge>
-        <jp-badge tone="success">Available</jp-badge>
-        <jp-badge tone="warning">Day to day</jp-badge>
-        <jp-badge tone="error">Injured</jp-badge>
+        <jp-badge tone="success">Starter</jp-badge>
+        <jp-badge tone="warning">Home run</jp-badge>
+        <jp-badge tone="error">Relief</jp-badge>
         <jp-badge tone="info">Away game</jp-badge>
       </div>
     `,

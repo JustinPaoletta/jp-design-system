@@ -11,7 +11,7 @@ test('validated settings keep input through failed save and retry', async ({
   await expect(
     page.getByText('Enter a valid notification email.'),
   ).toBeVisible();
-  const email = page.getByLabel('Manager email');
+  const email = page.getByLabel('Your email');
   await email.fill('justin@example.com');
   await page
     .getByRole('button', { name: 'Save settings', exact: true })
@@ -25,19 +25,19 @@ test('validated settings keep input through failed save and retry', async ({
   await expect(email).toHaveValue('justin@example.com');
   await page.getByRole('button', { name: 'Retry save', exact: true }).click();
   await expect(page.getByText('Your changes are now saved.')).toBeVisible();
-  await email.fill('notes@dodgers.example');
+  await email.fill('notes@rays.example');
   await expect(page.getByText('Your changes are now saved.')).toHaveCount(0);
   await page.clock.install();
   await page
     .getByRole('button', { name: 'Save settings', exact: true })
     .click();
-  await email.fill('staff@dodgers.example');
+  await email.fill('staff@rays.example');
   await page.clock.fastForward(500);
   await expect(
     page.getByRole('button', { name: 'Save settings', exact: true }),
   ).toBeEnabled();
   await expect(page.getByText('Your changes are now saved.')).toHaveCount(0);
-  await expect(email).toHaveValue('staff@dodgers.example');
+  await expect(email).toHaveValue('staff@rays.example');
   await page
     .getByRole('button', { name: 'Save settings', exact: true })
     .click();
@@ -50,12 +50,12 @@ test('sort, search, pagination, selection and destructive retry compose', async 
 }) => {
   await page.goto('/product-recipes');
   await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await expect(page.getByRole('table')).toContainText('Tommy Edman');
-  await page.getByLabel('Search players').fill('Jack');
-  await expect(page.getByRole('table')).toContainText('Jack Flaherty');
-  await page.getByRole('checkbox', { name: /Select Jack Flaherty/ }).check();
+  await expect(page.getByRole('table')).toContainText('Taylor Walls');
+  await page.getByLabel('Search players').fill('Freddy');
+  await expect(page.getByRole('table')).toContainText('Freddy Peralta');
+  await page.getByRole('checkbox', { name: /Select Freddy Peralta/ }).check();
   await page
-    .getByRole('button', { name: 'Remove player', exact: true })
+    .getByRole('button', { name: 'Remove from collection', exact: true })
     .click();
   const dialog = page.getByRole('dialog', {
     name: 'Remove selected players?',

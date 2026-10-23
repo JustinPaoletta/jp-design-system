@@ -15,7 +15,7 @@ const meta: Meta<JpCombobox> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: 'Club role',
+    label: 'Archive role',
     hint: 'Choose access for this club member.',
     options: [
       { value: 'viewer', label: 'Fan' },

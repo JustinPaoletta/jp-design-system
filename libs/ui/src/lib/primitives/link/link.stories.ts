@@ -8,7 +8,8 @@ const meta: Meta<JpLink> = {
   parameters: { layout: 'padded' },
   args: {},
   render: () => ({
-    template: '<a jpLink href="#example">Read club rules</a>',
+    template:
+      '<a jpLink href="https://www.mlb.com/news/rays-win-alcs-2026" target="_blank" rel="noopener noreferrer">Read the Game 6 recap</a>',
   }),
 };
 export default meta;

@@ -15,15 +15,15 @@ const meta: Meta<JpDatePicker> = {
   ],
   component: JpDatePicker,
   render: (args) => ({
-    props: { ...args, selectedDate: '2024-10-30' },
+    props: { ...args, selectedDate: '2026-10-19' },
     template: `<jp-date-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [error]="error" [disabled]="disabled" [readonly]="readonly" [size]="size" [locale]="locale" [weekStartsOn]="weekStartsOn" [(ngModel)]="selectedDate" />`,
   }),
   parameters: { layout: 'padded' },
   args: {
     label: 'Game date',
     hint: 'Enter YYYY-MM-DD or choose a date.',
-    min: '2024-10-01',
-    max: '2024-10-31',
+    min: '2026-10-01',
+    max: '2026-10-31',
     error: '',
     disabled: false,
     readonly: false,
@@ -70,7 +70,7 @@ export const OpenCalendar: Story = {
       c.getByRole('dialog', { name: 'Game date calendar' }),
     ).toBeVisible();
     await expect(
-      c.getByRole('button', { name: 'Wednesday, October 30, 2024' }),
+      c.getByRole('button', { name: 'Monday, October 19, 2026' }),
     ).toHaveFocus();
   },
 };
@@ -80,34 +80,34 @@ export const KeyboardSelection: Story = {
       field = c.getByRole('combobox', { name: 'Game date' });
     await userEvent.click(field);
     await userEvent.keyboard('{ArrowDown}{ArrowLeft}{Enter}');
-    await expect(field).toHaveValue('2024-10-29');
+    await expect(field).toHaveValue('2026-10-18');
     await expect(field).toHaveFocus();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Escape}');
-    await expect(field).toHaveValue('2024-10-29');
+    await expect(field).toHaveValue('2026-10-18');
     await expect(field).toHaveFocus();
   },
 };
 export const ConstrainedDates: Story = {
   args: {
-    min: '2024-10-01',
-    max: '2024-10-31',
+    min: '2026-10-01',
+    max: '2026-10-31',
     step: 2,
     hint: 'Choose an available game day in October.',
   },
   render: (args) => ({
-    props: { ...args, selectedDate: '2024-10-07' },
+    props: { ...args, selectedDate: '2026-10-19' },
     template: `<jp-date-picker [label]="label" [hint]="hint" [min]="min" [max]="max" [step]="step" [(ngModel)]="selectedDate" />`,
   }),
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
     await userEvent.click(c.getByRole('button', { name: 'Choose Game date' }));
     await expect(
-      c.getByRole('button', { name: 'Tuesday, October 8, 2024' }),
+      c.getByRole('button', { name: 'Tuesday, October 20, 2026' }),
     ).toHaveAttribute('aria-disabled', 'true');
     await userEvent.click(
-      c.getByRole('button', { name: 'Tuesday, October 8, 2024' }),
+      c.getByRole('button', { name: 'Tuesday, October 20, 2026' }),
     );
-    await expect(c.getByRole('combobox')).toHaveValue('2024-10-07');
+    await expect(c.getByRole('combobox')).toHaveValue('2026-10-19');
     await expect(c.getByRole('dialog')).toBeVisible();
   },
 };
@@ -117,13 +117,13 @@ export const NarrowCalendar: Story = {
     const c = within(canvasElement);
     await userEvent.click(c.getByRole('button', { name: 'Choose Game date' }));
     await expect(c.getByRole('dialog')).toBeVisible();
-    await expect(c.getByRole('grid')).toHaveAccessibleName('octobre 2024');
+    await expect(c.getByRole('grid')).toHaveAccessibleName('octobre 2026');
   },
 };
 export const InsideDialog: Story = {
   render: (args) => ({
-    props: { ...args, selectedDate: '2024-10-30', visible: true },
-    template: `<jp-dialog title="Schedule a Falcons game" [open]="visible" (openChange)="visible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-date-picker label="Game date" [(ngModel)]="selectedDate" /></div></jp-dialog>`,
+    props: { ...args, selectedDate: '2026-10-19', visible: true },
+    template: `<jp-dialog title="Save a Game 6 memory" [open]="visible" (openChange)="visible = $event"><div style="height: 7rem; padding: 4px; overflow: hidden;"><jp-date-picker label="Game date" [(ngModel)]="selectedDate" /></div></jp-dialog>`,
   }),
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
@@ -135,7 +135,7 @@ export const InsideDialog: Story = {
     ).toBeVisible();
     await userEvent.keyboard('{Escape}');
     await expect(
-      c.getByRole('dialog', { name: 'Schedule a Falcons game' }),
+      c.getByRole('dialog', { name: 'Save a Game 6 memory' }),
     ).toBeVisible();
     await expect(
       c.getByRole('button', { name: 'Choose Game date' }),

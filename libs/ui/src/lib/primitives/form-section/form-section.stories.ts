@@ -21,8 +21,8 @@ const meta: Meta<JpFormSection> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    legend: 'Club messages',
-    hint: 'Choose which Dodgers updates you receive by email.',
+    legend: 'Game 6 updates',
+    hint: 'Choose which Rays updates you receive by email.',
     error: '',
     disabled: false,
   },
@@ -30,7 +30,7 @@ const meta: Meta<JpFormSection> = {
     props: args,
     template: `<jp-card><jp-form-section [legend]="legend" [hint]="hint" [error]="error" [disabled]="disabled">
       <jp-checkbox [disabled]="disabled" hint="Starting times and field changes.">Game reminders</jp-checkbox>
-      <jp-checkbox [disabled]="disabled" hint="Player availability and starting positions.">Lineup updates</jp-checkbox>
+      <jp-checkbox [disabled]="disabled" hint="Game 6 contributions and starting positions.">Lineup updates</jp-checkbox>
       <jp-checkbox [disabled]="disabled" hint="Scores and notes after the final inning.">Game recaps</jp-checkbox>
     </jp-form-section></jp-card>`,
   }),
@@ -44,7 +44,7 @@ export const Default: Story = {
     await userEvent.click(reminders);
     await expect(reminders).toBeChecked();
     await expect(
-      canvas.getByRole('group', { name: 'Club messages' }),
+      canvas.getByRole('group', { name: 'Game 6 updates' }),
     ).toBeVisible();
     reminders.blur();
   },

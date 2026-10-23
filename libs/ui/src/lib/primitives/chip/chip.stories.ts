@@ -31,7 +31,7 @@ type ChipStoryArgs = {
   `,
 })
 class ChipStoryHost {
-  readonly labels = signal(['Available', 'Bench', 'Injured list']);
+  readonly labels = signal(['Starter', 'Bench', 'Bullpen']);
 
   remove(label: string): void {
     this.labels.update((current) => current.filter((item) => item !== label));
@@ -62,7 +62,7 @@ const meta: Meta<ChipStoryArgs> = {
     },
   },
   args: {
-    label: 'Available',
+    label: 'Starter',
     size: 'md',
     disabled: false,
   },
@@ -80,7 +80,7 @@ type Story = StoryObj<ChipStoryArgs>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
-    await expect(button?.getAttribute('aria-label')).toBe('Remove Available');
+    await expect(button?.getAttribute('aria-label')).toBe('Remove Starter');
     await expect(button?.getAttribute('type')).toBe('button');
   },
 };
@@ -97,19 +97,17 @@ export const Small: Story = {
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, label: 'Injured list' },
+  args: { disabled: true, label: 'Bullpen' },
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
     await expect(button?.disabled).toBe(true);
-    await expect(button?.getAttribute('aria-label')).toBe(
-      'Remove Injured list',
-    );
+    await expect(button?.getAttribute('aria-label')).toBe('Remove Bullpen');
   },
 };
 
 export const LongLabel: Story = {
   args: {
-    label: 'Jack Flaherty started Game 5 for the Los Angeles Dodgers',
+    label: 'Freddy Peralta started Game 6 for the Tampa Bay Rays',
   },
 };
 
