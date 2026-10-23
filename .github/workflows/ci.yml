@@ -117,6 +117,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Pack paired local archives
+        run: npm exec -- nx run packages:pack
+
+      - name: Upload local package archives
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: package-archives
+          path: dist/packages/archives
+          if-no-files-found: error
+
   visual:
     name: Visual regression (macOS)
     runs-on: macos-latest

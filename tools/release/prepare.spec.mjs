@@ -190,6 +190,81 @@ test('release planning refuses mismatched lock roots and unexpected package iden
   );
 });
 
+test('dry-run can verify an already prepared candidate without moving notes or changing its date', () => {
+  const plan = buildReleasePlan(fixture(), '0.2.0-rc.1', date);
+  const prepared = {
+    repositoryText: plan.outputs['package.json'],
+    lockText: plan.outputs['package-lock.json'],
+    uiText: plan.outputs['libs/ui/package.json'],
+    tokensText: plan.outputs['libs/tokens/package.distribution.json'],
+    changelog: plan.outputs['CHANGELOG.md'],
+  };
+  const checked = buildReleasePlan(
+    prepared,
+    '0.2.0-rc.1',
+    new Date('2026-10-21T00:00:00Z'),
+    true,
+  );
+  assert.equal(checked.changelog.alreadyPrepared, true);
+  assert.deepEqual(checked.outputs, originals(prepared));
+  assert.throws(
+    () => buildReleasePlan(prepared, '0.2.0-rc.1', date),
+    /already contains/,
+  );
+  assert.throws(
+    () =>
+      buildReleasePlan(
+        { ...prepared, uiText: fixture().uiText },
+        '0.2.0-rc.1',
+        date,
+        true,
+      ),
+    /already contains/,
+  );
+  assert.throws(
+    () =>
+      buildReleasePlan(
+        {
+          ...prepared,
+          changelog: prepared.changelog.replace(
+            '## [Unreleased]',
+            '## [Unreleased]\n\n- A later change.',
+          ),
+        },
+        '0.2.0-rc.1',
+        date,
+        true,
+      ),
+    /new Unreleased notes/,
+  );
+  assert.throws(
+    () =>
+      buildReleasePlan(
+        {
+          ...prepared,
+          changelog: '## [Unreleased]\n\n## [0.2.0-rc.1] - 2026-10-04\n',
+        },
+        '0.2.0-rc.1',
+        date,
+        true,
+      ),
+    /no release notes/,
+  );
+  assert.throws(
+    () =>
+      buildReleasePlan(
+        {
+          ...prepared,
+          changelog: prepared.changelog + '\n## [0.2.0-rc.1] - 2026-10-04\n',
+        },
+        '0.2.0-rc.1',
+        date,
+        true,
+      ),
+    /already contains/,
+  );
+});
+
 test('write mode applies the reviewed plan only to the release files', async () => {
   await withFixture(async (directory, state) => {
     const plan = buildReleasePlan(state, '0.2.0', date);

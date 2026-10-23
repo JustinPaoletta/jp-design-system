@@ -78,3 +78,16 @@ jobs:
         run: npx nx run packages:smoke
         env:
           CONSUMER_BROWSERS: chromium,firefox,webkit
+
+      - name: Pack checked-out package versions
+        run: npm exec -- nx run packages:pack
+
+      - name: Upload checked archives and evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-candidate-evidence
+          if-no-files-found: error
+          path: |
+            dist/packages/archives
+            dist/packages/consumer-smoke.json
+            dist/qa/api-readiness.json

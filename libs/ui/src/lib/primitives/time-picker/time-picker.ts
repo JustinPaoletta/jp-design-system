@@ -391,12 +391,13 @@ export class JpTimePicker extends TemporalInput {
     this.close(true);
   }
 
-  onButtonPointerdown(event: PointerEvent): void {
+  onButtonPointerdown(event: MouseEvent): void {
     const button =
       event.target instanceof Element ? event.target.closest('button') : null;
     if (!button || button.disabled) return;
     // Safari does not focus buttons on pointer activation. Keep focus inside
     // the picker until the button's click has committed or dismissed its draft.
+    if ('pointerType' in event && event.pointerType === 'touch') return;
     event.preventDefault();
     button.focus({ preventScroll: true });
   }
