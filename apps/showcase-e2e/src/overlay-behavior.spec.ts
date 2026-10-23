@@ -13,11 +13,13 @@ test.describe('native overlay behavior', () => {
     page,
   }) => {
     const opener = page.getByRole('button', {
-      name: 'Remove player',
+      name: 'Remove from collection',
       exact: true,
     });
     await opener.click();
-    const dialog = page.getByRole('dialog', { name: 'Remove player?' });
+    const dialog = page.getByRole('dialog', {
+      name: 'Remove from collection?',
+    });
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveJSProperty('open', true);
     expect(await dialog.evaluate((element) => element.matches(':modal'))).toBe(
@@ -57,7 +59,9 @@ test.describe('native overlay behavior', () => {
     ).toBeFocused();
     await page.getByRole('menuitem', { name: 'Delete…', exact: true }).click();
     await expect(menu).toBeHidden();
-    const dialog = page.getByRole('dialog', { name: 'Remove player?' });
+    const dialog = page.getByRole('dialog', {
+      name: 'Remove from collection?',
+    });
     await expect(dialog).toBeVisible();
     expect(await dialog.evaluate((element) => element.matches(':modal'))).toBe(
       true,

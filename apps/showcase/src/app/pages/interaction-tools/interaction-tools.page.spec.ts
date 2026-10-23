@@ -56,7 +56,7 @@ describe('InteractionToolsPage', () => {
     ]);
     expect(
       fixture.nativeElement.querySelector('jp-reorder li').textContent,
-    ).toContain('Inspect the field');
+    ).toContain('Choose your Game 6 highlights');
     expect(localStorage.getItem('jp-demo-priorities-v1')).toBeNull();
   });
   it.each([JSON.stringify({ order: ['docs'] }), JSON.stringify(['docs', 3])])(
@@ -73,7 +73,7 @@ describe('InteractionToolsPage', () => {
       ]);
       expect(
         fixture.nativeElement.querySelector('jp-reorder li').textContent,
-      ).toContain('Inspect the field');
+      ).toContain('Choose your Game 6 highlights');
     },
   );
   it('uses the current session if storage cannot be read, without preventing reordering', () => {
@@ -97,7 +97,7 @@ describe('InteractionToolsPage', () => {
       'feedback',
     ]);
     expect(root.querySelectorAll('jp-reorder li')[1].textContent).toContain(
-      'Inspect the field',
+      'Choose your Game 6 highlights',
     );
   });
   it('commits click reordering and resets through page controls even if saving is denied', () => {
@@ -133,7 +133,7 @@ describe('InteractionToolsPage', () => {
       'feedback',
     ]);
     expect(root.querySelector('jp-reorder li')?.textContent).toContain(
-      'Inspect the field',
+      'Choose your Game 6 highlights',
     );
   });
   it('connects carousel navigation, card actions, and note editing to consumer state', () => {
@@ -149,10 +149,10 @@ describe('InteractionToolsPage', () => {
       if (!element) throw new Error('Expected card control: ' + name);
       return element;
     };
-    button('Open club invitations').click();
+    button('Open sharing details').click();
     fixture.detectChanges();
     expect(root.querySelector('jp-carousel + p')?.textContent).toContain(
-      'Invitations opened',
+      'Sharing details opened',
     );
     button('Next slide').click();
     fixture.detectChanges();
@@ -168,10 +168,10 @@ describe('InteractionToolsPage', () => {
     button('Next slide').click();
     fixture.detectChanges();
     expect(fixture.componentInstance.slide()).toBe(2);
-    button('Schedule practice').click();
+    button('Save collection note').click();
     fixture.detectChanges();
     expect(root.querySelector('jp-carousel + p')?.textContent).toContain(
-      'Review scheduled',
+      'Collection note saved for this session',
     );
     button('Previous slide').click();
     fixture.detectChanges();

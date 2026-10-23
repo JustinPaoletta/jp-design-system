@@ -16,20 +16,20 @@
           <jp-input
             label="Email"
             type="email"
-            placeholder="manager@rays.example"
-            hint="Used for Rays club messages."
+            placeholder="fan@rays.example"
+            hint="Your archive account uses this address."
             [(ngModel)]="email"
             name="email"
           />
           <jp-select
-            label="Club role"
+            label="Archive role"
             [options]="roleOptions"
             [(ngModel)]="role"
             name="role"
           />
         </div>
         <jp-textarea
-          label="Manager notes"
+          label="Your game notes"
           placeholder="Add lineup changes or reminders for the coaching staff."
           rows="3"
           [(ngModel)]="notes"
@@ -37,9 +37,9 @@
         />
         <div class="lineup-editor__messages">
           <jp-checkbox [(ngModel)]="subscribe" name="subscribe">
-            Get club messages
+            Get Game 6 updates
           </jp-checkbox>
-          <p>Game changes and lineup updates from the Rays.</p>
+          <p>Updates about your Game 6 collection.</p>
         </div>
       </div>
       <div jpCardActions class="lineup-editor__footer">

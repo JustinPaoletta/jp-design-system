@@ -1,3 +1,4 @@
+import { GAME_SIX_ROSTER } from '../game-six.example';
 import {
   componentWrapperDecorator,
   type Meta,
@@ -5,34 +6,7 @@ import {
 } from '@storybook/angular';
 import { expect, userEvent, within } from 'storybook/test';
 import { JpVirtualTable } from './virtual-table';
-const roster = [
-  ['Junior Caminero', 'Designated hitter'],
-  ['Josh Lowe', 'Right field'],
-  ['Yandy Díaz', 'First base'],
-  ['Kameron Misner', 'Left field'],
-  ['Taylor Walls', 'Shortstop'],
-  ['Ben Rortvedt', 'Catcher'],
-  ['Curtis Mead', 'Third base'],
-  ['Brandon Lowe', 'Second base'],
-  ['Jonny DeLuca', 'Center field'],
-  ['Chandler Simpson', 'Outfield'],
-  ['Jonathan Aranda', 'Outfield'],
-  ['Jose Caballero', 'Shortstop'],
-  ['Logan Driscoll', 'Catcher'],
-  ['Shane Baz', 'Pitcher'],
-  ['Taj Bradley', 'Pitcher'],
-  ['Ryan Pepiot', 'Pitcher'],
-  ['Pete Fairbanks', 'Pitcher'],
-  ['Drew Rasmussen', 'Pitcher'],
-  ['Zack Littell', 'Pitcher'],
-  ['Edwin Uceta', 'Pitcher'],
-  ['Kevin Kelly', 'Pitcher'],
-  ['Mason Montgomery', 'Pitcher'],
-  ['Colin Poche', 'Pitcher'],
-  ['Ian Seymour', 'Pitcher'],
-  ['Jacob Lopez', 'Pitcher'],
-  ['Garrett Cleavinger', 'Pitcher'],
-] as const;
+const roster = GAME_SIX_ROSTER.map((player) => [player.name, player.position]);
 const rows = Array.from({ length: 10000 }, (_, i) => ({
   id: i,
   name: roster[i % roster.length][0] + ' · ' + (i + 1),
@@ -44,7 +18,7 @@ const meta: Meta<JpVirtualTable> = {
   decorators: [
     componentWrapperDecorator(
       (story) =>
-        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">2026 Rays roster</h2>${story}</section>`,
+        `<section style="max-inline-size:56rem;margin:var(--jp-space-lg) auto"><h2 style="margin:0 0 var(--jp-space-md);font:var(--jp-font-weight-semibold) var(--jp-font-size-body)/var(--jp-font-line-height-normal) var(--jp-font-family-base);color:var(--jp-color-text-primary)">2026 Rays roster</h2><p>The 26-player ALCS roster repeats across 10,000 rows to demonstrate scrolling. Row numbers are not statistics.</p>${story}</section>`,
     ),
   ],
   parameters: { layout: 'padded' },
@@ -97,7 +71,7 @@ export const BrowsePages: Story = {
     ).toBeVisible();
     await userEvent.click(c.getByRole('button', { name: 'Next' }));
     await expect(
-      c.getByRole('cell', { name: 'Jacob Lopez · 51' }),
+      c.getByRole('cell', { name: roster[50 % roster.length][0] + ' · 51' }),
     ).toBeVisible();
   },
 };
@@ -134,7 +108,7 @@ export const Narrow: Story = {
     frame.dispatchEvent(new Event('scroll'));
     await expect(
       await within(canvasElement).findByRole('cell', {
-        name: 'Ryan Pepiot · 10000',
+        name: roster[9999 % roster.length][0] + ' · 10000',
       }),
     ).toBeVisible();
   },

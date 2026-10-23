@@ -7,12 +7,13 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-- Use the 2026 ALCS Game 6 record for the Tampa Bay Rays in component examples.
+- Use verified 2026 ALCS Game 6 records in Storybook and Showcase. Add full Rays batting and pitching tables.
+- Use consistent Game 6 copy and charts. Add five original cartoon illustrations with visible labels and a generation record.
 - Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
 - Apply the Card layout to club settings. Track submitted values so later edits do not show saved feedback.
 - Align button combinations, context actions and inline alerts with the approved typography. Use working actions and baseball copy in assistant examples.
 - Add basic JavaScript, TypeScript and JSON syntax colors to Code Block. Preserve escaped source and a bounded plain-text fallback.
-- Add an avatar overflow list and collapsed breadcrumbs with keyboard access. Add licensed local photo examples and source attribution.
+- Add an avatar overflow list and collapsed breadcrumbs with keyboard access. Use local illustrations with an initials fallback.
 
 - Apply the approved Card direction to 20 components and two compositions. Align title sizes, descriptions, selection states and actions.
 - Add a narrow stepper layout. Keep selected and focused tabs visible after selection and container resize, including RTL layouts.

@@ -1,12 +1,12 @@
 <div class="roster-page">
   <header class="roster-page__header">
-    <jp-heading as="h1">Player roster</jp-heading>
+    <jp-heading as="h1">Game 6 roster</jp-heading>
   </header>
-  <jp-card title="2026 Rays">
+  <jp-card title="2026 ALCS">
     <span jpCardHeader class="roster-page__count"
       >{{ visibleRows.length }} players</span
     >
-    <p>Review player positions and availability.</p>
+    <p>Review the players and their Game 6 contributions.</p>
     <jp-table
       class="roster-page__table"
       caption="Rays roster"
@@ -26,8 +26,8 @@
         <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
       </ng-template>
       <jp-empty-state
-        title="No players on the roster"
-        description="No players match these filters."
+        title="No matching Game 6 players"
+        description="Clear the filters to return to the Game 6 roster."
       >
         <jp-button
           variant="secondary"
@@ -39,11 +39,11 @@
     </jp-table>
     <div jpCardActions class="roster-page__actions">
       <jp-button [disabled]="showEmpty" (click)="availableOnly = !availableOnly"
-        >{{ availableOnly ? 'Show all players' : 'Show available' }}</jp-button
+        >{{ availableOnly ? 'Show all players' : 'Show starters' }}</jp-button
       >
       <span role="status"
-        >{{ availableOnly ? 'Available players only' : 'Active roster and
-        injured list' }}</span
+        >{{ availableOnly ? 'Game 6 starters' : 'Active roster and bullpen'
+        }}</span
       >
     </div>
   </jp-card>

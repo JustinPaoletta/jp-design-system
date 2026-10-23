@@ -16,11 +16,11 @@ const meta: Meta<JpCodeBlock> = {
   ],
   parameters: { layout: 'padded' },
   args: {
-    label: 'Starting lineup',
+    label: 'Featured Game 6 players',
     language: 'TypeScript',
     code: `const lineup = [
-  { player: 'Shane Baz', position: 'Pitcher' },
-  { player: 'Yandy Díaz', position: 'First base' },
+  { player: 'Freddy Peralta', position: 'Pitcher' },
+  { player: 'Yandy Díaz', position: 'Designated hitter' },
   { player: 'Taylor Walls', position: 'Shortstop' },
 ];
 
@@ -36,7 +36,7 @@ export const Default: Story = {
     ).toHaveTextContent('const');
     await expect(
       canvasElement.querySelector('code .syntax-string'),
-    ).toHaveTextContent("'Shane Baz'");
+    ).toHaveTextContent("'Freddy Peralta'");
   },
 };
 export const Readonly: Story = { args: { copyable: false } };
@@ -44,11 +44,11 @@ export const LiteralMarkup: Story = {
   args: {
     label: 'HTML example',
     language: 'HTML',
-    code: '<jp-button>Save lineup</jp-button>',
+    code: '<jp-button>Save game notes</jp-button>',
   },
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('code')).toHaveTextContent(
-      '<jp-button>Save lineup</jp-button>',
+      '<jp-button>Save game notes</jp-button>',
     );
     await expect(canvasElement.querySelector('pre jp-button')).toBeNull();
   },
@@ -56,20 +56,19 @@ export const LiteralMarkup: Story = {
 
 export const Json: Story = {
   args: {
-    label: 'ALCS Game 6 result',
+    label: 'Final game score',
     language: 'JSON',
     code: `{
-  "game": "ALCS Game 6",
-  "club": "Rays",
-  "result": "won",
-  "gameNumber": 6,
+  "game": "2026 ALCS Game 6",
+  "home": { "club": "Rays", "runs": 7 },
+  "away": { "club": "Guardians", "runs": 3 },
   "final": true
 }`,
   },
   play: async ({ canvasElement }) => {
     await expect(
       canvasElement.querySelector('code .syntax-number'),
-    ).toHaveTextContent('6');
+    ).toHaveTextContent('7');
     await expect(
       canvasElement.querySelector('code .syntax-keyword'),
     ).toHaveTextContent('true');

@@ -33,7 +33,7 @@ describe('Rays recipe request recovery', () => {
   });
   it('clears the saved state when any field changes and recognizes the saved values', () => {
     const page = create().componentInstance;
-    page.form.controls.email.setValue('manager@rays.example');
+    page.form.controls.email.setValue('fan@rays.example');
     page.save();
     jest.runOnlyPendingTimers();
     page.save();
@@ -41,7 +41,7 @@ describe('Rays recipe request recovery', () => {
     expect(page.saved()).toBe(true);
     page.form.controls.email.setValue('notes@rays.example');
     expect(page.saved()).toBe(false);
-    page.form.controls.email.setValue('manager@rays.example');
+    page.form.controls.email.setValue('fan@rays.example');
     expect(page.saved()).toBe(true);
     page.form.controls.region.setValue('eu');
     expect(page.saved()).toBe(false);
@@ -53,7 +53,7 @@ describe('Rays recipe request recovery', () => {
   });
   it('saves the submitted snapshot without marking edits during a request as saved', () => {
     const page = create().componentInstance;
-    page.form.controls.email.setValue('manager@rays.example');
+    page.form.controls.email.setValue('fan@rays.example');
     page.save();
     jest.runOnlyPendingTimers();
     page.save();
@@ -61,7 +61,7 @@ describe('Rays recipe request recovery', () => {
     page.form.markAsDirty();
     jest.runOnlyPendingTimers();
     expect(page.saving()).toBe(false);
-    expect(page.savedValue()?.email).toBe('manager@rays.example');
+    expect(page.savedValue()?.email).toBe('fan@rays.example');
     expect(page.form.controls.email.value).toBe('notes@rays.example');
     expect(page.saved()).toBe(false);
     expect(page.form.dirty).toBe(true);
@@ -105,7 +105,7 @@ describe('Rays recipe request recovery', () => {
   it('resets paging on search/sort and calculates filtered pages', () => {
     const page = create().componentInstance;
     page.page.set(2);
-    page.setSearch('Yandy');
+    page.setSearch('Freddy');
     expect(page.page()).toBe(1);
     expect(page.visible()).toHaveLength(1);
     expect(page.filters()).toHaveLength(1);
@@ -113,7 +113,7 @@ describe('Rays recipe request recovery', () => {
     page.setSort({ key: 'name', direction: 'desc' });
     expect(page.filtered()[0]['name']).toBe('Yandy Díaz');
     page.setSort({ key: 'name', direction: 'asc' });
-    expect(page.filtered()[0]['name']).toBe('Josh Lowe');
+    expect(page.filtered()[0]['name']).toBe('Bryan Baker');
     page.setSort(null);
     expect(page.filtered()).toEqual(page.records());
     expect(page.filters()).toEqual([]);

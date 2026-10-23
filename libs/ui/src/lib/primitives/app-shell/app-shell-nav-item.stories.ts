@@ -87,7 +87,7 @@ export const Active: Story = {
 
 export const FocusVisible: Story = {
   args: {
-    label: 'Club settings',
+    label: 'Archive settings',
     href: '/settings',
   },
   play: async ({ canvasElement }) => {

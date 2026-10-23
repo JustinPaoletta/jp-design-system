@@ -13,7 +13,7 @@ test('product tools: wizard validates, focuses recovery, and preserves values on
   await summary
     .getByRole('link', { name: 'Enter a valid email address.' })
     .click();
-  const email = page.getByRole('textbox', { name: 'Manager email' });
+  const email = page.getByRole('textbox', { name: 'Your email' });
   await expect(email).toBeFocused();
   await email.fill('lineup@rays.example');
   const seats = page.getByRole('spinbutton', { name: 'Players' });
@@ -41,21 +41,21 @@ test('product tools: wizard validates, focuses recovery, and preserves values on
 test('product tools: nested checklist exposes mixed completion and keeps disabled tasks unchanged', async ({
   page,
 }) => {
-  const parent = page.getByRole('checkbox', { name: 'Game preparation' });
+  const parent = page.getByRole('checkbox', { name: 'Game 6 collection' });
   expect(
     await parent.evaluate((el: HTMLInputElement) => el.indeterminate),
   ).toBe(true);
   await parent.press('Space');
   await expect(
-    page.getByRole('checkbox', { name: 'Check the equipment' }),
+    page.getByRole('checkbox', { name: 'Add photo credits' }),
   ).toBeChecked();
   await expect(
-    page.getByRole('checkbox', { name: 'League approval' }),
+    page.getByRole('checkbox', { name: 'Publish collection' }),
   ).toBeDisabled();
   await expect(
     page.getByRole('status').filter({ hasText: '2 of 4 completed' }),
   ).toBeVisible();
-  await page.getByRole('checkbox', { name: 'Check the lineup' }).uncheck();
+  await page.getByRole('checkbox', { name: 'Read the box score' }).uncheck();
   await expect(
     page.getByRole('status').filter({ hasText: '1 of 4 completed' }),
   ).toBeVisible();
@@ -63,7 +63,7 @@ test('product tools: nested checklist exposes mixed completion and keeps disable
 test('product tools: numeric stepping and range keyboard/exact entry stay bounded', async ({
   page,
 }) => {
-  const volume = page.getByRole('slider', { name: 'Practice repetitions' });
+  const volume = page.getByRole('slider', { name: 'Replay volume' });
   await volume.focus();
   await page.keyboard.press('ArrowRight');
   await expect(volume).toHaveValue('45');
@@ -71,7 +71,7 @@ test('product tools: numeric stepping and range keyboard/exact entry stay bounde
   await expect(volume).toHaveValue('100');
   await page.keyboard.press('Home');
   await expect(volume).toHaveValue('0');
-  const exact = page.getByRole('spinbutton', { name: 'Practice repetitions' });
+  const exact = page.getByRole('spinbutton', { name: 'Replay volume' });
   // Wait for the controlled numeric alternative to receive the range change.
   // The native range value changes before Angular renders its sibling input.
   await expect(exact).toHaveValue('0');
@@ -112,7 +112,9 @@ test('product tools: overflow content is reachable by keyboard and restores focu
   await expect(opener).toHaveAttribute('aria-expanded', 'true');
   // WebKit follows macOS link navigation: Option+Tab includes links.
   await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
-  await expect(page.getByRole('link', { name: 'Shane Baz' })).toBeFocused();
+  await expect(
+    page.getByRole('link', { name: 'Freddy Peralta' }),
+  ).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
   await expect(opener).toBeFocused();

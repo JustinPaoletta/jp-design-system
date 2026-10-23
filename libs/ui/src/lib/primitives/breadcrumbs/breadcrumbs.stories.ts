@@ -39,7 +39,7 @@ export const LongHierarchy: Story = {
       { label: 'Clubhouse', href: '#workspace' },
       { label: 'Clubs', href: '#projects' },
       { label: 'Tampa Bay Rays', href: '#design-system' },
-      { label: 'Roster notification preferences' },
+      { label: 'Game 6 notification preferences' },
     ],
   },
 };
@@ -68,7 +68,7 @@ export const NarrowContainer: Story = {
     await userEvent.keyboard('{Escape}');
     await expect(trigger).toHaveFocus();
     await expect(
-      canvas.getByText('Roster notification preferences'),
+      canvas.getByText('Game 6 notification preferences'),
     ).toHaveAttribute('aria-current', 'page');
   },
 };

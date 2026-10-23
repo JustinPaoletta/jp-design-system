@@ -34,23 +34,24 @@ export class InteractionToolsPage {
   readonly priorities: JpReorderItem[] = [
     {
       id: 'audit',
-      label: 'Inspect the field',
-      description: 'Check the field before ALCS Game 6.',
+      label: 'Choose your Game 6 highlights',
+      description: 'Start with the plays you want to remember.',
     },
     {
       id: 'docs',
-      label: 'Prepare the lineup',
-      description: "Confirm each player's position and batting order.",
+      label: 'Read the Game 6 lineup',
+      description:
+        'Review the players and batting order from the official box score.',
     },
     {
       id: 'release',
-      label: 'Check the equipment',
-      description: 'Check bats, helmets and gloves.',
+      label: 'Add photo credits',
+      description: 'Record the photographer and source for each image.',
     },
     {
       id: 'feedback',
-      label: 'Meet the coaches',
-      description: 'Review the game plan with the coaches.',
+      label: 'Finish the game collection',
+      description: 'Bring the score, photographs and your own notes together.',
     },
   ];
   readonly order = signal<readonly string[]>(

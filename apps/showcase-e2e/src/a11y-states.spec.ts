@@ -32,10 +32,10 @@ test.describe('a11y state coverage', () => {
   test('open dialog meets WCAG AA', async ({ page }) => {
     await openOverlays(page);
     await page
-      .getByRole('button', { name: 'Remove player', exact: true })
+      .getByRole('button', { name: 'Remove from collection', exact: true })
       .click();
     await expect(
-      page.getByRole('dialog', { name: 'Remove player?' }),
+      page.getByRole('dialog', { name: 'Remove from collection?' }),
     ).toBeVisible();
     await expectWcag21Aa(page);
   });
@@ -71,7 +71,7 @@ test.describe('a11y state coverage', () => {
     page,
   }) => {
     await page.goto('/controls');
-    const role = page.getByRole('combobox', { name: 'Club role' });
+    const role = page.getByRole('combobox', { name: 'Archive role' });
     await role.click();
     await expect(role).toHaveAttribute('aria-expanded', 'true');
     await expect(page.getByRole('listbox')).toBeVisible();
@@ -91,7 +91,7 @@ test.describe('a11y state coverage', () => {
     await page
       .getByRole('button', { name: 'Save settings', exact: true })
       .click();
-    const email = page.getByLabel('Manager email');
+    const email = page.getByLabel('Your email');
     await expect(email).toHaveAttribute('aria-invalid', 'true');
     await expect(
       page.getByRole('alert').filter({
@@ -103,8 +103,8 @@ test.describe('a11y state coverage', () => {
 
   test('selected table row meets WCAG AA', async ({ page }) => {
     await openRecipes(page);
-    await page.getByRole('checkbox', { name: 'Select Shane Baz' }).check();
-    await expect(page.getByRole('row', { name: /Shane Baz/ })).toHaveClass(
+    await page.getByRole('checkbox', { name: 'Select Freddy Peralta' }).check();
+    await expect(page.getByRole('row', { name: /Freddy Peralta/ })).toHaveClass(
       /jp-table__row--selected/,
     );
     await expectWcag21Aa(page);
@@ -119,7 +119,7 @@ test.describe('a11y state coverage', () => {
     await expect(settings).toHaveAttribute('aria-selected', 'true');
     await expect(services).toHaveAttribute('aria-selected', 'false');
     await expect(
-      page.getByRole('heading', { name: 'Club account' }),
+      page.getByRole('heading', { name: 'Archive account' }),
     ).toBeVisible();
     await expectWcag21Aa(page);
   });
@@ -127,10 +127,10 @@ test.describe('a11y state coverage', () => {
   test('assistant response meets WCAG AA', async ({ page }) => {
     await page.goto('/assistant');
     await expect(
-      page.getByRole('heading', { name: 'Rays assistant' }),
+      page.getByRole('heading', { name: 'Game 6 companion' }),
     ).toBeVisible();
     await page.getByRole('button', { name: 'Ask about the game' }).click();
-    const panel = page.getByRole('complementary', { name: 'Rays manager' });
+    const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
     const composer = page.getByRole('textbox', {
       name: 'Message the assistant',
     });
@@ -138,7 +138,7 @@ test.describe('a11y state coverage', () => {
     await composer.fill('What is the game score?');
     await composer.press('Enter');
     await expect(panel).toContainText(
-      'Sample game summary for “What is the game score?”: the Rays won ALCS Game 6.',
+      'Rays 7, Guardians 3. Richie Palacios opened the scoring',
     );
     await expectWcag21Aa(page);
   });

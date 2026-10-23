@@ -4,7 +4,7 @@ const meta: Meta<JpCopyButton> = {
   title: 'Primitives/Controls/Copy Button',
   component: JpCopyButton,
   parameters: { layout: 'padded' },
-  args: { text: 'The Rays won ALCS Game 6', label: 'Copy score' },
+  args: { text: 'Rays 7, Guardians 3', label: 'Copy score' },
 };
 export default meta;
 type Story = StoryObj<JpCopyButton>;

@@ -127,6 +127,12 @@ Empty and single-slide views hide unnecessary picker and rotation controls.
 Native Previous, Next and numbered picker buttons keep focus.
 The selected picker has `aria-disabled` and stays in the focus order.
 
+The header places the slide count at the start and the arrow buttons at the end.
+The arrow icons follow the text direction.
+Numbered picker buttons sit below the content and align with its starting edge.
+Keep these groups separate instead of centering all controls in one row.
+The `Narrow` and `RightToLeft` stories show these layouts in Storybook.
+
 The viewport can receive focus. Left and Right follow LTR or RTL direction.
 Home and End select the first or last slide. Keys from controls inside slides
 keep their normal behavior.
@@ -142,7 +148,7 @@ view, interaction and accessibility navigation. Templates stay in the DOM,
 so application input values survive slide changes.
 
 Before a focused slide becomes hidden, focus moves to the viewport.
-External index changes use the same protection. The viewport has a 12rem
+External index changes use the same protection. The viewport has a 14rem
 minimum height and does not clip long content.
 
 The component follows the
@@ -156,7 +162,8 @@ Built-in labels and role descriptions use `JP_MESSAGES.carousel`.
 Timers start after browser render. Component destruction removes them.
 They do not run on the server.
 
-With rotation enabled, a Pause/Start control comes before slide content.
+With rotation enabled, a play/pause icon button comes before slide content.
+Its accessible name identifies the action: "Pause rotation" or "Start rotation".
 Hover pauses the timer. Keyboard focus stops rotation until the user starts
 it again. Manual navigation also stops rotation.
 

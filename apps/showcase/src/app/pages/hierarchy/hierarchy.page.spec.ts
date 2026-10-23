@@ -8,7 +8,7 @@ describe('HierarchyPage', () => {
       fixture.nativeElement
         .querySelector('[role=tree]')
         .getAttribute('aria-label'),
-    ).toBe('Club documents');
+    ).toBe('Game 6 documents');
     expect(
       fixture.nativeElement.querySelector('caption').textContent.trim(),
     ).toBe('2026 Rays roster');

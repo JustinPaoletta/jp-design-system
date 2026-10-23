@@ -22,7 +22,7 @@ import { JpToastService } from './toast.service';
 class ToastStoryHost {
   private readonly toasts = inject(JpToastService);
 
-  @Input() message = 'Lineup saved';
+  @Input() message = 'Game notes saved';
   @Input() tone: (typeof JP_TOAST_TONES)[number] = 'success';
 
   show(): void {
@@ -54,7 +54,7 @@ export const Neutral: Story = {
 
 export const Success: Story = {
   render: () => ({
-    template: `<jp-toast message="Rays lineup saved." tone="success" />`,
+    template: `<jp-toast message="Rays game notes saved." tone="success" />`,
   }),
 };
 
@@ -81,7 +81,7 @@ export const ViaService: Story = {
     },
   },
   args: {
-    message: 'Lineup saved',
+    message: 'Game notes saved',
     tone: 'success',
   },
   render: (args) => ({
@@ -92,7 +92,7 @@ export const ViaService: Story = {
 
 export const ViaServiceInteractive: Story = {
   args: {
-    message: 'Lineup saved',
+    message: 'Game notes saved',
     tone: 'success',
   },
   render: (args) => ({
@@ -102,6 +102,6 @@ export const ViaServiceInteractive: Story = {
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button') as HTMLButtonElement;
     await userEvent.click(button);
-    await expect(canvasElement.textContent).toContain('Lineup saved');
+    await expect(canvasElement.textContent).toContain('Game notes saved');
   },
 };

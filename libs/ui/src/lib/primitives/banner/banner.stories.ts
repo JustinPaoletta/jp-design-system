@@ -11,8 +11,8 @@ const meta: Meta<JpBanner> = {
   parameters: { layout: 'padded' },
   decorators: [moduleMetadata({ imports: [JpButton] })],
   args: {
-    title: 'ALCS Game 6',
-    message: 'The Rays won ALCS Game 6 and advanced to the World Series.',
+    title: 'Tropicana Field',
+    message: '2026 ALCS Game 6 started at 8:08 p.m. Eastern Time.',
     dismissible: true,
     tone: 'info',
     announce: false,
@@ -31,11 +31,11 @@ export const Default: Story = {
       canvas.getByRole('button', { name: 'Dismiss banner' }),
     );
     await expect(
-      canvas.queryByRole('region', { name: 'ALCS Game 6' }),
+      canvas.queryByRole('region', { name: 'Tropicana Field' }),
     ).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Show banner' }));
     await expect(
-      canvas.getByRole('region', { name: 'ALCS Game 6' }),
+      canvas.getByRole('region', { name: 'Tropicana Field' }),
     ).toBeVisible();
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
@@ -44,6 +44,7 @@ export const Error: Story = {
   args: {
     title: 'Score feed interrupted',
     tone: 'error',
-    message: 'The ALCS Game 6 feed stopped. The Rays won. Try again.',
+    message:
+      'The Game 6 feed stopped. The final score is Rays 7, Guardians 3. Try again.',
   },
 };

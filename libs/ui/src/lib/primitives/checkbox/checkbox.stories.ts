@@ -22,7 +22,7 @@ const meta: Meta<JpCheckbox> = {
     props: args,
     template: `
       <jp-checkbox [disabled]="disabled" [invalid]="invalid">
-        Get club messages
+        Get Game 6 updates
       </jp-checkbox>
     `,
   }),
@@ -54,7 +54,7 @@ export const Checked: Story = {
     props: { isOn: true },
     template: `
       <jp-checkbox [(ngModel)]="isOn">
-        Get club messages
+        Get Game 6 updates
       </jp-checkbox>
     `,
   }),

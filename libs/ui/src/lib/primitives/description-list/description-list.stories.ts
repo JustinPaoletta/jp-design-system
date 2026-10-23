@@ -22,9 +22,9 @@ const meta: Meta<JpDescriptionList> = {
   args: {
     items: [
       { term: 'Manager', description: 'Kevin Cash' },
-      { term: 'Series', description: '2026 ALCS' },
-      { term: 'Game', description: 'ALCS Game 6' },
-      { term: 'Result', description: 'Won' },
+      { term: 'Home field', description: 'Tropicana Field' },
+      { term: 'Game 6', description: 'October 19, 2026 at Tropicana Field' },
+      { term: 'Rays errors', description: 0 },
     ],
   },
   render: (args) => ({
@@ -43,7 +43,7 @@ export const Default: Story = {
     ).toBeVisible();
     await expect(canvasElement.querySelector('dd:last-child')).toBeVisible();
     await expect(
-      within(canvasElement).getByText('Won', { selector: 'dd' }),
+      within(canvasElement).getByText('0', { selector: 'dd' }),
     ).toBeVisible();
   },
 };
@@ -58,15 +58,16 @@ export const LongContent: Story = {
     items: [
       {
         term: 'Club',
-        description: '2026 ALCS winner',
+        description: '2026 American League champions',
       },
       {
         term: 'Contact',
-        description: 'postseason@rays.example',
+        description: 'archive@rays.example',
       },
       {
-        term: 'Result',
-        description: 'The Rays won and advanced to the World Series.',
+        term: 'Game 6 field',
+        description:
+          'Tropicana Field, St. Petersburg. First pitch was 8:08 p.m.',
       },
     ],
   },

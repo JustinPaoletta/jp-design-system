@@ -201,7 +201,7 @@ describe('Showcase dashboard pages', () => {
     fixture.detectChanges();
 
     assistant.open({
-      context: { label: 'ALCS Game 6' },
+      context: { label: '2026 ALCS Game 6' },
     });
     assistant.addMessage({ role: 'user', content: 'hello' });
     expect(assistant.isOpen()).toBe(true);
@@ -228,9 +228,9 @@ describe('Showcase dashboard pages', () => {
     page.showEmpty = true;
     fixture.detectChanges();
     expect(page.visibleRows.length).toBe(0);
-    expect(page.statusTone('Available')).toBe('success');
-    expect(page.statusTone('Day to day')).toBe('warning');
-    expect(page.statusTone('Injured')).toBe('error');
+    expect(page.statusTone('Starter')).toBe('success');
+    expect(page.statusTone('Home run')).toBe('warning');
+    expect(page.statusTone('Relief')).toBe('error');
     expect(page.statusTone('Unknown')).toBe('neutral');
   });
 
@@ -248,7 +248,7 @@ describe('Showcase dashboard pages', () => {
     expect(page.lastAction).toBe('Edit player');
     page.onMenuDelete();
     expect(page.dialogOpen).toBe(true);
-    expect(page.lastAction).toBe('Remove player');
+    expect(page.lastAction).toBe('Remove from collection');
     page.confirmDelete();
     expect(page.dialogOpen).toBe(false);
     expect(page.lastAction).toBe('Player removed');

@@ -9,7 +9,7 @@ describe('ControlsPage preview actions', () => {
   let form: NgForm;
 
   const defaults = {
-    email: 'manager@rays.example',
+    email: 'fan@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -112,7 +112,7 @@ describe('ControlsPage preview actions', () => {
     expect(form.pristine).toBe(true);
     expect(form.touched).toBe(true);
     expect(root.querySelector('[role="status"]')?.textContent).toContain(
-      'Lineup saved in this preview.',
+      'Game notes saved in this preview.',
     );
 
     await enterLineup({

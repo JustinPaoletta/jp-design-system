@@ -26,7 +26,7 @@ const meta: Meta<JpTextarea> = {
     rows: { control: 'number' },
   },
   args: {
-    label: 'Manager notes',
+    label: 'Your game notes',
     hint: 'Add notes for the coaches.',
     error: '',
     rows: 4,

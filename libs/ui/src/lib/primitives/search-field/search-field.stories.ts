@@ -15,7 +15,7 @@ const meta: Meta<JpSearchField> = {
   ],
   component: JpSearchField,
   parameters: { layout: 'padded' },
-  args: { label: 'Search clubs', placeholder: 'Search by name' },
+  args: { label: 'Search game collections', placeholder: 'Search by name' },
 };
 export default meta;
 type Story = StoryObj<JpSearchField>;

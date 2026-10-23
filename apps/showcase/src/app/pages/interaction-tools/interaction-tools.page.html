@@ -1,9 +1,9 @@
 <div class="page">
   <jp-page-header
-    title="Game preparation"
-    description="Order game tasks and browse club reference cards."
+    title="Game 6 collection"
+    description="Organize your Game 6 notes and revisit the highlights."
   />
-  <jp-card title="Game priorities">
+  <jp-card title="Collection priorities">
     <div class="toolbar">
       <jp-button variant="secondary" (click)="reset()"
         >Reset priorities</jp-button
@@ -12,39 +12,42 @@
     </div>
     <jp-reorder
       id="release-priorities"
-      label="Game priorities"
+      label="Collection priorities"
       [items]="priorities"
       [order]="order()"
       (orderChange)="save($event)"
     />
   </jp-card>
-  <jp-card title="Clubhouse reference cards">
+  <jp-card title="Remembering Game 6">
     <p>
-      Browse a short onboarding guide. Navigation keeps your place and does not
-      rotate automatically.
+      Revisit the score, the final out and the celebration. Navigation keeps
+      your place and does not rotate automatically.
     </p>
     <jp-carousel
       id="workspace-guide"
-      label="Clubhouse reference"
+      label="Game 6 highlights"
       [index]="slide()"
       (indexChange)="slide.set($event)"
     >
-      <ng-template jpCarouselSlide="team" label="Invite club members">
-        <h2>Invite club members</h2>
-        <p>Invite players and coaches to the Rays club.</p>
+      <ng-template jpCarouselSlide="team" label="Share this game">
+        <h2>Share this game</h2>
+        <p>
+          Keep the score, photographs and highlights together in your Game 6
+          collection.
+        </p>
         <jp-button
           variant="secondary"
-          (click)="action.set('Invitations opened')"
-          >Open club invitations</jp-button
+          (click)="action.set('Sharing details opened')"
+          >Open sharing details</jp-button
         >
       </ng-template>
       <ng-template jpCarouselSlide="priorities" label="Set priorities">
         <h2>Set priorities</h2>
         <p>
-          Choose a few concrete outcomes. Keep work ordered so everyone knows
-          what comes next.
+          Richie Palacios opened the scoring. Junior Caminero and Yandy Díaz
+          added two-run home runs. Write down the moment you want to remember.
         </p>
-        <label for="workspace-note">Manager note</label
+        <label for="workspace-note">Your game note</label
         ><input
           id="workspace-note"
           [value]="note()"
@@ -54,11 +57,13 @@
       <ng-template jpCarouselSlide="review" label="Review progress">
         <h2>Review progress</h2>
         <p>
-          Check completed work, gather feedback, and adjust the next priorities
-          together.
+          Liam Hicks caught the final out. Tampa Bay won 7–3 and claimed the
+          American League pennant, four games to two.
         </p>
-        <jp-button variant="secondary" (click)="action.set('Review scheduled')"
-          >Schedule practice</jp-button
+        <jp-button
+          variant="secondary"
+          (click)="action.set('Collection note saved for this session')"
+          >Save collection note</jp-button
         >
       </ng-template>
     </jp-carousel>

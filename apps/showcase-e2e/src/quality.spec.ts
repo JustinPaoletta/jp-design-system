@@ -76,9 +76,9 @@ test('recipes visual neon default mobile shell', async ({ page }) => {
 test('recipes visual neon default open dialog', async ({ page }) => {
   await prepareNeonDefault(page, '/overlays', { width: 1280, height: 900 });
   await page
-    .getByRole('button', { name: 'Remove player', exact: true })
+    .getByRole('button', { name: 'Remove from collection', exact: true })
     .click();
-  const dialog = page.getByRole('dialog', { name: 'Remove player?' });
+  const dialog = page.getByRole('dialog', { name: 'Remove from collection?' });
   await expect(dialog).toBeVisible();
   await dialog.evaluate(() => {
     if (document.activeElement instanceof HTMLElement) {
@@ -94,9 +94,9 @@ test('recipes visual neon default open dialog', async ({ page }) => {
 test('recipes visual neon default assistant response', async ({ page }) => {
   await prepareNeonDefault(page, '/assistant', { width: 1280, height: 900 });
   await page.getByRole('button', { name: 'Load game summary' }).click();
-  const panel = page.getByRole('complementary', { name: 'Rays manager' });
+  const panel = page.getByRole('complementary', { name: 'Game 6 companion' });
   await expect(panel).toContainText(
-    'The Rays won ALCS Game 6 and advanced to the World Series.',
+    'Yandy Díaz and Junior Caminero drove in runs',
   );
   await panel.locator('textarea').evaluate((element) => {
     if (element instanceof HTMLElement) element.blur();

@@ -11,10 +11,12 @@ test.describe('feedback overlays', () => {
     await expect(shell).toBeVisible();
     await expect(page.locator('h1')).toContainText('Club alerts');
 
-    await page.getByRole('button', { name: 'Remove player' }).click();
-    const dialog = page.getByRole('dialog', { name: 'Remove player?' });
+    await page.getByRole('button', { name: 'Remove from collection' }).click();
+    const dialog = page.getByRole('dialog', {
+      name: 'Remove from collection?',
+    });
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('Remove player?');
+    await expect(dialog).toContainText('Remove from collection?');
 
     await page.keyboard.press('Escape');
     await expect(dialog).toHaveCount(0);
@@ -25,6 +27,6 @@ test.describe('feedback overlays', () => {
     await page.goto('/overlays');
 
     await page.getByRole('button', { name: 'Success', exact: true }).click();
-    await expect(page.locator('jp-toast')).toContainText('Lineup saved');
+    await expect(page.locator('jp-toast')).toContainText('Game notes saved');
   });
 });

@@ -35,7 +35,7 @@ import {
         class="jp-dropdown-menu__item--destructive"
         (itemSelect)="open = false"
       >
-        Remove player
+        Remove from collection
       </button>
     </jp-dropdown-menu>
   `,
@@ -117,7 +117,7 @@ export const WithDisabledItem: Story = {
           Player actions
         </jp-button>
         <button type="button" jpDropdownMenuItem>Edit player</button>
-        <button type="button" jpDropdownMenuItem disabled>Remove player</button>
+        <button type="button" jpDropdownMenuItem disabled>Remove from collection</button>
         <button type="button" jpDropdownMenuItem>Duplicate player</button>
       </jp-dropdown-menu>
     `,

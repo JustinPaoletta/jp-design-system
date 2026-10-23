@@ -17,10 +17,10 @@ const meta: Meta<JpCommandPalette> = {
         keywords: ['home'],
         shortcut: ['Mod', 'Shift', 'O'],
       },
-      { id: 'duplicate', label: 'Duplicate lineup', section: 'Actions' },
+      { id: 'duplicate', label: 'Duplicate game notes', section: 'Actions' },
       {
         id: 'archive',
-        label: 'Archive lineup',
+        label: 'Archive game notes',
         section: 'Actions',
         disabled: true,
       },
@@ -44,7 +44,7 @@ export const Default: Story = {
     await expect(search).toHaveFocus();
     await userEvent.type(search, 'duplicate');
     await expect(
-      c.getByRole('option', { name: 'Duplicate lineup' }),
+      c.getByRole('option', { name: 'Duplicate game notes' }),
     ).toBeVisible();
     await userEvent.keyboard('{Enter}');
     await expect(c.getByRole('status')).toHaveTextContent('duplicate');

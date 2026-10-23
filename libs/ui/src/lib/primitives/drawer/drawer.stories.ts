@@ -9,7 +9,7 @@ const meta: Meta<JpDrawer> = {
   component: JpDrawer,
   parameters: { layout: 'padded' },
   decorators: [moduleMetadata({ imports: [JpButton] })],
-  args: { title: 'Club details', side: 'end', open: true },
+  args: { title: 'Game 6 details', side: 'end', open: true },
   render: (args) => ({
     props: args,
     template: `<jp-button variant="secondary" (click)="open=true">Open drawer</jp-button><jp-drawer [title]="title" [open]="open" [side]="side" (openChange)="open=$event"><p>Review the club roster without leaving this page.</p><jp-button jpDrawerActions (click)="open=false">Done</jp-button></jp-drawer>`,

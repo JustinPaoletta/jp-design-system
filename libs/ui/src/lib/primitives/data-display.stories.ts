@@ -24,32 +24,32 @@ type DataDisplayArgs = {
 
 const columns = [
   { key: 'name', header: 'Player' },
-  { key: 'status', header: 'Availability' },
+  { key: 'status', header: 'Game 6' },
 ];
 
 const rows = [
   {
-    name: 'Shane Baz',
+    name: 'Freddy Peralta',
     env: 'Active roster',
-    status: 'Available',
+    status: 'Starter',
     region: 'Pitcher',
   },
   {
     name: 'Yandy Díaz',
     env: 'Active roster',
-    status: 'Day to day',
-    region: 'First base',
+    status: 'Home run',
+    region: 'Designated hitter',
   },
   {
     name: 'Taylor Walls',
     env: 'Active roster',
-    status: 'Available',
+    status: 'Starter',
     region: 'Shortstop',
   },
   {
-    name: 'Shane McClanahan',
-    env: 'Injured list',
-    status: 'Injured',
+    name: 'Bryan Baker',
+    env: 'Bullpen',
+    status: 'Relief',
     region: 'Pitcher',
   },
 ];
@@ -97,18 +97,18 @@ const meta: Meta<DataDisplayArgs> = {
           showEmpty()
             ? []
             : rows.filter(
-                (row) => !availableOnly() || row.status === 'Available',
+                (row) => !availableOnly() || row.env === 'Active roster',
               ),
         columns,
         rows,
         statusTone(status: string) {
-          if (status === 'Available') {
+          if (status === 'Starter') {
             return 'success';
           }
-          if (status === 'Day to day') {
+          if (status === 'Home run') {
             return 'warning';
           }
-          if (status === 'Injured') return 'error';
+          if (status === 'Relief') return 'error';
           return 'neutral';
         },
         onSidebarCollapsedChange(next: boolean) {
@@ -218,11 +218,11 @@ const meta: Meta<DataDisplayArgs> = {
         <main jpAppShellMain>
 <div class="roster-page">
   <header class="roster-page__header">
-    <jp-heading as="h1">Player roster</jp-heading>
+    <jp-heading as="h1">Game 6 roster</jp-heading>
   </header>
-  <jp-card title="2026 Rays">
+  <jp-card title="2026 ALCS">
     <span jpCardHeader class="roster-page__count">{{ visibleRows().length }} players</span>
-    <p>Review player positions and availability.</p>
+    <p>Review the players and their Game 6 contributions.</p>
     <jp-table
       class="roster-page__table"
       caption="Rays roster"
@@ -239,13 +239,13 @@ const meta: Meta<DataDisplayArgs> = {
       <ng-template jpTableCell="status" let-value>
         <jp-badge [tone]="statusTone('' + value)">{{ value }}</jp-badge>
       </ng-template>
-      <jp-empty-state title="No players on the roster" description="No players match these filters.">
+      <jp-empty-state title="No matching Game 6 players" description="Clear the filters to return to the Game 6 roster.">
         <jp-button variant="secondary" type="button" (click)="showEmpty.set(false); availableOnly.set(false)">Clear filters</jp-button>
       </jp-empty-state>
     </jp-table>
     <div jpCardActions class="roster-page__actions">
-      <jp-button [disabled]="showEmpty()" (click)="availableOnly.set(!availableOnly())">{{ availableOnly() ? 'Show all players' : 'Show available' }}</jp-button>
-      <span role="status">{{ availableOnly() ? 'Available players only' : 'Active roster and injured list' }}</span>
+      <jp-button [disabled]="showEmpty()" (click)="availableOnly.set(!availableOnly())">{{ availableOnly() ? 'Show all players' : 'Show starters' }}</jp-button>
+      <span role="status">{{ availableOnly() ? 'Game 6 starters' : 'Active roster and bullpen' }}</span>
     </div>
   </jp-card>
   <jp-disclosure class="preview-settings" title="Preview settings">
@@ -268,7 +268,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('jp-app-shell')).toBeTruthy();
     await expect(canvasElement.querySelector('h1')?.textContent).toContain(
-      'Player roster',
+      'Game 6 roster',
     );
     await expect(canvasElement.querySelector('caption')?.textContent).toContain(
       'Rays roster',
@@ -277,11 +277,13 @@ export const Default: Story = {
 
     const canvas = within(canvasElement);
     await userEvent.click(
-      canvas.getByRole('button', { name: 'Show available' }),
+      canvas.getByRole('button', { name: 'Show starters' }),
     );
-    await expect(canvas.queryByRole('cell', { name: /Yandy Díaz/ })).toBeNull();
+    await expect(
+      canvas.queryByRole('cell', { name: /Bryan Baker/ }),
+    ).toBeNull();
     await expect(canvas.getByRole('status')).toHaveTextContent(
-      'Available players only',
+      'Game 6 starters',
     );
     await userEvent.click(
       canvas.getByRole('button', { name: 'Show all players' }),
@@ -293,13 +295,15 @@ export const Default: Story = {
     await userEvent.click(settings);
     const toggle = canvas.getByRole('switch', { name: 'Show empty state' });
     await userEvent.click(toggle);
-    await expect(canvas.getByText('No players on the roster')).toBeVisible();
+    await expect(canvas.getByText('No matching Game 6 players')).toBeVisible();
     await userEvent.click(toggle);
-    await expect(canvas.getByRole('cell', { name: /Shane Baz/ })).toBeVisible();
+    await expect(
+      canvas.getByRole('cell', { name: /Freddy Peralta/ }),
+    ).toBeVisible();
     await userEvent.click(settings);
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
   },
 };
 
-export const Available: Story = { args: { availableOnly: true } };
+export const Starter: Story = { args: { availableOnly: true } };
 export const Empty: Story = { args: { showEmpty: true } };

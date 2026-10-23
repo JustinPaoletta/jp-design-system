@@ -1,4 +1,9 @@
 import {
+  GAME_SIX_INNINGS,
+  GAME_SIX_SCORE_SERIES,
+  GAME_SIX_ROSTER,
+} from '@jp-design-system/ui/primitives/game-six.example';
+import {
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -20,34 +25,7 @@ import {
   type JpTableSort,
 } from '@jp-design-system/ui';
 
-const WORLD_SERIES_ROSTER = [
-  { name: 'Junior Caminero', position: 'Designated hitter' },
-  { name: 'Josh Lowe', position: 'Right field' },
-  { name: 'Yandy Díaz', position: 'First base' },
-  { name: 'Kameron Misner', position: 'Left field' },
-  { name: 'Taylor Walls', position: 'Shortstop' },
-  { name: 'Ben Rortvedt', position: 'Catcher' },
-  { name: 'Curtis Mead', position: 'Third base' },
-  { name: 'Brandon Lowe', position: 'Second base' },
-  { name: 'Jonny DeLuca', position: 'Center field' },
-  { name: 'Chandler Simpson', position: 'Outfield' },
-  { name: 'Jonathan Aranda', position: 'Outfield' },
-  { name: 'Jose Caballero', position: 'Shortstop' },
-  { name: 'Logan Driscoll', position: 'Catcher' },
-  { name: 'Shane Baz', position: 'Pitcher' },
-  { name: 'Taj Bradley', position: 'Pitcher' },
-  { name: 'Ryan Pepiot', position: 'Pitcher' },
-  { name: 'Pete Fairbanks', position: 'Pitcher' },
-  { name: 'Drew Rasmussen', position: 'Pitcher' },
-  { name: 'Zack Littell', position: 'Pitcher' },
-  { name: 'Edwin Uceta', position: 'Pitcher' },
-  { name: 'Kevin Kelly', position: 'Pitcher' },
-  { name: 'Mason Montgomery', position: 'Pitcher' },
-  { name: 'Colin Poche', position: 'Pitcher' },
-  { name: 'Ian Seymour', position: 'Pitcher' },
-  { name: 'Jacob Lopez', position: 'Pitcher' },
-  { name: 'Garrett Cleavinger', position: 'Pitcher' },
-] as const;
+const WORLD_SERIES_ROSTER = GAME_SIX_ROSTER;
 
 @Component({
   selector: 'app-data-performance-page',
@@ -69,15 +47,8 @@ const WORLD_SERIES_ROSTER = [
 })
 export class DataPerformancePage {
   readonly type = signal<'bar' | 'line'>('bar');
-  readonly labels = ['April', 'May', 'June', 'July', 'August', 'September'];
-  readonly series: JpChartSeries[] = [
-    { id: 'product', label: 'Rays', values: [130, 120, 141, 104, 146, 162] },
-    {
-      id: 'platform',
-      label: 'ALCS Game 6',
-      values: [129, 135, 152, 129, 123, 126],
-    },
-  ];
+  readonly labels = GAME_SIX_INNINGS;
+  readonly series: JpChartSeries[] = GAME_SIX_SCORE_SERIES;
   readonly columns: JpSortableTableColumn[] = [
     { key: 'name', header: 'Player', sortable: true, width: 260 },
     { key: 'region', header: 'Position', width: 180 },

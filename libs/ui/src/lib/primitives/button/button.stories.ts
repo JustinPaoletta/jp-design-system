@@ -53,7 +53,7 @@ const meta: Meta<ButtonStoryArgs> = {
     disabled: false,
     loading: false,
     loadingLabel: 'Loading lineup',
-    label: 'Save lineup',
+    label: 'Save game notes',
   },
   render: (args) => ({
     props: args,
@@ -76,7 +76,7 @@ export default meta;
 type Story = StoryObj<ButtonStoryArgs>;
 
 export const Primary: Story = {
-  args: { variant: 'primary', label: 'Save lineup' },
+  args: { variant: 'primary', label: 'Save game notes' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-button');
     await expect(host?.classList.contains('jp-button--primary')).toBe(true);
@@ -87,7 +87,7 @@ export const Primary: Story = {
 };
 
 export const Secondary: Story = {
-  args: { variant: 'secondary', label: 'View roster' },
+  args: { variant: 'secondary', label: 'View Game 6 roster' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-button');
     await expect(host?.classList.contains('jp-button--secondary')).toBe(true);
@@ -95,7 +95,7 @@ export const Secondary: Story = {
 };
 
 export const Ghost: Story = {
-  args: { variant: 'ghost', label: 'View game log' },
+  args: { variant: 'ghost', label: 'View Game 6 recap' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-button');
     await expect(host?.classList.contains('jp-button--ghost')).toBe(true);
@@ -103,7 +103,7 @@ export const Ghost: Story = {
 };
 
 export const Destructive: Story = {
-  args: { variant: 'destructive', label: 'Remove player' },
+  args: { variant: 'destructive', label: 'Remove from collection' },
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector('jp-button');
     await expect(host?.classList.contains('jp-button--destructive')).toBe(true);
@@ -111,7 +111,7 @@ export const Destructive: Story = {
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, label: 'Submit locked lineup' },
+  args: { disabled: true, label: 'Game record locked' },
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
     await expect(button?.disabled).toBe(true);
@@ -138,12 +138,16 @@ export const Sizes: Story = {
 };
 
 export const Loading: Story = {
-  args: { loading: true, loadingLabel: 'Saving lineup', label: 'Save lineup' },
+  args: {
+    loading: true,
+    loadingLabel: 'Saving game notes',
+    label: 'Save game notes',
+  },
   play: async ({ canvasElement }) => {
     const button = canvasElement.querySelector('button');
     await expect(button?.disabled).toBe(true);
     await expect(button?.getAttribute('aria-busy')).toBe('true');
-    await expect(button).toHaveAccessibleName('Saving lineup');
-    await expect(button?.textContent).toContain('Save lineup');
+    await expect(button).toHaveAccessibleName('Saving game notes');
+    await expect(button?.textContent).toContain('Save game notes');
   },
 };

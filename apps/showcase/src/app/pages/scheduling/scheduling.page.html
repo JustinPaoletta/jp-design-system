@@ -1,7 +1,7 @@
 <div class="page">
   <jp-page-header
     title="Club events"
-    description="Sample club appointments for October 2024. Clock times show layout, not official game times."
+    description="Your Game 6 archive reminders. These example appointments are not the team’s official schedule."
   />
   <div class="actions">
     <jp-button variant="secondary" (click)="showDst()"
@@ -32,7 +32,7 @@
       [(view)]="view"
       [events]="appointments"
       [timeZone]="zone()"
-      today="2024-10-07"
+      today="2026-10-19"
       [loading]="state() === 'loading'"
       [error]="state() === 'error' ? 'Appointments could not be loaded.' : ''"
       (retry)="state.set('ready')"

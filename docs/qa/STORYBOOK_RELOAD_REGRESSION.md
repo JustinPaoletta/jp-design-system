@@ -31,7 +31,7 @@ The current suite totals and confirmed revisions are recorded in
 [Verification](VERIFICATION.md). Keep the per-port output and runtime guards
 when changing Storybook tooling.
 
-Photo examples use the local `apps/showcase/public/example-photos/` directory.
+Illustration examples use the local `apps/showcase/public/example-illustrations/` directory.
 The static Storybook cache includes these files as inputs.
 The Jest runner ignores package output in `dist/` to avoid duplicate package names.
 These settings must preserve the per-port runtime isolation above.

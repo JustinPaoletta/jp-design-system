@@ -2,7 +2,7 @@
 <div class="page" id="workflow-main" tabindex="-1">
   <jp-page-header
     title="Club operations"
-    description="Manage the game plan, series dates, lineup files and club messages."
+    description="Manage the game plan, series dates, lineup files and Game 6 updates."
     ><a jpPageActions jpLink routerLink="/product-tools"
       >Game day tools</a
     ></jp-page-header
@@ -22,20 +22,20 @@
             (actionSelected)="record($event)"
         /></jp-button-group>
         <jp-context-menu
-          label="Game plan"
+          label="Game 6 notes"
           [actions]="menuActions"
           (actionSelected)="record($event)"
           ><p>
-            Game plan — right-click here, or use Shift + F10.
+            Game 6 notes — right-click here, or use Shift + F10.
           </p></jp-context-menu
         >
         <p role="status">Last action: {{action()}}</p>
       </div></jp-card
     >
-    <jp-card title="Club name"
+    <jp-card title="Collection name"
       ><div class="stack">
         <jp-inline-edit
-          label="Club name"
+          label="Collection name"
           [value]="projectName()"
           (valueChange)="projectName.set($event)"
           [save]="saveName"
@@ -54,28 +54,28 @@
           id="launch-date"
           label="Game date"
           [formControl]="launch"
-          min="2024-10-01"
-          max="2024-10-31"
+          min="2026-10-01"
+          max="2026-10-31"
           required
-          [error]="submitted() && launch.invalid?'Choose a date in October 2024.':''"
+          [error]="submitted() && launch.invalid?'Choose a date in October 2026.':''"
         />
         <jp-date-range-picker
           id="event-dates"
           label="Series dates"
           [formControl]="dates"
-          min="2024-10-01"
-          max="2024-10-31"
+          min="2026-10-01"
+          max="2026-10-31"
           required
           [error]="submitted() && dates.invalid?'Start must be on or before end.':''"
         />
         <jp-time-picker
           id="event-time"
-          label="First pitch"
+          label="Replay reminder"
           [formControl]="time"
           min="09:00"
           max="21:00"
           [step]="900"
-          hint="15-minute steps. This time is a demonstration."
+          hint="15-minute steps. 2026 ALCS Game 6 began at 8:08 p.m."
           [error]="submitted() && time.invalid?'Choose a valid time.':''"
         />
         <jp-button type="submit">Save schedule</jp-button>@if(scheduleSaved()){
@@ -115,7 +115,7 @@
     <jp-card title="Inbox"
       ><div #notificationRegion tabindex="-1" aria-label="Notification updates">
         <jp-notification-list
-          label="Club messages"
+          label="Game 6 updates"
           [items]="notifications()"
           (readChange)="changeRead($event)"
           (dismissRequested)="dismiss($event)"

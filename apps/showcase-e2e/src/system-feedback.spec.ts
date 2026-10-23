@@ -155,9 +155,9 @@ test('system feedback: inline saving keeps the save and cancel controls in posit
   page,
 }) => {
   await page.goto('/workflows');
-  await page.getByRole('button', { name: 'Edit: Club name' }).click();
-  const field = page.getByRole('textbox', { name: 'Club name' });
-  await field.fill('Rays clubhouse');
+  await page.getByRole('button', { name: 'Edit: Collection name' }).click();
+  const field = page.getByRole('textbox', { name: 'Collection name' });
+  await field.fill('Game 6 archive');
   const save = page.locator('jp-inline-edit jp-button button');
   const cancel = page
     .locator('jp-inline-edit button')
@@ -175,7 +175,7 @@ test('system feedback: inline saving keeps the save and cancel controls in posit
   await page.clock.fastForward(600);
   await page.clock.runFor(32);
   await expect(save).toBeEnabled();
-  await expect(field).toHaveValue('Rays clubhouse');
+  await expect(field).toHaveValue('Game 6 archive');
   expect(await save.boundingBox()).toEqual(before);
 });
 

@@ -50,7 +50,7 @@ const meta: Meta<JpHeading> = {
         </div>
         <div class="jp-heading-story__sample">
           <jp-heading [as]="asTag" [size]="size" [tone]="tone" [weight]="weight">
-            Rays clubhouse
+            Game 6 archive
           </jp-heading>
         </div>
       </div>

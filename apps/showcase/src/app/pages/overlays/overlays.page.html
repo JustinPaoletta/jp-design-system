@@ -1,21 +1,23 @@
 <div class="example-page">
   <header class="example-page__header">
     <jp-heading as="h1">Club alerts</jp-heading>
-    <p>Review club messages, game details and player actions.</p>
+    <p>Review Game 6 updates, game details and player actions.</p>
   </header>
   <div class="example-page__cards">
     <jp-card title="Game reference">
       <jp-stack gap="md">
         <jp-inline gap="sm" wrap="true">
           <jp-tooltip content="Copy game ID" placement="top">
-            <jp-copy-button text="ALCS-G6" label="Copy ID" />
+            <jp-copy-button text="849815" label="Copy ID" />
           </jp-tooltip>
-          <span class="example-page__status">ALCS Game 6 · Rays win</span>
+          <span class="example-page__status"
+            >2026 ALCS Game 6 · Rays 7, Guardians 3</span
+          >
         </jp-inline>
       </jp-stack>
     </jp-card>
 
-    <jp-card title="Club messages">
+    <jp-card title="Game 6 updates">
       <jp-stack gap="md">
         <jp-inline gap="sm" wrap="true">
           <jp-button
@@ -57,7 +59,7 @@
             type="button"
             (click)="dialogOpen = true"
           >
-            Remove player
+            Remove from collection
           </jp-button>
 
           <jp-dropdown-menu [open]="menuOpen" (openChange)="menuOpen = $event">
@@ -88,7 +90,7 @@
               <jp-stack gap="sm">
                 <jp-text weight="semibold">Squad filters</jp-text>
                 <jp-text tone="secondary"
-                  >Active roster, bench and the injured list.</jp-text
+                  >Active roster, bench and the bullpen.</jp-text
                 >
               </jp-stack>
             </div>
@@ -105,7 +107,7 @@
 
 <jp-dialog
   [open]="dialogOpen"
-  title="Remove player?"
+  title="Remove from collection?"
   (openChange)="dialogOpen = $event"
 >
   <p>

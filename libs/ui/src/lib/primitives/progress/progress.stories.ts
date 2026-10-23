@@ -13,10 +13,10 @@ type Story = StoryObj<JpProgress>;
 export const Upload: Story = {
   render: (args) => ({
     props: args,
-    template: `<div style="max-width:32rem;font:var(--jp-font-size-body)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-primary)"><div style="display:flex;justify-content:space-between;gap:var(--jp-space-md);margin-bottom:var(--jp-space-xs)"><span>Uploading lineup.csv</span><span>{{ value }}%</span></div><jp-progress [label]="label" [value]="value" [max]="max" [valueText]="valueText" /></div>`,
+    template: `<div style="max-width:32rem;font:var(--jp-font-size-body)/1.5 var(--jp-font-family-base);color:var(--jp-color-text-primary)"><div style="display:flex;justify-content:space-between;gap:var(--jp-space-md);margin-bottom:var(--jp-space-xs)"><span>Uploading game-6-notes.csv</span><span>{{ value }}%</span></div><jp-progress [label]="label" [value]="value" [max]="max" [valueText]="valueText" /></div>`,
   }),
   args: {
-    label: 'Uploading lineup',
+    label: 'Uploading Game 6 notes',
     value: 42,
     max: 100,
     valueText: '42 percent uploaded',
@@ -30,5 +30,5 @@ export const Upload: Story = {
   },
 };
 export const Indeterminate: Story = {
-  args: { label: 'Loading club roster', value: null },
+  args: { label: 'Loading the Game 6 roster', value: null },
 };

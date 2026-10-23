@@ -19,7 +19,7 @@ const meta: Meta<JpMultiSelect> = {
   args: {
     label: 'Players',
     options: [
-      { value: 'ada', label: 'Shane Baz' },
+      { value: 'ada', label: 'Freddy Peralta' },
       { value: 'grace', label: 'Yandy Díaz' },
       { value: 'blocked', label: 'Unavailable', disabled: true },
     ],

@@ -32,7 +32,7 @@ import {
 })
 export class ControlsPage {
   readonly defaults = {
-    email: 'manager@rays.example',
+    email: 'fan@rays.example',
     notes: '',
     role: 'editor',
     subscribe: true,
@@ -40,7 +40,7 @@ export class ControlsPage {
   saved: typeof this.defaults | null = { ...this.defaults };
   feedback = '';
 
-  email = 'manager@rays.example';
+  email = 'fan@rays.example';
   notes = '';
   role = 'editor';
   subscribe = true;
@@ -49,7 +49,7 @@ export class ControlsPage {
   save(form: NgForm): void {
     this.saved = { ...form.value };
     form.form.markAsPristine();
-    this.feedback = 'Lineup saved in this preview.';
+    this.feedback = 'Game notes saved in this preview.';
   }
 
   cancel(form: NgForm): void {

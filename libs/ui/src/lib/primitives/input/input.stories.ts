@@ -33,14 +33,14 @@ const meta: Meta<JpInput> = {
   },
   args: {
     label: 'Email',
-    hint: 'We use this address for club messages.',
+    hint: 'Use your email address for this archive account.',
     error: '',
     type: 'email',
     size: 'md',
     disabled: false,
     readonly: false,
     invalid: false,
-    placeholder: 'manager@rays.example',
+    placeholder: 'fan@rays.example',
   },
   render: (args) => ({
     props: args,
@@ -96,7 +96,7 @@ export const Disabled: Story = {
 export const Readonly: Story = {
   render: (args) => ({
     props: args,
-    template: `<jp-input [label]="label" [hint]="hint" [readonly]="true" [ngModel]="'manager@rays.example'" />`,
+    template: `<jp-input [label]="label" [hint]="hint" [readonly]="true" [ngModel]="'fan@rays.example'" />`,
   }),
   args: {
     readonly: true,
@@ -113,9 +113,9 @@ export const Sizes: Story = {
     props: args,
     template: `
       <div style="display:flex; flex-direction:column; gap:1rem;">
-        <jp-input label="Manager email (small)" size="sm" placeholder="manager@rays.example" [hint]="''" />
-        <jp-input label="Manager email (medium)" size="md" placeholder="manager@rays.example" [hint]="''" />
-        <jp-input label="Manager email (large)" size="lg" placeholder="manager@rays.example" [hint]="''" />
+        <jp-input label="Your email (small)" size="sm" placeholder="fan@rays.example" [hint]="''" />
+        <jp-input label="Your email (medium)" size="md" placeholder="fan@rays.example" [hint]="''" />
+        <jp-input label="Your email (large)" size="lg" placeholder="fan@rays.example" [hint]="''" />
       </div>
     `,
   }),

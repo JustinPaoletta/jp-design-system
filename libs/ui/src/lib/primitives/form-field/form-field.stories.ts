@@ -10,7 +10,7 @@ const meta: Meta<JpFormField> = {
   args: {
     controlId: 'example-field',
     label: 'Email',
-    hint: 'Use the manager email address',
+    hint: 'Use the email address for your game archive',
   },
   decorators: [
     componentWrapperDecorator(
@@ -20,7 +20,7 @@ const meta: Meta<JpFormField> = {
   ],
   render: (args) => ({
     props: args,
-    template: `<jp-form-field #field [controlId]="controlId" [label]="label" [hint]="hint" [error]="error"><jp-input [id]="controlId" type="email" placeholder="manager@rays.example" [invalid]="!!error" [ariaDescribedBy]="field.describedBy() || ''" /></jp-form-field>`,
+    template: `<jp-form-field #field [controlId]="controlId" [label]="label" [hint]="hint" [error]="error"><jp-input [id]="controlId" type="email" placeholder="fan@rays.example" [invalid]="!!error" [ariaDescribedBy]="field.describedBy() || ''" /></jp-form-field>`,
   }),
 };
 export default meta;

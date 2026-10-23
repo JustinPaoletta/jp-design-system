@@ -1,3 +1,4 @@
+import { GAME_SIX_MOMENTS } from '@jp-design-system/ui/primitives/game-six.example';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -78,17 +79,17 @@ export class ProductToolsPage {
   readonly checklist = [
     {
       id: 'quality',
-      label: 'Game preparation',
+      label: 'Game 6 collection',
       children: [
-        { id: 'tests', label: 'Check the lineup' },
-        { id: 'accessibility', label: 'Check the equipment' },
-        { id: 'approval', label: 'League approval', disabled: true },
+        { id: 'tests', label: 'Read the box score' },
+        { id: 'accessibility', label: 'Add photo credits' },
+        { id: 'approval', label: 'Publish collection', disabled: true },
       ],
     },
     {
       id: 'notes',
-      label: 'Write the game report',
-      description: 'Record the score and key plays.',
+      label: 'Write your Game 6 memory',
+      description: 'Add the moment you want to remember.',
     },
   ];
   steps(): readonly JpStep[] {
@@ -102,7 +103,7 @@ export class ProductToolsPage {
             : this.submitted() && (this.email.invalid || this.seats.invalid)
               ? 'error'
               : 'upcoming',
-        description: 'Manager email and player count',
+        description: 'Your email and player count',
       },
       {
         id: 'review',
@@ -112,31 +113,9 @@ export class ProductToolsPage {
       },
     ];
   }
-  readonly events = [
-    {
-      id: 'created',
-      title: 'Injured list sample',
-      timeLabel: 'Sample',
-      dateTime: '2024-10-05',
-      description: 'The injured-list row is a sample status for the Rays.',
-    },
-    {
-      id: 'reviewed',
-      title: 'Day to day sample',
-      timeLabel: 'Sample',
-      dateTime: '2024-10-07',
-      description: 'The status sample is day to day.',
-    },
-    {
-      id: 'deployment',
-      title: 'ALCS Game 6 final',
-      timeLabel: 'ALCS Game 6',
-      dateTime: '2024-10-30T23:50:00-04:00',
-      description: 'The Rays won ALCS Game 6.',
-    },
-  ];
+  readonly events = GAME_SIX_MOMENTS;
   readonly overflow = [
-    { id: 'ada', label: 'Shane Baz', href: '#reviewer-ada' },
+    { id: 'ada', label: 'Freddy Peralta', href: '#reviewer-ada' },
     { id: 'grace', label: 'Yandy Díaz' },
     { id: 'linus', label: 'Taylor Walls' },
   ];
