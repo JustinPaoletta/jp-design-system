@@ -1,6 +1,6 @@
 # Component Expansion Task List
 
-Updated: October 21, 2026. Five promotion and integration items remain.
+Updated: October 25, 2026. Five promotion and integration items remain.
 The [documentation index](docs/README.md) links completed feature work.
 The [verification record](docs/qa/VERIFICATION.md) gives test evidence.
 
@@ -35,7 +35,7 @@ visual placeholder exists.
 
 Picker checks cover forced colors, enlarged root text and touch emulation.
 Installed packages also exercise date, date-range and time popup controls.
-The release branch prepares paired `0.1.0-rc.1` package versions and release notes.
+The combined draft prepares paired `0.1.0-rc.1` package versions and release notes.
 `packages:pack` creates archives with verified integrity and a hash manifest.
 CI makes the archives available for download.
 

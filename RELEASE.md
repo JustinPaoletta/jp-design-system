@@ -5,7 +5,7 @@ The release pull request requires approval.
 After merge, a person creates the tag and GitHub Release.
 
 The repository had no release tags on October 21, 2026.
-The release branch prepares `0.1.0-rc.1` for approval.
+The combined draft prepares `0.1.0-rc.1` for approval.
 Registry publication is not configured.
 
 ## Version relationship
@@ -83,7 +83,11 @@ It does not write files.
 For an already prepared candidate, it verifies paired versions and the existing release notes.
 New Unreleased notes, empty candidate notes and duplicate sections cause a failure.
 
-Without `--dry-run`, the script writes those files and does not commit, tag, push, or publish. Write mode refuses an empty `## [Unreleased]` section and refuses a changelog that already has a section for that version. Run write mode only on the release branch when you intend to open the release pull request.
+Without `--dry-run`, the script writes the five files listed below.
+It does not commit, tag, push or publish.
+Write mode refuses an empty `## [Unreleased]` section.
+It also refuses an existing changelog section for that version.
+Use write mode only in the pull request that prepares the release.
 
 ```bash
 node tools/release/prepare.mjs --version X.Y.Z --dry-run

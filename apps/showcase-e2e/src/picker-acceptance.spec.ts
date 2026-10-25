@@ -29,7 +29,16 @@ for (const dir of ['ltr', 'rtl']) {
     const date = page.getByLabel('Game date', { exact: true });
     await date.press('ArrowDown');
     const calendar = page.getByRole('dialog', { name: 'Game date calendar' });
-    await expectFits(page, calendar);
+    // Wait for keyboard focus before checking layout.
+    await expect(calendar.locator('[data-date="2026-10-19"]')).toBeFocused();
+    await expectFits(page, calendar.locator('..'));
+    const pageScroll = await page.evaluate(() => scrollY);
+    await page.keyboard.press('End');
+    await page.keyboard.press('ArrowDown');
+    const lastDay = calendar.locator('[data-date="2026-10-31"]');
+    await expect(lastDay).toBeFocused();
+    await expect(lastDay).toBeInViewport({ ratio: 1 });
+    expect(await page.evaluate(() => scrollY)).toBe(pageScroll);
     await page.keyboard.press('Escape');
     await expect(date).toBeFocused();
     const time = page.getByRole('textbox', {
@@ -144,7 +153,7 @@ test.describe('picker acceptance touch', () => {
       .tap();
     const calendar = page.getByRole('dialog', { name: 'Game date calendar' });
     await expect(calendar).toBeVisible();
-    await expectFits(page, calendar);
+    await expectFits(page, calendar.locator('..'));
     await calendar.locator('[data-date="2026-10-20"]').tap();
     await expect(page.getByLabel('Game date', { exact: true })).toHaveValue(
       '2026-10-20',

@@ -203,9 +203,11 @@ export class JpDatePicker extends TemporalInput {
       }
       if (this.focusRequested()) {
         this.focusRequested.set(false);
-        panel
-          .querySelector<HTMLButtonElement>(`[data-date="${active}"]`)
-          ?.focus({ preventScroll: true });
+        const day = panel.querySelector<HTMLButtonElement>(
+          `[data-date="${active}"]`,
+        );
+        day?.focus({ preventScroll: true });
+        day?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
       }
     });
   }

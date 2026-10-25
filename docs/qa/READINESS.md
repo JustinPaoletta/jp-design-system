@@ -1,6 +1,6 @@
 # Readiness inspection and maintainer handoff
 
-Engineering evidence was updated October 21, 2026.
+Engineering evidence was updated October 25, 2026.
 The [verification record](VERIFICATION.md) identifies tested changes and their limits.
 Use this procedure to finish the five tasks in the [task list](../../COMPONENT_EXPANSION_PLAN.md).
 
@@ -13,8 +13,8 @@ Use this procedure to finish the five tasks in the [task list](../../COMPONENT_E
 - The installed tarball consumer passed Chromium, Firefox and WebKit runtime checks.
 - The inventory records source and maturity evidence for all 113 public classes.
 - Actual Chrome 200%/400% zoom passed on the four larger-feature screens.
-- Handlebars 4.7.10 removes the critical development-tool findings.
-- The release branch prepares paired `0.1.0-rc.1` versions and notes for approval.
+- Handlebars 4.7.10 clears its recorded advisories. The [current dependency audit](../SECURITY_REVIEW.md) records remaining development findings.
+- The combined draft prepares paired `0.1.0-rc.1` versions and notes for approval.
 
 ### Package consumer
 
@@ -154,7 +154,7 @@ The `Ui` removal version remains unassigned; follow the documented deprecation w
 
 The prepared first candidate is `0.1.0-rc.1`.
 It permits an inspected trial release while preview APIs remain clearly identified.
-The release branch contains the candidate versions and notes.
+The combined draft contains the candidate versions and notes.
 The candidate is not approved or published.
 The release tool uses a UTC date for changelog headings.
 

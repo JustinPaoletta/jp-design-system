@@ -123,3 +123,4 @@ These corrections do not establish human screen-reader or physical touch accepta
 
 The document writing check does not establish full ASD-STE100 conformance.
 The separate manual acceptance work remains in `MANUAL_QA.md`.
+The combined release candidate has later results in the [verification record](docs/qa/VERIFICATION.md#october-25-2026-combined-candidate).

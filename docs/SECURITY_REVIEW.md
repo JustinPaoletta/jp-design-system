@@ -1,5 +1,20 @@
 # Security inspection
 
+## October 25, 2026 candidate audit
+
+The combined candidate selects Zod 4.6.6 instead of 4.6.5.
+The Angular CLI pins the older version, so a scoped override selects the patch.
+Other existing dependency ranges also permit the patch.
+The patch addresses the [Zod memory exhaustion advisory](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5).
+
+`npm audit --omit=dev --audit-level=moderate` reports zero findings.
+The complete audit reports 23 development package findings: three low, one moderate, 18 high and one critical.
+These findings need separate dependency review.
+The current critical finding affects the Storybook development server.
+The complete audit remains a CI artifact; the runtime audit remains a required check.
+
+## Earlier inspection
+
 The dependency audit date is October 11, 2026.
 It used the lockfile at revision `b31915546a98f8ccd2cfeb85219b2030a1c995a5`.
 The focused source inspection date is October 2, 2026, after the Angular 22.2.1 upgrade.

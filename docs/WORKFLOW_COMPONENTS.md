@@ -132,6 +132,8 @@ Month controls cannot move beyond the configured date bounds.
 Months without available dates show a status message.
 Arrow navigation stays within the date bounds.
 Enter and Space select the active date, including before the next render.
+The calendar scrolls to keep the focused date visible.
+Scrolling or repositioning a popup preserves its scroll position.
 
 `JpTimePicker` shows a custom panel with time controls and Apply/Clear actions.
 The text field accepts the canonical 24-hour format described above.

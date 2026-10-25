@@ -77,6 +77,8 @@ export function positionOverlay(
   ) ?? ['max-height', '', ''];
   const update = () => {
     if (!panel.isConnected || !anchor.isConnected) return;
+    const scrollTop = panel.scrollTop;
+    const scrollLeft = panel.scrollLeft;
     const a = anchor.getBoundingClientRect();
     const edge = 8;
     const gap = 4;
@@ -153,10 +155,17 @@ export function positionOverlay(
     const snap = (value: number) => Math.round(value * scale) / scale;
     panel.style.left = `${snap(Math.max(offsetLeft + edge, Math.min(left, viewportRight - p.width - edge)))}px`;
     panel.style.top = `${snap(Math.max(offsetTop + edge, Math.min(top, viewportBottom - p.height - edge)))}px`;
+    panel.scrollTop = scrollTop;
+    panel.scrollLeft = scrollLeft;
+  };
+  const onScroll = (event: Event) => {
+    // Scrolling panel content does not move its anchor. Re-measuring here can
+    // temporarily remove the height limit and reset the panel's scroll offset.
+    if (!event.composedPath().includes(panel)) update();
   };
   update();
   win.addEventListener('resize', update);
-  doc.addEventListener('scroll', update, true);
+  doc.addEventListener('scroll', onScroll, true);
   win.visualViewport?.addEventListener('resize', update);
   win.visualViewport?.addEventListener('scroll', update);
   const observer =
@@ -171,7 +180,7 @@ export function positionOverlay(
     if (cleaned) return;
     cleaned = true;
     win.removeEventListener('resize', update);
-    doc.removeEventListener('scroll', update, true);
+    doc.removeEventListener('scroll', onScroll, true);
     win.visualViewport?.removeEventListener('resize', update);
     win.visualViewport?.removeEventListener('scroll', update);
     observer?.disconnect();
