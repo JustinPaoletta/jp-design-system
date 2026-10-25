@@ -14,11 +14,15 @@ The [security inspection](../SECURITY_REVIEW.md) records corrected versions and 
 | Production builds         | Four project builds and their token generation dependency pass.                         |
 | Release and token checks  | Release safety, API readiness and generated token checks pass.                          |
 | Installed dependency tree | `npm ls --all --json` reports no dependency problems.                                   |
+| Static Storybook          | All 388 checks pass in 97 suites.                                                       |
+| Live Storybook            | All 388 checks and concurrent preview/compiler runtime isolation checks pass.           |
+| Browser checks            | All 498 checks pass across Chromium, Firefox and WebKit without retries.                |
+| Expected skips            | Fifteen checks skip unsupported forced-colors or touch emulation.                       |
+| Visual comparisons        | All 94 macOS Chromium comparisons pass against the existing baselines.                  |
+| Installed packages        | All 18 browser, accent and density combinations pass.                                   |
 
-The local Storybook build stopped with `ENOSPC` while writing a source map.
-The host had less than 500 MiB of free disk space.
-Browser and installed-package checks were stopped to limit disk use.
-These local runs do not establish Storybook, browser, visual or installed-package acceptance.
+The initial Storybook and browser runs stopped when the host ran out of disk space.
+After free space became available, both completed successfully.
 Examine the [required CI jobs](../CI_BRANCH_PROTECTION.md#job-scope) for separate hosted results on the dependency update.
 The manual acceptance tasks remain open.
 
