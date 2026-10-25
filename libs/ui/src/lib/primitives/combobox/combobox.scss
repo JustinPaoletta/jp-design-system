@@ -42,6 +42,8 @@ input:disabled {
   cursor: not-allowed;
 }
 .jp-combobox__popup {
+  box-sizing: border-box;
+  padding: 0;
   position: absolute;
   inset: 100% 0 auto;
   z-index: var(--jp-z-overlay-dropdown);
@@ -133,6 +135,13 @@ input::placeholder {
 }
 
 @include interaction.feedback('input[type="text"], .jp-combobox__option');
+
+@media (forced-colors: active) {
+  .jp-combobox__option--active {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
 
 @include interaction.pressable(
   '.jp-combobox__option:not([aria-disabled="true"])'

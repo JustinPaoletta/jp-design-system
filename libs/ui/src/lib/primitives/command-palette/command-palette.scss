@@ -75,3 +75,10 @@ button.active {
 }
 
 @include interaction.pressable('button');
+
+@media (forced-colors: active) {
+  button.active {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

@@ -80,6 +80,7 @@ export class JpCheckbox implements ControlValueAccessor {
     const next = (event.target as HTMLInputElement).checked;
     this.checked.set(next);
     this.onChange(next);
+    (event.target as HTMLInputElement).indeterminate = this.indeterminate();
   }
 
   onBlur(): void {

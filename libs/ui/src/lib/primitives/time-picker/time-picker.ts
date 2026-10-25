@@ -126,6 +126,23 @@ export class JpTimePicker extends TemporalInput {
       this.draftValue() !== '' &&
       !this.validate(new FormControl(this.draftValue())),
   );
+  readonly constraintHint = computed(() => {
+    const min = String(this.min() ?? '') || '00:00';
+    const max =
+      String(this.max() ?? '') ||
+      (this.showSeconds() ? '23:59:59.999' : '23:59');
+    const lower = timeSeconds(min),
+      upper = timeSeconds(max);
+    const step = this.step() === 'any' ? null : Number(this.step() ?? 60);
+    if (
+      lower === null ||
+      upper === null ||
+      lower > upper ||
+      (step !== null && (!Number.isFinite(step) || step <= 0))
+    )
+      return this.timeMessages.dates.invalidTimeOptions;
+    return this.timeMessages.dates.timeConstraints({ min, max, step });
+  });
 
   constructor() {
     super();
@@ -394,7 +411,11 @@ export class JpTimePicker extends TemporalInput {
   onButtonPointerdown(event: PointerEvent): void {
     const button =
       event.target instanceof Element ? event.target.closest('button') : null;
-    if (!button || button.disabled) return;
+    if (!button) return;
+    if (button.disabled) {
+      event.preventDefault();
+      return;
+    }
     // Safari does not focus buttons on pointer activation. Keep focus inside
     // the picker until the button's click has committed or dismissed its draft.
     event.preventDefault();

@@ -3,9 +3,6 @@
   [attr.aria-label]="label()"
   [attr.aria-busy]="loading()"
 >
-  @if (loading() && eventCount() && !calendar().invalid && !error()) {
-  <span class="jp-refresh-status" role="status">{{messages.loading}}</span>
-  }
   <div class="toolbar">
     <div class="navigation">
       <jp-button
@@ -66,6 +63,9 @@
   <div class="period" role="status" aria-live="polite" aria-atomic="true">
     <strong>{{ rangeLabel() }}</strong
     ><span>{{ timeZone() }} · {{ messages.events(eventCount()) }}</span>
+    @if (loading() && eventCount() && !calendar().invalid && !error()) {
+    <span class="refresh-label">{{ messages.loading }}</span>
+    }
   </div>
   @if (loading() && (!eventCount() || calendar().invalid || error())) {
   <p class="state" role="status">{{ messages.loading }}</p>

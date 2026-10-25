@@ -76,6 +76,29 @@ describe('JpVirtualTable', () => {
     f.detectChanges();
     expect(f.componentInstance.currentPage()).toBe(200);
   });
+  it('resets paginated scroll only when the effective page or page size changes', () => {
+    const f = setup();
+    f.componentRef.setInput('virtual', false);
+    f.detectChanges();
+    const frame = f.nativeElement.querySelector(
+      'jp-table .jp-table__frame',
+    ) as HTMLElement;
+    frame.scrollTop = 1800;
+    f.componentInstance.page.set(2);
+    f.detectChanges();
+    expect(frame.scrollTop).toBe(0);
+    frame.scrollTop = 400;
+    f.componentInstance.chooseMode(false);
+    f.detectChanges();
+    expect(frame.scrollTop).toBe(400);
+    f.componentRef.setInput('page', 3);
+    f.detectChanges();
+    expect(frame.scrollTop).toBe(0);
+    frame.scrollTop = 200;
+    f.componentRef.setInput('pageSize', 20);
+    f.detectChanges();
+    expect(frame.scrollTop).toBe(0);
+  });
   it('includes partial boundary rows with zero overscan', () => {
     const f = setup();
     f.componentRef.setInput('overscan', 0);

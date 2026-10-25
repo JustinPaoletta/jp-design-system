@@ -67,6 +67,7 @@ export interface JpMessages {
   };
   chart: {
     data: string;
+    allHidden: string;
     category: string;
     empty: string;
     loading: string;
@@ -114,9 +115,16 @@ export interface JpMessages {
     minute: string;
     second: string;
     invalidDate: string;
+    noAvailableDates: string;
     requiredDate: string;
     requiredTime: string;
     invalidTime: string;
+    timeConstraints: (constraints: {
+      min: string;
+      max: string;
+      step: number | null;
+    }) => string;
+    invalidTimeOptions: string;
     apply: string;
     clear: string;
     close: string;
@@ -133,6 +141,11 @@ export interface JpMessages {
   };
   upload: {
     chooseFile: string;
+    result: (result: {
+      name: string;
+      status: string;
+      error?: string;
+    }) => string;
     chooseFiles: string;
     empty: string;
     queue: string;
@@ -208,6 +221,7 @@ export interface JpMessages {
     collapseRow: (label: string) => string;
     width: (label: string) => string;
     regionLabel: string;
+    scrollHint: string;
     selectAll: string;
     selectRow: (label: string) => string;
     emptyTitle: string;
@@ -233,6 +247,8 @@ export interface JpMessages {
   };
   assistant: {
     title: string;
+    conversation: string;
+    newMessages: string;
     close: string;
     clearContext: string;
     composerLabel: string;
@@ -306,7 +322,8 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
     failed: 'Could not load appointments',
     retry: 'Retry',
     allDay: 'All day',
-    events: (count) => `${count} appointments`,
+    events: (count) =>
+      `${count} ${count === 1 ? 'appointment' : 'appointments'}`,
     invalidEvents: (count) =>
       `${count} appointments could not be displayed. Check their dates and identifiers.`,
   },
@@ -339,6 +356,7 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
   },
   chart: {
     data: 'View chart data',
+    allHidden: 'All series are hidden. Select a series to show its data.',
     category: 'Inspect category',
     empty: 'No chart data',
     loading: 'Loading chart…',
@@ -380,9 +398,20 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
     minute: 'Minute',
     second: 'Second',
     invalidDate: 'Enter a valid date within the allowed range and step.',
+    noAvailableDates: 'No dates are available in this month.',
     requiredDate: 'Enter a date.',
     requiredTime: 'Enter a time.',
     invalidTime: 'Enter a valid time within the allowed range and step.',
+    timeConstraints: ({ min, max, step }) => {
+      const range = `Choose a time from ${min} to ${max}.`;
+      if (step === null) return range;
+      const minutes = step % 60 === 0;
+      const count = minutes ? step / 60 : step;
+      const unit = minutes ? 'minute' : 'second';
+      return `${range} Use ${count} ${unit} intervals from ${min}.`;
+    },
+    invalidTimeOptions:
+      'Time options are unavailable. Check the allowed range and interval.',
     apply: 'Apply',
     clear: 'Clear',
     close: 'Close',
@@ -403,6 +432,8 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
   },
   upload: {
     chooseFile: 'Choose file',
+    result: ({ name, status, error }) =>
+      `${name}: ${status}${error ? `. ${error}` : ''}`,
     chooseFiles: 'Choose files',
     empty: 'No files selected',
     queue: 'Selected files',
@@ -483,6 +514,7 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
     collapseRow: (label) => `Hide details: ${label}`,
     width: (label) => `Width in pixels: ${label}`,
     regionLabel: 'Data table',
+    scrollHint: 'Scroll horizontally to view more columns.',
     selectAll: 'Select all rows on this page',
     selectRow: (label) => `Select ${label}`,
     emptyTitle: 'No data',
@@ -504,6 +536,8 @@ export const JP_DEFAULT_MESSAGES: JpMessages = {
   },
   assistant: {
     title: 'JP Assistant',
+    conversation: 'Conversation',
+    newMessages: 'Show new messages',
     close: 'Close assistant',
     clearContext: 'Clear context',
     composerLabel: 'Message the assistant',

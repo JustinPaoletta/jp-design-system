@@ -1,5 +1,9 @@
 @use '../shared/interaction';
 
+.jp-dialog__panel {
+  overscroll-behavior: contain;
+}
+
 :host {
   display: contents;
 }

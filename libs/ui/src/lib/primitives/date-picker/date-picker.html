@@ -48,6 +48,7 @@
       [disabled]="isDisabled() || readonly()"
       (click)="toggle()"
       (pointerdown)="onPopupPointerdown($event)"
+      (mousedown)="onPopupPointerdown($event)"
     >
       <svg
         aria-hidden="true"
@@ -65,6 +66,7 @@
     #popup
     class="jp-date-picker__popup"
     (pointerdown)="onPopupPointerdown($event)"
+    (mousedown)="onPopupPointerdown($event)"
     [hidden]="!isOpen()"
   >
     @if (isOpen()) {
@@ -158,6 +160,11 @@
           }
         </tbody>
       </table>
+      @if (!hasAvailableDates()) {
+      <p class="jp-date-picker__keyboard-hint" role="status">
+        {{ dateMessages.noAvailableDates }}
+      </p>
+      }
       <p
         class="jp-date-picker__keyboard-hint"
         [id]="resolvedId() + '-keyboard-hint'"

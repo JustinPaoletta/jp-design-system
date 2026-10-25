@@ -95,6 +95,16 @@ export class JpCommandPalette {
     this.openChange.emit(false);
     this.query.set('');
   }
+  preserveSearchFocus(event: Event): void {
+    if (
+      event.target instanceof Element &&
+      event.target.closest('button:disabled')
+    ) {
+      event.preventDefault();
+      this.search()?.nativeElement.focus({ preventScroll: true });
+    }
+  }
+
   choose(command: JpCommand): void {
     if (command.disabled || !this.open()) return;
     this.close();

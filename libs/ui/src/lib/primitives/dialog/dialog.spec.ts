@@ -98,6 +98,16 @@ describe('JpDialog', () => {
     expect(fixture.componentInstance.open).toBe(false);
     expect(fixture.nativeElement.querySelector('[role="dialog"]')).toBeNull();
   });
+  it('releases the document scroll lock on close and component destruction', () => {
+    openDialog();
+    expect(document.documentElement.style.overflow).toBe('hidden');
+    fixture.nativeElement.querySelector('.jp-dialog__close').click();
+    fixture.detectChanges();
+    expect(document.documentElement.style.overflow).toBe('');
+    openDialog();
+    fixture.destroy();
+    expect(document.documentElement.style.overflow).toBe('');
+  });
 
   it('closes on a native backdrop pointerdown', () => {
     openDialog();

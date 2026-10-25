@@ -482,6 +482,25 @@ describe('JpTable advanced features', () => {
     isolated.componentInstance.resizeColumn({ key: 'x', header: 'X' }, 200);
     expect(isolated.componentInstance.columnWidths()).toEqual({});
   });
+  it('restores the applied width after repeated clamped or empty field edits', () => {
+    const fixture = setup();
+    const control = fixture.nativeElement.querySelector(
+      '.jp-table__column-setting input[type=number]',
+    ) as HTMLInputElement;
+    for (const value of ['1', '1', '']) {
+      control.value = value;
+      control.dispatchEvent(new Event('change'));
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(control.value).toBe('120');
+    }
+    control.value = '320';
+    control.dispatchEvent(new Event('change'));
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(control.value).toBe('320');
+    expect(fixture.componentInstance.widths.name).toBe(320);
+  });
   it('supports pointer resize, cancellation, mismatched pointers and RTL direction', () => {
     const fixture = setup();
     const table = fixture.debugElement.query(By.directive(JpTable))

@@ -85,6 +85,8 @@ The accessible name and tooltip keep exact timestamps.
 
 Agenda and mobile rows show a compact time range.
 The period header identifies the time zone. Repeated-hour events also show their UTC offsets.
+During refresh, the period header shows the loading text beside the appointment count.
+The count uses the singular label for one appointment.
 
 Slot positions help users read the schedule.
 They do not permit edits or drag movement.

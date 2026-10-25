@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  afterRenderEffect,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -86,6 +87,11 @@ export class JpVirtualTable {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   readonly frame = viewChild<ElementRef<HTMLElement>>('frame');
+  private readonly pagedTable = viewChild<unknown, ElementRef<HTMLElement>>(
+    'pagedTable',
+    { read: ElementRef },
+  );
+  private renderedPage: { page: number; size: number } | null = null;
   readonly label = input.required<string>();
   readonly columns = input<JpSortableTableColumn[]>([]);
   readonly rows = input<Record<string, JpTableCellValue>[]>([]);
@@ -161,6 +167,23 @@ export class JpVirtualTable {
     () => this.columns().length + Number(this.selectable()),
   );
   constructor() {
+    afterRenderEffect(() => {
+      const page = this.currentPage(),
+        size = this.safePageSize();
+      const table = this.pagedTable()?.nativeElement;
+      if (this.virtual() || !table) {
+        this.renderedPage = null;
+        return;
+      }
+      if (
+        this.renderedPage &&
+        (page !== this.renderedPage.page || size !== this.renderedPage.size)
+      ) {
+        const frame = table.querySelector<HTMLElement>('.jp-table__frame');
+        if (frame) frame.scrollTop = 0;
+      }
+      this.renderedPage = { page, size };
+    });
     effect(() => {
       this.rangeChange.emit(this.range());
     });

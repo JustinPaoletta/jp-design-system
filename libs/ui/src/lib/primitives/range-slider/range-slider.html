@@ -8,7 +8,7 @@
       >@if (!showNumberInputs()) {
       <span class="value">{{ valueText()(displayedValue()[index]) }}</span> }
     </div>
-    <div class="controls">
+    <div class="controls" [style.--jp-range-number-digits]="numberDigits()">
       <input
         class="slider"
         [style.--jp-slider-start]="positions()[0] + '%'"

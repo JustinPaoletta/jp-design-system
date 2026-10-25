@@ -30,6 +30,8 @@
     class="jp-app-shell__sidebar"
     [id]="sidebarId"
     [attr.aria-label]="sidebarLabel()"
+    [attr.inert]="sidebarInert() ? '' : null"
+    [attr.aria-hidden]="sidebarInert() ? true : null"
   >
     <div class="jp-app-shell__sidebar-toolbar">
       <div class="jp-app-shell__brand">

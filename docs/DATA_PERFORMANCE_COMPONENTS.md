@@ -34,6 +34,7 @@ Chart.js canvas contents must have an accessible alternative, as described in it
   back to en-US with two maximum fraction digits.
 - `hiddenSeries`/`hiddenSeriesChange` control legend visibility. Native pressed
   buttons toggle series; hidden series remain available in the data table.
+  When all series are hidden, the message explains how to show them again.
 - `activeIndex`/`activeIndexChange` control a `jp-select` category field. Its readout
   exposes tooltip-equivalent formatted values to keyboard and screen-reader users.
 - `loading`, `error`, and `retry` cover consumer data states. An engine failure
@@ -100,6 +101,7 @@ Virtualization is for large flat datasets with continuous navigation.
   every row through existing table and pagination components. This alternative
   avoids relying on assistive technology navigating a partially mounted table.
   Selecting the already-active mode keeps its scroll position and page.
+  A page or page-size change returns the paginated scroll region to its start.
 - The application controls `loading`, `error` and `retry`. Copy uses
   `provideJpMessages({ virtualTable: … })`, plus existing table/pagination messages.
 - Styling uses table, text, border, focus, spacing, typography and control tokens.

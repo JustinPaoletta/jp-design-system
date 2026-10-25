@@ -74,7 +74,7 @@ export class JpDatePicker extends TemporalInput {
     viewChild<ElementRef<HTMLButtonElement>>('trigger');
   private readonly popup = viewChild<ElementRef<HTMLElement>>('popup');
   private overlayCleanup?: () => void;
-  private focusRequested = false;
+  private readonly focusRequested = signal(false);
   private returnFocusToInput = false;
   private readonly nativeError = signal('');
   override readonly type = input<JpInputType, unknown>('date', {
@@ -126,6 +126,13 @@ export class JpDatePicker extends TemporalInput {
         })
       : '',
   );
+  private readonly calendarBounds = computed(() => {
+    const min = String(this.min() ?? '') || '0001-01-01';
+    const max = String(this.max() ?? '') || '9999-12-31';
+    return isCalendarDate(min) && isCalendarDate(max) && min <= max
+      ? { min, max }
+      : null;
+  });
   readonly weeks = computed(() => {
     if (!this.shownMonth()) return [];
     const first = asDate(this.shownMonth());
@@ -150,6 +157,11 @@ export class JpDatePicker extends TemporalInput {
       days.slice(index * 7, index * 7 + 7),
     );
   });
+  readonly hasAvailableDates = computed(() =>
+    this.weeks().some((week) =>
+      week.some((day) => !day.outside && !day.unavailable),
+    ),
+  );
 
   constructor() {
     super();
@@ -189,8 +201,8 @@ export class JpDatePicker extends TemporalInput {
           unregister();
         };
       }
-      if (this.focusRequested) {
-        this.focusRequested = false;
+      if (this.focusRequested()) {
+        this.focusRequested.set(false);
         panel
           .querySelector<HTMLButtonElement>(`[data-date="${active}"]`)
           ?.focus({ preventScroll: true });
@@ -235,7 +247,7 @@ export class JpDatePicker extends TemporalInput {
     const value = this.initialDate();
     this.activeDate.set(value);
     this.shownMonth.set(`${value.slice(0, 7)}-01`);
-    this.focusRequested = true;
+    this.focusRequested.set(true);
     this.open.set(true);
   }
   toggle(): void {
@@ -245,7 +257,7 @@ export class JpDatePicker extends TemporalInput {
   close(restoreFocus = false): void {
     this.cleanupOverlay();
     this.open.set(false);
-    this.focusRequested = false;
+    this.focusRequested.set(false);
     if (restoreFocus)
       (this.returnFocusToInput
         ? this.control()
@@ -292,13 +304,30 @@ export class JpDatePicker extends TemporalInput {
       this.host.nativeElement.contains(event.relatedTarget)
     )
       return;
+    if (
+      this.isOpen() &&
+      !event.relatedTarget &&
+      event.target instanceof Element &&
+      event.target.matches('.jp-date-picker__navigation:disabled')
+    ) {
+      // Reaching a date bound can disable the focused month button during render.
+      this.focusRequested.set(true);
+      return;
+    }
     this.close();
     this.onBlur();
   }
-  onPopupPointerdown(event: PointerEvent): void {
+  onPopupPointerdown(event: MouseEvent): void {
     const button =
       event.target instanceof Element ? event.target.closest('button') : null;
-    if (!button || button.disabled) return;
+    if (!button) return;
+    if (button.disabled) {
+      event.preventDefault();
+      return;
+    }
+    // Leave touch pointer events intact. Its compatibility mousedown is handled
+    // separately, preventing WebKit from focusing a parent before the click.
+    if ('pointerType' in event && event.pointerType === 'touch') return;
     event.preventDefault();
     button.focus({ preventScroll: true });
   }
@@ -329,7 +358,12 @@ export class JpDatePicker extends TemporalInput {
     }
   }
   changeMonth(offset: number, focus = false): void {
-    if (!this.isOpen() || !isCalendarDate(this.activeDate())) return;
+    if (
+      !this.isOpen() ||
+      !isCalendarDate(this.activeDate()) ||
+      !this.canMoveMonth(offset)
+    )
+      return;
     const current = asDate(this.activeDate());
     const day = current.getUTCDate();
     current.setUTCDate(1);
@@ -337,17 +371,23 @@ export class JpDatePicker extends TemporalInput {
     const last = new Date(current);
     last.setUTCMonth(last.getUTCMonth() + 1, 0);
     current.setUTCDate(Math.min(day, last.getUTCDate()));
-    const value = asValue(current);
+    const bounds = this.calendarBounds();
+    if (!bounds) return;
+    const value = [bounds.min, asValue(current), bounds.max].sort()[1];
     if (!value) return;
-    this.focusRequested = focus;
+    this.focusRequested.set(focus);
     this.activeDate.set(value);
     this.shownMonth.set(`${value.slice(0, 7)}-01`);
   }
   canMoveMonth(offset: number): boolean {
-    if (!this.shownMonth()) return false;
+    const bounds = this.calendarBounds();
+    if (!this.shownMonth() || !bounds) return false;
     const current = asDate(this.shownMonth());
     current.setUTCMonth(current.getUTCMonth() + offset);
-    return Boolean(asValue(current));
+    const first = asValue(current);
+    if (!first) return false;
+    current.setUTCMonth(current.getUTCMonth() + 1, 0);
+    return first <= bounds.max && asValue(current) >= bounds.min;
   }
   onDayKeydown(event: KeyboardEvent): void {
     if (!this.isOpen()) return;
@@ -364,6 +404,13 @@ export class JpDatePicker extends TemporalInput {
       return;
     }
     if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      // Navigation updates the signal before Angular moves DOM focus. A native
+      // button click could otherwise commit the previously focused day.
+      event.preventDefault();
+      this.choose(this.activeDate());
+      return;
+    }
     const rtl =
       this.host.nativeElement.ownerDocument.defaultView?.getComputedStyle(
         this.host.nativeElement,
@@ -380,11 +427,11 @@ export class JpDatePicker extends TemporalInput {
     };
     if (!(event.key in offsets)) return;
     event.preventDefault();
-    const value = asValue(
-      new Date(current.getTime() + offsets[event.key] * DAY),
-    );
-    if (!value) return;
-    this.focusRequested = true;
+    let value = asValue(new Date(current.getTime() + offsets[event.key] * DAY));
+    const bounds = this.calendarBounds();
+    if (!value || !bounds) return;
+    value = [bounds.min, value, bounds.max].sort()[1];
+    this.focusRequested.set(true);
     this.activeDate.set(value);
     this.shownMonth.set(`${value.slice(0, 7)}-01`);
   }

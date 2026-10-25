@@ -9,6 +9,8 @@ When data changes, replace the input arrays.
 `JpTreeView` (`jp-tree-view`) must have an `id` and a non-empty accessible `label`.
 The `id` must be unique in the document. The component shows a hierarchy with
 one keyboard focus position.
+Tree disclosure controls have a 32 px pointer target.
+They retain the tree's single keyboard focus position.
 
 | API                                      | Meaning                                                                                                                                                                             |
 | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -105,6 +107,8 @@ Enter and Space operate buttons and checkboxes. The component does not use
 The [W3C treegrid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treegrid/)
 has separate focus and editing rules. The table's scroll region can receive
 keyboard focus. Collapse returns focus from a hidden child to its ancestor button.
+An overflow hint appears when data columns extend beyond the frame.
+The hint arrows identify edges with more content.
 
 ## Styling, localization and inspection
 

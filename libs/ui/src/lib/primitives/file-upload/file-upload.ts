@@ -1,8 +1,10 @@
 import {
+  afterRenderEffect,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   input,
   output,
@@ -33,11 +35,37 @@ let nextUpload = 0;
   templateUrl: './file-upload.html',
   styleUrl: './file-upload.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[attr.id]': 'null' },
+  host: { '[attr.id]': 'null', '(focusin)': 'onFocusIn($event)' },
 })
 export class JpFileUpload {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private actionFocus: { element: HTMLElement; id: string } | null = null;
   readonly messages = inject(JP_MESSAGES).upload;
   private readonly generatedId = 'jp-upload-' + ++nextUpload;
+  constructor() {
+    afterRenderEffect(() => {
+      this.items();
+      const pending = this.actionFocus;
+      if (!pending || pending.element.isConnected) return;
+      this.actionFocus = null;
+      const host = this.host.nativeElement;
+      const active = host.ownerDocument.activeElement;
+      if (
+        !host.isConnected ||
+        (active !== host.ownerDocument.body && active !== pending.element)
+      )
+        return;
+      const row = Array.from(
+        host.querySelectorAll<HTMLElement>('[data-upload-id]'),
+      ).find(
+        (element) => element.getAttribute('data-upload-id') === pending.id,
+      );
+      (
+        row?.querySelector<HTMLButtonElement>('button:not(:disabled)') ??
+        host.querySelector<HTMLButtonElement>('.choose-files:not(:disabled)')
+      )?.focus();
+    });
+  }
   readonly id = input('');
   readonly label = input.required<string>();
   readonly hint = input('');
@@ -64,6 +92,14 @@ export class JpFileUpload {
         .filter(Boolean)
         .join(' ') || null,
   );
+  onFocusIn(event: FocusEvent): void {
+    const target = event.target;
+    const row =
+      target instanceof HTMLElement ? target.closest('[data-upload-id]') : null;
+    const id = row?.getAttribute('data-upload-id');
+    this.actionFocus =
+      target instanceof HTMLElement && id ? { element: target, id } : null;
+  }
   private accepts(file: File): boolean {
     const accepts = this.accept()
       .split(',')

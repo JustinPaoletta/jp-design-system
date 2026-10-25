@@ -55,12 +55,16 @@ button:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 var(--jp-size-icon-sm);
-  block-size: calc(
-    var(--jp-font-size-body-sm) * var(--jp-font-line-height-normal)
-  );
+  flex: 0 0 32px;
+  block-size: 32px;
+  margin-block: -4px;
+  border-radius: var(--jp-radius-sm);
   color: var(--jp-color-text-secondary);
   user-select: none;
+}
+.disclosure--branch:hover {
+  background: var(--jp-color-surface-raised);
+  color: var(--jp-color-text-primary);
 }
 .disabled {
   color: var(--jp-color-text-muted);

@@ -7,6 +7,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Correct 34 component audit findings. See [Component audit fixes](COMPONENT_AUDIT_FIXES.md).
+- Keep hidden mobile navigation outside keyboard focus. Preserve assistant reading position and message following.
+- Bound picker navigation and popup lists. Preserve chip reflow and show time limits, refresh feedback and singular appointment counts.
+- Align split-pane rendering with pointer movement. Normalize table widths and page scroll positions. Show labels for collapsed navigation and table overflow.
+- Correct selection marks and loading indicators in forced colors. Preserve checkbox row geometry and upload outcome announcements.
+
 - Use verified 2026 ALCS Game 6 records in Storybook and Showcase. Add full Rays batting and pitching tables.
 - Use consistent Game 6 copy and charts. Add five original cartoon illustrations with visible labels and a generation record.
 - Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.

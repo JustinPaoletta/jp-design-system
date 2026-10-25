@@ -3,12 +3,120 @@ import { FormControl } from '@angular/forms';
 import { JpDatePicker } from './date-picker';
 import { claimOverlayEvent, registerOverlay } from '../shared/overlay-manager';
 describe('JpDatePicker', () => {
+  it('keeps month and keyboard navigation inside configured bounds', async () => {
+    const f = await mount(),
+      c = f.componentInstance;
+    f.componentRef.setInput('min', '2026-10-31');
+    f.componentRef.setInput('max', '2026-11-02');
+    c.writeValue('2026-10-31');
+    c.show();
+    f.detectChanges();
+    expect(c.canMoveMonth(-1)).toBe(false);
+    c.changeMonth(-1);
+    expect(c.shownMonth()).toBe('2026-10-01');
+    c.changeMonth(1);
+    expect(c.activeDate()).toBe('2026-11-02');
+    expect(c.canMoveMonth(1)).toBe(false);
+    c.onDayKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    expect(c.activeDate()).toBe('2026-11-02');
+  });
+  it('explains months without step-aligned dates and disables invalid bounds', async () => {
+    const f = await mount(),
+      c = f.componentInstance;
+    f.componentRef.setInput('min', '2026-01-01');
+    f.componentRef.setInput('max', '2026-04-01');
+    f.componentRef.setInput('step', 60);
+    c.show();
+    c.shownMonth.set('2026-02-01');
+    c.activeDate.set('2026-02-01');
+    f.detectChanges();
+    expect(c.hasAvailableDates()).toBe(false);
+    expect(f.nativeElement.textContent).toContain(
+      'No dates are available in this month.',
+    );
+    expect(c.canMoveMonth(1)).toBe(true);
+    f.componentRef.setInput('min', '2026-05-01');
+    f.detectChanges();
+    expect(c.canMoveMonth(1)).toBe(false);
+    expect(c.canMoveMonth(-1)).toBe(false);
+  });
   async function mount() {
     const f = TestBed.createComponent(JpDatePicker);
     f.componentRef.setInput('label', 'Launch date');
     f.detectChanges();
     return f;
   }
+  it('keeps keyboard focus when a disabled month arrow receives a pointer press', async () => {
+    const f = await mount(),
+      c = f.componentInstance;
+    f.componentRef.setInput('min', '2026-10-01');
+    f.componentRef.setInput('max', '2026-10-31');
+    c.writeValue('2026-10-19');
+    c.show();
+    f.detectChanges();
+    const active = document.activeElement;
+    const button = f.nativeElement.querySelector(
+      '.jp-date-picker__navigation:disabled',
+    );
+    const event = new MouseEvent('pointerdown', {
+      bubbles: true,
+      cancelable: true,
+    });
+    button.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(active);
+    expect(c.isOpen()).toBe(true);
+  });
+  it('recovers calendar focus when navigation reaches the last available month', async () => {
+    const f = await mount(),
+      c = f.componentInstance;
+    f.componentRef.setInput('min', '2026-10-01');
+    f.componentRef.setInput('max', '2026-11-30');
+    c.writeValue('2026-10-19');
+    c.show();
+    f.detectChanges();
+    const next = f.nativeElement.querySelectorAll(
+      '.jp-date-picker__navigation',
+    )[1] as HTMLButtonElement;
+    next.focus();
+    next.click();
+    f.detectChanges();
+    expect(next.disabled).toBe(true);
+    next.dispatchEvent(
+      new FocusEvent('focusout', { bubbles: true, relatedTarget: null }),
+    );
+    f.detectChanges();
+    expect(c.isOpen()).toBe(true);
+    expect(document.activeElement).toBe(
+      f.nativeElement.querySelector('[data-date="2026-11-19"]'),
+    );
+  });
+  it.each(['mouse', 'touch'])(
+    'keeps button focus without cancelling %s activation',
+    async (pointerType) => {
+      const f = await mount();
+      const trigger = f.nativeElement.querySelector('.jp-date-picker__trigger');
+      const event = new Event('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      Object.defineProperty(event, 'pointerType', { value: pointerType });
+      const input = f.nativeElement.querySelector('input');
+      input.focus();
+      trigger.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(pointerType === 'mouse');
+      expect(document.activeElement).toBe(
+        pointerType === 'touch' ? input : trigger,
+      );
+      const mouse = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      trigger.dispatchEvent(mouse);
+      expect(mouse.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(trigger);
+    },
+  );
   it('validates local dates, Gregorian leap years, configured bounds, and required emptiness', async () => {
     const f = await mount(),
       c = f.componentInstance;
@@ -201,6 +309,41 @@ describe('JpDatePicker', () => {
     expect(c.activeDate()).toBe('9999-12-30');
     expect(c.canMoveMonth(1)).toBe(false);
   });
+  it.each(['Enter', ' '])(
+    'commits the active date before the next render with %s',
+    async (key) => {
+      const f = await mount(),
+        c = f.componentInstance,
+        changed = jest.fn();
+      c.registerOnChange(changed);
+      c.writeValue('2026-10-31');
+      c.show(true);
+      f.detectChanges();
+      const oldDay = f.nativeElement.querySelector('[data-date="2026-10-31"]');
+      oldDay.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+      // Enter can arrive before Angular moves focus or renders the next month.
+      const activation = new KeyboardEvent('keydown', {
+        key,
+        bubbles: true,
+        cancelable: true,
+      });
+      oldDay.dispatchEvent(activation);
+      expect(activation.defaultPrevented).toBe(true);
+      expect(changed).toHaveBeenCalledTimes(1);
+      expect(changed).toHaveBeenCalledWith('2026-11-01');
+      expect(c.isOpen()).toBe(false);
+      f.detectChanges();
+      expect(document.activeElement).toBe(
+        f.nativeElement.querySelector('input'),
+      );
+    },
+  );
   it('supports text entry, ArrowDown, Escape, and dismissal outside the control', async () => {
     const f = await mount(),
       c = f.componentInstance,

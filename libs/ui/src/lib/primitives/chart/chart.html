@@ -34,7 +34,7 @@
     ></canvas>
   </div>
   } @else {
-  <p class="state">{{ messages.empty }}</p>
+  <p class="state">{{ messages.allHidden }}</p>
   } @if (engineError()) {
   <p role="status">{{ messages.failed }}</p>
   } @if (!controlsCollapsed()) {

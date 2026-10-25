@@ -20,6 +20,31 @@ describe('JpCheckbox', () => {
     expect(component.invalid()).toBe(false);
   });
 
+  it('has no visible selection mark until checked or mixed', () => {
+    const mark = fixture.nativeElement.querySelector('svg') as SVGElement;
+    expect(mark.style.visibility).toBe('hidden');
+    component.writeValue(true);
+    fixture.detectChanges();
+    expect(mark.style.visibility).toBe('');
+    component.writeValue(false);
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+    expect(mark.style.visibility).toBe('');
+  });
+
+  it('retains the controlled mixed state after native activation clears it', () => {
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector(
+      'input',
+    ) as HTMLInputElement;
+    input.click();
+    fixture.detectChanges();
+    expect(component.indeterminate()).toBe(true);
+    expect(input.indeterminate).toBe(true);
+    expect(input.checked).toBe(component.checked());
+  });
+
   it('toggles checked state', () => {
     const input = fixture.nativeElement.querySelector(
       'input',

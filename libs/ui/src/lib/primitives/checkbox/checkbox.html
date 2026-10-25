@@ -17,6 +17,7 @@
   <span class="jp-checkbox__box" aria-hidden="true">
     <svg
       class="jp-checkbox__check"
+      [style.visibility]="checked() || indeterminate() ? null : 'hidden'"
       viewBox="0 0 16 16"
       width="100%"
       height="100%"

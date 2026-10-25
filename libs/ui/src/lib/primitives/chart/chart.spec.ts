@@ -102,6 +102,9 @@ describe('JpChart', () => {
     f.componentInstance.toggle('two');
     f.detectChanges();
     expect(f.nativeElement.querySelector('canvas')).toBeNull();
+    expect(f.nativeElement.textContent).toContain('All series are hidden');
+    expect(f.nativeElement.textContent).not.toContain('No chart data');
+    expect(f.nativeElement.querySelectorAll('tbody tr')).toHaveLength(2);
     f.componentInstance.toggle('one');
     f.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 0));

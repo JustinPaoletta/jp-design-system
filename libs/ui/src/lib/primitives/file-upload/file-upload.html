@@ -48,7 +48,7 @@
 </div>
 <ul [attr.aria-label]="label() + ': ' + messages.queue">
   @for(item of items();track item.id){
-  <li>
+  <li [attr.data-upload-id]="item.id">
     <div class="file">
       <svg
         class="file-icon"
@@ -96,6 +96,17 @@
   </li>
   }
 </ul>
-<p role="status" aria-live="polite">
-  @if(!items().length){ {{messages.empty}} }
+<p
+  role="status"
+  aria-live="polite"
+  aria-atomic="false"
+  aria-relevant="additions text"
+>
+  @if(!items().length){ {{messages.empty}} } @for(item of items();track
+  item.id){ @if(item.status==='complete' || item.status==='error'){
+  <span class="upload-announcement"
+    >{{messages.result({name:item.file.name,status:status(item),error:item.status==='error'
+    ? item.error : undefined})}}</span
+  >
+  } }
 </p>

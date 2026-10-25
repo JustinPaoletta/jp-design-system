@@ -1,6 +1,7 @@
 import {
   afterNextRender,
   afterRenderEffect,
+  booleanAttribute,
   DestroyRef,
   ChangeDetectionStrategy,
   Component,
@@ -52,6 +53,8 @@ export class JpTooltip {
   private focused = false;
 
   readonly content = input.required<string>();
+  /** Disable a repeated description when the tooltip repeats the trigger name. */
+  readonly describeTrigger = input(true, { transform: booleanAttribute });
   readonly placement = input<JpTooltipPlacement, unknown>('top', {
     transform: createStringUnionTransform(JP_TOOLTIP_PLACEMENTS, 'top'),
   });
@@ -68,10 +71,14 @@ export class JpTooltip {
     });
     afterRenderEffect(() => {
       const open = this.open();
+      const content = this.content();
+      this.describeTrigger();
+      if (!content && open) this.hide();
+      this.syncDescribedBy();
       const placement = this.placement();
       this.overlayCleanup?.();
       this.overlayCleanup = undefined;
-      if (open) {
+      if (open && content) {
         const panel =
           this.host.nativeElement.querySelector<HTMLElement>(
             '[role="tooltip"]',
@@ -152,7 +159,7 @@ export class JpTooltip {
         .split(/\s+/)
         .filter(Boolean),
     );
-    if (this.open()) tokens.add(this.tooltipId);
+    if (this.open() && this.describeTrigger()) tokens.add(this.tooltipId);
     else tokens.delete(this.tooltipId);
     if (tokens.size)
       trigger.setAttribute('aria-describedby', [...tokens].join(' '));

@@ -19,20 +19,24 @@ label,
 }
 .controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--jp-space-md);
   margin-block-start: var(--jp-space-xs);
 }
 .slider {
-  flex: 1;
+  flex: 1 1 8rem;
   min-inline-size: 0;
   block-size: var(--jp-size-control-lg);
   margin: 0;
   accent-color: var(--jp-color-accent-solid);
 }
 .number {
-  inline-size: 5rem;
-  max-inline-size: 30%;
+  inline-size: calc(
+    var(--jp-range-number-digits, 4) * 1ch + 2 * var(--jp-space-xs) + 2px
+  );
+  max-inline-size: 100%;
+  flex-shrink: 0;
   min-block-size: var(--jp-size-control-lg);
   box-sizing: border-box;
   background: var(--jp-color-field-bg);

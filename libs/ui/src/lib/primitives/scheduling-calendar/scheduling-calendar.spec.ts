@@ -36,6 +36,26 @@ function button(root: HTMLElement, text: string) {
   ) as HTMLButtonElement;
 }
 describe('JpSchedulingCalendar', () => {
+  it('shows refresh text beside a singular event count and keeps existing content', () => {
+    const f = create();
+    f.componentRef.setInput('events', [events[0]]);
+    f.detectChanges();
+    const viewport = f.nativeElement.querySelector('.days');
+    viewport.scrollTop = 200;
+    f.componentRef.setInput('loading', true);
+    f.detectChanges();
+    expect(f.nativeElement.querySelector('.period').textContent).toContain(
+      '1 appointment',
+    );
+    expect(f.nativeElement.querySelector('.period').textContent).not.toContain(
+      '1 appointments',
+    );
+    expect(
+      f.nativeElement.querySelector('.refresh-label').textContent,
+    ).toContain('Loading appointments');
+    expect(f.nativeElement.querySelector('.days')).toBe(viewport);
+    expect(viewport.scrollTop).toBe(200);
+  });
   it('shows the themed full event label on focus and dismisses it without moving focus', () => {
     const f = create(2000);
     const control = f.nativeElement.querySelector(

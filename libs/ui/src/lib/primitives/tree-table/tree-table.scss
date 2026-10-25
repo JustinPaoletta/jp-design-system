@@ -1,4 +1,7 @@
 @use '../shared/interaction';
+@use '../shared/scroll-overflow';
+
+@include scroll-overflow.hint;
 
 :host {
   display: block;

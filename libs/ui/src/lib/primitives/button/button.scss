@@ -116,6 +116,15 @@
   cursor: progress;
 }
 
+@media (forced-colors: active) {
+  .jp-button__spinner {
+    forced-color-adjust: none;
+    color: ButtonText;
+    border-color: currentColor;
+    border-right-color: transparent;
+  }
+}
+
 .jp-button__content {
   display: inline-flex;
   min-inline-size: 0;

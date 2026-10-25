@@ -147,6 +147,7 @@ Breakpoint behavior and generated sidebar IDs are in
 [Layout](consumers/LAYOUT.md). `Open navigation`, `Close navigation`,
 `Expand sidebar`, and `Collapse sidebar` come from `JP_MESSAGES.appShell`.
 The controls in each shell refer to its own sidebar ID.
+Closed mobile navigation is inert and cannot receive keyboard focus.
 
 ### jp-app-shell-nav-item
 
@@ -164,6 +165,8 @@ Class `JpAppShellNavItem`. Also exports `JP_APP_SHELL_NAV_ITEM_TAGS` and
 The label is projected. An icon goes in `[jpAppShellNavIcon]` and is
 `aria-hidden`. `routerLink` on the host does not reach the inner anchor.
 See [Navigation](consumers/COMPOSITION.md#navigation).
+In a collapsed desktop shell, pointer hover and keyboard focus show the item label in a JP tooltip.
+The tooltip does not repeat the accessible name as a description.
 
 ## Typography
 
@@ -494,6 +497,11 @@ exposes `value`, `row`, and `column`. `JpTableCellDef` is that directive.
 Project a `jp-empty-state` to replace `emptyTitle` / `emptyDescription`.
 The frame scrolls horizontally. See [Layout](consumers/LAYOUT.md).
 
+An overflow hint appears when columns extend beyond the frame.
+Its arrows show which edges have more content.
+Resizable frames stop at the combined column width when space permits.
+Width fields restore the applied value after invalid or clamped edits.
+
 ### jpTableCell
 
 Directive `JpTableCellDef`, selector `ng-template[jpTableCell]`. Covered by
@@ -603,6 +611,10 @@ the viewport. Escape and outside pointer dismiss the highest registered
 overlay first. If `showModal` or `showPopover` throws, the component falls
 back. That fallback does not establish the same clipping and inert behavior.
 
+Modal dialogs lock document scrolling until the last modal closes.
+The lock restores the host's previous overflow and scrollbar spacing styles.
+Anchored lists keep their component height limit and available viewport space.
+
 ### jp-skeleton
 
 Class `JpSkeleton`. Story:
@@ -666,14 +678,17 @@ WebKit does not skip buttons. Also exported: `JP_FOCUSABLE_SELECTOR`,
 Class `JpTooltip`. Story:
 [Primitives/Feedback/Tooltip](../libs/ui/src/lib/primitives/tooltip/tooltip.stories.ts).
 
-| Input       | Type                             | Default  |
-| ----------- | -------------------------------- | -------- |
-| `content`   | string                           | required |
-| `placement` | `top`, `bottom`, `left`, `right` | `top`    |
+| Input             | Type                             | Default  |
+| ----------------- | -------------------------------- | -------- |
+| `content`         | string                           | required |
+| `placement`       | `top`, `bottom`, `left`, `right` | `top`    |
+| `describeTrigger` | boolean                          | `true`   |
 
 Wrap a trigger. Pointer enter and focus show it. It stays open while the pointer is over the tooltip. Leave, blur, and Escape hide it.
 
 While open it appends its id to the trigger's `aria-describedby` and removes that token on close. Empty `content` does not open. The id is an incrementing counter.
+Set `describeTrigger` to `false` when the tooltip repeats the accessible name.
+Empty content also closes an open tooltip.
 
 ### jp-toast
 
@@ -863,6 +878,8 @@ the root service.
 | Input or output     | Type                                         | Default                                                            |
 | ------------------- | -------------------------------------------- | ------------------------------------------------------------------ |
 | `title`             | string                                       | `JP Assistant`                                                     |
+| `conversationLabel` | string                                       | `Conversation`                                                     |
+| `newMessagesLabel`  | string                                       | `Show new messages`                                                |
 | `closeLabel`        | string                                       | `Close assistant`                                                  |
 | `clearContextLabel` | string                                       | `Clear context`                                                    |
 | `composerLabel`     | string                                       | `Message the assistant`                                            |
@@ -883,6 +900,11 @@ Enter sends. Shift+Enter inserts a newline. Escape closes. Focus moves to the co
 Submit is ignored while `isPending` is true or the draft is empty. The user message is added before `messageSubmit` emits. `responseCancel` also marks the response cancelled in the service; abort the transport in that handler. Restart transport with `responseId` from `responseRetry`.
 
 Desktop is a dock. At `max-width: 48rem` the panel uses a scrim and traps focus. The composer id is `jp-assistant-composer-N`.
+
+The named conversation log accepts keyboard focus and scrolling keys.
+New content stays visible when the reader is near the end.
+When the reader moves to earlier content, the panel preserves that position.
+The `Show new messages` action reveals new content and focuses the log.
 
 The copyable transport wiring is in [Recipes](consumers/RECIPES.md#assistant-transport).
 
