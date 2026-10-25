@@ -1,5 +1,39 @@
 # Verification evidence
 
+## October 21, 2026 candidate automation
+
+The release branch prepares `0.1.0-rc.1` without publishing it.
+The repository, lockfile, UI and distributed token versions match.
+The candidate has release notes. API maturity remains unchanged.
+
+- All 544 UI tests pass with coverage gates.
+- All 59 Showcase tests and 17 token tests pass.
+- All 381 Storybook checks pass in 97 suites.
+- The focused picker browser selection passes 38 checks across Chromium, Firefox and WebKit without retries.
+- Seven checks skip unsupported emulation: forced colors in Firefox/WebKit and touch in Firefox.
+- Installed candidate packages pass all 18 browser, accent and density combinations.
+- All ten release preparation and archive safety checks pass.
+- API readiness, lint and Angular types pass.
+
+The picker checks cover enlarged root text, selection cues, invalid time drafts and touch activation.
+Enlarged root text is not actual browser zoom or text-only browser zoom.
+Forced colors and touch use emulation. Real Windows palettes and physical devices remain untested.
+
+The new checks found two picker defects.
+Rapid arrow-key navigation followed by Enter could commit the previous date before rendering finished.
+Enter and Space now commit the active date directly, including month boundaries.
+Two unit cases failed before this correction and passed afterward.
+
+WebKit touch activation could cancel a tap or move focus to a parent before a picker button activated.
+Touch pointer events now retain their default behavior.
+Compatibility mouse events keep focus inside the picker until activation finishes.
+Chromium and WebKit touch checks pass, along with mouse navigation checks.
+
+`packages:pack` creates two local archives and an integrity manifest.
+The candidate dry-run verifies prepared versions without moving notes or changing their date.
+Neither command creates a tag or publishes a release.
+The existing manual acceptance and product feedback tasks remain open.
+
 ## October 20, 2026 complete interaction pass
 
 The [component inventory](INTERACTION_REVIEW.md) covers all 91 primitive folders.

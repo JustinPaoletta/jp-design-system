@@ -9,6 +9,32 @@ describe('JpTimePicker', () => {
     fixture.detectChanges();
     return fixture;
   }
+  it.each(['mouse', 'touch'])(
+    'keeps button focus without cancelling %s activation',
+    (pointerType) => {
+      const f = mount();
+      const trigger = f.nativeElement.querySelector('.jp-time-picker__trigger');
+      const event = new Event('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      Object.defineProperty(event, 'pointerType', { value: pointerType });
+      const input = f.nativeElement.querySelector('input');
+      input.focus();
+      trigger.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(pointerType === 'mouse');
+      expect(document.activeElement).toBe(
+        pointerType === 'touch' ? input : trigger,
+      );
+      const mouse = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      trigger.dispatchEvent(mouse);
+      expect(mouse.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(trigger);
+    },
+  );
   const field = (fixture: ComponentFixture<JpTimePicker>) =>
     fixture.nativeElement.querySelector(
       '.jp-input__control',

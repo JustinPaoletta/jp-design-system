@@ -1,6 +1,6 @@
 # Manual QA checklist
 
-Updated October 8, 2026. Automated results are in
+Updated October 21, 2026. Automated results are in
 [Verification](docs/qa/VERIFICATION.md), with supported platforms and limits in
 [Support matrix](docs/qa/SUPPORT_MATRIX.md). This checklist records remaining
 human inspection; it does not establish those sessions have passed.
@@ -20,7 +20,9 @@ It also records actual Chrome zoom and completed engineering checks.
 | JAWS                                             | Out of scope unless a consumer requirement names it                                   |
 
 Chromium forced-colors emulation and 320/640 CSS-pixel reflow are automated
-for the seven larger features. They are partial evidence, not completion of
+for the larger features. Picker tests also cover forced colors and touch emulation.
+Enlarged root text is a separate stress test, not actual text-only browser zoom.
+These checks are partial evidence, not completion of
 the Windows/zoom inspection. SSR and hydration are outside the current contract.
 
 ## Prepare an inspection
@@ -68,7 +70,7 @@ real browser zoom rather than shrinking the viewport alone.
 | Product recipes      | Failed save keeps values, retries/cancellation work, destructive confirmation names the outcome, bulk selection persists, assistant transport errors recover                                    |
 
 Inspect small/compact targets against the consumer's accessibility requirements.
-The automated target is WCAG 2.1 A/AA; existing 20px controls have no blanket
+The automated target is WCAG 2.1 A/AA; selection marks keep a separate visual size, with no blanket
 WCAG 2.2 target-size claim. Record any defect in
 [QA findings](docs/qa/FINDINGS.md) using the [triage policy](docs/governance/TRIAGE.md).
 

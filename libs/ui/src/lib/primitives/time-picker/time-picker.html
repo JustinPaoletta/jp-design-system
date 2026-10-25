@@ -38,6 +38,7 @@
       [attr.aria-controls]="isOpen() ? resolvedId() + '-popup' : null"
       [disabled]="isDisabled() || readonly()"
       (pointerdown)="onButtonPointerdown($event)"
+      (mousedown)="onButtonPointerdown($event)"
       (click)="toggle()"
     >
       <svg
@@ -61,6 +62,7 @@
     [attr.aria-labelledby]="resolvedId() + '-popup-title'"
     [hidden]="!isOpen()"
     (pointerdown)="onButtonPointerdown($event)"
+    (mousedown)="onButtonPointerdown($event)"
   >
     @if (isOpen()) {
     <div class="jp-time-picker__header">

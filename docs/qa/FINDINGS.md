@@ -1,7 +1,23 @@
 # Accessibility findings
 
-Updated October 19, 2026. No screen reader or Windows high-contrast session
+Updated October 21, 2026. No screen reader or Windows high-contrast session
 was performed.
+
+## Resolved: rapid calendar activation selected the previous date
+
+The date picker moved keyboard focus after rendering.
+If Enter arrived first, native button activation could select the previous date.
+Enter and Space now commit the active date directly.
+Unit checks cover immediate activation across a month boundary.
+Forced-colors browser checks also exercise immediate arrow-key navigation and activation.
+
+## Resolved: WebKit touch activation dismissed picker controls
+
+Cancelling a touch pointer event could suppress its click.
+Allowing the event could move focus to a parent before a time stepper activated.
+Date and time controls now preserve touch events and handle compatibility mouse focus separately.
+Chromium and WebKit touch checks cover opening, selecting and applying values.
+Physical touch acceptance remains open.
 
 ## Resolved: open combobox options failed WCAG 2.1 AA contrast
 

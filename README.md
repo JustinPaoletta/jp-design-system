@@ -6,7 +6,8 @@ contracts. The private Nx workspace produces local UI and token packages.
 
 ## Current status
 
-Repository version: `0.0.0`. UI and distributed token package versions: `0.1.0`.
+Repository, UI and distributed token package versions: `0.1.0-rc.1`.
+This candidate awaits release approval.
 No tagged release has been cut. The public class inventory is 36 stable,
 76 preview and one deprecated export; [maturity](docs/governance/MATURITY.md)
 records the contracts and limits.
