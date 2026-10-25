@@ -13,7 +13,7 @@ Use this procedure to finish the five tasks in the [task list](../../COMPONENT_E
 - The installed tarball consumer passed Chromium, Firefox and WebKit runtime checks.
 - The inventory records source and maturity evidence for all 113 public classes.
 - Actual Chrome 200%/400% zoom passed on the four larger-feature screens.
-- Handlebars 4.7.10 clears its recorded advisories. The [current dependency audit](../SECURITY_REVIEW.md) records remaining development findings.
+- The [current dependency audit](../SECURITY_REVIEW.md) reports zero findings in the complete and runtime-only scans.
 - The combined draft prepares paired `0.1.0-rc.1` versions and notes for approval.
 
 ### Package consumer

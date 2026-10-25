@@ -184,9 +184,9 @@ jobs:
       - run: npm ci
       - name: Reject runtime advisories
         run: npm audit --omit=dev --audit-level=moderate
-      - name: Record development-tool advisories
+      - name: Reject development-tool advisories and record full audit
         if: always()
-        run: npm audit --json > dependency-audit.json || test -s dependency-audit.json
+        run: npm audit --audit-level=low --json > dependency-audit.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

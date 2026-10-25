@@ -1,6 +1,49 @@
 # Security inspection
 
-## October 25, 2026 candidate audit
+## October 25, 2026 development dependency corrections
+
+The complete dependency audit reports zero findings at every severity.
+The runtime-only audit also reports zero findings.
+The earlier candidate had 23 development package findings, including one critical finding.
+
+| Dependency chain               | Correction                                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| Storybook                      | Update the aligned packages from 10.6.1 to 10.6.3.                                                            |
+| Nx                             | Update the aligned packages from 23.2.1 to 23.3.1.                                                            |
+| Angular CLI                    | Update 22.2.1 to 22.2.4, which selects MCP server 2.3.1 and Zod 4.6.6.                                        |
+| Angular build tooling          | Select Vite 8.3.3 through a scoped override.                                                                  |
+| Nx HTTP client                 | Select Undici 7.30.1 through a scoped override.                                                               |
+| Other development dependencies | Select body-parser 2.4.0, fast-uri 3.1.9, launch-editor 2.14.2, serialize-javascript 7.1.4 and Undici 8.12.3. |
+
+The [Storybook advisory](https://github.com/advisories/GHSA-f2ph-cmg5-wxc8) identifies the development-server correction.
+Built Storybook sites are outside that advisory's affected configuration.
+The [Vite advisory](https://github.com/advisories/GHSA-9jrq-w75r-8gcw) identifies the patched Vite version.
+The [Undici advisory](https://github.com/advisories/GHSA-xjj6-f33q-929c) identifies the required fixes for both installed major versions.
+
+Angular build tooling still pins Vite 8.3.0.
+Nx 23.3.1 still pins Undici 7.29.0.
+The scoped overrides select corrected versions within the same major versions.
+Examine and remove these overrides when upstream packages select corrected versions.
+
+The older Angular CLI Zod override is no longer necessary.
+The older Nx axios, brace-expansion and smol-toml overrides are also removed.
+Existing UUID and Storybook middleware overrides remain.
+
+`npm ci --strict-peer-deps` succeeds from the committed lockfile.
+The update does not use `--force` or `--legacy-peer-deps`.
+The required `Runtime dependency audit` job now rejects all reported dependency advisories, including low-severity development findings.
+It uploads the complete JSON audit even if the audit fails.
+
+```sh
+npm audit --audit-level=low
+npm audit --omit=dev --audit-level=moderate
+```
+
+These results describe the inspected dependency versions and advisory data.
+They do not establish that all vulnerabilities are absent.
+The [verification record](qa/VERIFICATION.md) gives separate behavior and compatibility evidence.
+
+## Earlier October 25, 2026 candidate audit
 
 The combined candidate selects Zod 4.6.6 instead of 4.6.5.
 The Angular CLI pins the older version, so a scoped override selects the patch.
@@ -9,9 +52,8 @@ The patch addresses the [Zod memory exhaustion advisory](https://github.com/advi
 
 `npm audit --omit=dev --audit-level=moderate` reports zero findings.
 The complete audit reports 23 development package findings: three low, one moderate, 18 high and one critical.
-These findings need separate dependency review.
-The current critical finding affects the Storybook development server.
-The complete audit remains a CI artifact; the runtime audit remains a required check.
+The corrections above resolve these recorded findings.
+The critical finding affected the Storybook development server.
 
 ## Earlier inspection
 
@@ -75,12 +117,12 @@ A clean runtime audit does not clear development-tool findings or prove applicat
 The [UUID bounds-check advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq) and [middleware path-traversal advisory](https://github.com/advisories/GHSA-g84c-rxfj-3j2c) do not appear in this audit.
 The targeted overrides preserve the inspected CJS/ESM UUID imports and Storybook middleware API on Node 24.21.0.
 
-The full audit exits nonzero for `braces` and `sprintf-js`.
+The October 11 full audit exited nonzero for `braces` and `sprintf-js`.
 Do not run `npm audit fix --force`.
 Its proposed major changes and downgrades have no successful compatibility evidence for this Angular/Nx stack.
-The CI runtime check blocks moderate-or-higher runtime advisories.
-CI uploads the complete audit as an informational artifact.
-Development findings remain open.
+At that revision, the CI runtime check blocked moderate-or-higher runtime advisories.
+CI uploaded the complete audit as an informational artifact.
+The current job also rejects development dependency advisories.
 
 ## Source inspection
 

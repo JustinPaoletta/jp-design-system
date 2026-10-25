@@ -63,8 +63,8 @@ Application consumers install the built tarballs and load token CSS. See
 | `apps/storybook`, `apps/storybook-e2e` | Placeholder Angular app and scaffolded checks                           |
 | `tools`                                | Documentation, package, release and token validation tools              |
 
-Workspace versions: Angular 22.2.1, Nx 23.2.1, TypeScript 6.0.3 and Storybook
-10.6.1. Jest and Playwright verify behavior. Charts use a browser-loaded
+Workspace versions: Angular 22.2.1, Nx 23.3.1, TypeScript 6.0.3 and Storybook
+10.6.3. Angular CLI uses 22.2.4. Jest and Playwright verify behavior. Charts use a browser-loaded
 Chart.js dependency. Runtime peer ranges are documented in
 [support](docs/localization/SUPPORT.md).
 

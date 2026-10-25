@@ -1,5 +1,31 @@
 # Verification evidence
 
+## October 25, 2026 development dependency corrections
+
+The updated lockfile passes `npm ci --strict-peer-deps`.
+Complete and runtime-only audits report zero findings at every severity.
+The [security inspection](../SECURITY_REVIEW.md) records corrected versions and scoped overrides.
+
+| Local check               | Result                                                                                  |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| Unit tests                | All 668 tests pass: 591 UI, 59 Showcase, 17 token and one Storybook application test.   |
+| Branch coverage           | UI reaches 90.09%; Showcase reaches 91.32%; token and Storybook application gates pass. |
+| Source checks             | All 12 lint, type and unit targets pass without Nx cache reuse.                         |
+| Production builds         | Four project builds and their token generation dependency pass.                         |
+| Release and token checks  | Release safety, API readiness and generated token checks pass.                          |
+| Installed dependency tree | `npm ls --all --json` reports no dependency problems.                                   |
+| Static Storybook          | All 388 checks pass in 97 suites.                                                       |
+| Live Storybook            | All 388 checks and concurrent preview/compiler runtime isolation checks pass.           |
+| Browser checks            | All 498 checks pass across Chromium, Firefox and WebKit without retries.                |
+| Expected skips            | Fifteen checks skip unsupported forced-colors or touch emulation.                       |
+| Visual comparisons        | All 94 macOS Chromium comparisons pass against the existing baselines.                  |
+| Installed packages        | All 18 browser, accent and density combinations pass.                                   |
+
+The initial Storybook and browser runs stopped when the host ran out of disk space.
+After free space became available, both completed successfully.
+Examine the [required CI jobs](../CI_BRANCH_PROTECTION.md#job-scope) for separate hosted results on the dependency update.
+The manual acceptance tasks remain open.
+
 ## October 25, 2026 combined candidate
 
 The combined draft includes component corrections, release preparation and Nx/OpenCode tooling.

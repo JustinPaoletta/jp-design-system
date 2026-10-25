@@ -26,15 +26,15 @@ No deliberately failing merge was attempted.
 
 ## Job scope
 
-| Job                       | Scope                                                                                                                             |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Lint                      | Formatting, ESLint, semantic-color/token guards and generated token drift                                                         |
-| Test                      | Unit coverage, static and live Storybook, Chromium/Firefox/WebKit functional and WCAG 2.1 A/AA checks; excludes visual titles     |
-| Build                     | Type/template checks, production builds, release safety and public API evidence                                                   |
-| Visual regression (macOS) | All six visual title prefixes, examined Chromium PNG comparisons without automatic updates                                        |
-| Package consumer          | Real tarball consumer; compilation and runtime flows in Chromium/Firefox/WebKit across accents and densities                      |
-| Runtime dependency audit  | Fails for moderate-or-higher runtime advisories; uploads the complete dependency audit as informational development-tool evidence |
-| Documentation links       | Relative file paths, writing rules and writing-check tests. This Docs job is not a required branch-protection context.            |
+| Job                       | Scope                                                                                                                         |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Lint                      | Formatting, ESLint, semantic-color/token guards and generated token drift                                                     |
+| Test                      | Unit coverage, static and live Storybook, Chromium/Firefox/WebKit functional and WCAG 2.1 A/AA checks; excludes visual titles |
+| Build                     | Type/template checks, production builds, release safety and public API evidence                                               |
+| Visual regression (macOS) | All six visual title prefixes, examined Chromium PNG comparisons without automatic updates                                    |
+| Package consumer          | Real tarball consumer; compilation and runtime flows in Chromium/Firefox/WebKit across accents and densities                  |
+| Runtime dependency audit  | Fails for any runtime or development dependency advisory; uploads the complete dependency audit                               |
+| Documentation links       | Relative file paths, writing rules and writing-check tests. This Docs job is not a required branch-protection context.        |
 
 `Test` uploads coverage and Playwright output on failure when available.
 The visual job uploads failure diffs from `dist/.playwright`.
