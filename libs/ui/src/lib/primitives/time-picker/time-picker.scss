@@ -1,8 +1,14 @@
 @use '../shared/interaction';
-
 @use '../input/input' with (
   $with-text-actions: false
 );
+
+.jp-time-picker__constraints {
+  margin: 0;
+  font-size: var(--jp-font-size-caption);
+  line-height: var(--jp-font-line-height-normal);
+  color: var(--jp-color-text-secondary);
+}
 
 :host {
   min-inline-size: 0;

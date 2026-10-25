@@ -128,11 +128,21 @@ They cannot change the value.
 Horizontal arrows follow writing direction.
 Date selection commits the value and closes the popup.
 
+Month controls cannot move beyond the configured date bounds.
+Months without available dates show a status message.
+Arrow navigation stays within the date bounds.
+Enter and Space select the active date, including before the next render.
+The calendar scrolls to keep the focused date visible.
+Scrolling or repositioning a popup preserves its scroll position.
+
 `JpTimePicker` shows a custom panel with time controls and Apply/Clear actions.
 The text field accepts the canonical 24-hour format described above.
 The panel keeps edits separate until Apply.
 Escape cancels panel edits.
 The configured bounds and step also apply to panel values.
+
+The panel shows the allowed range, interval, and interval start.
+Each time control refers to these instructions.
 
 `JpDateRangePicker` uses two JP date pickers.
 The endpoints stack when their container cannot show two full date fields.
@@ -187,6 +197,10 @@ Upload or retry starts one simulated request; completion updates the matching it
 Cancellation removes the item and cancels its pending completion.
 Named loading and error stories stay unchanged until the user acts.
 
+Completed and failed items announce the filename and result through a polite status region.
+Progress changes do not produce these announcements.
+When an action disappears, focus stays with the same file when possible.
+
 Upload progress uses the existing progressbar.
 Without a progress value, it shows indeterminate progress.
 `action: JpUploadAction` emits remove, cancel or retry requests.
@@ -194,7 +208,7 @@ Cancel is available only during upload.
 Retry is available only after failure.
 Removal during upload is blocked.
 
-The application controls queue updates, upload transport, cancellation, retries, duplicate files, actual progress, post-action focus and server validation.
+The application controls queue updates, upload transport, cancellation, retries, duplicate files, actual progress and server validation.
 The accept filter and client limits give feedback; they do not replace server security checks.
 
 ## Notifications and button combinations

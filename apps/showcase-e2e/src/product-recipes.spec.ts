@@ -53,7 +53,15 @@ test('sort, search, pagination, selection and destructive retry compose', async 
   await expect(page.getByRole('table')).toContainText('Taylor Walls');
   await page.getByLabel('Search players').fill('Freddy');
   await expect(page.getByRole('table')).toContainText('Freddy Peralta');
+  const row = page.locator('.jp-table__row').first();
+  const rowHeight = await row.evaluate(
+    (element) => element.getBoundingClientRect().height,
+  );
   await page.getByRole('checkbox', { name: /Select Freddy Peralta/ }).check();
+  await expect(row).toHaveClass(/jp-table__row--selected/);
+  expect(
+    await row.evaluate((element) => element.getBoundingClientRect().height),
+  ).toBe(rowHeight);
   await page
     .getByRole('button', { name: 'Remove from collection', exact: true })
     .click();

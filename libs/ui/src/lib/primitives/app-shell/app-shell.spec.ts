@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { JpAppShell } from './app-shell';
+import { getFocusableElements } from '../shared/focus-trap';
 
 type MediaChangeListener = (event: MediaQueryListEvent) => void;
 
@@ -136,6 +137,23 @@ describe('JpAppShell', () => {
 
     mediaQuery.dispatch(true);
     expect(component.isMobileViewport()).toBe(true);
+  });
+
+  it('excludes the closed mobile sidebar from keyboard navigation and restores it when available', () => {
+    const sidebar = fixture.nativeElement.querySelector('aside') as HTMLElement;
+    expect(getFocusableElements(sidebar).length).toBeGreaterThan(0);
+    mediaQuery.dispatch(true);
+    fixture.detectChanges();
+    expect(getFocusableElements(sidebar)).toEqual([]);
+    expect(sidebar.getAttribute('aria-hidden')).toBe('true');
+    fixture.componentRef.setInput('mobileNavOpen', true);
+    fixture.detectChanges();
+    expect(getFocusableElements(sidebar).length).toBeGreaterThan(0);
+    fixture.componentRef.setInput('mobileNavOpen', false);
+    mediaQuery.dispatch(false);
+    fixture.detectChanges();
+    expect(getFocusableElements(sidebar).length).toBeGreaterThan(0);
+    expect(sidebar.hasAttribute('aria-hidden')).toBe(false);
   });
 
   it('closes mobile nav when viewport leaves mobile while open', () => {

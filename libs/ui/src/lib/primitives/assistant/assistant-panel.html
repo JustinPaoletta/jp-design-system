@@ -6,6 +6,7 @@
 ></div>
 }
 <aside
+  #surface
   class="jp-assistant-panel__surface"
   role="complementary"
   [attr.aria-label]="title()"
@@ -47,16 +48,20 @@
   }
 
   <div
+    #conversation
     class="jp-assistant-panel__messages"
     role="log"
+    tabindex="0"
+    [attr.aria-label]="conversationLabel()"
     aria-live="polite"
     [attr.aria-busy]="isPending()"
+    (scroll)="onConversationScroll()"
   >
     @if (messages().length === 0) {
     <jp-empty-state [title]="emptyTitle()" [description]="emptyDescription()" />
     <ng-content select="[jpAssistantSuggestions]" />
     } @else {
-    <div class="jp-assistant-panel__message-list">
+    <div #messageList class="jp-assistant-panel__message-list">
       @for (message of messages(); track message.id) { @if (message.content) {
       <jp-assistant-message
         [messageRole]="message.role"
@@ -80,7 +85,13 @@
     }
   </div>
 
-  @if (isPending()) {
+  @if (hasNewMessages()) {
+  <div class="jp-assistant-panel__new-messages">
+    <jp-button variant="secondary" size="sm" (click)="showLatestMessages()"
+      >{{ newMessagesLabel() }}</jp-button
+    >
+  </div>
+  } @if (isPending()) {
   <div class="jp-assistant-panel__pending">
     <span role="status">{{ pendingLabel() }}</span>
     <jp-progress [label]="pendingLabel()" />

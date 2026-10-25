@@ -3,13 +3,13 @@
 What JP treats as a breaking change while the packages are pre-1.0, and how
 the deprecated `Ui` / `lib-ui` export is removed.
 
-Package versions on October 4, 2026:
+Candidate package versions on October 21, 2026. No tagged release exists:
 
-| Package                               | Version source                          | Version |
-| ------------------------------------- | --------------------------------------- | ------- |
-| Repository                            | root `package.json` / README status     | `0.0.0` |
-| `@jp-design-system/ui`                | `libs/ui/package.json`                  | `0.1.0` |
-| `@jp-design-system/tokens` (consumer) | `libs/tokens/package.distribution.json` | `0.1.0` |
+| Package                               | Version source                          | Version      |
+| ------------------------------------- | --------------------------------------- | ------------ |
+| Repository                            | root `package.json` / README status     | `0.1.0-rc.1` |
+| `@jp-design-system/ui`                | `libs/ui/package.json`                  | `0.1.0-rc.1` |
+| `@jp-design-system/tokens` (consumer) | `libs/tokens/package.distribution.json` | `0.1.0-rc.1` |
 
 `libs/tokens/package.json` is the private workspace package (`0.0.1`). Consumers
 install the distribution metadata, not that file.
@@ -121,7 +121,7 @@ Importing them from a deep path is unsupported.
 
 ## Deprecation window
 
-The installed packages are `0.1.0`, before `1.0.0`.
+The candidate packages are `0.1.0-rc.1`, before `1.0.0`.
 
 Before removal:
 

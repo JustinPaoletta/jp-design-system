@@ -12,7 +12,12 @@
 figure {
   margin: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--jp-space-md);
+}
+details,
+.data {
+  min-inline-size: 0;
 }
 figcaption {
   display: flex;

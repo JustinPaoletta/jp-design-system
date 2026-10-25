@@ -51,6 +51,7 @@ export class JpMultiSelect implements ControlValueAccessor {
   private readonly messages = inject(JP_MESSAGES);
   private readonly control = viewChild<ElementRef<HTMLInputElement>>('control');
   private readonly popup = viewChild<ElementRef<HTMLElement>>('popup');
+  private readonly field = viewChild<ElementRef<HTMLElement>>('field');
   private overlayCleanup?: () => void;
   private readonly cvaDisabled = signal(false);
   private readonly generatedId = `jp-multi-select-${++nextMultiId}`;
@@ -123,7 +124,13 @@ export class JpMultiSelect implements ControlValueAccessor {
       const popup = this.popup()?.nativeElement;
       if (!control || !popup) return;
       const unregister = registerOverlay(this, control.ownerDocument);
-      const unposition = positionOverlay(popup, control);
+      const field = this.field()?.nativeElement;
+      const unposition = positionOverlay(
+        popup,
+        control,
+        'bottom',
+        field ? [field] : [],
+      );
       this.overlayCleanup = () => {
         unposition();
         unregister();

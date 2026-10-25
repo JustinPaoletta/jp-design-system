@@ -23,6 +23,7 @@
   </div>
   <div
     class="results"
+    (pointerdown)="preserveSearchFocus($event)"
     role="listbox"
     [id]="prefix+'-list'"
     [attr.aria-label]="title()"

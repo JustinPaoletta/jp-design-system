@@ -62,6 +62,65 @@ describe('overlay coordination', () => {
 });
 
 describe('native overlay lifecycle and viewport placement', () => {
+  it('preserves the component height limit and keeps long lists clear of the anchor', () => {
+    const { panel, anchor, remove } = elements();
+    panel.style.maxHeight = '288px';
+    jest.mocked(panel.getBoundingClientRect).mockImplementation(
+      () =>
+        ({
+          width: 100,
+          height: Math.min(1500, parseFloat(panel.style.maxHeight) || 1500),
+        }) as DOMRect,
+    );
+    const cleanup = positionOverlay(panel, anchor);
+    expect(panel.style.maxHeight).toBe('288px');
+    expect(panel.style.top).toBe('144px');
+    jest.mocked(anchor.getBoundingClientRect).mockReturnValue({
+      left: 120,
+      right: 140,
+      top: 40,
+      bottom: 60,
+      width: 20,
+      height: 20,
+    } as DOMRect);
+    panel.style.maxHeight = '1500px';
+    window.dispatchEvent(new Event('resize'));
+    expect(parseFloat(panel.style.top)).toBeGreaterThanOrEqual(64);
+    cleanup();
+    expect(panel.style.maxHeight).toBe('288px');
+    remove();
+  });
+
+  it('repositions when a containing field changes height', () => {
+    const originalObserver = globalThis.ResizeObserver;
+    const observe = jest.fn(),
+      disconnect = jest.fn();
+    let resize = () => undefined;
+    globalThis.ResizeObserver = jest.fn().mockImplementation((callback) => {
+      resize = callback;
+      return { observe, disconnect };
+    });
+    const { panel, anchor, remove } = elements();
+    const field = document.createElement('div');
+    document.body.append(field);
+    const cleanup = positionOverlay(panel, anchor, 'bottom', [field]);
+    expect(observe).toHaveBeenCalledWith(field);
+    jest.mocked(anchor.getBoundingClientRect).mockReturnValue({
+      left: 120,
+      right: 140,
+      top: 180,
+      bottom: 200,
+      width: 20,
+      height: 20,
+    } as DOMRect);
+    resize();
+    expect(panel.style.top).toBe('204px');
+    cleanup();
+    field.remove();
+    remove();
+    globalThis.ResizeObserver = originalObserver;
+  });
+
   function elements() {
     const panel = document.createElement('div'),
       anchor = document.createElement('button');
@@ -264,7 +323,7 @@ describe('native overlay lifecycle and viewport placement', () => {
     const { panel, anchor, remove } = elements();
     const cleanup = positionOverlay(panel, anchor);
     expect(panel.style.maxWidth).toBe('224px');
-    expect(panel.style.maxHeight).toBe('164px');
+    expect(panel.style.maxHeight).toBe('78px');
     expect(observe).toHaveBeenCalledTimes(2);
     viewport.offsetTop = 200;
     viewport.dispatchEvent(new Event('scroll'));

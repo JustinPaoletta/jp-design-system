@@ -1,6 +1,87 @@
 import { TestBed } from '@angular/core/testing';
 import { JpFileUpload, type JpUploadItem } from './file-upload';
 describe('JpFileUpload', () => {
+  it('announces completed and failed files without announcing progress changes', () => {
+    const f = mount();
+    const item: JpUploadItem = {
+      id: 'one',
+      file: new File(['x'], 'lineup.txt'),
+      status: 'uploading',
+      progress: 10,
+    };
+    f.componentRef.setInput('items', [item]);
+    f.detectChanges();
+    expect(
+      f.nativeElement.querySelector('[role="status"]').textContent.trim(),
+    ).toBe('');
+    f.componentRef.setInput('items', [{ ...item, status: 'complete' }]);
+    f.detectChanges();
+    expect(
+      f.nativeElement.querySelector('[role="status"]').textContent,
+    ).toContain('lineup.txt: Uploaded');
+    f.componentRef.setInput('items', [
+      { ...item, status: 'error', error: 'Try again.' },
+    ]);
+    f.detectChanges();
+    expect(
+      f.nativeElement.querySelector('[role="status"]').textContent,
+    ).toContain('lineup.txt: Upload failed');
+    expect(
+      f.nativeElement.querySelector('[role="status"]').textContent,
+    ).toContain('Try again.');
+  });
+
+  it('keeps focus on the file after a focused retry control is replaced', async () => {
+    const f = mount();
+    const item: JpUploadItem = {
+      id: 'one',
+      file: new File(['x'], 'lineup.txt'),
+      status: 'error',
+    };
+    f.componentRef.setInput('items', [item]);
+    f.detectChanges();
+    const retry = f.nativeElement.querySelector(
+      '[aria-label="Retry upload: lineup.txt"]',
+    ) as HTMLButtonElement;
+    retry.focus();
+    retry.click();
+    f.componentRef.setInput('items', [{ ...item, status: 'uploading' }]);
+    f.detectChanges();
+    await new Promise(requestAnimationFrame);
+    expect(document.activeElement?.getAttribute('aria-label')).toBe(
+      'Cancel upload: lineup.txt',
+    );
+    f.componentRef.setInput('items', [{ ...item, status: 'complete' }]);
+    f.detectChanges();
+    await new Promise(requestAnimationFrame);
+    expect(document.activeElement?.getAttribute('aria-label')).toBe(
+      'Remove: lineup.txt',
+    );
+  });
+
+  it('preserves focus moved outside while a retry completes', async () => {
+    const f = mount();
+    const item: JpUploadItem = {
+      id: 'one',
+      file: new File(['x'], 'lineup.txt'),
+      status: 'error',
+    };
+    f.componentRef.setInput('items', [item]);
+    f.detectChanges();
+    const retry = f.nativeElement.querySelector(
+      '[aria-label="Retry upload: lineup.txt"]',
+    ) as HTMLButtonElement;
+    retry.focus();
+    retry.click();
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    outside.focus();
+    f.componentRef.setInput('items', [{ ...item, status: 'complete' }]);
+    f.detectChanges();
+    await new Promise(requestAnimationFrame);
+    expect(document.activeElement).toBe(outside);
+    outside.remove();
+  });
   function mount() {
     const f = TestBed.createComponent(JpFileUpload);
     f.componentRef.setInput('label', 'Files');

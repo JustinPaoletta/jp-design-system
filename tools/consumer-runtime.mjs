@@ -107,6 +107,62 @@ export async function checkConsumerRuntime(directory, diagnostics) {
               ).toBe('admin');
               await page.getByRole('button', { name: 'Reset role' }).click();
               await expect(role).toHaveText('Scorekeeper');
+              // Exercise the distributed popup code, not only text entry.
+              const launchDate = page.getByLabel('Launch date', {
+                exact: true,
+              });
+              await launchDate.press('ArrowDown');
+              const calendar = page.getByRole('dialog', {
+                name: 'Launch date calendar',
+              });
+              await expect(
+                calendar.locator('[data-date="2026-10-10"]'),
+              ).toBeFocused();
+              await page.keyboard.press('ArrowRight');
+              await page.keyboard.press('Enter');
+              await expect(launchDate).toHaveValue('2026-10-11');
+              await expect(launchDate).toBeFocused();
+              await launchDate.press('ArrowDown');
+              await page.keyboard.press('Escape');
+              await expect(launchDate).toHaveValue('2026-10-11');
+              await expect(launchDate).toBeFocused();
+              for (const [label, date] of [
+                ['Start date', '2026-10-10'],
+                ['End date', '2026-10-12'],
+              ]) {
+                const field = page.getByLabel(label, { exact: true });
+                await field.press('ArrowDown');
+                await expect(
+                  page
+                    .getByRole('dialog', { name: `${label} calendar` })
+                    .locator(`[data-date="${date}"]`),
+                ).toBeFocused();
+                await page.keyboard.press('Escape');
+                await expect(field).toBeFocused();
+              }
+              const launchTime = page.getByRole('textbox', {
+                name: 'Launch time',
+                exact: true,
+              });
+              await launchTime.press('Alt+ArrowDown');
+              const timePanel = page.getByRole('dialog', {
+                name: 'Launch time',
+                exact: true,
+              });
+              await expect(
+                timePanel.getByRole('spinbutton', {
+                  name: 'Hour',
+                  exact: true,
+                }),
+              ).toBeFocused();
+              await timePanel
+                .getByRole('spinbutton', { name: 'Minute', exact: true })
+                .press('ArrowUp');
+              await timePanel
+                .getByRole('button', { name: 'Apply', exact: true })
+                .click();
+              await expect(launchTime).toHaveValue('09:15');
+              await expect(launchTime).toBeFocused();
               const project = page.getByLabel('Project name', { exact: true });
               await expect(project).toHaveAttribute(
                 'aria-describedby',

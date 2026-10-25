@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 test('advanced layout: table visibility and exact widths persist, normalize, and reset', async ({
   page,
 }) => {
-  await page.getByText('Columns', { selector: 'summary' }).click();
+  await page.getByText('Columns', { exact: true }).click();
   await page.getByRole('checkbox', { name: 'Manager', exact: true }).uncheck();
   await expect(
     page.getByRole('columnheader', { name: 'Manager', exact: true }),
@@ -30,8 +30,13 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
   await width.press('Tab');
   await expect(width).toHaveValue('330');
   await page.reload();
-  await page.getByText('Columns', { selector: 'summary' }).click();
+  await page.getByText('Columns', { exact: true }).click();
   await expect(width).toHaveValue('330');
+  for (const invalid of ['1', '1', '']) {
+    await width.fill(invalid);
+    await width.press('Tab');
+    await expect(width).toHaveValue('140');
+  }
   await expect(
     page.getByRole('checkbox', { name: 'Manager', exact: true }),
   ).not.toBeChecked();
@@ -52,7 +57,7 @@ test('advanced layout: table visibility and exact widths persist, normalize, and
     ),
   );
   await page.reload();
-  await page.getByText('Columns', { selector: 'summary' }).click();
+  await page.getByText('Columns', { exact: true }).click();
   await expect(width).toHaveValue('480');
   await expect(
     page.getByRole('columnheader', { name: 'Player', exact: true }),
@@ -123,7 +128,7 @@ for (const dir of ['ltr', 'rtl'])
         box.y + box.height / 2,
       );
       await page.mouse.up();
-      await page.getByText('Columns', { selector: 'summary' }).click();
+      await page.getByText('Columns', { exact: true }).click();
       await expect(
         page.getByRole('spinbutton', { name: 'Width in pixels: Player' }),
       ).toHaveValue('280');
@@ -159,6 +164,10 @@ for (const dir of ['ltr', 'rtl'])
         box.y + box.height / 2,
       );
       await page.mouse.up();
+      const after = await boxFor(separator);
+      expect(
+        Math.abs(after.x - box.x - (dir === 'rtl' ? -90 : 90)),
+      ).toBeLessThan(2);
       expect(
         Number(await separator.getAttribute('aria-valuenow')),
       ).toBeGreaterThan(25);
@@ -242,7 +251,7 @@ for (const accent of ['neon', 'cobalt'])
           },
           { accent, density },
         );
-        await page.getByText('Columns', { selector: 'summary' }).click();
+        await page.getByText('Columns', { exact: true }).click();
         await page
           .getByRole('button', {
             name: 'Show details: Freddy Peralta',

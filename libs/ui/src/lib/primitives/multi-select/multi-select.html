@@ -1,4 +1,4 @@
-<div class="field" (focusout)="onFocusOut($event)">
+<div #field class="field" (focusout)="onFocusOut($event)">
   <label [attr.for]="resolvedId()">{{ label() }}</label>
   <div class="selected">
     @for (option of selected(); track option.value) {

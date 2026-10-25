@@ -21,6 +21,7 @@ import {
 
 import { JP_MESSAGES } from '../../i18n';
 import { claimOverlayEvent, registerOverlay } from '../shared/overlay-manager';
+import { lockDocumentScroll } from '../shared/scroll-lock';
 
 @Directive({
   selector: '[jpDialogActions]',
@@ -49,6 +50,7 @@ export class JpDialog {
   private readonly panelRef = viewChild<ElementRef<HTMLDialogElement>>('panel');
   private readonly destroyRef = inject(DestroyRef);
   private unregister?: () => void;
+  private unlockScroll?: () => void;
   private previousFocus: HTMLElement | null = null;
   private pointerOpener: HTMLElement | null = null;
   private lastOpen = false;
@@ -67,6 +69,7 @@ export class JpDialog {
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.unregister?.();
+      this.unlockScroll?.();
       const panel = this.panelRef()?.nativeElement;
       if (panel?.isConnected && panel.open) {
         try {
@@ -95,6 +98,7 @@ export class JpDialog {
             }
           }
           this.unregister = registerOverlay(this, panel.ownerDocument);
+          this.unlockScroll = lockDocumentScroll(panel.ownerDocument);
           focusFirstElement(panel);
         }
       }
@@ -102,6 +106,8 @@ export class JpDialog {
       if (!isOpen && this.lastOpen) {
         this.unregister?.();
         this.unregister = undefined;
+        this.unlockScroll?.();
+        this.unlockScroll = undefined;
         if (this.previousFocus?.isConnected) this.previousFocus.focus();
         this.previousFocus = null;
       }

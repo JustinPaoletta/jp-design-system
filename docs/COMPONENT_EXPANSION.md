@@ -140,6 +140,8 @@ Drawers reuse the native top-layer dialog, focus trap, nested dismissal,
 backdrop handling, and focus restoration. `JpDialog.placement` now supports
 `center/start/end/bottom`; its default remains center. Drawers are modal; a
 persistent non-modal side panel is a separate future pattern.
+Modal drawers also lock background document scrolling.
+Closing a nested drawer keeps the parent dialog's scroll lock.
 
 Banner announcements are optional. Persistent page notices default to named
 regions; dynamic announced errors use alert, other tones use status. Error

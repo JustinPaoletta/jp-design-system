@@ -29,6 +29,8 @@ Keyboard: horizontal arrows resize in the visual direction, including RTL; verti
 At viewport widths up to 48rem, both panels are visible in source order. Resizing and collapse are inactive. The separator is removed from the focus and accessibility order. A focused separator moves focus to the primary panel after it renders.
 
 There are no resizing transitions or entrance animations.
+Pane percentages apply to the space available after the separator width.
+Pointer movement uses the same available space.
 
 Persist `sizeChange` in the application, with a versioned storage key
 and error handling. The component does not access storage. The Showcase

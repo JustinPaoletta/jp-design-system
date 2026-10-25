@@ -1,6 +1,27 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+test('themed controls: rapid calendar navigation commits the active date', async ({
+  page,
+}) => {
+  await page.goto('/workflows');
+  const field = page.getByLabel('Game date', { exact: true });
+  await field.press('ArrowDown');
+  const day = page.locator('[data-date="2026-10-19"]');
+  await expect(day).toBeFocused();
+  await day.evaluate((element) => {
+    for (const key of ['ArrowRight', 'Enter'])
+      element.dispatchEvent(
+        new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }),
+      );
+  });
+  await expect(field).toHaveValue('2026-10-20');
+  await expect(
+    page.getByRole('dialog', { name: 'Game date calendar' }),
+  ).toBeHidden();
+  await expect(field).toBeFocused();
+});
+
 for (const view of [
   { name: 'desktop', width: 1000, dir: 'ltr' },
   { name: 'narrow', width: 320, dir: 'ltr' },
@@ -22,6 +43,12 @@ for (const view of [
     await field.press('ArrowDown');
     const calendar = page.getByRole('dialog', { name: 'Game date calendar' });
     await expect(calendar).toBeVisible();
+    await expect(
+      calendar.getByRole('button', { name: 'Previous month', exact: true }),
+    ).toBeDisabled();
+    await expect(
+      calendar.getByRole('button', { name: 'Next month', exact: true }),
+    ).toBeDisabled();
     await expect(calendar.locator('[data-date="2026-10-19"]')).toBeFocused();
     await expect(calendar.locator('[data-date="2026-09-30"]')).toHaveAttribute(
       'aria-disabled',
@@ -100,6 +127,9 @@ for (const view of [
       exact: true,
     });
     await minute.fill('07');
+    await expect(popup.locator('.jp-time-picker__constraints')).toHaveText(
+      'Choose a time from 09:00 to 21:00. Use 15 minute intervals from 09:00.',
+    );
     await expect(
       popup.getByRole('button', { name: 'Apply', exact: true }),
     ).toBeDisabled();
@@ -159,7 +189,7 @@ test('themed controls: upload trigger keeps file chooser behavior and hides brow
   await expect(page.locator('jp-file-upload')).toContainText('Ready');
 });
 
-test('themed controls: calendar pointer navigation keeps the popup open', async ({
+test('themed controls: bounded calendar ignores unavailable month navigation', async ({
   page,
 }) => {
   await page.goto('/workflows');
@@ -167,10 +197,17 @@ test('themed controls: calendar pointer navigation keeps the popup open', async 
     .getByRole('button', { name: 'Choose Game date', exact: true })
     .click();
   const popup = page.getByRole('dialog', { name: 'Game date calendar' });
-  await popup.getByRole('button', { name: 'Next month' }).click();
+  await expect(
+    popup.getByRole('button', { name: 'Next month' }),
+  ).toBeDisabled();
+  await expect(
+    popup.getByRole('button', { name: 'Previous month' }),
+  ).toBeDisabled();
+  // A disabled native button must not navigate or dismiss the calendar.
+  await popup
+    .getByRole('button', { name: 'Next month' })
+    .click({ force: true });
   await expect(popup).toBeVisible();
-  await expect(popup).toContainText('November 2026');
-  await popup.getByRole('button', { name: 'Previous month' }).click();
   await expect(popup).toContainText('October 2026');
   await popup.locator('[data-date="2026-10-20"]').click();
   await expect(page.getByLabel('Game date', { exact: true })).toHaveValue(

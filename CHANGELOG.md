@@ -7,6 +7,19 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.0-rc.1] - 2026-10-25
+
+- Prepare paired `0.1.0-rc.1` package versions. Add local archives, integrity manifests and CI downloads.
+- Extend picker checks for enlarged text, forced colors and touch emulation. Preserve WebKit touch activation and installed-package picker behavior.
+- Keep focused dates visible in enlarged calendars. Preserve popup scroll positions during scrolling and repositioning.
+- Update Nx CI monitoring tools. Add OpenCode configuration and workspace skills.
+
+- Correct 34 component audit findings. See [Component audit fixes](COMPONENT_AUDIT_FIXES.md).
+- Keep hidden mobile navigation outside keyboard focus. Preserve assistant reading position and message following.
+- Bound picker navigation and popup lists. Preserve chip reflow and show time limits, refresh feedback and singular appointment counts.
+- Align split-pane rendering with pointer movement. Normalize table widths and page scroll positions. Show labels for collapsed navigation and table overflow.
+- Correct selection marks and loading indicators in forced colors. Preserve checkbox row geometry and upload outcome announcements.
+
 - Use verified 2026 ALCS Game 6 records in Storybook and Showcase. Add full Rays batting and pitching tables.
 - Use consistent Game 6 copy and charts. Add five original cartoon illustrations with visible labels and a generation record.
 - Connect File Upload example actions to the displayed queue. Keep named loading and error examples stable.
@@ -116,6 +129,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ### Security
 
+- Select Zod 4.6.6 through a scoped Angular CLI override. Clear the runtime dependency audit finding.
+
 - Patched compatible build-tool dependencies, constrained Nx overrides to audited leaf packages, rejected prototype-related token keys, and limited reference lookup to own properties
 - Validated patched UUID and Storybook middleware major overrides through live development-server interaction/accessibility checks; added the live suite to CI. Only the unpatched braces development advisory remains.
 - Restricted workflow token permissions, pinned official actions, and added runtime audit gating; documented remaining development-tool advisories in `docs/SECURITY_REVIEW.md`
@@ -132,7 +147,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 - Showcase routes renamed to feature paths (`/assistant`, `/overlays`, `/data`, `/controls`, `/app-shell`, `/layout-dashboard`); page titles and nav no longer reference delivery milestones
 - Renamed `playground` app to `showcase` for integration testing
-- No tagged releases exist yet. The first formal release should create the initial dated section, most likely as `0.1.0`.
+- Prepare the first dated release section for `0.1.0-rc.1`. Release approval and publication remain separate steps.
 - Jest coverage gates enabled for all unit-test projects; `ui` and `showcase` require ≥90% statements/branches/functions/lines
 - Showcase root redirect now points to `/assistant`
 - Storybook preview: story-owned sunken page (`.jp-storybook-page`) with an independent Canvas-only Dark/Light stage toolbar; Docs keeps a fixed dark stage

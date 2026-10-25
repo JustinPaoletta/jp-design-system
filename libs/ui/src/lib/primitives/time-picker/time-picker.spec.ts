@@ -9,6 +9,32 @@ describe('JpTimePicker', () => {
     fixture.detectChanges();
     return fixture;
   }
+  it.each(['mouse', 'touch'])(
+    'keeps button focus without cancelling %s activation',
+    (pointerType) => {
+      const f = mount();
+      const trigger = f.nativeElement.querySelector('.jp-time-picker__trigger');
+      const event = new Event('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      Object.defineProperty(event, 'pointerType', { value: pointerType });
+      const input = f.nativeElement.querySelector('input');
+      input.focus();
+      trigger.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(pointerType === 'mouse');
+      expect(document.activeElement).toBe(
+        pointerType === 'touch' ? input : trigger,
+      );
+      const mouse = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      trigger.dispatchEvent(mouse);
+      expect(mouse.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(trigger);
+    },
+  );
   const field = (fixture: ComponentFixture<JpTimePicker>) =>
     fixture.nativeElement.querySelector(
       '.jp-input__control',
@@ -161,6 +187,14 @@ describe('JpTimePicker', () => {
     expect(c.draftValue()).toBe('20:00');
     edit(f, 'minute', '12');
     expect(c.validDraft()).toBe(false);
+    expect(f.nativeElement.textContent).toContain(
+      'Choose a time from 20:00 to 20:30. Use 15 minute intervals from 20:00.',
+    );
+    expect(
+      f.nativeElement
+        .querySelector('[role=spinbutton]')
+        .getAttribute('aria-describedby'),
+    ).toContain('-constraints');
     expect(f.nativeElement.querySelector('[role="status"]')).not.toBeNull();
     c.apply();
     expect(changed).not.toHaveBeenCalled();
@@ -179,6 +213,24 @@ describe('JpTimePicker', () => {
     f.componentRef.setInput('min', 'bad');
     f.detectChanges();
     expect(c.nextTime('minute', 1)).toBeNull();
+  });
+  it('keeps the draft focused when a disabled step button receives a pointer press', () => {
+    const f = mount();
+    f.componentRef.setInput('min', '20:00');
+    f.componentRef.setInput('max', '20:30');
+    f.componentRef.setInput('step', 900);
+    open(f);
+    const active = document.activeElement;
+    const event = new MouseEvent('pointerdown', {
+      bubbles: true,
+      cancelable: true,
+    });
+    f.nativeElement
+      .querySelector('.jp-time-picker__step:disabled')
+      .dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(active);
+    expect(f.componentInstance.isOpen()).toBe(true);
   });
 
   it('supports keyboard increments, Enter and Escape without emitting abandoned drafts', () => {
@@ -461,6 +513,6 @@ describe('JpTimePicker', () => {
       cancelable: true,
     });
     button.dispatchEvent(disabledPointer);
-    expect(disabledPointer.defaultPrevented).toBe(false);
+    expect(disabledPointer.defaultPrevented).toBe(true);
   });
 });

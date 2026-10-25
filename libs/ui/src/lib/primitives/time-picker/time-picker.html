@@ -38,6 +38,7 @@
       [attr.aria-controls]="isOpen() ? resolvedId() + '-popup' : null"
       [disabled]="isDisabled() || readonly()"
       (pointerdown)="onButtonPointerdown($event)"
+      (mousedown)="onButtonPointerdown($event)"
       (click)="toggle()"
     >
       <svg
@@ -61,6 +62,7 @@
     [attr.aria-labelledby]="resolvedId() + '-popup-title'"
     [hidden]="!isOpen()"
     (pointerdown)="onButtonPointerdown($event)"
+    (mousedown)="onButtonPointerdown($event)"
   >
     @if (isOpen()) {
     <div class="jp-time-picker__header">
@@ -76,6 +78,9 @@
         <jp-icon name="close" size="sm" />
       </button>
     </div>
+    <p class="jp-time-picker__constraints" [id]="resolvedId() + '-constraints'">
+      {{ constraintHint() }}
+    </p>
     <div class="jp-time-picker__parts">
       @for (part of parts(); track part.key) {
       <div
@@ -111,7 +116,7 @@
           [attr.aria-valuemax]="part.max"
           [attr.aria-valuenow]="partNumber(part.key)"
           [attr.aria-invalid]="validDraft() ? null : true"
-          [attr.aria-describedby]="validDraft() ? null : resolvedId() + '-draft-error'"
+          [attr.aria-describedby]="resolvedId() + '-constraints' + (validDraft() ? '' : ' ' + resolvedId() + '-draft-error')"
           (input)="editPart(part.key, $event)"
           (keydown)="onPartKeydown(part.key, $event)"
         />

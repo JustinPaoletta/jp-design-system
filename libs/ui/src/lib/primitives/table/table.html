@@ -22,7 +22,7 @@
           [max]="widthBounds(column).max"
           step="1"
           [value]="widthFor(column)"
-          (change)="resizeColumn(column, $any($event.target).valueAsNumber)"
+          (change)="onWidthChange(column, $event)"
         />
       </label>
       }
@@ -31,12 +31,39 @@
   </div>
 </details>
 }
+<jp-inline
+  justify="between"
+  gap="xs"
+  [wrap]="false"
+  class="jp-scroll-hint"
+  [hidden]="!scrollOverflow.overflowing()"
+  aria-hidden="true"
+>
+  <jp-icon
+    class="jp-scroll-hint__left"
+    name="chevron-right"
+    size="sm"
+    [class.jp-scroll-hint__edge--inactive]="!scrollOverflow.hasLeft()"
+  />
+  <jp-text size="caption" tone="secondary"
+    >{{ messages.table.scrollHint }}</jp-text
+  >
+  <jp-icon
+    name="chevron-right"
+    size="sm"
+    [class.jp-scroll-hint__edge--inactive]="!scrollOverflow.hasRight()"
+  />
+</jp-inline>
 <div
+  jpScrollOverflow
+  #scrollOverflow="jpScrollOverflow"
   class="jp-table__frame"
   tabindex="0"
   role="region"
   [attr.aria-label]="caption() || messages.table.regionLabel"
+  [attr.aria-description]="scrollOverflow.overflowing() ? messages.table.scrollHint : null"
   [style.max-block-size]="maxHeight() || null"
+  [style.max-inline-size.px]="resizable() ? tableWidth() + (framed() ? 2 : 0) : null"
   [class.jp-table__frame--sticky-header]="stickyHeader()"
   [class.jp-table__frame--sticky-first]="stickyFirstColumn()"
   [style.--jp-table-leading-offset]="utilityCount() * 48 + 'px'"

@@ -76,6 +76,17 @@ export class JpRangeSlider implements ControlValueAccessor {
         ((value - this.safeMin()) / (this.safeMax() - this.safeMin())) * 100,
     ),
   );
+  readonly numberDigits = computed(() =>
+    Math.max(
+      4,
+      ...[
+        this.safeMin(),
+        this.safeMax(),
+        this.safeStep(),
+        ...this.displayedValue(),
+      ].map((value) => String(value).length),
+    ),
+  );
   readonly describedBy = computed(
     () =>
       [

@@ -1,7 +1,33 @@
+<jp-inline
+  justify="between"
+  gap="xs"
+  [wrap]="false"
+  class="jp-scroll-hint"
+  [hidden]="!scrollOverflow.overflowing()"
+  aria-hidden="true"
+>
+  <jp-icon
+    class="jp-scroll-hint__left"
+    name="chevron-right"
+    size="sm"
+    [class.jp-scroll-hint__edge--inactive]="!scrollOverflow.hasLeft()"
+  />
+  <jp-text size="caption" tone="secondary"
+    >{{ messages.table.scrollHint }}</jp-text
+  >
+  <jp-icon
+    name="chevron-right"
+    size="sm"
+    [class.jp-scroll-hint__edge--inactive]="!scrollOverflow.hasRight()"
+  />
+</jp-inline>
 <div
+  jpScrollOverflow
+  #scrollOverflow="jpScrollOverflow"
   class="frame"
   role="region"
   [attr.aria-label]="caption()"
+  [attr.aria-description]="scrollOverflow.overflowing() ? messages.table.scrollHint : null"
   tabindex="0"
   (focusin)="onFocus($event)"
   (focusout)="onFocusOut($event)"

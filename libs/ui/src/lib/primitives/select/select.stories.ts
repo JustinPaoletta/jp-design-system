@@ -37,7 +37,7 @@ const meta: Meta<JpSelect> = {
     ],
   },
   render: (args) => ({
-    props: { ...args, selectedRole: 'editor' },
+    props: { ...args, selectedRole: args.invalid ? '' : 'editor' },
     template: `<jp-select [label]="label" [hint]="hint" [error]="error" [size]="size" [disabled]="disabled" [invalid]="invalid" [options]="options" [placeholder]="placeholder" [(ngModel)]="selectedRole" />`,
   }),
 };
@@ -66,6 +66,9 @@ export const Default: Story = {
 export const Invalid: Story = {
   args: { invalid: true, error: 'Select a club role.', hint: '' },
   play: async ({ canvasElement }) => {
+    await expect(within(canvasElement).getByRole('combobox')).toHaveTextContent(
+      'Choose a role',
+    );
     await expect(within(canvasElement).getByRole('combobox')).toHaveAttribute(
       'aria-invalid',
       'true',

@@ -18,6 +18,9 @@ import { JpCheckbox } from '../checkbox/checkbox';
 import { NgTemplateOutlet } from '@angular/common';
 import { JpEmptyState } from '../empty-state/empty-state';
 import { JpIcon } from '../icon/icon';
+import { JpScrollOverflow } from '../shared/scroll-overflow';
+import { JpInline } from '../inline/inline';
+import { JpText } from '../text/text';
 import {
   type JpTableAlign,
   type JpTableCellValue,
@@ -63,7 +66,16 @@ export class JpTableRowDetail {
 
 @Component({
   selector: 'jp-table',
-  imports: [NgTemplateOutlet, FormsModule, JpCheckbox, JpEmptyState, JpIcon],
+  imports: [
+    NgTemplateOutlet,
+    FormsModule,
+    JpCheckbox,
+    JpEmptyState,
+    JpIcon,
+    JpScrollOverflow,
+    JpInline,
+    JpText,
+  ],
   templateUrl: './table.html',
   styleUrl: './table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -170,6 +182,12 @@ export class JpTable {
       ...this.columnWidths(),
       [column.key]: Math.round(Math.min(max, Math.max(min, value))),
     });
+  }
+  onWidthChange(column: JpSortableTableColumn, event: Event): void {
+    const control = event.target as HTMLInputElement;
+    this.resizeColumn(column, control.valueAsNumber);
+    // A controlled binding may retain its value after normalization or rejection.
+    control.value = String(this.widthFor(column));
   }
   startResize(event: PointerEvent, column: JpSortableTableColumn): void {
     if (!this.resizable() || event.button !== 0) return;

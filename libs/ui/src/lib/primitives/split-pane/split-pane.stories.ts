@@ -12,6 +12,7 @@ const meta: Meta<JpSplitPane> = {
     primaryLabel: 'Roster',
     secondaryLabel: 'Details',
     size: 40,
+    orientation: 'horizontal',
     min: 20,
     max: 80,
   },

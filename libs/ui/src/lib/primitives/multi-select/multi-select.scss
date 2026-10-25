@@ -2,10 +2,13 @@
 
 :host {
   display: block;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   font-family: var(--jp-font-family-base);
 }
 .field {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--jp-space-2xs);
 }
 label {
@@ -15,6 +18,8 @@ label {
 }
 .selected {
   display: flex;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   flex-wrap: wrap;
   gap: var(--jp-space-2xs);
 }
@@ -48,7 +53,7 @@ input:disabled {
     var(--jp-size-column-min-sm),
     calc(100vw - 2 * var(--jp-space-md))
   );
-  max-height: var(--jp-size-container-narrow);
+  max-height: 18rem;
   padding: var(--jp-space-xs);
   border: 1px solid var(--jp-color-overlay-panel-border);
   border-radius: var(--jp-radius-md);
@@ -95,6 +100,7 @@ p {
 }
 .input-wrap {
   position: relative;
+  min-inline-size: 0;
 }
 input {
   padding-inline-end: calc(var(--jp-size-icon-md) + 2 * var(--jp-space-sm));

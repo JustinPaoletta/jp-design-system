@@ -179,6 +179,24 @@ describe('JpTooltip', () => {
 });
 
 describe('tooltip description composition', () => {
+  it('can show a repeated name without adding a duplicate description', () => {
+    const fixture = TestBed.createComponent(JpTooltip);
+    fixture.componentRef.setInput('content', 'Roster');
+    fixture.componentRef.setInput('describeTrigger', false);
+    fixture.detectChanges();
+    const trigger = fixture.nativeElement.querySelector(
+      '.jp-tooltip__trigger',
+    ) as HTMLElement;
+    fixture.componentInstance.show();
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('[role=tooltip]').textContent,
+    ).toContain('Roster');
+    expect(trigger.hasAttribute('aria-describedby')).toBe(false);
+    fixture.componentRef.setInput('content', '');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.open()).toBe(false);
+  });
   it('preserves other descriptions when opening, closing and destroying', async () => {
     await TestBed.configureTestingModule({
       imports: [TooltipHost],

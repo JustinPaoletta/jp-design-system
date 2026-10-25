@@ -5,7 +5,7 @@
   [id]="id() + '-primary'"
   [attr.aria-label]="primaryLabel()"
   [hidden]="primaryCollapsed()"
-  [style.flex-basis.%]="value()"
+  [style.flex-basis]="'calc((100% - var(--jp-split-pane-separator-size)) * ' + value() / 100 + ')'"
 >
   <ng-content select="[jpSplitPrimary]" />
 </section>
@@ -16,7 +16,7 @@
   tabindex="0"
   [attr.aria-label]="primaryLabel()"
   [attr.aria-controls]="id() + '-primary'"
-  [attr.aria-orientation]="orientation() === 'horizontal' ? 'vertical' : 'horizontal'"
+  [attr.aria-orientation]="orientation() === 'vertical' ? 'horizontal' : 'vertical'"
   [attr.aria-valuemin]="collapsible() ? 0 : bounds().min"
   [attr.aria-valuemax]="bounds().max"
   [attr.aria-valuenow]="primaryCollapsed() ? 0 : value()"

@@ -58,6 +58,9 @@ export class JpAppShell implements OnInit {
   readonly mainInert = computed(
     () => this.mobileNavOpen() && this.isMobileViewport(),
   );
+  readonly sidebarInert = computed(
+    () => this.isMobileViewport() && !this.mobileNavOpen(),
+  );
 
   constructor() {
     afterRenderEffect(() => {

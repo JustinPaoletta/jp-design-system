@@ -51,7 +51,7 @@ the page, not a light component theme.
 Do not create the kit as part of this deferral. When a designer owner is
 assigned, the kit has to match the implementation that already exists:
 
-- Owner named, and a version that tracks the package version (`0.1.0` today for
+- Owner named, and a version that tracks the package version (`0.1.0-rc.1` for the candidate
   UI and token distribution builds).
 - Variables for semantic tokens only: color, space, type, radius, elevation,
   motion, and z-index. Primitive palettes stay source data, matching the lint

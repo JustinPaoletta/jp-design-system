@@ -1,0 +1,15 @@
+@mixin hint {
+  .jp-scroll-hint {
+    margin-block-end: var(--jp-space-xs);
+    color: var(--jp-color-text-secondary);
+  }
+  .jp-scroll-hint[hidden] {
+    display: none;
+  }
+  .jp-scroll-hint__edge--inactive {
+    visibility: hidden;
+  }
+  .jp-scroll-hint__left {
+    transform: rotate(180deg);
+  }
+}

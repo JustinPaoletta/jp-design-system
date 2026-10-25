@@ -1,5 +1,73 @@
 # Verification evidence
 
+## October 25, 2026 combined candidate
+
+The combined draft includes component corrections, release preparation and Nx/OpenCode tooling.
+The repository and both distributed packages use `0.1.0-rc.1`.
+The dated candidate notes include the current corrections.
+No tag or publication was created.
+
+| Check                     | Result                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------ |
+| UI unit tests             | 591 pass; branch coverage is 90.09%.                                                 |
+| Other unit tests          | 59 Showcase tests, 17 token tests and one Storybook application test pass.           |
+| Static Storybook          | 388 checks pass in 97 suites.                                                        |
+| Browser checks            | 498 pass across Chromium, Firefox and WebKit without retries.                        |
+| Visual comparisons        | All 94 macOS Chromium comparisons pass without baseline changes.                     |
+| Expected skips            | 15 cases skip unsupported forced-colors or touch emulation.                          |
+| Installed packages        | The isolated Angular build and all 18 browser, accent and density combinations pass. |
+| Package archives          | Both candidate archives have matching versions and verified integrity hashes.        |
+| Source and release checks | Lint, Angular types, API inventory, token guards and release safety checks pass.     |
+| Runtime dependency audit  | Zero findings after the Zod 4.6.6 patch.                                             |
+
+The enlarged-text calendar check originally measured content inside a bounded, scrollable popup.
+It now measures the popup frame and checks that keyboard focus stays fully visible.
+
+That check found a separate scroll defect in Chromium and Firefox.
+The shared overlay manager reset popup scroll positions during internal scrolling.
+It now preserves scroll offsets and ignores scroll events from inside its own panel.
+The date picker reveals the focused day without moving the host page.
+All six enlarged-text cases pass in LTR and RTL across the three engines.
+
+The acceptance tests use the current Game 6 dates and interface labels.
+The new checks preserve mouse focus, WebKit touch activation and rapid keyboard selection.
+API maturity is unchanged.
+The [manual checklist](../../MANUAL_QA.md) and [development dependency findings](../SECURITY_REVIEW.md) remain open.
+
+## October 21, 2026 candidate automation
+
+The release branch prepares `0.1.0-rc.1` without publishing it.
+The repository, lockfile, UI and distributed token versions match.
+The candidate has release notes. API maturity remains unchanged.
+
+- All 544 UI tests pass with coverage gates.
+- All 59 Showcase tests and 17 token tests pass.
+- All 381 Storybook checks pass in 97 suites.
+- The focused picker browser selection passes 38 checks across Chromium, Firefox and WebKit without retries.
+- Seven checks skip unsupported emulation: forced colors in Firefox/WebKit and touch in Firefox.
+- Installed candidate packages pass all 18 browser, accent and density combinations.
+- All ten release preparation and archive safety checks pass.
+- API readiness, lint and Angular types pass.
+
+The picker checks cover enlarged root text, selection cues, invalid time drafts and touch activation.
+Enlarged root text is not actual browser zoom or text-only browser zoom.
+Forced colors and touch use emulation. Real Windows palettes and physical devices remain untested.
+
+The new checks found two picker defects.
+Rapid arrow-key navigation followed by Enter could commit the previous date before rendering finished.
+Enter and Space now commit the active date directly, including month boundaries.
+Two unit cases failed before this correction and passed afterward.
+
+WebKit touch activation could cancel a tap or move focus to a parent before a picker button activated.
+Touch pointer events now retain their default behavior.
+Compatibility mouse events keep focus inside the picker until activation finishes.
+Chromium and WebKit touch checks pass, along with mouse navigation checks.
+
+`packages:pack` creates two local archives and an integrity manifest.
+The candidate dry-run verifies prepared versions without moving notes or changing their date.
+Neither command creates a tag or publishes a release.
+The existing manual acceptance and product feedback tasks remain open.
+
 ## October 20, 2026 complete interaction pass
 
 The [component inventory](INTERACTION_REVIEW.md) covers all 91 primitive folders.

@@ -89,6 +89,19 @@ test('paginated alternative exposes every row and controlled sorting', async ({
   const table = page.locator('jp-virtual-table');
   await table.getByRole('button', { name: 'Paginated rows' }).click();
   await expect(table.locator('jp-table tbody tr')).toHaveCount(50);
+  const frame = table.locator('.jp-table__frame');
+  await frame.focus();
+  await frame.press('End');
+  await expect
+    .poll(() => frame.evaluate((element) => element.scrollTop))
+    .toBeGreaterThan(1000);
+  await table.getByRole('button', { name: 'Next', exact: true }).click();
+  await expect
+    .poll(() => frame.evaluate((element) => element.scrollTop))
+    .toBeLessThanOrEqual(1);
+  await expect(table.locator('jp-table tbody tr').first()).toContainText(
+    '00051',
+  );
   await table.getByRole('button', { name: 'Last page', exact: true }).click();
   await expect(
     table.getByRole('cell', { name: 'Kevin Kelly 10000', exact: true }),

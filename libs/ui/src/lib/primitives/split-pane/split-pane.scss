@@ -1,6 +1,7 @@
 @use '../shared/interaction';
 
 :host {
+  --jp-split-pane-separator-size: var(--jp-space-lg);
   display: flex;
   min-inline-size: 0;
   color: var(--jp-color-text-primary);
@@ -23,7 +24,7 @@
 }
 .jp-split-pane__separator {
   position: relative;
-  flex: 0 0 var(--jp-space-lg);
+  flex: 0 0 var(--jp-split-pane-separator-size);
   display: grid;
   place-items: center;
   cursor: col-resize;

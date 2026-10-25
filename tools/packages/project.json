@@ -22,7 +22,7 @@
         "{workspaceRoot}/CHANGELOG.md"
       ],
       "options": {
-        "command": "node --test tools/release/prepare.spec.mjs"
+        "command": "node --test tools/release/prepare.spec.mjs tools/release/pack.spec.mjs"
       }
     },
     "build": {
@@ -39,6 +39,14 @@
       "cache": false,
       "options": {
         "command": "node tools/consumer-smoke.mjs"
+      }
+    },
+    "pack": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "cache": false,
+      "options": {
+        "command": "node tools/release/pack.mjs"
       }
     }
   }

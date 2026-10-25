@@ -20,7 +20,10 @@ import { JpProgress } from '../progress/progress';
 import { JpEmptyState } from '../empty-state/empty-state';
 import { JpFocusTrap } from '../shared/focus-trap';
 import { JpAssistantMessage } from './assistant-message';
-import { JpAssistantService } from './assistant.service';
+import {
+  JpAssistantService,
+  type JpAssistantResponseMessage,
+} from './assistant.service';
 
 const ASSISTANT_MOBILE_MEDIA = '(max-width: 48rem)';
 
@@ -54,6 +57,14 @@ export class JpAssistantPanel implements OnInit {
 
   private readonly composerRef =
     viewChild<ElementRef<HTMLTextAreaElement>>('composer');
+  private readonly surfaceRef = viewChild<ElementRef<HTMLElement>>('surface');
+  private readonly conversationRef =
+    viewChild<ElementRef<HTMLElement>>('conversation');
+  private readonly messageListRef =
+    viewChild<ElementRef<HTMLElement>>('messageList');
+  private followingConversation = true;
+  private previousMessages: readonly JpAssistantResponseMessage[] | null = null;
+  private firstMessageId: number | undefined;
   private previousFocus: HTMLElement | null = null;
   private lastOpen = false;
   private mobileMediaQuery: MediaQueryList | null = null;
@@ -68,6 +79,9 @@ export class JpAssistantPanel implements OnInit {
   readonly isPending = this.assistantService.isPending;
 
   readonly title = input(this.jpMessages.assistant.title);
+  readonly conversationLabel = input(this.jpMessages.assistant.conversation);
+  readonly newMessagesLabel = input(this.jpMessages.assistant.newMessages);
+  readonly hasNewMessages = signal(false);
   readonly closeLabel = input(this.jpMessages.assistant.close);
   readonly clearContextLabel = input(this.jpMessages.assistant.clearContext);
   readonly composerLabel = input(this.jpMessages.assistant.composerLabel);
@@ -90,9 +104,16 @@ export class JpAssistantPanel implements OnInit {
     afterRenderEffect(() => {
       const open = this.isOpen();
       const composer = this.composerRef()?.nativeElement;
+      const mobile = this.isMobileViewport();
 
       if (open && !this.lastOpen) {
         this.previousFocus = document.activeElement as HTMLElement | null;
+        composer?.focus();
+      } else if (
+        open &&
+        mobile &&
+        !this.surfaceRef()?.nativeElement.contains(document.activeElement)
+      ) {
         composer?.focus();
       }
 
@@ -103,6 +124,64 @@ export class JpAssistantPanel implements OnInit {
 
       this.lastOpen = open;
     });
+
+    afterRenderEffect(() => {
+      const messages = this.messages();
+      const log = this.conversationRef()?.nativeElement;
+      if (!this.isOpen() || !log) return;
+      const changed = this.previousMessages !== messages;
+      const firstId = messages[0]?.id;
+      if (
+        this.firstMessageId !== undefined &&
+        firstId !== this.firstMessageId
+      ) {
+        this.followingConversation = true;
+      }
+      this.firstMessageId = firstId;
+      this.previousMessages = messages;
+      if (!messages.length) {
+        log.scrollTop = 0;
+        this.followingConversation = true;
+        this.hasNewMessages.set(false);
+      } else if (this.followingConversation) {
+        this.scrollConversationToEnd();
+      } else if (changed) {
+        this.hasNewMessages.set(true);
+      }
+    });
+
+    afterRenderEffect((onCleanup) => {
+      const log = this.conversationRef()?.nativeElement;
+      const list = this.messageListRef()?.nativeElement;
+      if (!log || typeof ResizeObserver === 'undefined') return;
+      const observer = new ResizeObserver(() => {
+        if (this.isOpen() && this.followingConversation)
+          this.scrollConversationToEnd();
+      });
+      observer.observe(log);
+      if (list) observer.observe(list);
+      onCleanup(() => observer.disconnect());
+    });
+  }
+
+  onConversationScroll(): void {
+    const log = this.conversationRef()?.nativeElement;
+    if (!log) return;
+    this.followingConversation =
+      log.scrollHeight - log.clientHeight - log.scrollTop <= 48;
+    if (this.followingConversation) this.hasNewMessages.set(false);
+  }
+
+  showLatestMessages(): void {
+    this.followingConversation = true;
+    this.scrollConversationToEnd();
+    this.conversationRef()?.nativeElement.focus({ preventScroll: true });
+  }
+
+  private scrollConversationToEnd(): void {
+    const log = this.conversationRef()?.nativeElement;
+    if (log) log.scrollTop = Math.max(0, log.scrollHeight - log.clientHeight);
+    this.hasNewMessages.set(false);
   }
 
   ngOnInit(): void {

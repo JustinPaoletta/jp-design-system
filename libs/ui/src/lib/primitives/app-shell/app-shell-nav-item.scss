@@ -3,6 +3,10 @@
 :host {
   display: block;
 }
+jp-tooltip {
+  display: block;
+  --jp-tooltip-trigger-display: block;
+}
 
 .jp-app-shell-nav-item__root {
   display: flex;

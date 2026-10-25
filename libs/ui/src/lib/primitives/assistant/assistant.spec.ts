@@ -335,6 +335,135 @@ describe('JpAssistantPanel + trigger', () => {
     expect(panel.trapFocus()).toBe(true);
   });
 
+  it('includes the named conversation in the mobile keyboard focus cycle', () => {
+    service.open();
+    const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
+      .componentInstance as JpAssistantPanel;
+    panel.isMobileViewport.set(true);
+    fixture.detectChanges();
+    const close = fixture.nativeElement.querySelector(
+      '.jp-assistant-panel__close',
+    ) as HTMLElement;
+    const log = fixture.nativeElement.querySelector(
+      '[role="log"]',
+    ) as HTMLElement;
+    close.focus();
+    close.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+    expect(document.activeElement).toBe(log);
+    expect(log.getAttribute('aria-label')).toBeTruthy();
+  });
+
+  it('follows new exchanges while preserving a reader position until new messages are requested', () => {
+    service.open();
+    fixture.detectChanges();
+    const log = fixture.nativeElement.querySelector(
+      '[role="log"]',
+    ) as HTMLElement;
+    let height = 400;
+    Object.defineProperties(log, {
+      clientHeight: { configurable: true, get: () => 100 },
+      scrollHeight: { configurable: true, get: () => height },
+    });
+    service.addMessage({ role: 'user', content: 'First question' });
+    fixture.detectChanges();
+    expect(log.scrollTop).toBe(300);
+
+    log.scrollTop = 100;
+    log.dispatchEvent(new Event('scroll'));
+    height = 500;
+    service.addMessage({ role: 'assistant', content: 'New answer' });
+    fixture.detectChanges();
+    expect(log.scrollTop).toBe(100);
+    const latest = fixture.nativeElement.querySelector(
+      '.jp-assistant-panel__new-messages button',
+    ) as HTMLButtonElement;
+    expect(latest).toBeTruthy();
+    latest.click();
+    fixture.detectChanges();
+    expect(log.scrollTop).toBe(400);
+    expect(document.activeElement).toBe(log);
+    height = 600;
+    service.addMessage({ role: 'user', content: 'Following again' });
+    fixture.detectChanges();
+    expect(log.scrollTop).toBe(500);
+    service.clearMessages();
+    fixture.detectChanges();
+    expect(log.scrollTop).toBe(0);
+    expect(
+      fixture.nativeElement.querySelector('.jp-assistant-panel__new-messages'),
+    ).toBeNull();
+  });
+
+  it('moves outside focus into an open dock when it changes to a mobile overlay', () => {
+    const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
+      .componentInstance as JpAssistantPanel;
+    panel.isMobileViewport.set(false);
+    fixture.detectChanges();
+    const trigger = fixture.nativeElement.querySelector(
+      '#trigger',
+    ) as HTMLElement;
+    const outside = fixture.nativeElement.querySelector(
+      '#bare-trigger',
+    ) as HTMLElement;
+    trigger.focus();
+    service.open();
+    fixture.detectChanges();
+    outside.focus();
+    panel.isMobileViewport.set(true);
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(
+      fixture.nativeElement.querySelector('textarea'),
+    );
+    service.close();
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(trigger);
+  });
+
+  it('follows resized content only while the reader is at the end', () => {
+    fixture.destroy();
+    const original = globalThis.ResizeObserver;
+    let resize = () => undefined;
+    const disconnect = jest.fn();
+    globalThis.ResizeObserver = jest.fn().mockImplementation((callback) => {
+      resize = callback;
+      return { observe: jest.fn(), disconnect };
+    });
+    const f = TestBed.createComponent(AssistantHost);
+    try {
+      f.detectChanges();
+      service.open();
+      service.addMessage({ role: 'assistant', content: 'Game summary' });
+      f.detectChanges();
+      const log = f.nativeElement.querySelector('[role=log]') as HTMLElement;
+      let height = 400;
+      Object.defineProperties(log, {
+        clientHeight: { get: () => 100 },
+        scrollHeight: { get: () => height },
+      });
+      resize();
+      expect(log.scrollTop).toBe(300);
+      log.scrollTop = 100;
+      log.dispatchEvent(new Event('scroll'));
+      height = 600;
+      resize();
+      expect(log.scrollTop).toBe(100);
+      service.close();
+      f.detectChanges();
+      resize();
+      expect(log.scrollTop).toBe(100);
+    } finally {
+      f.destroy();
+      globalThis.ResizeObserver = original;
+    }
+    expect(disconnect).toHaveBeenCalled();
+  });
+
   it('ignores empty submits and Escape when closed', () => {
     const panel = fixture.debugElement.query(By.directive(JpAssistantPanel))
       .componentInstance as JpAssistantPanel;
