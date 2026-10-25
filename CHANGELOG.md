@@ -7,6 +7,9 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+- Update Storybook, Nx and Angular CLI to correct development dependency vulnerabilities.
+- Apply a scoped Vite patch. Reject development dependency advisories in the required CI audit.
+
 ## [0.1.0-rc.1] - 2026-10-25
 
 - Prepare paired `0.1.0-rc.1` package versions. Add local archives, integrity manifests and CI downloads.

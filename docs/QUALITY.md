@@ -28,6 +28,8 @@ npm exec -- nx run packages:build
 npm exec -- nx run packages:smoke
 npm exec -- nx run packages:check-release
 npm exec -- nx run packages:check-readiness
+npm audit --audit-level=low
+npm audit --omit=dev --audit-level=moderate
 node tools/docs/check-links.mjs
 node tools/docs/check-writing.mjs
 node --test tools/docs/check-writing.spec.mjs

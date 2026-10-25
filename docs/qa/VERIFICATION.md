@@ -1,5 +1,27 @@
 # Verification evidence
 
+## October 25, 2026 development dependency corrections
+
+The updated lockfile passes `npm ci --strict-peer-deps`.
+Complete and runtime-only audits report zero findings at every severity.
+The [security inspection](../SECURITY_REVIEW.md) records corrected versions and scoped overrides.
+
+| Local check               | Result                                                                                  |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| Unit tests                | All 668 tests pass: 591 UI, 59 Showcase, 17 token and one Storybook application test.   |
+| Branch coverage           | UI reaches 90.09%; Showcase reaches 91.32%; token and Storybook application gates pass. |
+| Source checks             | All 12 lint, type and unit targets pass without Nx cache reuse.                         |
+| Production builds         | Four project builds and their token generation dependency pass.                         |
+| Release and token checks  | Release safety, API readiness and generated token checks pass.                          |
+| Installed dependency tree | `npm ls --all --json` reports no dependency problems.                                   |
+
+The local Storybook build stopped with `ENOSPC` while writing a source map.
+The host had less than 500 MiB of free disk space.
+Browser and installed-package checks were stopped to limit disk use.
+These local runs do not establish Storybook, browser, visual or installed-package acceptance.
+Examine the [required CI jobs](../CI_BRANCH_PROTECTION.md#job-scope) for separate hosted results on the dependency update.
+The manual acceptance tasks remain open.
+
 ## October 25, 2026 combined candidate
 
 The combined draft includes component corrections, release preparation and Nx/OpenCode tooling.
